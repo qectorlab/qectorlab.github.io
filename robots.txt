@@ -1,1 +1,2 @@
 Allow: /
+Sitemap: https://www.qector.store/sitemap.xml
