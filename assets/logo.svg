@@ -1,31 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" role="img" aria-label="QECTOR">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1205 679" fill="none" role="img" aria-label="QECTOR official logo">
+  <title>QECTOR official logo</title>
   <defs>
-    <linearGradient id="ring" x1="12" y1="10" x2="84" y2="86" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#E8FDFF"/>
-      <stop offset="0.38" stop-color="#00D5FF"/>
-      <stop offset="0.78" stop-color="#367DFF"/>
-      <stop offset="1" stop-color="#9B7CFF"/>
+    <linearGradient id="qector-cyan" x1="115" y1="95" x2="1090" y2="595" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E9FEFF"/>
+      <stop offset="0.18" stop-color="#49F8FF"/>
+      <stop offset="0.58" stop-color="#08D8F4"/>
+      <stop offset="1" stop-color="#1976FF"/>
     </linearGradient>
-    <linearGradient id="tail" x1="60" y1="60" x2="86" y2="86" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFE6A6"/>
-      <stop offset="1" stop-color="#FFB020"/>
+    <linearGradient id="qector-blue" x1="180" y1="625" x2="1060" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#27F5FF"/>
+      <stop offset="0.55" stop-color="#11CDE8"/>
+      <stop offset="1" stop-color="#2676FF"/>
     </linearGradient>
-    <radialGradient id="core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30 22) rotate(52) scale(74)">
-      <stop stop-color="#00D5FF" stop-opacity="0.48"/>
-      <stop offset="0.55" stop-color="#1E63FF" stop-opacity="0.16"/>
-      <stop offset="1" stop-color="#020716" stop-opacity="0"/>
-    </radialGradient>
+    <filter id="qector-glow" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 .9  0 0 0 0 1  0 0 0 .55 0" result="cyanBlur"/>
+      <feMerge><feMergeNode in="cyanBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="qector-shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#005BFF" flood-opacity="0.55"/>
+      <feDropShadow dx="0" dy="-2" stdDeviation="2" flood-color="#CFFFFF" flood-opacity="0.5"/>
+    </filter>
   </defs>
-  <rect x="3" y="3" width="90" height="90" rx="25" fill="#030713"/>
-  <rect x="3" y="3" width="90" height="90" rx="25" fill="url(#core)"/>
-  <rect x="4.5" y="4.5" width="87" height="87" rx="23.5" stroke="url(#ring)" stroke-opacity="0.7" stroke-width="3"/>
-  <path d="M48 20C32.54 20 20 32.54 20 48s12.54 28 28 28c6.05 0 11.65-1.92 16.23-5.18" stroke="url(#ring)" stroke-width="8" stroke-linecap="round"/>
-  <path d="M63.5 63.5 82 82" stroke="url(#tail)" stroke-width="8.5" stroke-linecap="round"/>
-  <path d="M30 48h36M48 30v36" stroke="#C9FAFF" stroke-opacity="0.58" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M35.5 35.5 60.5 60.5M60.5 35.5 35.5 60.5" stroke="#7FB8FF" stroke-opacity="0.32" stroke-width="1.7" stroke-linecap="round"/>
-  <circle cx="48" cy="30" r="3.6" fill="#D9FBFF"/>
-  <circle cx="66" cy="48" r="3.6" fill="#00D5FF"/>
-  <circle cx="48" cy="66" r="3.6" fill="#367DFF"/>
-  <circle cx="30" cy="48" r="3.6" fill="#00D5FF"/>
-  <circle cx="48" cy="48" r="4.2" fill="#FFCF70"/>
+
+  <g filter="url(#qector-glow)" stroke="url(#qector-cyan)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M410 92H542l57 77v168l-57 77H410"/>
+    <path d="M795 92H663l-57 77v168l57 77h132"/>
+    <path d="M345 147h178v70H345"/>
+    <path d="M345 258h178v70H345"/>
+    <path d="M345 369h178"/>
+    <path d="M860 147H682v70h178"/>
+    <path d="M860 258H682v70h178"/>
+    <path d="M860 369H682"/>
+    <path d="M503 63l38 83"/>
+    <path d="M702 63l-38 83"/>
+    <path d="M505 445l38-83"/>
+    <path d="M700 445l-38-83"/>
+    <path d="M268 92h142"/>
+    <path d="M205 147h140"/>
+    <path d="M268 217h77"/>
+    <path d="M205 328h140"/>
+    <path d="M268 414h142"/>
+    <path d="M937 92H795"/>
+    <path d="M1000 147H860"/>
+    <path d="M937 217h-77"/>
+    <path d="M1000 328H860"/>
+    <path d="M937 414H795"/>
+  </g>
+
+  <g filter="url(#qector-glow)">
+    <g fill="#20E7F5" stroke="#E4FDFF" stroke-width="5">
+      <circle cx="268" cy="92" r="22"/><circle cx="205" cy="147" r="22"/><circle cx="268" cy="217" r="22"/><circle cx="205" cy="328" r="22"/><circle cx="268" cy="414" r="22"/>
+      <circle cx="503" cy="63" r="22"/><circle cx="702" cy="63" r="22"/><circle cx="505" cy="445" r="22"/><circle cx="700" cy="445" r="22"/>
+      <circle cx="937" cy="92" r="22"/><circle cx="1000" cy="147" r="22"/><circle cx="937" cy="217" r="22"/><circle cx="1000" cy="328" r="22"/><circle cx="937" cy="414" r="22"/>
+      <circle cx="603" cy="165" r="24"/><circle cx="603" cy="252" r="24"/><circle cx="602" cy="338" r="24"/>
+    </g>
+    <g fill="#C9FEFF" opacity="0.8">
+      <circle cx="268" cy="92" r="9"/><circle cx="205" cy="147" r="9"/><circle cx="937" cy="92" r="9"/><circle cx="1000" cy="147" r="9"/>
+      <circle cx="503" cy="63" r="9"/><circle cx="702" cy="63" r="9"/><circle cx="505" cy="445" r="9"/><circle cx="700" cy="445" r="9"/>
+    </g>
+  </g>
+
+  <g filter="url(#qector-shadow)">
+    <text x="602" y="640" text-anchor="middle" font-family="Orbitron, Eurostile, Bank Gothic, Arial Black, Arial, sans-serif" font-size="150" font-weight="900" letter-spacing="27" fill="url(#qector-blue)" stroke="#E7FEFF" stroke-width="5" paint-order="stroke fill">QECTOR</text>
+    <text x="602" y="640" text-anchor="middle" font-family="Orbitron, Eurostile, Bank Gothic, Arial Black, Arial, sans-serif" font-size="150" font-weight="900" letter-spacing="27" fill="url(#qector-blue)">QECTOR</text>
+  </g>
 </svg>
