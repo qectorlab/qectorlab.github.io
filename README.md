@@ -1,6 +1,6 @@
 # QECTOR Lab
 
-Official GitHub Pages bridge for **QECTOR**.
+Official GitHub Pages repository for **QECTOR**.
 
 **QECTOR** is a source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial **QEC** workflows.
 
@@ -8,59 +8,27 @@ Official GitHub Pages bridge for **QECTOR**.
 
 ---
 
-## Repository Description
+## About QECTOR
 
-Official GitHub Pages bridge for **QECTOR** Lab.
+**QECTOR** is built for quantum error correction research, decoder benchmarking, and commercial **QEC** workflow evaluation.
 
-**QECTOR** Decoder is a source-available Rust/Python quantum error correction decoder platform with Stim, Sinter, PyMatching-compatible workflows, belief-matching, BP-**OSD**, **CPU**/**GPU** batch decoding, reproducible benchmark artifacts, and commercial licensing through qector.store.
+The **QECTOR** ecosystem includes:
 
----
+- ****QECTOR** Decoder** — the available Rust/Python decoder library
+- ****QECTOR** Workbench** — the upcoming fullstack benchmarking and validation app
+- ****QECTOR** Benchmark Suite** — reproducible reports, artifacts, hashes, and comparison tools
 
-## Tags
+**QECTOR** is source-available for personal, academic, educational, and non-commercial research use.
 
-`quantum-error-correction` `qec` `quantum-computing` `decoder` `quantum-decoder` `qector` `qector-decoder` `stim` `sinter` `pymatching` `mwpm` `minimum-weight-perfect-matching` `belief-matching` `bp-osd` `ldpc` `qldpc` `rust` `python` `pyo3` `cuda` `opencl` `gpu` `benchmarking` `reproducibility` `research-software` `source-available` `commercial-license`
-
----
-
-## GitHub Topics
-
-Add these topics in the GitHub repository settings:
-
-```txt quantum-computing quantum-error-correction qec decoder stim sinter pymatching mwpm belief-matching bp-osd ldpc rust python cuda opencl benchmarking reproducibility source-available commercial-license ```
-
----
-
-## SEO Keywords
-
-**QECTOR**, **QECTOR** Decoder, **QECTOR** Workbench, quantum error correction decoder, **QEC** decoder, Rust quantum decoder, Python quantum decoder, Stim decoder, Sinter decoder, PyMatching-compatible decoder, belief-matching decoder, BP-**OSD** decoder, **LDPC** quantum decoder, qLDPC decoder, **MWPM** decoder, **GPU** quantum decoder, **CUDA** quantum decoder, OpenCL quantum decoder, quantum benchmarking, quantum error correction benchmarking, commercial **QEC** software, source-available **QEC** decoder.
-
----
-
-## Meta Description
-
-**QECTOR** is a source-available quantum error correction decoder platform with Rust/Python architecture, Stim and Sinter integration, PyMatching-compatible workflows, belief-matching accuracy mode, BP-**OSD** support, **CPU**/**GPU** batch decoding, and reproducible benchmark artifacts.
-
----
-
-## Website Redirect
-
-This repository is intended to point visitors to the official **QECTOR** website:
-
-[https://[www.qector.store](https://www.qector.store](https://www.qector.store](https://www.qector.store))
-
-Recommended GitHub Pages behavior:
-
-```txt quectorlab.github.io → [https://[www.qector.store](https://www.qector.store](https://www.qector.store](https://www.qector.store)) ```
+Commercial use requires a paid commercial license.
 
 ---
 
 ## QECTOR Decoder
 
-****QECTOR** Decoder** is the available core decoder library.
+****QECTOR** Decoder** is the core library.
 
-It provides a quantum error correction decoder stack for research, benchmarking, and commercial **QEC** workflow evaluation.
-
-Core features:
+It provides a quantum error correction decoder stack with:
 
 - Rust core with Python bindings
 - PyO3 integration
@@ -87,7 +55,7 @@ Core features:
 
 ****QECTOR** Workbench** is the upcoming fullstack app for **QEC** benchmarking, validation, and report generation.
 
-Planned features:
+Planned features include:
 
 - Load Stim circuits
 - Load Detector Error Models
@@ -111,7 +79,7 @@ Planned features:
 
 ---
 
-## Current Public Status
+## Public Status
 
 | Component            | Status                                          |
 | -------------------- | ----------------------------------------------- |
@@ -123,11 +91,25 @@ Planned features:
 
 ---
 
+## Official Website
+
+Visit the official **QECTOR** product and licensing portal:
+
+[https://[www.qector.store](https://www.qector.store](https://www.qector.store](https://www.qector.store))
+
+This GitHub Pages repository is intended to direct users to the official **QECTOR** website.
+
+Recommended redirect:
+
+```text quectorlab.github.io → [https://[www.qector.store](https://www.qector.store](https://www.qector.store](https://www.qector.store)) ```
+
+---
+
 ## License
 
 **QECTOR** is **source-available, not open-source**.
 
-Permitted free use:
+Permitted free use includes:
 
 - Personal learning
 - Academic evaluation
@@ -139,7 +121,7 @@ Permitted free use:
 
 Commercial use requires a paid commercial license.
 
-Commercial use includes:
+Commercial use includes, but is not limited to:
 
 - Company use
 - Startup use
@@ -157,7 +139,7 @@ Commercial use includes:
 - Revenue-generating use
 - Fundraising or investor validation
 
-For commercial licensing:
+For commercial licensing, contact:
 
 **[admin@qector.store](mailto:[admin@qector.store](mailto:admin@qector.store))**
 
@@ -186,93 +168,21 @@ Contact:
 
 ---
 
-## Recommended Site Pages
+## Repository Topics
 
-The official **QECTOR** website should include:
+Recommended GitHub topics:
 
-```txt / /decoder /workbench /benchmarks /license /pricing /docs /commercial /contact ```
-
----
-
-## Missing Before Public Launch
-
-Complete these before major public announcement:
-
-- Add final GitHub repository **URL**
-- Add final **QECTOR** Decoder GitHub link
-- Add `**LICENSE**.md`
-- Add commercial pricing page
-- Add benchmark report **PDF**
-- Add benchmark artifact hash table
-- Add reproduction commands
-- Add official contact form
-- Add **QECTOR** logo and hero banner
-- Add GitHub Pages redirect to qector.store
-- Add real Git commit hash in reports
-- Add downloadable report bundle
-- Add Workbench early-access form
-- Add clear non-commercial/commercial license warning
+```text quantum-computing quantum-error-correction qec decoder stim sinter pymatching mwpm belief-matching bp-osd ldpc rust python cuda opencl benchmarking reproducibility source-available commercial-license ```
 
 ---
 
-## Missing Before Serious Commercial Outreach
+## SEO Keywords
 
-Complete these before contacting labs, quantum companies, or investors:
-
-- Second-machine reproduction
-- Docker/Linux reproduction
-- Clean tagged release
-- Versioned release notes
-- Artifact bundle with **SHA**-**256** hashes
-- Full due-diligence evidence folder
-- Commercial license **PDF**
-- Pricing **PDF**
-- Technical one-pager
-- Executive one-pager
-- Benchmark summary page
-- Known limitations page
-- IP ownership statement
-- Contributor policy
-- Security contact
-- Private commercial support workflow
+**QECTOR**, **QECTOR** Decoder, **QECTOR** Workbench, quantum error correction decoder, **QEC** decoder, Rust quantum decoder, Python quantum decoder, Stim decoder, Sinter decoder, PyMatching-compatible decoder, belief-matching decoder, BP-**OSD** decoder, **LDPC** quantum decoder, qLDPC decoder, **MWPM** decoder, **GPU** quantum decoder, **CUDA** quantum decoder, OpenCL quantum decoder, quantum benchmarking, quantum error correction benchmarking, commercial **QEC** software, source-available **QEC** decoder.
 
 ---
 
-## Missing Before Workbench Launch
-
-Complete these before releasing **QECTOR** Workbench:
-
-- Working local app build
-- Load `.stim` files
-- Load `.dem` files
-- Run benchmark jobs
-- Export **PDF** reports
-- Export **CSV** artifacts
-- Export **JSON** artifacts
-- Show environment snapshot
-- Show backend diagnostics
-- Show **CPU** / **CUDA** / OpenCL status
-- Show benchmark charts from real data
-- Add job queue
-- Add cancel job function
-- Add error logs
-- Add update/release notes page
-- Add license activation flow if needed
-- Add commercial support contact
-
----
-
-## Recommended Homepage Copy
-
-**QECTOR** is a source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial **QEC** workflows.
-
-**QECTOR** Decoder is available now for personal, academic, educational, and non-commercial research use. Commercial use requires a paid license.
-
-**QECTOR** Workbench is the upcoming fullstack app for running **QEC** decoder benchmarks, validating results, exporting artifacts, and generating reproducible technical reports.
-
----
-
-## Official Contact
+## Contact
 
 **[admin@qector.store](mailto:[admin@qector.store](mailto:admin@qector.store))**
 
