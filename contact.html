@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact QECTOR — license inquiries, commercial discussions, early access for QECTOR Workbench, technical questions, and partnership discussions.">
+  <meta property="og:title" content="Contact QECTOR">
+  <meta property="og:description" content="Reach out for commercial licensing, Workbench early access, technical questions, or strategic discussions.">
+  <meta property="og:type" content="website">
+  <title>Contact QECTOR — License Inquiries, Early Access, Technical Questions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* ── CONTACT LAYOUT ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ── FORM ── */
+    .contact-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .contact-form h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group label .req {
+      color: var(--cyan);
+      margin-left: 0.15rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--bg);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 0.65rem 0.9rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text);
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--muted);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 2px rgba(0,213,255,0.1);
+    }
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+      border-color: var(--red);
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A91B0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    .form-group select option {
+      background: var(--panel);
+      color: var(--text);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.6;
+    }
+    .field-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .field-error {
+      font-size: 0.78rem;
+      color: var(--red);
+      display: none;
+    }
+    .field-error.visible {
+      display: block;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-submit-row {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .form-submit-btn {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.95rem;
+      padding: 0.8rem 1.5rem;
+    }
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── SUCCESS / ERROR STATE ── */
+    .form-feedback {
+      display: none;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+    }
+    .form-feedback.success {
+      background: rgba(25,230,161,0.08);
+      border: 1px solid rgba(25,230,161,0.3);
+      color: var(--green);
+    }
+    .form-feedback.error {
+      background: rgba(255,68,88,0.08);
+      border: 1px solid rgba(255,68,88,0.3);
+      color: var(--red);
+    }
+    .form-feedback.visible { display: block; }
+
+    /* ── SIDEBAR ── */
+    .contact-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .contact-topic {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .contact-topic:hover { border-color: var(--border-2); }
+    .contact-topic h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+    .contact-topic p {
+      font-size: 0.845rem;
+      margin: 0;
+      line-height: 1.55;
+    }
+    .contact-topic .response-time {
+      margin-top: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .direct-contact-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+    }
+    .direct-contact-block h4 {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      margin-bottom: 0.75rem;
+    }
+    .direct-email-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--cyan);
+      font-weight: 600;
+      word-break: break-all;
+    }
+    .direct-email-link:hover { color: #fff; }
+
+    /* ── RESPONSE POLICY ── */
+    .response-policy {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+    }
+    .response-policy h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    .policy-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(26,37,64,0.5);
+      font-size: 0.8rem;
+    }
+    .policy-row:last-child { border-bottom: none; }
+    .policy-type { color: var(--muted-2); }
+    .policy-time { font-family: var(--font-mono); color: var(--cyan); font-weight: 600; font-size: 0.75rem; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-layout > .contact-form { order: 1; }
+      .contact-layout > .contact-sidebar { order: 0; }
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" width="32" height="32" alt="QECTOR">
+      QECT<span>OR</span>
+    </a>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="decoder.html">Decoder</a></li>
+      <li><a href="workbench.html">Workbench</a></li>
+      <li><a href="benchmarks.html">Benchmarks</a></li>
+      <li><a href="license.html">License</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="commercial.html">Commercial</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="nav-cta"><a href="commercial.html">Get License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h1>Get in Touch</h1>
+    <p>License inquiries, early access requests, technical questions, and strategic discussions. All messages go directly to Guillaume Lessard. Response within 2 business days for all commercial inquiries.</p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section>
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- SIDEBAR -->
+      <div class="contact-sidebar">
+
+        <div class="contact-topic" style="border-color:rgba(255,176,32,0.25);background:rgba(255,176,32,0.03);">
+          <div class="badge badge-gold" style="margin-bottom:0.6rem;">License Inquiry</div>
+          <h4>Commercial licensing</h4>
+          <p>You need a commercial license to use QECTOR in a company, product, SaaS platform, funded research program, or government deployment. Include your organization name, use case, and intended scope.</p>
+          <div class="response-time">Response: 2 business days</div>
+        </div>
+
+        <div class="contact-topic" style="border-color:rgba(47,123,255,0.2);">
+          <div class="badge badge-blue" style="margin-bottom:0.6rem;">Workbench Early Access</div>
+          <h4>QECTOR Workbench early access</h4>
+          <p>Workbench — the local fullstack QEC benchmarking app — is coming soon. Early access is offered to selected research teams and commercial partners. Describe your team's use case and we'll confirm eligibility.</p>
+          <div class="response-time">Response: 2 business days</div>
+        </div>
+
+        <div class="contact-topic">
+          <div class="badge badge-muted" style="margin-bottom:0.6rem;">Technical</div>
+          <h4>Technical questions</h4>
+          <p>Integration questions, decoder selection advice, GPU backend configuration, Stim/Sinter wiring, or benchmark reproduction questions. Non-commercial users are welcome — support priority follows license tier.</p>
+          <div class="response-time">Response: 3–5 business days</div>
+        </div>
+
+        <div class="contact-topic" style="border-color:rgba(47,123,255,0.2);">
+          <div class="badge badge-blue" style="margin-bottom:0.6rem;">Strategic</div>
+          <h4>Strategic, partnership, acquisition</h4>
+          <p>Exclusive licensing, technology acquisition, joint development, or investor-level discussions. All strategic conversations begin under NDA. Provide a brief description of the opportunity and your organization.</p>
+          <div class="response-time">Response: 2 business days · NDA available</div>
+        </div>
+
+        <div class="direct-contact-block">
+          <h4>Direct Email</h4>
+          <a href="mailto:admin@qector.store" class="direct-email-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            admin@qector.store
+          </a>
+        </div>
+
+        <div class="response-policy">
+          <h4>Response policy</h4>
+          <div class="policy-row">
+            <span class="policy-type">License inquiry</span>
+            <span class="policy-time">≤ 2 biz days</span>
+          </div>
+          <div class="policy-row">
+            <span class="policy-type">Workbench early access</span>
+            <span class="policy-time">≤ 2 biz days</span>
+          </div>
+          <div class="policy-row">
+            <span class="policy-type">Strategic / partnership</span>
+            <span class="policy-time">≤ 2 biz days</span>
+          </div>
+          <div class="policy-row">
+            <span class="policy-type">Technical (commercial tier)</span>
+            <span class="policy-time">≤ 2 biz days</span>
+          </div>
+          <div class="policy-row">
+            <span class="policy-type">Technical (free tier)</span>
+            <span class="policy-time">≤ 5 biz days</span>
+          </div>
+          <div class="policy-row">
+            <span class="policy-type">Other</span>
+            <span class="policy-time">≤ 5 biz days</span>
+          </div>
+        </div>
+
+        <div class="notice" style="font-size:0.8rem;">
+          Québec statutory holidays may extend response times by one business day. QECTOR operates on Québec time (EST/EDT).
+        </div>
+
+      </div>
+
+      <!-- CONTACT FORM -->
+      <div class="contact-form">
+        <h3>Send a message</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Name<span class="req">*</span></label>
+            <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="name">
+            <span class="field-error" id="err-name">Please enter your name.</span>
+          </div>
+          <div class="form-group">
+            <label for="f-org">Organization</label>
+            <input type="text" id="f-org" name="organization" placeholder="Company, lab, or university" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-email">Email<span class="req">*</span></label>
+          <input type="email" id="f-email" name="email" placeholder="you@organization.com" autocomplete="email">
+          <span class="field-error" id="err-email">Please enter a valid email address.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="f-type">Inquiry type<span class="req">*</span></label>
+          <select id="f-type" name="inquiry_type">
+            <option value="" disabled selected>Select the best fit…</option>
+            <option value="license-startup">Commercial License — Startup ($9,500/yr)</option>
+            <option value="license-professional">Commercial License — Professional / Lab ($25,000/yr)</option>
+            <option value="license-enterprise">Commercial License — Enterprise ($75,000+/yr)</option>
+            <option value="license-saas">Commercial License — SaaS / Hosted API ($150,000+/yr)</option>
+            <option value="license-oem">Commercial License — OEM / Embedded ($250,000+/yr)</option>
+            <option value="license-strategic">Strategic / Acquisition / Partnership</option>
+            <option value="license-notsure">Commercial License — Not sure which tier</option>
+            <option value="early-access">QECTOR Workbench Early Access</option>
+            <option value="technical">Technical question</option>
+            <option value="benchmark">Benchmark question or reproduction</option>
+            <option value="other">Other</option>
+          </select>
+          <span class="field-error" id="err-type">Please select an inquiry type.</span>
+        </div>
+
+        <div class="form-group" id="group-tier-context" style="display:none;">
+          <label for="f-users">Approximate team size (internal users)</label>
+          <select id="f-users" name="team_size">
+            <option value="" disabled selected>Select…</option>
+            <option value="1">1 — solo / individual</option>
+            <option value="2-5">2–5 users</option>
+            <option value="6-20">6–20 users</option>
+            <option value="21-100">21–100 users</option>
+            <option value="100+">100+ users</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="f-subject">Subject<span class="req">*</span></label>
+          <input type="text" id="f-subject" name="subject" placeholder="One-line summary of your message">
+          <span class="field-error" id="err-subject">Please enter a subject.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="f-message">Message<span class="req">*</span></label>
+          <textarea id="f-message" name="message" placeholder="Describe your use case, organization, deployment context, or question. The more specific, the faster the response."></textarea>
+          <span class="field-hint">For license inquiries: include your intended use case, deployment context (internal/SaaS/OEM/other), and timeline. For technical questions: include the decoder backend, code family, and what you're trying to accomplish.</span>
+          <span class="field-error" id="err-message">Please enter a message of at least 20 characters.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="f-gpu">Are GPU batch decoding capabilities relevant to your use case?</label>
+          <select id="f-gpu" name="gpu_relevant">
+            <option value="" disabled selected>Select…</option>
+            <option value="yes-cuda">Yes — NVIDIA CUDA</option>
+            <option value="yes-opencl">Yes — OpenCL (cross-vendor)</option>
+            <option value="yes-both">Yes — both CUDA and OpenCL</option>
+            <option value="no">No — CPU-only is sufficient</option>
+            <option value="unsure">Not sure yet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="f-nda">NDA required before discussion?</label>
+          <select id="f-nda" name="nda_required">
+            <option value="" disabled selected>Select…</option>
+            <option value="yes">Yes — please send NDA first</option>
+            <option value="no">No — NDA not required</option>
+            <option value="maybe">Possibly — depends on the discussion</option>
+          </select>
+        </div>
+
+        <div id="form-feedback-success" class="form-feedback success">
+          <strong>Message prepared.</strong> Your email client should open with your message pre-filled. If it does not open automatically, copy the details and send directly to <a href="mailto:admin@qector.store" style="color:var(--green);">admin@qector.store</a>.
+        </div>
+        <div id="form-feedback-error" class="form-feedback error">
+          <strong>Please fix the errors above</strong> before sending.
+        </div>
+
+        <div class="form-submit-row">
+          <button type="button" id="form-submit-btn" class="btn btn-primary btn-lg form-submit-btn">
+            Send Message
+          </button>
+          <p class="form-note">
+            This opens your email client with the message pre-filled. Alternatively, email directly:
+            <a href="mailto:admin@qector.store">admin@qector.store</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS NEXT -->
+<section>
+  <div class="container">
+    <div class="section-label">What Happens Next</div>
+    <h2 style="margin-bottom:1.5rem;">After you send a message</h2>
+
+    <div class="grid-3" style="gap:1rem;margin-bottom:2rem;">
+      <div class="card">
+        <div class="badge badge-cyan" style="margin-bottom:0.75rem;">Step 1</div>
+        <h4 style="margin-bottom:0.5rem;">Acknowledgement</h4>
+        <p style="font-size:0.875rem;">You'll receive an acknowledgement email within 1 business day confirming your message was received and identifying who will respond and in what timeframe.</p>
+      </div>
+      <div class="card">
+        <div class="badge badge-cyan" style="margin-bottom:0.75rem;">Step 2</div>
+        <h4 style="margin-bottom:0.5rem;">Scoping response</h4>
+        <p style="font-size:0.875rem;">For license inquiries, the initial response outlines the applicable tier, proposed terms, and any clarifying questions needed to draft the license proposal. For technical questions, you receive a direct answer or a follow-up request for specifics.</p>
+      </div>
+      <div class="card">
+        <div class="badge badge-cyan" style="margin-bottom:0.75rem;">Step 3</div>
+        <h4 style="margin-bottom:0.5rem;">License proposal or resolution</h4>
+        <p style="font-size:0.875rem;">For commercial licenses, a formal proposal with draft license terms and an invoice is sent within 5 business days of the scoping exchange. Technical questions are typically resolved within the initial response thread.</p>
+      </div>
+    </div>
+
+    <div class="notice">
+      <strong>No sales team, no CRM, no automated sequences.</strong> All messages go directly to Guillaume Lessard. You will get a real response from a person who knows the codebase.
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<section>
+  <div class="container">
+    <div class="section-label">Before You Write</div>
+    <h2 style="margin-bottom:1rem;">Common questions already answered</h2>
+    <p style="max-width:600px;margin-bottom:2rem;">These pages may answer your question before you need to send a message.</p>
+
+    <div class="grid-4" style="gap:1rem;">
+      <a href="license.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;">
+        <h4 style="color:var(--green);font-size:0.9rem;">License Terms</h4>
+        <p style="font-size:0.82rem;margin:0;">Full source-available license text — what is and is not permitted.</p>
+      </a>
+      <a href="pricing.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;">
+        <h4 style="color:var(--gold);font-size:0.9rem;">Pricing</h4>
+        <p style="font-size:0.82rem;margin:0;">All commercial tiers — Startup through OEM and Strategic. Prices in USD.</p>
+      </a>
+      <a href="commercial.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;">
+        <h4 style="color:var(--cyan);font-size:0.9rem;">Commercial FAQ</h4>
+        <p style="font-size:0.82rem;margin:0;">Who needs a license, what's included, how the process works, and common licensing questions.</p>
+      </a>
+      <a href="benchmarks.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;">
+        <h4 style="color:var(--text);font-size:0.9rem;">Benchmarks</h4>
+        <p style="font-size:0.82rem;margin:0;">Methodology, reproduction commands, full tables, and what QECTOR honestly claims.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;">
+          <img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECTOR
+        </a>
+        <p>Source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="decoder.html">QECTOR Decoder</a></li>
+          <li><a href="workbench.html">QECTOR Workbench</a></li>
+          <li><a href="benchmarks.html">Benchmarks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="license.html">License</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="commercial.html">Commercial</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="mailto:admin@qector.store">admin@qector.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
+      <span>QECTOR is source-available, not open-source. <a href="license.html">License</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script>
+/* ── CONTACT FORM LOGIC ── */
+(function () {
+  'use strict';
+
+  const typeSelect  = document.getElementById('f-type');
+  const groupTier   = document.getElementById('group-tier-context');
+  const submitBtn   = document.getElementById('form-submit-btn');
+  const feedbackOk  = document.getElementById('form-feedback-success');
+  const feedbackErr = document.getElementById('form-feedback-error');
+
+  /* Show team-size field for license inquiries */
+  const licenseValues = [
+    'license-startup','license-professional','license-enterprise',
+    'license-saas','license-oem','license-strategic','license-notsure'
+  ];
+  typeSelect.addEventListener('change', function () {
+    groupTier.style.display = licenseValues.includes(this.value) ? 'flex' : 'none';
+  });
+
+  /* Validation helpers */
+  function val(id)       { return document.getElementById(id).value.trim(); }
+  function setErr(id, show) {
+    const el = document.getElementById('err-' + id);
+    if (!el) return;
+    el.classList.toggle('visible', show);
+    document.getElementById('f-' + id).classList.toggle('error', show);
+  }
+  function clearAllErrors() {
+    ['name','email','type','subject','message'].forEach(function(k){ setErr(k, false); });
+    feedbackOk.classList.remove('visible');
+    feedbackErr.classList.remove('visible');
+  }
+
+  function validateEmail(e) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+  }
+
+  /* Build subject line */
+  function buildSubject() {
+    const typeMap = {
+      'license-startup':      '[QECTOR License] Startup Inquiry',
+      'license-professional': '[QECTOR License] Professional / Lab Inquiry',
+      'license-enterprise':   '[QECTOR License] Enterprise Inquiry',
+      'license-saas':         '[QECTOR License] SaaS / Hosted API Inquiry',
+      'license-oem':          '[QECTOR License] OEM / Embedded Inquiry',
+      'license-strategic':    '[QECTOR Strategic] Partnership / Acquisition',
+      'license-notsure':      '[QECTOR License] Commercial Inquiry',
+      'early-access':         '[QECTOR Workbench] Early Access Request',
+      'technical':            '[QECTOR Technical] Question',
+      'benchmark':            '[QECTOR Benchmark] Question',
+      'other':                '[QECTOR] General Inquiry',
+    };
+    const prefix = typeMap[typeSelect.value] || '[QECTOR] Inquiry';
+    const subj   = val('subject');
+    return subj ? prefix + ' — ' + subj : prefix;
+  }
+
+  /* Build email body */
+  function buildBody() {
+    const name    = val('name');
+    const org     = val('org');
+    const type    = typeSelect.options[typeSelect.selectedIndex].text;
+    const users   = document.getElementById('f-users').value;
+    const gpu     = document.getElementById('f-gpu');
+    const gpuText = gpu.value ? gpu.options[gpu.selectedIndex].text : 'Not specified';
+    const nda     = document.getElementById('f-nda');
+    const ndaText = nda.value ? nda.options[nda.selectedIndex].text : 'Not specified';
+    const msg     = val('message');
+
+    let body = '';
+    body += 'Name: ' + name + '\n';
+    if (org) body += 'Organization: ' + org + '\n';
+    body += 'Inquiry type: ' + type + '\n';
+    if (users) body += 'Team size: ' + users + '\n';
+    body += 'GPU relevant: ' + gpuText + '\n';
+    body += 'NDA required: ' + ndaText + '\n';
+    body += '\n--- Message ---\n\n';
+    body += msg;
+    body += '\n\n---\nSent via qector.store/contact.html';
+    return body;
+  }
+
+  submitBtn.addEventListener('click', function () {
+    clearAllErrors();
+
+    /* Validate */
+    var hasError = false;
+    if (!val('name'))                    { setErr('name', true);    hasError = true; }
+    if (!validateEmail(val('email')))    { setErr('email', true);   hasError = true; }
+    if (!typeSelect.value)               { setErr('type', true);    hasError = true; }
+    if (!val('subject'))                 { setErr('subject', true); hasError = true; }
+    if (val('message').length < 20)      { setErr('message', true); hasError = true; }
+
+    if (hasError) {
+      feedbackErr.classList.add('visible');
+      feedbackErr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+
+    /* Build mailto */
+    var to      = 'admin@qector.store';
+    var subject = buildSubject();
+    var body    = buildBody();
+
+    var mailtoLink =
+      'mailto:' + to +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body='    + encodeURIComponent(body);
+
+    /* Open mailto */
+    var a = document.createElement('a');
+    a.href = mailtoLink;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    feedbackOk.classList.add('visible');
+    feedbackOk.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+</body>
+</html>
