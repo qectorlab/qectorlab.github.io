@@ -25,44 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
     link.href = href;
     link.textContent = label;
     item.appendChild(link);
-
     const anchor = navLinks.querySelector(`a[href="${afterHref}"]`);
-    if (anchor && anchor.parentElement) {
-      anchor.parentElement.insertAdjacentElement("afterend", item);
-    } else {
+    if (anchor && anchor.parentElement) anchor.parentElement.insertAdjacentElement("afterend", item);
+    else {
       const cta = navLinks.querySelector(".nav-cta");
       if (cta) navLinks.insertBefore(item, cta);
       else navLinks.appendChild(item);
     }
   };
 
-  const syncReleaseText = () => {
-    const replacements = [
-      ["Decoder v0.4.0 available", "Decoder v0.5.0 available"],
-      ["early-stage v0.4 R&D platform", "early-stage v0.5 R&D platform"],
-      ["832 tests collected: 829 passed / 2 skipped / 1 expected xfailed", "832 Python tests passed + 87 Rust tests passed"],
-      ["829 passed, 2 skipped, 1 expected xfailed", "832 passed, 0 skipped, 0 xfailed"],
-      ["The xfailed item is an expected test marker, not an unexplained failed release gate.", "The previous skips and expected xfail have been removed in the v0.5 validation report."],
-      ["33.7% lower observed LER at d=5", "34.8% lower observed LER at d=5"],
-      ["33.7% d=5 headline", "34.8% d=5 headline"],
-      ["33.7% lower LER at d=5", "34.8% lower LER at d=5"]
-    ];
-
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach((node) => {
-      let text = node.nodeValue;
-      replacements.forEach(([from, to]) => {
-        text = text.split(from).join(to);
-      });
-      node.nodeValue = text;
-    });
-  };
-
   applyOfficialLogo();
-  syncReleaseText();
+  ensureNavLink("installer.html", "Install", "decoder.html");
+  ensureNavLink("docs.html", "Docs", "installer.html");
+  ensureNavLink("about.html", "About", "commercial.html");
 
   let backdrop = document.querySelector(".mobile-backdrop");
   if (!backdrop) {
@@ -99,10 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
     hamburger.setAttribute("aria-controls", "qector-navigation");
   }
   if (navLinks) navLinks.id = "qector-navigation";
-
-  ensureNavLink("installer.html", "Install", "decoder.html");
-  ensureNavLink("docs.html", "Docs", "installer.html");
-  ensureNavLink("about.html", "About", "commercial.html");
 
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const href = link.getAttribute("href");
