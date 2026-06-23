@@ -32,7 +32,7 @@ Decoder repository: https://github.com/qectorlab/qector-decoder
 
 ## Installer status
 
-The website now documents the robust AIO installer for the decoder repository:
+The website documents the robust AIO installer for the decoder repository:
 
 ```bash
 git clone https://github.com/qectorlab/qector-decoder.git
@@ -41,7 +41,15 @@ cd qector-decoder
 python install.py --install-rust
 ```
 
-The installer is designed to handle missing Rust, Python version mismatch, thin checkout repair, Git Bash linker path cleanup, prebuilt wheel fallback, dev dependency installation, and pytest execution through the virtual environment.
+The installer handles missing Rust, Python version mismatch, thin checkout repair, Git Bash linker path cleanup, prebuilt wheel fallback, dev dependency installation, and pytest execution through the virtual environment.
+
+Verified Windows Git Bash path:
+
+- Python 3.11 selected automatically for the bundled cp311 wheel
+- `.venv` created successfully
+- QECTOR Decoder v3 0.4.0 installed from the compatible Windows wheel
+- dev and benchmark dependencies installed
+- pytest discovered 832 tests
 
 ## License
 
