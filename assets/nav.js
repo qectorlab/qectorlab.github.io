@@ -4,11 +4,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelector(".nav-links");
 
   const setNavState = () => {
-    if (nav) nav.classList.toggle("nav-scrolled", window.scrollY > 12);
+    if (nav) nav.classList.toggle("nav-scrolled", window.scrollY > 10);
+  };
+
+  const closeMenu = () => {
+    if (!hamburger || !navLinks) return;
+    navLinks.classList.remove("open");
+    hamburger.classList.remove("open");
+    hamburger.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("nav-open");
+  };
+
+  const openMenu = () => {
+    if (!hamburger || !navLinks) return;
+    navLinks.classList.add("open");
+    hamburger.classList.add("open");
+    hamburger.setAttribute("aria-expanded", "true");
+    document.body.classList.add("nav-open");
   };
 
   setNavState();
   window.addEventListener("scroll", setNavState, { passive: true });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) closeMenu();
+  });
 
   if (navLinks && !navLinks.querySelector('a[href="installer.html"]')) {
     const decoderLink = navLinks.querySelector('a[href="decoder.html"]');
@@ -22,18 +41,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (hamburger && navLinks) {
+    hamburger.setAttribute("aria-expanded", "false");
     hamburger.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("open");
-      hamburger.classList.toggle("open", isOpen);
-      hamburger.setAttribute("aria-expanded", String(isOpen));
+      navLinks.classList.contains("open") ? closeMenu() : openMenu();
     });
 
     navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        hamburger.classList.remove("open");
-        hamburger.setAttribute("aria-expanded", "false");
-      });
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!navLinks.classList.contains("open")) return;
+      if (nav && nav.contains(event.target)) return;
+      closeMenu();
     });
   }
 
