@@ -8,6 +8,16 @@ Official website: https://www.qector.store
 Official contact: admin@qector.store  
 Decoder repository: https://github.com/qectorlab/qector-decoder
 
+## Canonical repository
+
+The canonical decoder repository is:
+
+```text
+https://github.com/qectorlab/qector-decoder
+```
+
+This website, the installer commands, `Cargo.toml`, and `pyproject.toml` should all point to `qectorlab/qector-decoder`.
+
 ## Public pages
 
 - Home: https://www.qector.store/
@@ -24,11 +34,13 @@ Decoder repository: https://github.com/qectorlab/qector-decoder
 
 - 832 tests collected
 - 829 passed / 2 skipped / 1 xfailed
-- git 729282f
+- reference validation report build: git 729282f
 - d=15 LER parity vs PyMatching on tested workloads
 - 33.7% lower observed LER at d=5 with belief-matching in the headline run
 - CUDA/OpenCL bit-identical to CPU on tested batches
 - PyMatching remains the latency leader for exact MWPM
+
+The `729282f` value is the audited decoder report build reference. It is not meant to describe the latest website commit or the latest repository tip after documentation and packaging updates.
 
 ## Pricing position
 
