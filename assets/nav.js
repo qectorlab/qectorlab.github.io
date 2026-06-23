@@ -2,22 +2,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector(".nav");
   const hamburger = document.querySelector(".nav-hamburger");
   const navLinks = document.querySelector(".nav-links");
+  const current = window.location.pathname.split("/").pop() || "index.html";
 
-  if (!document.getElementById("qector-mobile-css")) {
-    const style = document.createElement("style");
-    style.id = "qector-mobile-css";
-    style.textContent = "@media(max-width:980px){.nav-hamburger{display:block}.hero-grid-layout{grid-template-columns:1fr!important}.product-split,.license-split,.arch-grid,.contact-grid,.footer-grid{grid-template-columns:1fr}.proof-grid,.pricing-grid,.decoder-matrix{grid-template-columns:1fr}.hero-actions,.product-actions{display:grid;grid-template-columns:1fr}.btn{width:100%;white-space:normal}.container{padding-left:1rem;padding-right:1rem}}";
-    document.head.appendChild(style);
+  let backdrop = document.querySelector(".mobile-backdrop");
+  if (!backdrop) {
+    backdrop = document.createElement("div");
+    backdrop.className = "mobile-backdrop";
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.appendChild(backdrop);
   }
 
   const setNavState = () => {
-    if (nav) nav.classList.toggle("nav-scrolled", window.scrollY > 10);
+    if (nav) nav.classList.toggle("nav-scrolled", window.scrollY > 8);
   };
 
   const closeMenu = () => {
     if (!hamburger || !navLinks) return;
     navLinks.classList.remove("open");
     hamburger.classList.remove("open");
+    backdrop.classList.remove("open");
     hamburger.setAttribute("aria-expanded", "false");
     document.body.classList.remove("nav-open");
   };
@@ -26,15 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!hamburger || !navLinks) return;
     navLinks.classList.add("open");
     hamburger.classList.add("open");
+    backdrop.classList.add("open");
     hamburger.setAttribute("aria-expanded", "true");
     document.body.classList.add("nav-open");
   };
 
-  setNavState();
-  window.addEventListener("scroll", setNavState, { passive: true });
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 980) closeMenu();
-  });
+  if (hamburger) {
+    hamburger.setAttribute("aria-expanded", "false");
+    hamburger.setAttribute("aria-controls", "qector-navigation");
+  }
+  if (navLinks) navLinks.id = "qector-navigation";
 
   if (navLinks && !navLinks.querySelector('a[href="installer.html"]')) {
     const decoderLink = navLinks.querySelector('a[href="decoder.html"]');
@@ -47,32 +51,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (hamburger && navLinks) {
-    hamburger.setAttribute("aria-expanded", "false");
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.contains("open") ? closeMenu() : openMenu();
-    });
-
-    navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeMenu);
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!navLinks.classList.contains("open")) return;
-      if (nav && nav.contains(event.target)) return;
-      closeMenu();
-    });
-  }
-
-  const current = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const href = link.getAttribute("href");
     if (href === current) link.classList.add("active");
+    link.addEventListener("click", closeMenu);
   });
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.contains("open") ? closeMenu() : openMenu();
+    });
+    backdrop.addEventListener("click", closeMenu);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 1040) closeMenu();
+    }, { passive: true });
+  }
+
+  setNavState();
+  window.addEventListener("scroll", setNavState, { passive: true });
 
   const form = document.getElementById("contactForm");
   if (form) {
