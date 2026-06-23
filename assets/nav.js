@@ -3,6 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.querySelector(".nav-hamburger");
   const navLinks = document.querySelector(".nav-links");
 
+  if (!document.getElementById("qector-mobile-css")) {
+    const style = document.createElement("style");
+    style.id = "qector-mobile-css";
+    style.textContent = "@media(max-width:980px){.nav-hamburger{display:block}.hero-grid-layout{grid-template-columns:1fr!important}.product-split,.license-split,.arch-grid,.contact-grid,.footer-grid{grid-template-columns:1fr}.proof-grid,.pricing-grid,.decoder-matrix{grid-template-columns:1fr}.hero-actions,.product-actions{display:grid;grid-template-columns:1fr}.btn{width:100%;white-space:normal}.container{padding-left:1rem;padding-right:1rem}}";
+    document.head.appendChild(style);
+  }
+
   const setNavState = () => {
     if (nav) nav.classList.toggle("nav-scrolled", window.scrollY > 10);
   };
