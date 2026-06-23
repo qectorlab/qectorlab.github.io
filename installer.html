@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Install QECTOR Decoder v0.5.0 from the official GitHub repository with the real PowerShell and Git Bash build commands.">
+  <meta name="description" content="Install QECTOR Decoder v0.5.0 from the official GitHub repository with the verified PowerShell and Git Bash build commands.">
   <link rel="canonical" href="https://www.qector.store/installer.html">
-  <meta property="og:title" content="QECTOR Installer | Real GitHub Install Command">
+  <meta property="og:title" content="QECTOR Installer | Verified GitHub Install Command">
   <meta property="og:description" content="Clone qectorlab/qector-decoder, create a venv, install maturin, build the Rust/Python extension, and verify QECTOR import.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.qector.store/installer.html">
   <meta property="og:image" content="https://www.qector.store/assets/QECTOR_logo.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <title>QECTOR Installer | Real GitHub Install Command</title>
+  <title>QECTOR Installer | Verified GitHub Install Command</title>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
 <body>
 <nav class="nav"><div class="container nav-inner"><a href="index.html" class="nav-logo" aria-label="QECTOR official logo"><img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo"></a><button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="decoder.html">Decoder</a></li><li><a class="active" href="installer.html">Install</a></li><li><a href="docs.html">Docs</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li class="nav-cta"><a href="commercial.html">Get License</a></li></ul></div></nav>
 
-<section class="hero"><div class="container hero-grid-layout"><div class="hero-copy"><div class="hero-eyebrow"><span class="badge badge-green"><span class="glow-dot"></span> Real repo command</span><span class="badge badge-cyan">PowerShell first</span><span class="badge badge-muted">v0.5.0</span></div><h1 class="hero-title">Install QECTOR from the repository that actually exists.</h1><p class="hero-subtitle">The public GitHub repository does not currently ship <code>install.py</code>. Use the real build path below: clone, create a virtual environment, install maturin, build the Rust/Python extension, then verify the package import.</p><div class="hero-actions"><a href="#powershell" class="btn btn-primary btn-lg">PowerShell Command</a><a href="#gitbash" class="btn btn-secondary btn-lg">Git Bash Command</a><a href="#gpu" class="btn btn-gold btn-lg">Optional GPU Build</a></div></div><div class="hero-visual" style="padding:1.5rem;background:rgba(10,16,31,.82);border-radius:24px;border:1px solid rgba(0,213,255,.22);box-shadow:0 28px 80px rgba(0,0,0,.36);"><div class="section-label">PowerShell</div><pre style="margin:0;"><code>git clone https://github.com/qectorlab/qector-decoder.git
+<section class="hero"><div class="container hero-grid-layout"><div class="hero-copy"><div class="hero-eyebrow"><span class="badge badge-green"><span class="glow-dot"></span> Verified PowerShell install</span><span class="badge badge-cyan">Windows tested</span><span class="badge badge-muted">v0.5.0</span></div><h1 class="hero-title">Install QECTOR from the real GitHub repository.</h1><p class="hero-subtitle">The public repository does not currently ship <code>install.py</code>. Use the verified source-build path below: clone, create a virtual environment, install maturin, build the Rust/Python extension, then confirm the package import prints <code>QECTOR OK</code>.</p><div class="hero-actions"><a href="#powershell" class="btn btn-primary btn-lg">PowerShell Command</a><a href="#gitbash" class="btn btn-secondary btn-lg">Git Bash Command</a><a href="#gpu" class="btn btn-gold btn-lg">Optional GPU Build</a></div></div><div class="hero-visual" style="padding:1.5rem;background:rgba(10,16,31,.82);border-radius:24px;border:1px solid rgba(0,213,255,.22);box-shadow:0 28px 80px rgba(0,0,0,.36);"><div class="section-label">PowerShell</div><pre style="margin:0;"><code>git clone https://github.com/qectorlab/qector-decoder.git
 cd qector-decoder
 py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip maturin
@@ -29,7 +29,7 @@ $env:PYO3_PYTHON = (Resolve-Path .\.venv\Scripts\python.exe).Path
 .\.venv\Scripts\python.exe -m maturin develop --release --no-default-features
 .\.venv\Scripts\python.exe -c "from qector_decoder_v3 import UnionFindDecoder; print('QECTOR OK')"</code></pre></div></div></section>
 
-<section id="powershell"><div class="container"><div class="section-label">Windows PowerShell</div><h2>Official public install command</h2><p style="max-width:780px;margin-bottom:1.5rem;">Run this from PowerShell. Rust must be installed first from <a href="https://rustup.rs/">rustup.rs</a>. This command avoids the missing <code>install.py</code> problem and builds the CPU-safe extension path.</p><pre><code>git clone https://github.com/qectorlab/qector-decoder.git
+<section id="powershell"><div class="container"><div class="section-label">Windows PowerShell</div><h2>Official public install command</h2><p style="max-width:820px;margin-bottom:1.5rem;">Run this from PowerShell. Rust must be installed first from <a href="https://rustup.rs/">rustup.rs</a>. This command was verified on a second Windows PC from a fresh clone: the package built as <code>qector-decoder-v3 0.5.0</code> and the final import check printed <code>QECTOR OK</code>.</p><pre><code>git clone https://github.com/qectorlab/qector-decoder.git
 cd qector-decoder
 
 py -3.11 -m venv .venv
@@ -52,7 +52,12 @@ python -m maturin develop --release --no-default-features
 
 python -c "from qector_decoder_v3 import UnionFindDecoder; print('QECTOR OK')"</code></pre></div></section>
 
-<section><div class="container"><div class="section-label">Validation</div><h2>After install</h2><p style="max-width:780px;margin-bottom:1.5rem;">Run the full test suite only after the import check passes.</p><pre><code>.\.venv\Scripts\python.exe -m pip install "pytest>=7" "hypothesis>=6" "fastapi>=0.110" "uvicorn>=0.29" "httpx>=0.27"
+<section><div class="container"><div class="section-label">Expected successful result</div><h2>What success looks like</h2><p style="max-width:820px;margin-bottom:1.5rem;">A successful Windows source build ends with maturin installing <code>qector-decoder-v3-0.5.0</code>, followed by the import check printing <code>QECTOR OK</code>. Messages such as <code>Ignoring pytest: markers 'extra == "dev"' don't match your environment</code> are normal for the base install because optional test and benchmark extras are not installed by the public CPU-safe command.</p><pre><code>Finished `release` profile [optimized]
+Built wheel for CPython 3.11
+Installed qector-decoder-v3-0.5.0
+QECTOR OK</code></pre></div></section>
+
+<section><div class="container"><div class="section-label">Validation</div><h2>Optional test suite</h2><p style="max-width:780px;margin-bottom:1.5rem;">Run the full test suite only after the import check passes. These extras are for development validation, not the minimal public install.</p><pre><code>.\.venv\Scripts\python.exe -m pip install "pytest>=7" "hypothesis>=6" "fastapi>=0.110" "uvicorn>=0.29" "httpx>=0.27"
 .\.venv\Scripts\python.exe -m pytest python/tests -q --tb=short</code></pre></div></section>
 
 <section id="gpu"><div class="container"><div class="section-label">Optional GPU build</div><h2>Build GPU features only when the local machine is ready</h2><p style="max-width:820px;margin-bottom:1.5rem;">The safe public command uses <code>--no-default-features</code>. CUDA/OpenCL builds are hardware/toolchain-specific and should be run separately.</p><pre><code># PowerShell, CUDA only
