@@ -16,7 +16,7 @@ The canonical decoder repository is:
 https://github.com/qectorlab/qector-decoder
 ```
 
-This website, the installer commands, `Cargo.toml`, and `pyproject.toml` should all point to `qectorlab/qector-decoder`.
+This website, repository metadata, and public install commands must all point to `qectorlab/qector-decoder`.
 
 ## Public pages
 
@@ -34,11 +34,13 @@ This website, the installer commands, `Cargo.toml`, and `pyproject.toml` should 
 
 ## Current public validation
 
-- 832 tests collected
-- 829 passed / 2 skipped / 1 expected xfailed
+- QECTOR Decoder v0.5.0
+- 832 Python tests passed
+- 87 Rust unit tests passed
+- 0 skipped / 0 xfailed / 0 failed in the local validation report
 - reference validation report build: git 729282f
 - d=15 LER parity vs PyMatching on tested workloads
-- 33.7% lower observed LER at d=5 with belief-matching in the headline run
+- 34.8% lower observed LER at d=5 with belief-matching in the selected 3,000-shot correlated workload
 - CUDA/OpenCL bit-identical to CPU on tested batches
 - PyMatching remains the latency leader for exact MWPM
 
@@ -46,9 +48,7 @@ The `729282f` value is the audited decoder report build reference. It is not mea
 
 ## Pricing position
 
-The public pricing has been repriced to match the current product stage and competitive reality.
-
-QECTOR is positioned as a promising v0.4 Rust/Python QEC R&D platform, not a mature real-time hardware QEC stack.
+QECTOR is positioned as a v0.5 Rust/Python QEC R&D platform, not a mature real-time hardware QEC stack.
 
 Current public tiers:
 
@@ -61,45 +61,52 @@ Current public tiers:
 - OEM / Embedded: Contact-only partner validation
 - Strategic Partnership: Custom, no public exclusive-price floor
 
-The previous public $2M+ strategic floor was removed because it was not credible without hardware co-design partnerships, patent/IP leverage, or enterprise proof.
+## Website conversion fixes
 
-## Homepage conversion fixes
+The website directly addresses the main conversion gaps:
 
-The homepage now directly addresses the main website gaps:
-
-- Visible pricing on the landing page, not only buried under Pricing
+- Visible pricing on the landing page
 - Links to benchmark evidence and reproduction workflow
 - Docs hub for install, API, examples, benchmarks, and commercial evaluation
 - About page with Guillaume Lessard / iD01t Productions identity
 - Workbench positioned as planned reproducibility product, not shipped product
 - Clear statement that QECTOR is not a fastest-PyMatching or real-time hardware claim
+- Correct install command based on the actual live repository contents
 
 ## Installer status
 
-The website documents the robust AIO installer for the decoder repository:
+The live decoder repository currently does **not** ship `install.py`. The website therefore documents the real source build path.
+
+PowerShell:
+
+```powershell
+git clone https://github.com/qectorlab/qector-decoder.git
+cd qector-decoder
+
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip maturin
+
+$env:PYO3_PYTHON = (Resolve-Path .\.venv\Scripts\python.exe).Path
+.\.venv\Scripts\python.exe -m maturin develop --release --no-default-features
+
+.\.venv\Scripts\python.exe -c "from qector_decoder_v3 import UnionFindDecoder; print('QECTOR OK')"
+```
+
+Git Bash:
 
 ```bash
 git clone https://github.com/qectorlab/qector-decoder.git
 cd qector-decoder
 
-python install.py
+python -m venv .venv
+source .venv/Scripts/activate
+python -m pip install --upgrade pip maturin
+
+export PYO3_PYTHON="$(pwd -W)/.venv/Scripts/python.exe"
+python -m maturin develop --release --no-default-features
+
+python -c "from qector_decoder_v3 import UnionFindDecoder; print('QECTOR OK')"
 ```
-
-Source build path:
-
-```bash
-python install.py --install-rust --build-from-source
-```
-
-The installer handles Python version selection, `.venv` creation, compatible wheel installation, dev dependency installation, Rust source builds when requested, Git Bash linker path cleanup, and pytest execution through the virtual environment.
-
-Latest installer fix:
-
-- Fixes local source shadowing of the installed wheel during tests
-- Copies the compiled native extension into `python/qector_decoder_v3/`
-- Verifies regular installed import
-- Verifies `PYTHONPATH=python` local source import
-- Targets the 832 item pytest suite
 
 ## License
 
