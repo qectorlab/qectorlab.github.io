@@ -3,194 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Workbench — upcoming local fullstack app for QEC benchmarking, circuit loading, decoder comparison, artifact export, and reproducible technical reports.">
-  <title>QECTOR Workbench — Fullstack QEC Benchmarking App</title>
+  <meta name="description" content="QECTOR Workbench is the upcoming local fullstack app for QEC benchmarking, circuit loading, decoder comparison, artifact export, backend diagnostics, and reproducible technical reports.">
+  <link rel="canonical" href="https://www.qector.store/workbench.html">
+  <meta property="og:title" content="QECTOR Workbench — Upcoming Fullstack QEC Benchmarking App">
+  <meta property="og:description" content="Local app for loading circuits, running decoder comparisons, exporting artifacts, validating hashes, and generating reproducible QEC benchmark reports.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.qector.store/workbench.html">
+  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>QECTOR Workbench — Upcoming Fullstack QEC Benchmarking App</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
-  <style>
-    .roadmap { display: flex; flex-direction: column; gap: 0; }
-    .roadmap-item { display: flex; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
-    .roadmap-item:last-child { border-bottom: none; }
-    .roadmap-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); min-width: 28px; margin-top: 0.15rem; }
-    .roadmap-content h4 { margin-bottom: 0.25rem; font-size: 0.95rem; }
-    .roadmap-content p { font-size: 0.85rem; }
-
-    .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .audience-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
-    .audience-card h4 { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--cyan); }
-    .audience-card p { font-size: 0.82rem; }
-  </style>
+  <style>.roadmap{display:flex;flex-direction:column;gap:0}.roadmap-item{display:flex;gap:1.5rem;padding:1.25rem 0;border-bottom:1px solid var(--border);align-items:flex-start}.roadmap-item:last-child{border-bottom:none}.roadmap-num{font-family:var(--font-mono);font-size:.75rem;color:var(--muted);min-width:28px;margin-top:.15rem}.roadmap-content h4{margin-bottom:.25rem;font-size:.95rem}.roadmap-content p{font-size:.85rem}.audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}.audience-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1.25rem}</style>
 </head>
 <body>
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="32" height="32" alt="">QECT<span>OR</span></a>
-    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
-      <li><a href="decoder.html">Decoder</a></li>
-      <li><a href="workbench.html">Workbench</a></li>
-      <li><a href="benchmarks.html">Benchmarks</a></li>
-      <li><a href="license.html">License</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="commercial.html">Commercial</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li class="nav-cta"><a href="commercial.html">Get License</a></li>
-    </ul>
-  </div>
-</nav>
+<nav class="nav"><div class="container nav-inner"><a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="32" height="32" alt="QECTOR">QECT<span>OR</span></a><button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="decoder.html">Decoder</a></li><li><a class="active" href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li><li><a href="contact.html">Contact</a></li><li class="nav-cta"><a href="contact.html">Early Access</a></li></ul></div></nav>
 
-<section class="page-hero">
-  <div class="container">
-    <div class="section-label">QECTOR Workbench</div>
-    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
-      <h1>Fullstack QEC Benchmarking and Validation App</h1>
-      <span class="badge badge-blue">Coming Soon</span>
-    </div>
-    <p>Load circuits, run decoder comparisons, export artifacts, and generate reproducible technical reports — all from one local interface. No cloud required. No vendor lock-in.</p>
-    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem;">
-      <a href="contact.html" class="btn btn-primary">Join Early Access</a>
-      <a href="commercial.html" class="btn btn-gold">Request Commercial Demo</a>
-    </div>
-  </div>
-</section>
+<section class="page-hero"><div class="container"><div class="section-label">Coming Soon</div><h1>QECTOR Workbench</h1><p>A local fullstack QEC benchmarking and validation app for loading circuits, running decoder comparisons, exporting artifacts, verifying hashes, and generating reproducible technical reports from one interface.</p><div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem;"><a class="btn btn-primary" href="contact.html">Join Early Access</a><a class="btn btn-secondary" href="decoder.html">View Decoder</a><a class="btn btn-gold" href="commercial.html">Request Commercial Demo</a></div></div></section>
 
-<!-- WHAT IT DOES -->
-<section>
-  <div class="container">
-    <div class="section-label">What it does</div>
-    <h2 style="margin-bottom:0.75rem;">From circuit to reproducible report in one local session</h2>
-    <p style="margin-bottom:2.5rem;max-width:660px;">QECTOR Workbench brings the decoder stack into a local fullstack application. Load your Stim circuits or Detector Error Models, run benchmark jobs across decoder backends, and export artifacts with verified hashes — all without sending data to a cloud service.</p>
+<section><div class="container"><div class="section-label">Purpose</div><h2>From decoder library to validation workstation</h2><p style="max-width:760px;margin-bottom:2rem;">The decoder library already provides the engine and evidence pipeline. Workbench packages the workflow into a local app: load circuits, run decoders, compare results, capture environments, export artifacts, and generate reproducible reports without sending sensitive work to a cloud service.</p><div class="grid-3"><div class="card"><h3>Load</h3><p>Import Stim circuits, Detector Error Models, benchmark configurations, and artifact bundles.</p></div><div class="card"><h3>Run</h3><p>Execute QECTOR, PyMatching-compatible comparisons, belief-matching, BP-OSD experiments, and backend diagnostics.</p></div><div class="card"><h3>Prove</h3><p>Export CSV/JSON artifacts, SHA-256 hashes, environment snapshots, and PDF reports from real benchmark data.</p></div></div></div></section>
 
-    <div class="grid-3">
-      <div class="card card-cyan">
-        <h4 style="color:var(--cyan);margin-bottom:0.5rem;">Load and parse</h4>
-        <p style="font-size:0.875rem;">Load <code>.stim</code> circuit files and <code>.dem</code> Detector Error Model files directly. Workbench inspects the circuit structure, validates it, and prepares it for benchmark runs.</p>
-      </div>
-      <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Run comparisons</h4>
-        <p style="font-size:0.875rem;">Run QECTOR Blossom vs PyMatching head-to-head, belief-matching accuracy benchmarks, and BP-OSD experiments for qLDPC codes — all from the same interface.</p>
-      </div>
-      <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Export artifacts</h4>
-        <p style="font-size:0.875rem;">Export results as PDF reports, CSV tables, and JSON artifacts. Every artifact captures the environment snapshot and a SHA-256 hash for reproducibility verification.</p>
-      </div>
-      <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Backend diagnostics</h4>
-        <p style="font-size:0.875rem;">Inspect CPU, CUDA, and OpenCL backend status. Run calibration to find the actual CPU↔GPU crossover on your hardware before starting batch jobs.</p>
-      </div>
-      <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Visualize results</h4>
-        <p style="font-size:0.875rem;">Charts built from real artifact data — logical error rate curves, latency percentiles, threshold crossings, memory usage, and scaling behavior across distances.</p>
-      </div>
-      <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Job management</h4>
-        <p style="font-size:0.875rem;">FIFO job queue with cancel support. View live progress on running benchmark jobs. Error logs with full stack traces. Update notes and release history.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<section><div class="container"><div class="section-label">Planned Features</div><h2 style="margin-bottom:2rem;">Local QEC benchmark workflow</h2><div class="grid-2"><ul class="feature-list"><li>Load .stim circuits and .dem files</li><li>Run QECTOR vs PyMatching comparisons</li><li>Run belief-matching accuracy benchmarks</li><li>Run BP-OSD / LDPC experiments</li><li>Generate PDF benchmark reports</li><li>Export CSV / JSON artifacts</li></ul><ul class="feature-list"><li>Capture environment and dependency versions</li><li>Verify SHA-256 artifact hashes</li><li>Run CPU / CUDA / OpenCL diagnostics</li><li>Visualize LER, latency, threshold, memory, and scaling</li><li>Job queue with cancel support</li><li>Local-first workflow, no cloud required by default</li></ul></div></div></section>
 
-<!-- WHO IT'S FOR -->
-<section>
-  <div class="container">
-    <div class="section-label">Who it's for</div>
-    <h2 style="margin-bottom:1.5rem;">Researchers, developers, and commercial teams</h2>
-    <div class="audience-grid">
-      <div class="audience-card">
-        <h4>QEC Researchers</h4>
-        <p>Run reproducible benchmark suites without scripting infrastructure. Compare decoder performance on your own circuits with verified artifacts you can attach to papers.</p>
-      </div>
-      <div class="audience-card">
-        <h4>Quantum Software Developers</h4>
-        <p>Validate decoder integration before deployment. Compare QECTOR to PyMatching on your specific circuits and export evidence for technical review.</p>
-      </div>
-      <div class="audience-card">
-        <h4>Commercial QEC Teams</h4>
-        <p>Generate reproducible benchmark reports for due-diligence, investor validation, and internal documentation — without building and maintaining a custom benchmarking stack.</p>
-      </div>
-      <div class="audience-card">
-        <h4>Enterprise Evaluation</h4>
-        <p>Run QECTOR in a local, air-gapped environment. No data sent to cloud services. Full artifact provenance for compliance and IP-sensitive workflows.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<section><div class="container"><div class="section-label">Audience</div><h2 style="margin-bottom:2rem;">Who Workbench is for</h2><div class="audience-grid"><div class="audience-card"><h4>Researchers</h4><p>Reproduce decoder experiments, inspect artifacts, and generate reports with consistent metadata.</p></div><div class="audience-card"><h4>Labs</h4><p>Run controlled benchmark workflows across code families, seeds, and noise settings.</p></div><div class="audience-card"><h4>Startups</h4><p>Evaluate QECTOR commercially before deeper integration or licensing.</p></div><div class="audience-card"><h4>Hardware teams</h4><p>Compare decoder behavior and backend performance against internal QEC workloads.</p></div></div></div></section>
 
-<!-- FEATURE ROADMAP -->
-<section>
-  <div class="container">
-    <div class="section-label">Roadmap</div>
-    <h2 style="margin-bottom:1.5rem;">Feature roadmap</h2>
-    <div class="grid-2" style="gap:2rem;">
-      <div>
-        <h4 style="color:var(--green);margin-bottom:1rem;">Core benchmarking</h4>
-        <div class="roadmap">
-          <div class="roadmap-item"><div class="roadmap-num">01</div><div class="roadmap-content"><h4>Load .stim and .dem files</h4><p>Parse Stim circuits and Detector Error Models with full validation and structure preview.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">02</div><div class="roadmap-content"><h4>QECTOR vs PyMatching comparison</h4><p>Head-to-head LER and latency benchmarks on the same circuit, same shots, same noise model.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">03</div><div class="roadmap-content"><h4>Belief-matching benchmarks</h4><p>Run belief-matching accuracy benchmarks against plain MWPM on correlated circuit-level noise.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">04</div><div class="roadmap-content"><h4>BP-OSD / qLDPC experiments</h4><p>Load bivariate-bicycle, hypergraph-product, and bicycle codes. Run BP-OSD and compare to ldpc reference.</p></div></div>
-        </div>
-      </div>
-      <div>
-        <h4 style="color:var(--cyan);margin-bottom:1rem;">Artifacts and reporting</h4>
-        <div class="roadmap">
-          <div class="roadmap-item"><div class="roadmap-num">05</div><div class="roadmap-content"><h4>PDF benchmark reports</h4><p>Generate technical PDF reports with charts built from real artifact data — no fabricated figures.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">06</div><div class="roadmap-content"><h4>CSV / JSON artifact export</h4><p>Export all results as CSV tables and JSON artifacts with environment snapshot and SHA-256 hashes.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">07</div><div class="roadmap-content"><h4>Environment and version capture</h4><p>Every run stamps Python, Stim, PyMatching, QECTOR, git commit, CPU, and OS versions.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">08</div><div class="roadmap-content"><h4>SHA-256 artifact verification</h4><p>Verify that a benchmark artifact has not been modified since generation. Chain of custody for reproducibility.</p></div></div>
-        </div>
-      </div>
-      <div>
-        <h4 style="color:var(--gold);margin-bottom:1rem;">Backend and diagnostics</h4>
-        <div class="roadmap">
-          <div class="roadmap-item"><div class="roadmap-num">09</div><div class="roadmap-content"><h4>CPU / CUDA / OpenCL diagnostics</h4><p>Display backend status, available GPU devices, compute capability, and driver versions.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">10</div><div class="roadmap-content"><h4>AutoDecoder calibration UI</h4><p>Run calibration interactively to find the CPU↔GPU crossover on your hardware before batch runs.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">11</div><div class="roadmap-content"><h4>GPU resilience monitoring</h4><p>Display consecutive failures, total failures, degraded mode status, and recovery events in real time.</p></div></div>
-        </div>
-      </div>
-      <div>
-        <h4 style="color:var(--blue);margin-bottom:1rem;">Visualization</h4>
-        <div class="roadmap">
-          <div class="roadmap-item"><div class="roadmap-num">12</div><div class="roadmap-content"><h4>Logical error rate curves</h4><p>LER vs noise rate across distances. Threshold crossing visualization.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">13</div><div class="roadmap-content"><h4>Latency percentiles</h4><p>p50 / p90 / p95 / p99 latency charts. Hot-path vs cold-path split.</p></div></div>
-          <div class="roadmap-item"><div class="roadmap-num">14</div><div class="roadmap-content"><h4>Memory and scaling</h4><p>Peak memory usage and throughput scaling across distances and batch sizes.</p></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section><div class="container"><div class="section-label">Roadmap</div><h2>Release path</h2><div class="card" style="margin-top:1.5rem;"><div class="roadmap"><div class="roadmap-item"><div class="roadmap-num">01</div><div class="roadmap-content"><h4>Headless backend</h4><p>Benchmark execution, cancellation, environment capture, export paths, and backend detection.</p></div></div><div class="roadmap-item"><div class="roadmap-num">02</div><div class="roadmap-content"><h4>Local interface</h4><p>Project dashboard, circuit loader, decoder selector, charts, artifact browser, and report export.</p></div></div><div class="roadmap-item"><div class="roadmap-num">03</div><div class="roadmap-content"><h4>Commercial alpha</h4><p>Private early-access build for serious commercial evaluators and labs under license terms.</p></div></div><div class="roadmap-item"><div class="roadmap-num">04</div><div class="roadmap-content"><h4>Public release</h4><p>Release only after a working build, docs, examples, support flow, and validated artifact exports exist.</p></div></div></div></div></div></section>
 
-<!-- EARLY ACCESS -->
-<section style="background:var(--panel);border-top:1px solid var(--border);">
-  <div class="container" style="padding:3rem 1.5rem;">
-    <div class="section-label" style="justify-content:center;text-align:center;">Early Access</div>
-    <h2 style="text-align:center;margin-bottom:0.75rem;">Get notified when Workbench launches</h2>
-    <p style="text-align:center;max-width:520px;margin:0 auto 2rem;">Early access will be offered to selected research teams and commercial partners. If your team has a specific use case that requires local QEC benchmarking infrastructure, reach out now.</p>
-    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-      <a href="contact.html" class="btn btn-primary btn-lg">Join Early Access</a>
-      <a href="commercial.html" class="btn btn-gold btn-lg">Commercial Demo Request</a>
-    </div>
-  </div>
-</section>
+<section><div class="container"><div class="section-label">Important Status</div><h2>Workbench is not released yet</h2><div class="notice warn" style="margin-top:1.5rem;">QECTOR Workbench is an upcoming fullstack product. Public pages must not describe it as shipped until a real public build exists. Early-access and demo requests go through admin@qector.store.</div><div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap;"><a class="btn btn-primary" href="contact.html">Join Early Access</a><a class="btn btn-secondary" href="mailto:admin@qector.store">Email admin@qector.store</a></div></div></section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;"><img src="assets/logo.svg" width="28" height="28" alt="">QECTOR</a>
-        <p>Source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows.</p>
-      </div>
-      <div class="footer-col"><h4>Product</h4><ul><li><a href="decoder.html">Decoder</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li></ul></div>
-      <div class="footer-col"><h4>Contact</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="mailto:admin@qector.store">admin@qector.store</a></li></ul></div>
-    </div>
-    <div class="footer-bottom">
-      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
-      <span>QECTOR is source-available, not open-source.</span>
-    </div>
-  </div>
-</footer>
-<script src="assets/nav.js"></script>
+<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECT<span>OR</span></a><p>Source-available quantum error correction decoder platform for reproducible benchmarking and commercial QEC workflows.</p></div><div class="footer-col"><h4>Product</h4><ul><li><a href="decoder.html">Decoder</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li></ul></div><div class="footer-col"><h4>Commercial</h4><ul><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:admin@qector.store">admin@qector.store</a></li><li><a href="https://github.com/qectorlab/qector-decoder">GitHub</a></li></ul></div></div><div class="footer-bottom"><span>© 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span><span>Workbench is upcoming.</span></div></div></footer><script src="assets/nav.js"></script>
 </body>
 </html>
