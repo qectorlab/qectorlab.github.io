@@ -1,30 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="QECTOR">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" role="img" aria-label="QECTOR">
   <defs>
-    <linearGradient id="g" x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#9BF4FF"/>
-      <stop offset="0.44" stop-color="#00D5FF"/>
-      <stop offset="1" stop-color="#2F7BFF"/>
+    <linearGradient id="ring" x1="12" y1="10" x2="84" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8FDFF"/>
+      <stop offset="0.38" stop-color="#00D5FF"/>
+      <stop offset="0.78" stop-color="#367DFF"/>
+      <stop offset="1" stop-color="#9B7CFF"/>
     </linearGradient>
-    <radialGradient id="r" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(22 15) rotate(47) scale(58)">
-      <stop stop-color="#00D5FF" stop-opacity="0.42"/>
-      <stop offset="1" stop-color="#00D5FF" stop-opacity="0"/>
+    <linearGradient id="tail" x1="60" y1="60" x2="86" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE6A6"/>
+      <stop offset="1" stop-color="#FFB020"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30 22) rotate(52) scale(74)">
+      <stop stop-color="#00D5FF" stop-opacity="0.48"/>
+      <stop offset="0.55" stop-color="#1E63FF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#020716" stop-opacity="0"/>
     </radialGradient>
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="2.4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
-  <rect x="3" y="3" width="58" height="58" rx="17" fill="#07101F"/>
-  <rect x="3" y="3" width="58" height="58" rx="17" fill="url(#r)"/>
-  <rect x="3.75" y="3.75" width="56.5" height="56.5" rx="16.25" stroke="url(#g)" stroke-opacity="0.54" stroke-width="1.5"/>
-  <path d="M32 12.5C21.23 12.5 12.5 21.23 12.5 32S21.23 51.5 32 51.5c4.4 0 8.45-1.46 11.72-3.92" stroke="url(#g)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
-  <path d="M42.5 42.5 52 52" stroke="url(#g)" stroke-width="4.4" stroke-linecap="round" filter="url(#glow)"/>
-  <path d="M21.5 32h21M32 21.5v21" stroke="#9BF4FF" stroke-opacity="0.54" stroke-width="1.6" stroke-linecap="round"/>
-  <circle cx="32" cy="21.5" r="2.25" fill="#9BF4FF"/>
-  <circle cx="42.5" cy="32" r="2.25" fill="#00D5FF"/>
-  <circle cx="32" cy="42.5" r="2.25" fill="#2F7BFF"/>
-  <circle cx="21.5" cy="32" r="2.25" fill="#00D5FF"/>
+  <rect x="3" y="3" width="90" height="90" rx="25" fill="#030713"/>
+  <rect x="3" y="3" width="90" height="90" rx="25" fill="url(#core)"/>
+  <rect x="4.5" y="4.5" width="87" height="87" rx="23.5" stroke="url(#ring)" stroke-opacity="0.7" stroke-width="3"/>
+  <path d="M48 20C32.54 20 20 32.54 20 48s12.54 28 28 28c6.05 0 11.65-1.92 16.23-5.18" stroke="url(#ring)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M63.5 63.5 82 82" stroke="url(#tail)" stroke-width="8.5" stroke-linecap="round"/>
+  <path d="M30 48h36M48 30v36" stroke="#C9FAFF" stroke-opacity="0.58" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M35.5 35.5 60.5 60.5M60.5 35.5 35.5 60.5" stroke="#7FB8FF" stroke-opacity="0.32" stroke-width="1.7" stroke-linecap="round"/>
+  <circle cx="48" cy="30" r="3.6" fill="#D9FBFF"/>
+  <circle cx="66" cy="48" r="3.6" fill="#00D5FF"/>
+  <circle cx="48" cy="66" r="3.6" fill="#367DFF"/>
+  <circle cx="30" cy="48" r="3.6" fill="#00D5FF"/>
+  <circle cx="48" cy="48" r="4.2" fill="#FFCF70"/>
 </svg>
