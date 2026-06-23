@@ -18,6 +18,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  const ensureNavLink = (href, label, afterHref) => {
+    if (!navLinks || navLinks.querySelector(`a[href="${href}"]`)) return;
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = href;
+    link.textContent = label;
+    item.appendChild(link);
+
+    const anchor = navLinks.querySelector(`a[href="${afterHref}"]`);
+    if (anchor && anchor.parentElement) {
+      anchor.parentElement.insertAdjacentElement("afterend", item);
+    } else {
+      const cta = navLinks.querySelector(".nav-cta");
+      if (cta) navLinks.insertBefore(item, cta);
+      else navLinks.appendChild(item);
+    }
+  };
+
   applyOfficialLogo();
 
   let backdrop = document.querySelector(".mobile-backdrop");
@@ -56,19 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (navLinks) navLinks.id = "qector-navigation";
 
-  if (navLinks && !navLinks.querySelector('a[href="installer.html"]')) {
-    const decoderLink = navLinks.querySelector('a[href="decoder.html"]');
-    const item = document.createElement("li");
-    const installLink = document.createElement("a");
-    installLink.href = "installer.html";
-    installLink.textContent = "Install";
-    item.appendChild(installLink);
-    if (decoderLink && decoderLink.parentElement) {
-      decoderLink.parentElement.insertAdjacentElement("afterend", item);
-    } else {
-      navLinks.insertBefore(item, navLinks.firstChild);
-    }
-  }
+  ensureNavLink("installer.html", "Install", "decoder.html");
+  ensureNavLink("docs.html", "Docs", "installer.html");
+  ensureNavLink("about.html", "About", "commercial.html");
 
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const href = link.getAttribute("href");
