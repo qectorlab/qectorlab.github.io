@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   applyOfficialLogo();
   ensureNavLink("installer.html", "Install", "decoder.html");
   ensureNavLink("docs.html", "Docs", "installer.html");
+  ensureNavLink("technical-reference.html", "Tech", "docs.html");
   ensureNavLink("about.html", "About", "commercial.html");
 
   let backdrop = document.querySelector(".mobile-backdrop");
