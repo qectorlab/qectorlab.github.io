@@ -30,6 +30,25 @@ Decoder repository: https://github.com/qectorlab/qector-decoder
 - CUDA/OpenCL bit-identical to CPU on tested batches
 - PyMatching remains the latency leader for exact MWPM
 
+## Pricing position
+
+The public pricing has been repriced to match the current product stage and competitive reality.
+
+QECTOR is positioned as a promising v0.4 Rust/Python QEC R&D platform, not a mature real-time hardware QEC stack.
+
+Current public tiers:
+
+- Non-commercial: Free
+- Commercial Evaluation Pilot: $1,500 / 90 days
+- Startup Commercial: $3,500 / year
+- Professional / Lab: $15,000 / year
+- Enterprise R&D: $35,000+ / year
+- SaaS / Hosted API: $75,000+ / year, custom review
+- OEM / Embedded: $125,000+ / year, custom review
+- Strategic Partnership: Custom, no public exclusive-price floor
+
+The previous public $2M+ strategic floor was removed because it was not credible without hardware co-design partnerships, patent/IP leverage, or enterprise proof.
+
 ## Installer status
 
 The website documents the robust AIO installer for the decoder repository:
