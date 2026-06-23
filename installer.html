@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Install QECTOR Decoder with the robust AIO installer for Git Bash and Windows. Handles Rust, Python 3.11 wheel fallback, thin checkout repair, dev dependencies, and pytest.">
+  <link rel="canonical" href="https://www.qector.store/installer.html">
+  <meta property="og:title" content="QECTOR Installer | Robust Git Bash and Windows Setup">
+  <meta property="og:description" content="Install QECTOR Decoder with the robust AIO installer for Git Bash and Windows. Handles Rust, Python 3.11 wheel fallback, thin checkout repair, dev dependencies, and pytest.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.qector.store/installer.html">
+  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>QECTOR Installer | Robust Git Bash and Windows Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="32" height="32" alt="QECTOR">QECT<span>OR</span></a>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li><li><a href="decoder.html">Decoder</a></li><li><a class="active" href="installer.html">Install</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li><li><a href="contact.html">Contact</a></li><li class="nav-cta"><a href="commercial.html">Get License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-grid-layout">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">
+        <span class="badge badge-green"><span class="glow-dot"></span> Robust AIO Installer</span>
+        <span class="badge badge-cyan">Git Bash Ready</span>
+        <span class="badge badge-muted">Windows Safe Path</span>
+      </div>
+      <h1 class="hero-title">Install QECTOR without fighting Rust, Python, or Git Bash.</h1>
+      <p class="hero-subtitle">Use the installer instead of the fragile manual sequence. It handles missing Rust, compatible Python selection, thin checkout repair, Git Bash linker cleanup, wheel fallback, dev dependencies, and pytest through the virtual environment.</p>
+      <div class="hero-actions">
+        <a href="#gitbash" class="btn btn-primary btn-lg">Git Bash Command</a>
+        <a href="decoder.html" class="btn btn-secondary btn-lg">Decoder Details</a>
+      </div>
+    </div>
+    <div class="hero-visual" style="padding:1.5rem;background:rgba(10,16,31,.82);border-radius:24px;border:1px solid rgba(0,213,255,.22);box-shadow:0 28px 80px rgba(0,0,0,.36);">
+      <pre style="margin:0;"><code>git clone https://github.com/qectorlab/qector-decoder.git
+cd qector-decoder
+
+python install.py --install-rust</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="gitbash">
+  <div class="container">
+    <div class="section-label">Git Bash</div>
+    <h2>Fresh install command</h2>
+    <p style="max-width:760px;margin-bottom:1.5rem;">Run this from Git Bash. This is the supported path for the cleaned public release folder.</p>
+    <pre><code>cd ~/Downloads/qector-decoder-clean-public-release
+
+rm -rf qector-decoder
+
+git clone https://github.com/qectorlab/qector-decoder.git
+cd qector-decoder
+
+python install.py --install-rust</code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Already cloned</div>
+    <h2>Repair and rerun</h2>
+    <pre><code>cd ~/Downloads/qector-decoder-clean-public-release/qector-decoder
+
+git pull
+rm -rf .venv
+python install.py</code></pre>
+    <p style="margin-top:1rem;max-width:760px;">If Python 3.11 is installed and you want the bundled cp311 wheel path, run <code>py -3.11 install.py</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">What it fixes</div>
+    <h2>Real installer coverage</h2>
+    <div class="proof-grid">
+      <div class="card"><h3>Missing Rust</h3><p>Installs Rust with rustup and detects Cargo paths after setup.</p></div>
+      <div class="card"><h3>Wrong Python</h3><p>Detects bundled wheel tags like cp311 and recreates the virtual environment with a compatible interpreter when available.</p></div>
+      <div class="card"><h3>Thin checkout</h3><p>Searches the parent release folder and Downloads for the real source payload and repairs the clone.</p></div>
+      <div class="card"><h3>Git Bash linker issue</h3><p>Removes Git Bash linker path conflicts before Rust source builds.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Windows source build</div>
+    <h2>When a native build is required</h2>
+    <p style="max-width:780px;margin-bottom:1.5rem;">If no matching wheel is available and QECTOR must compile from source on Windows, install Visual Studio Build Tools with the C++ build tools workload. The MSVC Rust target needs Microsoft linker support.</p>
+    <div class="hero-actions">
+      <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/" class="btn btn-secondary">Open Visual Studio Build Tools</a>
+      <a href="contact.html" class="btn btn-gold">Ask for support</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><a href="index.html" class="footer-brand"><img src="assets/logo.svg" width="34" height="34" alt="QECTOR">QECTOR</a><p>Source-available QEC decoding for reproducible research and commercial workflow evaluation.</p></div>
+    <div><h4>Product</h4><a href="decoder.html">Decoder</a><a href="installer.html">Installer</a><a href="benchmarks.html">Benchmarks</a><a href="workbench.html">Workbench</a></div>
+    <div><h4>Commercial</h4><a href="license.html">License</a><a href="pricing.html">Pricing</a><a href="commercial.html">Commercial use</a><a href="contact.html">Contact</a></div>
+    <div><h4>Official</h4><a href="https://github.com/qectorlab/qector-decoder">GitHub repository</a><a href="mailto:admin@qector.store">admin@qector.store</a><span>Copyright © 2026 Guillaume Lessard / iD01t Productions</span></div>
+  </div>
+</footer>
+<script src="assets/nav.js"></script>
+</body>
+</html>
