@@ -21,6 +21,14 @@
     .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
     .hero-trust { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
 
+    .hero-grid-layout { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center; }
+    .hero-copy .hero-subtitle, .hero-copy .hero-trust { max-width: 100%; }
+    .hero-visual { position: relative; }
+    .hero-visual img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,213,255,0.10); }
+    @media (max-width: 900px) {
+      .hero-grid-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
     .product-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .product-card { border-radius: 10px; padding: 2rem; border: 1px solid var(--border); background: var(--panel); }
     .product-card.decoder-card { border-color: rgba(0,213,255,0.3); }
@@ -70,22 +78,27 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container">
-    <div class="hero-eyebrow">
-      <span class="badge badge-green"><span class="glow-dot"></span> v0.4.0 Available</span>
-      <span class="badge badge-muted">Codename: Neutron</span>
-      <span class="badge badge-cyan">414 Tests Passing</span>
+  <div class="container hero-grid-layout">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">
+        <span class="badge badge-green"><span class="glow-dot"></span> v0.4.0 Available</span>
+        <span class="badge badge-muted">Codename: Neutron</span>
+        <span class="badge badge-cyan">414 Tests Passing</span>
+      </div>
+      <h1 class="hero-title">Quantum Error Correction<br>Decoding, <em>Reproducible by Design</em></h1>
+      <p class="hero-subtitle">
+        A Rust/Python QEC decoder platform with Stim/Sinter integration, exact weighted MWPM, belief-matching accuracy mode, BP-OSD for qLDPC codes, CPU/GPU batch decoding, and artifact-hashed reproducible benchmarks.
+      </p>
+      <div class="hero-actions">
+        <a href="decoder.html" class="btn btn-primary btn-lg">View QECTOR Decoder</a>
+        <a href="commercial.html" class="btn btn-gold btn-lg">Request Commercial License</a>
+        <a href="workbench.html" class="btn btn-secondary btn-lg">Workbench — Coming Soon</a>
+      </div>
+      <p class="hero-trust">Source-available for personal, academic, educational, and non-commercial research use. Commercial use requires a paid license. &nbsp;<a href="license.html">Full license terms →</a></p>
     </div>
-    <h1 class="hero-title">Quantum Error Correction<br>Decoding, <em>Reproducible by Design</em></h1>
-    <p class="hero-subtitle">
-      A Rust/Python QEC decoder platform with Stim/Sinter integration, exact weighted MWPM, belief-matching accuracy mode, BP-OSD for qLDPC codes, CPU/GPU batch decoding, and artifact-hashed reproducible benchmarks.
-    </p>
-    <div class="hero-actions">
-      <a href="decoder.html" class="btn btn-primary btn-lg">View QECTOR Decoder</a>
-      <a href="commercial.html" class="btn btn-gold btn-lg">Request Commercial License</a>
-      <a href="workbench.html" class="btn btn-secondary btn-lg">Workbench — Coming Soon</a>
+    <div class="hero-visual">
+      <img src="assets/hero.png" width="1672" height="941" loading="eager" alt="QECTOR Decoder. Quantum error correction decoding, reproducible by design. Stim, Sinter, PyMatching compatible workflows, CPU/GPU batch decoding.">
     </div>
-    <p class="hero-trust">Source-available for personal, academic, educational, and non-commercial research use. Commercial use requires a paid license. &nbsp;<a href="license.html">Full license terms →</a></p>
   </div>
 </section>
 
