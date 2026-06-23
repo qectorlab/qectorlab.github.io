@@ -4,6 +4,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelector(".nav-links");
   const current = window.location.pathname.split("/").pop() || "index.html";
 
+  const applyOfficialLogo = () => {
+    if (!document.getElementById("qector-official-logo-css")) {
+      const style = document.createElement("style");
+      style.id = "qector-official-logo-css";
+      style.textContent = "a.nav-logo,a.footer-brand{display:inline-flex;align-items:center;gap:0;line-height:1;color:transparent!important;font-size:0!important;letter-spacing:0!important}.nav-logo img.official-logo,.footer-brand img.official-logo{width:clamp(146px,14vw,206px)!important;height:auto!important;max-height:64px!important;object-fit:contain;filter:drop-shadow(0 0 18px rgba(0,213,255,.38)) drop-shadow(0 0 4px rgba(255,255,255,.22))}.footer .nav-logo img.official-logo,.footer .footer-brand img.official-logo{width:clamp(168px,18vw,230px)!important;max-height:78px!important}@media(max-width:760px){.nav-logo img.official-logo,.footer-brand img.official-logo{width:150px!important;max-height:54px!important}.footer .nav-logo img.official-logo,.footer .footer-brand img.official-logo{width:180px!important;max-height:66px!important}}@media(max-width:380px){.nav-logo img.official-logo,.footer-brand img.official-logo{width:132px!important;max-height:50px!important}}";
+      document.head.appendChild(style);
+    }
+
+    document.querySelectorAll("a.nav-logo, a.footer-brand").forEach((link) => {
+      while (link.firstChild) link.removeChild(link.firstChild);
+      const img = document.createElement("img");
+      img.className = "official-logo";
+      img.src = "assets/logo.svg";
+      img.width = 190;
+      img.height = 107;
+      img.alt = "QECTOR official logo";
+      link.appendChild(img);
+      link.setAttribute("aria-label", "QECTOR official logo");
+    });
+  };
+
+  applyOfficialLogo();
+
   let backdrop = document.querySelector(".mobile-backdrop");
   if (!backdrop) {
     backdrop = document.createElement("div");
@@ -43,7 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (navLinks && !navLinks.querySelector('a[href="installer.html"]')) {
     const decoderLink = navLinks.querySelector('a[href="decoder.html"]');
     const item = document.createElement("li");
-    item.innerHTML = '<a href="installer.html">Install</a>';
+    const installLink = document.createElement("a");
+    installLink.href = "installer.html";
+    installLink.textContent = "Install";
+    item.appendChild(installLink);
     if (decoderLink && decoderLink.parentElement) {
       decoderLink.parentElement.insertAdjacentElement("afterend", item);
     } else {
