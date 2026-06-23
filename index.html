@@ -3,149 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR is a source-available quantum error correction decoder platform with Rust/Python architecture, Stim/Sinter integration, belief-matching, BP-OSD, CPU/GPU batch decoding, and reproducible benchmark artifacts.">
+  <meta name="description" content="QECTOR is a source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows. Rust/Python, Stim/Sinter, belief-matching, BP-OSD, CPU/GPU batch decoding, and artifact-hashed benchmarks.">
+  <link rel="canonical" href="https://www.qector.store/">
   <meta property="og:title" content="QECTOR — Quantum Error Correction Decoding, Reproducible by Design">
-  <meta property="og:description" content="Source-available QEC decoder platform. Rust core, Python bindings, exact MWPM, belief-matching, GPU batch decoding.">
+  <meta property="og:description" content="Source-available QEC decoder platform with Rust/Python architecture, Stim/Sinter workflows, belief-matching accuracy mode, BP-OSD, CPU/GPU batch decoding, and reproducible benchmark artifacts.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.qector.store/">
+  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
+  <meta name="twitter:card" content="summary_large_image">
   <title>QECTOR — Quantum Error Correction Decoding, Reproducible by Design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <style>
-    /* Index-specific */
-    .hero-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .hero-title { margin-bottom: 1.25rem; }
-    .hero-title em { color: var(--cyan); font-style: normal; }
-    .hero-subtitle { font-size: 1.1rem; color: var(--muted-2); max-width: 640px; margin-bottom: 2rem; line-height: 1.7; }
-    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-    .hero-trust { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
-
-    .hero-grid-layout { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center; }
-    .hero-copy .hero-subtitle, .hero-copy .hero-trust { max-width: 100%; }
-    .hero-visual { position: relative; }
-    .hero-visual img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,213,255,0.10); }
-    @media (max-width: 900px) {
-      .hero-grid-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-
-    .product-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .product-card { border-radius: 10px; padding: 2rem; border: 1px solid var(--border); background: var(--panel); }
-    .product-card.decoder-card { border-color: rgba(0,213,255,0.3); }
-    .product-card.workbench-card { border-color: rgba(47,123,255,0.2); }
-    .product-card h3 { margin: 0.75rem 0 0.5rem; }
-    .product-card p { font-size: 0.9rem; margin: 0 0 1.25rem; }
-    .product-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-
-    .benchmark-proof { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .benchmark-header { padding: 1.5rem; border-bottom: 1px solid var(--border); }
-    .benchmark-body { padding: 1.5rem; }
-    .ler-caveat { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
-
-    .license-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .license-free { background: rgba(25,230,161,0.04); border-color: rgba(25,230,161,0.2); }
-    .license-commercial { background: rgba(255,176,32,0.04); border-color: rgba(255,176,32,0.25); }
-
-    @media (max-width: 700px) {
-      .product-split, .license-split { grid-template-columns: 1fr; }
-    }
+    .hero-eyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap}.hero-title{margin-bottom:1.25rem}.hero-title em{color:var(--cyan);font-style:normal}.hero-subtitle{font-size:1.1rem;color:var(--muted-2);max-width:680px;margin-bottom:2rem;line-height:1.7}.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem}.hero-trust{font-size:.82rem;color:var(--muted);margin-top:.5rem}.hero-grid-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}.hero-copy .hero-subtitle,.hero-copy .hero-trust{max-width:100%}.hero-visual img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,213,255,.10)}.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}.product-split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}.product-card{border-radius:10px;padding:2rem;border:1px solid var(--border);background:var(--panel)}.product-card.decoder-card{border-color:rgba(0,213,255,.30)}.product-card.workbench-card{border-color:rgba(47,123,255,.25)}.product-card h3{margin:.75rem 0 .5rem}.product-card p{font-size:.9rem;margin:0 0 1.25rem}.product-actions{display:flex;gap:.5rem;flex-wrap:wrap}.benchmark-proof{background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden}.benchmark-header{padding:1.5rem;border-bottom:1px solid var(--border)}.benchmark-body{padding:1.5rem}.ler-caveat{font-size:.82rem;color:var(--muted);margin-top:1rem;line-height:1.6}.license-split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}.license-free{background:rgba(25,230,161,.04);border-color:rgba(25,230,161,.20)}.license-commercial{background:rgba(255,176,32,.04);border-color:rgba(255,176,32,.25)}@media(max-width:900px){.hero-grid-layout{grid-template-columns:1fr;gap:2.5rem}.proof-grid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.product-split,.license-split,.proof-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav class="nav">
   <div class="container nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="assets/logo.svg" width="32" height="32" alt="QECTOR">
-      QECT<span>OR</span>
-    </a>
-    <button class="nav-hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="32" height="32" alt="QECTOR">QECT<span>OR</span></a>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links">
-      <li><a href="decoder.html">Decoder</a></li>
-      <li><a href="workbench.html">Workbench</a></li>
-      <li><a href="benchmarks.html">Benchmarks</a></li>
-      <li><a href="license.html">License</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="commercial.html">Commercial</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li class="nav-cta"><a href="commercial.html">Get License</a></li>
+      <li><a class="active" href="index.html">Home</a></li><li><a href="decoder.html">Decoder</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li><li><a href="contact.html">Contact</a></li><li class="nav-cta"><a href="commercial.html">Get License</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container hero-grid-layout">
     <div class="hero-copy">
       <div class="hero-eyebrow">
         <span class="badge badge-green"><span class="glow-dot"></span> v0.4.0 Available</span>
-        <span class="badge badge-muted">Codename: Neutron</span>
-        <span class="badge badge-cyan">414 Tests Passing</span>
+        <span class="badge badge-cyan">832 Tests Collected</span>
+        <span class="badge badge-muted">Git 729282f</span>
       </div>
       <h1 class="hero-title">Quantum Error Correction<br>Decoding, <em>Reproducible by Design</em></h1>
-      <p class="hero-subtitle">
-        A Rust/Python QEC decoder platform with Stim/Sinter integration, exact weighted MWPM, belief-matching accuracy mode, BP-OSD for qLDPC codes, CPU/GPU batch decoding, and artifact-hashed reproducible benchmarks.
-      </p>
+      <p class="hero-subtitle">A source-available Rust/Python QEC decoder platform with Stim/Sinter-compatible workflows, PyMatching-compatible interfaces, belief-matching accuracy mode, BP-OSD for LDPC/qLDPC codes, CPU/GPU batch decoding, and artifact-hashed reproducible benchmarks.</p>
       <div class="hero-actions">
         <a href="decoder.html" class="btn btn-primary btn-lg">View QECTOR Decoder</a>
         <a href="commercial.html" class="btn btn-gold btn-lg">Request Commercial License</a>
         <a href="workbench.html" class="btn btn-secondary btn-lg">Workbench — Coming Soon</a>
       </div>
-      <p class="hero-trust">Source-available for personal, academic, educational, and non-commercial research use. Commercial use requires a paid license. &nbsp;<a href="license.html">Full license terms →</a></p>
+      <p class="hero-trust">Free for personal, academic, educational, and non-commercial research use. Commercial use requires a paid license. <a href="license.html">Full license terms →</a></p>
     </div>
-    <div class="hero-visual">
-      <img src="assets/hero.png" width="1672" height="941" loading="eager" alt="QECTOR Decoder. Quantum error correction decoding, reproducible by design. Stim, Sinter, PyMatching compatible workflows, CPU/GPU batch decoding.">
+    <div class="hero-visual"><img src="assets/hero.png" width="1672" height="941" loading="eager" alt="QECTOR Decoder hero banner"></div>
+  </div>
+</section>
+
+<div style="position:relative;z-index:1;"><div class="container" style="padding-top:2.5rem;padding-bottom:2.5rem;"><div class="trust-strip"><div class="trust-item">Rust / Python</div><div class="trust-item">Stim</div><div class="trust-item">Sinter</div><div class="trust-item">PyMatching API</div><div class="trust-item">CUDA / OpenCL</div><div class="trust-item">Artifact Hashes</div><div class="trust-item">Belief-Matching</div><div class="trust-item">BP-OSD / qLDPC</div></div></div></div>
+
+<section>
+  <div class="container">
+    <div class="section-label">Validated Evidence</div>
+    <h2>Current public validation snapshot</h2>
+    <div class="proof-grid">
+      <div class="card"><div class="stat"><span class="stat-value">829</span><span class="stat-label">tests passed, 2 skipped, 1 xfailed</span></div></div>
+      <div class="card"><div class="stat"><span class="stat-value">d=15</span><span class="stat-label">LER parity vs PyMatching on tested workloads</span></div></div>
+      <div class="card"><div class="stat"><span class="stat-value">33.7%</span><span class="stat-label">lower LER at d=5 with belief-matching in the headline run</span></div></div>
+      <div class="card"><div class="stat"><span class="stat-value">GPU</span><span class="stat-label">CUDA/OpenCL bit-identical to CPU on tested batches</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- TRUST STRIP -->
-<div style="position:relative;z-index:1;">
-  <div class="container" style="padding-top:2.5rem;padding-bottom:2.5rem;">
-    <div class="trust-strip">
-      <div class="trust-item">Rust / Python</div>
-      <div class="trust-item">Stim Compatible</div>
-      <div class="trust-item">Sinter Compatible</div>
-      <div class="trust-item">PyMatching API</div>
-      <div class="trust-item">CUDA / OpenCL</div>
-      <div class="trust-item">Artifact Hashes</div>
-      <div class="trust-item">Belief-Matching</div>
-      <div class="trust-item">BP-OSD / qLDPC</div>
-    </div>
-  </div>
-</div>
-
-<!-- PRODUCT SPLIT -->
 <section>
   <div class="container">
     <div class="section-label">Products</div>
-    <h2 style="margin-bottom:2rem;">Two components, one platform</h2>
+    <h2 style="margin-bottom:2rem;">Two components, one QEC platform</h2>
     <div class="product-split">
-
       <div class="product-card decoder-card">
         <span class="badge badge-green"><span class="glow-dot"></span> Available Now</span>
         <h3>QECTOR Decoder</h3>
         <p>The core QEC decoder library for researchers, benchmarking workflows, and commercial QEC evaluation. Rust core with Python bindings via PyO3.</p>
         <ul class="feature-list" style="margin-bottom:1.5rem;">
-          <li>Exact weighted MWPM (Blossom)</li>
-          <li>Belief-matching accuracy mode — up to 35.7% lower LER</li>
-          <li>BP-OSD for LDPC / qLDPC codes</li>
-          <li>CUDA + OpenCL batch decoding (14.6M dec/s)</li>
-          <li>Stim DEM loading, Sinter plug-in</li>
-          <li>Drop-in PyMatching-compatible API</li>
+          <li>Weighted MWPM / Blossom workflows with PyMatching LER parity on tested workloads</li>
+          <li>Belief-matching accuracy mode — 33.7% lower LER at d=5 in the headline benchmark</li>
+          <li>BP-OSD for LDPC / qLDPC code experiments</li>
+          <li>CUDA + OpenCL batch decoding, bit-identical to CPU on tested configurations</li>
+          <li>Stim DEM loading, Sinter plug-in, PyMatching-compatible API</li>
           <li>Reproducible artifacts with SHA-256 hashes</li>
-          <li>395+ tests, including brute-force optimality checks</li>
+          <li>832 tests collected: 829 passed / 2 skipped / 1 xfailed</li>
         </ul>
-        <div class="product-actions">
-          <a href="decoder.html" class="btn btn-primary">Decoder Details</a>
-          <a href="benchmarks.html" class="btn btn-secondary">Benchmarks</a>
-          <a href="commercial.html" class="btn btn-ghost">Commercial License</a>
-        </div>
+        <div class="product-actions"><a href="decoder.html" class="btn btn-primary">Decoder Details</a><a href="benchmarks.html" class="btn btn-secondary">Benchmarks</a><a href="commercial.html" class="btn btn-ghost">Commercial License</a></div>
       </div>
-
       <div class="product-card workbench-card">
         <span class="badge badge-blue">Coming Soon</span>
         <h3>QECTOR Workbench</h3>
@@ -154,187 +95,45 @@
           <li>Load .stim circuits and .dem files</li>
           <li>Run QECTOR vs PyMatching comparisons</li>
           <li>Generate PDF benchmark reports from real data</li>
-          <li>Export CSV / JSON artifacts with environment snapshot</li>
+          <li>Export CSV / JSON artifacts with environment snapshots</li>
           <li>Verify SHA-256 artifact hashes</li>
           <li>CPU / CUDA / OpenCL backend diagnostics</li>
-          <li>Visualize LER, latency, threshold, and memory</li>
-          <li>Job queue with cancel support</li>
+          <li>Visualize LER, latency, threshold, memory, and scaling</li>
         </ul>
-        <div class="product-actions">
-          <a href="workbench.html" class="btn btn-secondary">Workbench Details</a>
-          <a href="contact.html" class="btn btn-ghost">Join Early Access</a>
-        </div>
+        <div class="product-actions"><a href="workbench.html" class="btn btn-secondary">Workbench Details</a><a href="contact.html" class="btn btn-ghost">Join Early Access</a></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- BENCHMARK PROOF -->
 <section>
   <div class="container">
     <div class="section-label">Benchmark Evidence</div>
-    <h2 style="margin-bottom:0.5rem;">Validated against PyMatching at circuit level</h2>
-    <p style="margin-bottom:2rem;max-width:640px;">Rotated surface code <code>memory_x</code>, rounds = distance, circuit-level depolarizing noise p = 0.005, 40,000 shots per point. Wilson 95% confidence intervals on each LER estimate.</p>
-
+    <h2 style="margin-bottom:.5rem;">Validated against PyMatching at circuit level</h2>
+    <p style="margin-bottom:2rem;max-width:700px;">Rotated surface code memory_x, rounds = distance, circuit-level depolarizing noise p = 0.005, 40,000 shots per point through d=11. Same DEM decoded by both QECTOR and PyMatching.</p>
     <div class="benchmark-proof">
-      <div class="benchmark-header">
-        <span class="badge badge-muted">QECTOR Blossom vs PyMatching — Stim circuit-level LER</span>
-      </div>
+      <div class="benchmark-header"><span class="badge badge-muted">QECTOR Blossom vs PyMatching — Stim circuit-level LER</span></div>
       <div class="benchmark-body">
-        <div class="table-wrap" style="margin:0;">
-          <table>
-            <thead>
-              <tr>
-                <th>Distance</th>
-                <th>QECTOR-Blossom LER</th>
-                <th>PyMatching LER</th>
-                <th>QECTOR µs/shot</th>
-                <th>PyMatching µs/shot</th>
-                <th>LER Parity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td class="label">d = 3</td><td class="highlight">0.0117</td><td>0.0117</td><td>0.7</td><td>0.5</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 5</td><td class="highlight">0.0089</td><td>0.0089</td><td>11.4</td><td>3.7</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 7</td><td class="highlight">0.0053</td><td>0.0053</td><td>60.4</td><td>13.3</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 9</td><td class="highlight">0.0029</td><td>0.0029</td><td>311.5</td><td>19.7</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 11</td><td class="highlight">0.0017</td><td>0.0017</td><td>633.9</td><td>46.0</td><td class="good">✓ Exact</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="ler-caveat">
-          PyMatching remains the latency leader for single-shot exact MWPM — QECTOR does not claim otherwise. QECTOR's validated advantages are: logical accuracy parity through d=11, belief-matching LER reduction (up to 35.7% at d=5), BP-OSD for qLDPC codes matching can't handle, GPU batch throughput (14.6M dec/s), and commercial workflow packaging with reproducible artifacts. Full methodology and reproduction commands: <a href="benchmarks.html">Benchmarks →</a>
-        </p>
-      </div>
-    </div>
-
-    <!-- BELIEF MATCHING PROOF -->
-    <div style="margin-top:1.5rem;" class="benchmark-proof">
-      <div class="benchmark-header">
-        <span class="badge badge-cyan">Belief-Matching — Lower LER than PyMatching</span>
-      </div>
-      <div class="benchmark-body">
-        <div class="table-wrap" style="margin:0;">
-          <table>
-            <thead>
-              <tr>
-                <th>Distance</th>
-                <th>PyMatching LER</th>
-                <th>QECTOR Belief-Matching LER</th>
-                <th>LER Reduction</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td class="label">d = 3</td><td>0.0106</td><td class="highlight">0.0095</td><td class="good">−10.6%</td></tr>
-              <tr><td class="label">d = 5</td><td>0.0088</td><td class="highlight">0.0056</td><td class="good">−35.7%</td></tr>
-              <tr><td class="label">d = 7</td><td>0.0046</td><td class="highlight">0.0030</td><td class="good">−35.1%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="ler-caveat">Belief-matching trades per-shot latency for accuracy — it is the accuracy mode, not the fast path. 8,000 shots per point, Wilson 95% intervals. Cross-validated against the reference <code>beliefmatching</code> package and through the standard Sinter harness.</p>
-      </div>
-    </div>
-
-    <!-- STATS ROW -->
-    <div class="grid-4" style="margin-top:2rem;">
-      <div class="card">
-        <div class="stat"><div class="stat-value">1.4 µs</div><div class="stat-label">p50 single-shot latency (ring code d=10)</div></div>
-      </div>
-      <div class="card">
-        <div class="stat"><div class="stat-value">14.6M</div><div class="stat-label">decodes/sec — OpenCL GPU, d=5, batch 10K</div></div>
-      </div>
-      <div class="card">
-        <div class="stat"><div class="stat-value">414</div><div class="stat-label">tests passing — brute-force, property-based, cross-validated</div></div>
-      </div>
-      <div class="card">
-        <div class="stat"><div class="stat-value">d=15</div><div class="stat-label">maximum distance with exact MWPM LER parity vs PyMatching</div></div>
+        <div class="table-wrap" style="margin:0;"><table><thead><tr><th>Distance</th><th>QECTOR LER</th><th>PyMatching LER</th><th>QECTOR µs/shot</th><th>PyMatching µs/shot</th><th>Result</th></tr></thead><tbody><tr><td class="label">d = 3</td><td class="highlight">0.0117</td><td>0.0117</td><td>0.7</td><td>0.5</td><td class="good">LER parity</td></tr><tr><td class="label">d = 5</td><td class="highlight">0.0089</td><td>0.0089</td><td>11.4</td><td>3.7</td><td class="good">LER parity</td></tr><tr><td class="label">d = 7</td><td class="highlight">0.0053</td><td>0.0053</td><td>60.4</td><td>13.3</td><td class="good">LER parity</td></tr><tr><td class="label">d = 9</td><td class="highlight">0.0029</td><td>0.0029</td><td>311.5</td><td>19.7</td><td class="good">LER parity</td></tr><tr><td class="label">d = 11</td><td class="highlight">0.0017</td><td>0.0017</td><td>633.9</td><td>46.0</td><td class="good">LER parity</td></tr></tbody></table></div>
+        <p class="ler-caveat">PyMatching remains the latency leader for exact MWPM. QECTOR's validated advantages are reproducible evidence packaging, belief-matching accuracy mode, BP-OSD / LDPC support, GPU batch workflows, and commercial QEC integration. <a href="benchmarks.html">Read benchmark details →</a></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LICENSING OVERVIEW -->
 <section>
   <div class="container">
     <div class="section-label">Licensing</div>
-    <h2 style="margin-bottom:0.5rem;">Source-Available, Commercially Licensed</h2>
-    <p style="margin-bottom:2rem;max-width:600px;">QECTOR is not open-source. You may use it freely for non-commercial work. Commercial use requires a paid license.</p>
-    <div class="license-split">
-      <div class="card license-free">
-        <h3 style="color:var(--green);margin-bottom:1rem;">Free — Non-Commercial</h3>
-        <ul class="feature-list">
-          <li>Personal learning and experimentation</li>
-          <li>Academic research and evaluation</li>
-          <li>Educational demonstrations</li>
-          <li>Non-commercial benchmarking</li>
-          <li>Source code review</li>
-          <li>Benchmark reproduction</li>
-        </ul>
-        <div style="margin-top:1.5rem;">
-          <a href="license.html" class="btn btn-ghost btn-sm">Full license terms →</a>
-        </div>
-      </div>
-      <div class="card license-commercial">
-        <h3 style="color:var(--gold);margin-bottom:1rem;">Paid — Commercial Use</h3>
-        <ul class="feature-list">
-          <li>Company or startup use</li>
-          <li>Commercial R&D and products</li>
-          <li>SaaS / hosted API services</li>
-          <li>Government and institutional use</li>
-          <li>OEM embedding and redistribution</li>
-          <li>Revenue-generating or funded use</li>
-        </ul>
-        <div style="margin-top:1.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-          <a href="pricing.html" class="btn btn-gold btn-sm">View Pricing</a>
-          <a href="commercial.html" class="btn btn-ghost btn-sm">Request License</a>
-        </div>
-      </div>
+    <h2>Source-available, commercially licensed</h2>
+    <div class="license-split" style="margin-top:2rem;">
+      <div class="card license-free"><span class="badge badge-green">Free permitted use</span><h3 style="margin:.75rem 0;">Personal, academic, educational, non-commercial research</h3><p>Use QECTOR for learning, private experiments, academic evaluation, benchmark reproduction, and non-commercial research under the source-available license.</p></div>
+      <div class="card license-commercial"><span class="badge badge-gold">Paid license required</span><h3 style="margin:.75rem 0;">Commercial R&D, products, SaaS, OEM, consulting, funded work</h3><p>Any company, startup, institutional, government, consulting, hosted API, product integration, or revenue-linked use requires a paid commercial license.</p></div>
     </div>
+    <div style="margin-top:2rem;display:flex;gap:.75rem;flex-wrap:wrap;"><a href="pricing.html" class="btn btn-gold">View Pricing</a><a href="contact.html" class="btn btn-secondary">Contact admin@qector.store</a></div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;">
-          <img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECTOR
-        </a>
-        <p>Source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <ul>
-          <li><a href="decoder.html">QECTOR Decoder</a></li>
-          <li><a href="workbench.html">QECTOR Workbench</a></li>
-          <li><a href="benchmarks.html">Benchmarks</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="license.html">License</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="commercial.html">Commercial</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="mailto:admin@qector.store">admin@qector.store</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
-      <span>QECTOR is source-available, not open-source. <a href="license.html">License</a></span>
-    </div>
-  </div>
-</footer>
-
+<footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECT<span>OR</span></a><p>Source-available quantum error correction decoder platform for reproducible benchmarking and commercial QEC workflows.</p></div><div class="footer-col"><h4>Product</h4><ul><li><a href="decoder.html">Decoder</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li></ul></div><div class="footer-col"><h4>Commercial</h4><ul><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:admin@qector.store">admin@qector.store</a></li><li><a href="https://github.com/qectorlab/qector-decoder">GitHub</a></li></ul></div></div><div class="footer-bottom"><span>© 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span><span>QECTOR is source-available, not open-source.</span></div></div></footer>
 <script src="assets/nav.js"></script>
 </body>
 </html>
