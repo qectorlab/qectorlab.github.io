@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25F4FF"/>
+      <stop offset="100%" stop-color="#1677FF"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#glow)">
+    <circle cx="520" cy="170" r="10"/>
+    <circle cx="680" cy="170" r="10"/>
+    <circle cx="450" cy="200" r="10"/>
+    <circle cx="750" cy="200" r="10"/>
+    <circle cx="450" cy="260" r="10"/>
+    <circle cx="750" cy="260" r="10"/>
+    <circle cx="450" cy="320" r="10"/>
+    <circle cx="750" cy="320" r="10"/>
+    <circle cx="520" cy="350" r="10"/>
+    <circle cx="680" cy="350" r="10"/>
+
+    <path d="M530 180 L550 210 L550 310 L530 340"/>
+    <path d="M670 180 L650 210 L650 310 L670 340"/>
+
+    <line x1="450" y1="200" x2="550" y2="200"/>
+    <line x1="450" y1="260" x2="550" y2="260"/>
+    <line x1="450" y1="320" x2="550" y2="320"/>
+
+    <line x1="650" y1="200" x2="750" y2="200"/>
+    <line x1="650" y1="260" x2="750" y2="260"/>
+    <line x1="650" y1="320" x2="750" y2="320"/>
+
+    <circle cx="575" cy="225" r="8" fill="url(#g)"/>
+    <circle cx="625" cy="225" r="8" fill="url(#g)"/>
+    <circle cx="575" cy="285" r="8" fill="url(#g)"/>
+    <circle cx="625" cy="285" r="8" fill="url(#g)"/>
+  </g>
+
+  <text x="600" y="520"
+        text-anchor="middle"
+        font-family="Orbitron, Arial, sans-serif"
+        font-size="120"
+        letter-spacing="8"
+        fill="url(#g)">QECTOR</text>
+</svg>
