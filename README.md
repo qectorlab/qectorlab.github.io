@@ -23,17 +23,19 @@ This website, the installer commands, `Cargo.toml`, and `pyproject.toml` should 
 - Home: https://www.qector.store/
 - Decoder: https://www.qector.store/decoder.html
 - Installer: https://www.qector.store/installer.html
+- Docs: https://www.qector.store/docs.html
 - Benchmarks: https://www.qector.store/benchmarks.html
 - Workbench: https://www.qector.store/workbench.html
 - License: https://www.qector.store/license.html
 - Pricing: https://www.qector.store/pricing.html
 - Commercial: https://www.qector.store/commercial.html
+- About: https://www.qector.store/about.html
 - Contact: https://www.qector.store/contact.html
 
 ## Current public validation
 
 - 832 tests collected
-- 829 passed / 2 skipped / 1 xfailed
+- 829 passed / 2 skipped / 1 expected xfailed
 - reference validation report build: git 729282f
 - d=15 LER parity vs PyMatching on tested workloads
 - 33.7% lower observed LER at d=5 with belief-matching in the headline run
@@ -55,11 +57,22 @@ Current public tiers:
 - Startup Commercial: $3,500 / year
 - Professional / Lab: $15,000 / year
 - Enterprise R&D: $35,000+ / year
-- SaaS / Hosted API: $75,000+ / year, custom review
-- OEM / Embedded: $125,000+ / year, custom review
+- SaaS / Hosted API: Contact-only beta review
+- OEM / Embedded: Contact-only partner validation
 - Strategic Partnership: Custom, no public exclusive-price floor
 
 The previous public $2M+ strategic floor was removed because it was not credible without hardware co-design partnerships, patent/IP leverage, or enterprise proof.
+
+## Homepage conversion fixes
+
+The homepage now directly addresses the main website gaps:
+
+- Visible pricing on the landing page, not only buried under Pricing
+- Links to benchmark evidence and reproduction workflow
+- Docs hub for install, API, examples, benchmarks, and commercial evaluation
+- About page with Guillaume Lessard / iD01t Productions identity
+- Workbench positioned as planned reproducibility product, not shipped product
+- Clear statement that QECTOR is not a fastest-PyMatching or real-time hardware claim
 
 ## Installer status
 
