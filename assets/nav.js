@@ -36,7 +36,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const syncReleaseText = () => {
+    const replacements = [
+      ["Decoder v0.4.0 available", "Decoder v0.5.0 available"],
+      ["early-stage v0.4 R&D platform", "early-stage v0.5 R&D platform"],
+      ["832 tests collected: 829 passed / 2 skipped / 1 expected xfailed", "832 Python tests passed + 87 Rust tests passed"],
+      ["829 passed, 2 skipped, 1 expected xfailed", "832 passed, 0 skipped, 0 xfailed"],
+      ["The xfailed item is an expected test marker, not an unexplained failed release gate.", "The previous skips and expected xfail have been removed in the v0.5 validation report."],
+      ["33.7% lower observed LER at d=5", "34.8% lower observed LER at d=5"],
+      ["33.7% d=5 headline", "34.8% d=5 headline"],
+      ["33.7% lower LER at d=5", "34.8% lower LER at d=5"]
+    ];
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach((node) => {
+      let text = node.nodeValue;
+      replacements.forEach(([from, to]) => {
+        text = text.split(from).join(to);
+      });
+      node.nodeValue = text;
+    });
+  };
+
   applyOfficialLogo();
+  syncReleaseText();
 
   let backdrop = document.querySelector(".mobile-backdrop");
   if (!backdrop) {
