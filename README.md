@@ -1,22 +1,23 @@
-# QECTOR Lab
+# QECTOR Store Website
 
-Official GitHub Pages repository for QECTOR.
+Official GitHub Pages repository for QECTOR Decoder v3 website.
 
-QECTOR is a source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflow evaluation.
+QECTOR is a source-available Rust/Python quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflow evaluation.
 
 Official website: https://www.qector.store  
 Official contact: admin@qector.store  
-Decoder repository: https://github.com/qectorlab/qector-decoder
+Canonical decoder repository: https://github.com/GuillaumeLessard/qector-decoder  
+PyPI package: https://pypi.org/project/qector-decoder-v3/  
+Zenodo DOI: https://doi.org/10.5281/zenodo.20825980
 
-## Canonical repository
+## Canonical public install
 
-The canonical decoder repository is:
-
-```text
-https://github.com/qectorlab/qector-decoder
+```bash
+pip install qector-decoder-v3
+python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"
 ```
 
-This website, repository metadata, and public install commands must all point to `qectorlab/qector-decoder`.
+Do not make source-build commands the primary public website install path. Source builds are secondary and should be presented only for local development, licensed source review, or special environments.
 
 ## Public pages
 
@@ -24,6 +25,7 @@ This website, repository metadata, and public install commands must all point to
 - Decoder: https://www.qector.store/decoder.html
 - Installer: https://www.qector.store/installer.html
 - Docs: https://www.qector.store/docs.html
+- Technical reference: https://www.qector.store/technical-reference.html
 - Benchmarks: https://www.qector.store/benchmarks.html
 - Workbench: https://www.qector.store/workbench.html
 - License: https://www.qector.store/license.html
@@ -32,23 +34,33 @@ This website, repository metadata, and public install commands must all point to
 - About: https://www.qector.store/about.html
 - Contact: https://www.qector.store/contact.html
 
-## Current public validation
+## Current public release state
 
-- QECTOR Decoder v0.5.0
-- 832 Python tests passed
-- 87 Rust unit tests passed
-- 0 skipped / 0 xfailed / 0 failed in the local validation report
-- reference validation report build: git 729282f
+- QECTOR Decoder v0.5.1
+- PyPI package: qector-decoder-v3
+- Canonical source-available repository: GuillaumeLessard/qector-decoder
+- DOI / provenance record: 10.5281/zenodo.20825980
+- Public install command: pip install qector-decoder-v3
 - d=15 LER parity vs PyMatching on tested workloads
-- 34.8% lower observed LER at d=5 with belief-matching in the selected 3,000-shot correlated workload
-- CUDA/OpenCL bit-identical to CPU on tested batches
+- Selected belief-matching evidence on correlated workloads
 - PyMatching remains the latency leader for exact MWPM
+- QECTOR is not marketed as production SaaS, OEM-ready embedded QEC, or real-time hardware QEC by default
 
-The `729282f` value is the audited decoder report build reference. It is not meant to describe the latest website commit or the latest repository tip after documentation and packaging updates.
+## SEO and trust requirements
+
+Every public page should keep these aligned:
+
+- Version: v0.5.1
+- Repository: https://github.com/GuillaumeLessard/qector-decoder
+- PyPI: https://pypi.org/project/qector-decoder-v3/
+- DOI: https://doi.org/10.5281/zenodo.20825980
+- Author / owner: Guillaume Lessard / iD01t Productions
+- Contact: admin@qector.store
+- Install command: pip install qector-decoder-v3
 
 ## Pricing position
 
-QECTOR is positioned as a v0.5 Rust/Python QEC R&D platform, not a mature real-time hardware QEC stack.
+QECTOR is positioned as a v0.5.x Rust/Python QEC R&D platform, not a mature real-time hardware QEC stack.
 
 Current public tiers:
 
@@ -57,56 +69,19 @@ Current public tiers:
 - Startup Commercial: $3,500 / year
 - Professional / Lab: $15,000 / year
 - Enterprise R&D: $35,000+ / year
-- SaaS / Hosted API: Contact-only beta review
-- OEM / Embedded: Contact-only partner validation
-- Strategic Partnership: Custom, no public exclusive-price floor
+- SaaS / Hosted API: contact-only review
+- OEM / Embedded: contact-only partner validation
+- Strategic Partnership: custom, no public exclusive-price floor
 
-## Website conversion fixes
+## Website conversion fixes now covered
 
-The website directly addresses the main conversion gaps:
-
-- Visible pricing on the landing page
-- Links to benchmark evidence and reproduction workflow
-- Docs hub for install, API, examples, benchmarks, and commercial evaluation
-- About page with Guillaume Lessard / iD01t Productions identity
-- Workbench positioned as planned reproducibility product, not shipped product
-- Clear statement that QECTOR is not a fastest-PyMatching or real-time hardware claim
-- Correct install command based on the actual live repository contents
-
-## Installer status
-
-The live decoder repository currently does **not** ship `install.py`. The website therefore documents the real source build path.
-
-PowerShell:
-
-```powershell
-git clone https://github.com/qectorlab/qector-decoder.git
-cd qector-decoder
-
-py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip maturin
-
-$env:PYO3_PYTHON = (Resolve-Path .\.venv\Scripts\python.exe).Path
-.\.venv\Scripts\python.exe -m maturin develop --release --no-default-features
-
-.\.venv\Scripts\python.exe -c "from qector_decoder_v3 import UnionFindDecoder; print('QECTOR OK')"
-```
-
-Git Bash:
-
-```bash
-git clone https://github.com/qectorlab/qector-decoder.git
-cd qector-decoder
-
-python -m venv .venv
-source .venv/Scripts/activate
-python -m pip install --upgrade pip maturin
-
-export PYO3_PYTHON="$(pwd -W)/.venv/Scripts/python.exe"
-python -m maturin develop --release --no-default-features
-
-python -c "from qector_decoder_v3 import UnionFindDecoder; print('QECTOR OK')"
-```
+- Homepage credits Guillaume Lessard / iD01t Productions
+- Homepage links directly to PyPI, GitHub, benchmark artifacts, and DOI
+- Install page uses PyPI first, not source-build first
+- Docs hub points to PyPI, GitHub README, artifacts, DOI, license, and pricing
+- Benchmark page includes direct artifact discovery links
+- About page states owner, version, DOI, package, and limitations
+- robots.txt and sitemap.xml are configured for indexing
 
 ## License
 
