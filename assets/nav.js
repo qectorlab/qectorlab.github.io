@@ -95,24 +95,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   }
 
-  setNavState();
-  window.addEventListener("scroll", setNavState, { passive: true });
+  const setupCopyButtons = () => {
+    document.querySelectorAll("pre").forEach((pre, index) => {
+      if (pre.closest(".code-block")) return;
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-block";
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "copy-btn";
+      button.textContent = "Copy";
+      button.setAttribute("aria-label", `Copy code block ${index + 1}`);
+      wrapper.appendChild(button);
+
+      button.addEventListener("click", async () => {
+        const code = pre.innerText.trim();
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = "Copied";
+          setTimeout(() => { button.textContent = "Copy"; }, 1400);
+        } catch (_) {
+          const range = document.createRange();
+          range.selectNodeContents(pre);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          button.textContent = "Select";
+          setTimeout(() => { button.textContent = "Copy"; }, 1400);
+        }
+      });
+    });
+  };
 
   const form = document.getElementById("contactForm");
   if (form) {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const data = new FormData(form);
-      const subject = encodeURIComponent(`QECTOR inquiry: ${data.get("type") || "General"}`);
+      const subject = encodeURIComponent(`QECTOR ${data.get("type") || "Contact"}`);
       const body = encodeURIComponent([
         `Name: ${data.get("name") || ""}`,
-        `Email: ${data.get("email") || ""}`,
         `Organization: ${data.get("org") || ""}`,
+        `Email: ${data.get("email") || ""}`,
         `Inquiry type: ${data.get("type") || ""}`,
+        `License tier: ${data.get("tier") || ""}`,
         "",
-        String(data.get("message") || "")
+        "Use case / message:",
+        `${data.get("message") || ""}`,
+        "",
+        "Official links:",
+        "Website: https://www.qector.store",
+        "PyPI: https://pypi.org/project/qector-decoder-v3/",
+        "Repository: https://github.com/GuillaumeLessard/qector-decoder",
+        "DOI: https://doi.org/10.5281/zenodo.20825980"
       ].join("\n"));
       window.location.href = `mailto:admin@qector.store?subject=${subject}&body=${body}`;
     });
   }
+
+  setupCopyButtons();
+  setNavState();
+  window.addEventListener("scroll", setNavState, { passive: true });
 });
