@@ -129,8 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const form = document.getElementById("contactForm");
-  if (form) {
+  const originalForm = document.getElementById("contactForm");
+  if (originalForm) {
+    const form = originalForm.cloneNode(true);
+    originalForm.replaceWith(form);
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const data = new FormData(form);
