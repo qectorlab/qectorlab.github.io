@@ -87,7 +87,8 @@ The Worker provides:
 
 ```text
 Accept: text/markdown → Content-Type: text/markdown
-Link response header for llms, API catalog, OpenAPI, docs, auth, MCP, and skills
+x-markdown-tokens header for Markdown for Agents
+RFC 8288 Link response header for llms, API catalog, OpenAPI, docs, health, auth, OAuth, OIDC, Web Bot Auth, MCP, skills, and WebMCP script
 Content-Type correction for extensionless .well-known JSON resources
 Security headers
 Long cache TTL for /assets/*
@@ -98,7 +99,7 @@ Long cache TTL for /assets/*
 If using Cloudflare Response Header Rules instead of the Worker, add this `Link` header on `https://qector.store/`:
 
 ```text
-</llms.txt>; rel="alternate"; type="text/plain", </llms-full.txt>; rel="alternate"; type="text/plain", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json", </docs.html>; rel="service-doc"; type="text/html", </auth.md>; rel="authorization"; type="text/markdown", </.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"
+</llms.txt>; rel="alternate"; type="text/plain", </llms-full.txt>; rel="alternate"; type="text/plain", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json", </docs.html>; rel="service-doc"; type="text/html", </health.json>; rel="status"; type="application/json", </auth.md>; rel="authorization"; type="text/markdown", </.well-known/oauth-protected-resource>; rel="oauth-protected-resource"; type="application/json", </.well-known/oauth-authorization-server>; rel="oauth-authorization-server"; type="application/json", </.well-known/openid-configuration>; rel="openid-configuration"; type="application/json", </.well-known/http-message-signatures-directory>; rel="http-message-signatures-directory"; type="application/json", </.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json", </assets/webmcp.js>; rel="modulepreload"; as="script"
 ```
 
 ## Agent discovery files in repo
@@ -107,22 +108,40 @@ The repo contains these static discovery files:
 
 ```text
 /.well-known/api-catalog
+/.well-known/api-catalog.json
 /openapi.json
 /auth.md
 /.well-known/oauth-protected-resource
+/.well-known/oauth-protected-resource.json
 /.well-known/oauth-authorization-server
+/.well-known/oauth-authorization-server.json
 /.well-known/openid-configuration
+/.well-known/jwks.json
+/.well-known/http-message-signatures-directory
+/.well-known/http-message-signatures-directory.json
 /.well-known/mcp/server-card.json
 /.well-known/mcp.json
 /.well-known/mcp/server-cards.json
 /.well-known/agent-skills/index.json
 /.well-known/skills/index.json
 /.well-known/ucp
+/.well-known/ucp.json
 /.well-known/acp.json
+/assets/webmcp.js
 /health.json
 /llms.txt
 /llms-full.txt
 ```
+
+## Web Bot Auth note
+
+The Web Bot Auth directory is published at:
+
+```text
+https://qector.store/.well-known/http-message-signatures-directory
+```
+
+It currently contains an empty JWKS because QECTOR Store does not yet send signed outbound bot requests. Add public signing keys only when a real outbound signed agent exists.
 
 ## DNS-AID records
 
@@ -133,7 +152,7 @@ _index._agents.qector.store
 _a2a._agents.qector.store
 ```
 
-Point them to `qector.store` with HTTPS/SVCB service parameters appropriate for Cloudflare. DNSSEC should be enabled in Cloudflare when available.
+Point them to `qector.store` with HTTPS/SVCB service parameters appropriate for Cloudflare. DNSSEC should be enabled in Cloudflare when available. See `DNS_AID_RECORDS.md`.
 
 ## Cache rule
 
@@ -167,7 +186,7 @@ Cross-Origin-Opener-Policy: same-origin
 Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
 ```
 
-CSP must allow the contact form endpoint:
+CSP must allow the contact form endpoint and WebMCP script:
 
 ```text
 default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://api.web3forms.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; upgrade-insecure-requests
@@ -184,8 +203,14 @@ https://qector.store/robots.txt
 https://qector.store/llms.txt
 https://qector.store/.well-known/api-catalog
 https://qector.store/openapi.json
+https://qector.store/auth.md
+https://qector.store/.well-known/oauth-protected-resource
+https://qector.store/.well-known/oauth-authorization-server
+https://qector.store/.well-known/openid-configuration
+https://qector.store/.well-known/http-message-signatures-directory
 https://qector.store/.well-known/mcp/server-card.json
 https://qector.store/.well-known/agent-skills/index.json
+https://qector.store/assets/webmcp.js
 https://qector.store/contact.html
 ```
 
