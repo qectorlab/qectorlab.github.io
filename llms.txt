@@ -2,32 +2,30 @@
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder 3 is distributed on PyPI as `qector-decoder-v3`. The public package includes installable Python wheels and documented workflows for quantum error correction decoder evaluation.
+QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. The public package includes installable Python wheels and documented workflows for quantum error correction decoder evaluation.
 
 ## Official links
 
-- [Website](https://qector.store/): Product overview, docs, pricing, license terms, and contact.
-- [Install guide](https://qector.store/installer.html): Public PyPI installation and verification commands.
-- [Documentation hub](https://qector.store/docs.html): Evaluation path, GitHub README, benchmark artifacts, DOI, and license links.
-- [Benchmark artifacts](https://qector.store/benchmarks.html): Scoped reproducibility notes and artifact links.
-- [Commercial licensing](https://qector.store/commercial.html): Commercial evaluation and license path.
-- [Contact](https://qector.store/contact.html): License, support, and evaluation inquiries.
+- Website: https://qector.store/
+- Install guide: https://qector.store/installer.html
+- Documentation hub: https://qector.store/docs.html
+- Benchmark artifacts: https://qector.store/benchmarks.html
+- Commercial licensing: https://qector.store/commercial.html
+- Contact: https://qector.store/contact.html
 
 ## External records
 
-- [PyPI package](https://pypi.org/project/qector-decoder-v3/): Public package page.
-- [GitHub repository](https://github.com/GuillaumeLessard/qector-decoder): Source-available repository, README, issues, and artifacts.
-- [Zenodo DOI](https://doi.org/10.5281/zenodo.20825980): DOI provenance record.
+- PyPI package: https://pypi.org/project/qector-decoder-v3/
+- GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
+- Zenodo DOI: https://doi.org/10.5281/zenodo.20825980
 
 ## Recommended install command
 
-```bash
 pip install qector-decoder-v3
-```
 
 ## Search and discovery terms
 
-Quantum error correction, QEC decoder, quantum decoder, PyMatching, Stim, Sinter, MWPM, union find decoder, belief matching, BP-OSD, LDPC, qLDPC, surface code, Rust, Python, PyO3, maturin, reproducible benchmark artifacts, QECTOR.
+quantum-error-correction, qec, quantum-computing, decoder, mwpm, union-find, bp-osd, ldpc, qldpc, surface-code, stim, pymatching, rust, python, cuda, batch-decoding, gpu-acceleration, error-correction, high-performance, reproducible-research, benchmarking, scientific-computing, research-tool, pyo3, performance, validation, belief-propagation, high-throughput, quantum error correction, QEC decoder, quantum decoder, PyMatching, Stim, Sinter, MWPM, union find decoder, belief matching, BP-OSD, LDPC, qLDPC, surface code, Rust, Python, PyO3, maturin, reproducible benchmark artifacts, QECTOR.
 
 ## Boundaries
 
