@@ -113,32 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const originalForm = document.getElementById("contactForm");
-  if (originalForm) {
-    const form = originalForm.cloneNode(true);
-    originalForm.replaceWith(form);
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const data = new FormData(form);
-      const subject = encodeURIComponent(`QECTOR ${data.get("type") || "Contact"}`);
-      const body = encodeURIComponent([
-        `Name: ${data.get("name") || ""}`,
-        `Organization: ${data.get("org") || ""}`,
-        `Email: ${data.get("email") || ""}`,
-        `Inquiry type: ${data.get("type") || ""}`,
-        `License tier: ${data.get("tier") || ""}`,
-        "",
-        "Message:",
-        `${data.get("message") || ""}`,
-        "",
-        "Official links:",
-        "Website: https://www.qector.store",
-        "PyPI: https://pypi.org/project/qector-decoder-v3/",
-        "Repository: https://github.com/GuillaumeLessard/qector-decoder",
-        "DOI: https://doi.org/10.5281/zenodo.20825980"
-      ].join("\n"));
-      window.location.href = `mailto:admin@qector.store?subject=${subject}&body=${body}`;
-    });
+  const sentNotice = document.createElement("div");
+  if (window.location.search.includes("sent=true") && document.querySelector("#contactForm")) {
+    sentNotice.className = "notice";
+    sentNotice.innerHTML = "<strong>Message sent.</strong><br>Your QECTOR inquiry was submitted successfully.";
+    document.querySelector("#contactForm").before(sentNotice);
   }
 
   setNavState();
