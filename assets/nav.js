@@ -29,41 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.insertBefore(link, document.body.firstChild);
   };
 
-  const applyOfficialLogo = () => {
-    document.querySelectorAll("a.nav-logo, a.footer-brand").forEach((link) => {
-      while (link.firstChild) link.removeChild(link.firstChild);
-      const img = document.createElement("img");
-      img.className = "official-logo";
-      img.src = "assets/logo.svg";
-      img.width = 132;
-      img.height = 74;
-      img.alt = "QECTOR official logo";
-      img.loading = "eager";
-      img.decoding = "async";
-      link.appendChild(img);
-      link.setAttribute("aria-label", "QECTOR official logo");
-    });
-  };
-
-  const ensureNavLink = (href, label, afterHref) => {
-    if (!navLinks || navLinks.querySelector(`a[href="${href}"]`)) return;
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = href;
-    link.textContent = label;
-    item.appendChild(link);
-    const anchor = navLinks.querySelector(`a[href="${afterHref}"]`);
-    if (anchor && anchor.parentElement) anchor.parentElement.insertAdjacentElement("afterend", item);
-    else navLinks.appendChild(item);
-  };
-
   ensureMainLandmark();
   ensureSkipLink();
-  applyOfficialLogo();
-  ensureNavLink("installer.html", "Install", "decoder.html");
-  ensureNavLink("docs.html", "Docs", "installer.html");
-  ensureNavLink("technical-reference.html", "Tech", "docs.html");
-  ensureNavLink("about.html", "About", "commercial.html");
 
   let backdrop = document.querySelector(".mobile-backdrop");
   if (!backdrop) {
@@ -103,7 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const href = link.getAttribute("href");
-    if (href === current) link.classList.add("active");
+    if (href === current) {
+      link.classList.add("active");
+      link.setAttribute("aria-current", "page");
+    }
     link.addEventListener("click", closeMenu, { passive: true });
   });
 
