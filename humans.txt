@@ -1,0 +1,4 @@
+QECTOR Decoder 3
+Creator: Guillaume Lessard
+Organization: iD01t Productions
+Website: https://www.qector.store
