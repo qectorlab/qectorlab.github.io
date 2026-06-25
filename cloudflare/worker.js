@@ -31,18 +31,37 @@ const LINK_HEADER = [
   '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
   '</openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json"',
   '</docs.html>; rel="service-doc"; type="text/html"',
+  '</health.json>; rel="status"; type="application/json"',
   '</auth.md>; rel="authorization"; type="text/markdown"',
+  '</.well-known/oauth-protected-resource>; rel="oauth-protected-resource"; type="application/json"',
+  '</.well-known/oauth-authorization-server>; rel="oauth-authorization-server"; type="application/json"',
+  '</.well-known/openid-configuration>; rel="openid-configuration"; type="application/json"',
   '</.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json"',
-  '</.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"'
+  '</.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"',
+  '</assets/webmcp.js>; rel="modulepreload"; as="script"'
 ].join(', ');
 
 const CONTENT_TYPES = new Map([
   ['/.well-known/api-catalog', 'application/linkset+json; charset=utf-8'],
+  ['/.well-known/api-catalog.json', 'application/linkset+json; charset=utf-8'],
   ['/.well-known/oauth-protected-resource', 'application/json; charset=utf-8'],
+  ['/.well-known/oauth-protected-resource.json', 'application/json; charset=utf-8'],
   ['/.well-known/oauth-authorization-server', 'application/json; charset=utf-8'],
+  ['/.well-known/oauth-authorization-server.json', 'application/json; charset=utf-8'],
   ['/.well-known/openid-configuration', 'application/json; charset=utf-8'],
+  ['/.well-known/jwks.json', 'application/json; charset=utf-8'],
+  ['/.well-known/mcp/server-card.json', 'application/json; charset=utf-8'],
+  ['/.well-known/mcp.json', 'application/json; charset=utf-8'],
+  ['/.well-known/mcp/server-cards.json', 'application/json; charset=utf-8'],
+  ['/.well-known/agent-skills/index.json', 'application/json; charset=utf-8'],
+  ['/.well-known/skills/index.json', 'application/json; charset=utf-8'],
   ['/.well-known/ucp', 'application/json; charset=utf-8'],
+  ['/.well-known/ucp.json', 'application/json; charset=utf-8'],
+  ['/.well-known/acp.json', 'application/json; charset=utf-8'],
+  ['/openapi.json', 'application/vnd.oai.openapi+json; charset=utf-8'],
+  ['/health.json', 'application/json; charset=utf-8'],
   ['/auth.md', 'text/markdown; charset=utf-8'],
+  ['/markdown/index.md', 'text/markdown; charset=utf-8'],
   ['/llms.txt', 'text/plain; charset=utf-8'],
   ['/llms-full.txt', 'text/plain; charset=utf-8']
 ]);
