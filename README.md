@@ -1,14 +1,29 @@
 # QECTOR Store Website
 
-Official GitHub Pages repository for QECTOR Decoder v3 website.
+Official GitHub Pages repository for QECTOR Decoder 3 website.
 
 QECTOR is a source-available Rust/Python quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflow evaluation.
 
-Official website: https://www.qector.store  
-Official contact: admin@qector.store  
+Official website: https://qector.store  
 Canonical decoder repository: https://github.com/GuillaumeLessard/qector-decoder  
 PyPI package: https://pypi.org/project/qector-decoder-v3/  
 Zenodo DOI: https://doi.org/10.5281/zenodo.20825980
+
+## Canonical domain
+
+Production canonical domain:
+
+```text
+https://qector.store
+```
+
+Repository `CNAME` must contain exactly:
+
+```text
+qector.store
+```
+
+`www.qector.store` should be redirected to `qector.store` through Cloudflare.
 
 ## Canonical public install
 
@@ -21,18 +36,18 @@ Do not make source-build commands the primary public website install path. Sourc
 
 ## Public pages
 
-- Home: https://www.qector.store/
-- Decoder: https://www.qector.store/decoder.html
-- Installer: https://www.qector.store/installer.html
-- Docs: https://www.qector.store/docs.html
-- Technical reference: https://www.qector.store/technical-reference.html
-- Benchmarks: https://www.qector.store/benchmarks.html
-- Workbench: https://www.qector.store/workbench.html
-- License: https://www.qector.store/license.html
-- Pricing: https://www.qector.store/pricing.html
-- Commercial: https://www.qector.store/commercial.html
-- About: https://www.qector.store/about.html
-- Contact: https://www.qector.store/contact.html
+- Home: https://qector.store/
+- Decoder: https://qector.store/decoder.html
+- Installer: https://qector.store/installer.html
+- Docs: https://qector.store/docs.html
+- Technical reference: https://qector.store/technical-reference.html
+- Benchmarks: https://qector.store/benchmarks.html
+- Workbench: https://qector.store/workbench.html
+- License: https://qector.store/license.html
+- Pricing: https://qector.store/pricing.html
+- Commercial: https://qector.store/commercial.html
+- About: https://qector.store/about.html
+- Contact: https://qector.store/contact.html
 
 ## Current public release state
 
@@ -51,12 +66,16 @@ Do not make source-build commands the primary public website install path. Sourc
 Every public page should keep these aligned:
 
 - Version: v0.5.1
+- Website: https://qector.store
 - Repository: https://github.com/GuillaumeLessard/qector-decoder
 - PyPI: https://pypi.org/project/qector-decoder-v3/
 - DOI: https://doi.org/10.5281/zenodo.20825980
 - Author / owner: Guillaume Lessard / iD01t Productions
-- Contact: admin@qector.store
 - Install command: pip install qector-decoder-v3
+
+## Cloudflare deployment
+
+See `CLOUDFLARE_GITHUB_PAGES.md` for DNS, SSL/TLS, redirect, cache, and security header rules.
 
 ## Pricing position
 
@@ -73,26 +92,8 @@ Current public tiers:
 - OEM / Embedded: contact-only partner validation
 - Strategic Partnership: custom, no public exclusive-price floor
 
-## Website conversion fixes now covered
-
-- Homepage credits Guillaume Lessard / iD01t Productions
-- Homepage links directly to PyPI, GitHub, benchmark artifacts, and DOI
-- Install page uses PyPI first, not source-build first
-- Docs hub points to PyPI, GitHub README, artifacts, DOI, license, and pricing
-- Benchmark page includes direct artifact discovery links
-- About page states owner, version, DOI, package, and limitations
-- robots.txt and sitemap.xml are configured for indexing
-
 ## License
 
 QECTOR is source-available, not open-source.
 
 Personal, academic, educational, and non-commercial research use is permitted under the source-available license.
-
-Commercial use requires a paid commercial license.
-
-## Contact
-
-admin@qector.store
-
-Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
