@@ -1,4 +1,7 @@
 QECTOR Decoder 3
 Creator: Guillaume Lessard
 Organization: iD01t Productions
-Website: https://www.qector.store
+Website: https://qector.store
+PyPI: https://pypi.org/project/qector-decoder-v3/
+GitHub: https://github.com/GuillaumeLessard/qector-decoder
+DOI: https://doi.org/10.5281/zenodo.20825980
