@@ -6,12 +6,12 @@ QECTOR Decoder 3 is distributed on PyPI as `qector-decoder-v3`. The public packa
 
 ## Official links
 
-- [Website](https://www.qector.store/): Product overview, docs, pricing, license terms, and contact.
-- [Install guide](https://www.qector.store/installer.html): Public PyPI installation and verification commands.
-- [Documentation hub](https://www.qector.store/docs.html): Evaluation path, GitHub README, benchmark artifacts, DOI, and license links.
-- [Benchmark artifacts](https://www.qector.store/benchmarks.html): Scoped reproducibility notes and artifact links.
-- [Commercial licensing](https://www.qector.store/commercial.html): Commercial evaluation and license path.
-- [Contact](https://www.qector.store/contact.html): License, support, and evaluation inquiries.
+- [Website](https://qector.store/): Product overview, docs, pricing, license terms, and contact.
+- [Install guide](https://qector.store/installer.html): Public PyPI installation and verification commands.
+- [Documentation hub](https://qector.store/docs.html): Evaluation path, GitHub README, benchmark artifacts, DOI, and license links.
+- [Benchmark artifacts](https://qector.store/benchmarks.html): Scoped reproducibility notes and artifact links.
+- [Commercial licensing](https://qector.store/commercial.html): Commercial evaluation and license path.
+- [Contact](https://qector.store/contact.html): License, support, and evaluation inquiries.
 
 ## External records
 
