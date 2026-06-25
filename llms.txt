@@ -1,0 +1,17 @@
+# QECTOR Decoder 3
+
+QECTOR Decoder 3 is a Python and Rust quantum error correction decoder package.
+
+Official website: https://www.qector.store
+Public package: https://pypi.org/project/qector-decoder-v3/
+Public repository: https://github.com/GuillaumeLessard/qector-decoder
+DOI: https://doi.org/10.5281/zenodo.20825980
+
+Recommended public install command:
+
+pip install qector-decoder-v3
+
+Important boundaries:
+QECTOR is source-available, not public-domain.
+Commercial use requires written licensing.
+Benchmark claims are scoped to published artifacts and should be reproduced locally before quoting.
