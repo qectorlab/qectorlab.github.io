@@ -36,6 +36,7 @@ const LINK_HEADER = [
   '</.well-known/oauth-protected-resource>; rel="oauth-protected-resource"; type="application/json"',
   '</.well-known/oauth-authorization-server>; rel="oauth-authorization-server"; type="application/json"',
   '</.well-known/openid-configuration>; rel="openid-configuration"; type="application/json"',
+  '</.well-known/http-message-signatures-directory>; rel="http-message-signatures-directory"; type="application/json"',
   '</.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json"',
   '</.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"',
   '</assets/webmcp.js>; rel="modulepreload"; as="script"'
@@ -50,6 +51,8 @@ const CONTENT_TYPES = new Map([
   ['/.well-known/oauth-authorization-server.json', 'application/json; charset=utf-8'],
   ['/.well-known/openid-configuration', 'application/json; charset=utf-8'],
   ['/.well-known/jwks.json', 'application/json; charset=utf-8'],
+  ['/.well-known/http-message-signatures-directory', 'application/json; charset=utf-8'],
+  ['/.well-known/http-message-signatures-directory.json', 'application/json; charset=utf-8'],
   ['/.well-known/mcp/server-card.json', 'application/json; charset=utf-8'],
   ['/.well-known/mcp.json', 'application/json; charset=utf-8'],
   ['/.well-known/mcp/server-cards.json', 'application/json; charset=utf-8'],
