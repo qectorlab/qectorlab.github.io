@@ -4,13 +4,7 @@ Canonical production domain: `qector.store`
 
 ## Repository state
 
-The repository root must contain:
-
-```text
-CNAME
-```
-
-with this exact content:
+The repository root must contain `CNAME` with this exact content:
 
 ```text
 qector.store
@@ -75,6 +69,72 @@ Preserve query string: Yes
 
 Goal: every `www.qector.store/*` URL becomes `qector.store/*`.
 
+## Required Cloudflare Worker for agent readiness
+
+GitHub Pages cannot perform content negotiation or custom `Link` response headers by itself. Use the included Worker file:
+
+```text
+cloudflare/worker.js
+```
+
+Deploy it in Cloudflare Workers and attach this route:
+
+```text
+qector.store/*
+```
+
+The Worker provides:
+
+```text
+Accept: text/markdown → Content-Type: text/markdown
+Link response header for llms, API catalog, OpenAPI, docs, auth, MCP, and skills
+Content-Type correction for extensionless .well-known JSON resources
+Security headers
+Long cache TTL for /assets/*
+```
+
+## Link response header
+
+If using Cloudflare Response Header Rules instead of the Worker, add this `Link` header on `https://qector.store/`:
+
+```text
+</llms.txt>; rel="alternate"; type="text/plain", </llms-full.txt>; rel="alternate"; type="text/plain", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json", </docs.html>; rel="service-doc"; type="text/html", </auth.md>; rel="authorization"; type="text/markdown", </.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"
+```
+
+## Agent discovery files in repo
+
+The repo contains these static discovery files:
+
+```text
+/.well-known/api-catalog
+/openapi.json
+/auth.md
+/.well-known/oauth-protected-resource
+/.well-known/oauth-authorization-server
+/.well-known/openid-configuration
+/.well-known/mcp/server-card.json
+/.well-known/mcp.json
+/.well-known/mcp/server-cards.json
+/.well-known/agent-skills/index.json
+/.well-known/skills/index.json
+/.well-known/ucp
+/.well-known/acp.json
+/health.json
+/llms.txt
+/llms-full.txt
+```
+
+## DNS-AID records
+
+DNS-AID is DNS-based and cannot be committed into GitHub Pages files. Add DNS discovery records in Cloudflare DNS when the UI supports SVCB/HTTPS records for these names:
+
+```text
+_index._agents.qector.store
+_a2a._agents.qector.store
+```
+
+Point them to `qector.store` with HTTPS/SVCB service parameters appropriate for Cloudflare. DNSSEC should be enabled in Cloudflare when available.
+
 ## Cache rule
 
 Create a Cloudflare Cache Rule for static assets:
@@ -122,6 +182,10 @@ https://qector.store/
 https://qector.store/sitemap.xml
 https://qector.store/robots.txt
 https://qector.store/llms.txt
+https://qector.store/.well-known/api-catalog
+https://qector.store/openapi.json
+https://qector.store/.well-known/mcp/server-card.json
+https://qector.store/.well-known/agent-skills/index.json
 https://qector.store/contact.html
 ```
 
