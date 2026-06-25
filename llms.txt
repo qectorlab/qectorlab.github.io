@@ -1,17 +1,36 @@
 # QECTOR Decoder 3
 
-QECTOR Decoder 3 is a Python and Rust quantum error correction decoder package.
+> Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-Official website: https://www.qector.store
-Public package: https://pypi.org/project/qector-decoder-v3/
-Public repository: https://github.com/GuillaumeLessard/qector-decoder
-DOI: https://doi.org/10.5281/zenodo.20825980
+QECTOR Decoder 3 is distributed on PyPI as `qector-decoder-v3`. The public package includes installable Python wheels and documented workflows for quantum error correction decoder evaluation.
 
-Recommended public install command:
+## Official links
 
+- [Website](https://www.qector.store/): Product overview, docs, pricing, license terms, and contact.
+- [Install guide](https://www.qector.store/installer.html): Public PyPI installation and verification commands.
+- [Documentation hub](https://www.qector.store/docs.html): Evaluation path, GitHub README, benchmark artifacts, DOI, and license links.
+- [Benchmark artifacts](https://www.qector.store/benchmarks.html): Scoped reproducibility notes and artifact links.
+- [Commercial licensing](https://www.qector.store/commercial.html): Commercial evaluation and license path.
+- [Contact](https://www.qector.store/contact.html): License, support, and evaluation inquiries.
+
+## External records
+
+- [PyPI package](https://pypi.org/project/qector-decoder-v3/): Public package page.
+- [GitHub repository](https://github.com/GuillaumeLessard/qector-decoder): Source-available repository, README, issues, and artifacts.
+- [Zenodo DOI](https://doi.org/10.5281/zenodo.20825980): DOI provenance record.
+
+## Recommended install command
+
+```bash
 pip install qector-decoder-v3
+```
 
-Important boundaries:
-QECTOR is source-available, not public-domain.
-Commercial use requires written licensing.
-Benchmark claims are scoped to published artifacts and should be reproduced locally before quoting.
+## Search and discovery terms
+
+Quantum error correction, QEC decoder, quantum decoder, PyMatching, Stim, Sinter, MWPM, union find decoder, belief matching, BP-OSD, LDPC, qLDPC, surface code, Rust, Python, PyO3, maturin, reproducible benchmark artifacts, QECTOR.
+
+## Boundaries
+
+- Commercial use requires written licensing.
+- Benchmark claims should be tied to published artifacts and local reproduction.
+- PyMatching and Stim remain important reference tools.
