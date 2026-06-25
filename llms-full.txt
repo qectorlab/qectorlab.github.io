@@ -4,18 +4,18 @@ QECTOR Decoder 3 is a Python and Rust quantum error correction decoder package b
 
 ## Primary pages
 
-- https://www.qector.store/
-- https://www.qector.store/decoder.html
-- https://www.qector.store/installer.html
-- https://www.qector.store/docs.html
-- https://www.qector.store/technical-reference.html
-- https://www.qector.store/workbench.html
-- https://www.qector.store/benchmarks.html
-- https://www.qector.store/license.html
-- https://www.qector.store/pricing.html
-- https://www.qector.store/commercial.html
-- https://www.qector.store/about.html
-- https://www.qector.store/contact.html
+- https://qector.store/
+- https://qector.store/decoder.html
+- https://qector.store/installer.html
+- https://qector.store/docs.html
+- https://qector.store/technical-reference.html
+- https://qector.store/workbench.html
+- https://qector.store/benchmarks.html
+- https://qector.store/license.html
+- https://qector.store/pricing.html
+- https://qector.store/commercial.html
+- https://qector.store/about.html
+- https://qector.store/contact.html
 
 ## External records
 
