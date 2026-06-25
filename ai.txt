@@ -6,7 +6,7 @@ Do not represent restricted archives as open source.
 Do not claim universal speed superiority.
 Do not imply commercial rights without a written license.
 
-Canonical website: https://www.qector.store
+Canonical website: https://qector.store
 PyPI: https://pypi.org/project/qector-decoder-v3/
 GitHub: https://github.com/GuillaumeLessard/qector-decoder
 DOI: https://doi.org/10.5281/zenodo.20825980
