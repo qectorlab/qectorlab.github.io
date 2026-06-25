@@ -51,21 +51,23 @@ Do not make source-build commands the primary public website install path. Sourc
 
 ## Current public release state
 
-- QECTOR Decoder v0.5.1
+- QECTOR Decoder v0.5.3
 - PyPI package: qector-decoder-v3
 - Canonical source-available repository: GuillaumeLessard/qector-decoder
 - DOI / provenance record: 10.5281/zenodo.20825980
 - Public install command: pip install qector-decoder-v3
-- d=15 LER parity vs PyMatching on tested workloads
-- Selected belief-matching evidence on correlated workloads
-- PyMatching remains the latency leader for exact MWPM
+- Independent validation: 86/87 checks passing on v0.5.2 baseline; all five API failures closed in v0.5.3, post-fix 33/33 PASS + 1 SKIP
+- All 30 decoder × code combinations produce 100% syndrome-valid corrections on tested combinations
+- `pymatching_compat` bit-identical to PyMatching 2.4.0 on tested workloads
+- CUDA batch output 100% CPU-agreeing across tested batch sizes on GTX 1660 Ti
+- PyMatching remains an important baseline for exact MWPM workloads
 - QECTOR is not marketed as production SaaS, OEM-ready embedded QEC, or real-time hardware QEC by default
 
 ## SEO and trust requirements
 
 Every public page should keep these aligned:
 
-- Version: v0.5.1
+- Version: v0.5.3
 - Website: https://qector.store
 - Repository: https://github.com/GuillaumeLessard/qector-decoder
 - PyPI: https://pypi.org/project/qector-decoder-v3/
@@ -75,7 +77,7 @@ Every public page should keep these aligned:
 
 ## Cloudflare deployment
 
-See `CLOUDFLARE_GITHUB_PAGES.md` for DNS, SSL/TLS, redirect, cache, and security header rules.
+See `CLOUDFLARE_GITHUB_PAGES.md` for DNS, SSL/TLS, redirect, cache, Worker, Markdown negotiation, Link headers, Web Bot Auth, agent discovery, and DNS-AID notes.
 
 ## Pricing position
 
