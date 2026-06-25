@@ -29,8 +29,24 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.insertBefore(link, document.body.firstChild);
   };
 
+  const normalizeFooterLabels = () => {
+    document.querySelectorAll("footer h4").forEach((heading) => {
+      const label = document.createElement("span");
+      label.className = "footer-title";
+      label.textContent = heading.textContent;
+      label.setAttribute("aria-hidden", "true");
+      label.style.display = "block";
+      label.style.margin = "0 0 .75rem";
+      label.style.color = "#f7fbff";
+      label.style.fontWeight = "850";
+      label.style.letterSpacing = "-.02em";
+      heading.replaceWith(label);
+    });
+  };
+
   ensureMainLandmark();
   ensureSkipLink();
+  normalizeFooterLabels();
 
   let backdrop = document.querySelector(".mobile-backdrop");
   if (!backdrop) {
@@ -113,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const sentNotice = document.createElement("div");
   if (window.location.search.includes("sent=true") && document.querySelector("#contactForm")) {
+    const sentNotice = document.createElement("div");
     sentNotice.className = "notice";
     sentNotice.innerHTML = "<strong>Message sent.</strong><br>Your QECTOR inquiry was submitted successfully.";
     document.querySelector("#contactForm").before(sentNotice);
