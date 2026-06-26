@@ -19,39 +19,60 @@
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
     <style>
-        /* Pro-level responsive grid enhancements */
-        .pro-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.75rem;
-        }
-        
-        @media (max-width: 640px) {
-            .pro-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
-            }
-            
-            .page-hero h1 {
-                font-size: 2.35rem !important;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-        }
-        
+        /* Premium Visual Polish */
         .feature-card {
             background: #1e2937;
             border: 1px solid #334155;
             border-radius: 14px;
             padding: 2rem 1.85rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+                        0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
         
         .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+                        0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .btn-premium {
+            background: linear-gradient(145deg, #3b82f6, #2563eb);
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 2.1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgb(59 130 246 / 0.2),
+                        0 2px 4px -2px rgb(59 130 246 / 0.2);
+        }
+        
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #e2e8f0;
+            font-weight: 600;
+            padding: 0.9rem 1.85rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.05rem;
+            border: 1px solid #475569;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #1e2937;
+            border-color: #64748b;
         }
     </style>
 </head>
@@ -109,12 +130,10 @@
                 </p>
 
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="pricing.html" 
-                       style="display: inline-flex; align-items: center; justify-content: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.9rem 2.1rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem; transition: all 0.2s ease;">
+                    <a href="pricing.html" class="btn-premium">
                         Get Started
                     </a>
-                    <a href="workbench.html" 
-                       style="display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #e2e8f0; font-weight: 600; padding: 0.9rem 1.85rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem; border: 1px solid #475569; transition: all 0.2s ease;">
+                    <a href="workbench.html" class="btn-secondary">
                         Explore the Workbench
                     </a>
                 </div>
@@ -132,7 +151,7 @@
         </div>
     </section>
 
-    <!-- Features with CSS Grid -->
+    <!-- Features with Premium Cards -->
     <section style="padding: 5rem 0 4rem;">
         <div class="container">
             <div style="text-align: center; max-width: 720px; margin: 0 auto 3.25rem;">
@@ -144,7 +163,6 @@
                 </p>
             </div>
 
-            <!-- CSS Grid Implementation -->
             <div class="pro-grid">
                 <div class="feature-card">
                     <div style="width: 44px; height: 44px; background: #334155; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.45rem;">
@@ -188,8 +206,7 @@
             <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 2rem; font-size: 1.05rem;">
                 Get the full SATI OS platform with visual tooling, plugin architecture, and professional support.
             </p>
-            <a href="pricing.html" 
-               style="display: inline-flex; align-items: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.95rem 2.25rem; border-radius: 10px; text-decoration: none; font-size: 1.08rem;">
+            <a href="pricing.html" class="btn-premium">
                 See Pricing &amp; Plans
             </a>
         </div>
