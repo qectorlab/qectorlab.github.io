@@ -7,6 +7,19 @@
     <title>Workbench • SATI OS</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .pro-workbench-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.6rem;
+        }
+        
+        @media (max-width: 640px) {
+            .pro-workbench-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -51,32 +64,33 @@
         </div>
     </section>
 
+    <!-- CSS Grid Features -->
     <section>
         <div class="container">
-            <div class="grid-3" style="gap: 1.5rem;">
+            <div class="pro-workbench-grid">
                 <div class="card" style="padding: 2rem 1.85rem;">
-                    <h3 style="margin-bottom: 0.85rem; font-size: 1.35rem;">Code Lab</h3>
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.3rem;">Code Lab</h3>
                     <p style="color: #94a3b8; line-height: 1.7;">Load, visualize, and analyze any supported QEC code. Instant parity check matrix view and logical operator inspection.</p>
                 </div>
                 <div class="card" style="padding: 2rem 1.85rem;">
-                    <h3 style="margin-bottom: 0.85rem; font-size: 1.35rem;">Multi-Decoder Comparison</h3>
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.3rem;">Multi-Decoder Comparison</h3>
                     <p style="color: #94a3b8; line-height: 1.7;">Run the same syndrome across UnionFind, Blossom, BP-OSD, and your custom plugins side-by-side with clear metrics.</p>
                 </div>
                 <div class="card" style="padding: 2rem 1.85rem;">
-                    <h3 style="margin-bottom: 0.85rem; font-size: 1.35rem;">Benchmark Suite</h3>
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.3rem;">Benchmark Suite</h3>
                     <p style="color: #94a3b8; line-height: 1.7;">Monte-Carlo simulations, logical error rate curves, finite-size scaling, and threshold analysis in one place.</p>
                 </div>
 
                 <div class="card" style="padding: 2rem 1.85rem;">
-                    <h3 style="margin-bottom: 0.85rem; font-size: 1.35rem;">Resource Estimator</h3>
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.3rem;">Resource Estimator</h3>
                     <p style="color: #94a3b8; line-height: 1.7;">FPGA and ASIC analytical modeling. Get realistic latency, power, and resource estimates without writing RTL.</p>
                 </div>
                 <div class="card" style="padding: 2rem 1.85rem;">
-                    <h3 style="margin-bottom: 0.85rem; font-size: 1.35rem;">Plugin Architecture</h3>
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.3rem;">Plugin Architecture</h3>
                     <p style="color: #94a3b8; line-height: 1.7;">Clean <code>CodeProvider</code> interface. Load standard codes or premium LCL-832/833 modules without touching core logic.</p>
                 </div>
                 <div class="card" style="padding: 2rem 1.85rem;">
-                    <h3 style="margin-bottom: 0.85rem; font-size: 1.35rem;">Cross-Platform</h3>
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.3rem;">Cross-Platform</h3>
                     <p style="color: #94a3b8; line-height: 1.7;">Native Dear PyGui experience on Windows, Linux, and macOS with optional GPU acceleration and graceful CPU fallbacks.</p>
                 </div>
             </div>
@@ -85,7 +99,7 @@
 
     <section style="background: #0f172a; padding: 4rem 0; border-top: 1px solid #1e2937; margin-top: 3rem;">
         <div class="container" style="text-align: center;">
-            <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem;">Ready to stop stitching tools together?</h2>
+            <h2 style="font-size: 1.7rem; font-weight: 700; margin-bottom: 1rem;">Ready to stop stitching tools together?</h2>
             <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 2rem;">Get the full SATI OS platform with visual tooling and professional support.</p>
             <a href="pricing.html" style="display: inline-flex; align-items: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.9rem 2.1rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem;">
                 See Pricing
