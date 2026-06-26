@@ -1,2 +1,104 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Install QECTOR Decoder 3 from PyPI with pip install qector-decoder-v3. Includes verification commands, manual links, and official resources."><meta name="author" content="Guillaume Lessard / iD01t Productions"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#24e7ff"><link rel="canonical" href="https://qector.store/installer.html"><link rel="manifest" href="manifest.webmanifest"><meta property="og:title" content="Install QECTOR Decoder 3 from PyPI"><meta property="og:description" content="Use pip install qector-decoder-v3 for the official PyPI wheel and verify with a one-line Python import test."><meta property="og:type" content="website"><meta property="og:url" content="https://qector.store/installer.html"><meta property="og:image" content="https://qector.store/assets/logo.svg"><meta name="twitter:card" content="summary_large_image"><title>Install QECTOR Decoder 3</title><link rel="icon" href="assets/logo.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head><body><a class="skip-link" href="#main">Skip to content</a><nav class="nav" aria-label="Primary navigation"><div class="container nav-inner"><a href="index.html" class="nav-logo" aria-label="QECTOR home"><img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo"></a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="decoder.html">Decoder</a></li><li><a class="active" aria-current="page" href="installer.html">Install</a></li><li><a href="docs.html">Docs</a></li><li><a href="manual.html">Manual</a></li><li><a href="benchmarks.html">Benchmarks</a></li><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav><main id="main" tabindex="-1"><section class="hero"><div class="container hero-grid-layout"><div class="hero-copy"><div class="hero-eyebrow"><span class="badge badge-green"><span class="glow-dot"></span> Official PyPI install</span><span class="badge badge-cyan">Wheel first</span><span class="badge badge-muted">Manual available</span></div><h1>Install QECTOR Decoder 3 from PyPI.</h1><p class="hero-subtitle">The normal public path is the PyPI wheel. Use the same Python environment for install and verification.</p><div class="hero-actions"><a href="#pypi" class="btn btn-primary btn-lg">PyPI command</a><a href="#verify" class="btn btn-secondary btn-lg">Verify install</a><a href="manual.html" class="btn btn-gold btn-lg">User Manual</a></div></div><div class="hero-visual"><div class="section-label">Terminal</div><pre><code>pip install qector-decoder-v3
-python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"</code></pre></div></div></section><section id="pypi"><div class="container"><div class="section-label">Recommended command</div><h2>Use the public PyPI package.</h2><p>This installs <code>qector-decoder-v3</code>. Use the same Python environment for the install and the verification command.</p><pre><code>pip install qector-decoder-v3</code></pre></div></section><section id="verify"><div class="container"><div class="section-label">Verification</div><h2>Expected successful result.</h2><pre><code>python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"</code></pre><pre><code>QECTOR OK</code></pre></div></section><section><div class="container grid-2"><div class="card"><h3>Official manual</h3><p>Use the manual for install, quick start, decoder selection, Workbench, benchmarking, integrations, and troubleshooting.</p><div class="hero-actions"><a class="btn btn-primary" href="manual.html">Manual page</a><a class="btn btn-secondary" href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ">Google Books</a><a class="btn btn-secondary" href="https://id01t.itch.io/qector-decoder-v3-the-official-user-manual">Itch</a></div></div><div class="card"><h3>Official resources</h3><p>Use PyPI for installation, GitHub for artifacts and source-available docs, and DOI for provenance.</p><div class="hero-actions"><a class="btn btn-primary" href="https://pypi.org/project/qector-decoder-v3/">PyPI</a><a class="btn btn-secondary" href="https://github.com/GuillaumeLessard/qector-decoder">GitHub</a></div></div></div></section></main><footer class="footer"><div class="container footer-grid"><div><a href="index.html" class="footer-brand"><img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo"></a><p>Quantum error correction decoder package for reproducible research and commercial workflow evaluation.</p></div><div><h4>Product</h4><a href="decoder.html">Decoder</a><a href="installer.html">Install</a><a href="docs.html">Docs</a><a href="manual.html">Manual</a><a href="benchmarks.html">Benchmarks</a></div><div><h4>Official</h4><a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub repository</a><a href="https://pypi.org/project/qector-decoder-v3/">PyPI package</a><a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ">Google Books manual</a><a href="https://id01t.itch.io/qector-decoder-v3-the-official-user-manual">Itch manual</a></div></div></footer><script src="assets/nav.js" defer></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Installation guide for QECTOR Decoder v3.">
+    <title>Install • QECTOR</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Header -->
+<nav class="nav" aria-label="Primary navigation">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">
+            <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
+        </a>
+        <button class="nav-hamburger" type="button" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="decoder.html">Decoder</a></li>
+            <li><a href="installer.html" class="active" aria-current="page">Install</a></li>
+            <li><a href="docs.html">Docs</a></li>
+            <li><a href="technical-reference.html">Tech</a></li>
+            <li><a href="workbench.html">Workbench</a></li>
+            <li><a href="benchmarks.html">Benchmarks</a></li>
+            <li><a href="license.html">License</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="commercial.html">Commercial</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="nav-cta"><a href="contact.html">Get License</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main id="main" tabindex="-1">
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="section-label">Installation</div>
+            <h1>Install QECTOR Decoder v3</h1>
+            <p>Quick installation and verification steps.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container" style="max-width: 720px; margin: 0 auto;">
+            <div style="background: #1e2937; padding: 2.25rem; border-radius: 14px;">
+                <h3 style="margin-bottom: 1rem;">Install via PyPI</h3>
+                <pre style="background:#0f172a; padding:1rem; border-radius:8px;"><code>pip install qector-decoder-v3</code></pre>
+
+                <h3 style="margin: 2rem 0 1rem;">Quick Verification</h3>
+                <pre style="background:#0f172a; padding:1rem; border-radius:8px;"><code>python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"</code></pre>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div>
+            <a href="index.html" class="footer-brand">
+                <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
+            </a>
+            <p>Quantum error correction decoder package for reproducible research and commercial workflow evaluation.</p>
+        </div>
+        <div>
+            <h4>Product</h4>
+            <a href="decoder.html">Decoder</a>
+            <a href="installer.html">Install</a>
+            <a href="docs.html">Docs</a>
+            <a href="benchmarks.html">Benchmarks</a>
+        </div>
+        <div>
+            <h4>Commercial</h4>
+            <a href="license.html">License</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="commercial.html">Commercial use</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div>
+            <h4>Official</h4>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub repository</a>
+            <a href="https://pypi.org/project/qector-decoder-v3/">PyPI package</a>
+            <a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ">Official Manual</a>
+            <a href="https://www.qector.store">Official Website</a>
+            <span>Copyright © 2026 Guillaume Lessard / iD01t Productions</span>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+</body>
+</html>
