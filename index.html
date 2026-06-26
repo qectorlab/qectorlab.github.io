@@ -19,23 +19,6 @@
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
     <style>
-        .feature-card {
-            background: #1e2937;
-            border: 1px solid #334155;
-            border-radius: 14px;
-            padding: 2rem 1.85rem;
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-                        0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-                        0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-        
         .btn-premium {
             background: linear-gradient(145deg, #3b82f6, #2563eb);
             color: white;
@@ -57,19 +40,15 @@
             box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.3);
         }
         
-        .hero-banner {
-            width: 100%;
-            max-width: 1080px;
-            margin: 0 auto 2.5rem;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
-        }
-        
-        .hero-banner img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .terminal {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin: 1.5rem 0;
         }
     </style>
 </head>
@@ -108,14 +87,14 @@
 
 <main id="main" tabindex="-1">
 
-    <!-- Clean Hero Section -->
+    <!-- Professional Hero with Terminal Style -->
     <section style="background: #0f172a; padding: 3rem 0 4rem;">
         <div class="container">
             <!-- Hero Banner -->
-            <div class="hero-banner">
+            <div style="max-width: 980px; margin: 0 auto 2.5rem; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);">
                 <img src="https://raw.githubusercontent.com/qectorlab/qectorlab.github.io/main/assets/HQD.png" 
-                     alt="SATI OS - Built for real QEC work" 
-                     style="width: 100%; height: auto; display: block; border-radius: 16px;">
+                     alt="SATI OS" 
+                     style="width: 100%; height: auto; display: block;">
             </div>
 
             <div style="max-width: 780px; margin: 0 auto; text-align: center;">
@@ -123,15 +102,20 @@
                     UPCOMING
                 </div>
                 
-                <h1 style="font-size: clamp(2.75rem, 6.5vw, 4.25rem); line-height: 1.02; font-weight: 800; letter-spacing: -0.045em; margin-bottom: 1.35rem; color: #f1f5f9;">
+                <h1 style="font-size: clamp(2.6rem, 6vw, 4.1rem); line-height: 1.05; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1.25rem; color: #f1f5f9;">
                     SATI OS.<br>
                     <span style="color: #64748b; font-weight: 700;">Built for real QEC work.</span>
                 </h1>
                 
-                <p style="font-size: 1.2rem; color: #94a3b8; max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.6;">
+                <p style="font-size: 1.2rem; color: #94a3b8; max-width: 620px; margin: 0 auto 2.25rem; line-height: 1.6;">
                     The complete cross-platform Quantum Error Correction platform.<br>
                     High-performance Rust core, modern visual Workbench, and clean plugin architecture.
                 </p>
+
+                <!-- Terminal-style install command -->
+                <div class="terminal" style="max-width: 420px; margin: 2rem auto; text-align: left;">
+                    <span style="color: #64748b;">$</span> pip install qector-decoder-v3
+                </div>
 
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <a href="pricing.html" class="btn-premium">
