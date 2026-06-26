@@ -7,6 +7,19 @@
     <title>Commercial • SATI OS</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .pro-commercial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        @media (max-width: 640px) {
+            .pro-commercial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -54,21 +67,21 @@
     <!-- Full Platform -->
     <section>
         <div class="container">
-            <div style="max-width: 860px; margin: 0 auto 3rem;">
-                <h2 style="font-size: 1.65rem; font-weight: 700; margin-bottom: 0.75rem;">1. Full SATI OS Platform</h2>
-                <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.7;">
-                    Includes the complete visual Workbench, Plugin System, LCL-832/833 support, cross-platform tools, and priority updates.
-                </p>
-            </div>
-
-            <div style="max-width: 860px; margin: 0 auto;">
-                <div style="background: #1e2937; border-radius: 14px; padding: 2.25rem 2.5rem;">
-                    <ul style="line-height: 2.15; color: #cbd5e1; font-size: 1.05rem;">
-                        <li><strong>Individual</strong> — $2,900 / year (1 seat)</li>
-                        <li><strong>Professional / Team</strong> — $9,900 / year (up to 8 seats)</li>
-                        <li><strong>Enterprise</strong> — $24,000 / year (custom seats + source access)</li>
-                        <li><strong>Strategic / IP Preview</strong> — Custom (for potential acquirers and deep technical evaluation)</li>
-                    </ul>
+            <div class="pro-commercial-grid">
+                <div>
+                    <h2 style="font-size: 1.55rem; font-weight: 700; margin-bottom: 0.7rem;">1. Full SATI OS Platform</h2>
+                    <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                        Includes the complete visual Workbench, Plugin System, LCL-832/833 support, cross-platform tools, and priority updates.
+                    </p>
+                    
+                    <div style="background: #1e2937; border-radius: 12px; padding: 1.75rem 2rem;">
+                        <ul style="line-height: 2.1; color: #cbd5e1;">
+                            <li><strong>Individual</strong> — $2,900 / year</li>
+                            <li><strong>Professional / Team</strong> — $9,900 / year</li>
+                            <li><strong>Enterprise</strong> — $24,000 / year</li>
+                            <li><strong>Strategic / IP Preview</strong> — Custom</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,27 +90,23 @@
     <!-- Decoder Only -->
     <section style="padding: 4rem 0 5.5rem; background: #0f172a; border-top: 1px solid #1e2937; margin-top: 4rem;">
         <div class="container">
-            <div style="max-width: 860px; margin: 0 auto 2.5rem;">
-                <h2 style="font-size: 1.65rem; font-weight: 700; margin-bottom: 0.75rem;">2. QECTOR Decoder v3 Only</h2>
-                <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.7;">
-                    For teams that only need the high-performance decoder library (no GUI, no Workbench, no plugin system).
-                </p>
-            </div>
-
-            <div style="max-width: 860px; margin: 0 auto;">
-                <div style="background: #1e2937; border-radius: 14px; padding: 2.25rem 2.5rem;">
-                    <ul style="line-height: 2.15; color: #cbd5e1; font-size: 1.05rem;">
-                        <li><strong>Personal / Academic</strong> — Free (non-commercial research &amp; education)</li>
-                        <li><strong>Commercial Evaluation Pilot</strong> — $1,500 for 90 days (up to 2 named users)</li>
-                        <li><strong>Startup Commercial</strong> — $3,500 / year (up to 5 named users)</li>
-                        <li><strong>Professional / Lab</strong> — $15,000 / year (up to 20 named users)</li>
-                        <li><strong>Enterprise R&amp;D</strong> — $35,000+ / year</li>
-                    </ul>
+            <div class="pro-commercial-grid">
+                <div>
+                    <h2 style="font-size: 1.55rem; font-weight: 700; margin-bottom: 0.7rem;">2. QECTOR Decoder v3 Only</h2>
+                    <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                        For teams that only need the high-performance decoder library (no GUI, no Workbench).
+                    </p>
+                    
+                    <div style="background: #1e2937; border-radius: 12px; padding: 1.75rem 2rem;">
+                        <ul style="line-height: 2.1; color: #cbd5e1;">
+                            <li><strong>Personal / Academic</strong> — Free</li>
+                            <li><strong>Commercial Evaluation</strong> — $1,500 / 90 days</li>
+                            <li><strong>Startup Commercial</strong> — $3,500 / year</li>
+                            <li><strong>Professional / Lab</strong> — $15,000 / year</li>
+                            <li><strong>Enterprise R&amp;D</strong> — $35,000+ / year</li>
+                        </ul>
+                    </div>
                 </div>
-
-                <p style="margin-top: 1.5rem; color: #64748b; font-size: 0.95rem;">
-                    Note: Decoder-only licensing does <strong>not</strong> include access to the SATI OS Workbench or GUI.
-                </p>
             </div>
         </div>
     </section>
