@@ -3,77 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATI OS • Modern Quantum Error Correction Platform</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <meta name="description" content="SATI OS - Modern cross-platform Quantum Error Correction platform with visual Workbench, plugin system and high-performance Rust core.">
+    <meta name="author" content="Guillaume Lessard / iD01t Productions">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#24e7ff">
+    <link rel="canonical" href="https://www.qector.store/">
     <link rel="manifest" href="manifest.webmanifest">
+    <meta property="og:title" content="SATI OS - Quantum Error Correction Platform">
+    <meta property="og:description" content="Full visual Workbench, modular plugin system and high-performance Rust core for quantum error correction.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.qector.store/">
+    <meta property="og:image" content="https://www.qector.store/assets/logo.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>SATI OS • Modern Quantum Error Correction Platform</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<!-- Header -->
-<header>
-    <div class="nav-container">
-        <a href="/" class="logo">SATI OS</a>
-        <nav>
-            <a href="/workbench.html">Workbench</a>
-            <a href="/decoder.html">Decoder</a>
-            <a href="/pricing.html">Pricing</a>
-            <a href="/commercial.html">Commercial</a>
-            <a href="/docs.html">Docs</a>
-        </nav>
-    </div>
-</header>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<main>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
+<!-- Exact Header from workbench.html -->
+<nav class="nav" aria-label="Primary navigation">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">
+            <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
+        </a>
+        <button class="nav-hamburger" type="button" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="decoder.html">Decoder</a></li>
+            <li><a href="installer.html">Install</a></li>
+            <li><a href="docs.html">Docs</a></li>
+            <li><a href="technical-reference.html">Tech</a></li>
+            <li><a href="workbench.html">Workbench</a></li>
+            <li><a href="benchmarks.html">Benchmarks</a></li>
+            <li><a href="license.html">License</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="commercial.html">Commercial</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="nav-cta"><a href="contact.html">Get License</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main id="main" tabindex="-1">
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="section-label">Platform</div>
             <h1>SATI OS</h1>
-            <p class="lead">The modern, cross-platform Quantum Error Correction platform.</p>
-            <p>Built for researchers and teams who need more than just a decoder. A complete workbench with a high-performance Rust core, intuitive GUI, and modular plugin architecture.</p>
+            <p>The modern, cross-platform Quantum Error Correction platform.</p>
+            <p>Built for researchers and teams who need more than just a decoder. A complete workbench with high-performance Rust core, intuitive GUI, and modular plugin architecture.</p>
             
-            <div class="cta-group">
-                <a href="/pricing.html" class="btn btn-primary">Get Started</a>
-                <a href="/workbench.html" class="btn btn-secondary">Explore Workbench</a>
+            <div style="margin-top: 2rem;">
+                <a href="pricing.html" class="btn btn-primary">Get Started</a>
+                <a href="workbench.html" class="btn btn-secondary" style="margin-left: 1rem;">Explore Workbench</a>
             </div>
         </div>
     </section>
 
     <!-- Features -->
-    <section class="features">
-        <div class="feature-card">
-            <h3>Full Visual Workbench</h3>
-            <p>Modern Dear PyGui interface with real-time decoding, benchmarking, resource estimation, and multi-decoder comparison.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Modular Plugin System</h3>
-            <p>Support for standard codes (Surface, Toric, Repetition) and premium LCL-832/833 through a clean plugin architecture.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Cross-Platform & Performant</h3>
-            <p>Native Rust core with optional GPU acceleration. Runs on Windows, Linux, and macOS.</p>
+    <section>
+        <div class="container grid-3">
+            <div class="card">
+                <h3>Full Visual Workbench</h3>
+                <p>Modern Dear PyGui interface with real-time decoding, benchmarking, resource estimation, and multi-decoder comparison.</p>
+            </div>
+            <div class="card">
+                <h3>Modular Plugin System</h3>
+                <p>Support for standard codes (Surface, Toric, Repetition) and premium LCL-832/833 through a clean plugin architecture.</p>
+            </div>
+            <div class="card">
+                <h3>Cross-Platform Performance</h3>
+                <p>Native Rust core with optional GPU acceleration. Runs reliably on Windows, Linux, and macOS.</p>
+            </div>
         </div>
     </section>
 
-    <!-- Quickstart -->
-    <section class="quickstart">
-        <h2>Quick Start</h2>
-        <pre><code>pip install qector-decoder-v3</code></pre>
-        <p>Full SATI OS platform access requires a license. <a href="/pricing.html">See Pricing</a></p>
+    <!-- Quick Start -->
+    <section>
+        <div class="container">
+            <h2 style="text-align:center; margin-bottom: 1.5rem;">Quick Start</h2>
+            <div style="max-width: 520px; margin: 0 auto; text-align: center;">
+                <pre style="text-align:left; background:#0f172a; padding:1rem; border-radius:8px;"><code>pip install qector-decoder-v3</code></pre>
+                <p style="margin-top:1rem; color:#64748b;">Full SATI OS platform (Workbench + GUI) requires a license. <a href="pricing.html">See Pricing</a></p>
+            </div>
+        </div>
     </section>
+
 </main>
 
-<!-- Footer -->
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2026 QECTOR Lab</p>
-        <nav>
-            <a href="https://www.qector.store">Official Site</a>
-            <a href="/commercial.html">Commercial</a>
-            <a href="/docs.html">Documentation</a>
-        </nav>
+<!-- Exact Footer from workbench.html -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div>
+            <a href="index.html" class="footer-brand">
+                <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
+            </a>
+            <p>Quantum error correction decoder package for reproducible research and commercial workflow evaluation.</p>
+        </div>
+        <div>
+            <h4>Product</h4>
+            <a href="decoder.html">Decoder</a>
+            <a href="installer.html">Install</a>
+            <a href="docs.html">Docs</a>
+            <a href="benchmarks.html">Benchmarks</a>
+        </div>
+        <div>
+            <h4>Commercial</h4>
+            <a href="license.html">License</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="commercial.html">Commercial use</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div>
+            <h4>Official</h4>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub repository</a>
+            <a href="https://pypi.org/project/qector-decoder-v3/">PyPI package</a>
+            <a href="https://doi.org/10.5281/zenodo.20825980">Zenodo DOI</a>
+            <a href="mailto:admin@qector.store">admin@qector.store</a>
+            <span>Copyright © 2026 Guillaume Lessard / iD01t Productions</span>
+        </div>
     </div>
 </footer>
 
-<script src="assets/nav.js"></script>
+<script src="assets/nav.js" defer></script>
 </body>
 </html>
