@@ -59,17 +59,37 @@
         
         .hero-banner {
             width: 100%;
-            max-width: 1100px;
-            margin: 0 auto 2rem;
-            border-radius: 16px;
+            max-width: 1080px;
+            margin: 0 auto 2.5rem;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.5),
+                        0 0 0 1px rgba(255,255,255,0.06) inset;
         }
         
         .hero-banner img {
             width: 100%;
             height: auto;
             display: block;
+        }
+        
+        .hero-content {
+            max-width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: #1e2937;
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            border: 1px solid #334155;
         }
     </style>
 </head>
@@ -108,27 +128,27 @@
 
 <main id="main" tabindex="-1">
 
-    <!-- Hero Section with Banner Image -->
-    <section style="background: #0f172a; padding: 3rem 0 2.5rem;">
+    <!-- Refined Hero Section -->
+    <section style="background: #0f172a; padding: 2.5rem 0 3rem;">
         <div class="container">
             <!-- Hero Banner Image -->
             <div class="hero-banner">
                 <img src="https://raw.githubusercontent.com/qectorlab/qectorlab.github.io/main/assets/HQD.png" 
-                     alt="SATI OS Hero Banner" 
-                     style="width: 100%; height: auto; border-radius: 16px;">
+                     alt="SATI OS - Built for real QEC work" 
+                     style="width: 100%; height: auto; display: block;">
             </div>
 
-            <div style="max-width: 820px; margin: 0 auto; text-align: center;">
-                <div style="display: inline-block; background: #1e2937; color: #64748b; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.9rem; border-radius: 9999px; margin-bottom: 1.25rem; letter-spacing: 0.5px;">
+            <div class="hero-content">
+                <div class="hero-badge">
                     UPCOMING
                 </div>
                 
-                <h1 style="font-size: clamp(2.6rem, 6vw, 4.1rem); line-height: 1.05; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1.25rem;">
+                <h1 style="font-size: clamp(2.75rem, 6.5vw, 4.25rem); line-height: 1.02; font-weight: 800; letter-spacing: -0.045em; margin-bottom: 1.35rem; color: #f1f5f9;">
                     SATI OS.<br>
                     <span style="color: #64748b; font-weight: 700;">Built for real QEC work.</span>
                 </h1>
                 
-                <p style="font-size: 1.2rem; color: #94a3b8; max-width: 620px; margin: 0 auto 2.25rem; line-height: 1.55;">
+                <p style="font-size: 1.22rem; color: #94a3b8; max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.6;">
                     The complete cross-platform Quantum Error Correction platform.<br>
                     High-performance Rust core, modern visual Workbench, and clean plugin architecture.
                 </p>
