@@ -18,6 +18,42 @@
     <title>SATI OS • Modern Quantum Error Correction Platform</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        /* Pro-level responsive grid enhancements */
+        .pro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.75rem;
+        }
+        
+        @media (max-width: 640px) {
+            .pro-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+            
+            .page-hero h1 {
+                font-size: 2.35rem !important;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        .feature-card {
+            background: #1e2937;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 2rem 1.85rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -55,30 +91,30 @@
 <main id="main" tabindex="-1">
 
     <!-- Premium Hero -->
-    <section class="page-hero" style="background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); padding: 6rem 0 5rem;">
+    <section class="page-hero" style="background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); padding: 5.5rem 0 4.5rem;">
         <div class="container">
             <div style="max-width: 820px;">
                 <div style="display: inline-block; background: #1e2937; color: #64748b; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.9rem; border-radius: 9999px; margin-bottom: 1.25rem; letter-spacing: 0.5px;">
                     PLATFORM v2
                 </div>
                 
-                <h1 style="font-size: clamp(2.75rem, 6vw, 4.25rem); line-height: 1.05; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1.25rem;">
+                <h1 style="font-size: clamp(2.6rem, 6vw, 4.1rem); line-height: 1.05; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1.25rem;">
                     SATI OS.<br>
                     <span style="color: #64748b; font-weight: 700;">Built for real QEC work.</span>
                 </h1>
                 
-                <p style="font-size: 1.25rem; color: #94a3b8; max-width: 620px; margin-bottom: 2.25rem;">
-                    The complete cross-platform Quantum Error Correction platform. 
-                    High-performance Rust core, modern visual Workbench, and a clean plugin system for serious research and commercial evaluation.
+                <p style="font-size: 1.2rem; color: #94a3b8; max-width: 620px; margin-bottom: 2.25rem; line-height: 1.55;">
+                    The complete cross-platform Quantum Error Correction platform.<br>
+                    High-performance Rust core, modern visual Workbench, and clean plugin architecture.
                 </p>
 
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                     <a href="pricing.html" 
-                       style="display: inline-flex; align-items: center; justify-content: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.875rem 2rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem; transition: all 0.2s ease;">
+                       style="display: inline-flex; align-items: center; justify-content: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.9rem 2.1rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem; transition: all 0.2s ease;">
                         Get Started
                     </a>
                     <a href="workbench.html" 
-                       style="display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #e2e8f0; font-weight: 600; padding: 0.875rem 1.75rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem; border: 1px solid #475569; transition: all 0.2s ease;">
+                       style="display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #e2e8f0; font-weight: 600; padding: 0.9rem 1.85rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem; border: 1px solid #475569; transition: all 0.2s ease;">
                         Explore the Workbench
                     </a>
                 </div>
@@ -87,8 +123,8 @@
     </section>
 
     <!-- Trust Bar -->
-    <section style="border-bottom: 1px solid #1e2937; padding: 1.25rem 0; background: #0f172a;">
-        <div class="container" style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; color: #64748b; font-size: 0.95rem;">
+    <section style="border-bottom: 1px solid #1e2937; padding: 1.1rem 0; background: #0f172a;">
+        <div class="container" style="display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; color: #64748b; font-size: 0.95rem; text-align: center;">
             <div>Reproducible workflows</div>
             <div>Cross-platform (Win / Linux / macOS)</div>
             <div>Optional GPU acceleration</div>
@@ -96,46 +132,47 @@
         </div>
     </section>
 
-    <!-- Features -->
-    <section style="padding: 5rem 0;">
+    <!-- Features with CSS Grid -->
+    <section style="padding: 5rem 0 4rem;">
         <div class="container">
-            <div style="text-align: center; max-width: 720px; margin: 0 auto 3.5rem;">
-                <h2 style="font-size: 2.1rem; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 1rem;">
+            <div style="text-align: center; max-width: 720px; margin: 0 auto 3.25rem;">
+                <h2 style="font-size: 2rem; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.9rem;">
                     Everything you need for serious QEC work.
                 </h2>
                 <p style="color: #94a3b8; font-size: 1.1rem;">
-                    One integrated platform instead of stitching together multiple tools.
+                    One integrated platform instead of stitching multiple tools together.
                 </p>
             </div>
 
-            <div class="grid-3" style="gap: 1.75rem;">
-                <div class="card" style="padding: 2rem 1.75rem;">
-                    <div style="width: 44px; height: 44px; background: #1e2937; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
-                        <span style="font-size: 1.5rem;">🖥️</span>
+            <!-- CSS Grid Implementation -->
+            <div class="pro-grid">
+                <div class="feature-card">
+                    <div style="width: 44px; height: 44px; background: #334155; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.45rem;">
+                        🖥️
                     </div>
-                    <h3 style="font-size: 1.35rem; margin-bottom: 0.65rem;">Full Visual Workbench</h3>
-                    <p style="color: #94a3b8; line-height: 1.65;">
-                        Modern Dear PyGui interface. Real-time decoding, benchmark comparison, resource estimation, and syndrome visualization in one place.
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.6rem; font-weight: 700;">Full Visual Workbench</h3>
+                    <p style="color: #94a3b8; line-height: 1.65; font-size: 1.02rem;">
+                        Modern Dear PyGui interface with real-time decoding, benchmark comparison, resource estimation, and syndrome visualization.
                     </p>
                 </div>
 
-                <div class="card" style="padding: 2rem 1.75rem;">
-                    <div style="width: 44px; height: 44px; background: #1e2937; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
-                        <span style="font-size: 1.5rem;">🔌</span>
+                <div class="feature-card">
+                    <div style="width: 44px; height: 44px; background: #334155; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.45rem;">
+                        🔌
                     </div>
-                    <h3 style="font-size: 1.35rem; margin-bottom: 0.65rem;">Modular Plugin System</h3>
-                    <p style="color: #94a3b8; line-height: 1.65;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.6rem; font-weight: 700;">Modular Plugin System</h3>
+                    <p style="color: #94a3b8; line-height: 1.65; font-size: 1.02rem;">
                         Clean <code>CodeProvider</code> architecture. Load standard codes or premium LCL-832/833 modules without touching core logic.
                     </p>
                 </div>
 
-                <div class="card" style="padding: 2rem 1.75rem;">
-                    <div style="width: 44px; height: 44px; background: #1e2937; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
-                        <span style="font-size: 1.5rem;">🚀</span>
+                <div class="feature-card">
+                    <div style="width: 44px; height: 44px; background: #334155; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.45rem;">
+                        🚀
                     </div>
-                    <h3 style="font-size: 1.35rem; margin-bottom: 0.65rem;">Cross-Platform Performance</h3>
-                    <p style="color: #94a3b8; line-height: 1.65;">
-                        Native Rust core. Optional CUDA acceleration. Reliable experience on Windows, Linux, and macOS with graceful fallbacks.
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.6rem; font-weight: 700;">Cross-Platform Performance</h3>
+                    <p style="color: #94a3b8; line-height: 1.65; font-size: 1.02rem;">
+                        Native Rust core with optional CUDA acceleration. Reliable on Windows, Linux, and macOS with graceful CPU fallbacks.
                     </p>
                 </div>
             </div>
@@ -143,16 +180,16 @@
     </section>
 
     <!-- Final CTA -->
-    <section style="background: #0f172a; padding: 4.5rem 0; border-top: 1px solid #1e2937;">
+    <section style="background: #0f172a; padding: 4.25rem 0; border-top: 1px solid #1e2937;">
         <div class="container" style="text-align: center;">
-            <h2 style="font-size: 1.9rem; font-weight: 700; margin-bottom: 1rem;">
-                Ready to move beyond stitching tools together?
+            <h2 style="font-size: 1.85rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.02em;">
+                Ready to stop stitching tools together?
             </h2>
-            <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 2rem;">
+            <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 2rem; font-size: 1.05rem;">
                 Get the full SATI OS platform with visual tooling, plugin architecture, and professional support.
             </p>
             <a href="pricing.html" 
-               style="display: inline-flex; align-items: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.95rem 2.35rem; border-radius: 10px; text-decoration: none; font-size: 1.1rem;">
+               style="display: inline-flex; align-items: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.95rem 2.25rem; border-radius: 10px; text-decoration: none; font-size: 1.08rem;">
                 See Pricing &amp; Plans
             </a>
         </div>
