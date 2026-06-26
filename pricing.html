@@ -8,45 +8,38 @@
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
     <style>
-        .pro-pricing-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #0f172a;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        .feature-card {
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+                        0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
         
-        @media (max-width: 768px) {
-            .pro-pricing-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .pro-pricing-table thead {
-                display: none;
-            }
-            
-            .pro-pricing-table tr {
-                display: block;
-                margin-bottom: 1rem;
-                background: #1e2937;
-                border-radius: 10px;
-                padding: 1rem;
-            }
-            
-            .pro-pricing-table td {
-                display: flex;
-                justify-content: space-between;
-                padding: 0.6rem 0;
-                border: none;
-            }
-            
-            .pro-pricing-table td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                color: #64748b;
-            }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+                        0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .btn-premium {
+            background: linear-gradient(145deg, #3b82f6, #2563eb);
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 2.1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgb(59 130 246 / 0.2),
+                        0 2px 4px -2px rgb(59 130 246 / 0.2);
+        }
+        
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.3);
         }
     </style>
 </head>
@@ -93,7 +86,7 @@
         </div>
     </section>
 
-    <!-- Full Platform Pricing with CSS Grid responsive table -->
+    <!-- Full Platform Pricing -->
     <section style="padding-bottom: 3rem;">
         <div class="container">
             <div style="text-align: center; max-width: 680px; margin: 0 auto 2.5rem;">
@@ -104,7 +97,7 @@
             </div>
 
             <div style="max-width: 1040px; margin: 0 auto;">
-                <table class="pro-pricing-table">
+                <table style="width: 100%; min-width: 720px; border-collapse: collapse; background: #0f172a; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);">
                     <thead>
                         <tr style="background: #1e2937;">
                             <th style="padding: 1.1rem 1.5rem; text-align: left; font-weight: 600; border-bottom: 1px solid #334155;">Tier</th>
@@ -115,34 +108,34 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label="Tier" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Free Core</strong></td>
-                            <td data-label="Annual" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; color: #64748b;">$0</td>
-                            <td data-label="Seats" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; color: #64748b;">-</td>
-                            <td data-label="Best For" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Researchers, testing, open use</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Free Core</strong></td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; color: #64748b;">$0</td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; color: #64748b;">-</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Researchers, testing, open use</td>
                         </tr>
                         <tr>
-                            <td data-label="Tier" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Individual</strong></td>
-                            <td data-label="Annual" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">$2,900</td>
-                            <td data-label="Seats" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">1</td>
-                            <td data-label="Best For" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Independent researchers &amp; PhDs</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Individual</strong></td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">$2,900</td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">1</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Independent researchers &amp; PhDs</td>
                         </tr>
                         <tr style="background: #1e2937;">
-                            <td data-label="Tier" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Professional / Team</strong></td>
-                            <td data-label="Annual" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; font-weight: 600;">$9,900</td>
-                            <td data-label="Seats" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">Up to 8</td>
-                            <td data-label="Best For" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #cbd5e1;">Quantum teams &amp; funded groups</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Professional / Team</strong></td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; font-weight: 600;">$9,900</td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">Up to 8</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #cbd5e1;">Quantum teams &amp; funded groups</td>
                         </tr>
                         <tr>
-                            <td data-label="Tier" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Enterprise</strong></td>
-                            <td data-label="Annual" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">$24,000</td>
-                            <td data-label="Seats" style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">Custom</td>
-                            <td data-label="Best For" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Serious commercial &amp; R&amp;D use</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Enterprise</strong></td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">$24,000</td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">Custom</td>
+                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Serious commercial &amp; R&amp;D use</td>
                         </tr>
                         <tr>
-                            <td data-label="Tier" style="padding: 1.15rem 1.5rem;"><strong>Strategic / IP Preview</strong></td>
-                            <td data-label="Annual" style="padding: 1.15rem 1.5rem; text-align: center;">Custom</td>
-                            <td data-label="Seats" style="padding: 1.15rem 1.5rem; text-align: center;">-</td>
-                            <td data-label="Best For" style="padding: 1.15rem 1.5rem; color: #94a3b8;">Potential acquirers &amp; deep evaluation</td>
+                            <td style="padding: 1.15rem 1.5rem;"><strong>Strategic / IP Preview</strong></td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center;">Custom</td>
+                            <td style="padding: 1.15rem 1.5rem; text-align: center;">-</td>
+                            <td style="padding: 1.15rem 1.5rem; color: #94a3b8;">Potential acquirers &amp; deep evaluation</td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,7 +143,7 @@
         </div>
     </section>
 
-    <!-- Decoder Only Section -->
+    <!-- Decoder Only -->
     <section style="padding: 3.5rem 0 5rem; background: #0f172a; border-top: 1px solid #1e2937;">
         <div class="container">
             <div style="text-align: center; max-width: 620px; margin: 0 auto 2.25rem;">
