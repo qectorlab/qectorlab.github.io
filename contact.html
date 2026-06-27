@@ -5,6 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - QECTOR</title>
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .contact-form {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        .contact-form button {
+            width: 100%;
+            background: #67e8f9;
+            color: #0f172a;
+            font-weight: 700;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .contact-form button:hover {
+            background: #22d3ee;
+        }
+    </style>
 </head>
 <body>
 
@@ -28,19 +67,25 @@
 
 <section class="section">
     <div class="container" style="max-width:720px;margin:0 auto;">
-        <h1 style="margin-bottom:1rem;">Contact</h1>
-        <p style="color:#9ca3af;font-size:1.1rem;">
+        <h1 style="text-align:center; margin-bottom:0.5rem;">Contact</h1>
+        <p style="text-align:center; color:#9ca3af; max-width:520px; margin:0 auto 3rem;">
             License inquiries, early access requests, technical questions, and strategic discussions.
         </p>
 
-        <div style="margin-top:3rem;">
-            <p><strong>Email:</strong> <a href="mailto:admin@qector.store">admin@qector.store</a></p>
-            <p style="margin-top:1.5rem;color:#9ca3af;">All commercial and strategic inquiries receive a response within 2 business days.</p>
+        <!-- WEB3FORMS -->
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+            <input type="hidden" name="access_key" value="4982c998-f54c-4cd0-9ffd-ccee2cd71bfd">
+            
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            
+            <button type="submit">Send Message</button>
+        </form>
 
-            <div style="margin-top:2.5rem;">
-                <a href="mailto:admin@qector.store" class="btn btn-primary btn-lg">Email admin@qector.store</a>
-            </div>
-        </div>
+        <p style="text-align:center; color:#64748b; margin-top:2rem; font-size:0.9rem;">
+            Or email directly: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>
+        </p>
     </div>
 </section>
 
