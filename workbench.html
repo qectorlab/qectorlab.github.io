@@ -3,33 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QECTOR Workbench — Early Access</title>
+    <title>QECTOR Workbench - Coming Soon</title>
     <link rel="stylesheet" href="assets/style.css">
-    <style>
-        .early-access-hero {
-            background: linear-gradient(135deg, #0a1628 0%, #111827 100%);
-            padding: 120px 0 100px;
-            text-align: center;
-        }
-        .early-access-hero h1 {
-            font-size: 3.2rem;
-            margin-bottom: 1.5rem;
-        }
-        .early-access-hero p {
-            max-width: 620px;
-            margin: 0 auto 2.5rem;
-            color: #9ca3af;
-            font-size: 1.15rem;
-        }
-    </style>
 </head>
 <body>
 
 <!-- HEADER -->
-<nav class="nav">
+<nav class="nav" aria-label="Primary navigation">
     <div class="container nav-inner">
-        <a href="index.html" class="nav-logo">
-            <img src="assets/logo.svg" width="132" height="74" alt="QECTOR">
+        <a href="index.html" class="nav-logo" aria-label="QECTOR home">
+            <img src="assets/logo.svg" width="132" height="74" alt="QECTOR logo">
         </a>
         <div class="nav-links">
             <a href="index.html">Platform</a>
@@ -39,61 +22,44 @@
             <a href="commercial.html">Commercial</a>
             <a href="contact.html">Contact</a>
         </div>
+        <a href="commercial.html" class="btn btn-primary btn-sm" style="margin-left:auto;">Get License</a>
     </div>
 </nav>
 
-<!-- HERO -->
-<header class="early-access-hero">
-    <div class="container">
-        <div class="badge badge-blue" style="margin-bottom:1.5rem; font-size:0.95rem; padding: 8px 20px;">
-            Coming Soon
-        </div>
-        <h1>Early Access</h1>
-        <p>
-            The QECTOR Workbench is currently in active development. 
-            Join the early access list to get notified when the first private beta is available.
+<section class="section">
+    <div class="container" style="max-width:780px;margin:0 auto;text-align:center;">
+        <div class="badge badge-blue" style="margin-bottom:1rem;">Coming Soon</div>
+        <h1 style="margin-bottom:1rem;">QECTOR Workbench</h1>
+        <p style="color:#9ca3af;font-size:1.15rem;max-width:620px;margin:0 auto;">
+            A local fullstack app for loading circuits, running decoder comparisons, exporting artifacts, and generating reproducible benchmark reports. No cloud required.
         </p>
-        <a href="contact.html" class="btn btn-primary btn-lg" style="padding: 16px 48px; font-size: 1.05rem;">
-            Request Early Access
-        </a>
+
+        <div style="margin-top:3rem;">
+            <a href="contact.html" class="btn btn-primary btn-lg">Join Early Access</a>
+            <a href="commercial.html" class="btn btn-gold btn-lg" style="margin-left:0.75rem;">Request Commercial Demo</a>
+        </div>
     </div>
-</header>
+</section>
 
 <!-- FOOTER -->
 <footer class="footer-professional">
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;">
             <div>
-                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR" style="margin-bottom: 16px;">
-                <p style="color: #6b7280; max-width: 260px; text-align: center; margin: 0 auto;">
-                    Advanced quantum error correction technology and tooling.
-                </p>
+                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR logo" style="margin-bottom:16px;">
+                <p style="color:#6b7280;max-width:260px;text-align:center;margin:0 auto;">Advanced quantum error correction technology and tooling.</p>
             </div>
-            <div style="display: flex; gap: 60px; flex-wrap: wrap;">
-                <div>
-                    <h4 style="margin-bottom: 16px; font-size: 0.95rem;">Product</h4>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <a href="decoder.html" style="color: #9ca3af;">Decoder v3</a>
-                        <a href="sati-codex.html" style="color: #9ca3af;">SATI CODEX</a>
-                        <a href="workbench.html" style="color: #9ca3af;">Workbench</a>
-                    </div>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 16px; font-size: 0.95rem;">Company</h4>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <a href="commercial.html" style="color: #9ca3af;">Commercial</a>
-                        <a href="contact.html" style="color: #9ca3af;">Contact</a>
-                        <a href="https://github.com/GuillaumeLessard/qector-decoder" style="color: #9ca3af;">GitHub</a>
-                    </div>
-                </div>
+            <div style="display:flex;gap:60px;flex-wrap:wrap;">
+                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Product</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="decoder.html">Decoder v3</a><a href="sati-codex.html">SATI CODEX</a><a href="workbench.html">Workbench</a></div></div>
+                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Company</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="commercial.html">Commercial</a><a href="contact.html">Contact</a><a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub</a></div></div>
             </div>
         </div>
-        <div style="margin-top: 60px; padding-top: 32px; border-top: 1px solid #1f2937; text-align: center;">
-            <div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 8px;">
-                © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
+        <div style="margin-top:60px;padding-top:32px;border-top:1px solid #1f2937;text-align:center;">
+            <div style="color:#6b7280;font-size:0.9rem;margin-bottom:8px;">
+                Copyright 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
             </div>
-            <div style="color: #6b7280; font-size: 0.9rem;">
-                Restricted access materials • Serious inquiries only
+            <div style="color:#6b7280;font-size:0.9rem;">
+                Restricted access materials. Serious inquiries only.
             </div>
         </div>
     </div>
