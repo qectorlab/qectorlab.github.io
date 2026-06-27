@@ -3,11 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder v3 v0.5.3 — Official documentation for the source-available Rust/Python quantum error correction decoder.">
+  <meta name="description" content="QECTOR Decoder v3 v0.5.3 — Official documentation and installation guide.">
   <title>QECTOR Decoder v3 — Documentation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .command-box {
+      background: #0f1117;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .command-box pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: #d1d5db;
+      overflow-x: auto;
+    }
+    .command-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .copy-btn:hover {
+      background: var(--cyan);
+      color: #000;
+      border-color: var(--cyan);
+    }
+  </style>
 </head>
 <body>
 
@@ -32,60 +73,61 @@
   <div class="container">
     <div class="section-label">QECTOR Decoder v3</div>
     <h1>Source-Available Quantum Error Correction Decoder</h1>
-    <p>Version 0.5.3 — Rust core with Python API. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding, and reproducible artifacts.</p>
-    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem;">
-      <a href="https://pypi.org/project/qector-decoder-v3/" class="btn btn-primary" target="_blank" rel="noopener">Install from PyPI v0.5.3</a>
-      <a href="benchmarks.html" class="btn btn-secondary">View Benchmarks</a>
-      <a href="commercial.html" class="btn btn-gold">Commercial License</a>
-    </div>
+    <p>Version 0.5.3 — Rust core with Python API. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding.</p>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="section-label">Installation</div>
-    <h2 style="margin-bottom:1rem;">pip install qector-decoder-v3</h2>
+    <div class="section-label">Quick Start</div>
+    <h2 style="margin-bottom:1.5rem;">Copy & paste these three commands</h2>
+
+    <!-- Command 1 -->
+    <div>
+      <span class="command-label">1. Install QECTOR Decoder v3</span>
+      <div class="command-box">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code>pip install qector-decoder-v3</code></pre>
+      </div>
+    </div>
+
+    <!-- Command 2 -->
+    <div>
+      <span class="command-label">2. Verify the installation</span>
+      <div class="command-box">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code>python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"</code></pre>
+      </div>
+    </div>
+
+    <!-- Command 3 -->
+    <div>
+      <span class="command-label">3. Run your first decode (repetition code)</span>
+      <div class="command-box">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code>import numpy as np
+from qector_decoder_v3 import generate_repetition_code_checks, UnionFindDecoder
+
+checks, n_qubits = generate_repetition_code_checks(5)
+syndrome = np.zeros(len(checks), dtype=np.uint8)
+syndrome[0] = 1
+
+decoder = UnionFindDecoder(checks, n_qubits)
+correction = decoder.decode(syndrome)
+print(correction)</code></pre>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Installation Options</div>
+    <h2 style="margin-bottom:1rem;">Recommended installs</h2>
     <pre><code>pip install qector-decoder-v3
-pip install "qector-decoder-v3[stim]"   # Stim + Sinter + PyMatching
-pip install "qector-decoder-v3[all]"    # Full environment</code></pre>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-label">Decoders Included (v0.5.3)</div>
-    <h2 style="margin-bottom:1.5rem;">Choose the right backend for your workload</h2>
-    <div class="grid-2" style="gap:1.5rem;">
-      <div class="card">
-        <h4>Matching Decoders</h4>
-        <ul class="feature-list">
-          <li><strong>BlossomDecoder</strong> — Exact weighted MWPM (PyMatching parity)</li>
-          <li><strong>SparseBlossomDecoder</strong> — Near-optimal, faster on large graphs</li>
-          <li><strong>UnionFindDecoder</strong> + <strong>FastUnionFindDecoder</strong> — Lowest latency</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>Accuracy & LDPC</h4>
-        <ul class="feature-list">
-          <li><strong>BeliefMatching</strong> — Up to 35.7% lower LER on correlated noise</li>
-          <li><strong>BpOsdDecoder</strong> — BP-OSD for qLDPC codes (BB, HGP, etc.)</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>Batch & GPU</h4>
-        <ul class="feature-list">
-          <li><strong>CUDABatchDecoder</strong> + <strong>OpenCLBatchDecoder</strong> — 14.6M dec/s</li>
-          <li><strong>AutoDecoder</strong> — Automatically chooses best backend</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>Specialized</h4>
-        <ul class="feature-list">
-          <li>StreamingDecoder, SlidingWindow, HybridDecoder</li>
-          <li>LookupTableDecoder, PredecodedDecoder</li>
-        </ul>
-      </div>
-    </div>
+pip install "qector-decoder-v3[stim]"     # + Stim, Sinter, PyMatching
+pip install "qector-decoder-v3[all]"      # Full environment</code></pre>
   </div>
 </section>
 
@@ -120,6 +162,39 @@ pip install "qector-decoder-v3[all]"    # Full environment</code></pre>
     </div>
   </div>
 </footer>
+
 <script src="assets/nav.js"></script>
+<script>
+function copyToClipboard(button) {
+  const pre = button.parentElement.querySelector('pre');
+  const text = pre.innerText.trim();
+  
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = button.innerText;
+    button.innerText = 'Copied!';
+    button.style.background = 'var(--green)';
+    button.style.color = '#000';
+    
+    setTimeout(() => {
+      button.innerText = originalText;
+      button.style.background = '';
+      button.style.color = '';
+    }, 1800);
+  }).catch(() => {
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    button.innerText = 'Copied!';
+    setTimeout(() => {
+      button.innerText = 'Copy';
+    }, 1800);
+  });
+}
+</script>
 </body>
 </html>
