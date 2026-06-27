@@ -1,259 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder v3 v0.5.3 — Source-available Rust/Python quantum error correction decoder. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding with reproducible artifacts.">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="QECTOR Decoder v3 — Quantum Error Correction Decoding">
-  <meta property="og:description" content="Source-available Rust/Python platform for high-performance QEC decoding. Exact MWPM, Belief-Matching, BP-OSD, GPU batch, and fully reproducible benchmarks.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.qector.store">
-  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="QECTOR Decoder v3 — Reproducible Quantum Error Correction">
-  <meta name="twitter:description" content="High-performance, source-available QEC decoder with Belief-Matching, BP-OSD, GPU batch decoding, and SHA-256 reproducible artifacts.">
-  <title>QECTOR Decoder v3 — Quantum Error Correction Decoding</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
-  <style>
-    .tech-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      justify-content: center;
-      align-items: center;
-      margin: 1.5rem 0;
-    }
-    .tech-badges a {
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
-    .tech-badges a:hover {
-      transform: translateY(-2px);
-    }
-    .tech-badges img {
-      height: 28px;
-      border-radius: 4px;
-    }
-    @media (max-width: 768px) {
-      .hero-visual img {
-        max-height: 320px;
-        object-fit: contain;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QECTOR • Quantum Error Correction Platform</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
+<!-- HEADER -->
 <nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="assets/logo.svg" width="32" height="32" alt="QECTOR">
-      QECT<span>OR</span>
-    </a>
-    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    <ul class="nav-links">
-      <li><a href="decoder.html">Decoder</a></li>
-      <li><a href="workbench.html">Workbench</a></li>
-      <li><a href="benchmarks.html">Benchmarks</a></li>
-      <li><a href="license.html">License</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="commercial.html">Commercial</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li class="nav-cta"><a href="commercial.html">Get License</a></li>
-    </ul>
-  </div>
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">
+            <img src="assets/logo.svg" width="132" height="74" alt="QECTOR">
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Platform</a>
+            <a href="decoder.html">Decoder</a>
+            <a href="sati-codex.html">SATI CODEX</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="commercial.html">Commercial</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
 </nav>
 
-<section class="hero">
-  <div class="container hero-grid-layout">
-    <div class="hero-copy">
-      <div class="hero-eyebrow">
-        <span class="badge badge-green"><span class="glow-dot"></span> v0.5.3 Available</span>
-        <span class="badge badge-muted">June 2026</span>
-        <span class="badge badge-cyan">414+ Tests Passing</span>
-      </div>
-      <h1 class="hero-title">Quantum Error Correction<br>Decoding, <em>Reproducible by Design</em></h1>
-      <p class="hero-subtitle">A source-available Rust/Python platform for high-performance quantum error-correction decoding. Exact MWPM, Belief-Matching, BP-OSD for qLDPC, CPU/GPU batch decoding, and artifact-backed reproducible benchmarks.</p>
-      <div class="hero-actions">
-        <a href="decoder.html" class="btn btn-primary btn-lg">View Decoder v0.5.3</a>
-        <a href="commercial.html" class="btn btn-gold btn-lg">Commercial License</a>
-        <a href="benchmarks.html" class="btn btn-secondary btn-lg">Benchmarks</a>
-      </div>
-      <p class="hero-trust">Free for personal, academic, and non-commercial research. Commercial use requires a paid license.</p>
-    </div>
-    <div class="hero-visual">
-      <img src="assets/hero.png" 
-           width="1672" 
-           height="941" 
-           loading="eager" 
-           decoding="async"
-           alt="QECTOR Decoder v3 - Quantum Error Correction Platform">
-    </div>
-  </div>
-</section>
-
-<div style="position:relative;z-index:1;">
-  <div class="container" style="padding-top:1.5rem;padding-bottom:2rem;">
-    <div style="text-align:center;margin-bottom:0.75rem;">
-      <span class="section-label" style="margin-bottom:0.5rem;">Tech Stack &amp; Ecosystem</span>
-    </div>
-    <div class="tech-badges">
-      <a href="https://www.rust-lang.org/" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/Rust-1.70%2B-orange?logo=rust&logoColor=white" alt="Rust 1.70+">
-      </a>
-      <a href="https://www.python.org/" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white" alt="Python 3.8+">
-      </a>
-      <a href="https://github.com/quantumlib/Stim" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/Stim-Compatible-brightgreen?logo=github" alt="Stim Compatible">
-      </a>
-      <a href="https://github.com/quantumlib/Stim" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/Sinter-Compatible-brightgreen" alt="Sinter Compatible">
-      </a>
-      <a href="https://github.com/oscarhiggott/PyMatching" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/PyMatching-API-blueviolet" alt="PyMatching API">
-      </a>
-      <a href="https://developer.nvidia.com/cuda-toolkit" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/CUDA-Supported-green?logo=nvidia&logoColor=white" alt="CUDA Supported">
-      </a>
-      <a href="https://www.khronos.org/opencl/" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/OpenCL-Supported-blue?logo=opencl&logoColor=white" alt="OpenCL Supported">
-      </a>
-      <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/SHA--256-Artifacts-yellow" alt="SHA-256 Artifacts">
-      </a>
-      <a href="https://arxiv.org/abs/2302.08442" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/Belief--Matching-Implemented-important" alt="Belief-Matching">
-      </a>
-      <a href="https://arxiv.org/abs/2007.07959" target="_blank" rel="noopener">
-        <img src="https://img.shields.io/badge/BP--OSD-qLDPC-red" alt="BP-OSD / qLDPC">
-      </a>
-    </div>
-  </div>
-</div>
-
-<section>
-  <div class="container">
-    <div class="section-label">Platform</div>
-    <h2 style="margin-bottom:2rem;">One decoder. Multiple backends. Reproducible results.</h2>
-    <div class="product-split">
-      <div class="product-card decoder-card">
-        <span class="badge badge-green"><span class="glow-dot"></span> v0.5.3 — Available Now</span>
-        <h3>QECTOR Decoder v3</h3>
-        <p>The core high-performance decoder library. Rust core with clean Python API. PyMatching-compatible.</p>
-        <ul class="feature-list" style="margin-bottom:1.5rem;">
-          <li>Exact weighted MWPM (BlossomDecoder)</li>
-          <li>Belief-Matching — up to 35.7% lower LER</li>
-          <li>BP-OSD for qLDPC / LDPC codes</li>
-          <li>CUDA + OpenCL batch decoding (14.6M dec/s)</li>
-          <li>Stim DEM loading + Sinter plug-in</li>
-          <li>Drop-in PyMatching-compatible API</li>
-          <li>SHA-256 hashed reproducible artifacts</li>
-          <li>414+ tests with brute-force validation</li>
-        </ul>
-        <div class="product-actions">
-          <a href="decoder.html" class="btn btn-primary">Decoder Details</a>
-          <a href="benchmarks.html" class="btn btn-secondary">Benchmarks</a>
-          <a href="commercial.html" class="btn btn-ghost">Get Commercial License</a>
+<!-- HERO -->
+<header class="hero">
+    <div class="container">
+        <div style="max-width: 720px;">
+            <h1>Production-grade quantum error correction.<br>
+            <span style="color: #9ca3af;">Built for researchers and serious engineering teams.</span></h1>
+            <p style="margin-top: 24px; font-size: 1.2rem; color: #9ca3af;">
+                QECTOR combines a high-performance Rust decoder with a validated topological framework.
+            </p>
+            <div style="margin-top: 40px; display: flex; gap: 16px;">
+                <a href="decoder.html" class="btn btn-primary">Get Decoder v3</a>
+                <a href="sati-codex.html" class="btn btn-secondary">Explore SATI CODEX</a>
+            </div>
         </div>
-      </div>
-      <div class="product-card workbench-card">
-        <span class="badge badge-blue">Coming Soon</span>
-        <h3>QECTOR Workbench</h3>
-        <p>Local fullstack application for circuit loading, decoder comparison, artifact export, and reproducible technical reports.</p>
-        <ul class="feature-list" style="margin-bottom:1.5rem;">
-          <li>Load .stim circuits and .dem files</li>
-          <li>Run QECTOR vs PyMatching head-to-head</li>
-          <li>Generate PDF benchmark reports</li>
-          <li>Export CSV/JSON with SHA-256 hashes</li>
-          <li>CPU / CUDA / OpenCL diagnostics</li>
-          <li>Visual LER, latency, threshold curves</li>
-          <li>Job queue with cancel support</li>
-        </ul>
-        <div class="product-actions">
-          <a href="workbench.html" class="btn btn-secondary">Workbench Details</a>
-          <a href="contact.html" class="btn btn-ghost">Join Early Access</a>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
+</header>
 
-<section>
-  <div class="container">
-    <div class="section-label">Benchmark Evidence</div>
-    <h2 style="margin-bottom:0.5rem;">Validated against PyMatching at circuit level</h2>
-    <p style="margin-bottom:2rem;max-width:640px;">Rotated surface code, circuit-level depolarizing noise. Wilson 95% confidence intervals. All artifacts are SHA-256 hashed and traceable to a specific git commit.</p>
-    <div class="benchmark-proof">
-      <div class="benchmark-header"><span class="badge badge-muted">QECTOR Blossom vs PyMatching — LER Parity through d=15</span></div>
-      <div class="benchmark-body">
-        <div class="table-wrap" style="margin:0;">
-          <table>
-            <thead><tr><th>Distance</th><th>QECTOR LER</th><th>PyMatching LER</th><th>Parity</th></tr></thead>
-            <tbody>
-              <tr><td class="label">d = 3</td><td class="highlight">0.0117</td><td>0.0117</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 5</td><td class="highlight">0.0089</td><td>0.0089</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 7</td><td class="highlight">0.0053</td><td>0.0053</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 9</td><td class="highlight">0.0029</td><td>0.0029</td><td class="good">✓ Exact</td></tr>
-              <tr><td class="label">d = 11</td><td class="highlight">0.0017</td><td>0.0017</td><td class="good">✓ Exact</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="ler-caveat">PyMatching remains faster for single-shot exact MWPM. QECTOR's strengths: belief-matching LER reduction (up to 35.7%), BP-OSD for qLDPC codes, GPU batch throughput (14.6M dec/s), and fully reproducible, hashed artifacts.</p>
-      </div>
-    </div>
-    <div class="grid-4" style="margin-top:2rem;">
-      <div class="card"><div class="stat"><div class="stat-value">1.4 µs</div><div class="stat-label">p50 latency (ring d=10)</div></div></div>
-      <div class="card"><div class="stat"><div class="stat-value">14.6M</div><div class="stat-label">dec/s — OpenCL GPU batch</div></div></div>
-      <div class="card"><div class="stat"><div class="stat-value">35.7%</div><div class="stat-label">LER reduction (Belief-Matching d=5)</div></div></div>
-      <div class="card"><div class="stat"><div class="stat-value">d=15</div><div class="stat-label">Exact MWPM parity validated</div></div></div>
-    </div>
-  </div>
-</section>
+<!-- Add remaining index content here if needed -->
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;">
-          <img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECTOR
-        </a>
-        <p>Source-available quantum error correction decoder platform.<br>Free for non-commercial use. Commercial use requires a paid license.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <ul>
-          <li><a href="decoder.html">QECTOR Decoder v3</a></li>
-          <li><a href="workbench.html">QECTOR Workbench</a></li>
-          <li><a href="benchmarks.html">Benchmarks</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener">PyPI Package v0.5.3</a></li>
-          <li><a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener">GitHub Repository</a></li>
-          <li><a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ&pli=1" target="_blank" rel="noopener">Official User Manual (Book)</a></li>
-          <li><a href="license.html">License</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="contact.html">Contact</a></li><li><a href="mailto:admin@qector.store">admin@qector.store</a></li><li><a href="commercial.html">Commercial Licensing</a></li><li><a href="pricing.html">Pricing</a></li>
-        </ul>
-      </div>
+<!-- FOOTER -->
+<footer class="footer-professional">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;">
+            <div>
+                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR" style="margin-bottom: 16px;">
+                <p style="color: #6b7280; max-width: 260px;">
+                    Advanced quantum error correction technology and tooling.
+                </p>
+            </div>
+            <div style="display: flex; gap: 60px; flex-wrap: wrap;">
+                <div>
+                    <h4 style="margin-bottom: 16px; font-size: 0.95rem;">Product</h4>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <a href="decoder.html" style="color: #9ca3af;">Decoder v3</a>
+                        <a href="sati-codex.html" style="color: #9ca3af;">SATI CODEX</a>
+                        <a href="workbench.html" style="color: #9ca3af;">Workbench</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-size: 0.95rem;">Company</h4>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <a href="commercial.html" style="color: #9ca3af;">Commercial</a>
+                        <a href="contact.html" style="color: #9ca3af;">Contact</a>
+                        <a href="https://github.com/GuillaumeLessard/qector-decoder" style="color: #9ca3af;">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 60px; padding-top: 32px; border-top: 1px solid #1f2937; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="color: #6b7280; font-size: 0.9rem;">
+                © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
+            </div>
+            <div style="color: #6b7280; font-size: 0.9rem;">
+                Restricted access materials • Serious inquiries only
+            </div>
+        </div>
     </div>
-    <div class="footer-bottom">
-      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
-      <span>QECTOR is source-available, not open-source.</span>
-    </div>
-  </div>
 </footer>
 
-<script src="assets/nav.js"></script>
 </body>
 </html>
