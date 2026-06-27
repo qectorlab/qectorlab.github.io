@@ -3,11 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder v3 v0.5.3 commercial pricing — Evaluation Pilot, Startup, Professional, Enterprise, SaaS, OEM, and Strategic tiers. Free for non-commercial use.">
+  <meta name="description" content="QECTOR Decoder v3 v0.5.3 commercial pricing — Evaluation Pilot, Startup, Professional, Enterprise, SaaS, OEM, and Strategic tiers.">
   <title>QECTOR Pricing — Commercial License Tiers</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .pricing-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-2);
+    }
+    .pricing-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 10px 30px rgba(255, 176, 32, 0.1);
+    }
+    .pricing-card .badge {
+      margin-bottom: 1rem;
+      align-self: flex-start;
+    }
+    .pricing-card h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.5rem 0;
+      color: var(--text);
+    }
+    .pricing-card .price {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      margin: 0.5rem 0;
+      color: var(--text);
+    }
+    .pricing-card .price span {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .pricing-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0;
+      flex: 1;
+    }
+    .pricing-card ul li {
+      padding: 0.35rem 0;
+      font-size: 0.9rem;
+      color: var(--muted-2);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .pricing-card ul li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .pricing-card .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
 </head>
 <body>
 
@@ -32,41 +104,40 @@
   <div class="container">
     <div class="section-label">Pricing</div>
     <h1>Commercial License Pricing</h1>
-    <p>QECTOR Decoder v3 is source-available for personal, academic, educational, and non-commercial research use. All commercial use requires a paid commercial license.</p>
+    <p>QECTOR Decoder v3 is source-available for personal, academic, educational, and non-commercial research use. All commercial use requires a paid license.</p>
   </div>
 </section>
 
 <section>
   <div class="container">
     <div class="section-label">Public Pricing Tiers</div>
-    <h2 style="margin-bottom:1.5rem;">Source-available QEC R&D platform</h2>
+    <h2 style="margin-bottom:2rem;">Source-available QEC R&D platform</h2>
 
-    <div class="pricing-grid-full">
+    <div class="pricing-grid">
 
-      <!-- FREE -->
-      <div class="pc free-tier">
+      <!-- Free -->
+      <div class="pricing-card free-tier">
         <span class="badge badge-green">Free</span>
-        <div class="pc-name">Personal / Academic</div>
-        <div class="pc-price" style="color:var(--green);">$0</div>
-        <div class="pc-desc">Personal, academic, educational, and non-commercial research use.</div>
+        <h3>Personal / Academic</h3>
+        <div class="price" style="color:var(--green);">$0</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Personal, academic, educational, and non-commercial research use.</p>
         <ul>
           <li>Full source access</li>
           <li>Personal learning & experimentation</li>
           <li>Academic research & evaluation</li>
           <li>Educational demonstrations</li>
           <li>Non-commercial benchmarking</li>
-          <li>Source code review</li>
         </ul>
-        <div class="note">Not permitted for company use, commercial products, funded R&D, paid consulting, or any revenue-generating purpose.</div>
-        <a href="license.html" class="btn btn-ghost btn-sm" style="margin-top:auto;">Read License →</a>
+        <div class="note">Not for company, funded, or revenue-generating use.</div>
+        <a href="license.html" class="btn btn-ghost btn-sm" style="margin-top:1rem;">Read License →</a>
       </div>
 
-      <!-- EVALUATION PILOT -->
-      <div class="pc">
+      <!-- Pilot -->
+      <div class="pricing-card">
         <span class="badge badge-cyan">Pilot</span>
-        <div class="pc-name">Commercial Evaluation Pilot</div>
-        <div class="pc-price">$1,500 <span>/ 90 days</span></div>
-        <div class="pc-desc">Internal commercial evaluation. Up to 2 named users. Creditable toward annual license.</div>
+        <h3>Commercial Evaluation Pilot</h3>
+        <div class="price">$1,500 <span>/ 90 days</span></div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Internal commercial evaluation. Up to 2 named users. Creditable toward annual license.</p>
         <ul>
           <li>Full commercial evaluation rights</li>
           <li>Up to 2 named users</li>
@@ -74,16 +145,16 @@
           <li>Creditable toward annual license</li>
           <li>Standard email support</li>
         </ul>
-        <div class="note">Best way to validate QECTOR inside your organization before committing to an annual license.</div>
-        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:auto;">Request Pilot</a>
+        <div class="note">Best way to validate before annual commitment.</div>
+        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:1rem;">Request Pilot</a>
       </div>
 
-      <!-- STARTUP -->
-      <div class="pc">
+      <!-- Startup -->
+      <div class="pricing-card">
         <span class="badge badge-cyan">Startup</span>
-        <div class="pc-name">Startup Commercial</div>
-        <div class="pc-price">$3,500 <span>/ year</span></div>
-        <div class="pc-desc">Early commercial R&D and internal prototype use. Up to 5 named users.</div>
+        <h3>Startup Commercial</h3>
+        <div class="price">$3,500 <span>/ year</span></div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Early commercial R&D, internal prototype use. Up to 5 named users.</p>
         <ul>
           <li>Full commercial use rights</li>
           <li>Up to 5 named users</li>
@@ -91,16 +162,16 @@
           <li>Internal prototype use</li>
           <li>Standard email support</li>
         </ul>
-        <div class="note">Ideal for early-stage teams validating QECTOR in commercial R&D workflows.</div>
-        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:auto;">Request License</a>
+        <div class="note">Ideal for early-stage teams validating QECTOR.</div>
+        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:1rem;">Request License</a>
       </div>
 
-      <!-- PROFESSIONAL -->
-      <div class="pc featured">
+      <!-- Professional -->
+      <div class="pricing-card featured">
         <span class="badge badge-gold">Professional</span>
-        <div class="pc-name">Professional / Lab</div>
-        <div class="pc-price" style="color:var(--gold);">$15,000 <span>/ year</span></div>
-        <div class="pc-desc">Funded lab or commercial R&D use. Benchmark workflows. Up to 20 named users.</div>
+        <h3>Professional / Lab</h3>
+        <div class="price" style="color:var(--gold);">$15,000 <span>/ year</span></div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Funded lab or commercial R&D. Up to 20 named users.</p>
         <ul>
           <li>Full commercial use rights</li>
           <li>Up to 20 named users</li>
@@ -109,16 +180,16 @@
           <li>Priority email support</li>
           <li>Basic integration guidance</li>
         </ul>
-        <div class="note">Most popular tier for established quantum software and research teams.</div>
-        <a href="contact.html" class="btn btn-gold btn-sm" style="margin-top:auto;">Request License</a>
+        <div class="note">Most popular tier for established quantum teams.</div>
+        <a href="contact.html" class="btn btn-gold btn-sm" style="margin-top:1rem;">Request License</a>
       </div>
 
-      <!-- ENTERPRISE R&D -->
-      <div class="pc">
+      <!-- Enterprise -->
+      <div class="pricing-card">
         <span class="badge badge-muted">Enterprise</span>
-        <div class="pc-name">Enterprise R&D</div>
-        <div class="pc-price">$35,000+ <span>/ year</span></div>
-        <div class="pc-desc">Internal enterprise evaluation and commercial QEC research workflows.</div>
+        <h3>Enterprise R&D</h3>
+        <div class="price">$35,000+ <span>/ year</span></div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Internal enterprise evaluation and commercial QEC research.</p>
         <ul>
           <li>Full commercial use rights</li>
           <li>Enterprise-wide internal use</li>
@@ -127,188 +198,63 @@
           <li>Custom integration support</li>
           <li>Confidential roadmap access</li>
         </ul>
-        <div class="note">Starting at $35,000/year. Final price depends on scope and team size.</div>
-        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:auto;">Request Quote</a>
+        <div class="note">Starting at $35,000/year. Final price depends on scope.</div>
+        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:1rem;">Request Quote</a>
       </div>
 
-      <!-- SAAS / HOSTED API -->
-      <div class="pc">
+      <!-- SaaS -->
+      <div class="pricing-card">
         <span class="badge badge-blue">SaaS / API</span>
-        <div class="pc-name">SaaS / Hosted API</div>
-        <div class="pc-price">Contact only</div>
-        <div class="pc-desc">Revenue-generating hosted or API services built on QECTOR.</div>
+        <h3>SaaS / Hosted API</h3>
+        <div class="price">Contact only</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Revenue-generating hosted or API services.</p>
         <ul>
           <li>Rights to use in hosted/API services</li>
           <li>Unlimited end-users via your platform</li>
           <li>Revenue-generating service permitted</li>
           <li>Dedicated support channel</li>
-          <li>Custom SLA negotiable</li>
         </ul>
-        <div class="note">Beta review stage. Requires production hosted infrastructure and hosted-value proof.</div>
-        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:auto;">Request Quote</a>
+        <div class="note">Requires production infrastructure and value proof.</div>
+        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:1rem;">Request Quote</a>
       </div>
 
-      <!-- OEM / EMBEDDED -->
-      <div class="pc">
+      <!-- OEM -->
+      <div class="pricing-card">
         <span class="badge badge-muted">OEM</span>
-        <div class="pc-name">OEM / Embedded</div>
-        <div class="pc-price">Contact only</div>
-        <div class="pc-desc">Hardware embedding, firmware integration, and product redistribution.</div>
+        <h3>OEM / Embedded</h3>
+        <div class="price">Contact only</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Hardware embedding and product redistribution.</p>
         <ul>
           <li>Rights to embed in hardware/firmware</li>
           <li>Redistribution rights with product</li>
           <li>Custom integration support</li>
-          <li>Co-development options</li>
           <li>NDA available</li>
         </ul>
-        <div class="note">Requires serious hardware or platform partner. Not for early-stage OEM discussions.</div>
-        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:auto;">Request Quote</a>
+        <div class="note">Requires serious hardware or platform partner.</div>
+        <a href="contact.html" class="btn btn-secondary btn-sm" style="margin-top:1rem;">Request Quote</a>
       </div>
 
-      <!-- STRATEGIC -->
-      <div class="pc" style="border-color:rgba(47,123,255,0.3);">
+      <!-- Strategic -->
+      <div class="pricing-card">
         <span class="badge badge-blue">Strategic</span>
-        <div class="pc-name">Strategic Partnership</div>
-        <div class="pc-price" style="color:var(--blue);">Custom</div>
-        <div class="pc-desc">Exclusive licensing, technology acquisition, joint development, or investor-led strategic agreements.</div>
+        <h3>Strategic Partnership</h3>
+        <div class="price" style="color:var(--blue);">Custom</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Exclusive licensing, acquisition, or strategic partnerships.</p>
         <ul>
           <li>Exclusive or semi-exclusive licensing</li>
           <li>Technology acquisition discussions</li>
           <li>Joint development agreements</li>
           <li>IP transfer discussions</li>
-          <li>Strategic partnership terms</li>
           <li>Starts at $2M — negotiated case-by-case</li>
         </ul>
-        <div class="note">Direct outreach required. All discussions under NDA available on request.</div>
-        <a href="contact.html" class="btn btn-ghost btn-sm" style="margin-top:auto;">Initiate Discussion</a>
+        <div class="note">Direct outreach required. NDA available.</div>
+        <a href="contact.html" class="btn btn-ghost btn-sm" style="margin-top:1rem;">Initiate Discussion</a>
       </div>
 
     </div>
 
-    <div class="notice warn" style="margin-top:2rem;">
-      All prices are in USD. A written commercial license agreement is required for all paid tiers. Hosted API and OEM tiers are intentionally not listed publicly until production infrastructure and partner validation exist.
-    </div>
-  </div>
-</section>
-
-<!-- WHY PAY -->
-<section>
-  <div class="container">
-    <div class="section-label">Why pay when PyMatching and Stim are free?</div>
-    <h2 style="margin-bottom:1rem;">QECTOR is not sold as the universal fastest MWPM decoder.</h2>
-    <p style="max-width:720px;margin-bottom:2rem;">PyMatching remains the latency leader for exact MWPM on surface codes. QECTOR's commercial value comes from decoder breadth, reproducible evidence, legal clarity, and workflow time-saving — not from claiming to replace PyMatching in every scenario.</p>
-
-    <div class="grid-2" style="gap:1.25rem;">
-      <div class="card">
-        <h4>When teams choose QECTOR</h4>
-        <ul class="feature-list">
-          <li>Multi-decoder experiments (Union-Find, Blossom, Sparse Blossom, BP-OSD, streaming, batch, hybrid)</li>
-          <li>LDPC / qLDPC coverage with BP-OSD workflows</li>
-          <li>Reproducible benchmark artifacts with hashes and environment snapshots</li>
-          <li>Written commercial license for company, lab, funded, product, hosted, or revenue-linked use</li>
-          <li>Paid support, validation packages, and advisory options</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>What you actually get</h4>
-        <ul class="feature-list">
-          <li>Decoder diversity in one source-available platform</li>
-          <li>Reproducible evidence packaging (artifacts, scripts, manifests)</li>
-          <li>Commercial legal clarity and written license terms</li>
-          <li>Workflow time-saving vs maintaining custom decoder stacks</li>
-          <li>Support path for commercial R&D users</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- OPTIONAL SUPPORT -->
-<section style="background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="container">
-    <div class="section-label">Optional Support & Advisory</div>
-    <h2 style="margin-bottom:1.5rem;">Available to licensed users</h2>
-
-    <div class="pricing-grid-full">
-      <div class="pc">
-        <div class="pc-name">Priority Support</div>
-        <div class="pc-price">$5,000 <span>/ year</span></div>
-        <div class="pc-desc">Private email support and priority bug review for licensed users.</div>
-      </div>
-      <div class="pc">
-        <div class="pc-name">Integration Support</div>
-        <div class="pc-price">$10,000 <span>/ year</span></div>
-        <div class="pc-desc">Benchmark review, install support, and integration guidance.</div>
-      </div>
-      <div class="pc">
-        <div class="pc-name">Validation Report Package</div>
-        <div class="pc-price">$5,000 <span>one-time</span></div>
-        <div class="pc-desc">Review of customer benchmark setup and reproducibility package.</div>
-      </div>
-      <div class="pc">
-        <div class="pc-name">Custom Engineering</div>
-        <div class="pc-price">$150 <span>/ hour</span></div>
-        <div class="pc-desc">Private fixes, special reports, scripts, or workflow adaptation.</div>
-      </div>
-      <div class="pc">
-        <div class="pc-name">Technical Advisory</div>
-        <div class="pc-price">$2,000 <span>/ day</span></div>
-        <div class="pc-desc">Architecture review and QEC workflow consulting.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PILOT SUCCESS -->
-<section>
-  <div class="container">
-    <div class="section-label">Pilot Success Criteria</div>
-    <h2 style="margin-bottom:1rem;">A commercial pilot should be judged on measurable workflow value.</h2>
-    <p style="max-width:720px;margin-bottom:1.5rem;">Recommended proof points for a successful evaluation:</p>
-    <div class="grid-3" style="gap:1rem;">
-      <div class="card"><h4>Install success</h4><p style="font-size:0.875rem;">Successful installation on the buyer's target machines with documented environment.</p></div>
-      <div class="card"><h4>Reproduced benchmark</h4><p style="font-size:0.875rem;">One reproduced benchmark artifact bundle with SHA-256 hashes.</p></div>
-      <div class="card"><h4>QECTOR vs PyMatching</h4><p style="font-size:0.875rem;">One head-to-head comparison run with documented results.</p></div>
-      <div class="card"><h4>BP-OSD / LDPC workflow</h4><p style="font-size:0.875rem;">One BP-OSD or LDPC workflow executed if relevant to the use case.</p></div>
-      <div class="card"><h4>Artifact manifest</h4><p style="font-size:0.875rem;">Documented artifact manifest with hashes and environment snapshot.</p></div>
-      <div class="card"><h4>Time saved</h4><p style="font-size:0.875rem;">Documented time saved versus existing PyMatching / Stim / custom workflow.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- RIGHTS NOT INCLUDED -->
-<section>
-  <div class="container">
-    <div class="section-label">Rights Not Included by Default</div>
-    <p style="max-width:720px;margin-bottom:1.5rem;">Unless explicitly granted in a written commercial agreement, no license tier includes:</p>
-    <div class="grid-3" style="gap:1rem;">
-      <div class="card"><ul class="feature-list" style="margin:0;">
-        <li>Redistribution rights</li>
-        <li>Sublicensing rights</li>
-        <li>OEM rights</li>
-        <li>Hosted API rights</li>
-        <li>SaaS rights</li>
-      </ul></div>
-      <div class="card"><ul class="feature-list" style="margin:0;">
-        <li>Trademark rights</li>
-        <li>Patent rights</li>
-        <li>Exclusivity</li>
-        <li>Warranty or indemnification</li>
-        <li>Government or defense rights</li>
-      </ul></div>
-      <div class="card"><p style="font-size:0.875rem;color:var(--muted);">All commercial use requires a written license agreement. Contact admin@qector.store to begin the process.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section style="background:var(--panel);border-top:1px solid var(--border);">
-  <div class="container" style="text-align:center;padding:3rem 1.5rem;">
-    <h2 style="margin-bottom:0.75rem;">Ready to license QECTOR Decoder v3?</h2>
-    <p style="max-width:520px;margin:0 auto 2rem;">Contact us with your organization name, use case, and intended deployment. We respond with a license proposal within 2 business days.</p>
-    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-      <a href="contact.html" class="btn btn-primary btn-lg">Start License Inquiry</a>
-      <a href="mailto:admin@qector.store" class="btn btn-secondary btn-lg">admin@qector.store</a>
+    <div class="notice warn" style="margin-top:2.5rem;">
+      All prices in USD. A written commercial license agreement is required for all paid tiers. Hosted API and OEM tiers are contact-only until production infrastructure exists.
     </div>
   </div>
 </section>
@@ -344,6 +290,7 @@
     </div>
   </div>
 </footer>
+
 <script src="assets/nav.js"></script>
 </body>
 </html>
