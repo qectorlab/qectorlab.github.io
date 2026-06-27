@@ -3,25 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder v3 — Source-available Rust/Python quantum error correction decoder. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding, Stim/Sinter compatible. v0.5.3">
+  <meta name="description" content="QECTOR Decoder v3 — Source-available Rust/Python quantum error correction decoder. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding. v0.5.3">
   <title>QECTOR Decoder v3 — Quantum Error Correction Decoding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="nav-logo">
       <img src="assets/logo.svg" width="32" height="32" alt="QECTOR">
       QECT<span>OR</span>
     </a>
-    <button class="nav-hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links">
       <li><a href="decoder.html">Decoder</a></li>
       <li><a href="workbench.html">Workbench</a></li>
@@ -35,7 +31,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container hero-grid-layout">
     <div class="hero-copy">
@@ -45,10 +40,7 @@
         <span class="badge badge-cyan">414+ Tests Passing</span>
       </div>
       <h1 class="hero-title">Quantum Error Correction<br>Decoding, <em>Reproducible by Design</em></h1>
-      <p class="hero-subtitle">
-        A source-available Rust/Python platform for high-performance quantum error-correction decoding.
-        Exact MWPM, Belief-Matching, BP-OSD for qLDPC, CPU/GPU batch decoding, and artifact-backed reproducible benchmarks.
-      </p>
+      <p class="hero-subtitle">A source-available Rust/Python platform for high-performance quantum error-correction decoding. Exact MWPM, Belief-Matching, BP-OSD for qLDPC, CPU/GPU batch decoding, and artifact-backed reproducible benchmarks.</p>
       <div class="hero-actions">
         <a href="decoder.html" class="btn btn-primary btn-lg">View Decoder v0.5.3</a>
         <a href="commercial.html" class="btn btn-gold btn-lg">Commercial License</a>
@@ -57,12 +49,11 @@
       <p class="hero-trust">Free for personal, academic, and non-commercial research. Commercial use requires a paid license.</p>
     </div>
     <div class="hero-visual">
-      <img src="assets/hero.png" width="1672" height="941" loading="eager" alt="QECTOR Decoder v3 — Quantum error correction decoding">
+      <img src="assets/hero.png" width="1672" height="941" loading="eager" alt="QECTOR Decoder v3">
     </div>
   </div>
 </section>
 
-<!-- TRUST STRIP -->
 <div style="position:relative;z-index:1;">
   <div class="container" style="padding-top:2.5rem;padding-bottom:2.5rem;">
     <div class="trust-strip">
@@ -78,13 +69,11 @@
   </div>
 </div>
 
-<!-- PRODUCT SPLIT -->
 <section>
   <div class="container">
     <div class="section-label">Platform</div>
     <h2 style="margin-bottom:2rem;">One decoder. Multiple backends. Reproducible results.</h2>
     <div class="product-split">
-
       <div class="product-card decoder-card">
         <span class="badge badge-green"><span class="glow-dot"></span> v0.5.3 — Available Now</span>
         <h3>QECTOR Decoder v3</h3>
@@ -105,7 +94,6 @@
           <a href="commercial.html" class="btn btn-ghost">Get Commercial License</a>
         </div>
       </div>
-
       <div class="product-card workbench-card">
         <span class="badge badge-blue">Coming Soon</span>
         <h3>QECTOR Workbench</h3>
@@ -124,33 +112,21 @@
           <a href="contact.html" class="btn btn-ghost">Join Early Access</a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- BENCHMARK PROOF -->
 <section>
   <div class="container">
     <div class="section-label">Benchmark Evidence</div>
     <h2 style="margin-bottom:0.5rem;">Validated against PyMatching at circuit level</h2>
     <p style="margin-bottom:2rem;max-width:640px;">Rotated surface code, circuit-level depolarizing noise. Wilson 95% confidence intervals. All artifacts are SHA-256 hashed and traceable to a specific git commit.</p>
-
     <div class="benchmark-proof">
-      <div class="benchmark-header">
-        <span class="badge badge-muted">QECTOR Blossom vs PyMatching — LER Parity through d=15</span>
-      </div>
+      <div class="benchmark-header"><span class="badge badge-muted">QECTOR Blossom vs PyMatching — LER Parity through d=15</span></div>
       <div class="benchmark-body">
         <div class="table-wrap" style="margin:0;">
           <table>
-            <thead>
-              <tr>
-                <th>Distance</th>
-                <th>QECTOR LER</th>
-                <th>PyMatching LER</th>
-                <th>Parity</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Distance</th><th>QECTOR LER</th><th>PyMatching LER</th><th>Parity</th></tr></thead>
             <tbody>
               <tr><td class="label">d = 3</td><td class="highlight">0.0117</td><td>0.0117</td><td class="good">✓ Exact</td></tr>
               <tr><td class="label">d = 5</td><td class="highlight">0.0089</td><td>0.0089</td><td class="good">✓ Exact</td></tr>
@@ -160,12 +136,9 @@
             </tbody>
           </table>
         </div>
-        <p class="ler-caveat">
-          PyMatching remains faster for single-shot exact MWPM. QECTOR's strengths: belief-matching LER reduction (up to 35.7%), BP-OSD for qLDPC codes, GPU batch throughput (14.6M dec/s), and fully reproducible, hashed artifacts.
-        </p>
+        <p class="ler-caveat">PyMatching remains faster for single-shot exact MWPM. QECTOR's strengths: belief-matching LER reduction (up to 35.7%), BP-OSD for qLDPC codes, GPU batch throughput (14.6M dec/s), and fully reproducible, hashed artifacts.</p>
       </div>
     </div>
-
     <div class="grid-4" style="margin-top:2rem;">
       <div class="card"><div class="stat"><div class="stat-value">1.4 µs</div><div class="stat-label">p50 latency (ring d=10)</div></div></div>
       <div class="card"><div class="stat"><div class="stat-value">14.6M</div><div class="stat-label">dec/s — OpenCL GPU batch</div></div></div>
@@ -175,7 +148,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
@@ -183,7 +155,7 @@
         <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;">
           <img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECTOR
         </a>
-        <p>Source-available quantum error correction decoder platform. Free for non-commercial use. Commercial use requires a paid license.</p>
+        <p>Source-available quantum error correction decoder platform.<br>Free for non-commercial use. Commercial use requires a paid license.</p>
       </div>
       <div class="footer-col">
         <h4>Product</h4>
@@ -194,24 +166,27 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Legal</h4>
+        <h4>Resources</h4>
         <ul>
+          <li><a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener">PyPI Package v0.5.3</a></li>
+          <li><a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener">GitHub Repository</a></li>
+          <li><a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ&pli=1" target="_blank" rel="noopener">Official User Manual (Book)</a></li>
           <li><a href="license.html">License</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="commercial.html">Commercial</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h4>Company</h4>
         <ul>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="mailto:admin@qector.store">admin@qector.store</a></li>
+          <li><a href="commercial.html">Commercial Licensing</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
-      <span>QECTOR is source-available, not open-source. <a href="license.html">License</a></span>
+      <span>QECTOR is source-available, not open-source.</span>
     </div>
   </div>
 </footer>
