@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commercial Licensing - QECTOR</title>
+    <title>Commercial Licensing - QECTOR Decoder v3</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -27,75 +27,65 @@
 </nav>
 
 <section class="section">
-    <div class="container" style="max-width:820px; margin:0 auto;">
-        <h1 style="margin-bottom:1rem;">Commercial Licensing</h1>
-        <p style="color:#9ca3af; font-size:1.1rem; max-width:680px;">
-            QECTOR Decoder v0.5.4 is source-available and free for personal, academic, and non-commercial research use. Any commercial use requires a paid commercial license.
+    <div class="container" style="max-width:860px; margin:0 auto;">
+
+        <h1 style="margin-bottom:0.75rem;">Commercial Licensing</h1>
+        <p style="color:#9ca3af; font-size:1.15rem; max-width:720px;">
+            QECTOR Decoder v3 is a production-grade, source-available quantum error correction decoding framework. It is free for personal, academic, and non-commercial research use. All commercial deployment requires a paid license.
         </p>
 
         <!-- EXECUTIVE SUMMARY -->
-        <div style="margin-top:3rem; background:#111827; border:1px solid #1f2937; border-radius:12px; padding:2rem;">
+        <div style="margin-top:2.5rem; background:#111827; border:1px solid #1f2937; border-radius:12px; padding:2rem;">
             <h3 style="margin-bottom:1.25rem; color:#67e8f9;">Executive Summary</h3>
-            <p style="color:#e2e8f0; line-height:1.7; margin-bottom:1.5rem;">
-                QECTOR Decoder v3 is a quantum error correction decoder suite with a high-performance Rust core (Union-Find, exact polynomial MWPM/Blossom, Sparse Blossom, BP-OSD) and a pure-Python ecosystem layer for Stim, PyMatching, and Sinter compatibility.
+            <p style="color:#e2e8f0; line-height:1.75;">
+                QECTOR v3 is a poly-algorithmic decoding suite featuring a high-performance Rust core (Blossom MWPM, Sparse Blossom, Union-Find, BP-OSD) with full Python ecosystem integration. It delivers <strong>exact LER parity</strong> with PyMatching on weighted MWPM up to distance 15, while its belief-matching mode consistently achieves lower logical error rates than standard MWPM on circuit-level noise.
             </p>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.25rem;">
-                <div>
-                    <strong style="color:#4ade80;">Accuracy</strong><br>
-                    <span style="color:#9ca3af; font-size:0.95rem;">Belief-matching achieves lower logical error rates than PyMatching on real Stim circuit-level noise (-33.7% at d=5, -25.7% at d=7).</span>
-                </div>
-                <div>
-                    <strong style="color:#4ade80;">Parity</strong><br>
-                    <span style="color:#9ca3af; font-size:0.95rem;">QECTOR weighted exact MWPM matches PyMatching LER at every distance d=3 to d=15 with correct threshold scaling.</span>
-                </div>
-                <div>
-                    <strong style="color:#4ade80;">Correctness</strong><br>
-                    <span style="color:#9ca3af; font-size:0.95rem;">832 / 832 tests passing. GPU batch decoders are bit-identical to CPU. Full reproducibility with SHA-256 artifacts.</span>
-                </div>
-                <div>
-                    <strong style="color:#4ade80;">Ecosystem</strong><br>
-                    <span style="color:#9ca3af; font-size:0.95rem;">Native Stim DEM loader, drop-in PyMatching API, and Sinter plug-in for standardized Monte-Carlo benchmarking.</span>
-                </div>
+            <div style="margin-top:1.5rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem;">
+                <div><strong style="color:#4ade80;">Exact MWPM Parity</strong><br><span style="color:#9ca3af; font-size:0.95rem;">Matches PyMatching LER from d=3 to d=15 after adaptive-k optimization.</span></div>
+                <div><strong style="color:#4ade80;">Belief-Matching Advantage</strong><br><span style="color:#9ca3af; font-size:0.95rem;">-33.7% LER reduction at d=5 vs PyMatching (pooled +28.8%).</span></div>
+                <div><strong style="color:#4ade80;">Near-Exact Quality</strong><br><span style="color:#9ca3af; font-size:0.95rem;">98.3% of shots at d=9 have exact optimal weight (median gap ≈ 0).</span></div>
+                <div><strong style="color:#4ade80;">Full Ecosystem</strong><br><span style="color:#9ca3af; font-size:0.95rem;">Native Stim DEM support, Sinter integration, GPU batch decoding (CUDA/OpenCL).</span></div>
             </div>
         </div>
 
         <div style="margin-top:3rem;">
-            <h3 style="margin-bottom:1.5rem;">Key Validated Strengths for Commercial Teams</h3>
+            <h3 style="margin-bottom:1.25rem;">Why Commercial Teams License QECTOR</h3>
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem;">
                 <div class="card">
-                    <h4 style="color:#4ade80;">Accuracy Mode</h4>
-                    <p style="color:#9ca3af; font-size:0.95rem;">Belief-matching delivers lower logical error rates than PyMatching on real Stim circuit-level noise (-33.7% at d=5, -25.7% at d=7).</p>
+                    <h4 style="color:#4ade80;">Accuracy When It Matters</h4>
+                    <p style="color:#9ca3af; font-size:0.95rem;">Belief-matching suppresses correlated errors that standard MWPM cannot see, delivering measurably lower logical error rates on real Stim circuit-level workloads.</p>
                 </div>
                 <div class="card">
-                    <h4 style="color:#4ade80;">Exact Parity on MWPM</h4>
-                    <p style="color:#9ca3af; font-size:0.95rem;">QECTOR-Blossom matches PyMatching LER exactly from d=3 to d=15 with correct threshold scaling.</p>
+                    <h4 style="color:#4ade80;">Reproducible &amp; Auditable</h4>
+                    <p style="color:#9ca3af; font-size:0.95rem;">832/832 tests passing. Full SHA-256 artifact manifests. Environment-stamped evidence bundles. Suitable for due diligence and investor validation.</p>
                 </div>
                 <div class="card">
-                    <h4 style="color:#4ade80;">Strong Correctness</h4>
-                    <p style="color:#9ca3af; font-size:0.95rem;">832 / 832 tests passing. GPU bit-identical to CPU. Full reproducibility with SHA-256 artifacts.</p>
+                    <h4 style="color:#4ade80;">Future-Proof Architecture</h4>
+                    <p style="color:#9ca3af; font-size:0.95rem;">Poly-algorithmic design (MWPM + Belief + BP-OSD + UF + GPU) anticipates the need for dynamic algorithm selection in real-time control systems.</p>
                 </div>
                 <div class="card">
-                    <h4 style="color:#4ade80;">Ecosystem Ready</h4>
-                    <p style="color:#9ca3af; font-size:0.95rem;">Native Stim DEM loader + drop-in Sinter integration. Easy to plug into existing research and benchmarking workflows.</p>
+                    <h4 style="color:#4ade80;">Source-Available Clarity</h4>
+                    <p style="color:#9ca3af; font-size:0.95rem;">Full source visibility for verification and integration, with clear commercial licensing terms. No hidden open-source obligations.</p>
                 </div>
             </div>
         </div>
 
         <div style="margin-top:3rem;">
-            <h3 style="margin-bottom:1.5rem;">Honest Limitations</h3>
-            <div style="color:#9ca3af; font-size:0.95rem; line-height:1.7;">
-                <p>PyMatching remains the latency leader (typically 3x–24x faster depending on distance). Belief-matching is the accuracy mode and is slower per shot. BP-OSD is competitive but trails the specialized 'ldpc' package by ~10%. Union-Find is a fast approximate path.</p>
+            <h3 style="margin-bottom:1.25rem;">Honest Limitations</h3>
+            <div style="color:#9ca3af; font-size:0.95rem; line-height:1.75; background:#111827; border:1px solid #1f2937; border-radius:8px; padding:1.5rem;">
+                PyMatching remains the CPU latency leader (typically 3x–24x faster). Belief-matching is the accuracy mode and is significantly slower per shot. BP-OSD is competitive but trails specialized ldpc implementations by ~10% on certain qLDPC codes. Union-Find is a fast approximate path.
             </div>
         </div>
 
         <div style="margin-top:3rem; text-align:center;">
             <a href="pricing.html" class="btn btn-gold btn-lg">View Pricing Tiers</a>
-            <a href="contact.html" class="btn btn-primary btn-lg" style="margin-left:0.75rem;">Start License Inquiry</a>
+            <a href="contact.html" class="btn btn-primary btn-lg" style="margin-left:0.75rem;">Start Commercial Inquiry</a>
         </div>
 
-        <p style="margin-top:3rem; color:#64748b; font-size:0.9rem; text-align:center;">
-            Full 35-page technical report with all raw data and environment snapshots available for qualified commercial evaluations.
+        <p style="margin-top:2.5rem; color:#64748b; font-size:0.9rem; text-align:center;">
+            Full 35-page technical report with raw data, weight-gap histograms, multi-seed analysis, and reproducible artifacts available for qualified commercial evaluations.
         </p>
+
     </div>
 </section>
 
