@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QECTOR Decoder v0.5.3</title>
+    <title>QECTOR Decoder v0.5.4</title>
     <link rel="stylesheet" href="assets/style.css">
     <style>
         .specs-table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: #111827; }
@@ -36,7 +36,7 @@
 <header style="background: linear-gradient(135deg, #0a1628 0%, #111827 100%); padding: 90px 0 70px;">
     <div class="container">
         <div style="max-width: 820px;">
-            <div class="badge badge-cyan" style="margin-bottom:1rem;">v0.5.3 - June 2026</div>
+            <div class="badge badge-cyan" style="margin-bottom:1rem;">v0.5.4 - June 2026</div>
             <h1 style="font-size: 3.1rem; line-height: 1.1; margin-bottom: 1.25rem;">
                 Quantum Error Correction<br>Decoding, <span style="color:#67e8f9;">Reproducible by Design</span>
             </h1>
@@ -44,7 +44,7 @@
                 Source-available Rust/Python platform. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding.
             </p>
             <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <a href="#install" class="btn btn-primary">View Decoder v0.5.3</a>
+                <a href="#install" class="btn btn-primary">View Decoder v0.5.4</a>
                 <a href="commercial.html" class="btn btn-gold">Commercial License</a>
             </div>
         </div>
@@ -71,11 +71,13 @@
             <tbody>
                 <tr><th>Core Architecture</th><td><strong>Rust core</strong> with PyO3 Python bindings. GIL-releasing during decode operations. Zero-copy NumPy interoperability.</td></tr>
                 <tr><th>Decoder Backends</th><td><strong>BlossomDecoder</strong> - Exact weighted MWPM<br><strong>BeliefMatching</strong> - Accuracy mode (up to 35.7% LER reduction)<br><strong>BpOsdDecoder</strong> - BP-OSD for qLDPC codes<br><strong>SparseBlossomDecoder</strong> - Near-optimal region growing<br><strong>UnionFindDecoder</strong> - Lowest latency real-time path<br><strong>CUDABatchDecoder</strong> / <strong>OpenCLBatchDecoder</strong> - GPU batch</td></tr>
-                <tr><th>Performance</th><td>p50 single-shot latency: <strong>1.4 µs</strong> (ring code d=10)<br>OpenCL GPU batch throughput: <strong>14.6M dec/s</strong> (d=5, batch 10k)<br>CPU BatchDecoder: <strong>4.1M dec/s</strong> (SIMD + Rayon)</td></tr>
+                <tr><th>Performance</th><td>p50 single-shot latency: <strong>1.4 µs</strong> (ring code d=10)<br>OpenCL GPU batch throughput: <strong>14.6M dec/s</strong> (d=5, batch 10k)
+CPU BatchDecoder: <strong>4.1M dec/s</strong> (SIMD + Rayon)</td></tr>
                 <tr><th>Supported Code Families</th><td>Rotated/Toric/Repetition surface codes<br>Bivariate-Bicycle (BB) codes<br>Hypergraph-Product codes<br>General CSS stabilizer codes via Stim DEM</td></tr>
                 <tr><th>Compatibility</th><td>Stim Detector Error Model loader<br>Sinter Decoder plug-in<br>PyMatching-compatible API<br>Native DEM parsing</td></tr>
                 <tr><th>Reproducibility</th><td>SHA-256 hashed artifacts<br>Full environment snapshot stamping<br>Git commit + dependency versions recorded</td></tr>
-                <tr><th>GPU Acceleration</th><td>CUDA (NVIDIA) with NVRTC kernel compilation<br>OpenCL (cross-vendor: NVIDIA / AMD / Intel)<br>Transparent CPU fallback + auto-recovery</td></tr>
+                <tr><th>GPU Acceleration</th><td>CUDA (NVIDIA) with NVRTC kernel compilation<br>OpenCL (cross-vendor: NVIDIA / AMD / Intel)
+Transparent CPU fallback + auto-recovery</td></tr>
                 <tr><th>Testing and Validation</th><td><strong>414+ tests</strong> passing<br>Brute-force optimality verification<br>PyMatching LER parity regression (d=15)</td></tr>
                 <tr><th>Installation</th><td><code>pip install qector-decoder-v3</code><br>PyPI: https://pypi.org/project/qector-decoder-v3/<br>GitHub: https://github.com/GuillaumeLessard/qector-decoder</td></tr>
             </tbody>
@@ -83,46 +85,24 @@
     </div>
 </section>
 
-<!-- FOOTER - PROFESSIONAL VERSION -->
+<!-- FOOTER -->
 <footer class="footer-professional">
     <div class="container">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:50px;">
-            
-            <!-- LEFT: LOGO + DESCRIPTION -->
-            <div style="max-width: 280px;">
-                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR logo" style="margin-bottom: 12px;">
-                <p style="color:#9ca3af; font-size:0.9rem; line-height:1.6;">
-                    Professional quantum error correction decoder platform for reproducible research and commercial workflows.
-                </p>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;">
+            <div>
+                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR logo" style="margin-bottom:16px;">
+                <p style="color:#6b7280;max-width:260px;text-align:center;margin:0 auto;">Advanced quantum error correction technology and tooling.</p>
             </div>
-
-            <!-- RIGHT: LINKS -->
-            <div style="display:flex; gap:70px; flex-wrap:wrap;">
-                <div>
-                    <h4 style="margin-bottom:14px; font-size:0.95rem; color:#e2e8f0;">Product</h4>
-                    <div style="display:flex; flex-direction:column; gap:9px;">
-                        <a href="decoder.html" style="color:#94a3b8; font-size:0.9rem;">Decoder v3</a>
-                        <a href="sati-codex.html" style="color:#94a3b8; font-size:0.9rem;">SATI CODEX</a>
-                        <a href="workbench.html" style="color:#94a3b8; font-size:0.9rem;">Workbench</a>
-                    </div>
-                </div>
-                <div>
-                    <h4 style="margin-bottom:14px; font-size:0.95rem; color:#e2e8f0;">Company</h4>
-                    <div style="display:flex; flex-direction:column; gap:9px;">
-                        <a href="commercial.html" style="color:#94a3b8; font-size:0.9rem;">Commercial</a>
-                        <a href="contact.html" style="color:#94a3b8; font-size:0.9rem;">Contact</a>
-                        <a href="https://github.com/GuillaumeLessard/qector-decoder" style="color:#94a3b8; font-size:0.9rem;">GitHub</a>
-                    </div>
-                </div>
+            <div style="display:flex;gap:60px;flex-wrap:wrap;">
+                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Product</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="decoder.html">Decoder v3</a><a href="sati-codex.html">SATI CODEX</a><a href="workbench.html">Workbench</a></div></div>
+                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Company</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="commercial.html">Commercial</a><a href="contact.html">Contact</a><a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub</a></div></div>
             </div>
         </div>
-
-        <!-- BOTTOM LEGAL -->
-        <div style="margin-top:70px; padding-top:28px; border-top:1px solid #1f2937; text-align:center;">
-            <div style="color:#64748b; font-size:0.85rem; margin-bottom:6px;">
-                Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
+        <div style="margin-top:60px;padding-top:32px;border-top:1px solid #1f2937;text-align:center;">
+            <div style="color:#6b7280;font-size:0.9rem;margin-bottom:8px;">
+                Copyright 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
             </div>
-            <div style="color:#64748b; font-size:0.85rem;">
+            <div style="color:#6b7280;font-size:0.9rem;">
                 Restricted access materials. Serious inquiries only.
             </div>
         </div>
