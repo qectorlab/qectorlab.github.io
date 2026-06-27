@@ -55,7 +55,7 @@
 <section class="section">
     <div class="container">
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
-            <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">1.4 us</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">p50 latency (ring d=10)</div></div>
+            <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">1.4 µs</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">p50 latency (ring d=10)</div></div>
             <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">14.6M</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">dec/s - OpenCL GPU batch</div></div>
             <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">35.7%</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">LER reduction (Belief-Matching)</div></div>
             <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">d=15</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">Exact MWPM parity validated</div></div>
@@ -71,7 +71,7 @@
             <tbody>
                 <tr><th>Core Architecture</th><td><strong>Rust core</strong> with PyO3 Python bindings. GIL-releasing during decode operations. Zero-copy NumPy interoperability.</td></tr>
                 <tr><th>Decoder Backends</th><td><strong>BlossomDecoder</strong> - Exact weighted MWPM<br><strong>BeliefMatching</strong> - Accuracy mode (up to 35.7% LER reduction)<br><strong>BpOsdDecoder</strong> - BP-OSD for qLDPC codes<br><strong>SparseBlossomDecoder</strong> - Near-optimal region growing<br><strong>UnionFindDecoder</strong> - Lowest latency real-time path<br><strong>CUDABatchDecoder</strong> / <strong>OpenCLBatchDecoder</strong> - GPU batch</td></tr>
-                <tr><th>Performance</th><td>p50 single-shot latency: <strong>1.4 us</strong> (ring code d=10)<br>OpenCL GPU batch throughput: <strong>14.6M dec/s</strong> (d=5, batch 10k)<br>CPU BatchDecoder: <strong>4.1M dec/s</strong> (SIMD + Rayon)</td></tr>
+                <tr><th>Performance</th><td>p50 single-shot latency: <strong>1.4 µs</strong> (ring code d=10)<br>OpenCL GPU batch throughput: <strong>14.6M dec/s</strong> (d=5, batch 10k)<br>CPU BatchDecoder: <strong>4.1M dec/s</strong> (SIMD + Rayon)</td></tr>
                 <tr><th>Supported Code Families</th><td>Rotated/Toric/Repetition surface codes<br>Bivariate-Bicycle (BB) codes<br>Hypergraph-Product codes<br>General CSS stabilizer codes via Stim DEM</td></tr>
                 <tr><th>Compatibility</th><td>Stim Detector Error Model loader<br>Sinter Decoder plug-in<br>PyMatching-compatible API<br>Native DEM parsing</td></tr>
                 <tr><th>Reproducibility</th><td>SHA-256 hashed artifacts<br>Full environment snapshot stamping<br>Git commit + dependency versions recorded</td></tr>
@@ -83,24 +83,46 @@
     </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FOOTER - PROFESSIONAL VERSION -->
 <footer class="footer-professional">
     <div class="container">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;">
-            <div>
-                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR logo" style="margin-bottom:16px;">
-                <p style="color:#6b7280;max-width:260px;text-align:center;margin:0 auto;">Advanced quantum error correction technology and tooling.</p>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:50px;">
+            
+            <!-- LEFT: LOGO + DESCRIPTION -->
+            <div style="max-width: 280px;">
+                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR logo" style="margin-bottom: 12px;">
+                <p style="color:#9ca3af; font-size:0.9rem; line-height:1.6;">
+                    Professional quantum error correction decoder platform for reproducible research and commercial workflows.
+                </p>
             </div>
-            <div style="display:flex;gap:60px;flex-wrap:wrap;">
-                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Product</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="decoder.html">Decoder v3</a><a href="sati-codex.html">SATI CODEX</a><a href="workbench.html">Workbench</a></div></div>
-                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Company</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="commercial.html">Commercial</a><a href="contact.html">Contact</a><a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub</a></div></div>
+
+            <!-- RIGHT: LINKS -->
+            <div style="display:flex; gap:70px; flex-wrap:wrap;">
+                <div>
+                    <h4 style="margin-bottom:14px; font-size:0.95rem; color:#e2e8f0;">Product</h4>
+                    <div style="display:flex; flex-direction:column; gap:9px;">
+                        <a href="decoder.html" style="color:#94a3b8; font-size:0.9rem;">Decoder v3</a>
+                        <a href="sati-codex.html" style="color:#94a3b8; font-size:0.9rem;">SATI CODEX</a>
+                        <a href="workbench.html" style="color:#94a3b8; font-size:0.9rem;">Workbench</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:14px; font-size:0.95rem; color:#e2e8f0;">Company</h4>
+                    <div style="display:flex; flex-direction:column; gap:9px;">
+                        <a href="commercial.html" style="color:#94a3b8; font-size:0.9rem;">Commercial</a>
+                        <a href="contact.html" style="color:#94a3b8; font-size:0.9rem;">Contact</a>
+                        <a href="https://github.com/GuillaumeLessard/qector-decoder" style="color:#94a3b8; font-size:0.9rem;">GitHub</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div style="margin-top:60px;padding-top:32px;border-top:1px solid #1f2937;text-align:center;">
-            <div style="color:#6b7280;font-size:0.9rem;margin-bottom:8px;">
-                Copyright 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
+
+        <!-- BOTTOM LEGAL -->
+        <div style="margin-top:70px; padding-top:28px; border-top:1px solid #1f2937; text-align:center;">
+            <div style="color:#64748b; font-size:0.85rem; margin-bottom:6px;">
+                Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
             </div>
-            <div style="color:#6b7280;font-size:0.9rem;">
+            <div style="color:#64748b; font-size:0.85rem;">
                 Restricted access materials. Serious inquiries only.
             </div>
         </div>
