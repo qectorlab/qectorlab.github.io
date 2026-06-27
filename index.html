@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QECTOR — Quantum Error Correction Decoding, Reproducible by Design</title>
-    <meta name="description" content="QECTOR is a source-available quantum error correction decoder platform with Rust/Python architecture, Stim/Sinter integration, belief-matching, BP-OSD, CPU/GPU batch decoding.">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- HEADER (from workbench.html style) -->
 <nav class="nav">
     <div class="container nav-inner">
         <a href="index.html" class="nav-logo">
@@ -23,6 +22,7 @@
             <a href="commercial.html">Commercial</a>
             <a href="contact.html">Contact</a>
         </div>
+        <a href="commercial.html" class="btn btn-primary btn-sm" style="margin-left:auto;">Get License</a>
     </div>
 </nav>
 
@@ -45,44 +45,23 @@
     </div>
 </header>
 
-<!-- BADGES SECTION -->
+<!-- BADGES -->
 <section style="padding: 3rem 0; border-bottom: 1px solid #1f2937;">
     <div class="container">
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <h3 style="margin-bottom: 1rem; color: #9ca3af;">Built With &amp; Compatible With</h3>
+        <div style="text-align:center; margin-bottom:2rem;">
+            <h3 style="margin-bottom:1rem; color:#9ca3af;">Built With &amp; Compatible With</h3>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
-            <a href="https://www.rust-lang.org/" target="_blank"><img src="https://img.shields.io/badge/Rust-1.70%2B-orange?logo=rust&logoColor=white" alt="Rust 1.70+"></a>
-            <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white" alt="Python 3.8+"></a>
-            <a href="https://github.com/quantumlib/Stim" target="_blank"><img src="https://img.shields.io/badge/Stim-Compatible-brightgreen?logo=github" alt="Stim Compatible"></a>
-            <a href="https://github.com/quantumlib/Stim" target="_blank"><img src="https://img.shields.io/badge/Sinter-Compatible-brightgreen" alt="Sinter Compatible"></a>
-            <a href="https://github.com/oscarhiggott/PyMatching" target="_blank"><img src="https://img.shields.io/badge/PyMatching-API-blueviolet" alt="PyMatching API"></a>
-            <a href="https://developer.nvidia.com/cuda-toolkit" target="_blank"><img src="https://img.shields.io/badge/CUDA-Supported-green?logo=nvidia&logoColor=white" alt="CUDA Supported"></a>
-            <a href="https://www.khronos.org/opencl/" target="_blank"><img src="https://img.shields.io/badge/OpenCL-Supported-blue?logo=opencl&logoColor=white" alt="OpenCL Supported"></a>
-            <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank"><img src="https://img.shields.io/badge/SHA--256-Artifacts-yellow" alt="SHA-256 Artifacts"></a>
+        <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center;">
+            <a href="https://www.rust-lang.org/" target="_blank"><img src="https://img.shields.io/badge/Rust-1.70%2B-orange?logo=rust&logoColor=white" alt="Rust"></a>
+            <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white" alt="Python"></a>
+            <a href="https://github.com/quantumlib/Stim" target="_blank"><img src="https://img.shields.io/badge/Stim-Compatible-brightgreen?logo=github" alt="Stim"></a>
+            <a href="https://github.com/quantumlib/Stim" target="_blank"><img src="https://img.shields.io/badge/Sinter-Compatible-brightgreen" alt="Sinter"></a>
+            <a href="https://github.com/oscarhiggott/PyMatching" target="_blank"><img src="https://img.shields.io/badge/PyMatching-API-blueviolet" alt="PyMatching"></a>
+            <a href="https://developer.nvidia.com/cuda-toolkit" target="_blank"><img src="https://img.shields.io/badge/CUDA-Supported-green?logo=nvidia&logoColor=white" alt="CUDA"></a>
+            <a href="https://www.khronos.org/opencl/" target="_blank"><img src="https://img.shields.io/badge/OpenCL-Supported-blue?logo=opencl&logoColor=white" alt="OpenCL"></a>
+            <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank"><img src="https://img.shields.io/badge/SHA--256-Artifacts-yellow" alt="SHA-256"></a>
             <a href="https://arxiv.org/abs/2302.08442" target="_blank"><img src="https://img.shields.io/badge/Belief--Matching-Implemented-important" alt="Belief-Matching"></a>
-            <a href="https://arxiv.org/abs/2007.07959" target="_blank"><img src="https://img.shields.io/badge/BP--OSD-qLDPC-red" alt="BP-OSD / qLDPC"></a>
-        </div>
-    </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="section">
-    <div class="container">
-        <h2 style="margin-bottom:2rem; text-align:center;">Two components. One platform.</h2>
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
-            <div class="card" style="border-color:#67e8f9; background:#0f172a;">
-                <div class="badge badge-cyan" style="margin-bottom:1rem;">Available Now</div>
-                <h3>QECTOR Decoder v0.5.3</h3>
-                <p style="color:#9ca3af;">The core high-performance decoder library. Rust core with clean Python API. PyMatching-compatible.</p>
-                <a href="decoder.html" class="btn btn-primary" style="margin-top:1rem;">Decoder Details</a>
-            </div>
-            <div class="card">
-                <div class="badge badge-blue" style="margin-bottom:1rem;">Coming Soon</div>
-                <h3>QECTOR Workbench</h3>
-                <p style="color:#9ca3af;">Local fullstack app for circuit loading, decoder comparison, artifact export, and reproducible technical reports.</p>
-                <a href="workbench.html" class="btn btn-secondary" style="margin-top:1rem;">Workbench Details</a>
-            </div>
+            <a href="https://arxiv.org/abs/2007.07959" target="_blank"><img src="https://img.shields.io/badge/BP--OSD-qLDPC-red" alt="BP-OSD"></a>
         </div>
     </div>
 </section>
@@ -90,37 +69,21 @@
 <!-- FOOTER -->
 <footer class="footer-professional">
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;">
             <div>
-                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR" style="margin-bottom: 16px;">
-                <p style="color: #6b7280; max-width: 260px; text-align: center; margin: 0 auto;">
-                    Advanced quantum error correction technology and tooling.
-                </p>
+                <img src="assets/logo.svg" width="132" height="74" alt="QECTOR" style="margin-bottom:16px;">
+                <p style="color:#6b7280;max-width:260px;text-align:center;margin:0 auto;">Advanced quantum error correction technology and tooling.</p>
             </div>
-            <div style="display: flex; gap: 60px; flex-wrap: wrap;">
-                <div>
-                    <h4 style="margin-bottom: 16px; font-size: 0.95rem;">Product</h4>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <a href="decoder.html" style="color: #9ca3af;">Decoder v3</a>
-                        <a href="sati-codex.html" style="color: #9ca3af;">SATI CODEX</a>
-                        <a href="workbench.html" style="color: #9ca3af;">Workbench</a>
-                    </div>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 16px; font-size: 0.95rem;">Company</h4>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <a href="commercial.html" style="color: #9ca3af;">Commercial</a>
-                        <a href="contact.html" style="color: #9ca3af;">Contact</a>
-                        <a href="https://github.com/GuillaumeLessard/qector-decoder" style="color: #9ca3af;">GitHub</a>
-                    </div>
-                </div>
+            <div style="display:flex;gap:60px;flex-wrap:wrap;">
+                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Product</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="decoder.html" style="color:#9ca3af;">Decoder v3</a><a href="sati-codex.html" style="color:#9ca3af;">SATI CODEX</a><a href="workbench.html" style="color:#9ca3af;">Workbench</a></div></div>
+                <div><h4 style="margin-bottom:16px;font-size:0.95rem;">Company</h4><div style="display:flex;flex-direction:column;gap:10px;"><a href="commercial.html" style="color:#9ca3af;">Commercial</a><a href="contact.html" style="color:#9ca3af;">Contact</a><a href="https://github.com/GuillaumeLessard/qector-decoder" style="color:#9ca3af;">GitHub</a></div></div>
             </div>
         </div>
-        <div style="margin-top: 60px; padding-top: 32px; border-top: 1px solid #1f2937; text-align: center;">
-            <div style="color: #6b7280; font-size: 0.9rem; margin-bottom: 8px;">
+        <div style="margin-top:60px;padding-top:32px;border-top:1px solid #1f2937;text-align:center;">
+            <div style="color:#6b7280;font-size:0.9rem;margin-bottom:8px;">
                 © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.
             </div>
-            <div style="color: #6b7280; font-size: 0.9rem;">
+            <div style="color:#6b7280;font-size:0.9rem;">
                 Restricted access materials • Serious inquiries only
             </div>
         </div>
