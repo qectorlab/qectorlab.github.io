@@ -3,24 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="QECTOR Decoder v3 benchmarks and performance data. Reproducible results with artifacts and evidence.">
+    <meta name="description" content="QECTOR Decoder v3 benchmarks and performance data.">
     <title>Benchmarks • QECTOR</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
-    <style>
-        .feature-card {
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-                        0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-                        0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-    </style>
 </head>
 <body>
 
@@ -61,40 +47,34 @@
         <div class="container">
             <div class="section-label">Benchmarks</div>
             <h1>Reproducible Performance Data</h1>
-            <p>All benchmarks are provided with full artifacts, code, and environment details for independent verification.</p>
+            <p>All benchmarks include full artifacts, code, and environment details for independent verification.</p>
         </div>
     </section>
 
     <section>
-        <div class="container">
-            <div style="max-width: 820px; margin: 0 auto;">
-                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Decoder-v3 Performance</h2>
-                <p style="color: #94a3b8; line-height: 1.7;">
-                    Throughput and accuracy results on standard surface codes and repetition codes. 
-                    Full Monte-Carlo datasets and decoding traces are available in the GitHub artifacts.
-                </p>
+        <div class="container" style="max-width: 820px; margin: 0 auto;">
+            <p style="color: #94a3b8; line-height: 1.75;">
+                Decoder-v3 delivers strong throughput and accuracy on standard surface codes and repetition codes. 
+                Full Monte-Carlo datasets and decoding traces are available in the repository.
+            </p>
 
-                <div style="margin-top: 2.5rem; background: #1e2937; padding: 2rem; border-radius: 12px;">
-                    <p style="color: #64748b; margin-bottom: 1rem;"><strong>Key Results (v0.5.3)</strong></p>
-                    <ul style="line-height: 2; color: #cbd5e1;">
-                        <li>UnionFind: High throughput on repetition codes</li>
-                        <li>Blossom (MWPM): Strong accuracy on distance-3/5 surface codes</li>
-                        <li>BP-OSD: Competitive performance on LDPC/qLDPC instances</li>
-                    </ul>
-                </div>
+            <div style="margin-top: 2.5rem; background: #1e2937; padding: 2.25rem; border-radius: 14px;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Key Results (v0.5.3)</h3>
+                <ul style="line-height: 2; color: #cbd5e1;">
+                    <li><strong>UnionFind</strong> — High throughput on repetition codes</li>
+                    <li><strong>Blossom (MWPM)</strong> — Strong accuracy on distance-3/5 surface codes</li>
+                    <li><strong>BP-OSD</strong> — Competitive performance on LDPC/qLDPC instances</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <section style="background: #0f172a; padding: 4rem 0; border-top: 1px solid #1e2937; margin-top: 3rem;">
+    <section style="background: #0f172a; padding: 4.5rem 0; border-top: 1px solid #1e2937; margin-top: 3rem;">
         <div class="container" style="text-align: center;">
             <p style="color: #94a3b8; max-width: 620px; margin: 0 auto 2rem;">
-                Full benchmark artifacts, code, and reproduction instructions are available in the repository.
+                Full benchmark artifacts and reproduction instructions are available in the repository.
             </p>
-            <a href="https://github.com/GuillaumeLessard/qector-decoder" 
-               style="display: inline-flex; align-items: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.9rem 2.1rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem;">
-                View Artifacts on GitHub
-            </a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" class="btn-premium">View Artifacts on GitHub</a>
         </div>
     </section>
 
