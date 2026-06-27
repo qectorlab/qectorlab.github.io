@@ -8,6 +8,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+    .tech-badges a {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .tech-badges a:hover {
+      transform: translateY(-2px);
+    }
+    .tech-badges img {
+      height: 28px;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
 
@@ -55,16 +76,41 @@
 </section>
 
 <div style="position:relative;z-index:1;">
-  <div class="container" style="padding-top:2rem;padding-bottom:2.5rem;">
-    <div class="trust-strip">
-      <div class="trust-item">Rust + Python</div>
-      <div class="trust-item">Stim Compatible</div>
-      <div class="trust-item">Sinter Compatible</div>
-      <div class="trust-item">PyMatching API</div>
-      <div class="trust-item">CUDA + OpenCL</div>
-      <div class="trust-item">SHA-256 Artifacts</div>
-      <div class="trust-item">Belief-Matching</div>
-      <div class="trust-item">BP-OSD / qLDPC</div>
+  <div class="container" style="padding-top:1.5rem;padding-bottom:2rem;">
+    <div style="text-align:center;margin-bottom:0.75rem;">
+      <span class="section-label" style="margin-bottom:0.5rem;">Tech Stack &amp; Ecosystem</span>
+    </div>
+    <div class="tech-badges">
+      <a href="https://www.rust-lang.org/" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/Rust-1.70%2B-orange?logo=rust&logoColor=white" alt="Rust 1.70+">
+      </a>
+      <a href="https://www.python.org/" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white" alt="Python 3.8+">
+      </a>
+      <a href="https://github.com/quantumlib/Stim" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/Stim-Compatible-brightgreen?logo=github" alt="Stim Compatible">
+      </a>
+      <a href="https://github.com/quantumlib/Stim" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/Sinter-Compatible-brightgreen" alt="Sinter Compatible">
+      </a>
+      <a href="https://github.com/oscarhiggott/PyMatching" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/PyMatching-API-blueviolet" alt="PyMatching API">
+      </a>
+      <a href="https://developer.nvidia.com/cuda-toolkit" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/CUDA-Supported-green?logo=nvidia&logoColor=white" alt="CUDA Supported">
+      </a>
+      <a href="https://www.khronos.org/opencl/" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/OpenCL-Supported-blue?logo=opencl&logoColor=white" alt="OpenCL Supported">
+      </a>
+      <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/SHA--256-Artifacts-yellow" alt="SHA-256 Artifacts">
+      </a>
+      <a href="https://arxiv.org/abs/2302.08442" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/Belief--Matching-Implemented-important" alt="Belief-Matching">
+      </a>
+      <a href="https://arxiv.org/abs/2007.07959" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/BP--OSD-qLDPC-red" alt="BP-OSD / qLDPC">
+      </a>
     </div>
   </div>
 </div>
