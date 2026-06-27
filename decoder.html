@@ -10,6 +10,8 @@
         .specs-table th, .specs-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #1f2937; vertical-align: top; }
         .specs-table th { background: #0f172a; color: #67e8f9; font-weight: 600; width: 220px; }
         .specs-table tr:hover { background: #1e2937; }
+        .changelog-item { margin-bottom: 1.25rem; }
+        .changelog-item h4 { margin-bottom: 0.35rem; color: #67e8f9; }
     </style>
 </head>
 <body>
@@ -44,7 +46,7 @@
                 Source-available Rust/Python platform. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding.
             </p>
             <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <a href="#install" class="btn btn-primary">View Decoder v0.5.4</a>
+                <a href="#changelog" class="btn btn-primary">What's New in v0.5.4</a>
                 <a href="commercial.html" class="btn btn-gold">Commercial License</a>
             </div>
         </div>
@@ -59,6 +61,38 @@
             <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">14.6M</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">dec/s - OpenCL GPU batch</div></div>
             <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">35.7%</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">LER reduction (Belief-Matching)</div></div>
             <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">d=15</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">Exact MWPM parity validated</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- v0.5.4 CHANGELOG -->
+<section id="changelog" class="section">
+    <div class="container">
+        <h2 style="margin-bottom:1.5rem;">What's New in v0.5.4</h2>
+        
+        <div class="changelog-item">
+            <h4>Improved BatchDecoder API</h4>
+            <p style="color:#9ca3af;">Added <code>BatchDecoder.decode()</code> for single-shot decoding and better support for large batch workflows.</p>
+        </div>
+        
+        <div class="changelog-item">
+            <h4>Enhanced BeliefMatching</h4>
+            <p style="color:#9ca3af;">BeliefMatching now accepts raw NumPy parity-check matrices directly, improving ease of use with custom codes.</p>
+        </div>
+        
+        <div class="changelog-item">
+            <h4>Sinter Integration Improvements</h4>
+            <p style="color:#9ca3af;"><code>QectorSinterDecoder</code> now supports DEM caching for significantly faster repeated Monte-Carlo runs.</p>
+        </div>
+        
+        <div class="changelog-item">
+            <h4>Performance &amp; Stability</h4>
+            <p style="color:#9ca3af;">Multiple internal optimizations and bug fixes for GPU backends (CUDA/OpenCL) and Union-Find decoder stability.</p>
+        </div>
+        
+        <div class="changelog-item">
+            <h4>Documentation &amp; Examples</h4>
+            <p style="color:#9ca3af;">Updated documentation and added more practical examples for Stim + Sinter workflows.</p>
         </div>
     </div>
 </section>
