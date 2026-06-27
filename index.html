@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QECTOR - Quantum Error Correction Decoding, Reproducible by Design</title>
+    <title>QECTOR — Quantum Error Correction Decoding Platform</title>
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .hero { background: linear-gradient(135deg, #0a1628 0%, #111827 100%); padding: 100px 0 80px; }
+        .metric { background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 1.5rem; text-align: center; }
+        .metric-value { font-size: 1.75rem; font-weight: 700; color: #4ade80; }
+    </style>
 </head>
 <body>
 
@@ -27,41 +32,108 @@
 </nav>
 
 <!-- HERO -->
-<header style="background: linear-gradient(135deg, #0a1628 0%, #111827 100%); padding: 100px 0 80px;">
+<header class="hero">
     <div class="container">
-        <div style="max-width: 780px;">
-            <div class="badge badge-green" style="margin-bottom:1rem;"><span class="glow-dot"></span> v0.5.4 Available - June 2026</div>
-            <h1 style="font-size: 3.2rem; line-height: 1.1; margin-bottom: 1.25rem;">
-                Quantum Error Correction<br>Decoding, <span style="color:#67e8f9;">Reproducible by Design</span>
+        <div style="max-width: 860px;">
+            <div class="badge badge-cyan" style="margin-bottom:1.25rem;">QECTOR Decoder v3 — v0.5.4</div>
+            
+            <h1 style="font-size: 3.2rem; line-height: 1.1; margin-bottom: 1.5rem;">
+                The decoding layer for<br>
+                <span style="color:#67e8f9;">fault-tolerant quantum computing</span>
             </h1>
-            <p style="font-size: 1.2rem; color: #9ca3af; max-width: 620px;">
-                A source-available Rust/Python platform for high-performance quantum error-correction decoding.
+            
+            <p style="font-size: 1.2rem; color: #9ca3af; max-width: 680px; margin-bottom: 2.5rem;">
+                A poly-algorithmic, source-available decoding platform engineered for rigorous validation, reproducible Monte Carlo campaigns, and integration into commercial quantum control systems.
             </p>
-            <div style="margin-top: 2rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-                <a href="decoder.html" class="btn btn-primary btn-lg">View Decoder v0.5.4</a>
-                <a href="commercial.html" class="btn btn-gold btn-lg">Commercial License</a>
+
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="decoder.html" class="btn btn-primary btn-lg">Explore the Decoder</a>
+                <a href="commercial.html" class="btn btn-gold btn-lg">Commercial Licensing</a>
             </div>
         </div>
     </div>
 </header>
 
-<!-- BADGES -->
-<section style="padding: 3rem 0; border-bottom: 1px solid #1f2937;">
+<!-- STRATEGIC PROBLEM -->
+<section class="section">
     <div class="container">
-        <div style="text-align:center; margin-bottom:2rem;">
-            <h3 style="margin-bottom:1rem; color:#9ca3af;">Built With and Compatible With</h3>
+        <div style="max-width: 820px; margin: 0 auto; text-align: center;">
+            <h2 style="margin-bottom: 1.25rem;">Decoding is the critical bottleneck</h2>
+            <p style="color: #9ca3af; font-size: 1.05rem; line-height: 1.75;">
+                As quantum processors scale toward fault tolerance, the classical decoding layer becomes one of the most severe constraints. Slow or inaccurate decoders force hardware teams to over-provision physical qubits, inflate cryogenic infrastructure, and delay the path to utility-scale systems.
+            </p>
         </div>
-        <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center;">
-            <a href="https://www.rust-lang.org/" target="_blank"><img src="https://img.shields.io/badge/Rust-1.70%2B-orange?logo=rust&logoColor=white" alt="Rust"></a>
-            <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white" alt="Python"></a>
-            <a href="https://github.com/quantumlib/Stim" target="_blank"><img src="https://img.shields.io/badge/Stim-Compatible-brightgreen?logo=github" alt="Stim"></a>
-            <a href="https://github.com/quantumlib/Stim" target="_blank"><img src="https://img.shields.io/badge/Sinter-Compatible-brightgreen" alt="Sinter"></a>
-            <a href="https://github.com/oscarhiggott/PyMatching" target="_blank"><img src="https://img.shields.io/badge/PyMatching-API-blueviolet" alt="PyMatching"></a>
-            <a href="https://developer.nvidia.com/cuda-toolkit" target="_blank"><img src="https://img.shields.io/badge/CUDA-Supported-green?logo=nvidia&logoColor=white" alt="CUDA"></a>
-            <a href="https://www.khronos.org/opencl/" target="_blank"><img src="https://img.shields.io/badge/OpenCL-Supported-blue?logo=opencl&logoColor=white" alt="OpenCL"></a>
-            <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank"><img src="https://img.shields.io/badge/SHA--256-Artifacts-yellow" alt="SHA-256"></a>
-            <a href="https://arxiv.org/abs/2302.08442" target="_blank"><img src="https://img.shields.io/badge/Belief--Matching-Implemented-important" alt="Belief-Matching"></a>
-            <a href="https://arxiv.org/abs/2007.07959" target="_blank"><img src="https://img.shields.io/badge/BP--OSD-qLDPC-red" alt="BP-OSD"></a>
+    </div>
+</section>
+
+<!-- KEY RESULTS -->
+<section class="section" style="background: #0f172a;">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 2.5rem;">Validated Performance at Scale</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; max-width: 1100px; margin: 0 auto;">
+            <div class="metric">
+                <div class="metric-value">Exact Parity</div>
+                <div style="color:#9ca3af; margin-top: 0.5rem;">QECTOR-Blossom matches PyMatching LER from d=3 to d=15</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">+28.8% Advantage</div>
+                <div style="color:#9ca3af; margin-top: 0.5rem;">Belief-matching LER reduction vs PyMatching at d=5 (pooled across seeds)</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">98.3% Optimal</div>
+                <div style="color:#9ca3af; margin-top: 0.5rem;">Shots with exact minimum weight at d=9 (median gap ≈ 0)</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">832 / 832</div>
+                <div style="color:#9ca3af; margin-top: 0.5rem;">Tests passing with full reproducibility and SHA-256 artifacts</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- POLY-ALGORITHMIC -->
+<section class="section">
+    <div class="container">
+        <div style="max-width: 820px; margin: 0 auto;">
+            <h2 style="margin-bottom: 1.25rem;">One framework. Multiple algorithms.</h2>
+            <p style="color: #9ca3af; font-size: 1.05rem; line-height: 1.75; margin-bottom: 2rem;">
+                Modern fault-tolerant systems cannot rely on a single decoding heuristic. QECTOR provides a unified, production-grade platform with interchangeable algorithms so teams can dynamically trade accuracy for latency based on real-time syndrome density and hardware constraints.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="card">
+                    <strong>Blossom MWPM</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">Exact weighted matching with adaptive-k optimization for near-exact quality at scale.</span>
+                </div>
+                <div class="card">
+                    <strong>Belief-Matching</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">BP + reweighted MWPM for correlated errors. Lower LER than standard MWPM.</span>
+                </div>
+                <div class="card">
+                    <strong>BP-OSD</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">Competitive on qLDPC codes where matching fundamentally fails.</span>
+                </div>
+                <div class="card">
+                    <strong>Union-Find</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">Ultra-fast approximate path for latency-critical workloads.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="background: #0f172a; text-align: center;">
+    <div class="container">
+        <h2 style="margin-bottom: 1rem;">Ready to evaluate?</h2>
+        <p style="color: #9ca3af; max-width: 520px; margin: 0 auto 2rem;">
+            Full technical report, reproducible artifacts, and commercial licensing available.
+        </p>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <a href="decoder.html" class="btn btn-primary">View Decoder Details</a>
+            <a href="benchmarks.html" class="btn btn-gold">See Full Benchmarks</a>
+            <a href="commercial.html" class="btn btn-primary">Commercial Licensing</a>
         </div>
     </div>
 </section>
