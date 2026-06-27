@@ -3,27 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder — source-available Rust/Python QEC decoder. Exact MWPM, belief-matching, BP-OSD, GPU batch decoding, Stim/Sinter compatible.">
-  <title>QECTOR Decoder — Source-Available QEC Decoder Library</title>
+  <meta name="description" content="QECTOR Decoder v3 — Official documentation for the source-available Rust/Python quantum error correction decoder (v0.5.3).">
+  <title>QECTOR Decoder v3 — Documentation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
-  <style>
-    .decoder-matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-    .decoder-row-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
-    .decoder-row-card h4 { margin-bottom: 0.25rem; font-size: 0.95rem; }
-    .decoder-row-card .accuracy { font-family: var(--font-mono); font-size: 0.78rem; color: var(--cyan); }
-    .decoder-row-card .use-when { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
-
-    .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .arch-item { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
-    .arch-item h4 { color: var(--cyan); margin-bottom: 0.5rem; font-size: 0.9rem; }
-    .arch-item p { font-size: 0.85rem; }
-
-    @media (max-width: 700px) { .arch-grid { grid-template-columns: 1fr; } }
-  </style>
 </head>
 <body>
+
 <nav class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="32" height="32" alt="">QECT<span>OR</span></a>
@@ -43,246 +30,62 @@
 
 <section class="page-hero">
   <div class="container">
-    <div class="section-label">QECTOR Decoder</div>
-    <h1>Source-Available Quantum Error Correction Decoder Library</h1>
-    <p>A Rust/Python decoder suite covering exact MWPM, belief-matching accuracy mode, BP-OSD for qLDPC codes, and GPU batch decoding — with reproducible benchmark artifacts and commercial licensing.</p>
+    <div class="section-label">QECTOR Decoder v3</div>
+    <h1>Source-Available Quantum Error Correction Decoder</h1>
+    <p>Version 0.5.3 — Rust core with Python API. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding, and reproducible artifacts.</p>
     <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem;">
-      <a href="benchmarks.html" class="btn btn-primary">View Benchmarks</a>
+      <a href="https://pypi.org/project/qector-decoder-v3/" class="btn btn-primary">Install from PyPI</a>
+      <a href="benchmarks.html" class="btn btn-secondary">View Benchmarks</a>
       <a href="commercial.html" class="btn btn-gold">Commercial License</a>
-      <a href="contact.html" class="btn btn-secondary">Contact / Early Access</a>
     </div>
   </div>
 </section>
 
-<!-- STATUS BADGES -->
-<section>
-  <div class="container">
-    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem;">
-      <span class="badge badge-green"><span class="glow-dot"></span> Available Now</span>
-      <span class="badge badge-muted">Version 0.4.0 — Codename Neutron</span>
-      <span class="badge badge-muted">Released 2026-06-20</span>
-      <span class="badge badge-cyan">414 Tests Passing</span>
-    </div>
-
-    <!-- PERFORMANCE SUMMARY -->
-    <div class="grid-4" style="margin-bottom:3rem;">
-      <div class="card"><div class="stat"><div class="stat-value">1.4 µs</div><div class="stat-label">p50 latency — ring code d=10</div></div></div>
-      <div class="card"><div class="stat"><div class="stat-value">663K</div><div class="stat-label">decodes/sec — ring d=10, CPU</div></div></div>
-      <div class="card"><div class="stat"><div class="stat-value">14.6M</div><div class="stat-label">decodes/sec — OpenCL GPU, d=5, batch 10K</div></div></div>
-      <div class="card"><div class="stat"><div class="stat-value">35.7%</div><div class="stat-label">LER reduction — belief-matching vs PyMatching at d=5</div></div></div>
-    </div>
-
-    <!-- DECODER DECISION MATRIX -->
-    <div class="section-label" style="margin-bottom:1rem;">Decoder Selection</div>
-    <h2 style="margin-bottom:0.5rem;">When to use which decoder</h2>
-    <p style="margin-bottom:2rem;max-width:660px;">QECTOR ships multiple decoder backends. Choose based on your accuracy, latency, code family, and batch size requirements.</p>
-
-    <div class="decoder-matrix">
-      <div class="decoder-row-card" style="border-color:rgba(0,213,255,0.3);">
-        <span class="badge badge-cyan" style="margin-bottom:0.5rem;">Exact MWPM</span>
-        <h4>BlossomDecoder</h4>
-        <div class="accuracy">Weight-optimal · Verified vs brute force</div>
-        <div class="use-when">Use when you need minimum-weight matching or LER parity with PyMatching. Validated through d=15 for <code>memory_x</code> and <code>memory_z</code>.</div>
-      </div>
-      <div class="decoder-row-card" style="border-color:rgba(25,230,161,0.3);">
-        <span class="badge badge-green" style="margin-bottom:0.5rem;">Highest Accuracy</span>
-        <h4>BeliefMatching</h4>
-        <div class="accuracy">Up to 35.7% lower LER vs PyMatching (d=5)</div>
-        <div class="use-when">Accuracy mode — recovers X–Z correlations via sum-product BP then exact MWPM. Higher per-shot cost; use when LER is the priority.</div>
-      </div>
-      <div class="decoder-row-card">
-        <span class="badge badge-blue" style="margin-bottom:0.5rem;">qLDPC / LDPC</span>
-        <h4>BpOsdDecoder</h4>
-        <div class="accuracy">BP + ordered statistics · [[72,12]] BB code</div>
-        <div class="use-when">For non-graphlike CSS codes that matching cannot decode — bivariate-bicycle, hypergraph-product, bicycle. Within ~10% LER of reference <code>ldpc</code> package.</div>
-      </div>
-      <div class="decoder-row-card">
-        <span class="badge badge-muted" style="margin-bottom:0.5rem;">Near-Optimal</span>
-        <h4>SparseBlossomDecoder</h4>
-        <div class="accuracy">Region-growing · ≥99% optimal at small distances</div>
-        <div class="use-when">Lower latency than Blossom with ≤1 weight gap vs brute force. Not exact MWPM — use BlossomDecoder when exact minimum weight is required.</div>
-      </div>
-      <div class="decoder-row-card">
-        <span class="badge badge-muted" style="margin-bottom:0.5rem;">Lowest Latency</span>
-        <h4>UnionFindDecoder</h4>
-        <div class="accuracy">1.4 µs p50 — real-time path</div>
-        <div class="use-when">Fastest path on surface/repetition/toric matching graphs. Approximate — falls back to Blossom for safety. Best for real-time QEC control.</div>
-      </div>
-      <div class="decoder-row-card">
-        <span class="badge badge-muted" style="margin-bottom:0.5rem;">GPU Batch</span>
-        <h4>CUDABatchDecoder / OpenCLBatchDecoder</h4>
-        <div class="accuracy">Bit-identical to CPU · Transparent fallback</div>
-        <div class="use-when">Large-batch offline Monte-Carlo sampling. CUDA for NVIDIA production. OpenCL for cross-vendor (NVIDIA / AMD / Intel). Win at batch ≥ 1024.</div>
-      </div>
-      <div class="decoder-row-card">
-        <span class="badge badge-muted" style="margin-bottom:0.5rem;">Adaptive</span>
-        <h4>AutoDecoder</h4>
-        <div class="accuracy">Calibrates CPU↔GPU crossover on your hardware</div>
-        <div class="use-when">Routes to the GPU only when it is actually faster, measured on your machine. GPU output is bit-identical to CPU path.</div>
-      </div>
-      <div class="decoder-row-card">
-        <span class="badge badge-muted" style="margin-bottom:0.5rem;">CPU Batch</span>
-        <h4>BatchDecoder / CPUBatchDecoder</h4>
-        <div class="accuracy">4.1M dec/s · SIMD · Rayon parallel</div>
-        <div class="use-when">High-throughput CPU batch sampling. Optimal at batch sizes 64–4096. Same accuracy as chosen backend decoder.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INSTALLATION -->
 <section>
   <div class="container">
     <div class="section-label">Installation</div>
-    <h2 style="margin-bottom:1.5rem;">Get started</h2>
+    <h2 style="margin-bottom:1rem;">pip install qector-decoder-v3</h2>
+    <pre><code>pip install qector-decoder-v3
+pip install "qector-decoder-v3[stim]"   # Stim + Sinter + PyMatching
+pip install "qector-decoder-v3[all]"    # Full environment</code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Decoders Included</div>
+    <h2 style="margin-bottom:1.5rem;">Choose the right backend for your workload</h2>
+
     <div class="grid-2" style="gap:1.5rem;">
-      <div>
-        <h4 style="margin-bottom:0.75rem;color:var(--muted-2);">Standard install</h4>
-        <pre><code>pip install qector-decoder-v3</code></pre>
-        <h4 style="margin-top:1.25rem;margin-bottom:0.75rem;color:var(--muted-2);">With development tools</h4>
-        <pre><code>pip install qector-decoder-v3[dev]</code></pre>
-        <h4 style="margin-top:1.25rem;margin-bottom:0.75rem;color:var(--muted-2);">With Stim / Sinter</h4>
-        <pre><code>pip install qector-decoder-v3[stim]</code></pre>
-        <h4 style="margin-top:1.25rem;margin-bottom:0.75rem;color:var(--muted-2);">Full extras (all optional deps)</h4>
-        <pre><code>pip install qector-decoder-v3[all]</code></pre>
-      </div>
-      <div>
-        <h4 style="margin-bottom:0.75rem;color:var(--muted-2);">Quick start — UnionFind decoder</h4>
-        <pre><code>from qector_decoder_v3 import UnionFindDecoder
-import numpy as np
-
-checks = [[0, 1], [1, 2], [2, 3]]
-decoder = UnionFindDecoder(checks)
-
-syndrome = np.array([0, 1, 0], dtype=np.uint8)
-correction = decoder.decode(syndrome)
-print("Correction:", correction)</code></pre>
-        <h4 style="margin-top:1.25rem;margin-bottom:0.75rem;color:var(--muted-2);">Streaming multi-round</h4>
-        <pre><code>from qector_decoder_v3 import StreamingDecoder
-
-stream = StreamingDecoder(checks, history_size=10)
-for syndrome in syndrome_stream:
-    correction = stream.update(syndrome)
-    apply_correction(correction)
-stream.flush()</code></pre>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ECOSYSTEM -->
-<section>
-  <div class="container">
-    <div class="section-label">Ecosystem Layer</div>
-    <h2 style="margin-bottom:1rem;">Full Python ecosystem on top of the Rust core</h2>
-    <p style="margin-bottom:2rem;max-width:660px;">Every module is covered by the test suite. The ecosystem layer makes QECTOR benchmark-transparent, drop-in compatible with PyMatching, and directly wired to Stim/Sinter workflows.</p>
-
-    <div class="grid-2" style="gap:1.5rem;margin-bottom:2rem;">
-      <div>
-        <h4 style="margin-bottom:0.75rem;color:var(--muted-2);">Stim DEM → QECTOR decoder</h4>
-        <pre><code>from qector_decoder_v3 import dem
-
-model = dem.parse_dem(open("circuit.dem").read())
-decoder = model.make_decoder("sparse_blossom")
-logical = model.predicted_observables(
-    decoder.decode(syndrome)
-)</code></pre>
-      </div>
-      <div>
-        <h4 style="margin-bottom:0.75rem;color:var(--muted-2);">PyMatching-compatible drop-in</h4>
-        <pre><code>from qector_decoder_v3.pymatching_compat import Matching
-
-m = Matching.from_check_matrix(H, faults_matrix=L)
-predicted = m.decode(syndrome)
-# Same API as pymatching.Matching</code></pre>
-      </div>
-      <div>
-        <h4 style="margin-bottom:0.75rem;color:var(--muted-2);">GPU with transparent fallback</h4>
-        <pre><code>from qector_decoder_v3 import (
-    CUDABatchDecoder, OpenCLBatchDecoder
-)
-
-if CUDABatchDecoder.is_available():
-    dec = CUDABatchDecoder(checks)
-elif OpenCLBatchDecoder.is_available():
-    dec = OpenCLBatchDecoder(checks, n_qubits)
-    print(dec.is_degraded)  # False
-else:
-    dec = CPUBatchDecoder(checks)</code></pre>
-      </div>
-      <div>
-        <h4 style="margin-bottom:0.75rem;color:var(--muted-2);">Belief-matching — accuracy mode</h4>
-        <pre><code>from qector_decoder_v3.belief_matching import (
-    BeliefMatching
-)
-from qector_decoder_v3 import codes
-
-code = codes.rotated_surface_code(5)
-bm = BeliefMatching(code)
-# Lower LER than PyMatching on circuit-level noise
-correction = bm.decode(syndrome)</code></pre>
-      </div>
-    </div>
-
-    <div class="notice">
-      <strong>Sinter plug-in:</strong> QECTOR exposes <code>qector_blossom</code>, <code>qector_belief</code>, and <code>qector_unionfind</code> as <code>sinter.Decoder</code> objects — plug into the standard Monte-Carlo harness used by the community to benchmark PyMatching and fusion-blossom. Requires <code>pip install qector-decoder-v3[stim]</code>.
-    </div>
-  </div>
-</section>
-
-<!-- ARCHITECTURE -->
-<section>
-  <div class="container">
-    <div class="section-label">Architecture</div>
-    <h2 style="margin-bottom:1.5rem;">Rust core with Python ecosystem</h2>
-    <div class="arch-grid">
-      <div class="arch-item"><h4>Rust core</h4><p>Union-Find with path compression + union by rank. Flat edge storage for cache efficiency. Corrected algorithm — only active clusters corrected. Zero-copy NumPy interop via PyO3. GIL released during every decode call.</p></div>
-      <div class="arch-item"><h4>Blossom / SparseBlossom</h4><p>Exact weighted MWPM via Edmonds primal-dual. SparseBlossomDecoder uses region-growing with BFS-per-pair, RadixHeap ordering, and exact DP for n ≤ 20 with Edmonds fallback for n &gt; 20.</p></div>
-      <div class="arch-item"><h4>GPU backends</h4><p>CUDA: NVRTC native kernel compilation, reusable device workspace, CPU fallback after runtime error, auto-recovery. OpenCL: dual-kernel (global/local memory), cross-vendor NVIDIA/AMD/Intel, same resilience model.</p></div>
-      <div class="arch-item"><h4>Rayon parallelism</h4><p>BatchDecoder distributes across all CPU cores via Rayon. CPUBatchDecoder adds SIMD-optimised SoA layout for small/medium batches. AutoDecoder calibrates the CPU↔GPU crossover and routes accordingly.</p></div>
-      <div class="arch-item"><h4>Stim DEM loader</h4><p>Correct detector graph: mechanisms = columns, detectors = rows. Handles <code>repeat</code>, <code>shift_detectors</code>, and <code>^</code> decomposition. Works without Stim installed. Emits matching weights, priors, observables.</p></div>
-      <div class="arch-item"><h4>Provenance</h4><p>Every benchmark artifact stamps git commit, Python version, Stim/PyMatching versions, CPU details, and seed. The due-diligence bundle hashes all artifacts with SHA-256 so benchmark figures trace to a specific build.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- KNOWN LIMITATIONS -->
-<section>
-  <div class="container">
-    <div class="section-label">Honest Limitations</div>
-    <h2 style="margin-bottom:1rem;">Known limitations, re-checked every release</h2>
-    <div class="notice warn" style="margin-bottom:1.5rem;">Benchmark figures are from QECTOR's reference machine. Your numbers will differ based on hardware. Latency ratios are honest comparisons against PyMatching on the same machine.</div>
-    <div class="grid-2" style="gap:1rem;">
       <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Latency vs PyMatching</h4>
-        <p style="font-size:0.875rem;">QECTOR-Blossom matches PyMatching accuracy but is slower per shot at circuit level — roughly on par at d ≤ 5, ~5–6× behind at d = 9–11, gap widens beyond d = 13. For minimum single-shot latency on plain MWPM, PyMatching remains faster.</p>
+        <h4>Matching Decoders</h4>
+        <ul class="feature-list">
+          <li><strong>BlossomDecoder</strong> — Exact weighted MWPM (PyMatching parity)</li>
+          <li><strong>SparseBlossomDecoder</strong> — Near-optimal, faster on large graphs</li>
+          <li><strong>UnionFindDecoder</strong> + <strong>FastUnionFindDecoder</strong> — Lowest latency</li>
+        </ul>
       </div>
       <div class="card">
-        <h4 style="margin-bottom:0.5rem;">Belief-matching throughput</h4>
-        <p style="font-size:0.875rem;">Belief-matching rebuilds the weighted matching per shot — a few shots/sec at d=7. It is the accuracy mode, not the fast path. Use when LER reduction matters more than throughput.</p>
+        <h4>Accuracy & LDPC</h4>
+        <ul class="feature-list">
+          <li><strong>BeliefMatching</strong> — Up to 35.7% lower LER on correlated noise</li>
+          <li><strong>BpOsdDecoder</strong> — BP-OSD for qLDPC codes (BB, HGP, etc.)</li>
+        </ul>
       </div>
       <div class="card">
-        <h4 style="margin-bottom:0.5rem;">SparseBlossomDecoder exactness</h4>
-        <p style="font-size:0.875rem;">SparseBlossomDecoder is region-growing, not exact MWPM. ≥99% of small-code syndromes are minimum-weight with a weight gap ≤ 1 vs brute force. Use BlossomDecoder when exact minimum weight is required.</p>
+        <h4>Batch & GPU</h4>
+        <ul class="feature-list">
+          <li><strong>CUDABatchDecoder</strong> + <strong>OpenCLBatchDecoder</strong> — 14.6M dec/s</li>
+          <li><strong>AutoDecoder</strong> — Automatically chooses best backend</li>
+        </ul>
       </div>
       <div class="card">
-        <h4 style="margin-bottom:0.5rem;">GPU batch threshold</h4>
-        <p style="font-size:0.875rem;">GPU transfer overhead means CUDA/OpenCL win decisively only at large batch sizes. AutoDecoder.calibrate() finds the crossover on your machine and keeps small batches on CPU. Do not assume GPU is always faster.</p>
+        <h4>Specialized</h4>
+        <ul class="feature-list">
+          <li>StreamingDecoder, SlidingWindow, HybridDecoder</li>
+          <li>LookupTableDecoder, PredecodedDecoder</li>
+        </ul>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- LICENSE CTA -->
-<section style="background:var(--panel);border-top:1px solid var(--border);">
-  <div class="container" style="text-align:center;padding:3rem 1.5rem;">
-    <div class="section-label" style="justify-content:center;">License</div>
-    <h2 style="margin-bottom:0.75rem;">Free for non-commercial use</h2>
-    <p style="max-width:520px;margin:0 auto 2rem;">Commercial use — including company use, SaaS, products, government, and paid consulting — requires a paid commercial license.</p>
-    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-      <a href="license.html" class="btn btn-secondary">Read License</a>
-      <a href="pricing.html" class="btn btn-gold">Commercial Pricing</a>
-      <a href="contact.html" class="btn btn-primary">Contact / Inquire</a>
     </div>
   </div>
 </section>
@@ -292,15 +95,23 @@ correction = bm.decode(syndrome)</code></pre>
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;"><img src="assets/logo.svg" width="28" height="28" alt="">QECTOR</a>
-        <p>Source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows.</p>
+        <p>Source-available quantum error correction decoder platform. Free for non-commercial use.</p>
       </div>
-      <div class="footer-col"><h4>Product</h4><ul><li><a href="decoder.html">Decoder</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li></ul></div>
-      <div class="footer-col"><h4>Contact</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="mailto:admin@qector.store">admin@qector.store</a></li></ul></div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul><li><a href="decoder.html">Decoder v3</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul><li><a href="contact.html">Contact</a></li><li><a href="mailto:admin@qector.store">admin@qector.store</a></li></ul>
+      </div>
     </div>
     <div class="footer-bottom">
-      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
-      <span>QECTOR is source-available, not open-source.</span>
+      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions.</span>
     </div>
   </div>
 </footer>
