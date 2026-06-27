@@ -33,6 +33,32 @@
             QECTOR Decoder v0.5.4 is source-available and free for personal, academic, and non-commercial research use. Any commercial use requires a paid commercial license.
         </p>
 
+        <!-- EXECUTIVE SUMMARY -->
+        <div style="margin-top:3rem; background:#111827; border:1px solid #1f2937; border-radius:12px; padding:2rem;">
+            <h3 style="margin-bottom:1.25rem; color:#67e8f9;">Executive Summary</h3>
+            <p style="color:#e2e8f0; line-height:1.7; margin-bottom:1.5rem;">
+                QECTOR Decoder v3 is a quantum error correction decoder suite with a high-performance Rust core (Union-Find, exact polynomial MWPM/Blossom, Sparse Blossom, BP-OSD) and a pure-Python ecosystem layer for Stim, PyMatching, and Sinter compatibility.
+            </p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.25rem;">
+                <div>
+                    <strong style="color:#4ade80;">Accuracy</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">Belief-matching achieves lower logical error rates than PyMatching on real Stim circuit-level noise (-33.7% at d=5, -25.7% at d=7).</span>
+                </div>
+                <div>
+                    <strong style="color:#4ade80;">Parity</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">QECTOR weighted exact MWPM matches PyMatching LER at every distance d=3 to d=15 with correct threshold scaling.</span>
+                </div>
+                <div>
+                    <strong style="color:#4ade80;">Correctness</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">832 / 832 tests passing. GPU batch decoders are bit-identical to CPU. Full reproducibility with SHA-256 artifacts.</span>
+                </div>
+                <div>
+                    <strong style="color:#4ade80;">Ecosystem</strong><br>
+                    <span style="color:#9ca3af; font-size:0.95rem;">Native Stim DEM loader, drop-in PyMatching API, and Sinter plug-in for standardized Monte-Carlo benchmarking.</span>
+                </div>
+            </div>
+        </div>
+
         <div style="margin-top:3rem;">
             <h3 style="margin-bottom:1.5rem;">Key Validated Strengths for Commercial Teams</h3>
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem;">
