@@ -3,8 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — QECTOR Decoder v3 v0.5.3</title>
+  <meta name="description" content="Contact QECTOR team for licensing, early access, or technical inquiries.">
+  <title>Contact — QECTOR Decoder v3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .contact-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: #0f1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--cyan);
+    }
+    .form-group textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    .form-success {
+      background: rgba(25, 230, 161, 0.1);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -29,28 +78,85 @@
   <div class="container">
     <div class="section-label">Contact</div>
     <h1>Get in Touch</h1>
-    <p>License inquiries, early access requests, technical questions, and strategic discussions.</p>
+    <p>License inquiries, Workbench early access, technical questions, and strategic discussions.</p>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="grid-2" style="gap:2rem;">
+    <div class="grid-2" style="gap:3rem; align-items: start;">
+      
+      <!-- Contact Form -->
       <div>
-        <h3>Direct Email</h3>
-        <p><a href="mailto:admin@qector.store" style="font-size:1.1rem;color:var(--cyan);">admin@qector.store</a></p>
-        <p style="margin-top:1rem;color:var(--muted);">All messages go directly to Guillaume Lessard. Response within 2 business days for commercial inquiries.</p>
+        <div class="contact-form">
+          <div id="form-success" class="form-success">
+            Thank you! Your message has been sent successfully. We'll reply within 2 business days.
+          </div>
+
+          <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+            <!-- Web3Forms Access Key -->
+            <input type="hidden" name="access_key" value="4982c998-f54c-4cd0-9ffd-ccee2cd71bfd">
+            
+            <!-- Honeypot for spam protection -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none;">
+
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="License inquiry, Early access, Technical question..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your use case or question..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+              Send Message
+            </button>
+          </form>
+        </div>
       </div>
+
+      <!-- Contact Info -->
       <div>
-        <h3>Response Times</h3>
-        <ul class="feature-list">
-          <li><strong>License inquiry</strong> — ≤ 2 business days</li>
-          <li><strong>Workbench early access</strong> — ≤ 2 business days</li>
-          <li><strong>Strategic / partnership</strong> — ≤ 2 business days</li>
-          <li><strong>Technical (commercial)</strong> — ≤ 2 business days</li>
-          <li><strong>Technical (free tier)</strong> — ≤ 5 business days</li>
-        </ul>
+        <h3 style="margin-bottom:1.5rem;">Direct Contact</h3>
+        
+        <div style="margin-bottom:2rem;">
+          <p style="color:var(--muted);margin-bottom:0.5rem;">Email</p>
+          <a href="mailto:admin@qector.store" style="font-size:1.1rem;color:var(--cyan);">admin@qector.store</a>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <p style="color:var(--muted);margin-bottom:0.75rem;">Response Times</p>
+          <ul class="feature-list">
+            <li><strong>License &amp; commercial inquiries</strong> — within 2 business days</li>
+            <li><strong>Workbench early access</strong> — within 2 business days</li>
+            <li><strong>Technical questions (paid users)</strong> — within 2 business days</li>
+            <li><strong>Technical questions (free tier)</strong> — within 5 business days</li>
+          </ul>
+        </div>
+
+        <div>
+          <p style="color:var(--muted);margin-bottom:0.75rem;">What to include</p>
+          <ul class="feature-list">
+            <li>Your organization / company name</li>
+            <li>Intended use case (R&amp;D, product, SaaS, OEM, etc.)</li>
+            <li>Team size or number of users (if applicable)</li>
+            <li>Any specific technical requirements</li>
+          </ul>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -86,6 +192,36 @@
     </div>
   </div>
 </footer>
+
 <script src="assets/nav.js"></script>
+<script>
+  // Handle Web3Forms submission
+  const form = document.getElementById('contact-form');
+  const successMessage = document.getElementById('form-success');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again or email us directly at admin@qector.store');
+      }
+    } catch (error) {
+      alert('Network error. Please try again or email us directly at admin@qector.store');
+    }
+  });
+</script>
 </body>
 </html>
