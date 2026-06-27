@@ -1,110 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Licensing information for QECTOR Decoder v3 and SATI OS.">
-    <title>License • QECTOR</title>
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="QECTOR Decoder Source-Available License — free for personal, academic, and non-commercial use. Commercial use requires a paid license.">
+  <title>QECTOR License — Source-Available License v1.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .license-section { margin-bottom: 2.5rem; }
+    .license-section h3 { margin-bottom: 0.75rem; color: var(--text); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .license-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.75rem; }
+    .license-list li { display: flex; gap: 0.5rem; font-size: 0.875rem; color: var(--muted-2); }
+    .license-list li::before { content: '—'; color: var(--muted); flex-shrink: 0; }
+    .full-text { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; font-size: 0.82rem; color: var(--muted-2); line-height: 1.8; white-space: pre-wrap; font-family: var(--font-mono); max-height: 600px; overflow-y: auto; }
+  </style>
 </head>
 <body>
-
-<a class="skip-link" href="#main">Skip to content</a>
-
-<!-- Header -->
-<nav class="nav" aria-label="Primary navigation">
-    <div class="container nav-inner">
-        <a href="index.html" class="nav-logo">
-            <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
-        </a>
-        <button class="nav-hamburger" type="button" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="decoder.html">Decoder</a></li>
-            <li><a href="installer.html">Install</a></li>
-            <li><a href="docs.html">Docs</a></li>
-            <li><a href="technical-reference.html">Tech</a></li>
-            <li><a href="workbench.html">Workbench</a></li>
-            <li><a href="benchmarks.html">Benchmarks</a></li>
-            <li><a href="license.html" class="active" aria-current="page">License</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="commercial.html">Commercial</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li class="nav-cta"><a href="contact.html">Get License</a></li>
-        </ul>
-    </div>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" width="32" height="32" alt="">QECT<span>OR</span></a>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="decoder.html">Decoder</a></li>
+      <li><a href="workbench.html">Workbench</a></li>
+      <li><a href="benchmarks.html">Benchmarks</a></li>
+      <li><a href="license.html">License</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="commercial.html">Commercial</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="nav-cta"><a href="commercial.html">Get License</a></li>
+    </ul>
+  </div>
 </nav>
 
-<main id="main" tabindex="-1">
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">License</div>
+    <h1>QECTOR Decoder Source-Available License v1.0</h1>
+    <p>QECTOR is source-available, not open-source. Free for personal, academic, educational, and non-commercial research use. Commercial use requires a paid commercial license.</p>
+    <p style="margin-top:0.5rem;font-size:0.875rem;color:var(--muted);">Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</p>
+  </div>
+</section>
 
-    <section class="page-hero">
-        <div class="container">
-            <div class="section-label">License</div>
-            <h1>Licensing Overview</h1>
-            <p>QECTOR is source-available with clear paths for both non-commercial and commercial use.</p>
-        </div>
-    </section>
+<!-- SUMMARY GRID -->
+<section>
+  <div class="container">
+    <div class="section-label">License Summary</div>
+    <h2 style="margin-bottom:1.5rem;">What is and is not permitted</h2>
+    <div class="grid-2" style="gap:1.5rem;margin-bottom:2rem;">
 
-    <section>
-        <div class="container" style="max-width: 820px; margin: 0 auto;">
-            <p style="color: #94a3b8; line-height: 1.75;">
-                The project follows a dual licensing model: a permissive path for personal/academic use and structured commercial licensing for startups, labs, and enterprises.
-            </p>
+      <div class="card" style="border-color:rgba(25,230,161,0.2);background:rgba(25,230,161,0.03);">
+        <h3 style="color:var(--green);margin-bottom:1rem;">Free Permitted Use</h3>
+        <ul class="license-list">
+          <li>Personal learning and private experimentation</li>
+          <li>Non-commercial research</li>
+          <li>Academic evaluation and study</li>
+          <li>Internal non-commercial testing</li>
+          <li>Educational demonstrations</li>
+          <li>Benchmark reproduction</li>
+          <li>Reviewing or studying the source code</li>
+        </ul>
+        <div class="notice success" style="margin-top:1rem;font-size:0.8rem;">No payment required. Non-exclusive, non-transferable, revocable permission.</div>
+      </div>
 
-            <div style="margin-top: 2.5rem;">
-                <h3 style="margin-bottom: 1rem;">Key Points</h3>
-                <ul style="line-height: 2.1; color: #cbd5e1;">
-                    <li>Personal and academic use is free</li>
-                    <li>Commercial use requires a paid license</li>
-                    <li>Full SATI OS platform has separate tiered pricing</li>
-                    <li>Source code is available for inspection under license terms</li>
-                </ul>
-            </div>
+      <div class="card" style="border-color:rgba(255,176,32,0.25);background:rgba(255,176,32,0.03);">
+        <h3 style="color:var(--gold);margin-bottom:1rem;">Requires Paid Commercial License</h3>
+        <ul class="license-list">
+          <li>Company, startup, lab, or institution use</li>
+          <li>Commercial products or paid services</li>
+          <li>SaaS, cloud, hosted, or API services</li>
+          <li>Paid consulting using QECTOR</li>
+          <li>Internal business operations</li>
+          <li>Commercial R&D</li>
+          <li>Government or institutional deployment</li>
+          <li>Revenue-generating or funded use</li>
+          <li>OEM embedding and redistribution</li>
+          <li>Investor validation or fundraising use</li>
+        </ul>
+        <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+          <a href="pricing.html" class="btn btn-gold btn-sm">View Pricing</a>
+          <a href="contact.html" class="btn btn-ghost btn-sm">Inquire</a>
         </div>
-    </section>
-
-</main>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="container footer-grid">
-        <div>
-            <a href="index.html" class="footer-brand">
-                <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
-            </a>
-            <p>Quantum error correction decoder package for reproducible research and commercial workflow evaluation.</p>
-        </div>
-        <div>
-            <h4>Product</h4>
-            <a href="decoder.html">Decoder</a>
-            <a href="installer.html">Install</a>
-            <a href="docs.html">Docs</a>
-            <a href="benchmarks.html">Benchmarks</a>
-        </div>
-        <div>
-            <h4>Commercial</h4>
-            <a href="license.html">License</a>
-            <a href="pricing.html">Pricing</a>
-            <a href="commercial.html">Commercial use</a>
-            <a href="contact.html">Contact</a>
-        </div>
-        <div>
-            <h4>Official</h4>
-            <a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub repository</a>
-            <a href="https://pypi.org/project/qector-decoder-v3/">PyPI package</a>
-            <a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ">Official Manual</a>
-            <a href="https://www.qector.store">Official Website</a>
-            <span>Copyright © 2026 Guillaume Lessard / iD01t Productions</span>
-        </div>
+      </div>
     </div>
-</footer>
 
-<script src="assets/nav.js" defer></script>
+    <!-- RESTRICTIONS -->
+    <div class="license-section">
+      <h3>Restrictions — You may not</h3>
+      <ul class="license-list">
+        <li>Sell, rent, sublicense, lease, or commercially distribute QECTOR without written permission</li>
+        <li>Use QECTOR commercially without a paid commercial license</li>
+        <li>Remove or alter copyright notices, license notices, attribution, or disclaimers</li>
+        <li>Claim ownership of QECTOR or any derivative work</li>
+        <li>Re-license QECTOR under an open-source license or any other license</li>
+        <li>Publish modified versions as if they were official releases</li>
+        <li>Use QECTOR in a way that competes with the copyright holder's commercial licensing rights</li>
+        <li>Use QECTOR in safety-critical, medical, military, nuclear, or regulated systems without a separate written agreement</li>
+        <li>Use QECTOR to misrepresent scientific results or remove stated limitations</li>
+      </ul>
+    </div>
+
+    <!-- MODIFICATIONS -->
+    <div class="license-section">
+      <h3>Modifications</h3>
+      <p style="font-size:0.875rem;margin-bottom:0.75rem;">You may modify QECTOR for permitted non-commercial use. Modified versions must:</p>
+      <ul class="license-list">
+        <li>Keep this license file and all copyright notices</li>
+        <li>Clearly state the version was modified</li>
+        <li>Not use the official QECTOR name, logo, or branding to imply endorsement</li>
+        <li>Not be distributed commercially without a separate written license</li>
+      </ul>
+      <div class="notice" style="margin-top:1rem;font-size:0.82rem;">Contributions submitted to the official repository grant the copyright holder a perpetual, worldwide, royalty-free, irrevocable license to use and commercialize that contribution as part of QECTOR Decoder.</div>
+    </div>
+
+    <!-- RESEARCH CITATION -->
+    <div class="license-section">
+      <h3>Research and Citation</h3>
+      <p style="font-size:0.875rem;margin-bottom:0.75rem;">If you use QECTOR Decoder in academic work, research papers, benchmarks, reports, or public comparisons, you must provide attribution:</p>
+      <pre><code>QECTOR Decoder by Guillaume Lessard / iD01t Productions
+www.qector.store</code></pre>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:0.75rem;">Benchmark results must be presented honestly and must not remove stated limitations, hardware details, confidence intervals, methodology notes, or competing baseline results.</p>
+    </div>
+
+    <!-- NO WARRANTY -->
+    <div class="license-section">
+      <h3>No Warranty</h3>
+      <p style="font-size:0.875rem;">QECTOR Decoder is provided "as is" and "as available," without warranty of any kind — including warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, reliability, or suitability for production, quantum hardware, or scientific conclusions. You use the software at your own risk.</p>
+    </div>
+
+    <!-- GOVERNING LAW -->
+    <div class="license-section">
+      <h3>Governing Law</h3>
+      <p style="font-size:0.875rem;">Unless otherwise agreed in a separate written commercial license, this license is governed by the laws of the Province of Québec and the applicable laws of Canada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMERCIAL CTA -->
+<section style="background:var(--panel);border-top:1px solid var(--border);">
+  <div class="container" style="text-align:center;padding:3rem 1.5rem;">
+    <h2 style="margin-bottom:0.75rem;">Need a commercial license?</h2>
+    <p style="max-width:520px;margin:0 auto 2rem;">Commercial licenses are available for startups, labs, enterprises, SaaS providers, OEMs, and strategic partnerships. Reach out to discuss your use case and pricing.</p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="pricing.html" class="btn btn-secondary">View Pricing</a>
+      <a href="commercial.html" class="btn btn-gold">Commercial Inquiry</a>
+      <a href="mailto:admin@qector.store" class="btn btn-ghost">admin@qector.store</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;"><img src="assets/logo.svg" width="28" height="28" alt="">QECTOR</a>
+        <p>Source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="decoder.html">Decoder</a></li><li><a href="workbench.html">Workbench</a></li><li><a href="benchmarks.html">Benchmarks</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="license.html">License</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="commercial.html">Commercial</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="mailto:admin@qector.store">admin@qector.store</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
+      <span>QECTOR is source-available, not open-source.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/nav.js"></script>
 </body>
 </html>

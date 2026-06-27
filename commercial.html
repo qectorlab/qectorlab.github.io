@@ -1,130 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Commercial licensing for SATI OS full platform and QECTOR Decoder v3.">
-    <title>Commercial • SATI OS</title>
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="QECTOR commercial licensing — use QECTOR Decoder in your company, product, SaaS platform, or quantum hardware. Startup through strategic partnership tiers available.">
+  <meta property="og:title" content="QECTOR Commercial Licensing">
+  <meta property="og:description" content="Commercial license for QECTOR Decoder — exact MWPM, belief-matching, BP-OSD, GPU batch decoding. Startup, Professional, Enterprise, SaaS, OEM, and Strategic tiers.">
+  <meta property="og:type" content="website">
+  <title>QECTOR Commercial License — Licensing for Companies, Labs, and Platforms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+    .use-case-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .use-case-card:hover { border-color: var(--border-2); }
+    .use-case-card h4 { margin-bottom: 0.4rem; font-size: 0.95rem; }
+    .use-case-card p { font-size: 0.855rem; }
+
+    .tier-compare {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .tier-compare-header {
+      background: var(--panel-2);
+      padding: 0.75rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      border-right: 1px solid var(--border);
+    }
+    .tier-compare-header:last-child { border-right: none; }
+    .tier-compare-header.tier-name { color: var(--text); }
+    .tier-compare-row {
+      display: contents;
+    }
+    .tier-cell {
+      padding: 0.7rem 1rem;
+      border-right: 1px solid rgba(26,37,64,0.5);
+      border-bottom: 1px solid rgba(26,37,64,0.4);
+      font-size: 0.82rem;
+      color: var(--muted-2);
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+    }
+    .tier-cell:last-child { border-right: none; }
+    .tier-cell.label-col { color: var(--text); font-family: var(--font-body); font-weight: 500; font-size: 0.875rem; }
+    .tier-cell.yes { color: var(--green); font-weight: 700; }
+    .tier-cell.partial { color: var(--gold); }
+    .tier-cell.no { color: var(--muted); }
+    .tier-cell.row-last { border-bottom: none; }
+
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      counter-reset: steps;
+    }
+    .process-step {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .process-step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--cyan);
+      background: rgba(0,213,255,0.08);
+      border: 1px solid rgba(0,213,255,0.2);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .step-body h4 { margin-bottom: 0.3rem; font-size: 0.95rem; }
+    .step-body p { font-size: 0.875rem; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+    .faq-a {
+      font-size: 0.875rem;
+      color: var(--muted-2);
+      line-height: 1.7;
+    }
+
+    .highlight-banner {
+      background: linear-gradient(135deg, rgba(0,213,255,0.07) 0%, rgba(47,123,255,0.07) 100%);
+      border: 1px solid rgba(0,213,255,0.2);
+      border-radius: 10px;
+      padding: 2rem 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .tier-compare { grid-template-columns: 2fr 1fr 1fr; }
+      .tier-col-saas, .tier-col-oem { display: none; }
+    }
+    @media (max-width: 700px) {
+      .tier-compare { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<a class="skip-link" href="#main">Skip to content</a>
-
-<!-- Header -->
-<nav class="nav" aria-label="Primary navigation">
-    <div class="container nav-inner">
-        <a href="index.html" class="nav-logo">
-            <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
-        </a>
-        <button class="nav-hamburger" type="button" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="decoder.html">Decoder</a></li>
-            <li><a href="installer.html">Install</a></li>
-            <li><a href="docs.html">Docs</a></li>
-            <li><a href="technical-reference.html">Tech</a></li>
-            <li><a href="workbench.html">Workbench</a></li>
-            <li><a href="benchmarks.html">Benchmarks</a></li>
-            <li><a href="license.html">License</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="commercial.html" class="active" aria-current="page">Commercial</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li class="nav-cta"><a href="contact.html">Get License</a></li>
-        </ul>
-    </div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" width="32" height="32" alt="QECTOR">
+      QECT<span>OR</span>
+    </a>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="decoder.html">Decoder</a></li>
+      <li><a href="workbench.html">Workbench</a></li>
+      <li><a href="benchmarks.html">Benchmarks</a></li>
+      <li><a href="license.html">License</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="commercial.html">Commercial</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="nav-cta"><a href="commercial.html">Get License</a></li>
+    </ul>
+  </div>
 </nav>
 
-<main id="main" tabindex="-1">
-
-    <section class="page-hero">
-        <div class="container">
-            <div class="section-label">Commercial</div>
-            <h1>Commercial Licensing</h1>
-            <p>Two clear paths: Full SATI OS Platform or Decoder-only licensing.</p>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 2.5rem;">
-                
-                <!-- Full Platform -->
-                <div style="background: #1e2937; border-radius: 16px; padding: 2.75rem 3rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);">
-                    <div style="margin-bottom: 1.5rem;">
-                        <div style="display: inline-block; background: #334155; color: #e2e8f0; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.85rem; border-radius: 9999px; margin-bottom: 1rem;">RECOMMENDED</div>
-                        <h2 style="font-size: 1.65rem; font-weight: 700; margin-bottom: 0.5rem;">Full SATI OS Platform</h2>
-                        <p style="color: #94a3b8;">Complete Workbench, Plugin System, LCL support, and cross-platform tools.</p>
-                    </div>
-                    <ul style="line-height: 2.2; color: #cbd5e1; margin-bottom: 2rem;">
-                        <li><strong>Individual</strong> — $2,900 / year</li>
-                        <li><strong>Professional / Team</strong> — $9,900 / year</li>
-                        <li><strong>Enterprise</strong> — $24,000 / year</li>
-                        <li><strong>Strategic / IP Preview</strong> — Custom</li>
-                    </ul>
-                </div>
-
-                <!-- Decoder Only -->
-                <div style="background: #1e2937; border-radius: 16px; padding: 2.75rem 3rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);">
-                    <div style="margin-bottom: 1.5rem;">
-                        <h2 style="font-size: 1.65rem; font-weight: 700; margin-bottom: 0.5rem;">QECTOR Decoder v3 Only</h2>
-                        <p style="color: #94a3b8;">High-performance decoder library only (no GUI or Workbench).</p>
-                    </div>
-                    <ul style="line-height: 2.2; color: #cbd5e1;">
-                        <li><strong>Personal / Academic</strong> — Free</li>
-                        <li><strong>Commercial Evaluation</strong> — $1,500 / 90 days</li>
-                        <li><strong>Startup Commercial</strong> — $3,500 / year</li>
-                        <li><strong>Professional / Lab</strong> — $15,000 / year</li>
-                        <li><strong>Enterprise R&amp;D</strong> — $35,000+ / year</li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="container footer-grid">
-        <div>
-            <a href="index.html" class="footer-brand">
-                <img class="official-logo" src="assets/logo.svg" width="132" height="74" alt="QECTOR official logo">
-            </a>
-            <p>Quantum error correction decoder package for reproducible research and commercial workflow evaluation.</p>
-        </div>
-        <div>
-            <h4>Product</h4>
-            <a href="decoder.html">Decoder</a>
-            <a href="installer.html">Install</a>
-            <a href="docs.html">Docs</a>
-            <a href="benchmarks.html">Benchmarks</a>
-        </div>
-        <div>
-            <h4>Commercial</h4>
-            <a href="license.html">License</a>
-            <a href="pricing.html">Pricing</a>
-            <a href="commercial.html">Commercial use</a>
-            <a href="contact.html">Contact</a>
-        </div>
-        <div>
-            <h4>Official</h4>
-            <a href="https://github.com/GuillaumeLessard/qector-decoder">GitHub repository</a>
-            <a href="https://pypi.org/project/qector-decoder-v3/">PyPI package</a>
-            <a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ">Official Manual</a>
-            <a href="https://www.qector.store">Official Website</a>
-            <span>Copyright © 2026 Guillaume Lessard / iD01t Productions</span>
-        </div>
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">Commercial Licensing</div>
+    <h1>License QECTOR for Commercial Use</h1>
+    <p>QECTOR Decoder is source-available and free for personal, academic, and non-commercial research. Any commercial use — company R&D, products, SaaS, consulting, government, or funded research — requires a paid commercial license.</p>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem;">
+      <a href="contact.html" class="btn btn-primary btn-lg">Start License Inquiry</a>
+      <a href="pricing.html" class="btn btn-gold btn-lg">View Pricing</a>
+      <a href="mailto:admin@qector.store" class="btn btn-secondary btn-lg">admin@qector.store</a>
     </div>
+  </div>
+</section>
+
+<!-- WHO NEEDS A LICENSE -->
+<section>
+  <div class="container">
+    <div class="section-label">Who Needs a License</div>
+    <h2 style="margin-bottom:0.75rem;">If any of these apply, a commercial license is required</h2>
+    <p style="max-width:680px;margin-bottom:2rem;">The threshold is simple: if your organization earns revenue, is funded, or uses QECTOR to support any commercial objective, you need a paid license. Uncertainty is not a green light — reach out if you're unsure.</p>
+
+    <div class="use-case-grid">
+
+      <div class="use-case-card" style="border-color:rgba(0,213,255,0.2);">
+        <div class="badge badge-cyan" style="margin-bottom:0.75rem;">Company & Startup</div>
+        <h4>Company or startup QEC work</h4>
+        <p>Any use of QECTOR inside a for-profit entity — internal R&D, product evaluation, benchmarking for investor decks, or integration into commercial software — requires a commercial license. This includes pre-revenue startups with outside funding.</p>
+      </div>
+
+      <div class="use-case-card" style="border-color:rgba(0,213,255,0.2);">
+        <div class="badge badge-cyan" style="margin-bottom:0.75rem;">Quantum Hardware</div>
+        <h4>Quantum hardware evaluation and integration</h4>
+        <p>Using QECTOR to evaluate error correction performance on a real or simulated quantum processor — whether IBM, IonQ, Quantinuum, Pasqal, or custom hardware — constitutes commercial R&D and requires a license.</p>
+      </div>
+
+      <div class="use-case-card" style="border-color:rgba(255,176,32,0.2);">
+        <div class="badge badge-gold" style="margin-bottom:0.75rem;">SaaS / Cloud</div>
+        <h4>SaaS platform or hosted API</h4>
+        <p>Offering a cloud service, hosted API, or software-as-a-service product that calls QECTOR decoding routines requires a SaaS commercial license, regardless of whether end users pay directly or indirectly.</p>
+      </div>
+
+      <div class="use-case-card" style="border-color:rgba(255,176,32,0.2);">
+        <div class="badge badge-gold" style="margin-bottom:0.75rem;">OEM / Embedded</div>
+        <h4>Hardware or firmware embedding</h4>
+        <p>Embedding QECTOR Decoder in a quantum control system, FPGA-adjacent stack, or any hardware product for redistribution requires an OEM license with explicit redistribution rights.</p>
+      </div>
+
+      <div class="use-case-card">
+        <div class="badge badge-muted" style="margin-bottom:0.75rem;">Government / National Lab</div>
+        <h4>Government and institutional deployment</h4>
+        <p>Government agencies, national laboratories, and defence research organizations using QECTOR for any funded or operational purpose require a commercial license — academic exemptions do not apply to institutional deployment.</p>
+      </div>
+
+      <div class="use-case-card">
+        <div class="badge badge-muted" style="margin-bottom:0.75rem;">Consulting</div>
+        <h4>Paid consulting or professional services</h4>
+        <p>If you are being paid to provide technical services — benchmarking, integration advice, validation, or any professional deliverable — and QECTOR is part of that work, a commercial license is required for the duration of that engagement.</p>
+      </div>
+
+      <div class="use-case-card">
+        <div class="badge badge-muted" style="margin-bottom:0.75rem;">Funded Research</div>
+        <h4>Grant-funded or institutionally funded research</h4>
+        <p>Research funded by NSERC, NSF, DARPA, EU Horizon, or any public or private grant body that would benefit commercially from the results requires a commercial license. Pure academic publication without institutional commercialization interest may qualify for the free tier — contact to confirm.</p>
+      </div>
+
+      <div class="use-case-card">
+        <div class="badge badge-muted" style="margin-bottom:0.75rem;">Investor Validation</div>
+        <h4>Fundraising and due-diligence use</h4>
+        <p>Using QECTOR benchmark artifacts in investor materials, pitch decks, or technical due-diligence packages produced on behalf of a commercial entity constitutes commercial use and requires a license.</p>
+      </div>
+
+    </div>
+
+    <div class="notice warn" style="margin-top:2rem;">
+      <strong>Not sure?</strong> The safe answer is to reach out before using QECTOR in a commercial context. Email <a href="mailto:admin@qector.store">admin@qector.store</a> with a brief description of your use case. We respond within 2 business days.
+    </div>
+  </div>
+</section>
+
+<!-- TIER COMPARISON TABLE -->
+<section>
+  <div class="container">
+    <div class="section-label">Tier Comparison</div>
+    <h2 style="margin-bottom:1.5rem;">Which license tier fits your use case</h2>
+
+    <div class="tier-compare">
+      <!-- Headers -->
+      <div class="tier-compare-header tier-name">Feature</div>
+      <div class="tier-compare-header">Startup<br><span style="color:var(--cyan);font-size:0.7em;">$9,500/yr</span></div>
+      <div class="tier-compare-header">Professional<br><span style="color:var(--gold);font-size:0.7em;">$25,000/yr</span></div>
+      <div class="tier-compare-header tier-col-saas">Enterprise<br><span style="font-size:0.7em;color:var(--muted);">$75k+/yr</span></div>
+      <div class="tier-compare-header tier-col-oem">SaaS / OEM<br><span style="font-size:0.7em;color:var(--muted);">$150k+/yr</span></div>
+
+      <!-- Row: Internal commercial use -->
+      <div class="tier-cell label-col">Internal commercial R&amp;D</div>
+      <div class="tier-cell yes">✓</div>
+      <div class="tier-cell yes">✓</div>
+      <div class="tier-cell yes tier-col-saas">✓</div>
+      <div class="tier-cell yes tier-col-oem">✓</div>
+
+      <!-- Row: Users -->
+      <div class="tier-cell label-col">Internal users</div>
+      <div class="tier-cell">Up to 10</div>
+      <div class="tier-cell yes">Unlimited</div>
+      <div class="tier-cell yes tier-col-saas">Unlimited</div>
+      <div class="tier-cell yes tier-col-oem">Unlimited</div>
+
+      <!-- Row: Multiple projects -->
+      <div class="tier-cell label-col">Multiple products or projects</div>
+      <div class="tier-cell no">1 project</div>
+      <div class="tier-cell yes">✓</div>
+      <div class="tier-cell yes tier-col-saas">✓</div>
+      <div class="tier-cell yes tier-col-oem">✓</div>
+
+      <!-- Row: Production deployment -->
+      <div class="tier-cell label-col">Production deployment</div>
+      <div class="tier-cell partial">Limited</div>
+      <div class="tier-cell partial">Lab / internal</div>
+      <div class="tier-cell yes tier-col-saas">✓</div>
+      <div class="tier-cell yes tier-col-oem">✓</div>
+
+      <!-- Row: Hosted/API use -->
+      <div class="tier-cell label-col">Hosted API or SaaS offering</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell no tier-col-saas">✗</div>
+      <div class="tier-cell yes tier-col-oem">✓ (SaaS tier)</div>
+
+      <!-- Row: OEM/embedded redistribution -->
+      <div class="tier-cell label-col">OEM embedding + redistribution</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell no tier-col-saas">✗</div>
+      <div class="tier-cell yes tier-col-oem">✓ (OEM tier)</div>
+
+      <!-- Row: Support -->
+      <div class="tier-cell label-col">Support</div>
+      <div class="tier-cell">Email</div>
+      <div class="tier-cell">Priority email</div>
+      <div class="tier-cell tier-col-saas">Priority + SLA</div>
+      <div class="tier-cell tier-col-oem">Dedicated</div>
+
+      <!-- Row: Integration guidance -->
+      <div class="tier-cell label-col">Integration guidance</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell partial">Basic</div>
+      <div class="tier-cell yes tier-col-saas">✓</div>
+      <div class="tier-cell yes tier-col-oem">✓</div>
+
+      <!-- Row: Roadmap access -->
+      <div class="tier-cell label-col">Private roadmap access</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell no">✗</div>
+      <div class="tier-cell yes tier-col-saas">✓</div>
+      <div class="tier-cell yes tier-col-oem">✓</div>
+
+      <!-- Row: NDA -->
+      <div class="tier-cell label-col row-last">NDA available</div>
+      <div class="tier-cell row-last no">✗</div>
+      <div class="tier-cell row-last partial">On request</div>
+      <div class="tier-cell row-last yes tier-col-saas">✓</div>
+      <div class="tier-cell row-last yes tier-col-oem">✓</div>
+    </div>
+
+    <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <a href="pricing.html" class="btn btn-secondary">Full Pricing Details</a>
+      <a href="contact.html" class="btn btn-primary">Start License Inquiry</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT QECTOR PROVIDES -->
+<section>
+  <div class="container">
+    <div class="section-label">What You License</div>
+    <h2 style="margin-bottom:0.75rem;">Exactly what QECTOR Decoder includes</h2>
+    <p style="max-width:660px;margin-bottom:2rem;">A commercial license grants you written authorization to use QECTOR Decoder for the defined commercial purposes. Here is what the decoder package includes that you're licensing.</p>
+
+    <div class="grid-3" style="gap:1rem;margin-bottom:2rem;">
+      <div class="card card-cyan">
+        <h4 style="color:var(--cyan);margin-bottom:0.5rem;">Decoder backends</h4>
+        <p style="font-size:0.875rem;">Exact MWPM (BlossomDecoder), belief-matching accuracy mode (BeliefMatching), Union-Find real-time path (UnionFindDecoder), SparseBlossomDecoder, BP-OSD for qLDPC codes, and CPU/GPU batch decoders — all in a single <code>pip install</code>.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:0.5rem;">Python ecosystem layer</h4>
+        <p style="font-size:0.875rem;">Stim DEM loader, PyMatching-compatible drop-in API, Sinter plug-in (<code>qector_blossom</code>, <code>qector_belief</code>, <code>qector_unionfind</code>), AutoDecoder, GPU resilience and fallback, streaming decoder, and reproducible benchmark scaffolding.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:0.5rem;">Rust core</h4>
+        <p style="font-size:0.875rem;">GIL-releasing, zero-copy NumPy interop. Union-Find with path compression, Blossom primal-dual, Rayon parallelism, NVRTC CUDA kernel compilation, OpenCL dual-kernel cross-vendor backend.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:0.5rem;">Validated test suite</h4>
+        <p style="font-size:0.875rem;">414 tests — brute-force optimality checks, PyMatching parity regression through d=15, belief-matching cross-validation, BP-OSD syndrome faithfulness, GPU bit-identity, and Sinter harness integration.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:0.5rem;">Reproducible benchmark artifacts</h4>
+        <p style="font-size:0.875rem;">SHA-256-hashed JSON/CSV artifacts, committed benchmark scripts, environment snapshot stamping, due-diligence bundle generator. Figures in the benchmark documentation trace to a specific build commit.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:0.5rem;">qLDPC support</h4>
+        <p style="font-size:0.875rem;">BP-OSD decoder for bivariate-bicycle (BB), hypergraph-product, and bicycle CSS codes — code families that standard matching decoders cannot handle. Within ~10% LER of the reference <code>ldpc</code> package on [[72,12]] BB.</p>
+      </div>
+    </div>
+
+    <div class="highlight-banner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+        <div>
+          <h3 style="margin-bottom:0.75rem;">QECTOR Workbench — included for relevant tiers</h3>
+          <p style="font-size:0.9rem;margin-bottom:1rem;">QECTOR Workbench (coming soon) — the local fullstack benchmarking and report-generation app — will be included in Professional, Enterprise, SaaS, and OEM commercial licenses when it launches. Early access for commercial licensees is planned ahead of the public release.</p>
+          <a href="workbench.html" class="btn btn-secondary btn-sm">Workbench Details →</a>
+        </div>
+        <div>
+          <div class="grid-2" style="gap:0.75rem;">
+            <div class="card" style="padding:1rem;">
+              <div class="stat"><div class="stat-value" style="font-size:1.4rem;">414</div><div class="stat-label">tests passing</div></div>
+            </div>
+            <div class="card" style="padding:1rem;">
+              <div class="stat"><div class="stat-value" style="font-size:1.4rem;">1.4 µs</div><div class="stat-label">p50 single-shot</div></div>
+            </div>
+            <div class="card" style="padding:1rem;">
+              <div class="stat"><div class="stat-value" style="font-size:1.4rem;">14.6M</div><div class="stat-label">dec/s GPU batch</div></div>
+            </div>
+            <div class="card" style="padding:1rem;">
+              <div class="stat"><div class="stat-value" style="font-size:1.4rem;">35.7%</div><div class="stat-label">LER reduction</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LICENSING PROCESS -->
+<section>
+  <div class="container">
+    <div class="section-label">Licensing Process</div>
+    <h2 style="margin-bottom:0.5rem;">How to get a commercial license</h2>
+    <p style="max-width:600px;margin-bottom:2.5rem;">The process is direct — no sales funnel, no account managers. You describe your use case, we propose terms, you sign and pay, you're licensed. Typical turnaround from first email to signed license is 5–7 business days.</p>
+
+    <div class="grid-2" style="gap:3rem;align-items:start;">
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h4>Submit a license inquiry</h4>
+            <p>Use the <a href="contact.html">contact form</a> or email <a href="mailto:admin@qector.store">admin@qector.store</a> with your organization name, intended use case, deployment scope, and tier you're targeting. The more specific, the faster the response.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h4>Receive a license proposal</h4>
+            <p>We respond within 2 business days with a license proposal covering permitted use, term, pricing, and any use-case-specific provisions. For Enterprise, SaaS, OEM, or Strategic discussions, an NDA can be signed first on request.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h4>Review and negotiate terms</h4>
+            <p>Standard license terms are non-negotiable at Startup tier. Professional and above allow limited customization of scope, multi-project provisions, and deployment clauses. Enterprise, SaaS, and OEM terms are fully negotiated.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h4>Sign and pay</h4>
+            <p>License agreement is signed digitally. Payment is by wire transfer, bank transfer, or invoice for qualified organizations. Annual licenses are invoiced at the start of each term. No auto-renewal without explicit written confirmation.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <h4>Receive your license document and begin use</h4>
+            <p>A formal signed license document identifying your organization, permitted use, effective date, and term is delivered. Commercial use may begin as of the effective date stated in the license. Support access is activated immediately.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card card-gold" style="margin-bottom:1.5rem;">
+          <h4 style="color:var(--gold);margin-bottom:1rem;">What to include in your inquiry</h4>
+          <ul class="feature-list">
+            <li>Organization name and type (startup, lab, enterprise, government)</li>
+            <li>Primary use case in one or two sentences</li>
+            <li>Deployment context (internal R&D, product, SaaS, OEM, or other)</li>
+            <li>Number of internal users who will interact with QECTOR directly</li>
+            <li>Whether GPU batch decoding is part of your requirements</li>
+            <li>Target license tier from the pricing page, or "not sure yet"</li>
+            <li>Preferred timeline to license start</li>
+          </ul>
+        </div>
+
+        <div class="notice" style="margin-bottom:1.5rem;">
+          <strong>Response time:</strong> All license inquiries receive an initial response within 2 business days. Québec statutory holidays may extend this by one day.
+        </div>
+
+        <div class="notice warn">
+          <strong>Do not begin commercial use before signing.</strong> Using QECTOR commercially without a signed license agreement constitutes a violation of the license terms and may result in termination of all license rights.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 style="margin-bottom:2rem;">Frequently asked licensing questions</h2>
+    <div class="grid-2" style="gap:0 3rem;align-items:start;">
+      <div>
+        <div class="faq-item">
+          <div class="faq-q">Is QECTOR open-source?</div>
+          <div class="faq-a">No. QECTOR is source-available, not open-source. Source code is readable for review, benchmarking, and non-commercial use, but it is not licensed under any OSI-approved open-source license. Commercial use, redistribution, and embedding all require a paid commercial license.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I use QECTOR for academic research for free?</div>
+          <div class="faq-a">Pure academic research for personal study, non-commercial evaluation, and publishing results in peer-reviewed papers is permitted under the free tier. Research funded by a grant or institutional program that benefits the organization commercially requires a commercial license. When in doubt, reach out to confirm before beginning.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need a license to benchmark QECTOR and publish results?</div>
+          <div class="faq-a">Non-commercial benchmarking and academic publishing is free. If benchmark results are used in investor materials, product marketing, or due-diligence documents for a commercial organization, a commercial license is required. Published results must preserve stated limitations, hardware details, and confidence intervals.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">We're a VC-funded pre-revenue startup. Do we need a commercial license?</div>
+          <div class="faq-a">Yes. Outside-funded startups — regardless of revenue status — are commercial entities. The test is not revenue; it is commercial purpose. A seed-stage startup using QECTOR for product benchmarking or technical due-diligence needs the Startup tier.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can we trial QECTOR commercially before purchasing?</div>
+          <div class="faq-a">A limited evaluation period can be included in a license proposal for Enterprise and above tiers. Startup and Professional tiers do not include an unpaid trial period — both tiers are priced for organizations that have already validated the technical fit using the free non-commercial tier.</div>
+        </div>
+      </div>
+      <div>
+        <div class="faq-item">
+          <div class="faq-q">What law governs the license agreement?</div>
+          <div class="faq-a">Unless otherwise specified in a custom commercial agreement, QECTOR licenses are governed by the laws of the Province of Québec and the applicable laws of Canada. Disputes are subject to the jurisdiction of the courts of Québec.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can we negotiate custom license terms?</div>
+          <div class="faq-a">Startup tier uses standard non-negotiable terms. Professional tier allows limited customization of scope and deployment clauses. Enterprise, SaaS, OEM, and Strategic tiers are fully negotiated. All custom agreements require written sign-off from Guillaume Lessard / iD01t Productions.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does a commercial license include QECTOR Workbench?</div>
+          <div class="faq-a">QECTOR Workbench is currently in development. When it launches, it will be included in Professional, Enterprise, SaaS, and OEM commercial licenses. Startup-tier licensees will have a separate upgrade path. Commercial licensees will receive early access ahead of the public release.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can we embed QECTOR in a hardware product?</div>
+          <div class="faq-a">Embedding QECTOR in hardware, firmware, or quantum control systems for redistribution requires the OEM tier license ($250,000+/year), which includes explicit redistribution rights and IP provisions. Standard commercial tiers do not grant redistribution rights.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is there a multi-year discount?</div>
+          <div class="faq-a">Multi-year commitments are available for Enterprise, SaaS, OEM, and Strategic tiers and are negotiated individually. Startup and Professional tiers are billed annually without a multi-year discount. Renewal pricing is locked at the rate in the original agreement for the first renewal term.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGIC LICENSING -->
+<section>
+  <div class="container">
+    <div class="section-label">Strategic Discussions</div>
+    <h2 style="margin-bottom:0.75rem;">Exclusive licensing, acquisition, and strategic partnerships</h2>
+    <p style="max-width:680px;margin-bottom:2rem;">If you are interested in exclusive or semi-exclusive licensing, a joint development agreement, technology acquisition, or a strategic partnership — including potential IP transfer — these are handled separately from the standard commercial tiers. Discussions begin at $2M USD and are structured individually based on scope and strategic fit.</p>
+
+    <div class="grid-2" style="gap:1.5rem;margin-bottom:2rem;">
+      <div class="card" style="border-color:rgba(47,123,255,0.3);">
+        <h4 style="color:var(--blue);margin-bottom:0.75rem;">Exclusive licensing</h4>
+        <p style="font-size:0.875rem;">QECTOR's exact MWPM and belief-matching decoder stack can be licensed exclusively for a specific market vertical, hardware platform, or geographic territory. Exclusivity terms are fully negotiated and time-bounded. Requires NDA prior to discussion.</p>
+      </div>
+      <div class="card" style="border-color:rgba(47,123,255,0.3);">
+        <h4 style="color:var(--blue);margin-bottom:0.75rem;">Technology acquisition</h4>
+        <p style="font-size:0.875rem;">Full or partial IP acquisition of the QECTOR decoder platform, including source code, benchmark methodology, test suite, and ongoing development commitments, is available for serious acquirers. All acquisition discussions begin under NDA.</p>
+      </div>
+      <div class="card" style="border-color:rgba(47,123,255,0.3);">
+        <h4 style="color:var(--blue);margin-bottom:0.75rem;">Joint development</h4>
+        <p style="font-size:0.875rem;">Co-development agreements for extending QECTOR to new code families, hardware-specific backends, or novel decoder architectures are available. These are structured as joint IP agreements with negotiated contribution and commercialization rights.</p>
+      </div>
+      <div class="card" style="border-color:rgba(47,123,255,0.3);">
+        <h4 style="color:var(--blue);margin-bottom:0.75rem;">Investor-led strategic agreements</h4>
+        <p style="font-size:0.875rem;">If your organization is leading or participating in a funding round that includes QECTOR as a strategic asset, contact directly. Investor-level discussions are handled under NDA and subject to valuation conversations.</p>
+      </div>
+    </div>
+
+    <div class="notice" style="max-width:600px;">
+      All strategic and acquisition discussions are conducted under NDA. To initiate, email <a href="mailto:admin@qector.store">admin@qector.store</a> with a one-paragraph description of the opportunity and your organization. NDA documents will be exchanged within 48 hours.
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section style="background:var(--panel);border-top:1px solid var(--border);">
+  <div class="container" style="text-align:center;padding:3rem 1.5rem;">
+    <div class="section-label" style="justify-content:center;">Get Started</div>
+    <h2 style="margin-bottom:0.75rem;">Ready to license QECTOR?</h2>
+    <p style="max-width:520px;margin:0 auto 2rem;">Submit a license inquiry with your organization name, use case, and intended deployment scope. We'll respond within 2 business days with a license proposal and pricing confirmation.</p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary btn-lg">Submit License Inquiry</a>
+      <a href="pricing.html" class="btn btn-gold btn-lg">View Pricing</a>
+      <a href="mailto:admin@qector.store" class="btn btn-secondary btn-lg">admin@qector.store</a>
+    </div>
+    <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted);">Governed by the laws of the Province of Québec. Copyright © 2026 Guillaume Lessard / iD01t Productions.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="color:var(--text);font-size:1rem;">
+          <img src="assets/logo.svg" width="28" height="28" alt="QECTOR">QECTOR
+        </a>
+        <p>Source-available quantum error correction decoder platform for reproducible benchmarking, research, and commercial QEC workflows.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="decoder.html">QECTOR Decoder</a></li>
+          <li><a href="workbench.html">QECTOR Workbench</a></li>
+          <li><a href="benchmarks.html">Benchmarks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="license.html">License</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="commercial.html">Commercial</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="mailto:admin@qector.store">admin@qector.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Copyright © 2026 Guillaume Lessard / iD01t Productions. All rights reserved.</span>
+      <span>QECTOR is source-available, not open-source. <a href="license.html">License</a></span>
+    </div>
+  </div>
 </footer>
 
-<script src="assets/nav.js" defer></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>
