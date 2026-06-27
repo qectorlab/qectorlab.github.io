@@ -3,43 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SATI OS pricing tiers - Full platform vs Decoder-only licensing. Professional plans for researchers, teams and enterprises.">
+    <meta name="description" content="SATI OS pricing - Professional plans for the full platform and Decoder-only licensing.">
     <title>Pricing • SATI OS</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
     <style>
-        .feature-card {
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-                        0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-4px);
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0f172a;
+            border-radius: 16px;
+            overflow: hidden;
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
                         0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
         
-        .btn-premium {
-            background: linear-gradient(145deg, #3b82f6, #2563eb);
-            color: white;
+        .pricing-table th {
+            background: #1e2937;
+            padding: 1.25rem 1.5rem;
+            text-align: left;
             font-weight: 600;
-            padding: 0.9rem 2.1rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 1.05rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px -1px rgb(59 130 246 / 0.2),
-                        0 2px 4px -2px rgb(59 130 246 / 0.2);
+            border-bottom: 1px solid #334155;
+            color: #e2e8f0;
         }
         
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.3);
+        .pricing-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #1e2937;
+            color: #cbd5e1;
+        }
+        
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #f1f5f9;
+        }
+        
+        .section-subtitle {
+            color: #94a3b8;
+            font-size: 1.08rem;
+            max-width: 620px;
+            margin: 0 auto 2.5rem;
         }
     </style>
 </head>
@@ -82,60 +91,58 @@
         <div class="container">
             <div class="section-label">Pricing</div>
             <h1>SATI OS Pricing</h1>
-            <p>Professional plans for the full platform. Clear options for individuals, teams, and enterprises.</p>
+            <p>Professional-grade plans for serious quantum error correction work.</p>
         </div>
     </section>
 
-    <!-- Full Platform Pricing -->
-    <section style="padding-bottom: 3rem;">
+    <!-- Full SATI OS Platform -->
+    <section style="padding-bottom: 3.5rem;">
         <div class="container">
-            <div style="text-align: center; max-width: 680px; margin: 0 auto 2.5rem;">
-                <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.7rem;">Full SATI OS Platform</h2>
-                <p style="color: #94a3b8; font-size: 1.05rem;">
-                    Complete access to the Workbench, Plugin System, LCL support, and cross-platform tools.
-                </p>
+            <div style="text-align: center; max-width: 680px; margin: 0 auto 2.75rem;">
+                <h2 class="section-title">Full SATI OS Platform</h2>
+                <p class="section-subtitle">Complete access to the Workbench, Plugin System, LCL support, and cross-platform tools.</p>
             </div>
 
             <div style="max-width: 1040px; margin: 0 auto;">
-                <table style="width: 100%; min-width: 720px; border-collapse: collapse; background: #0f172a; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);">
+                <table class="pricing-table">
                     <thead>
-                        <tr style="background: #1e2937;">
-                            <th style="padding: 1.1rem 1.5rem; text-align: left; font-weight: 600; border-bottom: 1px solid #334155;">Tier</th>
-                            <th style="padding: 1.1rem 1.5rem; text-align: center; font-weight: 600; border-bottom: 1px solid #334155;">Annual</th>
-                            <th style="padding: 1.1rem 1.5rem; text-align: center; font-weight: 600; border-bottom: 1px solid #334155;">Seats</th>
-                            <th style="padding: 1.1rem 1.5rem; text-align: left; font-weight: 600; border-bottom: 1px solid #334155;">Best For</th>
+                        <tr>
+                            <th>Tier</th>
+                            <th style="text-align: center;">Annual</th>
+                            <th style="text-align: center;">Seats</th>
+                            <th>Best For</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Free Core</strong></td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; color: #64748b;">$0</td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; color: #64748b;">-</td>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Researchers, testing, open use</td>
+                            <td><strong>Free Core</strong></td>
+                            <td style="text-align: center; color: #64748b;">$0</td>
+                            <td style="text-align: center; color: #64748b;">-</td>
+                            <td style="color: #94a3b8;">Researchers, testing, open use</td>
                         </tr>
                         <tr>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Individual</strong></td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">$2,900</td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">1</td>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Independent researchers &amp; PhDs</td>
+                            <td><strong>Individual</strong></td>
+                            <td style="text-align: center;">$2,900</td>
+                            <td style="text-align: center;">1</td>
+                            <td style="color: #94a3b8;">Independent researchers &amp; PhDs</td>
                         </tr>
                         <tr style="background: #1e2937;">
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Professional / Team</strong></td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937; font-weight: 600;">$9,900</td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">Up to 8</td>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #cbd5e1;">Quantum teams &amp; funded groups</td>
+                            <td><strong>Professional / Team</strong></td>
+                            <td style="text-align: center; font-weight: 600; color: #60a5fa;">$9,900</td>
+                            <td style="text-align: center;">Up to 8</td>
+                            <td>Quantum teams &amp; funded groups</td>
                         </tr>
                         <tr>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937;"><strong>Enterprise</strong></td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">$24,000</td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center; border-bottom: 1px solid #1e2937;">Custom</td>
-                            <td style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #1e2937; color: #94a3b8;">Serious commercial &amp; R&amp;D use</td>
+                            <td><strong>Enterprise</strong></td>
+                            <td style="text-align: center;">$24,000</td>
+                            <td style="text-align: center;">Custom</td>
+                            <td style="color: #94a3b8;">Serious commercial &amp; R&amp;D use</td>
                         </tr>
                         <tr>
-                            <td style="padding: 1.15rem 1.5rem;"><strong>Strategic / IP Preview</strong></td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center;">Custom</td>
-                            <td style="padding: 1.15rem 1.5rem; text-align: center;">-</td>
-                            <td style="padding: 1.15rem 1.5rem; color: #94a3b8;">Potential acquirers &amp; deep evaluation</td>
+                            <td><strong>Strategic / IP Preview</strong></td>
+                            <td style="text-align: center;">Custom</td>
+                            <td style="text-align: center;">-</td>
+                            <td style="color: #94a3b8;">Potential acquirers &amp; deep evaluation</td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,23 +150,38 @@
         </div>
     </section>
 
-    <!-- Decoder Only -->
-    <section style="padding: 3.5rem 0 5rem; background: #0f172a; border-top: 1px solid #1e2937;">
+    <!-- Decoder Only Section (Premium Styled) -->
+    <section style="padding: 4rem 0 5.5rem; background: #0f172a; border-top: 1px solid #1e2937;">
         <div class="container">
-            <div style="text-align: center; max-width: 620px; margin: 0 auto 2.25rem;">
-                <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 0.6rem;">QECTOR Decoder v3 Only</h2>
-                <p style="color: #94a3b8;">For teams that only need the high-performance decoder library (no GUI or Workbench).</p>
+            <div style="text-align: center; max-width: 680px; margin: 0 auto 2.5rem;">
+                <h2 class="section-title">QECTOR Decoder v3 Only</h2>
+                <p class="section-subtitle">For teams that only need the high-performance decoder library (no GUI or Workbench).</p>
             </div>
 
-            <div style="max-width: 860px; margin: 0 auto;">
-                <div style="background: #1e2937; border-radius: 14px; padding: 2.25rem 2.5rem;">
-                    <ul style="line-height: 2.1; color: #cbd5e1; font-size: 1.02rem;">
-                        <li><strong>Personal / Academic</strong> — Free (non-commercial research &amp; education)</li>
-                        <li><strong>Commercial Evaluation Pilot</strong> — $1,500 for 90 days (up to 2 named users)</li>
-                        <li><strong>Startup Commercial</strong> — $3,500 / year (up to 5 named users)</li>
-                        <li><strong>Professional / Lab</strong> — $15,000 / year (up to 20 named users)</li>
-                        <li><strong>Enterprise R&amp;D</strong> — $35,000+ / year</li>
-                    </ul>
+            <div style="max-width: 920px; margin: 0 auto;">
+                <div style="background: #1e2937; border-radius: 16px; padding: 2.5rem 3rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.35rem;">Personal / Academic</div>
+                            <div style="color: #64748b; font-size: 0.95rem;">Free • Non-commercial research &amp; education</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.35rem;">Commercial Evaluation</div>
+                            <div style="color: #64748b; font-size: 0.95rem;">$1,500 for 90 days • Up to 2 users</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.35rem;">Startup Commercial</div>
+                            <div style="color: #64748b; font-size: 0.95rem;">$3,500 / year • Up to 5 users</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.35rem;">Professional / Lab</div>
+                            <div style="color: #64748b; font-size: 0.95rem;">$15,000 / year • Up to 20 users</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.35rem;">Enterprise R&amp;D</div>
+                            <div style="color: #64748b; font-size: 0.95rem;">$35,000+ / year</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
