@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder v3 v0.5.3 — Reproducible benchmark results. Validated MWPM parity with PyMatching through d=15, Belief-Matching LER reduction, and GPU batch performance.">
+  <meta name="description" content="QECTOR Decoder v3 v0.5.3 reproducible benchmark results — Validated MWPM parity with PyMatching, Belief-Matching LER reduction, and GPU batch performance.">
+  <meta name="robots" content="index, follow">
   <meta property="og:title" content="QECTOR Benchmarks — Reproducible QEC Performance Data">
-  <meta property="og:description" content="Validated benchmark results for QECTOR Decoder v3 including MWPM parity, Belief-Matching gains, and GPU throughput.">
+  <meta property="og:description" content="Validated benchmark results for QECTOR Decoder v3 including exact MWPM parity, Belief-Matching gains, and GPU throughput with full reproducibility.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.qector.store/benchmarks.html">
+  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
+  <meta name="twitter:card" content="summary_large_image">
   <title>QECTOR Benchmarks — Reproducible Performance Data</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -48,7 +51,7 @@
     <div class="grid-2" style="gap:1.25rem;">
       <div class="card">
         <h4>Exact MWPM Parity</h4>
-        <p>QECTOR BlossomDecoder achieves bit-identical logical error rates with PyMatching through distance 15 on rotated surface codes under circuit-level depolarizing noise (Wilson 95% CI overlap).</p>
+        <p>QECTOR BlossomDecoder achieves bit-identical logical error rates with PyMatching through distance 15 on rotated surface codes under circuit-level depolarizing noise.</p>
       </div>
       <div class="card">
         <h4>Belief-Matching Improvement</h4>
@@ -56,11 +59,11 @@
       </div>
       <div class="card">
         <h4>GPU Batch Throughput</h4>
-        <p>OpenCLBatchDecoder sustains <strong>14.6 million</strong> decodes per second on large batches with full bit-identical results across CPU and GPU paths.</p>
+        <p>OpenCLBatchDecoder sustains <strong>14.6 million</strong> decodes per second on large batches with full bit-identical results.</p>
       </div>
       <div class="card">
         <h4>BP-OSD / qLDPC Support</h4>
-        <p>BpOsdDecoder successfully decodes hypergraph product and bivariate bicycle codes within ~10% LER of reference ldpc package implementations.</p>
+        <p>BpOsdDecoder successfully decodes hypergraph product and bivariate bicycle codes within ~10% LER of reference implementations.</p>
       </div>
     </div>
   </div>
