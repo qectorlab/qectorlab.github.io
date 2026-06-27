@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QECTOR Workbench — Coming Soon (v0.5.3)</title>
+  <meta name="description" content="QECTOR Workbench — Local fullstack application for circuit loading, decoder comparison, reproducible benchmarking, and technical report generation. Coming soon.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="QECTOR Workbench — Coming Soon">
+  <meta property="og:description" content="Local fullstack QEC benchmarking application with circuit loading, decoder comparison, artifact export, and reproducible reports.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.qector.store/workbench.html">
+  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>QECTOR Workbench — Coming Soon | QECTOR Decoder v3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -28,9 +38,9 @@
 <section class="page-hero">
   <div class="container">
     <div class="section-label">QECTOR Workbench</div>
-    <h1>Fullstack QEC Benchmarking App <span class="badge badge-blue">Coming Soon</span></h1>
-    <p>Load circuits, run decoder comparisons, export artifacts, and generate reproducible technical reports — all from one local interface.</p>
-    <div style="margin-top:1.5rem;">
+    <h1>Local Fullstack QEC Benchmarking Application</h1>
+    <p>Load circuits, compare decoders, export reproducible artifacts, and generate professional technical reports — all from one local desktop application.</p>
+    <div style="margin-top:2rem;">
       <a href="contact.html" class="btn btn-primary btn-lg">Join Early Access</a>
     </div>
   </div>
@@ -38,15 +48,69 @@
 
 <section>
   <div class="container">
-    <div class="section-label">Key Features (Planned)</div>
-    <div class="grid-3" style="gap:1rem;">
-      <div class="card"><h4>Load & Parse</h4><p>Load .stim circuits and .dem files directly with full validation.</p></div>
-      <div class="card"><h4>Decoder Comparison</h4><p>Run QECTOR vs PyMatching head-to-head with real data.</p></div>
-      <div class="card"><h4>Artifact Export</h4><p>Export PDF reports, CSV, and JSON with SHA-256 hashes and environment snapshots.</p></div>
-      <div class="card"><h4>Backend Diagnostics</h4><p>CPU / CUDA / OpenCL status and auto-calibration.</p></div>
-      <div class="card"><h4>Visualization</h4><p>LER curves, latency percentiles, threshold plots from real artifacts.</p></div>
-      <div class="card"><h4>Job Management</h4><p>FIFO queue with cancel support and live progress.</p></div>
+    <div class="section-label">Key Capabilities</div>
+    <h2 style="margin-bottom:2rem;">Designed for serious QEC research and commercial workflows</h2>
+
+    <div class="grid-3" style="gap:1.5rem;">
+      <div class="card">
+        <h4>Circuit &amp; DEM Loading</h4>
+        <p>Load .stim circuits and detector error models directly with full validation and parsing.</p>
+      </div>
+      <div class="card">
+        <h4>Multi-Decoder Comparison</h4>
+        <p>Run head-to-head comparisons between QECTOR, PyMatching, and other decoders with real data.</p>
+      </div>
+      <div class="card">
+        <h4>Reproducible Artifacts</h4>
+        <p>Export PDF reports, CSV/JSON results with SHA-256 hashes, git commit stamps, and full environment snapshots.</p>
+      </div>
+      <div class="card">
+        <h4>Backend Diagnostics</h4>
+        <p>Real-time CPU, CUDA, and OpenCL status with automatic backend selection and calibration.</p>
+      </div>
+      <div class="card">
+        <h4>Visual Analytics</h4>
+        <p>Generate LER curves, latency percentiles, threshold plots, and comparison charts from real benchmark data.</p>
+      </div>
+      <div class="card">
+        <h4>Job Management</h4>
+        <p>FIFO job queue with cancel support, live progress tracking, and batch processing capabilities.</p>
+      </div>
     </div>
+  </div>
+</section>
+
+<section style="background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Target Users</div>
+    <h2 style="margin-bottom:1.5rem;">Built for professionals who need reproducible results</h2>
+    
+    <div class="grid-2" style="gap:1.5rem;">
+      <div class="card">
+        <h4>Quantum Research Labs</h4>
+        <p>Researchers who need to run controlled decoder comparisons and produce publication-ready benchmark artifacts with full reproducibility.</p>
+      </div>
+      <div class="card">
+        <h4>Commercial QEC Teams</h4>
+        <p>Teams evaluating multiple decoders for product integration who require documented, auditable benchmark results.</p>
+      </div>
+      <div class="card">
+        <h4>Hardware Developers</h4>
+        <p>Teams building quantum control systems or ASICs who need to validate decoder performance on target hardware.</p>
+      </div>
+      <div class="card">
+        <h4>Academic Groups</h4>
+        <p>Universities and research groups that need reproducible workflows for papers and grant reporting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="text-align:center;">
+    <h2 style="margin-bottom:1rem;">Early Access</h2>
+    <p style="max-width:520px;margin:0 auto 2rem;color:var(--muted);">The Workbench is currently in active development. Join the early access list to get notified when the first private beta is available.</p>
+    <a href="contact.html" class="btn btn-primary btn-lg">Request Early Access</a>
   </div>
 </section>
 
@@ -81,6 +145,7 @@
     </div>
   </div>
 </footer>
+
 <script src="assets/nav.js"></script>
 </body>
 </html>
