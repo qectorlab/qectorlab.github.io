@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="QECTOR Decoder v3 - High-performance Rust + Python quantum error correction decoder.">
+    <meta name="description" content="QECTOR Decoder v3 - High-performance Rust + Python quantum error correction decoder with UnionFind, Blossom, and BP-OSD support.">
     <title>Decoder • QECTOR</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/style.css">
@@ -51,25 +51,26 @@
         </div>
     </section>
 
-    <section style="background: #0f172a; padding: 3rem 0;">
+    <section>
         <div class="container">
             <div style="max-width: 820px; margin: 0 auto 3rem;">
-                <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.75;">
+                <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem;">Built for real QEC workflows</h2>
+                <p style="color: #94a3b8; font-size: 1.08rem; line-height: 1.7;">
                     A production-grade decoder library designed to work alongside PyMatching, Stim, and Sinter. 
-                    Focus on reproducibility, clean APIs, and measurable performance.
+                    Focus on reproducibility, clear APIs, and measurable performance.
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem; max-width: 1100px; margin: 0 auto;">
-                <div class="pro-card">
+            <div class="grid-3" style="gap: 1.5rem;">
+                <div class="card" style="padding: 2rem 1.85rem;">
                     <h3 style="margin-bottom: 0.85rem;">UnionFind Decoder</h3>
                     <p style="color: #94a3b8;">Fast, lightweight decoder ideal for repetition codes and initial prototyping.</p>
                 </div>
-                <div class="pro-card">
+                <div class="card" style="padding: 2rem 1.85rem;">
                     <h3 style="margin-bottom: 0.85rem;">Blossom (MWPM)</h3>
                     <p style="color: #94a3b8;">High-accuracy Minimum Weight Perfect Matching decoder for surface codes and general CSS codes.</p>
                 </div>
-                <div class="pro-card">
+                <div class="card" style="padding: 2rem 1.85rem;">
                     <h3 style="margin-bottom: 0.85rem;">BP-OSD</h3>
                     <p style="color: #94a3b8;">Belief Propagation with Ordered Statistics Decoding. Strong performance on LDPC and qLDPC codes.</p>
                 </div>
@@ -77,16 +78,13 @@
         </div>
     </section>
 
-    <!-- Final CTA -->
-    <section style="background: #0f172a; padding: 4.5rem 0; border-top: 1px solid #1e2937;">
-        <div class="container" style="max-width: 720px; margin: 0 auto; text-align: center;">
-            <h2 style="font-size: 1.7rem; font-weight: 700; margin-bottom: 1rem; color: #f1f5f9;">
-                Ready for more than just decoding?
-            </h2>
-            <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.65; margin-bottom: 2rem;">
+    <section style="background: #0f172a; padding: 4rem 0; border-top: 1px solid #1e2937; margin-top: 3rem;">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 1.65rem; font-weight: 700; margin-bottom: 1rem;">Ready for more than just decoding?</h2>
+            <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 2rem;">
                 Get the full SATI OS platform with visual Workbench, plugin system, and professional tooling.
             </p>
-            <a href="pricing.html" class="btn-premium">
+            <a href="pricing.html" style="display: inline-flex; align-items: center; background: #3b82f6; color: white; font-weight: 600; padding: 0.9rem 2.1rem; border-radius: 10px; text-decoration: none; font-size: 1.05rem;">
                 Explore Full Platform
             </a>
         </div>
