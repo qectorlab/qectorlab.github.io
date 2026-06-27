@@ -3,47 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact the QECTOR team for commercial licensing, technical inquiries, and partnership opportunities.">
+    <meta name="robots" content="index, follow">
     <title>Contact - QECTOR</title>
     <link rel="stylesheet" href="assets/style.css">
-    <style>
-        .contact-form {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 620px;
-            margin: 0 auto;
-        }
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            background: #0f172a;
-            border: 1px solid #334155;
-            color: #e2e8f0;
-            padding: 0.85rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.25rem;
-            font-size: 0.95rem;
-        }
-        .contact-form textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-        .contact-form button {
-            width: 100%;
-            background: #67e8f9;
-            color: #0f172a;
-            font-weight: 700;
-            padding: 0.9rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .contact-form button:hover {
-            background: #22d3ee;
-        }
-    </style>
 </head>
 <body>
 
@@ -66,26 +29,39 @@
 </nav>
 
 <section class="section">
-    <div class="container" style="max-width:720px;margin:0 auto;">
-        <h1 style="text-align:center; margin-bottom:0.5rem;">Contact</h1>
-        <p style="text-align:center; color:#9ca3af; max-width:520px; margin:0 auto 3rem;">
-            License inquiries, early access requests, technical questions, and strategic discussions.
+    <div class="container" style="max-width: 720px; margin: 0 auto;">
+        <h1 style="margin-bottom: 1rem; text-align: center;">Get in Touch</h1>
+        <p style="color: #9ca3af; text-align: center; max-width: 520px; margin: 0 auto 3rem;">
+            For commercial licensing, technical questions, integration support, or partnership inquiries.
         </p>
 
-        <!-- WEB3FORMS -->
-        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+        <form action="https://api.web3forms.com/submit" method="POST" style="display: grid; gap: 1.25rem;">
             <input type="hidden" name="access_key" value="4982c998-f54c-4cd0-9ffd-ccee2cd71bfd">
             
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            
-            <button type="submit">Send Message</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <label style="display:block; margin-bottom:0.5rem; color:#e2e8f0; font-size:0.9rem;">Name</label>
+                    <input type="text" name="name" required style="width:100%; padding:0.75rem; background:#111827; border:1px solid #1f2937; border-radius:6px; color:#e2e8f0;">
+                </div>
+                <div>
+                    <label style="display:block; margin-bottom:0.5rem; color:#e2e8f0; font-size:0.9rem;">Email</label>
+                    <input type="email" name="email" required style="width:100%; padding:0.75rem; background:#111827; border:1px solid #1f2937; border-radius:6px; color:#e2e8f0;">
+                </div>
+            </div>
+
+            <div>
+                <label style="display:block; margin-bottom:0.5rem; color:#e2e8f0; font-size:0.9rem;">Message</label>
+                <textarea name="message" rows="6" required style="width:100%; padding:0.75rem; background:#111827; border:1px solid #1f2937; border-radius:6px; color:#e2e8f0; resize:vertical;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%; padding: 0.9rem; font-size:1rem;">
+                Send Message
+            </button>
         </form>
 
-        <p style="text-align:center; color:#64748b; margin-top:2rem; font-size:0.9rem;">
-            Or email directly: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>
-        </p>
+        <div style="margin-top: 3rem; text-align: center; color: #64748b; font-size: 0.9rem;">
+            For urgent commercial matters, email <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>
+        </div>
     </div>
 </section>
 
