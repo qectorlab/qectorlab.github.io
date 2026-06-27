@@ -12,6 +12,7 @@
         .specs-table tr:hover { background: #1e2937; }
         .changelog-item { margin-bottom: 1.25rem; }
         .changelog-item h4 { margin-bottom: 0.35rem; color: #67e8f9; }
+        .benefit-item { margin-bottom: 1.1rem; }
     </style>
 </head>
 <body>
@@ -93,6 +94,41 @@
         <div class="changelog-item">
             <h4>Documentation &amp; Examples</h4>
             <p style="color:#9ca3af;">Updated documentation and added more practical examples for Stim + Sinter workflows.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SINTER INTEGRATION BENEFITS -->
+<section class="section">
+    <div class="container">
+        <h2 style="margin-bottom:1.5rem;">Sinter Integration Benefits</h2>
+        <p style="max-width:720px; color:#9ca3af; margin-bottom:2rem;">
+            QECTOR provides native support for <strong>Sinter</strong>, the standard Monte Carlo sampling framework used in the quantum error correction community. This integration delivers several practical advantages:
+        </p>
+
+        <div class="benefit-item">
+            <h4 style="color:#67e8f9; margin-bottom:0.4rem;">Standardized Benchmarking</h4>
+            <p style="color:#9ca3af;">Run QECTOR decoders (Blossom, BeliefMatching, UnionFind, BP-OSD) using the same experiment harness as PyMatching and other community decoders. Results are directly comparable.</p>
+        </div>
+
+        <div class="benefit-item">
+            <h4 style="color:#67e8f9; margin-bottom:0.4rem;">Reproducible Experiments</h4>
+            <p style="color:#9ca3af;">Sinter provides consistent noise models, shot counts, and result collection. Combined with QECTOR’s artifact hashing, this makes benchmarks highly reproducible and auditable.</p>
+        </div>
+
+        <div class="benefit-item">
+            <h4 style="color:#67e8f9; margin-bottom:0.4rem;">Easy Head-to-Head Comparisons</h4>
+            <p style="color:#9ca3af;">Quickly compare QECTOR against PyMatching or other decoders on identical circuits and noise models — ideal for papers, internal reports, or commercial due diligence.</p>
+        </div>
+
+        <div class="benefit-item">
+            <h4 style="color:#67e8f9; margin-bottom:0.4rem;">Performance on Repeated Runs (v0.5.4)</h4>
+            <p style="color:#9ca3af;">The <code>QectorSinterDecoder</code> now supports DEM caching, significantly speeding up large parameter sweeps and repeated Monte Carlo campaigns.</p>
+        </div>
+
+        <div class="benefit-item">
+            <h4 style="color:#67e8f9; margin-bottom:0.4rem;">Professional &amp; Commercial Value</h4>
+            <p style="color:#9ca3af;">Makes it much easier to generate reproducible benchmark reports with proper environment stamping — valuable for research publications and commercial evaluation.</p>
         </div>
     </div>
 </section>
