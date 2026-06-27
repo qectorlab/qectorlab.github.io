@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QECTOR Decoder v0.5.3</title>
+    <title>QECTOR Decoder v0.5.3 — Technical Specifications</title>
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: #111827;
+        }
+        .specs-table th, .specs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1f2937;
+            vertical-align: top;
+        }
+        .specs-table th {
+            background: #0f172a;
+            color: #67e8f9;
+            font-weight: 600;
+            width: 220px;
+        }
+        .specs-table tr:hover {
+            background: #1e2937;
+        }
+    </style>
 </head>
 <body>
 
@@ -32,28 +55,106 @@
         <div style="max-width: 820px;">
             <div class="badge badge-cyan" style="margin-bottom:1rem;">v0.5.3 — June 2026</div>
             <h1 style="font-size: 3.1rem; line-height: 1.1; margin-bottom: 1.25rem;">
-                Quantum Error Correction<br>Decoding, <span style="color:#67e8f9;">Reproducible by Design</span>
+                QECTOR Decoder v0.5.3<br>
+                <span style="color:#67e8f9;">Technical Specifications</span>
             </h1>
-            <p style="font-size: 1.15rem; color: #9ca3af; max-width: 620px;">
-                Source-available Rust/Python platform. Exact MWPM, Belief-Matching, BP-OSD, GPU batch decoding.
-            </p>
-            <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <a href="#install" class="btn btn-primary">View Decoder v0.5.3</a>
-                <a href="commercial.html" class="btn btn-gold">Commercial License</a>
-            </div>
         </div>
     </div>
 </header>
 
-<!-- STATS -->
+<!-- TECHNICAL SPECIFICATIONS TABLE -->
 <section class="section">
     <div class="container">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
-            <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">1.4 µs</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">p50 latency (ring d=10)</div></div>
-            <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">14.6M</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">dec/s — OpenCL GPU batch</div></div>
-            <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">35.7%</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">LER reduction (Belief-Matching)</div></div>
-            <div class="card" style="text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#67e8f9;">d=15</div><div style="color:#9ca3af;font-size:0.85rem;margin-top:0.25rem;">Exact MWPM parity validated</div></div>
-        </div>
+        <h2 style="margin-bottom: 1.5rem;">Detailed Technical Specifications</h2>
+
+        <table class="specs-table">
+            <tbody>
+                <tr>
+                    <th>Core Architecture</th>
+                    <td>
+                        <strong>Rust core</strong> with PyO3 Python bindings<br>
+                        GIL-releasing during decode operations<br>
+                        Zero-copy NumPy interoperability
+                    </td>
+                </tr>
+                <tr>
+                    <th>Decoder Backends</th>
+                    <td>
+                        <strong>BlossomDecoder</strong> — Exact weighted MWPM<br>
+                        <strong>BeliefMatching</strong> — Accuracy mode (up to 35.7% LER reduction)<br>
+                        <strong>BpOsdDecoder</strong> — BP-OSD for qLDPC codes<br>
+                        <strong>SparseBlossomDecoder</strong> — Near-optimal region growing<br>
+                        <strong>UnionFindDecoder</strong> — Lowest latency real-time path<br>
+                        <strong>CUDABatchDecoder</strong> / <strong>OpenCLBatchDecoder</strong> — GPU batch
+                    </td>
+                </tr>
+                <tr>
+                    <th>Performance (Reference Hardware)</th>
+                    <td>
+                        p50 single-shot latency: <strong>1.4 µs</strong> (ring code d=10)<br>
+                        OpenCL GPU batch throughput: <strong>14.6M dec/s</strong> (d=5, batch 10k)<br>
+                        CPU BatchDecoder: <strong>4.1M dec/s</strong> (SIMD + Rayon)
+                    </td>
+                </tr>
+                <tr>
+                    <th>Supported Code Families</th>
+                    <td>
+                        Rotated/Toric/Repetition surface codes<br>
+                        Bivariate-Bicycle (BB) codes<br>
+                        Hypergraph-Product codes<br>
+                        General CSS stabilizer codes via Stim DEM
+                    </td>
+                </tr>
+                <tr>
+                    <th>Compatibility</th>
+                    <td>
+                        Stim Detector Error Model loader<br>
+                        Sinter Decoder plug-in<br>
+                        PyMatching-compatible API<br>
+                        Native DEM parsing (no Stim required)
+                    </td>
+                </tr>
+                <tr>
+                    <th>Reproducibility</th>
+                    <td>
+                        SHA-256 hashed artifacts<br>
+                        Full environment snapshot stamping<br>
+                        Git commit + dependency versions recorded<br>
+                        Due-diligence bundle generator included
+                    </td>
+                </tr>
+                <tr>
+                    <th>GPU Acceleration</th>
+                    <td>
+                        CUDA (NVIDIA) with NVRTC kernel compilation<br>
+                        OpenCL (cross-vendor: NVIDIA / AMD / Intel)<br>
+                        Transparent CPU fallback + auto-recovery<br>
+                        AutoDecoder for automatic CPU↔GPU routing
+                    </td>
+                </tr>
+                <tr>
+                    <th>Testing & Validation</th>
+                    <td>
+                        <strong>414+ tests</strong> passing<br>
+                        Brute-force optimality verification<br>
+                        PyMatching LER parity regression (d≤15)<br>
+                        Belief-matching cross-validation<br>
+                        GPU bit-identity verification
+                    </td>
+                </tr>
+                <tr>
+                    <th>Installation</th>
+                    <td>
+                        <code>pip install qector-decoder-v3</code><br>
+                        Extras: <code>[stim]</code>, <code>[dev]</code>, <code>[all]</code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="color:#64748b; font-size:0.9rem; margin-top:1rem;">
+            All specifications are from the reference development environment. Performance numbers will vary by hardware.
+        </p>
     </div>
 </section>
 
