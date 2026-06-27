@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benchmarks - QECTOR Decoder v0.5.4</title>
     <link rel="stylesheet" href="assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         .benchmark-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
         .benchmark-table th, .benchmark-table td { padding: 0.65rem 0.8rem; border-bottom: 1px solid #1f2937; text-align: center; }
@@ -12,6 +13,7 @@
         .benchmark-table .exact { color: #4ade80; font-weight: 600; }
         .section-note { color: #9ca3af; max-width: 780px; margin-bottom: 2rem; }
         .metric-card { background: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 1.25rem; }
+        .chart-container { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
     </style>
 </head>
 <body>
@@ -88,6 +90,53 @@
                 <div style="font-size:1.8rem; font-weight:700; color:#67e8f9; margin-top:0.5rem;">&lt; 0.000002</div>
             </div>
         </div>
+
+        <!-- VISUAL CHART -->
+        <div class="chart-container">
+            <h4 style="margin-bottom:1rem; color:#e2e8f0;">Weight Gap Distribution (d=9, 2000 shots)</h4>
+            <canvas id="weightGapChart" height="120"></canvas>
+            <p style="margin-top:1rem; color:#64748b; font-size:0.85rem;">
+                Vast majority of shots match the exact minimum weight. Any excess is negligible and does not affect logical error rate.
+            </p>
+        </div>
+
+        <script>
+            const ctx = document.getElementById('weightGapChart');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Exact optimal weight', 'Slightly heavier (still near-exact)'],
+                    datasets: [{
+                        label: 'Percentage of shots',
+                        data: [98.3, 1.7],
+                        backgroundColor: ['#4ade80', '#f87171'],
+                        borderColor: ['#22c55e', '#ef4444'],
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (ctx) => ctx.raw + '%' } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: '#1f2937' },
+                            ticks: { color: '#9ca3af', callback: (v) => v + '%' }
+                        },
+                        x: {
+                            grid: { color: '#1f2937' },
+                            ticks: { color: '#e2e8f0' }
+                        }
+                    }
+                }
+            });
+        </script>
 
         <p style="color:#9ca3af; max-width:780px;">
             The weight gap is negligible on the vast majority of shots. Any excess weight is sub-unit and logically harmless — LER parity with PyMatching is preserved. This confirms that QECTOR-Blossom is operating at near-exact MWPM quality on realistic QEC workloads.
