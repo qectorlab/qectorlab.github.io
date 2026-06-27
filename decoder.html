@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QECTOR Decoder v3 v0.5.3 — Official documentation and installation guide.">
-  <title>QECTOR Decoder v3 — Documentation</title>
+  <meta name="description" content="QECTOR Decoder v3 v0.5.3 — Official documentation, installation guide, and quick start for the source-available Rust/Python quantum error correction decoder.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="QECTOR Decoder v3 v0.5.3 — Documentation &amp; Quick Start">
+  <meta property="og:description" content="Install, verify, and run your first decode with QECTOR Decoder v3. Full documentation and copy-paste commands included.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.qector.store/decoder.html">
+  <meta property="og:image" content="https://www.qector.store/assets/hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>QECTOR Decoder v3 v0.5.3 — Documentation &amp; Quick Start</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
@@ -80,9 +87,8 @@
 <section>
   <div class="container">
     <div class="section-label">Quick Start</div>
-    <h2 style="margin-bottom:1.5rem;">Copy & paste these three commands</h2>
+    <h2 style="margin-bottom:1.5rem;">Copy &amp; paste these three commands</h2>
 
-    <!-- Command 1 -->
     <div>
       <span class="command-label">1. Install QECTOR Decoder v3</span>
       <div class="command-box">
@@ -91,7 +97,6 @@
       </div>
     </div>
 
-    <!-- Command 2 -->
     <div>
       <span class="command-label">2. Verify the installation</span>
       <div class="command-box">
@@ -100,7 +105,6 @@
       </div>
     </div>
 
-    <!-- Command 3 -->
     <div>
       <span class="command-label">3. Run your first decode (repetition code)</span>
       <div class="command-box">
@@ -181,7 +185,6 @@ function copyToClipboard(button) {
       button.style.color = '';
     }, 1800);
   }).catch(() => {
-    // Fallback for older browsers
     const textArea = document.createElement('textarea');
     textArea.value = text;
     document.body.appendChild(textArea);
