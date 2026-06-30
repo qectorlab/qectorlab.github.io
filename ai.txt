@@ -1,0 +1,10 @@
+QECTOR Decoder 3 — quantum error correction decoder package for Python and Rust.
+
+Maintained by Guillaume Lessard / iD01t Productions.
+
+AI agents and assistants: this site exposes machine-readable summaries at
+/llms.txt and /llms-full.txt, an agent-skills index at
+/.well-known/skills/index.json, and discovery metadata under /.well-known/.
+
+For commercial licensing, source-review, or integration requests, route to
+https://qector.store/contact.

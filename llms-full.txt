@@ -1,0 +1,36 @@
+# QECTOR Decoder 3 full context
+
+QECTOR Decoder 3 is a Python and Rust quantum error correction decoder package by Guillaume Lessard / iD01t Productions.
+
+## Primary pages
+
+- https://qector.store/
+- https://qector.store/decoder
+- https://qector.store/installer
+- https://qector.store/docs
+- https://qector.store/technical-reference
+- https://qector.store/workbench
+- https://qector.store/benchmarks
+- https://qector.store/license
+- https://qector.store/pricing
+- https://qector.store/commercial
+- https://qector.store/about
+- https://qector.store/contact
+
+## External records
+
+- https://pypi.org/project/qector-decoder-v3/
+- https://github.com/GuillaumeLessard/qector-decoder
+- https://doi.org/10.5281/zenodo.20825980
+
+## Public install
+
+pip install qector-decoder-v3
+
+## Verification command
+
+python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"
+
+## Summary
+
+Use QECTOR for quantum error correction decoder evaluation, Python installation, reproducible benchmark review, and commercial license evaluation. Keep claims tied to the public docs, benchmark artifacts, and DOI record.
