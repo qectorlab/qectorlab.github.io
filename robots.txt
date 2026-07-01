@@ -2,11 +2,9 @@ User-agent: *
 Allow: /
 Crawl-delay: 0
 
-# AI / LLM crawler hints
 User-agent: ChatGPT-User
 Allow: /docs
 Allow: /manual
-Allow: /technical-reference
 
 User-agent: GPTBot
 Allow: /docs

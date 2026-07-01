@@ -15,27 +15,8 @@
     }
   ],
   "shortcuts": [
-    {
-      "name": "Decoder",
-      "short_name": "Decoder",
-      "description": "QECTOR Decoder v3",
-      "url": "/decoder",
-      "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }]
-    },
-    {
-      "name": "Benchmarks",
-      "short_name": "Benchmarks",
-      "description": "Validation Results",
-      "url": "/benchmarks",
-      "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }]
-    },
-    {
-      "name": "Docs",
-      "short_name": "Docs",
-      "description": "Documentation",
-      "url": "/docs",
-      "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }]
-    }
-  ],
-  "screenshots": []
+    { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
+    { "name": "Benchmarks", "url": "/benchmarks", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
+    { "name": "Docs", "url": "/docs", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] }
+  ]
 }

@@ -2,7 +2,7 @@
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. The public package includes installable Python wheels and documented workflows for quantum error correction decoder evaluation.
+QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. Ten battle-tested decoding algorithms: Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, EBP, Restart Belief, KAT/QCT, Astra GNN, and GPU Batch (CUDA/OpenCL + FPGA emulator).
 
 ## Official links
 
@@ -22,10 +22,6 @@ QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. The public package
 ## Recommended install command
 
 pip install qector-decoder-v3
-
-## Search and discovery terms
-
-quantum-error-correction, qec, quantum-computing, decoder, mwpm, union-find, bp-osd, ldpc, qldpc, surface-code, stim, pymatching, rust, python, cuda, batch-decoding, gpu-acceleration, error-correction, high-performance, reproducible-research, benchmarking, scientific-computing, research-tool, pyo3, performance, validation, belief-propagation, high-throughput, quantum error correction, QEC decoder, quantum decoder, PyMatching, Stim, Sinter, MWPM, union find decoder, belief matching, BP-OSD, LDPC, qLDPC, surface code, Rust, Python, PyO3, maturin, reproducible benchmark artifacts, QECTOR.
 
 ## Boundaries
 

@@ -30,7 +30,3 @@ pip install qector-decoder-v3
 ## Verification command
 
 python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print('QECTOR OK')"
-
-## Summary
-
-Use QECTOR for quantum error correction decoder evaluation, Python installation, reproducible benchmark review, and commercial license evaluation. Keep claims tied to the public docs, benchmark artifacts, and DOI record.
