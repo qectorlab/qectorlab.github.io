@@ -42,7 +42,7 @@ export default function Decoder() {
           programmingLanguage: 'Python',
           url: 'https://qector.store/decoder',
           downloadUrl: 'https://pypi.org/project/qector-decoder-v3/',
-          softwareVersion: '0.5.7',
+          softwareVersion: '0.5.8',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
         }}
       />
@@ -53,7 +53,7 @@ export default function Decoder() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse-dot" />
-            v0.5.7 · PyPI
+            v0.5.8 · PyPI
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />

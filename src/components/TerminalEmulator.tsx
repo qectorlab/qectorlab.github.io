@@ -9,7 +9,7 @@ interface TerminalLine {
 export default function TerminalEmulator() {
   const [input, setInput] = useState('');
   const [lines, setLines] = useState<TerminalLine[]>([
-    { text: 'QECTOR CLI Terminal Emulator v0.5.7', type: 'info' },
+    { text: 'QECTOR CLI Terminal Emulator v0.5.8', type: 'info' },
     { text: 'Type "help" for a list of available commands.', type: 'info' },
   ]);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -47,7 +47,7 @@ export default function TerminalEmulator() {
       setLines([]);
     } else if (trimmed === 'pip install qector-decoder-v3') {
       await sleep(300);
-      setLines((prev) => [...prev, { text: 'Downloading qector-decoder-v3-0.5.7-cp310-manylinux_x86_64.whl (5.2MB)...', type: 'output' }]);
+      setLines((prev) => [...prev, { text: 'Downloading qector-decoder-v3-0.5.8-cp310-manylinux_x86_64.whl (5.2MB)...', type: 'output' }]);
       await sleep(800);
       setLines((prev) => [...prev, { text: 'Installing collected packages: qector-decoder-v3', type: 'output' }]);
       await sleep(400);
@@ -56,7 +56,7 @@ export default function TerminalEmulator() {
       setLines((prev) => [
         ...prev,
         { text: '✓ Signature verified: Cosign cert subject CN matches guillaume@qector.store', type: 'success' },
-        { text: 'Successfully installed qector-decoder-v3-0.5.7', type: 'success' },
+        { text: 'Successfully installed qector-decoder-v3-0.5.8', type: 'success' },
       ]);
     } else if (trimmed === 'python -m qector.validate -quick') {
       await sleep(300);

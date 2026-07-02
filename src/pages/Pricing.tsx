@@ -141,7 +141,7 @@ export default function Pricing() {
               className="space-y-8"
             >
               <div className="text-center mb-8">
-                <span className="text-cyan-300 text-xs font-semibold uppercase tracking-wider">QECTOR Decoder v3 · v0.5.7</span>
+                <span className="text-cyan-300 text-xs font-semibold uppercase tracking-wider">QECTOR Decoder v3 · v0.5.8</span>
                 <h2 className="text-2xl font-bold mt-2">Decoder Licensing</h2>
                 <p className="text-secondary text-sm mt-2 max-w-2xl mx-auto">
                   10 decoder algorithms with compiled Rust core, CPU and CUDA, and PyPI binary distribution.

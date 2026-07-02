@@ -11,7 +11,7 @@ export default function Changelog() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Latest: v0.5.7 · PyPI
+            Latest: v0.5.8 · PyPI
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Changelog</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -26,18 +26,32 @@ export default function Changelog() {
           {/* Vertical neon timeline line */}
           <div className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-300 via-gold-400/30 to-transparent shadow-[0_0_8px_rgba(103,232,249,0.5)]" />
 
-          {/* v0.5.7 */}
+          {/* v0.5.8 */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
-              version="v0.5.7 — 2026"
+              version="v0.5.8 — 2026"
               note={
                 <>
                   Exact release dates on{' '}
                   <a href="https://pypi.org/project/qector-decoder-v3/#history" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">PyPI</a>.
                 </>
               }
+              items={[
+                'Optimizations for Rust-core matching decoders, reducing runtime memory allocations',
+                'Added full Python 3.13 pre-built binary wheels on PyPI',
+                'Fixed rare edge case in Union-Find path compression at distance d=15',
+                'Corrected stabilizer parity check mappings for newer Stim versions',
+              ]}
+            />
+          </div>
+
+          {/* v0.5.7 */}
+          <div className="relative">
+            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
+            <ChangelogEntry
+              version="v0.5.7 — 2026"
               items={[
                 'Sigstore attestation for PyPI wheels',
                 'Performance regression fixes in BP-OSD path',
