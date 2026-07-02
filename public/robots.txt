@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Crawl-delay: 0
+
+User-agent: ChatGPT-User
+Allow: /docs
+Allow: /manual
+
+User-agent: GPTBot
+Allow: /docs
+Allow: /manual
+
+User-agent: CCBot
+Allow: /docs
+Allow: /manual
+
+Sitemap: https://qector.store/sitemap.xml
+Host: https://qector.store
