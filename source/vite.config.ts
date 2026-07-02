@@ -11,8 +11,8 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: 'docs',
-    emptyOutDir: true,
+    outDir: '../',
+    emptyOutDir: false,
   },
   resolve: {
     alias: {
