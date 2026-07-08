@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { SEO, JsonLd } from '../lib/seo';
+import { usePyPIVersion } from '../hooks/usePyPIVersion';
 import NeuralReveal from '../components/NeuralReveal';
 import PricingTierCard from '../components/PricingTierCard';
 import gsap from 'gsap';
@@ -11,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 type ProductTab = 'decoder' | 'sati-os' | 'codex' | 'support';
 
 export default function Pricing() {
+  const { version: pypiVersion } = usePyPIVersion();
   const [activeTab, setActiveTab] = useState<ProductTab>('decoder');
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
@@ -141,7 +143,7 @@ export default function Pricing() {
               className="space-y-8"
             >
               <div className="text-center mb-8">
-                <span className="text-cyan-300 text-xs font-semibold uppercase tracking-wider">QECTOR Decoder v3 · v0.5.8</span>
+                <span className="text-cyan-300 text-xs font-semibold uppercase tracking-wider">QECTOR Decoder v3 · v{pypiVersion || '0.6.2'} (latest from PyPI RSS) + Workbench v3.4 free GUI</span>
                 <h2 className="text-2xl font-bold mt-2">Decoder Licensing</h2>
                 <p className="text-secondary text-sm mt-2 max-w-2xl mx-auto">
                   10 decoder algorithms with compiled Rust core, CPU and CUDA, and PyPI binary distribution.

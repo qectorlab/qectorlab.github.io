@@ -4,11 +4,13 @@ import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function SatiOs() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
+  const { version: pypiVersion } = usePyPIVersion();
   useEffect(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
@@ -37,9 +39,9 @@ export default function SatiOs() {
             <NeuralReveal text="SATI OS v1.0.0" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Full-stack QEC workbench — desktop GUI (39 panels), FastAPI REST (122 routes), dual CLI, MCP server,
+            SATI OS is the full commercial QEC suite built on the new QECTOR Decoder v3 (v{pypiVersion || '0.6.2'}) + new free QectorWorkbench GUI v3.4 — desktop GUI (39 panels), FastAPI REST (122 routes), dual CLI, MCP server,
             and <span className="text-cyan-300 font-semibold">17 hardware abstraction adapters</span> across 21 backend targets.
-            Integrated with QECTOR Decoder v3.
+            Core components (new free decoder + new free workbench GUI) are open for the community; full SATI OS adds commercial HAL adapters, expanded MCP, support, and enterprise features.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/contact" className="btn-cyan">Get License Key</Link>
@@ -59,7 +61,31 @@ export default function SatiOs() {
             <p className="text-secondary text-sm leading-relaxed">
               SATI OS v1.0.0 is officially released as a production-grade software package.
               It consists of an LCL-free open core workbench, plus an optional AES-256-GCM encrypted LCL-832 premium plugin.
+              Self-contained Windows executable (qector.exe). Per-user install to %LOCALAPPDATA%\Programs\SATI OS, no admin rights required (~3-4 GB). Simulation-validated QEC platform (BETA). See EULA for full terms.
             </p>
+          </div>
+
+          {/* Installation */}
+          <div ref={(el) => addRef(el, 3)} className="card-surface">
+            <h2 className="text-xl font-bold mb-4">Installation (SATI OS Setup)</h2>
+            <p className="text-secondary text-sm mb-4">
+              Download SATI_OS_Setup.exe from the distribution. Per-user install to <code>%LOCALAPPDATA%\Programs\SATI OS</code>. No Python or admin rights needed.
+            </p>
+            <div className="space-y-3 text-sm">
+              <div>
+                <strong className="text-primary">Graphical:</strong> Run SATI_OS_Setup.exe, accept EULA, click Install. Creates Start Menu + Desktop shortcuts.
+              </div>
+              <div>
+                <strong className="text-primary">Silent/Unattended:</strong> <code>SATI_OS_Setup.exe /SILENT /ACCEPTEULA</code> or use Install-SATI_OS.ps1 -Silent -AcceptEula.
+              </div>
+              <div>
+                <strong className="text-primary">Launch:</strong> No args opens full GUI. CLI: <code>qector.exe campaign|decode|bench|doctor|providers|workbench|mcp</code>.
+              </div>
+              <div>
+                <strong className="text-primary">Uninstall:</strong> Settings &gt; Apps or registry entry.
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">Windows 10/11 x64 only. ~3-4 GB disk. See EULA for terms (simulation-validated software, not hardware fault-tolerant system).</p>
           </div>
 
           {/* Architecture */}
@@ -69,7 +95,7 @@ export default function SatiOs() {
               {[
                 { layer: 'Presentation', items: ['NiceGUI Desktop App', '39 panels (fail-soft)', 'Web Dashboard'] },
                 { layer: 'API Layer', items: ['FastAPI (122 routes)', 'MCP Server (93 tools)', '2 WebSocket Endpoints'] },
-                { layer: 'Engine Layer', items: ['QECTOR Decoder v3', 'Headless Batch Engine', 'Stim / PyMatching'] },
+                { layer: 'Engine Layer', items: [`New QECTOR Decoder v3 (v${pypiVersion || '0.6.2'})`, 'New free QectorWorkbench GUI v3.4', 'Headless + Stim/PyMatching'] },
                 { layer: 'Hardware Layer', items: ['17 HAL Adapters', '21 Backend Targets', 'IBM live-exercised'] },
                 { layer: 'Data Layer', items: ['Circuit Storage', 'Syndrome Database', 'Artifact Manager'] },
                 { layer: 'License Layer', items: ['HMAC-JWT Enforcement', 'AES-256-GCM cryptography', 'Scrypt Key Derivation'] },
