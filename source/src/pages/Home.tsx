@@ -112,7 +112,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 border border-gridline rounded-full text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>QECTOR Decoder v{pypiVersion} (Source-Available, not free) · New Free Workbench</span>
+            <span>QECTOR Decoder v{pypiVersion} (Source-Available, not free) under qectorlab · New Free Workbench</span>
             <span className="opacity-50 ml-1">· Changelog →</span>
           </Link>
 
@@ -128,7 +128,7 @@ export default function Home() {
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-secondary max-w-3xl mx-auto mb-10 leading-relaxed" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}>
-            Python library for quantum error correction decoding. Exact MWPM parity with PyMatching through d=15.{' '}
+            QECTOR Decoder v3 under the qectorlab brand. Exact MWPM parity with PyMatching through d=15.{' '}
             <strong className="text-primary">+35.7% LER reduction</strong> with Belief-Matching at d=5.
             GPU batch decoding included. All claims are simulation-validated with reproducible artifacts on GitHub.
           </p>
@@ -202,7 +202,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 1)}>
               <SectionHeader
                 heading={<NeuralReveal text="Platform" className="text-3xl md:text-4xl font-bold" />}
-                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, and real-time vs. batch workloads need different decoders. QECTOR gives you all of them in one Python library with a consistent API."
+                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, and real-time vs. batch workloads need different decoders. QECTOR Decoder v3 under qectorlab gives you all of them in one Python library with a consistent API."
               />
             </div>
 
