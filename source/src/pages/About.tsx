@@ -145,7 +145,7 @@ export default function About() {
               <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Engineering Philosophy</h3>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                 <li>Reproducibility first — every claim ships with verifiable artifacts</li>
-                <li>Honest documentation — v0.6.x + free Workbench is the current production offering (fetched live from PyPI)</li>
+                <li>Honest documentation — Decoder is Source Available (not free); Workbench GUI app is free</li>
                 <li>Simulation-validated before any public benchmark claim</li>
                 <li>Full provenance trail — DOI, SHA-256 bundles, IBM job IDs</li>
                 <li>No vendor lock-in — pluggable CodeProvider architecture</li>
@@ -172,7 +172,7 @@ export default function About() {
                 { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Zenodo DOI publication.' },
                 { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated. SATI OS desktop UI scaffolded.' },
                 { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends achieving byte-for-byte identical corrections to CPU.' },
-                { year: '2025 Q4–2026', event: `v${pypiVersion || '0.6.2'} new Decoder + free QectorWorkbench GUI v3.4 (25 tools, 10/10 polish, production packaging). SATI OS full suite on top.` },
+                { year: '2025 Q4–2026', event: `v${pypiVersion || '0.6.2'} Decoder (Source Available) + free QectorWorkbench GUI v3.4 (25 tools, 10/10 polish). SATI OS full suite on top.` },
                 { year: '2026 Q2', event: 'SATI OS v1.0.0 (build 1.0.0.0) first GA release. Features 39-panel desktop GUI, FastAPI server, dual CLIs, MCP server, and LCL-free open core with optional premium LCL-832 plugin. 1204 tests passing.' },
               ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
@@ -189,7 +189,7 @@ export default function About() {
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
               All claims are simulation-validated using Stim + PyMatching cross-validation. IBM hardware runs are real but limited in scope.
-              QECTOR v${pypiVersion || '0.6.2'} (latest from PyPI RSS) + free Workbench is the production base. We publish our validation reports, non-pass counts, and known limitations openly.
+              QECTOR Decoder is Source Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
               What you see is what you get.
             </p>
           </div>

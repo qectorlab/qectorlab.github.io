@@ -112,7 +112,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 border border-gridline rounded-full text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>QECTOR Decoder v{pypiVersion || '0.6.2'} · New Production Release + Free Workbench</span>
+            <span>QECTOR Decoder v{pypiVersion || '0.6.2'} (Source Available, not free) · New Free Workbench</span>
             <span className="opacity-50 ml-1">· Changelog →</span>
           </Link>
 
