@@ -131,7 +131,7 @@ correction = decoder.decode(syndrome)`
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Technical Reference</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Complete API documentation for QECTOR's decoders — signatures, parameter limits,
+            Complete API documentation for QECTOR's decoders - signatures, parameter limits,
             and integration snippets for quantum pipelines.
           </p>
         </div>

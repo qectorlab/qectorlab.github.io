@@ -33,7 +33,7 @@ export default function Changelog() {
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
-              version={`v${pypiVersion} Decoder + new free Workbench v3.4.0 — 2026`}
+              version={`v${pypiVersion} Decoder + new free Workbench v3.4.0 - 2026`}
               note={
                 <>
                   Exact release dates on{' '}
@@ -53,7 +53,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <ChangelogEntry
-              version="v0.5.7 — 2026"
+              version="v0.5.7 - 2026"
               items={[
                 'Sigstore attestation for PyPI wheels',
                 'Performance regression fixes in BP-OSD path',
@@ -67,7 +67,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <ChangelogEntry
-              version="v0.5.6 — 2026"
+              version="v0.5.6 - 2026"
               items={[
                 'Union-Find decoder: near-linear time path compression',
                 'CUDA batch decoder: improved memory layout for large batches',
@@ -81,7 +81,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
             <ChangelogEntry
-              version="v0.5.5 — 2026"
+              version="v0.5.5 - 2026"
               items={[
                 'Belief-Matching: configurable BP iteration counts',
                 'BP-OSD: added ordered statistics decoding for qLDPC',
@@ -95,7 +95,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
             <ChangelogEntry
-              version="v0.5.4 — 2025–2026"
+              version="v0.5.4 - 2025-2026"
               items={[
                 'GPU batch decoder: native CUDA implementation',
                 'Benchmark suite: head-to-head PyMatching comparison scripts',
@@ -108,12 +108,12 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
             <ChangelogEntry
-              version="v0.5.3 — 2025"
+              version="v0.5.3 - 2025"
               items={[
                 'Initial public PyPI release',
                 'MWPM Blossom: adaptive-k exact matching',
                 'Belief-Matching: BP + reweighted MWPM',
-                'Surface code support: distances 3–15 verified',
+                'Surface code support: distances 3-15 verified',
               ]}
             />
           </div>
@@ -122,7 +122,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
             <ChangelogEntry
-              version="Pre-v0.5.x — 2024–2025"
+              version="Pre-v0.5.x - 2024-2025"
               items={[
                 '2024: iD01t Productions established. Initial QEC research begins.',
                 '2025 Q1: SATI CODEX LCL-832 framework. IBM Quantum hardware runs on ibm_fez.',

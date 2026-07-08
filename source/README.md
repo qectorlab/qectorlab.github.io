@@ -1,4 +1,4 @@
-# QECTOR — qectorlab.github.io
+# QECTOR - qectorlab.github.io
 
 Lightweight static bridge + marketing site for **QECTOR Decoder v3** (high-performance decoder library) and **Qector Workbench** (free professional GUI) under the **qectorlab** brand.
 
@@ -8,8 +8,8 @@ Lightweight static bridge + marketing site for **QECTOR Decoder v3** (high-perfo
 
 - Quick-start: pip install qector-decoder-v3
 - Free Workbench: https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0
-- Key claims + evidence: Exact PyMatching parity d=15, +35.7% gains, GPU batch — all on GitHub
-- Commercial: Source-Available; licenses for production use — see qector.store/commercial
+- Key claims + evidence: Exact PyMatching parity d=15, +35.7% gains, GPU batch - all on GitHub
+- Commercial: Source-Available; licenses for production use - see qector.store/commercial
 - Full docs & artifacts: https://github.com/GuillaumeLessard/qector-decoder
 - PyPI + dynamic version: https://pypi.org/project/qector-decoder-v3/
 
@@ -38,7 +38,7 @@ npm run preview     # preview the production build locally
 npm run lint         # eslint
 ```
 
-Node 18+ is recommended. The production build type-checks the whole project before bundling — a failing `tsc -b` will fail the build.
+Node 18+ is recommended. The production build type-checks the whole project before bundling - a failing `tsc -b` will fail the build.
 
 ## Project structure
 
@@ -66,14 +66,14 @@ src/
 
 ### Shared component pattern
 
-Cards, section headers, and evidence blocks are intentionally centralized (`components/*.tsx`, not `ui/*`) so that every page — Home, Decoder, Benchmarks, Evidence, Pricing, Evidence reports — renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
+Cards, section headers, and evidence blocks are intentionally centralized (`components/*.tsx`, not `ui/*`) so that every page - Home, Decoder, Benchmarks, Evidence, Pricing, Evidence reports - renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
 
 ## Accessibility
 
 The site targets WCAG 2.1 AA. Notable patterns in place:
 
 - Skip-to-content link and route-change focus management (`Layout.tsx`).
-- Keyboard-operable tab groups (`role="tablist"`/`"tab"`/`"tabpanel"`, arrow-key navigation) — see the product switcher on `Pricing.tsx`.
+- Keyboard-operable tab groups (`role="tablist"`/`"tab"`/`"tabpanel"`, arrow-key navigation) - see the product switcher on `Pricing.tsx`.
 - `NeuralReveal` (the scramble-in heading effect) exposes the final text via `aria-label` and hides the animated glyphs from assistive tech with `aria-hidden`; it also honors `prefers-reduced-motion` and skips the scramble entirely.
 - Decorative SVGs and background video are `aria-hidden`; data-bearing SVG charts use `role="img"` with a text `aria-label` that states the actual values, and the underlying data is also present in an adjacent HTML table where applicable.
 - Form fields use explicit `<label htmlFor>` / `id` pairing, not implicit/visual-only association.
@@ -83,7 +83,7 @@ When adding new interactive UI, match these patterns: real semantics over ARIA w
 
 ## Content & claims policy
 
-Numbers used across the site (exact MWPM parity to d=15, +35.7% Belief-Matching LER reduction, 98.3% optimal shots at d=9, 832/832 tests) are simulation-validated with reproducible artifacts in the decoder repository. Do not edit these figures without updating the underlying validation report — the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
+Numbers used across the site (exact MWPM parity to d=15, +35.7% Belief-Matching LER reduction, 98.3% optimal shots at d=9, 832/832 tests) are simulation-validated with reproducible artifacts in the decoder repository. Do not edit these figures without updating the underlying validation report - the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
 
 ## Deployment
 
@@ -91,4 +91,4 @@ The site is a static Vite build deployed to GitHub Pages from `qectorlab/qectorl
 
 ## License
 
-Site content and code are © Guillaume Lessard / iD01t Productions. The QECTOR Decoder itself is dual-licensed (PolyForm Noncommercial for community use, commercial licenses available) — see [`/license`](https://qector.store/license) on the live site for current terms.
+Site content and code are © Guillaume Lessard / iD01t Productions. The QECTOR Decoder itself is dual-licensed (PolyForm Noncommercial for community use, commercial licenses available) - see [`/license`](https://qector.store/license) on the live site for current terms.

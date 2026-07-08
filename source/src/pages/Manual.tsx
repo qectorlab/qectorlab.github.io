@@ -330,7 +330,7 @@ prediction = decoder.decode(syndrome)`}
                   <span>Issue: ImportError when importing `qector`</span>
                 </div>
                 <p className="text-secondary text-xs leading-relaxed">
-                  <strong>Fix:</strong> Ensure your Python architecture matches 64-bit and is python 3.9–3.13. If using macOS, verify you are not using the default system Python. Run `pip install -force-reinstall qector-decoder-v3` to rebuild binary wheels.
+                  <strong>Fix:</strong> Ensure your Python architecture matches 64-bit and is python 3.9-3.13. If using macOS, verify you are not using the default system Python. Run `pip install -force-reinstall qector-decoder-v3` to rebuild binary wheels.
                 </p>
               </div>
 
@@ -403,7 +403,7 @@ prediction = decoder.decode(syndrome)`}
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">User Manual</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Complete guide to QECTOR Decoder v3 — installation, all ten decoders,
+            Complete guide to QECTOR Decoder v3 - installation, all ten decoders,
             GPU batch workflows, benchmarking, diagnostics, and ecosystem integration.
           </p>
         </div>

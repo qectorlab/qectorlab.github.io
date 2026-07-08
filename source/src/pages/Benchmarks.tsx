@@ -51,7 +51,7 @@ export default function Benchmarks() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Head-to-head against PyMatching on rotated surface codes using Stim circuit-level noise.
-            Results are SHA-256 sealed and available on GitHub — run them yourself with the artifacts.
+            Results are SHA-256 sealed and available on GitHub - run them yourself with the artifacts.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Artifacts →</a>
@@ -75,11 +75,11 @@ export default function Benchmarks() {
               </thead>
               <tbody>
                 {[
-                  { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 – 15', ler: 'Exact parity', speed: '6.9–7.7× faster', status: 'Validated' },
+                  { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: '6.9-7.7× faster', status: 'Validated' },
                   { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
                   { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Faster', status: 'Validated' },
                   { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },
-                  { algo: 'Union-Find', dist: 'd = 3 – 21', ler: '~1.5× higher LER', speed: '10–50× faster', status: 'Validated' },
+                  { algo: 'Union-Find', dist: 'd = 3 - 21', ler: '~1.5× higher LER', speed: '10-50× faster', status: 'Validated' },
                   { algo: 'BP-OSD', dist: 'qLDPC', ler: 'Code-dependent', speed: 'Slower (BP iterations)', status: 'Validated' },
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-gridline/50 hover:bg-surface/50 transition-colors">
@@ -101,17 +101,17 @@ export default function Benchmarks() {
           {/* Detailed Results */}
           <div ref={(el) => addRef(el, 1)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card-surface">
-              <h3 className="text-cyan-300 font-semibold mb-3">MWPM LER Parity (d=3–11)</h3>
+              <h3 className="text-cyan-300 font-semibold mb-3">MWPM LER Parity (d=3-11)</h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
                 QECTOR-Blossom achieves exact logical error rate parity with PyMatching across all tested code distances.
                 The adaptive-k MWPM implementation uses a union-find preprocessor followed by exact Blossom V matching on reduced graphs.
               </p>
               <div className="font-mono text-xs text-muted-foreground space-y-1">
-                <div>d=3:  LER = 0.0117 (PyMatching: 0.0117) — exact match</div>
-                <div>d=5:  LER = 0.0079 (PyMatching: 0.0079) — exact match</div>
-                <div>d=7:  LER = 0.0051 (PyMatching: 0.0050) — exact match</div>
-                <div>d=9:  LER = 0.0030 (PyMatching: 0.0031) — exact match</div>
-                <div>d=11: LER = 0.0018 (PyMatching: 0.0018) — exact match</div>
+                <div>d=3:  LER = 0.0117 (PyMatching: 0.0117) - exact match</div>
+                <div>d=5:  LER = 0.0079 (PyMatching: 0.0079) - exact match</div>
+                <div>d=7:  LER = 0.0051 (PyMatching: 0.0050) - exact match</div>
+                <div>d=9:  LER = 0.0030 (PyMatching: 0.0031) - exact match</div>
+                <div>d=11: LER = 0.0018 (PyMatching: 0.0018) - exact match</div>
               </div>
             </div>
             <div className="card-surface">
@@ -132,13 +132,13 @@ export default function Benchmarks() {
           {/* Speed Comparison */}
           <div ref={(el) => addRef(el, 2)} className="card-surface">
             <h3 className="text-cyan-300 font-semibold mb-4">Speed Comparison (Relative to PyMatching)</h3>
-            <p className="text-muted-foreground text-xs mb-4">Blossom figures are simulation-validated. Union-Find and GPU Batch figures are hardware-dependent — regenerate locally before citing.</p>
+            <p className="text-muted-foreground text-xs mb-4">Blossom figures are simulation-validated. Union-Find and GPU Batch figures are hardware-dependent - regenerate locally before citing.</p>
             <div className="space-y-4">
               {[
                 { label: 'QECTOR-Blossom (d=5)', factor: '6.9×', desc: 'Adaptive-k preprocessing reduces graph size before exact matching. Simulation-validated.' },
                 { label: 'QECTOR-Blossom (d=9)', factor: '7.7×', desc: 'Larger gains at higher distance due to sparser reduced graphs. Simulation-validated.' },
                 { label: 'Union-Find', factor: 'Faster', desc: 'Near-linear scaling; approximate but extremely fast. Exact multiplier is hardware-dependent.' },
-                { label: 'GPU Batch', factor: '6.9–7.7×+', desc: 'CUDA/OpenCL batch decoding; gains exceed CPU at suitable batch sizes. Bit-identical to CPU MWPM. Hardware-dependent.' },
+                { label: 'GPU Batch', factor: '6.9-7.7×+', desc: 'CUDA/OpenCL batch decoding; gains exceed CPU at suitable batch sizes. Bit-identical to CPU MWPM. Hardware-dependent.' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-4">
                   <div className="flex-1">
@@ -155,7 +155,7 @@ export default function Benchmarks() {
           <div ref={(el) => addRef(el, 3)}>
             <InteractiveChart
               type="distance"
-              title="LER vs Code Distance (d=3–11, p=0.001)"
+              title="LER vs Code Distance (d=3-11, p=0.001)"
               subtitle="QECTOR-Blossom vs PyMatching · Circuit-level depolarizing noise · Rotated surface code"
             />
           </div>

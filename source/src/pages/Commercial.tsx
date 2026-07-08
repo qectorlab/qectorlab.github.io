@@ -167,7 +167,7 @@ export default function Commercial() {
                 <li>• No auto-renewing subscriptions without explicit confirmation</li>
                 <li>• No price increases after first year without 90-day notice</li>
                 <li>• No restrictions on publishing benchmark results (with attribution)</li>
-                <li>• No vendor lock-in — data and models are yours</li>
+                <li>• No vendor lock-in - data and models are yours</li>
                 <li>• No claims beyond what validation artifacts prove</li>
               </ul>
             }

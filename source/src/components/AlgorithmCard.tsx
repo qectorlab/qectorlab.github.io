@@ -1,7 +1,7 @@
 type BadgeColor = 'cyan' | 'green' | 'purple' | 'gold';
 
 interface AlgorithmCardProps {
-  /** e.g. "Exact MWPM — Validated" */
+  /** e.g. "Exact MWPM - Validated" */
   title: string;
   /** Short technical tag shown as small mono text above the title, e.g. "Blossom + Belief-Matching" */
   tag?: string;
@@ -9,7 +9,7 @@ interface AlgorithmCardProps {
   badge?: { label: string; color: BadgeColor };
   /** What it is and why it matters, plain language first */
   desc: string;
-  /** Optional single concrete fact/number to anchor the claim, e.g. "d = 3–15, exact parity" */
+  /** Optional single concrete fact/number to anchor the claim, e.g. "d = 3-15, exact parity" */
   proof?: string;
   /** Dims the card for research-stage / experimental entries */
   muted?: boolean;

@@ -79,7 +79,7 @@ export default function Evidence() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Every public claim is backed by a verifiable artifact. Validation reports, benchmark data,
-            and IBM hardware job IDs — all archived with the decoder source on GitHub.
+            and IBM hardware job IDs - all archived with the decoder source on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>
@@ -159,7 +159,7 @@ export default function Evidence() {
           {/* Transparency */}
           <EvidenceBlock
             title="Our Transparency Commitment"
-            statement={`We publish all validation results — passes, non-passes, and known limitations. A "non-pass" is a test that doesn't meet the strictest criterion but has a documented explanation (typically stale-test artifacts or local-source configuration differences). We do not hide non-passes behind aggregate statistics.`}
+            statement={`We publish all validation results - passes, non-passes, and known limitations. A "non-pass" is a test that doesn't meet the strictest criterion but has a documented explanation (typically stale-test artifacts or local-source configuration differences). We do not hide non-passes behind aggregate statistics.`}
           />
 
         </div>

@@ -25,7 +25,7 @@ export default function SatiCodex() {
     <>
       <SEO
         title="SATI CODEX · QECTOR"
-        description="SATI CODEX research series — theoretical, mathematical, and manufacturing-blueprint layer. [[832,10,4]] CSS code, IBM hardware validation, ZNE Richardson extrapolation."
+        description="SATI CODEX research series - theoretical, mathematical, and manufacturing-blueprint layer. [[832,10,4]] CSS code, IBM hardware validation, ZNE Richardson extrapolation."
       />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
@@ -39,7 +39,7 @@ export default function SatiCodex() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Theoretical, mathematical, and manufacturing-blueprint layer for quantum error correction.
-            Built on the <span className="text-gold-400 font-semibold">[[832,10,4]] LCL-832</span> CSS code —
+            Built on the <span className="text-gold-400 font-semibold">[[832,10,4]] LCL-832</span> CSS code -
             a genus-5 surface code with IBM hardware validation and full reproducibility artifacts.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -98,7 +98,7 @@ export default function SatiCodex() {
             <div className="space-y-3">
               {[
                 { name: 'GHZ Entanglement', result: 'F = 0.874', desc: '7-qubit GHZ state fidelity on ibm_fez' },
-                { name: 'Repetition Code', result: 'Λ ~ 2.5–3.5', desc: 'Bit-flip suppression factor, offline MWPM decoding' },
+                { name: 'Repetition Code', result: 'Λ ~ 2.5-3.5', desc: 'Bit-flip suppression factor, offline MWPM decoding' },
                 { name: 'ZNE Extraction', result: 'α_op = 0.8783', desc: 'Design constant from Richardson extrapolation (not measured hardware value)' },
               ].map((exp) => (
                 <div key={exp.name} className="flex items-center gap-4 p-3 bg-void rounded-lg">
@@ -115,7 +115,7 @@ export default function SatiCodex() {
           {/* Technical Boundaries */}
           <EvidenceBlock
             title="Technical Boundaries"
-            statement="The [[832,10,4]] distance is an exact algebraic property of the certified LCL-832 matrices, not a hardware fault-tolerance demonstration. The code has never been run end-to-end on hardware (832+ qubits exceed current device limits). Proven IBM hardware results are GHZ entanglement (F=0.874 at 7q) and repetition-code bit-flip suppression (Lambda ~2.5–3.5, offline MWPM). α_op = 0.8783 is a design constant, not a measured hardware value. These boundaries are maintained in all licensing discussions."
+            statement="The [[832,10,4]] distance is an exact algebraic property of the certified LCL-832 matrices, not a hardware fault-tolerance demonstration. The code has never been run end-to-end on hardware (832+ qubits exceed current device limits). Proven IBM hardware results are GHZ entanglement (F=0.874 at 7q) and repetition-code bit-flip suppression (Lambda ~2.5-3.5, offline MWPM). α_op = 0.8783 is a design constant, not a measured hardware value. These boundaries are maintained in all licensing discussions."
           />
 
         </div>

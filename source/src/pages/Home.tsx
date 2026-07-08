@@ -121,7 +121,7 @@ export default function Home() {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6"
             style={{ textShadow: '0 4px 24px rgba(0,0,0,0.8)' }}
           >
-            QECTOR Decoder v3 — Production-Grade Quantum Error Correction Decoding with Exact PyMatching Parity
+            QECTOR Decoder v3 - Production-Grade Quantum Error Correction Decoding with Exact PyMatching Parity
             <br />
             <span className="text-cyan-300">Validated MWPM Parity to d=15 + 35.7% LER Reduction via Belief-Matching | GPU Batch Decoding</span>
           </h1>
@@ -139,7 +139,7 @@ export default function Home() {
               Explore the Decoder
             </Link>
             <a href="https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0" className="btn-outline text-base px-8 py-4" target="_blank" rel="noopener noreferrer">
-              Free Professional GUI – QECTOR Decoder Workbench v3.4
+              Free Professional GUI - QECTOR Decoder Workbench v3.4
             </a>
             <Link to="/commercial" className="btn-gold text-base px-8 py-4">
               Start Commercial Evaluation
@@ -224,10 +224,10 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Exact MWPM — Validated',
+                  title: 'Exact MWPM - Validated',
                   tag: 'Blossom + Belief-Matching',
                   desc: 'Exact LER parity with PyMatching through d=15. Add BP preprocessing for +35.7% accuracy gain at d=5. These are the production decoders.',
-                  proof: 'd = 3–15 · exact LER parity',
+                  proof: 'd = 3-15 · exact LER parity',
                 },
                 {
                   title: 'qLDPC Support',
@@ -238,7 +238,7 @@ export default function Home() {
                 {
                   title: 'Speed When You Need It',
                   tag: 'Union-Find + GPU Batch',
-                  desc: 'Near-linear Union-Find for large-distance real-time decoding. Native CUDA/OpenCL GPU batch for throughput-bound workloads — bit-identical to CPU.',
+                  desc: 'Near-linear Union-Find for large-distance real-time decoding. Native CUDA/OpenCL GPU batch for throughput-bound workloads - bit-identical to CPU.',
                   proof: 'Bit-identical CPU ↔ GPU output',
                 },
                 {
@@ -268,8 +268,8 @@ export default function Home() {
                   <NeuralReveal text="Decoder" className="text-3xl md:text-4xl font-bold" />
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
-                  Ten battle-tested decoding algorithms in a single Python library — MWPM, Belief-Matching,
-                  BP-OSD, Union-Find, GPU Batch, EBP, Restart Belief, KAT/QCT, Astra GNN, and FPGA emulator —
+                  Ten battle-tested decoding algorithms in a single Python library - MWPM, Belief-Matching,
+                  BP-OSD, Union-Find, GPU Batch, EBP, Restart Belief, KAT/QCT, Astra GNN, and FPGA emulator -
                   with provable accuracy guarantees and reproducible validation artifacts.
                 </p>
 
@@ -336,7 +336,7 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {[
-                    { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 – 15', ler: 'Exact parity', speed: '6.9–7.7× faster', status: 'Validated' },
+                    { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: '6.9-7.7× faster', status: 'Validated' },
                     { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
                     { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Faster', status: 'Validated' },
                     { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },

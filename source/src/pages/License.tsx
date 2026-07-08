@@ -62,7 +62,7 @@ export default function License() {
             </p>
             <p className="text-secondary text-sm leading-relaxed">
               All commercial licenses include: written license agreement, commercial use rights (internal),
-              reproducible artifact bundles, and priority bug review. No redistribution or OEM rights included by default —
+              reproducible artifact bundles, and priority bug review. No redistribution or OEM rights included by default -
               contact <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> for OEM/SaaS licensing.
             </p>
           </div>

@@ -152,7 +152,7 @@ export default function Pricing() {
               </div>
 
               <div className="flex flex-wrap justify-center gap-2 mb-8">
-                {['Exact LER parity d=3–15', 'Linux · Windows · macOS ARM64', 'Python 3.9–3.13', 'CUDA 6.9–7.7× CPU', 'Sigstore-attested wheels'].map((pill) => (
+                {['Exact LER parity d=3-15', 'Linux · Windows · macOS ARM64', 'Python 3.9-3.13', 'CUDA 6.9-7.7× CPU', 'Sigstore-attested wheels'].map((pill) => (
                   <span key={pill} className="px-3 py-1.5 bg-cyan-300/5 border border-cyan-300/15 rounded-full text-xs text-cyan-300">{pill}</span>
                 ))}
               </div>

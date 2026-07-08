@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 — ten battle-tested QEC decoding algorithms in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
+        description="QECTOR Decoder v3 - ten battle-tested QEC decoding algorithms in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
         pageType="SoftwareApplication"
       />
       <JsonLd
@@ -79,7 +79,7 @@ export default function Decoder() {
           {/* Core Metrics */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Exact Parity', value: 'd=3–15', desc: 'MWPM LER matches PyMatching across all tested distances' },
+              { label: 'Exact Parity', value: 'd=3-15', desc: 'MWPM LER matches PyMatching across all tested distances' },
               { label: '+35.7% Gain', value: 'Belief-Match', desc: 'LER reduction vs PyMatching at d=5, circuit-level noise' },
               { label: '98.3% Optimal', value: 'd=9', desc: 'Shots achieving exact minimum-weight correction' },
               { label: '832 / 832 Tests', value: '100% Pass', desc: 'Validation and Stim comparison tests passing successfully' },
@@ -88,7 +88,7 @@ export default function Decoder() {
             ))}
           </div>
 
-          {/* Algorithm Cards — tiered */}
+          {/* Algorithm Cards - tiered */}
           <div ref={(el) => addRef(el, 1)}>
             <SectionHeader
               align="left"
@@ -99,13 +99,13 @@ export default function Decoder() {
             />
 
             {/* Production */}
-            <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production — Validated</h3>
+            <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production - Validated</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
                 { name: 'Blossom MWPM', tag: 'Exact', color: 'gold', desc: 'Adaptive-k minimum-weight perfect matching. Exact LER parity with PyMatching through d=15. The reference decoder for surface codes.' },
                 { name: 'Belief Matching', tag: 'Best LER', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. +35.7% LER reduction vs plain MWPM at d=5. Use when accuracy matters more than latency.' },
                 { name: 'BP-OSD', tag: 'qLDPC', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. Required for qLDPC codes where matching decoders cannot be applied.' },
-                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. Fastest option at large code distances — trades some LER accuracy for speed.' },
+                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. Fastest option at large code distances - trades some LER accuracy for speed.' },
                 { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for ring-like detector graphs. Lower latency than exact Blossom, close to optimal.' },
                 { name: 'GPU Batch', tag: 'Parallel', color: 'gold', desc: 'Native CUDA/OpenCL batch decoding. Bit-identical corrections to CPU MWPM. Throughput advantage grows with batch size.' },
               ].map((algo) => (
@@ -119,12 +119,12 @@ export default function Decoder() {
             </div>
 
             {/* Experimental */}
-            <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental — Research Stage</h3>
+            <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental - Research Stage</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 { name: 'EBP', desc: 'Enhanced belief propagation for harder LDPC/qLDPC instances where standard BP-OSD stalls.' },
                 { name: 'Restart Belief', desc: 'BP with restart strategies to escape local minima on degenerate syndromes.' },
-                { name: 'KAT / QCT', desc: 'Transformer-based decoder for maximum-accuracy offline analysis. High latency — not for real-time use.' },
+                { name: 'KAT / QCT', desc: 'Transformer-based decoder for maximum-accuracy offline analysis. High latency - not for real-time use.' },
                 { name: 'Astra GNN', desc: 'Graph neural network decoder. Research benchmarking only. Not validated for production workloads.' },
               ].map((algo) => (
                 <AlgorithmCard

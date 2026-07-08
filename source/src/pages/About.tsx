@@ -65,7 +65,7 @@ export default function About() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">About QECTOR</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            Independent quantum error correction research, engineering, and commercialization —
+            Independent quantum error correction research, engineering, and commercialization -
             built by <span className="text-cyan-300 font-semibold">Guillaume Lessard</span> with full transparency,
             reproducible artifacts, and no speculative claims.
           </p>
@@ -132,34 +132,34 @@ export default function About() {
             <div ref={(el) => addRef(el, 2)} className="card-surface">
               <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Software Stack</h3>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
-                <li>Rust / PyO3 — core decoder engine</li>
-                <li>Python 3.10+ — API, CLI, benchmarking, simulation</li>
-                <li>Stim — circuit-level noise simulation</li>
-                <li>OpenCL / CUDA — GPU-accelerated batch decoding</li>
-                <li>PyPI distribution — <code className="text-cyan-300 text-xs">qector-decoder-v3</code></li>
+                <li>Rust / PyO3 - core decoder engine</li>
+                <li>Python 3.10+ - API, CLI, benchmarking, simulation</li>
+                <li>Stim - circuit-level noise simulation</li>
+                <li>OpenCL / CUDA - GPU-accelerated batch decoding</li>
+                <li>PyPI distribution - <code className="text-cyan-300 text-xs">qector-decoder-v3</code></li>
                 <li>HMAC-JWT commercial license enforcement</li>
-                <li>NiceGUI / CustomTkinter — SATI OS desktop interface</li>
+                <li>NiceGUI / CustomTkinter - SATI OS desktop interface</li>
               </ul>
             </div>
             <div ref={(el) => addRef(el, 3)} className="card-surface">
               <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Engineering Philosophy</h3>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
-                <li>Reproducibility first — every claim ships with verifiable artifacts</li>
-                <li>Honest documentation — Decoder is Source-Available (not free); Workbench GUI app is free</li>
+                <li>Reproducibility first - every claim ships with verifiable artifacts</li>
+                <li>Honest documentation - Decoder is Source-Available (not free); Workbench GUI app is free</li>
                 <li>Simulation-validated before any public benchmark claim</li>
-                <li>Full provenance trail — DOI, SHA-256 bundles, IBM job IDs</li>
-                <li>No vendor lock-in — pluggable CodeProvider architecture</li>
+                <li>Full provenance trail - DOI, SHA-256 bundles, IBM job IDs</li>
+                <li>No vendor lock-in - pluggable CodeProvider architecture</li>
                 <li>Transparent validation reports with non-pass classification</li>
               </ul>
             </div>
             <div ref={(el) => addRef(el, 4)} className="card-surface">
               <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Scope (qectorlab)</h3>
-              <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench are the high-performance decoder library + professional GUI. Broader QECTOR vision (LCL-833, full SATI CODEX theoretical work) is research context — see GitHub for details.</p>
+              <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench are the high-performance decoder library + professional GUI. Broader QECTOR vision (LCL-833, full SATI CODEX theoretical work) is research context - see GitHub for details.</p>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                 <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
                 <li><strong className="text-primary">Free Qector Workbench v3.4</strong>: Professional GUI, MCP, benchmarks (fully free)</li>
                 <li><strong className="text-primary">SATI OS</strong>: Full commercial stack on top (GUI + HALs + support)</li>
-                <li><strong className="text-primary">Research</strong>: SATI CODEX, LCL codes, "Mastering QEC" book — cross-linked on GitHub</li>
+                <li><strong className="text-primary">Research</strong>: SATI CODEX, LCL codes, "Mastering QEC" book - cross-linked on GitHub</li>
               </ul>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function About() {
                 { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
                 { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated. SATI OS desktop UI scaffolded.' },
                 { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends achieving byte-for-byte identical corrections to CPU.' },
-                { year: '2025 Q4–2026', event: `v${pypiVersion} Decoder (Source Available) + free QectorWorkbench GUI v3.4 (25 tools, 10/10 polish). SATI OS full suite on top.` },
+                { year: '2025 Q4-2026', event: `v${pypiVersion} Decoder (Source-Available) + free QectorWorkbench GUI v3.4 (25 tools, 10/10 polish). SATI OS full suite on top.` },
                 { year: '2026 Q2', event: 'SATI OS v1.0.0 (build 1.0.0.0) first GA release. Features 39-panel desktop GUI, FastAPI server, dual CLIs, MCP server, and LCL-free open core with optional premium LCL-832 plugin. 1204 tests passing.' },
               ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">

@@ -57,12 +57,12 @@ export default function Contact() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            admin@qector.store · Mon–Fri EST/EDT
+            admin@qector.store - Mon-Fri EST/EDT
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Contact Us</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Commercial evaluation requests, technical inquiries, partnership discussions,
-            and support — all handled directly by Guillaume Lessard / iD01t Productions.
+            and support - all handled directly by Guillaume Lessard / iD01t Productions.
           </p>
         </div>
       </section>
@@ -84,8 +84,8 @@ export default function Contact() {
               <div className="card-surface">
                 <h3 className="text-primary font-semibold mb-2">Working Hours</h3>
                 <p className="text-secondary text-sm leading-relaxed">
-                  Monday – Friday: 09:00–17:00 EST/EDT<br />
-                  Saturday – Sunday: Closed
+                  Monday - Friday: 09:00-17:00 EST/EDT<br />
+                  Saturday - Sunday: Closed
                 </p>
               </div>
               <div className="card-surface">
@@ -131,7 +131,7 @@ export default function Contact() {
                       <div>
                         <label htmlFor="contact-referral" className="block text-secondary text-sm mb-2">Referral Source</label>
                         <select id="contact-referral" name="referral" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors">
-                          <option value="">— Select —</option>
+                          <option value="">- Select -</option>
                           <option>Web search</option>
                           <option>Social media</option>
                           <option>Conference / event</option>
@@ -143,9 +143,9 @@ export default function Contact() {
                       <div>
                         <label htmlFor="contact-timeline" className="block text-secondary text-sm mb-2">Evaluation Timeline</label>
                         <select id="contact-timeline" name="timeline" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors">
-                          <option value="">— Select —</option>
-                          <option>0–30 days</option>
-                          <option>30–90 days</option>
+                          <option value="">- Select -</option>
+                          <option>0-30 days</option>
+                          <option>30-90 days</option>
                           <option>90+ days</option>
                           <option>Undecided</option>
                         </select>
