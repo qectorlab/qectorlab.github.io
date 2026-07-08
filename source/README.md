@@ -4,10 +4,10 @@ Marketing and documentation site for **QECTOR Decoder v3**, **SATI OS**, and **S
 
 Live at **[qector.store](https://qector.store)**, deployed via GitHub Pages from this repository.
 
-- New Decoder: QECTOR Decoder v3 (version dynamically from PyPI RSS https://pypi.org/project/qector-decoder-v3/)
-- New Free Workbench GUI: QectorWorkbench v3.4.0 (https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0) (decoder versions on site are live from PyPI RSS)
+- Decoder: QECTOR Decoder v3 — Source Available (not free), version dynamically from PyPI RSS https://pypi.org/project/qector-decoder-v3/
+- New Free Workbench GUI: QectorWorkbench v3.4.0 (https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0) — the free GUI app (decoder versions on site are live from PyPI RSS)
 - Decoder source: [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
-- Full SATI OS suite: Commercial extensions on top of new decoder + new free workbench
+- Full SATI OS suite: Commercial extensions on top of Source Available decoder + free Workbench GUI
 - Validation artifacts: [Zenodo DOI 10.5281/zenodo.20825980](https://doi.org/10.5281/zenodo.20825980)
 
 ## Stack
