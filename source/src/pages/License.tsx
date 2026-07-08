@@ -13,9 +13,9 @@ export default function License() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">License</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            QECTOR Decoder v3 is <span className="text-primary font-semibold">source-available</span> —
-            free for personal, academic, and non-commercial research.
-            Commercial use requires a written agreement from <span className="text-cyan-300 font-semibold">$1,500</span>.
+            QECTOR Decoder v3 is <span className="text-primary font-semibold">Source-Available</span> (not free for commercial use).
+            Free for personal, academic, and non-commercial research.
+            Commercial use requires a written agreement from <span className="text-cyan-300 font-semibold">$1,500</span>. The Workbench GUI is free.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="/pricing" className="btn-cyan">View Pricing</a>

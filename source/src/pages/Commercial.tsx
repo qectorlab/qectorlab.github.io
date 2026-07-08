@@ -26,7 +26,7 @@ export default function Commercial() {
     <>
       <SEO
         title="Commercial · QECTOR"
-        description="Commercial evaluation licenses for QECTOR Decoder v3, SATI OS, and SATI CODEX. Contact us for enterprise licensing, support agreements, and custom engineering."
+        description="Commercial licenses for QECTOR Decoder v3 (Source-Available). Free Workbench GUI. Evaluation pilots from $1,500. Professional support for research and production teams."
       />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
@@ -40,6 +40,7 @@ export default function Commercial() {
             <NeuralReveal text="Commercial Evaluation" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
+            QECTOR Decoder v3 is Source-Available (not free for commercial use). The Workbench GUI is free.
             90-day pilot from <span className="text-cyan-300 font-semibold">$1,500</span>, creditable toward an annual license.
             Full decoder access, written agreement, benchmark artifact package, and priority support.
             Walk away with your data either way.
@@ -89,6 +90,35 @@ export default function Commercial() {
                   <span className="text-secondary text-sm">{item}</span>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Free vs Licensed */}
+          <div ref={(el) => addRef(el, 1.5)} className="card-surface">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">What is Free vs Licensed</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-emerald-400 font-semibold mb-2">Free (Source-Available)</h3>
+                <ul className="text-secondary text-sm space-y-1">
+                  <li>• QECTOR Decoder v3 PyPI package (non-commercial use)</li>
+                  <li>• Qector Workbench GUI v3.4 (full featured, 25+ MCP tools)</li>
+                  <li>• Public benchmarks, artifacts, and validation on GitHub</li>
+                  <li>• Documentation and examples</li>
+                  <li>• Community issues and discussions</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-gold-400 font-semibold mb-2">Licensed (Commercial)</h3>
+                <ul className="text-secondary text-sm space-y-1">
+                  <li>• Commercial use rights (internal R&amp;D / production)</li>
+                  <li>• Written license agreement</li>
+                  <li>• Priority support and response SLAs</li>
+                  <li>• Full access to validation artifacts and reproduction harnesses</li>
+                  <li>• IBM Quantum evaluation pathway</li>
+                  <li>• Custom integration guidance and onboarding</li>
+                </ul>
+                <p className="text-xs text-muted-foreground mt-2">Source-Available under PolyForm Noncommercial. Commercial use requires a license.</p>
+              </div>
             </div>
           </div>
 

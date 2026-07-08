@@ -1,12 +1,14 @@
 # QECTOR — qectorlab.github.io
 
-Marketing and documentation site for **QECTOR Decoder v3**, **SATI OS**, and **SATI CODEX** — production-grade quantum error correction software by [Guillaume Lessard](https://github.com/GuillaumeLessard) / iD01t Productions.
+Marketing and documentation site for **QECTOR Decoder v3** (platform), **Qector Workbench**, and related research — production-grade quantum error correction software under the **qectorlab** brand.
+
+**Created by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions.**
 
 Live at **[qector.store](https://qector.store)**, deployed via GitHub Pages from this repository.
 
 - Decoder: QECTOR Decoder v3 — Source Available (not free), version dynamically from PyPI RSS https://pypi.org/project/qector-decoder-v3/
 - New Free Workbench GUI: QectorWorkbench v3.4.0 (https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0) — the free GUI app (decoder versions on site are live from PyPI RSS)
-- Decoder source: [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
+- Primary development: [qectorlab org](https://github.com/qectorlab) and [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
 - Full SATI OS suite: Commercial extensions on top of Source Available decoder + free Workbench GUI
 - Reproducible artifacts and validation: [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
 

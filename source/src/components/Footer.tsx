@@ -78,9 +78,9 @@ export default function Footer() {
                 QECTOR
               </Link>
               <p className="text-secondary text-sm leading-relaxed max-w-sm mb-6">
-                Python library for quantum error correction decoding. Exact MWPM parity with PyMatching
-                through d=15. +35.7% LER reduction with Belief-Matching. All benchmarks and artifacts on GitHub.
+                QECTOR Decoder v3 under the qectorlab brand. Exact MWPM parity with PyMatching through d=15. +35.7% LER reduction with Belief-Matching. All benchmarks and artifacts on GitHub.
               </p>
+              <p className="text-xs text-muted-foreground">Created by Guillaume Lessard (ORCID) / iD01t Productions</p>
               <div className="flex flex-wrap gap-2">
                 {[
                   { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },

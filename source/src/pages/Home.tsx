@@ -112,7 +112,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 border border-gridline rounded-full text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>QECTOR Decoder v{pypiVersion} (Source Available, not free) · New Free Workbench</span>
+            <span>QECTOR Decoder v{pypiVersion} (Source-Available, not free) · New Free Workbench</span>
             <span className="opacity-50 ml-1">· Changelog →</span>
           </Link>
 
@@ -172,6 +172,22 @@ export default function Home() {
                 variant={pill.gold ? 'gold' : 'default'}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== VALIDATION & EVIDENCE (P0) ===== */}
+      <section className="py-16 bg-surface/30 border-t border-gridline">
+        <div className="section-padding max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Every Claim is Backed by Reproducible Artifacts</h2>
+          <p className="text-secondary mb-6 max-w-2xl mx-auto">
+            All performance and correctness claims are simulation-validated with public, reproducible artifacts on GitHub.
+            No hidden data. Run it yourself.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">View Artifacts on GitHub</a>
+            <Link to="/benchmarks" className="btn-outline">See Full Benchmarks</Link>
+            <Link to="/evidence" className="btn-outline">Evidence &amp; Reports</Link>
           </div>
         </div>
       </section>

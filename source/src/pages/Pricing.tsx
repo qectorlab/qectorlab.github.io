@@ -72,7 +72,7 @@ export default function Pricing() {
             <NeuralReveal text="Transparent Pricing" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            Every tier priced on verified capability. Decoder is Source Available (not free); free for personal/academic non-commercial use only.
+            Every tier priced on verified capability. Decoder is Source-Available (not free); free for personal/academic non-commercial use only.
             Commercial licenses from <span className="text-gold-400 font-semibold">$1,500</span> for a 90-day pilot. Workbench GUI app is free.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -147,7 +147,7 @@ export default function Pricing() {
                 <h2 className="text-2xl font-bold mt-2">Decoder Licensing</h2>
                 <p className="text-secondary text-sm mt-2 max-w-2xl mx-auto">
                   10 decoder algorithms with compiled Rust core, CPU and CUDA, and PyPI binary distribution.
-                  Source Available (not free). Free for personal and academic non-commercial use only. Workbench GUI app is free.
+                  Source-Available (not free). Free for personal and academic non-commercial use only. Workbench GUI app is free.
                 </p>
               </div>
 

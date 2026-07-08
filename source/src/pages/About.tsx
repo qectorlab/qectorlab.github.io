@@ -145,7 +145,7 @@ export default function About() {
               <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Engineering Philosophy</h3>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                 <li>Reproducibility first — every claim ships with verifiable artifacts</li>
-                <li>Honest documentation — Decoder is Source Available (not free); Workbench GUI app is free</li>
+                <li>Honest documentation — Decoder is Source-Available (not free); Workbench GUI app is free</li>
                 <li>Simulation-validated before any public benchmark claim</li>
                 <li>Full provenance trail — DOI, SHA-256 bundles, IBM job IDs</li>
                 <li>No vendor lock-in — pluggable CodeProvider architecture</li>
@@ -189,7 +189,7 @@ export default function About() {
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
               All claims are simulation-validated using Stim + PyMatching cross-validation. IBM hardware runs are real but limited in scope.
-              QECTOR Decoder is Source Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
+              QECTOR Decoder is Source-Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
               What you see is what you get.
             </p>
           </div>
