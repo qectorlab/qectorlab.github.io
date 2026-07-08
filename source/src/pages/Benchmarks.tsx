@@ -57,6 +57,7 @@ export default function Benchmarks() {
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Artifacts →</a>
             <Link to="/evidence" className="btn-outline">All Reports</Link>
           </div>
+          <p className="text-xs text-muted-foreground mt-2">Reproduction: git clone https://github.com/GuillaumeLessard/qector-decoder ; cd qector-decoder ; python -m qector.bench --repro --d 15</p>
         </div>
       </section>
 
@@ -64,7 +65,16 @@ export default function Benchmarks() {
         <div className="max-w-6xl mx-auto space-y-12">
 
           {/* Main Benchmark Table */}
-          <div ref={(el) => addRef(el, 0)} className="overflow-x-auto">
+          {/* Methodology */}
+          <div ref={(el) => addRef(el, 0)} className="card-surface mb-8">
+            <h3 className="text-xl font-bold mb-3">Methodology &amp; Reproducibility</h3>
+            <p className="text-secondary text-sm mb-4">
+              All results use Stim for circuit-level depolarizing noise (p=0.001). Exact parameters, seeds, and raw outputs in the GitHub artifacts folder (e.g. stim_ler_d13_d15.json). Hypergraph-safe Union-Find added in v0.6.2.
+            </p>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/artifacts" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm">Direct link to artifact bundle on GitHub →</a>
+          </div>
+
+          <div ref={(el) => addRef(el, 1)} className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b border-gridline">

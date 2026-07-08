@@ -1,19 +1,42 @@
 # QECTOR - qectorlab.github.io
 
-Lightweight static bridge + marketing site for **QECTOR Decoder v3** (high-performance decoder library) and **Qector Workbench** (free professional GUI) under the **qectorlab** brand.
+**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (free GUI) under the qectorlab brand.**
 
-**Go to [qector.store](https://qector.store) for licensing, full details, commercial evaluation.**
+**Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
 
-**Created by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions.**
+**Created by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. qectorlab org for Workbench and branding; decoder repo maintained under founder account.**
 
-- Quick-start: pip install qector-decoder-v3
-- Free Workbench: https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0
-- Key claims + evidence: Exact PyMatching parity d=15, +35.7% gains, GPU batch - all on GitHub
-- Commercial: Source-Available; licenses for production use - see qector.store/commercial
-- Full docs & artifacts: https://github.com/GuillaumeLessard/qector-decoder
-- PyPI + dynamic version: https://pypi.org/project/qector-decoder-v3/
+## Quick Start
+```bash
+pip install qector-decoder-v3
+# Free GUI
+# https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0
+```
 
-Primary source of truth: the decoder repo README is mirrored here where useful.
+## Key Claims + Evidence (all on GitHub)
+- Exact MWPM parity with PyMatching through d=15
+- +35.7% LER reduction with Belief-Matching at d=5
+- GPU batch (CUDA/OpenCL) bit-identical to CPU
+- BP-OSD for qLDPC
+- Hypergraph-safe Union-Find (v0.6.2+)
+- Full Stim + Sinter + PyMatching compatible
+
+Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (e.g. stim_ler_d13_d15.json, full harness)
+
+## Commercial
+Source-Available (PolyForm Noncommercial for non-comm). Commercial use requires license.
+Free: Workbench GUI, public PyPI (non-comm), all artifacts.
+See qector.store/commercial for tiers (Researcher/Academic, Commercial Deployment, Enterprise + Support). Contact for eval.
+
+## Links
+- Store: https://qector.store
+- Decoder: https://github.com/GuillaumeLessard/qector-decoder
+- Workbench (free): https://github.com/qectorlab/qector-decoder-workbench
+- PyPI: https://pypi.org/project/qector-decoder-v3/
+- ORCID: https://orcid.org/0009-0000-3465-3753
+- Book: Mastering QEC on Google Play
+
+Primary source of truth: decoder repo README. This bridge has quick-start, claims, links.
 
 ## Stack
 

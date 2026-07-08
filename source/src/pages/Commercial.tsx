@@ -140,6 +140,7 @@ export default function Commercial() {
               <p><strong>Enterprise + Support:</strong> Full access, custom builds, SLAs, onboarding.</p>
             </div>
             <p className="text-xs mt-2">What remains free: Workbench GUI, public PyPI package (non-commercial), all GitHub artifacts.</p>
+            <p className="text-xs mt-2">Source-available under PolyForm Noncommercial. Commercial use requires license. What you get: full Rust source access (on request for qualified licensees), priority support, custom builds, IBM Quantum evaluation pathway.</p>
           </div>
 
           {/* Pricing Cards */}

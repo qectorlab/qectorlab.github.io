@@ -159,7 +159,7 @@ export default function About() {
                 <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
                 <li><strong className="text-primary">Free Qector Workbench v3.4</strong>: Professional GUI, MCP, benchmarks (fully free)</li>
                 <li><strong className="text-primary">SATI OS</strong>: Full commercial stack on top (GUI + HALs + support)</li>
-                <li><strong className="text-primary">Research</strong>: SATI CODEX, LCL codes, "Mastering QEC" book - cross-linked on GitHub</li>
+                <li><strong className="text-primary">Research</strong>: SATI CODEX / LCL-833 theoretical work, "Mastering QEC" book - see decoder repo README for deep integration and Zenodo papers</li>
               </ul>
             </div>
           </div>
