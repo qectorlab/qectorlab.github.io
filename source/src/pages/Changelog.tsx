@@ -28,7 +28,7 @@ export default function Changelog() {
           {/* Vertical neon timeline line */}
           <div className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-300 via-gold-400/30 to-transparent shadow-[0_0_8px_rgba(103,232,249,0.5)]" />
 
-          {/* v0.6.2 + Free Workbench v3.4.0 */}
+          {/* Latest Decoder + Free Workbench v3.4.0 */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
@@ -41,7 +41,7 @@ export default function Changelog() {
                 </>
               }
               items={[
-                'New QECTOR Decoder v3 0.6.2: full validation, hypergraph rejection support, sdist + wheels',
+                `New QECTOR Decoder v3 (v${pypiVersion || '0.6.2'}): full validation, hypergraph rejection support, sdist + wheels`,
                 'New free QectorWorkbench GUI v3.4.0: 10/10 polished CustomTkinter app, 25 MCP tools (all verified), premium multi-format docs generator',
                 'Production packaging: clean PyInstaller + Inno Setup bundles with manifests and checksums',
                 'Repo hygiene and all docs updated for the new decoder + new free workbench',
