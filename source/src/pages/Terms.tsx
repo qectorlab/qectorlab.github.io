@@ -43,8 +43,7 @@ export default function Terms() {
             <h2 className="text-xl font-bold mb-4">Disclaimer of Warranties</h2>
             <p className="text-secondary text-sm leading-relaxed">
               THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-              TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. QECTOR v0.5.x is
-              research-grade software, not a production fault-tolerance stack.
+              TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. QECTOR Decoder v3 is Source Available (PolyForm Noncommercial for community / research use; commercial license required for commercial use). It is simulation-validated software, not a production fault-tolerance stack.
             </p>
           </div>
 
