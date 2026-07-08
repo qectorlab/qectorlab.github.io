@@ -99,7 +99,7 @@ export default function Changelog() {
               items={[
                 'GPU batch decoder: native CUDA implementation',
                 'Benchmark suite: head-to-head PyMatching comparison scripts',
-                'Validation artifacts: Zenodo publication workflow',
+                'Validation artifacts: GitHub publication workflow',
               ]}
             />
           </div>

@@ -26,7 +26,7 @@ export default function Benchmarks() {
     <>
       <SEO
         title="Benchmarks · QECTOR"
-        description="Head-to-head benchmarks: QECTOR vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain, 98.3% optimal shots. All simulation-validated with Zenodo artifacts."
+        description="Head-to-head benchmarks: QECTOR vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain, 98.3% optimal shots. All simulation-validated with GitHub artifacts."
       />
       <JsonLd
         data={{
@@ -44,17 +44,17 @@ export default function Benchmarks() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Zenodo DOI · 10.5281/zenodo.20825980 · SHA-256 Verified
+            GitHub Artifacts · Reproducible Validation
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Head-to-Head Benchmarks" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Head-to-head against PyMatching on rotated surface codes using Stim circuit-level noise.
-            Results are SHA-256 sealed and published on Zenodo — run them yourself with the artifact bundle.
+            Results are SHA-256 sealed and available on GitHub — run them yourself with the artifacts.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://doi.org/10.5281/zenodo.20825980" target="_blank" rel="noopener noreferrer" className="btn-cyan">Evidence Bundle →</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Artifacts →</a>
             <Link to="/evidence" className="btn-outline">All Reports</Link>
           </div>
         </div>
@@ -174,13 +174,13 @@ export default function Benchmarks() {
             title="Reproducibility"
             statement={
               <>
-                All benchmarks are reproducible using the Zenodo artifact bundle (DOI 10.5281/zenodo.20825980).
+                All benchmarks are reproducible using the artifacts in the GitHub repository.
                 The bundle includes Stim circuits, exact parameters, expected outputs, and SHA-256 checksums.
                 Run <code className="text-cyan-300">python -m qector.validate</code> after installation to verify on your hardware.
               </>
             }
-            href="https://doi.org/10.5281/zenodo.20825980"
-            linkLabel="Zenodo Artifact Bundle →"
+            href="https://github.com/GuillaumeLessard/qector-decoder"
+            linkLabel="GitHub Artifacts →"
           />
 
         </div>

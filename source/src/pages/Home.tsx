@@ -79,7 +79,7 @@ export default function Home() {
               sameAs: [
                 'https://github.com/GuillaumeLessard/qector-decoder',
                 'https://pypi.org/project/qector-decoder-v3/',
-                'https://doi.org/10.5281/zenodo.20825980',
+                'https://github.com/GuillaumeLessard/qector-decoder',
               ],
             },
           ],
@@ -130,7 +130,7 @@ export default function Home() {
           <p className="text-lg md:text-xl text-secondary max-w-3xl mx-auto mb-10 leading-relaxed" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}>
             Python library for quantum error correction decoding. Exact MWPM parity with PyMatching through d=15.{' '}
             <strong className="text-primary">+35.7% LER reduction</strong> with Belief-Matching at d=5.
-            GPU batch decoding included. All claims are simulation-validated with published artifacts on Zenodo.
+            GPU batch decoding included. All claims are simulation-validated with reproducible artifacts on GitHub.
           </p>
 
           {/* Buttons */}
@@ -157,7 +157,7 @@ export default function Home() {
         <div className="section-padding">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
             {[
-              { icon: '\uD83D\uDCCB', label: 'Evidence Bundle (Zenodo)', href: 'https://doi.org/10.5281/zenodo.20825980' },
+              { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
               { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
               { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion} (New)`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: '\uD83E\uDD16', label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
@@ -259,8 +259,8 @@ export default function Home() {
                   <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
                     <img src="https://img.shields.io/github/v/release/GuillaumeLessard/qector-decoder?style=flat-square&color=24e7ff" alt="GitHub" loading="lazy" />
                   </a>
-                  <a href="https://doi.org/10.5281/zenodo.20825980" target="_blank" rel="noopener noreferrer">
-                    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.20825980.svg" alt="Zenodo" loading="lazy" />
+                  <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/GitHub-Artifacts-blue?logo=github" alt="GitHub Artifacts" loading="lazy" />
                   </a>
                 </div>
               </div>
@@ -285,9 +285,9 @@ export default function Home() {
               />
               <EvidenceBlock
                 title="Validation Report"
-                statement="Every figure below comes from the official Validation Report published on Zenodo, with the full simulation code, seeds, and raw output included so the numbers can be re-run independently."
-                href="https://doi.org/10.5281/zenodo.20825980"
-                linkLabel="View Zenodo record (DOI: 10.5281/zenodo.20825980) →"
+                statement="Every figure below comes from the official Validation Report with reproducible artifacts on GitHub, including the full simulation code, seeds, and raw output."
+                href="https://github.com/GuillaumeLessard/qector-decoder"
+                linkLabel="GitHub Artifacts →"
                 className="max-w-3xl mx-auto mb-4"
               />
             </div>

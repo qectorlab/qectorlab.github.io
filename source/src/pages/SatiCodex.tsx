@@ -32,7 +32,7 @@ export default function SatiCodex() {
         <div className="absolute inset-0 bg-gradient-to-b from-gold-400/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            IBM ibm_fez · 1.9M Shots · Zenodo DOI Archived
+            IBM ibm_fez · 1.9M Shots · GitHub Artifacts
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="SATI CODEX" className="text-4xl md:text-6xl font-extrabold" />
@@ -43,7 +43,7 @@ export default function SatiCodex() {
             a genus-5 surface code with IBM hardware validation and full reproducibility artifacts.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://doi.org/10.5281/zenodo.20825980" target="_blank" rel="noopener noreferrer" className="btn-gold">Zenodo Evidence →</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-gold">GitHub Artifacts →</a>
             <Link to="/pricing" className="btn-outline">Research Licensing</Link>
           </div>
         </div>

@@ -5,7 +5,7 @@ interface EvidenceBlockProps {
   title: string;
   /** Plain-language statement of what was validated and how */
   statement: ReactNode;
-  /** Link out to the primary artifact, e.g. Zenodo DOI record */
+  /** Link out to the primary artifact, e.g. GitHub repo */
   href?: string;
   linkLabel?: string;
   className?: string;
@@ -13,7 +13,7 @@ interface EvidenceBlockProps {
 
 /**
  * EvidenceBlock
- * Surfaces a single piece of reproducible evidence (Zenodo DOI, test suite
+ * Surfaces a single piece of reproducible evidence (GitHub artifacts, test suite
  * results, hardware validation) as a distinct, citable unit rather than
  * folding it into general marketing copy. Use one per concrete artifact.
  */

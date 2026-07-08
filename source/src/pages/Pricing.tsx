@@ -221,8 +221,8 @@ export default function Pricing() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
                 {[
                   { name: 'Research Access', price: '$2,995', period: '/ year', desc: 'University / non-profit lab', features: ['Full SATI CODEX document access', 'LCL-832 construction + certificate', 'IBM hardware job IDs + datasets', 'ZNE methodology + extrapolation scripts', 'Citation + publication rights', '1 named researcher'] },
-                  { name: 'Commercial IP', price: '$14,995', period: '/ year', desc: 'Commercial entity · full IP access', gold: true, features: ['Everything in Research Access', 'Commercial internal use rights', 'LCL-832 code family commercial license', 'Manufacturing blueprint access', 'Up to 5 named users', 'Provenance chain + Zenodo DOI'] },
-                  { name: 'Due Diligence', price: 'Contact', period: '', desc: 'IP sale · exclusive license · acquisition', features: ['Full SATI OS + CODEX IP data room', 'Restricted Zenodo archive access', 'Full test suite + validation artifacts', 'IBM hardware evidence + job IDs', 'Replacement cost documentation', 'Valuation report furnished'] },
+                  { name: 'Commercial IP', price: '$14,995', period: '/ year', desc: 'Commercial entity · full IP access', gold: true, features: ['Everything in Research Access', 'Commercial internal use rights', 'LCL-832 code family commercial license', 'Manufacturing blueprint access', 'Up to 5 named users', 'Provenance chain + GitHub artifacts'] },
+                  { name: 'Due Diligence', price: 'Contact', period: '', desc: 'IP sale · exclusive license · acquisition', features: ['Full SATI OS + CODEX IP data room', 'Restricted GitHub archive access', 'Full test suite + validation artifacts', 'IBM hardware evidence + job IDs', 'Replacement cost documentation', 'Valuation report furnished'] },
                 ].map((tier) => (
                   <PricingTierCard
                     key={tier.name}

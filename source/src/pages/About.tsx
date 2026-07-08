@@ -28,7 +28,7 @@ export default function About() {
     <>
       <SEO
         title="About · QECTOR"
-        description="About QECTOR: Guillaume Lessard, iD01t Productions, QEC research background, ORCID, Zenodo DOI, mission and engineering philosophy."
+        description="About QECTOR: Guillaume Lessard, iD01t Productions, QEC research background, ORCID, GitHub artifacts, mission and engineering philosophy."
       />
       <JsonLd
         data={{
@@ -39,7 +39,7 @@ export default function About() {
               name: 'Guillaume Lessard',
               alternateName: "El'Nox Rah",
               url: 'https://qector.store/about',
-              sameAs: ['https://orcid.org/0009-0000-3465-3753', 'https://github.com/GuillaumeLessard', 'https://zenodo.org/records/20825980'],
+              sameAs: ['https://orcid.org/0009-0000-3465-3753', 'https://github.com/GuillaumeLessard'],
               affiliation: { '@type': 'Organization', name: 'iD01t Productions' },
               jobTitle: 'Independent QEC Researcher & Software Engineer',
               knowsAbout: ['Quantum Error Correction', 'CSS Codes', 'LDPC Codes', 'MWPM Decoding', 'Rust', 'Python'],
@@ -71,7 +71,7 @@ export default function About() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub</a>
-            <a href="https://doi.org/10.5281/zenodo.20825980" target="_blank" rel="noopener noreferrer" className="btn-outline">Zenodo</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub</a>
             <Link to="/contact" className="btn-cyan">Contact</Link>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function About() {
                 🆔 ORCID 0009-0000-3465-3753
               </a>
               {[
-                { label: 'Zenodo DOI', href: 'https://doi.org/10.5281/zenodo.20825980', external: true },
+                { label: 'GitHub Artifacts', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
                 { label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
                 { label: 'PyPI', href: 'https://pypi.org/project/qector-decoder-v3/', external: true },
                 { label: 'Play Store Book', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', external: true },
@@ -125,7 +125,7 @@ export default function About() {
                 <li>MWPM (Blossom), Belief-Matching, BP-OSD decoding</li>
                 <li>SATI CODEX: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface, with IBM Quantum operational verification on ibm_fez</li>
                 <li>SATI v18: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC targeting IBM hardware</li>
-                <li>Zenodo-published provenance with DOI, SHA-256 sealed artifacts</li>
+                <li>Reproducible provenance and SHA-256 sealed artifacts on GitHub</li>
                 <li>Monte Carlo FSS threshold analysis, Z₁₂ monodromy algebra, Jones polynomial verification</li>
               </ul>
             </div>
@@ -169,7 +169,7 @@ export default function About() {
             <div className="space-y-4">
               {[
                 { year: '2024', event: 'iD01t Productions established. Initial QEC research begins: CSS codes, surface code simulation with Stim, MWPM benchmarking against PyMatching.' },
-                { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Zenodo DOI publication.' },
+                { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
                 { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated. SATI OS desktop UI scaffolded.' },
                 { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends achieving byte-for-byte identical corrections to CPU.' },
                 { year: '2025 Q4–2026', event: `v${pypiVersion} Decoder (Source Available) + free QectorWorkbench GUI v3.4 (25 tools, 10/10 polish). SATI OS full suite on top.` },

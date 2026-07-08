@@ -19,7 +19,7 @@ export default function InteractiveChart({ type, title, subtitle, className = ''
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [hoveredSeries, setHoveredSeries] = useState<'qector' | 'pymatching' | 'plain' | 'belief' | null>(null);
 
-  // Hardcoded verified metrics from Zenodo bundle
+  // Hardcoded verified metrics from GitHub artifacts
   const distanceData: ChartDataItem[] = [
     { label: 'd=3', value1: 0.0117, value2: 0.0117, display1: '0.0117', display2: '0.0117' },
     { label: 'd=5', value1: 0.0079, value2: 0.0079, display1: '0.0079', display2: '0.0079' },

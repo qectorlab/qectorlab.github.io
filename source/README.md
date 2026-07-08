@@ -8,7 +8,7 @@ Live at **[qector.store](https://qector.store)**, deployed via GitHub Pages from
 - New Free Workbench GUI: QectorWorkbench v3.4.0 (https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0) — the free GUI app (decoder versions on site are live from PyPI RSS)
 - Decoder source: [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
 - Full SATI OS suite: Commercial extensions on top of Source Available decoder + free Workbench GUI
-- Validation artifacts: [Zenodo DOI 10.5281/zenodo.20825980](https://doi.org/10.5281/zenodo.20825980)
+- Reproducible artifacts and validation: [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
 
 ## Stack
 
@@ -48,9 +48,9 @@ src/
     MetricCard.tsx        Single validated number/claim (stat or note card)
     AlgorithmCard.tsx     Decoder / evidence-report card with badge + proof
     PricingTierCard.tsx   Pricing tier card (included/excluded features, CTA)
-    EvidenceBlock.tsx     Citable evidence unit linking to a Zenodo artifact
+    EvidenceBlock.tsx     Citable evidence unit linking to GitHub artifacts
     ChangelogEntry.tsx    Single version/release entry
-    TrustSignal.tsx        External-link pill (PyPI, GitHub, Zenodo, ORCID…)
+    TrustSignal.tsx        External-link pill (PyPI, GitHub, ORCID…)
     NeuralReveal.tsx       Decorative scramble-in text effect for headings
   pages/            One file per route (see Navigation.tsx for the route list)
   lib/
@@ -78,7 +78,7 @@ When adding new interactive UI, match these patterns: real semantics over ARIA w
 
 ## Content & claims policy
 
-Numbers used across the site (exact MWPM parity to d=15, +35.7% Belief-Matching LER reduction, 98.3% optimal shots at d=9, 832/832 tests) are simulation-validated and published with reproducible artifacts on Zenodo (DOI 10.5281/zenodo.20825980). Do not edit these figures without updating the underlying validation report — the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
+Numbers used across the site (exact MWPM parity to d=15, +35.7% Belief-Matching LER reduction, 98.3% optimal shots at d=9, 832/832 tests) are simulation-validated with reproducible artifacts in the decoder repository. Do not edit these figures without updating the underlying validation report — the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
 
 ## Deployment
 

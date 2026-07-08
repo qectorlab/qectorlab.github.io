@@ -46,7 +46,7 @@ export default function Contact() {
             sameAs: [
               'https://github.com/GuillaumeLessard/qector-decoder',
               'https://pypi.org/project/qector-decoder-v3/',
-              'https://doi.org/10.5281/zenodo.20825980',
+              'https://github.com/GuillaumeLessard/qector-decoder',
             ],
           },
         }}

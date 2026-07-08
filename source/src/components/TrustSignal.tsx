@@ -11,7 +11,7 @@ interface TrustSignalProps {
 /**
  * TrustSignal
  * Single pill used in trust bars linking out to external, verifiable
- * artifacts (Zenodo, PyPI, GitHub, ORCID, published books, etc).
+ * artifacts (PyPI, GitHub, ORCID, published books, etc).
  */
 export default function TrustSignal({ icon, label, href, variant = 'default', className = '' }: TrustSignalProps) {
   const styles =

@@ -99,11 +99,11 @@ export default function Docs() {
                   <div className="text-muted-foreground text-xs">Latest release and installation</div>
                 </div>
               </a>
-              <a href="https://doi.org/10.5281/zenodo.20825980" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-void rounded-xl hover:bg-surface transition-colors">
+              <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-void rounded-xl hover:bg-surface transition-colors">
                 <span className="text-2xl">📋</span>
                 <div>
-                  <div className="text-primary font-medium text-sm">Zenodo Evidence Bundle</div>
-                  <div className="text-muted-foreground text-xs">DOI 10.5281/zenodo.20825980</div>
+                  <div className="text-primary font-medium text-sm">GitHub Artifacts &amp; Validation</div>
+                  <div className="text-muted-foreground text-xs">github.com/GuillaumeLessard/qector-decoder</div>
                 </div>
               </a>
             </div>

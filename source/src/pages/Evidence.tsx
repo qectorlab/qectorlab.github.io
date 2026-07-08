@@ -64,7 +64,7 @@ export default function Evidence() {
     <>
       <SEO
         title="Evidence & Reports · QECTOR"
-        description="Validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. Zenodo DOI 10.5281/zenodo.20825980."
+        description="Validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. Available on GitHub."
       />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
@@ -79,11 +79,10 @@ export default function Evidence() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Every public claim is backed by a verifiable artifact. Validation reports, benchmark data,
-            and IBM hardware job IDs — all archived on Zenodo with DOI{' '}
-            <span className="text-green-400 font-semibold font-mono">10.5281/zenodo.20825980</span>.
+            and IBM hardware job IDs — all archived with the decoder source on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://doi.org/10.5281/zenodo.20825980" target="_blank" rel="noopener noreferrer" className="btn-cyan">Open Zenodo Record →</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>
             <Link to="/benchmarks" className="btn-outline">Benchmark Details</Link>
           </div>
         </div>
@@ -92,18 +91,18 @@ export default function Evidence() {
       <section className="section-padding pb-24">
         <div className="max-w-5xl mx-auto space-y-12">
 
-          {/* Zenodo CTA */}
+          {/* GitHub Artifacts CTA */}
           <div ref={(el) => addRef(el, 0)} className="text-center">
             <a
-              href="https://doi.org/10.5281/zenodo.20825980"
+              href="https://github.com/GuillaumeLessard/qector-decoder"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-cyan-300/10 border border-cyan-300/20 rounded-2xl hover:bg-cyan-300/20 transition-all"
             >
               <span className="text-2xl">📋</span>
               <div className="text-left">
-                <div className="text-cyan-300 font-semibold">Zenodo Evidence Bundle</div>
-                <div className="text-muted-foreground text-sm">DOI: 10.5281/zenodo.20825980</div>
+                <div className="text-cyan-300 font-semibold">GitHub Artifacts &amp; Validation</div>
+                <div className="text-muted-foreground text-sm">github.com/GuillaumeLessard/qector-decoder</div>
               </div>
             </a>
           </div>

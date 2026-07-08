@@ -79,11 +79,11 @@ export default function Footer() {
               </Link>
               <p className="text-secondary text-sm leading-relaxed max-w-sm mb-6">
                 Python library for quantum error correction decoding. Exact MWPM parity with PyMatching
-                through d=15. +35.7% LER reduction with Belief-Matching. All benchmarks on Zenodo.
+                through d=15. +35.7% LER reduction with Belief-Matching. All benchmarks and artifacts on GitHub.
               </p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { icon: '\uD83D\uDCCB', label: 'Evidence (Zenodo)', href: 'https://doi.org/10.5281/zenodo.20825980' },
+                  { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
                   { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion} + free Workbench v3.4`, href: 'https://pypi.org/project/qector-decoder-v3/' },
                   { icon: '\uD83E\uDD16', label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
                   { icon: '\uD83D\uDCD6', label: 'Mastering QEC', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ' },
