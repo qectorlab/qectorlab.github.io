@@ -69,7 +69,7 @@ export default function Benchmarks() {
           <div ref={(el) => addRef(el, 0)} className="card-surface mb-8">
             <h3 className="text-xl font-bold mb-3">Methodology &amp; Reproducibility</h3>
             <p className="text-secondary text-sm mb-4">
-              All results use Stim for circuit-level depolarizing noise (p=0.001). Exact parameters, seeds, and raw outputs in the GitHub artifacts folder (e.g. stim_ler_d13_d15.json). Hypergraph-safe Union-Find added in v0.6.2.
+              All results use Stim for circuit-level depolarizing noise (p=0.001). Exact parameters, seeds, and raw outputs in the GitHub artifacts folder (e.g. stim_ler_d13_d15.json). Hypergraph-safe Union-Find added in recent release.
             </p>
             <a href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/artifacts" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm">Direct link to artifact bundle on GitHub →</a>
           </div>

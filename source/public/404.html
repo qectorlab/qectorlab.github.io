@@ -1,20 +1,67 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, follow" />
-    <title>QECTOR</title>
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#24e7ff" />
+    <meta name="msapplication-TileColor" content="#24e7ff" />
+    <meta name="description" content="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains." />
+    <link rel="canonical" href="https://qector.store/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="QECTOR" />
+    <meta property="og:title" content="QECTOR · Production-Grade Quantum Error Correction Decoding for Python" />
+    <meta property="og:description" content="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains." />
+    <meta property="og:url" content="https://qector.store/" />
+    <meta property="og:image" content="https://qector.store/assets/logo.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@DJiD01T" />
+    <meta name="twitter:title" content="QECTOR · Production-Grade Quantum Error Correction Decoding for Python" />
+    <meta name="twitter:description" content="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains." />
+    <meta name="twitter:image" content="https://qector.store/assets/logo.svg" />
+    <link rel="preconnect" href="https://github.com" />
+    <link rel="dns-prefetch" href="https://github.com" />
+    <link rel="preconnect" href="https://pypi.org" />
+    <link rel="dns-prefetch" href="https://pypi.org" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>QECTOR · Production-Grade Quantum Error Correction Decoding for Python</title>
+    <!-- Early SPA redirect for GitHub Pages: set before bundle loads so React Router can restore path even on direct /subpage hits -->
+    <script>
+      (function() {
+        try {
+          var l = window.location;
+          if (!sessionStorage.getItem('gh-redirect')) {
+            sessionStorage.setItem('gh-redirect', l.pathname + l.search + l.hash);
+          }
+        } catch(e){}
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-CEazwYLI.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DheyIznP.css">
     <script type="text/javascript">
-      var l = window.location;
-      l.replace(
-        l.protocol + "//" + l.hostname + (l.port ? ":" + l.port : "") +
-        l.pathname.split("/").slice(0, 1).join("/") + "/?p=/" +
-        l.pathname.slice(1).replace(/&/g, "~and~") +
-        (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
-        l.hash
-      );
+      (function(l){
+        var restored = false;
+        try {
+          var stored = sessionStorage.getItem('gh-redirect');
+          if (stored && stored !== l.pathname + l.search + l.hash && stored.length > 1) {
+            sessionStorage.removeItem('gh-redirect');
+            var target = stored;
+            if (target[0] !== '/') target = '/' + target;
+            window.history.replaceState(null, null, target);
+            restored = true;
+          }
+        } catch(e){}
+        if (!restored && l.search[1]==='p'&&l.search.slice(1,3)==='p='){
+          var d=l.search.slice(3).split('&').map(function(s){return s.replace(/~and~/g,'&');}).join('?');
+          window.history.replaceState(null,null,l.pathname.slice(0,-1)+d+l.hash);
+        }
+      })(window.location);
     </script>
   </head>
-  <body></body>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>

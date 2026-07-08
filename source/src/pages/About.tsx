@@ -70,8 +70,7 @@ export default function About() {
             reproducible artifacts, and no speculative claims.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub</a>
-            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub Artifacts</a>
             <Link to="/contact" className="btn-cyan">Contact</Link>
           </div>
         </div>
@@ -105,7 +104,6 @@ export default function About() {
               </a>
               {[
                 { label: 'GitHub Artifacts', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
-                { label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
                 { label: 'PyPI', href: 'https://pypi.org/project/qector-decoder-v3/', external: true },
                 { label: 'Play Store Book', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', external: true },
               ].map((link) => (

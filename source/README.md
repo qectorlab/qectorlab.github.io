@@ -18,7 +18,7 @@ pip install qector-decoder-v3
 - +35.7% LER reduction with Belief-Matching at d=5
 - GPU batch (CUDA/OpenCL) bit-identical to CPU
 - BP-OSD for qLDPC
-- Hypergraph-safe Union-Find (v0.6.2+)
+- Hypergraph-safe Union-Find (recent releases)
 - Full Stim + Sinter + PyMatching compatible
 
 Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (e.g. stim_ler_d13_d15.json, full harness)
