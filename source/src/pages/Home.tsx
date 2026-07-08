@@ -67,7 +67,7 @@ export default function Home() {
               programmingLanguage: 'Python',
               url: 'https://qector.store/',
               downloadUrl: 'https://pypi.org/project/qector-decoder-v3/',
-              softwareVersion: pypiVersion || '0.6.2',
+              softwareVersion: pypiVersion,
               author: { '@type': 'Person', name: 'Guillaume Lessard', url: 'https://github.com/GuillaumeLessard' },
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
             },
@@ -112,7 +112,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 border border-gridline rounded-full text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>QECTOR Decoder v{pypiVersion || '0.6.2'} (Source Available, not free) · New Free Workbench</span>
+            <span>QECTOR Decoder v{pypiVersion} (Source Available, not free) · New Free Workbench</span>
             <span className="opacity-50 ml-1">· Changelog →</span>
           </Link>
 
@@ -159,7 +159,7 @@ export default function Home() {
             {[
               { icon: '\uD83D\uDCCB', label: 'Evidence Bundle (Zenodo)', href: 'https://doi.org/10.5281/zenodo.20825980' },
               { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
-              { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion || '0.6.2'} (New)`, href: 'https://pypi.org/project/qector-decoder-v3/' },
+              { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion} (New)`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: '\uD83E\uDD16', label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
               { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
               { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.4 (New)', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0' },

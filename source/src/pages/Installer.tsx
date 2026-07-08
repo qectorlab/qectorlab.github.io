@@ -55,7 +55,7 @@ export default function Installer() {
             <h2 className="text-xl font-bold mb-4">Verify Installation</h2>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
               <div>python -c "import qector; print(qector.__version__)"</div>
-              <div className="text-green-400 font-semibold"># Should print: {pypiVersion || '0.6.2'}</div>
+              <div className="text-green-400 font-semibold"># Should print: {pypiVersion}</div>
               <div className="mt-2">python -m qector.validate -quick</div>
               <div className="text-green-400"># Should print: QECTOR OK</div>
             </div>

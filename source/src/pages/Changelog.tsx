@@ -13,7 +13,7 @@ export default function Changelog() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Latest: v{pypiVersion || '0.6.2'} Decoder + free Workbench GUI v3.4.0 (live from PyPI RSS)
+            Latest: v{pypiVersion} Decoder + free Workbench GUI v3.4.0 (live from PyPI RSS)
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Changelog</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -33,7 +33,7 @@ export default function Changelog() {
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
-              version={`v${pypiVersion || '0.6.2'} Decoder + new free Workbench v3.4.0 — 2026`}
+              version={`v${pypiVersion} Decoder + new free Workbench v3.4.0 — 2026`}
               note={
                 <>
                   Exact release dates on{' '}
@@ -41,7 +41,7 @@ export default function Changelog() {
                 </>
               }
               items={[
-                `New QECTOR Decoder v3 (v${pypiVersion || '0.6.2'}): full validation, hypergraph rejection support, sdist + wheels`,
+                `New QECTOR Decoder v3 (v${pypiVersion}): full validation, hypergraph rejection support, sdist + wheels`,
                 'New free QectorWorkbench GUI v3.4.0: 10/10 polished CustomTkinter app, 25 MCP tools (all verified), premium multi-format docs generator',
                 'Production packaging: clean PyInstaller + Inno Setup bundles with manifests and checksums',
                 'Repo hygiene and all docs updated for the new decoder + new free workbench',

@@ -39,7 +39,7 @@ export default function SatiOs() {
             <NeuralReveal text="SATI OS v1.0.0" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            SATI OS is the full commercial QEC suite built on the new QECTOR Decoder v3 (Source Available, v{pypiVersion || '0.6.2'}) + the new free QectorWorkbench GUI v3.4 — desktop GUI (39 panels), FastAPI REST (122 routes), dual CLI, MCP server,
+            SATI OS is the full commercial QEC suite built on the new QECTOR Decoder v3 (Source Available, v{pypiVersion}) + the new free QectorWorkbench GUI v3.4 — desktop GUI (39 panels), FastAPI REST (122 routes), dual CLI, MCP server,
             and <span className="text-cyan-300 font-semibold">17 hardware abstraction adapters</span> across 21 backend targets.
             The core decoder is Source Available; the Workbench GUI app is free. Full SATI OS adds commercial HAL adapters, expanded MCP, support, and enterprise features.
           </p>
@@ -95,7 +95,7 @@ export default function SatiOs() {
               {[
                 { layer: 'Presentation', items: ['NiceGUI Desktop App', '39 panels (fail-soft)', 'Web Dashboard'] },
                 { layer: 'API Layer', items: ['FastAPI (122 routes)', 'MCP Server (93 tools)', '2 WebSocket Endpoints'] },
-                { layer: 'Engine Layer', items: [`New QECTOR Decoder v3 (Source Available, v${pypiVersion || '0.6.2'})`, 'New free QectorWorkbench GUI v3.4', 'Headless + Stim/PyMatching'] },
+                { layer: 'Engine Layer', items: [`New QECTOR Decoder v3 (Source Available, v${pypiVersion})`, 'New free QectorWorkbench GUI v3.4', 'Headless + Stim/PyMatching'] },
                 { layer: 'Hardware Layer', items: ['17 HAL Adapters', '21 Backend Targets', 'IBM live-exercised'] },
                 { layer: 'Data Layer', items: ['Circuit Storage', 'Syndrome Database', 'Artifact Manager'] },
                 { layer: 'License Layer', items: ['HMAC-JWT Enforcement', 'AES-256-GCM cryptography', 'Scrypt Key Derivation'] },

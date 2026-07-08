@@ -84,7 +84,7 @@ export default function Footer() {
               <div className="flex flex-wrap gap-2">
                 {[
                   { icon: '\uD83D\uDCCB', label: 'Evidence (Zenodo)', href: 'https://doi.org/10.5281/zenodo.20825980' },
-                  { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion || '0.6.2'} + free Workbench v3.4`, href: 'https://pypi.org/project/qector-decoder-v3/' },
+                  { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion} + free Workbench v3.4`, href: 'https://pypi.org/project/qector-decoder-v3/' },
                   { icon: '\uD83E\uDD16', label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
                   { icon: '\uD83D\uDCD6', label: 'Mastering QEC', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ' },
                   { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },

@@ -2,7 +2,7 @@
 import { fetchLatestQectorVersion } from '../lib/pypiVersion';
 
 export function usePyPIVersion() {
-  const [version, setVersion] = useState<string>('0.6.2');
+  const [version, setVersion] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
