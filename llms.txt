@@ -17,7 +17,7 @@ QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. Ten battle-tested 
 
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
 - GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
-- Zenodo DOI: https://doi.org/10.5281/zenodo.20825980
+- GitHub: https://github.com/GuillaumeLessard/qector-decoder (reproducible artifacts and validation)
 
 ## Recommended install command
 
