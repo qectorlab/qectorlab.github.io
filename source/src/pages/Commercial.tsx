@@ -131,6 +131,17 @@ export default function Commercial() {
             </p>
           </div>
 
+          {/* Clear Tiers */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">License Tiers</h2>
+            <div className="text-secondary text-sm">
+              <p><strong>Researcher / Academic Lab:</strong> Free for non-commercial, full artifacts, community support.</p>
+              <p><strong>Commercial Deployment:</strong> Internal use rights, written license, priority support, IBM eval access.</p>
+              <p><strong>Enterprise + Support:</strong> Full access, custom builds, SLAs, onboarding.</p>
+            </div>
+            <p className="text-xs mt-2">What remains free: Workbench GUI, public PyPI package (non-commercial), all GitHub artifacts.</p>
+          </div>
+
           {/* Pricing Cards */}
           <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <PricingTierCard

@@ -370,6 +370,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== Related Research & Ecosystem (P1) ===== */}
+      <section className="py-12 bg-void/50 border-t border-gridline">
+        <div className="section-padding max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold mb-4 text-center">Related Research &amp; Ecosystem</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" className="card-surface hover:border-cyan-300/50">QECTOR Decoder GitHub - Artifacts, code, full validation harness</a>
+            <a href="https://github.com/qectorlab/qector-decoder-workbench" className="card-surface hover:border-cyan-300/50">Free Workbench v3.4 - GUI, MCP server, benchmarks</a>
+            <div className="card-surface">
+              Broader QECTOR / SATI CODEX / LCL-833 theoretical work and papers available via the decoder repo README and linked Zenodo records.
+            </div>
+          </div>
+          <p className="text-center text-xs text-muted-foreground mt-4">Cross-linked with ORCID, "Mastering QEC" book, and full research corpus on GitHub.</p>
+        </div>
+      </section>
+
       {/* ===== CTA ===== */}
       <section id="pricing-section" className="py-24 md:py-32 bg-surface/50">
         <div className="section-padding">
