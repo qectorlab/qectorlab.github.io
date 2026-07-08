@@ -150,6 +150,9 @@ export default function Evidence() {
               <div className="text-cyan-300 mb-2"># Quick validation</div>
               <div>pip install qector-decoder-v3</div>
               <div>python -m qector.validate -all</div>
+              <div className="mt-2"># Full harness + artifacts</div>
+              <div>git clone https://github.com/GuillaumeLessard/qector-decoder</div>
+              <div>cd qector-decoder ; python -m qector.bench --repro</div>
             </div>
           </div>
 

@@ -122,6 +122,15 @@ export default function Commercial() {
             </div>
           </div>
 
+          {/* Pricing Philosophy */}
+          <div className="p-6 bg-gold-400/5 border border-gold-400/20 rounded-2xl">
+            <h3 className="text-gold-400 font-semibold mb-2">Pricing Philosophy</h3>
+            <p className="text-secondary text-sm">
+              Designed for serious QEC research and production teams. Licenses support continued independent development.
+              No auto-renewing without confirmation. Written agreements. Priority support included.
+            </p>
+          </div>
+
           {/* Pricing Cards */}
           <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <PricingTierCard

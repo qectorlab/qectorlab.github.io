@@ -153,12 +153,13 @@ export default function About() {
               </ul>
             </div>
             <div ref={(el) => addRef(el, 4)} className="card-surface">
-              <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Suite</h3>
+              <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Scope (qectorlab)</h3>
+              <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench are the high-performance decoder library + professional GUI. Broader QECTOR vision (LCL-833, full SATI CODEX theoretical work) is research context — see GitHub for details.</p>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
-                <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library</li>
-                <li><strong className="text-primary">SATI OS v1.0.0</strong>: Full-stack QEC platform <em>(GA released July 2, 2026; complete LCL-free open core with optional premium LCL-832 plugin)</em></li>
-                <li><strong className="text-primary">SATI CODEX</strong>: Experimental high-rate CSS code framework with IBM hardware validation</li>
-                <li><strong className="text-primary">QEC eBook</strong>: "Mastering QEC, Second Edition", companion textbook</li>
+                <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
+                <li><strong className="text-primary">Free Qector Workbench v3.4</strong>: Professional GUI, MCP, benchmarks (fully free)</li>
+                <li><strong className="text-primary">SATI OS</strong>: Full commercial stack on top (GUI + HALs + support)</li>
+                <li><strong className="text-primary">Research</strong>: SATI CODEX, LCL codes, "Mastering QEC" book — cross-linked on GitHub</li>
               </ul>
             </div>
           </div>

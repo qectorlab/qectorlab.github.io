@@ -121,9 +121,9 @@ export default function Home() {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6"
             style={{ textShadow: '0 4px 24px rgba(0,0,0,0.8)' }}
           >
-            QEC Decoder for Python
+            QECTOR Decoder v3 — Production-Grade Quantum Error Correction Decoding with Exact PyMatching Parity
             <br />
-            <span className="text-cyan-300">with Measurable Accuracy Gains</span>
+            <span className="text-cyan-300">Validated MWPM Parity to d=15 + 35.7% LER Reduction via Belief-Matching | GPU Batch Decoding</span>
           </h1>
 
           {/* Subheadline */}
@@ -139,7 +139,7 @@ export default function Home() {
               Explore the Decoder
             </Link>
             <a href="https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0" className="btn-outline text-base px-8 py-4" target="_blank" rel="noopener noreferrer">
-              Free Workbench v3.4.0 (New)
+              Free Professional GUI – QECTOR Decoder Workbench v3.4
             </a>
             <Link to="/commercial" className="btn-gold text-base px-8 py-4">
               Start Commercial Evaluation
@@ -184,11 +184,26 @@ export default function Home() {
             All performance and correctness claims are simulation-validated with public, reproducible artifacts on GitHub.
             No hidden data. Run it yourself.
           </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-left max-w-4xl mx-auto">
+            <div className="card-surface">
+              <strong>Exact MWPM Parity</strong><br />
+              Matches PyMatching LER d=3 to d=15. <a href="https://github.com/GuillaumeLessard/qector-decoder" className="text-cyan-300">View stim_ler_d13_d15.json</a>
+            </div>
+            <div className="card-surface">
+              <strong>+35.7% LER Reduction</strong><br />
+              Belief-Matching at d=5, circuit-level noise. <a href="https://github.com/GuillaumeLessard/qector-decoder" className="text-cyan-300">Full artifact + seeds</a>
+            </div>
+            <div className="card-surface">
+              <strong>GPU Batch &amp; BP-OSD</strong><br />
+              Bit-identical CUDA/OpenCL, qLDPC support. <a href="https://github.com/GuillaumeLessard/qector-decoder" className="text-cyan-300">Repro harness</a>
+            </div>
+          </div>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">View Artifacts on GitHub</a>
             <Link to="/benchmarks" className="btn-outline">See Full Benchmarks</Link>
             <Link to="/evidence" className="btn-outline">Evidence &amp; Reports</Link>
           </div>
+          <p className="text-xs text-muted-foreground mt-4">One-click reproduction: git clone ... ; python -m qector.validate</p>
         </div>
       </section>
 
@@ -201,8 +216,8 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div ref={(el) => addRef(el, 1)}>
               <SectionHeader
-                heading={<NeuralReveal text="Platform" className="text-3xl md:text-4xl font-bold" />}
-                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, and real-time vs. batch workloads need different decoders. QECTOR Decoder v3 under qectorlab gives you all of them in one Python library with a consistent API."
+                heading={<NeuralReveal text="Key Differentiators" className="text-3xl md:text-4xl font-bold" />}
+                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, and real-time vs. batch workloads need different decoders. QECTOR Decoder v3 under qectorlab gives you all of them in one Python library with a consistent API. Every claim backed by GitHub artifacts."
               />
             </div>
 

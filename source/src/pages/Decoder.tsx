@@ -163,9 +163,9 @@ export default function Decoder() {
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="All benchmark claims are simulation-validated using Stim + PyMatching cross-validation. Reproducible artifacts are on GitHub."
+              statement="All benchmark claims are simulation-validated using Stim + PyMatching cross-validation. Reproducible artifacts are on GitHub. Exact parity through d=15, full Stim integration."
               href="https://github.com/GuillaumeLessard/qector-decoder"
-              linkLabel="GitHub Artifacts →"
+              linkLabel="GitHub Artifacts &amp; Harness →"
             />
             <div className="flex flex-wrap gap-4 mt-3 px-1">
               <Link to="/benchmarks" className="text-cyan-300 text-sm hover:underline">Full Benchmarks →</Link>

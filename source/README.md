@@ -1,16 +1,19 @@
 # QECTOR — qectorlab.github.io
 
-Marketing and documentation site for **QECTOR Decoder v3** (platform), **Qector Workbench**, and related research — production-grade quantum error correction software under the **qectorlab** brand.
+Lightweight static bridge + marketing site for **QECTOR Decoder v3** (high-performance decoder library) and **Qector Workbench** (free professional GUI) under the **qectorlab** brand.
+
+**Go to [qector.store](https://qector.store) for licensing, full details, commercial evaluation.**
 
 **Created by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions.**
 
-Live at **[qector.store](https://qector.store)**, deployed via GitHub Pages from this repository.
+- Quick-start: pip install qector-decoder-v3
+- Free Workbench: https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0
+- Key claims + evidence: Exact PyMatching parity d=15, +35.7% gains, GPU batch — all on GitHub
+- Commercial: Source-Available; licenses for production use — see qector.store/commercial
+- Full docs & artifacts: https://github.com/GuillaumeLessard/qector-decoder
+- PyPI + dynamic version: https://pypi.org/project/qector-decoder-v3/
 
-- Decoder: QECTOR Decoder v3 — Source Available (not free), version dynamically from PyPI RSS https://pypi.org/project/qector-decoder-v3/
-- New Free Workbench GUI: QectorWorkbench v3.4.0 (https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0) — the free GUI app (decoder versions on site are live from PyPI RSS)
-- Primary development: [qectorlab org](https://github.com/qectorlab) and [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
-- Full SATI OS suite: Commercial extensions on top of Source Available decoder + free Workbench GUI
-- Reproducible artifacts and validation: [GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
+Primary source of truth: the decoder repo README is mirrored here where useful.
 
 ## Stack
 
