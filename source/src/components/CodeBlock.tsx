@@ -17,7 +17,6 @@ export default function CodeBlock({ code, language = 'python', filename, classNa
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('Failed to copy text: ', err);
     }
   };

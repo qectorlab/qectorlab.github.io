@@ -35,7 +35,13 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  // Close the mobile menu whenever the route changes. This is a legitimate
+  // effect: we can't derive `isOpen` from `location` because the user can also
+  // toggle it independently, but we need to reset it on navigation. React 19's
+  // linter flags setState-in-effect as a perf hazard, so we keep the reset but
+  // silence the rule with a targeted comment explaining why it's intentional.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false);
   }, [location]);
 

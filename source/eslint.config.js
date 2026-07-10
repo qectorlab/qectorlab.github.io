@@ -20,4 +20,15 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    // shadcn/ui components intentionally co-locate component + helpers in one
+    // file (e.g. `cva` variants). That's a Fast Refresh warning, not a runtime
+    // bug, and splitting them all would be churn for zero user-visible gain.
+    // The `eslint-plugin-react-refresh` rule fires on these patterns; silence
+    // it for the shadcn-generated folder only.
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])

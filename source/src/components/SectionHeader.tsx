@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface SectionHeaderProps {
   /** Optional small uppercase pill above the heading, e.g. "Performance" */

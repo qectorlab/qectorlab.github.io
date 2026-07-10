@@ -4,11 +4,8 @@ import { useLocation } from 'react-router';
 interface SEOProps {
   title?: string;
   description?: string;
-  pageType?: string;
   ogImage?: string;
-  canonical?: string;
   noindex?: boolean;
-  children?: React.ReactNode;
 }
 
 export function SEO({
@@ -57,8 +54,6 @@ export function SEO({
       document.head.appendChild(link);
     }
     link.href = canonical;
-
-    return () => {};
   }, [title, description, canonical, ogImage, noindex]);
 
   return null;

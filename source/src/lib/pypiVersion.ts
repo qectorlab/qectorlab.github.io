@@ -7,8 +7,8 @@
     const firstTitle = doc.querySelector('item title')?.textContent || '';
     const match = firstTitle.match(/qector-decoder-v3\s+([\d.]+)/);
     return match ? match[1] : 'latest';
-  } catch (e) {
-    console.error('Failed to fetch PyPI RSS for qector-decoder-v3', e);
+  } catch {
+    console.error('Failed to fetch PyPI RSS for qector-decoder-v3');
     return 'latest';
   }
 }

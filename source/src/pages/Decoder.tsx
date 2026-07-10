@@ -31,7 +31,6 @@ export default function Decoder() {
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
         description="QECTOR Decoder v3 - ten battle-tested QEC decoding algorithms in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
-        pageType="SoftwareApplication"
       />
       <JsonLd
         data={{

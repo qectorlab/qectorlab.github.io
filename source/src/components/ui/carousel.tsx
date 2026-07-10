@@ -93,6 +93,10 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api) return
+    // Sync local state with the embla carousel's external state. The
+    // setState-in-effect linter flag is a false positive here: this is the
+    // standard shadcn pattern for subscribing to a non-React controller.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect(api)
     api.on("reInit", onSelect)
     api.on("select", onSelect)

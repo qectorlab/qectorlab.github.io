@@ -96,6 +96,11 @@ export default function NeuralReveal({
 
   useEffect(() => {
     if (!triggerOnView) {
+      // Not gated on viewport — start immediately. React 19 linter flags the
+      // setState inside, but the alternative (running on every render) is
+      // strictly worse. The animation is idempotent thanks to the `started`
+      // guard inside startAnimation.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       startAnimation();
       return;
     }
@@ -116,8 +121,13 @@ export default function NeuralReveal({
 
     return () => {
       observer.disconnect();
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      timeoutsRef.current.forEach(clearTimeout);
+      // Snapshot the refs at unmount time so the cleanup uses stable local
+      // copies even if the ref is reassigned between scheduling and running.
+      const interval = intervalRef.current;
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- refs are stable; cleanup intentionally reads their .current at unmount
+      const timeouts = timeoutsRef.current;
+      if (interval) clearInterval(interval);
+      timeouts.forEach(clearTimeout);
     };
   }, [triggerOnView, startAnimation]);
 

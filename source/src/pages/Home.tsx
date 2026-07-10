@@ -52,7 +52,6 @@ export default function Home() {
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
         description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains."
-        pageType="SoftwareApplication"
       />
       <JsonLd
         data={{
@@ -79,7 +78,6 @@ export default function Home() {
               sameAs: [
                 'https://github.com/GuillaumeLessard/qector-decoder',
                 'https://pypi.org/project/qector-decoder-v3/',
-                'https://github.com/GuillaumeLessard/qector-decoder',
               ],
             },
           ],
@@ -157,12 +155,11 @@ export default function Home() {
         <div className="section-padding">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
             {[
-              { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub / qectorlab)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
+              { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
               { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
-              { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion} (New)`, href: 'https://pypi.org/project/qector-decoder-v3/' },
-              { icon: '\uD83E\uDD16', label: 'GitHub (qectorlab brand)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
+              { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
-              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.4 (New)', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0' },
+              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.4', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0' },
             ].map((pill) => (
               <TrustSignal
                 key={pill.label}
