@@ -28,6 +28,9 @@ todo.md
 build_log.txt
 info.md
 
+# Lint output
+lint-output.txt
+
 # Deploy keys
 id_qector_deploy
 id_qector_deploy.pub
