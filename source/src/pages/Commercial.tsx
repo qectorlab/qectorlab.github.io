@@ -26,7 +26,7 @@ export default function Commercial() {
     <>
       <SEO
         title="Commercial · QECTOR"
-        description="Commercial licenses for QECTOR Decoder v3 (Source-Available). Free Workbench GUI. Evaluation pilots from $1,500. Professional support for research and production teams."
+        description="Commercial licenses for QECTOR Decoder v3 (Source-Available). Free Workbench GUI. Evaluation pilots from $499. Professional support for research and production teams."
       />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
@@ -41,7 +41,7 @@ export default function Commercial() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             QECTOR Decoder v3 is Source-Available (not free for commercial use). The Workbench GUI is free.
-            90-day pilot from <span className="text-cyan-300 font-semibold">$1,500</span>, creditable toward an annual license.
+            60-day pilot from <span className="text-cyan-300 font-semibold">$499</span>, fully creditable toward any annual license.
             Full decoder access, written agreement, benchmark artifact package, and priority support.
             Walk away with your data either way.
           </p>
@@ -60,7 +60,7 @@ export default function Commercial() {
             {[
               { step: '1', title: 'Contact', desc: 'Reach out with your use case and team size.' },
               { step: '2', title: 'License', desc: 'Sign a written evaluation license agreement.' },
-              { step: '3', title: 'Evaluate', desc: 'Full access for 90 days with priority support.' },
+              { step: '3', title: 'Evaluate', desc: 'Full access for 60 days with priority support.' },
               { step: '4', title: 'Decide', desc: 'Convert to annual license or walk away with data.' },
             ].map((s) => (
               <div key={s.step} className="card-surface text-center">
@@ -135,9 +135,13 @@ export default function Commercial() {
           <div>
             <h2 className="text-2xl font-bold mb-4">License Tiers</h2>
             <div className="text-secondary text-sm">
-              <p><strong>Researcher / Academic Lab:</strong> Free for non-commercial, full artifacts, community support.</p>
-              <p><strong>Commercial Deployment:</strong> Internal use rights, written license, priority support, IBM eval access.</p>
-              <p><strong>Enterprise + Support:</strong> Full access, custom builds, SLAs, onboarding.</p>
+              <p><strong>Personal / Academic:</strong> Free for non-commercial use, full artifacts, community support.</p>
+              <p><strong>Commercial Evaluation License:</strong> $499/60 days, full decoder suite, up to 3 named users. 100% credit toward annual license. Self-serve.</p>
+              <p><strong>Solo / Indie Commercial:</strong> $1,299/year or $899 one-time perpetual. Single named user, full commercial R&D rights.</p>
+              <p><strong>Startup / Growth Team:</strong> $4,499/year, up to 10 named users. Advanced BP-OSD/LDPC + batch/GPU workflows.</p>
+              <p><strong>Professional / Lab:</strong> $11,500/year, up to 25 named users. Built-in proof-of-value with Validation Report Package credit.</p>
+              <p><strong>Enterprise R&D:</strong> $28,000+/year, custom volume. Full platform with dedicated support.</p>
+              <p><strong>SaaS / Hosted API / OEM / Strategic:</strong> Contact sales for custom terms.</p>
             </div>
             <p className="text-xs mt-2">What remains free: Workbench GUI, public PyPI package (non-commercial), all GitHub artifacts.</p>
             <p className="text-xs mt-2">Source-available under PolyForm Noncommercial. Commercial use requires license. What you get: full Rust source access (on request for qualified licensees), priority support, custom builds, IBM Quantum evaluation pathway.</p>
@@ -146,29 +150,147 @@ export default function Commercial() {
           {/* Pricing Cards */}
           <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <PricingTierCard
-              name="Evaluation Pilot"
-              price="$1,500"
-              period="/ 90 days"
-              desc="Up to 2 named users. Creditable toward annual license."
+              name="Commercial Evaluation License"
+              price="$499"
+              period="/ 60 days"
+              desc="Up to 3 named users. 100% credit toward annual license. Self-serve."
               centered
               ctaLabel="Start Evaluation"
             />
             <PricingTierCard
-              name="Startup"
-              price="$3,500"
+              name="Solo / Indie Commercial"
+              price="$1,299"
               period="/ year"
-              desc="Up to 5 named users. Full commercial R&D rights."
+              desc="Single named user. Also $899 one-time perpetual."
+              centered
+            />
+            <PricingTierCard
+              name="Startup / Growth Team"
+              price="$4,499"
+              period="/ year"
+              desc="Up to 10 named users. Advanced workflows."
               centered
               featured
               featuredLabel="Recommended"
             />
             <PricingTierCard
-              name="Enterprise"
-              price="$35,000+"
+              name="Professional / Lab"
+              price="$11,500"
               period="/ year"
-              desc="Custom user count · SLA options · Advisory."
+              desc="Up to 25 named users. Validation Report Package credit."
               centered
             />
+            <PricingTierCard
+              name="Enterprise R&D"
+              price="$28,000+"
+              period="/ year"
+              desc="Custom user volume · Dedicated support."
+              centered
+            />
+          </div>
+
+          {/* Why License QECTOR */}
+          <div ref={(el) => addRef(el, 3)} className="card-surface">
+            <h2 className="text-2xl font-bold mb-4">Why License QECTOR?</h2>
+            <p className="text-secondary text-sm mb-6">
+              PyMatching and Stim provide excellent free baselines. QECTOR is the appropriate commercial choice when a team requires:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b border-gridline">
+                    <th className="text-left py-3 px-4 text-cyan-300 font-semibold text-sm">Need</th>
+                    <th className="text-left py-3 px-4 text-cyan-300 font-semibold text-sm">QECTOR Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { need: 'Multi-decoder experimentation', value: 'Union-Find, Blossom, Sparse Blossom, BP-OSD, batch, streaming, and hybrid workflows in a single source-available platform' },
+                    { need: 'LDPC / qLDPC coverage', value: 'BP-OSD and LDPC workflows beyond standard graph-like MWPM' },
+                    { need: 'Reproducible evidence', value: 'Benchmark artifacts, environment snapshots, reproducibility scripts, and Workbench report bundles' },
+                    { need: 'Commercial permission', value: 'Written license terms for company, lab, funded, product, hosted, or revenue-generating use' },
+                    { need: 'Rapid proof of workflow value', value: 'Productized Validation Sprints that deliver customer-specific, reproducible results within weeks' },
+                  ].map((row) => (
+                    <tr key={row.need} className="border-b border-gridline/50 hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-4 text-primary text-sm font-medium">{row.need}</td>
+                      <td className="py-3 px-4 text-secondary text-sm">{row.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Validation Sprint */}
+          <div ref={(el) => addRef(el, 4)} className="p-6 bg-gold-400/5 border border-gold-400/20 rounded-2xl">
+            <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
+              <div>
+                <h3 className="text-xl font-bold text-gold-400">QECTOR Validation Sprint</h3>
+                <p className="text-secondary text-sm">10–20 business days delivery · $3,750 one-time</p>
+              </div>
+            </div>
+            <p className="text-secondary text-sm mb-4">The recommended fast-track entry point for teams seeking immediate, defensible proof of workflow value.</p>
+            <ul className="text-secondary text-sm space-y-1.5">
+              <li>• 60-day Commercial Evaluation License for up to 3 named users</li>
+              <li>• Execution of up to 3 customer-specified or standard benchmark workloads using QECTOR</li>
+              <li>• Complete reproducible artifact bundles (environment snapshots, input hashes, LER curves, timing data, manifest)</li>
+              <li>• Comparative analysis against PyMatching / Stim baselines where applicable</li>
+              <li>• 60-minute results review call with your team</li>
+            </ul>
+          </div>
+
+          {/* Evaluation Success Criteria */}
+          <div ref={(el) => addRef(el, 5)} className="p-6 bg-surface border border-gridline rounded-2xl">
+            <h2 className="text-xl font-bold mb-3">Evaluation & Pilot Success Criteria</h2>
+            <p className="text-secondary text-sm mb-3">Commercial engagements are evaluated on measurable workflow value. Recommended proof points:</p>
+            <ul className="text-secondary text-sm space-y-1.5">
+              <li>• Successful installation on your target environment(s)</li>
+              <li>• At least one reproduced benchmark artifact bundle with full manifest, hashes, and environment snapshot</li>
+              <li>• One QECTOR vs. PyMatching / Stim comparison run (where relevant)</li>
+              <li>• One BP-OSD / LDPC workflow execution (if within scope)</li>
+              <li>• Documented time savings or insight velocity versus your existing workflow</li>
+              <li>• Clear attribution of results to QECTOR components</li>
+            </ul>
+          </div>
+
+          {/* Rights & Portal */}
+          <div ref={(el) => addRef(el, 6)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 bg-surface border border-gridline rounded-2xl">
+              <h3 className="text-lg font-bold mb-3">Rights Not Included by Default</h3>
+              <p className="text-secondary text-xs mb-3">Unless explicitly granted in a written commercial agreement, no license tier includes:</p>
+              <ul className="text-secondary text-sm space-y-1">
+                <li>• Redistribution rights</li>
+                <li>• Sublicensing rights</li>
+                <li>• OEM rights</li>
+                <li>• Hosted API or SaaS rights</li>
+                <li>• Trademark rights · Patent rights</li>
+                <li>• Exclusivity · Warranty or indemnification</li>
+                <li>• Government or defense-specific rights</li>
+              </ul>
+            </div>
+            <div className="p-6 bg-surface border border-gridline rounded-2xl">
+              <h3 className="text-lg font-bold mb-3">Official Licensing Portal</h3>
+              <p className="text-secondary text-sm mb-3">
+                Self-serve purchasing for Commercial Evaluation License and Solo / Indie tiers:
+              </p>
+              <a href="https://www.qector.store" className="text-cyan-300 hover:underline font-semibold block mb-4">https://www.qector.store</a>
+              <p className="text-secondary text-sm mb-2">
+                Higher tiers, Validation Sprints, and custom services:
+              </p>
+              <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline font-semibold block">admin@qector.store</a>
+              <p className="text-muted-foreground text-xs mt-4">
+                All commercial licenses are issued under written agreement. Source-available access for non-commercial use continues under the repository license.
+              </p>
+            </div>
+          </div>
+
+          {/* Pricing Position */}
+          <div className="p-6 bg-gold-400/5 border border-gold-400/20 rounded-2xl">
+            <h3 className="text-gold-400 font-semibold mb-2">Commercial Pricing Position</h3>
+            <p className="text-secondary text-sm">
+              QECTOR is positioned as a source-available Rust/Python QEC R&amp;D platform focused on decoder diversity, reproducible benchmark packaging, BP-OSD/LDPC workflows, CPU/GPU batch paths, and commercial legal clarity.
+              QECTOR is not positioned as the universal fastest MWPM decoder. PyMatching remains the reference for exact MWPM latency on standard surface-code workloads. Commercial value derives from integrated multi-decoder experimentation, LDPC/qLDPC coverage, reproducible artifact workflows, and clear licensing for revenue-linked or institutional use.
+            </p>
           </div>
 
           {/* Transparency */}
