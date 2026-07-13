@@ -1,9 +1,363 @@
-<script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing · QECTOR</title>
+  <meta name="description" content="Purchase QECTOR Corporate License. 60-Day Commercial Evaluation pilot for $499.00. Instant compliance pipeline clearance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --void: #030712;
+      --surface: #0b1329;
+      --cyan-300: #67e8f9;
+      --cyan-400: #22d3ee;
+      --primary: #f3f4f6;
+      --secondary: #9ca3af;
+      --muted: #6b7280;
+      --gridline: rgba(34, 211, 238, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 64px 24px;
+      background-color: var(--void);
+      color: var(--primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        radial-gradient(circle at top, #0f172a 0%, var(--void) 100%),
+        linear-gradient(to right, var(--gridline) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--gridline) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+    }
 
-<stripe-buy-button
-  buy-button-id="buy_btn_1TsoKxRsa9cg9l8A7ExMmc77"
-  publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
->
-</stripe-buy-button>
+    .container {
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+      color: var(--secondary);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: rgba(11, 19, 41, 0.7);
+      border: 1px solid rgba(103, 232, 249, 0.3);
+      box-shadow: 0 0 30px rgba(103, 232, 249, 0.15);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--cyan-300), transparent);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(103, 232, 249, 0.1);
+      border: 1px solid rgba(103, 232, 249, 0.2);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--cyan-300);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 8px 0;
+    }
+
+    .price-sub {
+      font-size: 0.75rem;
+      color: var(--secondary);
+      margin-bottom: 24px;
+    }
+
+    .stripe-container {
+      display: flex;
+      justify-content: center;
+      min-height: 50px;
+      margin-bottom: 24px;
+    }
+
+    .coupon-info {
+      border-top: 1px solid var(--gridline);
+      padding-top: 16px;
+      margin-top: 24px;
+      text-align: left;
+      font-size: 0.75rem;
+      color: var(--secondary);
+      line-height: 1.5;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 0;
+      margin-bottom: 4px;
+      border-bottom: 1px solid var(--gridline);
+      padding-bottom: 8px;
+    }
+
+    .section-sub {
+      color: var(--cyan-300);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .desc-text {
+      font-size: 0.875rem;
+      color: var(--secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      color: var(--cyan-300);
+      font-weight: bold;
+    }
+
+    .feature-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 2px 0;
+    }
+
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .note-box {
+      margin-top: 32px;
+      padding: 16px;
+      background: rgba(11, 19, 41, 0.4);
+      border: 1px solid var(--gridline);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-style: italic;
+      text-align: left;
+    }
+
+    .divider {
+      margin: 48px 0;
+      border: 0;
+      border-top: 1px solid var(--gridline);
+    }
+
+    .faq-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cyan-300);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .faq-item {
+      background: rgba(11, 19, 41, 0.4);
+      border: 1px solid var(--gridline);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .faq-question {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 8px 0;
+      display: flex;
+      gap: 8px;
+    }
+
+    .faq-q-indicator {
+      color: var(--cyan-300);
+    }
+
+    .faq-answer {
+      font-size: 0.875rem;
+      color: var(--secondary);
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+  </style>
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="text-center">
+      <h1>Secure Your License</h1>
+      <p class="subtitle">Secure your official corporate evaluation receipt and instantly clear compliance pipelines.</p>
+    </div>
+
+    <!-- Pricing Card -->
+    <div class="card">
+      <span class="badge">Commercial Evaluation License</span>
+      <div class="price">$499</div>
+      <div class="price-sub">One-time payment · 60-day pilot · Fully creditable</div>
+
+      <!-- Stripe Buy Button -->
+      <div class="stripe-container">
+        <stripe-buy-button
+          buy-button-id="buy_btn_1TsoKxRsa9cg9l8A7ExMmc77"
+          publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
+        ></stripe-buy-button>
+      </div>
+
+      <div class="coupon-info">
+        💡 <strong>Coupon Instructions:</strong> If you have an academic discount or partner referral coupon, you can enter it directly on the Stripe checkout page after clicking the button above.
+      </div>
+    </div>
+
+    <!-- Product Description -->
+    <div style="text-align: left;">
+      <h3 class="section-title">QECTOR Corporate License</h3>
+      <p class="section-sub">60-Day Commercial Evaluation · $499.00 One-Time Payment</p>
+      <p class="desc-text">
+        A full-access commercial license designed specifically to clear compliance requirements for corporate research labs, aerospace teams, and quantum hardware startups evaluating the QECTOR engine.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <div>
+            <h4 class="feature-title">Full Structural Clearance</h4>
+            <p class="feature-desc">Grants your company complete legal rights to run all 10 compiled Rust and CUDA multi-algorithm backends internally.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <div>
+            <h4 class="feature-title">Pipeline Compliance</h4>
+            <p class="feature-desc">Instantly clears automated enterprise scanner flags (Snyk, FOSSA, Black Duck) triggered by our Other/Proprietary PyPI metadata.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <div>
+            <h4 class="feature-title">Frictionless Deployment</h4>
+            <p class="feature-desc">No software lockouts, activation keys, or seat throttling. Your engineering team continues to deploy seamlessly via standard cluster pipelines: <code>pip install qector-decoder-v3</code>.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <div>
+            <h4 class="feature-title">Scale Limits</h4>
+            <p class="feature-desc">Covers unlimited internal developer seats and unlimited Monte Carlo simulation cluster nodes for a flat 60 days.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <strong>*Note:</strong> This tier covers internal R&D, architecture design, and threshold optimization workflows only. It does not grant commercial software/hardware redistribution or SaaS hosting rights.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Frequently Asked Questions -->
+    <div>
+      <h3 class="faq-title">📋 Frequently Asked Questions</h3>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h4 class="faq-question">
+            <span class="faq-q-indicator">Q:</span>
+            <span>How is the license delivered?</span>
+          </h4>
+          <p class="faq-answer">There are no license keys, tokens, or software lockouts to manage. Your Stripe receipt serves as your active legal contract. Your team continues to use the un-throttled, standard package via <code>pip install qector-decoder-v3</code>.</p>
+        </div>
+        <div class="faq-item">
+          <h4 class="faq-question">
+            <span class="faq-q-indicator">Q:</span>
+            <span>What happens after the 60 days expire?</span>
+          </h4>
+          <p class="faq-answer">This is a flat, non-recurring evaluation window. Your team is legally cleared to run internal simulations using QECTOR for 60 consecutive days. If you need to extend usage or transition to an annual corporate deployment contract, contact us at <a href="mailto:licensing@qector.store" style="color: var(--cyan-300); text-decoration: none;">licensing@qector.store</a>.</p>
+        </div>
+        <div class="faq-item">
+          <h4 class="faq-question">
+            <span class="faq-q-indicator">Q:</span>
+            <span>Does this include redistribution rights?</span>
+          </h4>
+          <p class="faq-answer">No. This tier provides strict clearance for internal evaluation and R&D pipelines only. If you want to bundle QECTOR binaries inside a commercial product, deploy it inside a cloud SaaS framework, or compile it onto physical quantum control hardware, email us to establish an Enterprise OEM License.</p>
+        </div>
+        <div class="faq-item">
+          <h4 class="faq-question">
+            <span class="faq-q-indicator">Q:</span>
+            <span>Can we get a signed corporate EULA or W-8/W-9 tax form?</span>
+          </h4>
+          <p class="faq-answer">Yes. If your company's procurement or legal departments require a formally signed PDF agreement, vendor onboarding profiles, or tax validation documents to clear the invoice, simply email your request alongside your Stripe invoice number.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
