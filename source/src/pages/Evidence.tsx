@@ -11,6 +11,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 const REPORTS_DATA = [
   {
+    title: 'Zenodo Benchmark Master Report (v0.6.6)',
+    desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies. DOI: 10.5281/zenodo.21339300.',
+    status: 'Validated',
+    proof: 'DOI: 10.5281/zenodo.21339300',
+  },
+  {
     title: 'MWPM LER Parity Validation',
     desc: 'Exact LER parity between QECTOR-Blossom and PyMatching verified across distances d=3 to d=15. Full Stim circuit files, exact parameters, and expected outputs included.',
     status: 'Validated',
@@ -91,8 +97,8 @@ export default function Evidence() {
       <section className="section-padding pb-24">
         <div className="max-w-5xl mx-auto space-y-12">
 
-          {/* GitHub Artifacts CTA */}
-          <div ref={(el) => addRef(el, 0)} className="text-center">
+          {/* Artifacts CTA Grid */}
+          <div ref={(el) => addRef(el, 0)} className="flex flex-wrap justify-center gap-4">
             <a
               href="https://github.com/GuillaumeLessard/qector-decoder"
               target="_blank"
@@ -103,6 +109,18 @@ export default function Evidence() {
               <div className="text-left">
                 <div className="text-cyan-300 font-semibold">GitHub Artifacts &amp; Validation</div>
                 <div className="text-muted-foreground text-sm">github.com/GuillaumeLessard/qector-decoder</div>
+              </div>
+            </a>
+            <a
+              href="https://zenodo.org/records/21339300"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gold-400/10 border border-gold-400/20 rounded-2xl hover:bg-gold-400/20 transition-all"
+            >
+              <span className="text-2xl">📊</span>
+              <div className="text-left">
+                <div className="text-gold-400 font-semibold">Zenodo Benchmark Dataset (v0.6.6)</div>
+                <div className="text-muted-foreground text-sm">doi.org/10.5281/zenodo.21339300</div>
               </div>
             </a>
           </div>
@@ -135,6 +153,7 @@ export default function Evidence() {
                   color: report.status === 'Validated' ? 'green' : report.status === 'Certified' ? 'cyan' : 'gold',
                 }}
                 desc={report.desc}
+                proof={report.proof}
               />
             ))}
           </div>

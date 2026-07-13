@@ -55,6 +55,7 @@ export default function Benchmarks() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Artifacts →</a>
+            <a href="https://zenodo.org/records/21339300" target="_blank" rel="noopener noreferrer" className="btn-gold">Zenodo Dataset (v0.6.6) →</a>
             <Link to="/evidence" className="btn-outline">All Reports</Link>
           </div>
           <p className="text-xs text-muted-foreground mt-2">Reproduction: git clone https://github.com/GuillaumeLessard/qector-decoder ; cd qector-decoder ; python -m qector.bench --repro --d 15</p>
@@ -66,12 +67,24 @@ export default function Benchmarks() {
 
           {/* Main Benchmark Table */}
           {/* Methodology */}
-          <div ref={(el) => addRef(el, 0)} className="card-surface mb-8">
-            <h3 className="text-xl font-bold mb-3">Methodology &amp; Reproducibility</h3>
-            <p className="text-secondary text-sm mb-4">
-              All results use Stim for circuit-level depolarizing noise (p=0.001). Exact parameters, seeds, and raw outputs in the GitHub artifacts folder (e.g. stim_ler_d13_d15.json). Hypergraph-safe Union-Find added in recent release.
-            </p>
-            <a href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/artifacts" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm">Direct link to artifact bundle on GitHub →</a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div ref={(el) => addRef(el, 0)} className="card-surface">
+              <h3 className="text-xl font-bold mb-3">Methodology &amp; Reproducibility</h3>
+              <p className="text-secondary text-sm mb-4">
+                All results use Stim for circuit-level depolarizing noise (p=0.001). Exact parameters, seeds, and raw outputs in the GitHub artifacts folder (e.g. stim_ler_d13_d15.json). Hypergraph-safe Union-Find added in recent release.
+              </p>
+              <a href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/artifacts" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">Direct link to artifact bundle on GitHub →</a>
+            </div>
+            <div className="card-surface">
+              <h3 className="text-xl font-bold mb-3">Zenodo Benchmark Dataset (v0.6.6)</h3>
+              <p className="text-secondary text-sm mb-4">
+                The QECTOR Workbench Decoder Benchmark Master Report (v0.6.6) aggregates 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies.
+              </p>
+              <div className="flex gap-4">
+                <a href="https://zenodo.org/records/21339300" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">Zenodo Record →</a>
+                <a href="https://doi.org/10.5281/zenodo.21339300" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">DOI: 10.5281/zenodo.21339300 →</a>
+              </div>
+            </div>
           </div>
 
           <div ref={(el) => addRef(el, 1)} className="overflow-x-auto">

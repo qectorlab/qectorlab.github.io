@@ -42,6 +42,7 @@ export default function Changelog() {
               }
               items={[
                 `New QECTOR Decoder v3 (v${pypiVersion}): full validation, hypergraph rejection support, sdist + wheels`,
+                'New Zenodo dataset & master report integration with 1,858 timing measurements across 6 topologies up to distance 19 (DOI: 10.5281/zenodo.21339300)',
                 'New free QectorWorkbench GUI v3.4.0: 10/10 polished CustomTkinter app, 25 MCP tools (all verified), premium multi-format docs generator',
                 'Production packaging: clean PyInstaller + Inno Setup bundles with manifests and checksums',
                 'Repo hygiene and all docs updated for the new decoder + new free workbench',
