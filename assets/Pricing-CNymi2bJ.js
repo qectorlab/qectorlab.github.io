@@ -1,4 +1,0 @@
-import{r as s,j as e,a as r}from"./index-Bh2shR14.js";function n(){return s.useEffect(()=>{const t=document.createElement("script");return t.src="https://js.stripe.com/v3/buy-button.js",t.async=!0,document.body.appendChild(t),()=>{document.body.removeChild(t)}},[]),e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Pricing · QECTOR",description:"Purchase QECTOR Decoder v3. Transparent commercial licensing."}),e.jsx("div",{className:"flex min-h-[60vh] items-center justify-center p-8 bg-void",children:e.jsx("div",{dangerouslySetInnerHTML:{__html:`<stripe-buy-button
-              buy-button-id="buy_btn_1TsoKxRsa9cg9l8A7ExMmc77"
-              publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
-            ></stripe-buy-button>`}})})]})}export{n as default};
