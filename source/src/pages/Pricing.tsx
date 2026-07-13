@@ -79,6 +79,52 @@ export default function Pricing() {
             </div>
           </div>
 
+          {/* Product Description */}
+          <div className="max-w-2xl mx-auto mt-16 border-t border-gridline/60 pt-12">
+            <h3 className="text-xl font-bold text-center mb-2 text-primary">
+              QECTOR Corporate License
+            </h3>
+            <p className="text-center text-cyan-300 text-sm font-medium mb-8">
+              60-Day Commercial Evaluation · $499.00 One-Time Payment
+            </p>
+            <p className="text-secondary text-sm leading-relaxed mb-8">
+              A full-access commercial license designed specifically to clear compliance requirements for corporate research labs, aerospace teams, and quantum hardware startups evaluating the QECTOR engine.
+            </p>
+            <div className="space-y-5">
+              {[
+                {
+                  title: 'Full Structural Clearance',
+                  desc: 'Grants your company complete legal rights to run all 10 compiled Rust and CUDA multi-algorithm backends internally.'
+                },
+                {
+                  title: 'Pipeline Compliance',
+                  desc: 'Instantly clears automated enterprise scanner flags (Snyk, FOSSA, Black Duck) triggered by our Other/Proprietary PyPI metadata.'
+                },
+                {
+                  title: 'Frictionless Deployment',
+                  desc: 'No software lockouts, activation keys, or seat throttling. Your engineering team continues to deploy seamlessly via standard cluster pipelines: pip install qector-decoder-v3.'
+                },
+                {
+                  title: 'Scale Limits',
+                  desc: 'Covers unlimited internal developer seats and unlimited Monte Carlo simulation cluster nodes for a flat 60 days.'
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <span className="text-cyan-300 mt-0.5">✓</span>
+                  <div>
+                    <h4 className="text-sm font-semibold text-primary">{item.title}</h4>
+                    <p className="text-secondary text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 p-4 bg-[#0b1329]/60 border border-gridline/30 rounded-lg">
+              <p className="text-xs text-muted-foreground leading-relaxed italic">
+                <strong>Note:</strong> This tier covers internal R&D, architecture design, and threshold optimization workflows only. It does not grant commercial software/hardware redistribution or SaaS hosting rights.
+              </p>
+            </div>
+          </div>
+
           {/* FAQ Block */}
           <div className="max-w-2xl mx-auto mt-16 border-t border-gridline/60 pt-12">
             <h3 className="text-2xl font-bold text-center mb-8 text-cyan-300">

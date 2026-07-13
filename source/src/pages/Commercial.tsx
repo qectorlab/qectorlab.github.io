@@ -136,7 +136,7 @@ export default function Commercial() {
             <h2 className="text-2xl font-bold mb-4">License Tiers</h2>
             <div className="text-secondary text-sm">
               <p><strong>Personal / Academic:</strong> Free for non-commercial use, full artifacts, community support.</p>
-              <p><strong>Commercial Evaluation License:</strong> $499/60 days, full decoder suite, up to 3 named users. 100% credit toward annual license. Self-serve.</p>
+              <p><strong>Commercial Evaluation License:</strong> $499/60 days, full decoder suite, unlimited internal seats. 100% credit toward annual license. Self-serve.</p>
               <p><strong>Solo / Indie Commercial:</strong> $1,299/year or $899 one-time perpetual. Single named user, full commercial R&D rights.</p>
               <p><strong>Startup / Growth Team:</strong> $4,499/year, up to 10 named users. Advanced BP-OSD/LDPC + batch/GPU workflows.</p>
               <p><strong>Professional / Lab:</strong> $11,500/year, up to 25 named users. Built-in proof-of-value with Validation Report Package credit.</p>
@@ -153,7 +153,7 @@ export default function Commercial() {
               name="Commercial Evaluation License"
               price="$499"
               period="/ 60 days"
-              desc="Up to 3 named users. 100% credit toward annual license. Self-serve."
+              desc="Unlimited internal seats. 100% credit toward annual license. Self-serve."
               centered
               ctaLabel="Start Evaluation"
             />
