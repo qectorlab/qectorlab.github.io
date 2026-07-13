@@ -9,7 +9,6 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
-  const isPricing = location.pathname === '/pricing';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,16 +16,6 @@ export default function Layout({ children }: LayoutProps) {
     // land on the new page instead of staying on the old nav position.
     document.getElementById('main-content')?.focus();
   }, [location.pathname]);
-
-  if (isPricing) {
-    return (
-      <div className="min-h-screen bg-void text-foreground quantum-grid-bg relative flex flex-col justify-center items-center">
-        <main id="main-content" tabIndex={-1} className="w-full outline-none">
-          {children}
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-void text-foreground quantum-grid-bg relative">
