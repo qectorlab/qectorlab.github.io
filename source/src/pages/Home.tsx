@@ -455,6 +455,43 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* FAQ Block */}
+          <div className="max-w-2xl mx-auto mt-16 border-t border-gridline/60 pt-12">
+            <h3 className="text-2xl font-bold text-center mb-8 text-cyan-300">
+              📋 Frequently Asked Questions
+            </h3>
+            <div className="space-y-6 text-left">
+              {[
+                {
+                  q: 'How is the license delivered?',
+                  a: 'There are no license keys, tokens, or software lockouts to manage. Your Stripe receipt serves as your active legal contract. Your team continues to use the un-throttled, standard package via pip install qector-decoder-v3.'
+                },
+                {
+                  q: 'What happens after the 60 days expire?',
+                  a: 'This is a flat, non-recurring evaluation window. Your team is legally cleared to run internal simulations using QECTOR for 60 consecutive days. If you need to extend usage or transition to an annual corporate deployment contract, contact us at licensing@qector.store.'
+                },
+                {
+                  q: 'Does this include redistribution rights?',
+                  a: 'No. This tier provides strict clearance for internal evaluation and R&D pipelines only. If you want to bundle QECTOR binaries inside a commercial product, deploy it inside a cloud SaaS framework, or compile it onto physical quantum control hardware, email us to establish an Enterprise OEM License.'
+                },
+                {
+                  q: 'Can we get a signed corporate EULA or W-8/W-9 tax form?',
+                  a: 'Yes. If your company\'s procurement or legal departments require a formally signed PDF agreement, vendor onboarding profiles, or tax validation documents to clear the invoice, simply email your request alongside your Stripe invoice number.'
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="card-surface bg-[#0b1329]/40 border-gridline/40 p-5 rounded-xl">
+                  <h4 className="text-sm font-semibold text-primary mb-2 flex items-start gap-2">
+                    <span className="text-cyan-300">Q:</span>
+                    <span>{item.q}</span>
+                  </h4>
+                  <p className="text-secondary text-xs sm:text-sm leading-relaxed pl-6">
+                    {item.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>
