@@ -1,0 +1,200 @@
+[
+ {
+  "decoder": "qector_union_find",
+  "backend": "CPU",
+  "distance": 3,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 78,
+  "detectors": 24,
+  "wall_s": 0.1262367000163067,
+  "shots_per_s": 316865.06376381015
+ },
+ {
+  "decoder": "qector_fast_uf",
+  "backend": "CPU",
+  "distance": 3,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 78,
+  "detectors": 24,
+  "wall_s": 0.11690839999937452,
+  "shots_per_s": 342148.21176420175
+ },
+ {
+  "decoder": "qector_sparse_blossom",
+  "backend": "CPU",
+  "distance": 3,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 78,
+  "detectors": 24,
+  "wall_s": 0.19908220000797883,
+  "shots_per_s": 200922.03119312966
+ },
+ {
+  "decoder": "qector_blossom_weighted",
+  "backend": "CPU",
+  "distance": 3,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 78,
+  "detectors": 24,
+  "wall_s": 0.13712499997927807,
+  "shots_per_s": 291704.64908692567
+ },
+ {
+  "decoder": "qector_cuda(GPU)",
+  "backend": "GPU",
+  "distance": 3,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 78,
+  "detectors": 24,
+  "wall_s": 0.04425989999435842,
+  "shots_per_s": 903752.6068766217
+ },
+ {
+  "decoder": "PyMatching(ref)",
+  "backend": "CPU",
+  "distance": 3,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 78,
+  "detectors": 24,
+  "wall_s": 0.06472110000322573,
+  "shots_per_s": 618036.4672109464
+ },
+ {
+  "decoder": "qector_union_find",
+  "backend": "CPU",
+  "distance": 5,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 502,
+  "detectors": 120,
+  "wall_s": 0.23485409998102114,
+  "shots_per_s": 170318.50839833092
+ },
+ {
+  "decoder": "qector_fast_uf",
+  "backend": "CPU",
+  "distance": 5,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 502,
+  "detectors": 120,
+  "wall_s": 0.22031149998656474,
+  "shots_per_s": 181561.10780617135
+ },
+ {
+  "decoder": "qector_sparse_blossom",
+  "backend": "CPU",
+  "distance": 5,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 502,
+  "detectors": 120,
+  "wall_s": 3.92598940001335,
+  "shots_per_s": 10188.514518114589
+ },
+ {
+  "decoder": "qector_blossom_weighted",
+  "backend": "CPU",
+  "distance": 5,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 502,
+  "detectors": 120,
+  "wall_s": 1.0349983000196517,
+  "shots_per_s": 38647.40647326717
+ },
+ {
+  "decoder": "qector_cuda(GPU)",
+  "backend": "GPU",
+  "distance": 5,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 502,
+  "detectors": 120,
+  "wall_s": 0.33175589999882504,
+  "shots_per_s": 120570.5761378823
+ },
+ {
+  "decoder": "PyMatching(ref)",
+  "backend": "CPU",
+  "distance": 5,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 502,
+  "detectors": 120,
+  "wall_s": 0.5093565999995917,
+  "shots_per_s": 78530.44409365082
+ },
+ {
+  "decoder": "qector_union_find",
+  "backend": "CPU",
+  "distance": 7,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 1558,
+  "detectors": 336,
+  "wall_s": 0.5214716000191402,
+  "shots_per_s": 76705.99894324415
+ },
+ {
+  "decoder": "qector_fast_uf",
+  "backend": "CPU",
+  "distance": 7,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 1558,
+  "detectors": 336,
+  "wall_s": 0.5336758000194095,
+  "shots_per_s": 74951.87152676817
+ },
+ {
+  "decoder": "qector_sparse_blossom",
+  "backend": "CPU",
+  "distance": 7,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 1558,
+  "detectors": 336,
+  "wall_s": 259.9716621999978,
+  "shots_per_s": 153.86292360291083
+ },
+ {
+  "decoder": "qector_blossom_weighted",
+  "backend": "CPU",
+  "distance": 7,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 1558,
+  "detectors": 336,
+  "wall_s": 5.465525100007653,
+  "shots_per_s": 7318.601464284555
+ },
+ {
+  "decoder": "qector_cuda(GPU)",
+  "backend": "GPU",
+  "distance": 7,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 1558,
+  "detectors": 336,
+  "wall_s": 1.1580576999986079,
+  "shots_per_s": 34540.59327099857
+ },
+ {
+  "decoder": "PyMatching(ref)",
+  "backend": "CPU",
+  "distance": 7,
+  "p": 0.01,
+  "shots": 40000,
+  "edges": 1558,
+  "detectors": 336,
+  "wall_s": 1.980434500001138,
+  "shots_per_s": 20197.58795354101
+ }
+]

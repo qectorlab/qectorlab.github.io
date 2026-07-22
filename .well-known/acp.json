@@ -1,0 +1,1 @@
+{"protocol":{"name":"acp","version":"0.1"},"api_base_url":"https://qector.store","transports":["https"],"capabilities":{"services":[{"name":"QECTOR commercial licensing","description":"Human-reviewed commercial evaluation and license inquiry path.","url":"https://qector.store/contact"}],"payments":false,"checkout":false,"requires_human_review":true}}

@@ -1,0 +1,22 @@
+{
+  "name": "QECTOR Decoder v3",
+  "short_name": "QECTOR",
+  "description": "Production-grade quantum error correction decoder and research platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030712",
+  "theme_color": "#24e7ff",
+  "categories": ["developer", "utilities", "science"],
+  "icons": [
+    {
+      "src": "/assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
+    { "name": "Benchmarks", "url": "/benchmarks", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
+    { "name": "Docs", "url": "/docs", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] }
+  ]
+}
