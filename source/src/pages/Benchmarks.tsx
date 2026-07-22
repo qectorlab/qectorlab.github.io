@@ -9,6 +9,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const SvgFigure = ({ src, caption }: { src: string; caption: string }) => (
+  <figure className="card-surface p-4">
+    <img src={src} alt={caption} loading="lazy" className="w-full h-auto rounded-lg" />
+    <figcaption className="text-muted-foreground text-xs text-center mt-3">{caption}</figcaption>
+  </figure>
+);
+
 export default function Benchmarks() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
@@ -65,10 +72,32 @@ export default function Benchmarks() {
       <section className="section-padding pb-24">
         <div className="max-w-6xl mx-auto space-y-12">
 
-          {/* Main Benchmark Table */}
+          {/* v0.6.8 Benchmark Release */}
+          <div ref={(el) => addRef(el, 0)} className="card-surface border-cyan-300/30 bg-gradient-to-br from-cyan-300/5 to-transparent">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
+              New · v0.6.8 Master Benchmark
+            </div>
+            <h3 className="text-xl font-bold mb-3">v0.6.8 Benchmark Release — Full Validation Report</h3>
+            <p className="text-secondary text-sm leading-relaxed mb-4">
+              The v0.6.8 master benchmark (2026-07-22) runs 8 decoders across distances d=3–19 on an AMD64 16-core machine
+              with NVIDIA GTX 1660 Ti GPU. Key results:
+            </p>
+            <ul className="text-secondary text-sm space-y-2 mb-4 list-disc pl-5">
+              <li><strong className="text-green-400">Throughput</strong>: peak CPU ≈ 5,212,664 shots/s (Blossom·d=3), peak CUDA ≈ 13,487,996 shots/s (GTX 1660 Ti·d=3)</li>
+              <li><strong className="text-green-400">CUDA bit-identical to CPU</strong>: verified row-exact at every distance d=3–19 vs CPU Union-Find</li>
+              <li><strong className="text-green-400">Faithfulness</strong>: every decoder (incl. CUDA) reproduces H·c = s on 100% of shots, d=3–19</li>
+              <li><strong className="text-green-400">Circuit-level LER</strong>: QECTOR weighted MWPM matches PyMatching failure-for-failure; Union-Find/CUDA do not suppress at circuit level (expected)</li>
+              <li><strong className="text-green-400">GPU overtaken by CPU at large distance+batch</strong>: at d=19@200k shots, best CPU decoder is ~2× faster than CUDA on this entry GPU</li>
+            </ul>
+            <div className="flex gap-4">
+              <a href="/images/benchmarks/QECTOR_v0.6.7_Master_Benchmark.pdf" target="_blank" className="text-cyan-300 text-sm hover:underline">Download Full PDF Report →</a>
+              <a href="/json/benchmarks/manifest.json" target="_blank" className="text-cyan-300 text-sm hover:underline">Raw JSON Data →</a>
+            </div>
+          </div>
+
           {/* Methodology */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div ref={(el) => addRef(el, 0)} className="card-surface">
+            <div ref={(el) => addRef(el, 1)} className="card-surface">
               <h3 className="text-xl font-bold mb-3">Methodology &amp; Reproducibility</h3>
               <p className="text-secondary text-sm mb-4">
                 All results use Stim for circuit-level depolarizing noise (p=0.001). Exact parameters, seeds, and raw outputs in the GitHub artifacts folder (e.g. stim_ler_d13_d15.json). Hypergraph-safe Union-Find added in recent release.
@@ -87,7 +116,8 @@ export default function Benchmarks() {
             </div>
           </div>
 
-          <div ref={(el) => addRef(el, 1)} className="overflow-x-auto">
+          {/* Main Benchmark Table */}
+          <div ref={(el) => addRef(el, 2)} className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b border-gridline">
@@ -101,9 +131,11 @@ export default function Benchmarks() {
                   { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: 'Validated', status: 'Validated' },
                   { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
                   { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Validated', status: 'Validated' },
-                  { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },
+                  { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Validated' },
                   { algo: 'Union-Find', dist: 'd = 3 - 21', ler: '~1.5× higher LER', speed: '10-50× faster', status: 'Validated' },
+                  { algo: 'Sparse Blossom', dist: 'd = 3 - 19', ler: 'Exact parity', speed: 'Similar to Blossom', status: 'Validated' },
                   { algo: 'BP-OSD', dist: 'qLDPC', ler: 'Code-dependent', speed: 'Slower (BP iterations)', status: 'Validated' },
+                  { algo: 'CUDA Batch (GPU)', dist: 'd = 3 - 15', ler: 'Bit-identical to CPU UF', speed: 'Up to 13.5M shots/s', status: 'Validated' },
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-gridline/50 hover:bg-surface/50 transition-colors">
                     <td className="py-4 px-4 text-primary font-semibold text-sm">{row.algo}</td>
@@ -122,7 +154,7 @@ export default function Benchmarks() {
           </div>
 
           {/* Detailed Results */}
-          <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div ref={(el) => addRef(el, 3)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card-surface">
               <h3 className="text-cyan-300 font-semibold mb-3">MWPM LER Parity (d=3-11)</h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
@@ -152,16 +184,39 @@ export default function Benchmarks() {
             </div>
           </div>
 
+          {/* Throughput SVG Charts */}
+          <div ref={(el) => addRef(el, 4)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <SvgFigure
+              src="/images/benchmarks/throughput_vs_distance_200000.svg"
+              caption="Decoder throughput vs code distance — 200,000 shots (code-capacity noise)"
+            />
+            <SvgFigure
+              src="/images/benchmarks/gpu_speedup.svg"
+              caption="GPU (CUDA) speedup vs best CPU decoder — code-capacity noise"
+            />
+          </div>
+
+          <div ref={(el) => addRef(el, 5)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <SvgFigure
+              src="/images/benchmarks/throughput_scaling_d5.svg"
+              caption="Throughput scaling at d=5 — all decoders vs shot count"
+            />
+            <SvgFigure
+              src="/images/benchmarks/throughput_scaling_d11.svg"
+              caption="Throughput scaling at d=11 — all decoders vs shot count"
+            />
+          </div>
+
           {/* Speed Comparison */}
-          <div ref={(el) => addRef(el, 2)} className="card-surface">
-            <h3 className="text-cyan-300 font-semibold mb-4">Performance Characteristics</h3>
-            <p className="text-muted-foreground text-xs mb-4">PyMatching remains the speed leader for standard MWPM latency on surface-code workloads. QECTOR's value is multi-algorithm diversity and reproducibility.</p>
+          <div ref={(el) => addRef(el, 6)} className="card-surface">
+            <h3 className="text-cyan-300 font-semibold mb-4">Performance Characteristics (v0.6.8)</h3>
+            <p className="text-muted-foreground text-xs mb-4">PyMatching remains the speed leader for standard MWPM latency on surface-code workloads. QECTOR's value is multi-algorithm diversity and reproducibility. GPU batch decoding peaks at 13.5M shots/s on GTX 1660 Ti (d=3).</p>
             <div className="space-y-4">
               {[
-                { label: 'QECTOR-Blossom (d=5)', factor: 'Slower', desc: 'Adaptive-k MWPM matches LER exactly; PyMatching is faster for standard MWPM latency.' },
-                { label: 'QECTOR-Blossom (d=9)', factor: 'Slower', desc: 'Same per-shot LER parity. Performance gap widens at higher distances.' },
-                { label: 'Union-Find', factor: '10-50×', desc: 'Near-linear scaling; approximate but extremely fast. Hardware-dependent.' },
-                { label: 'GPU Batch', factor: 'Batch', desc: 'CUDA/OpenCL batch decoding; throughput advantage grows with batch size. Bit-identical to CPU. Hardware-dependent.' },
+                { label: 'QECTOR-Blossom (d=3)', factor: '5.2M/s', desc: 'Adaptive-k MWPM, peak CPU throughput at 200k shots.' },
+                { label: 'CUDA Batch (d=3)', factor: '13.5M/s', desc: 'GPU batch decoding, peak throughput. Bit-identical to CPU Union-Find.' },
+                { label: 'Union-Find (d=3)', factor: '2.4M/s', desc: 'Near-linear scaling; approximate but extremely fast.' },
+                { label: 'PyMatching (d=3, ref)', factor: '3.3M/s', desc: 'Reference implementation. Fastest for standard MWPM on surface codes.' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-4">
                   <div className="flex-1">
@@ -174,8 +229,55 @@ export default function Benchmarks() {
             </div>
           </div>
 
-          {/* Visual Chart */}
-          <div ref={(el) => addRef(el, 3)}>
+          {/* Circuit-level LER Validation */}
+          <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <SvgFigure
+              src="/images/benchmarks/ler_vs_distance.svg"
+              caption="Circuit-level logical error rate vs distance (rotated_memory_z, p=0.003)"
+            />
+            <SvgFigure
+              src="/images/benchmarks/us_per_shot_200000.svg"
+              caption="Microseconds per shot at 200,000 shots — all decoders vs code distance"
+            />
+          </div>
+
+          {/* Faithfulness */}
+          <div ref={(el) => addRef(el, 8)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="card-surface">
+              <h3 className="text-cyan-300 font-semibold mb-3">Faithfulness — 100% Verified</h3>
+              <p className="text-secondary text-sm leading-relaxed mb-4">
+                Every decoder in the v0.6.8 benchmark suite reproduces the parity-check equation
+                <code className="text-cyan-300 mx-1">H·c = s</code> on 100% of shots across all distances d=3–19.
+                This includes FastUnionFind, UnionFind, Blossom, SparseBlossom, BatchDecoder, CPUBatchDecoder,
+                and CUDABatch(GPU) — verified at 5,000 shots per distance.
+              </p>
+              <a href="/json/benchmarks/faithfulness.json" target="_blank" className="text-cyan-300 text-sm hover:underline">Raw faithfulness data (JSON) →</a>
+            </div>
+            <div className="card-surface">
+              <h3 className="text-cyan-300 font-semibold mb-3">Bit-Exact: CUDA = CPU</h3>
+              <p className="text-secondary text-sm leading-relaxed mb-4">
+                CUDA batch decoder corrections are 100% row-exact vs the CPU Union-Find decoder at every
+                distance d=3–19. This means the GPU produces byte-for-byte identical output to the CPU,
+                validated across 5,000 shots per distance.
+              </p>
+              <a href="/json/benchmarks/bitexact.json" target="_blank" className="text-cyan-300 text-sm hover:underline">Raw bit-exact data (JSON) →</a>
+            </div>
+          </div>
+
+          {/* More SVG charts */}
+          <div ref={(el) => addRef(el, 9)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <SvgFigure
+              src="/images/benchmarks/throughput_vs_distance_50000.svg"
+              caption="Throughput vs code distance — 50,000 shots"
+            />
+            <SvgFigure
+              src="/images/benchmarks/bitexact_vs_distance.svg"
+              caption="Bit-exact match between CUDA and CPU Union-Find — all distances 100% identical"
+            />
+          </div>
+
+          {/* Interactive Charts */}
+          <div ref={(el) => addRef(el, 10)}>
             <InteractiveChart
               type="distance"
               title="LER vs Code Distance (d=3-11, p=0.001)"
@@ -183,8 +285,7 @@ export default function Benchmarks() {
             />
           </div>
 
-          {/* Belief-Matching visual */}
-          <div ref={(el) => addRef(el, 4)}>
+          <div ref={(el) => addRef(el, 11)}>
             <InteractiveChart
               type="advantage"
               title="Belief-Matching vs Plain MWPM (d=5, p=0.001)"

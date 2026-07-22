@@ -50,6 +50,23 @@ export default function Changelog() {
             />
           </div>
 
+          {/* v0.6.8 */}
+          <div className="relative">
+            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
+            <ChangelogEntry
+              version="v0.6.8 - 2026-07-22"
+              items={[
+                'Fixed _guard() in Rust/PyO3 bindings preventing HybridCascadeDecoder import',
+                'New CPU/CUDA bit-exact validation: CUDA decoder row-identical to CPU Union-Find at d=3-19',
+                'Faithfulness verified: H·c = s on 100% of shots across all 8 decoders at d=3-19',
+                'Benchmark release with 8 SVG charts, 20 JSON data files, and full PDF report',
+                'GPU throughput peak: 13,487,996 shots/s on GTX 1660 Ti (d=3, batch decoder)',
+                'Peak CPU throughput: 5,212,664 shots/s (Blossom, d=3, 200k shots)',
+                'Website updated with v0.6.8 benchmark artifacts, charts, and validation data',
+              ]}
+            />
+          </div>
+
           {/* v0.5.7 */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />

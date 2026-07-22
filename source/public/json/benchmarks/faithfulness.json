@@ -1,0 +1,443 @@
+[
+ {
+  "distance": 3,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 3,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 3,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 3,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 3,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 3,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 3,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 5,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 7,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 9,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 11,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 13,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 15,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 17,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "FastUnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "UnionFind",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "Blossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "SparseBlossom",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "BatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "CPUBatchDecoder",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ },
+ {
+  "distance": 19,
+  "decoder": "CUDABatch(GPU)",
+  "shots": 5000,
+  "faithful_all": true,
+  "faithful_frac": 1.0
+ }
+]
