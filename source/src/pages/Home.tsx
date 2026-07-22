@@ -46,7 +46,7 @@ export default function Home() {
 
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());
-      document.body.removeChild(script);
+      if (script.parentNode === document.body) document.body.removeChild(script);
     };
   }, []);
 
@@ -345,9 +345,9 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {[
-                    { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: '6.9-7.7× faster', status: 'Validated' },
+                    { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: 'Validated', status: 'Validated' },
                     { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
-                    { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Faster', status: 'Validated' },
+                    { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Validated', status: 'Validated' },
                     { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },
                   ].map((row, i) => (
                     <tr key={i} className="border-b border-gridline/50 hover:bg-surface/50 transition-colors">

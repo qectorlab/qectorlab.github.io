@@ -98,9 +98,9 @@ export default function Benchmarks() {
               </thead>
               <tbody>
                 {[
-                  { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: '6.9-7.7× faster', status: 'Validated' },
+                  { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: 'Validated', status: 'Validated' },
                   { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
-                  { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Faster', status: 'Validated' },
+                  { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Validated', status: 'Validated' },
                   { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },
                   { algo: 'Union-Find', dist: 'd = 3 - 21', ler: '~1.5× higher LER', speed: '10-50× faster', status: 'Validated' },
                   { algo: 'BP-OSD', dist: 'qLDPC', ler: 'Code-dependent', speed: 'Slower (BP iterations)', status: 'Validated' },
@@ -122,7 +122,7 @@ export default function Benchmarks() {
           </div>
 
           {/* Detailed Results */}
-          <div ref={(el) => addRef(el, 1)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card-surface">
               <h3 className="text-cyan-300 font-semibold mb-3">MWPM LER Parity (d=3-11)</h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
@@ -154,14 +154,14 @@ export default function Benchmarks() {
 
           {/* Speed Comparison */}
           <div ref={(el) => addRef(el, 2)} className="card-surface">
-            <h3 className="text-cyan-300 font-semibold mb-4">Speed Comparison (Relative to PyMatching)</h3>
-            <p className="text-muted-foreground text-xs mb-4">Blossom figures are simulation-validated. Union-Find and GPU Batch figures are hardware-dependent - regenerate locally before citing.</p>
+            <h3 className="text-cyan-300 font-semibold mb-4">Performance Characteristics</h3>
+            <p className="text-muted-foreground text-xs mb-4">PyMatching remains the speed leader for standard MWPM latency on surface-code workloads. QECTOR's value is multi-algorithm diversity and reproducibility.</p>
             <div className="space-y-4">
               {[
-                { label: 'QECTOR-Blossom (d=5)', factor: '6.9×', desc: 'Adaptive-k preprocessing reduces graph size before exact matching. Simulation-validated.' },
-                { label: 'QECTOR-Blossom (d=9)', factor: '7.7×', desc: 'Larger gains at higher distance due to sparser reduced graphs. Simulation-validated.' },
-                { label: 'Union-Find', factor: 'Faster', desc: 'Near-linear scaling; approximate but extremely fast. Exact multiplier is hardware-dependent.' },
-                { label: 'GPU Batch', factor: '6.9-7.7×+', desc: 'CUDA/OpenCL batch decoding; gains exceed CPU at suitable batch sizes. Bit-identical to CPU MWPM. Hardware-dependent.' },
+                { label: 'QECTOR-Blossom (d=5)', factor: 'Slower', desc: 'Adaptive-k MWPM matches LER exactly; PyMatching is faster for standard MWPM latency.' },
+                { label: 'QECTOR-Blossom (d=9)', factor: 'Slower', desc: 'Same per-shot LER parity. Performance gap widens at higher distances.' },
+                { label: 'Union-Find', factor: '10-50×', desc: 'Near-linear scaling; approximate but extremely fast. Hardware-dependent.' },
+                { label: 'GPU Batch', factor: 'Batch', desc: 'CUDA/OpenCL batch decoding; throughput advantage grows with batch size. Bit-identical to CPU. Hardware-dependent.' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-4">
                   <div className="flex-1">

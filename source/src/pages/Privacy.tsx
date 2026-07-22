@@ -34,7 +34,7 @@ export default function Privacy() {
             <h2 className="text-xl font-bold mb-4">Data We Collect</h2>
             <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
               <li><strong className="text-primary">Contact form:</strong> Name, email, organization, message - stored only to respond to your inquiry.</li>
-              <li><strong className="text-primary">Usage analytics:</strong> Anonymous page views via privacy-respecting analytics (no personal identifiers).</li>
+              <li><strong className="text-primary">Usage analytics:</strong> Standard server access logs only (no page-view analytics, no cookies, no tracking scripts).</li>
               <li><strong className="text-primary">Technical logs:</strong> Standard server logs (IP address, user agent) retained for 30 days for security.</li>
             </ul>
           </div>

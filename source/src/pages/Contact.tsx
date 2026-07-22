@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { SEO, JsonLd } from '../lib/seo';
+import { APP_CONFIG } from '../lib/config';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Contact() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
@@ -20,8 +22,26 @@ export default function Contact() {
   }, []);
   const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    if (APP_CONFIG.contactEndpoint) {
+      try {
+        const res = await fetch(APP_CONFIG.contactEndpoint, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' },
+        });
+        if (!res.ok) throw new Error(`Server responded with ${res.status}`);
+      } catch {
+        setError('Failed to send. Please email us directly at admin@qector.store');
+        return;
+      }
+    } else {
+      window.location.href = `mailto:admin@qector.store?subject=QECTOR inquiry from ${data.get('name') || 'anonymous'}&body=${encodeURIComponent((data.get('message') as string) || '')}`;
+    }
     setSubmitted(true);
   };
 
@@ -112,7 +132,7 @@ export default function Contact() {
                     <p className="text-secondary">We'll get back to you within 1 business day.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form onSubmit={handleSubmit} method="POST" className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="contact-name" className="block text-secondary text-sm mb-2">Full Name <span className="text-cyan-300">*</span></label>
@@ -155,6 +175,7 @@ export default function Contact() {
                       <label htmlFor="contact-message" className="block text-secondary text-sm mb-2">Message <span className="text-cyan-300">*</span></label>
                       <textarea id="contact-message" name="message" required rows={6} className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors resize-y" placeholder="Tell us about your interest in QECTOR and evaluation needs..." />
                     </div>
+                    {error && <p className="text-red-400 text-sm" role="alert">{error}</p>}
                     <button type="submit" className="btn-gold w-full py-3">
                       Send Message
                     </button>

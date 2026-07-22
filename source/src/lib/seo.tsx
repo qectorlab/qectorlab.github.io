@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { APP_CONFIG } from './config';
 
 interface SEOProps {
   title?: string;
@@ -11,7 +12,7 @@ interface SEOProps {
 export function SEO({
   title = 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
   description = 'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains.',
-  ogImage = 'https://qector.store/assets/logo.svg',
+  ogImage = APP_CONFIG.ogImage,
   noindex = false,
 }: SEOProps) {
   const location = useLocation();

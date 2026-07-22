@@ -1,4 +1,0 @@
-{
-  "keys": [],
-  "comment": "QECTOR Store does not currently send signed automated bot requests. This Web Bot Auth directory is published for discovery readiness. Active public verification keys will be added here when QECTOR operates an outbound signed agent."
-}

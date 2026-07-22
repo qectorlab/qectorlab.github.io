@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { SEO } from '../lib/seo';
 
 export default function License() {
@@ -18,7 +19,7 @@ export default function License() {
             Commercial use requires a written agreement from <span className="text-cyan-300 font-semibold">$1,500</span>. The Workbench GUI is free.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="/pricing" className="btn-cyan">View Pricing</a>
+            <Link to="/pricing" className="btn-cyan">View Pricing</Link>
             <a href="mailto:admin@qector.store" className="btn-outline">Contact for Commercial</a>
           </div>
         </div>
@@ -58,7 +59,7 @@ export default function License() {
             <h2 className="text-xl font-bold mb-4">Commercial License</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
               Commercial licenses grant internal use rights, written agreements, priority support, and
-              validation packages. See <a href="/pricing" className="text-cyan-300 hover:underline">Pricing</a> for tier details.
+              validation packages. See <Link to="/pricing" className="text-cyan-300 hover:underline">Pricing</Link> for tier details.
             </p>
             <p className="text-secondary text-sm leading-relaxed">
               All commercial licenses include: written license agreement, commercial use rights (internal),

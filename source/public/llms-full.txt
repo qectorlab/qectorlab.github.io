@@ -1,6 +1,6 @@
-# QECTOR Decoder 3 full context
+# QECTOR Decoder v3 full context
 
-QECTOR Decoder 3 is a Python and Rust quantum error correction decoder package by Guillaume Lessard / iD01t Productions.
+QECTOR Decoder v3 is a Python and Rust quantum error correction decoder package by Guillaume Lessard / iD01t Productions.
 
 ## Primary pages
 
