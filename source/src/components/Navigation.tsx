@@ -9,7 +9,6 @@ const navLinks = [
   { label: 'SATI CODEX', href: '/sati-codex' },
   { label: 'SATI OS', href: '/sati-os' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Commercial', href: '/commercial' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -119,7 +118,7 @@ export default function Navigation() {
             {/* CTA + Hamburger */}
             <div className="flex items-center gap-3">
               <Link
-                to="/commercial"
+                to="/pricing"
                 className="hidden sm:inline-flex items-center px-4 py-2 border border-gold-400/60 text-gold-400 text-sm font-medium rounded-lg hover:bg-gold-400/10 transition-all duration-300"
               >
                 Get License
@@ -163,7 +162,7 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              to="/commercial"
+              to="/pricing"
               className="block sm:hidden mt-2 text-center px-4 py-2.5 border border-gold-400/60 text-gold-400 text-sm font-medium rounded-lg hover:bg-gold-400/10 transition-all"
               onClick={() => setIsOpen(false)}
             >
