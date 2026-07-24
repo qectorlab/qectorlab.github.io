@@ -8,7 +8,7 @@ mechanisms (same detector set) into a single graphlike edge. We decode IDENTICAL
 seeded Stim shots through both and require their logical error rates to agree:
 overlapping Wilson 95% intervals AND QECTOR no worse than PyMatching beyond a
 small tie/Poisson slack. Agreement proves the graph collapse preserves logical
-decoding accuracy — it does not throw away information PyMatching uses on the
+decoding accuracy - it does not throw away information PyMatching uses on the
 full model.
 """
 
@@ -20,7 +20,7 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-from qector_decoder_v3 import pymatching_compat  # noqa: E402
+from qector_decoder_v3 import pymatching_compat
 
 
 def wilson(k, n, z=1.959963985):
@@ -67,12 +67,12 @@ def test_pymatching_full_dem_vs_collapsed(d):
     pl, ph = wilson(p_err, shots)
     overlap = not (qh < pl or ph < ql)
     assert overlap, (
-        f"d={d}: Wilson intervals disjoint — collapsed QECTOR "
+        f"d={d}: Wilson intervals disjoint - collapsed QECTOR "
         f"{q_err}/{shots} {ql:.4f}-{qh:.4f} vs full-DEM PyMatching "
         f"{p_err}/{shots} {pl:.4f}-{ph:.4f} (collapse lost accuracy)"
     )
     slack = max(4, int(0.3 * p_err))
     assert q_err <= p_err + slack, (
         f"d={d}: collapsed QECTOR {q_err} logical errors vs full-DEM "
-        f"PyMatching {p_err} (+{slack} slack) — collapse regression"
+        f"PyMatching {p_err} (+{slack} slack) - collapse regression"
     )

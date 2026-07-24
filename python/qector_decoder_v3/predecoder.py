@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.predecoder — a fast, faithful matching predecoder.
+qector_decoder_v3.predecoder - a fast, faithful matching predecoder.
 
 A predecoder cheaply resolves the "easy" part of a syndrome before handing the
 hard residual to a full decoder, cutting latency on sparse syndromes. This

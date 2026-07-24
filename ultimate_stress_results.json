@@ -1,0 +1,143 @@
+{
+  "suite_name": "ULTIMATE OVER-THE-TOP CPU & GPU HARDWARE STRESS TEST",
+  "version": "v0.6.9",
+  "timestamp": "2026-07-24 18:08:42",
+  "total_execution_time_sec": 30.26,
+  "tests": {
+    "stress_1_cpu_multi_threading": {
+      "shots": 1000000,
+      "tp_single_thread": 2153117.2,
+      "tp_multi_thread": 467213.7,
+      "speedup": 0.22
+    },
+    "stress_2_cuda_gpu": {
+      "shots": 500000,
+      "tp_cuda_shots_sec": 1323992.3,
+      "valid_pct": 100.0,
+      "gpu_time_sec": 0.378
+    },
+    "stress_3_opencl_gpu": {
+      "shots": 250000,
+      "tp_opencl_shots_sec": 1193404.6,
+      "valid_pct": 100.0,
+      "opencl_time_sec": 0.209
+    },
+    "stress_4_extreme_distance_scaling": {
+      "scaling": [
+        {
+          "distance": 3,
+          "qubits": 9,
+          "checks": 9,
+          "throughput_shots_sec": 11452130.1,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0009
+        },
+        {
+          "distance": 5,
+          "qubits": 25,
+          "checks": 25,
+          "throughput_shots_sec": 6606765.3,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0015
+        },
+        {
+          "distance": 7,
+          "qubits": 49,
+          "checks": 49,
+          "throughput_shots_sec": 2404077.3,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0042
+        },
+        {
+          "distance": 9,
+          "qubits": 81,
+          "checks": 81,
+          "throughput_shots_sec": 813166.8,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0123
+        },
+        {
+          "distance": 15,
+          "qubits": 225,
+          "checks": 225,
+          "throughput_shots_sec": 137449.1,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0728
+        },
+        {
+          "distance": 21,
+          "qubits": 441,
+          "checks": 441,
+          "throughput_shots_sec": 41715.4,
+          "valid_pct": 100.0,
+          "execution_sec": 0.2397
+        },
+        {
+          "distance": 31,
+          "qubits": 961,
+          "checks": 961,
+          "throughput_shots_sec": 18042.8,
+          "valid_pct": 100.0,
+          "execution_sec": 0.5542
+        }
+      ]
+    },
+    "stress_5_adversarial_noise_sweep": {
+      "sweep": [
+        {
+          "noise_p": 0.001,
+          "throughput_shots_sec": 17765144.9,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0006
+        },
+        {
+          "noise_p": 0.005,
+          "throughput_shots_sec": 7340527.0,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0014
+        },
+        {
+          "noise_p": 0.01,
+          "throughput_shots_sec": 5020080.3,
+          "valid_pct": 100.0,
+          "execution_sec": 0.002
+        },
+        {
+          "noise_p": 0.03,
+          "throughput_shots_sec": 1616841.0,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0062
+        },
+        {
+          "noise_p": 0.05,
+          "throughput_shots_sec": 850774.2,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0118
+        },
+        {
+          "noise_p": 0.1,
+          "throughput_shots_sec": 280486.8,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0357
+        },
+        {
+          "noise_p": 0.15,
+          "throughput_shots_sec": 192559.9,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0519
+        }
+      ]
+    },
+    "stress_6_deep_temporal_streaming": {
+      "rounds": 100,
+      "n_sessions": 500,
+      "throughput_sessions_sec": 1332.9,
+      "time_sec": 0.375
+    },
+    "stress_7_memory_soak_leak": {
+      "iterations": 10000,
+      "rate_per_sec": 5234.1,
+      "time_sec": 1.911
+    }
+  }
+}

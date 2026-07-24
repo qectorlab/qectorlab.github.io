@@ -1,10 +1,10 @@
 """
-qector_decoder_v3.sinter_compat — plug QECTOR into Sinter.
+qector_decoder_v3.sinter_compat - plug QECTOR into Sinter.
 
 `sinter <https://github.com/quantumlib/Stim/tree/main/glue/sample>`_ is the
 standard harness for Monte-Carlo logical-error-rate sampling of Stim circuits.
 Exposing QECTOR through Sinter's decoder interface makes QECTOR's accuracy
-**externally verifiable with the community-standard tool** — the same harness
+**externally verifiable with the community-standard tool** - the same harness
 people use to benchmark PyMatching, fusion-blossom, etc.
 
 Usage
@@ -25,12 +25,9 @@ Decoders provided: ``qector_blossom`` (weighted exact MWPM),
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Dict
+from typing import Dict
 
 import numpy as np
-
-if TYPE_CHECKING:
-    pass  # sinter types used only at runtime
 
 __all__ = ["QectorSinterDecoder", "qector_sinter_decoders"]
 
@@ -86,7 +83,7 @@ class QectorSinterDecoder(_SINTER_BASE):  # type: ignore[misc,valid-type]
             raise ImportError("sinter is not installed (pip install sinter)")
         self.kind = kind
 
-    def compile_decoder_for_dem(self, *, dem) -> "_CompiledQectorDecoder":
+    def compile_decoder_for_dem(self, *, dem) -> _CompiledQectorDecoder:
         matcher = _build_matcher(self.kind, dem)
         return _CompiledQectorDecoder(matcher, dem.num_detectors, dem.num_observables)
 
@@ -124,7 +121,7 @@ class _UnionFindSinter:
         return ((self._L @ corr.T) & 1).T.astype(np.uint8)
 
 
-def qector_sinter_decoders() -> Dict[str, "QectorSinterDecoder"]:
+def qector_sinter_decoders() -> Dict[str, QectorSinterDecoder]:
     """Return the ``custom_decoders`` mapping to pass to ``sinter.collect``."""
     if not _HAS_SINTER:  # pragma: no cover
         raise ImportError("sinter is not installed (pip install sinter)")

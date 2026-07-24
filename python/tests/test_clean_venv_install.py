@@ -2,7 +2,7 @@
 
 A *true* clean-venv build (create venv, ``maturin build``, ``pip install`` the
 wheel, import) is too slow for a unit test; that full round-trip is exercised by
-CI — the ``Dockerfile`` builds the wheel from scratch and ``.github/workflows``
+CI - the ``Dockerfile`` builds the wheel from scratch and ``.github/workflows``
 runs the suite across a Linux/Windows/macOS x Python 3.9-3.12 matrix.
 
 What *this* test verifies cheaply and deterministically is the property that the

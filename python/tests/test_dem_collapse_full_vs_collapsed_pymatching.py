@@ -2,7 +2,7 @@
 
 PyMatching decoding the *full* (uncollapsed) detector error model must give the
 same logical error rate as QECTOR decoding the *collapsed* graph on identical
-shots — collapsing parallel mechanisms is a speed optimisation that must not
+shots - collapsing parallel mechanisms is a speed optimisation that must not
 change logical outcomes.
 """
 
@@ -14,7 +14,7 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-from qector_decoder_v3 import dem, pymatching_compat  # noqa: E402
+from qector_decoder_v3 import dem, pymatching_compat
 
 
 def _wilson(k, n, z=1.959963985):

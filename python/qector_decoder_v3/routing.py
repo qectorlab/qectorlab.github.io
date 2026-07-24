@@ -1,8 +1,8 @@
 """
-qector_decoder_v3.routing — intelligent decoder router / auto-selection.
+qector_decoder_v3.routing - intelligent decoder router / auto-selection.
 
 QECTOR ships a zoo of decoders with very different correctness domains and cost
-profiles.  Picking the wrong one is not merely slow — it can be *invalid*: sending
+profiles.  Picking the wrong one is not merely slow - it can be *invalid*: sending
 a non-graphlike (qLDPC / hypergraph-product / color-code) problem to a pure
 matching decoder (Union-Find / Blossom) cannot in general satisfy ``H·c == s``.
 This module encodes a documented policy that maps a *decoding problem* (code
@@ -13,16 +13,16 @@ It complements :mod:`qector_decoder_v3.backend`.  ``backend.AutoDecoder`` answer
 "given a fixed graphlike decoder, which *execution backend* (single-thread CPU,
 Rayon, CUDA, OpenCL) should run this batch?".  This module answers the question
 one level up: "which *decoder family* is even appropriate here, and is it
-correct?".  The two compose — the router can hand a graphlike batch problem to a
+correct?".  The two compose - the router can hand a graphlike batch problem to a
 backend-aware path, and always routes hyperedge problems to BP-OSD.
 
 Two entry points:
 
-* :func:`recommend_decoder` — pure, side-effect-free policy. Returns the name of
+* :func:`recommend_decoder` - pure, side-effect-free policy. Returns the name of
   the recommended decoder class as a string.  :func:`recommend` returns the same
   decision as a rich :class:`Recommendation` (decoder + human-readable reason +
   classified family + resolved hardware + flags).
-* :class:`AutoRouter` — stateful, *constructs and caches* the chosen decoder and
+* :class:`AutoRouter` - stateful, *constructs and caches* the chosen decoder and
   dispatches :meth:`AutoRouter.decode`.  Crucially it inspects the **actual**
   check structure, so even if the caller mislabels a hyperedge code as
   ``"surface"`` the router detects ``max qubit degree > 2`` and forces BP-OSD,
@@ -53,8 +53,9 @@ Examples
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, replace
-from typing import Any, Mapping, Optional, Sequence, Union, cast
+from typing import Any, Optional, Union, cast
 
 import numpy as np
 
@@ -62,13 +63,13 @@ from . import gpu_backend as _gb
 from .backend import BackendConfig
 
 __all__ = [
+    "AutoRouter",
     "DecoderName",
     "HardwareProfile",
-    "detect_hardware",
     "Recommendation",
+    "detect_hardware",
     "recommend",
     "recommend_decoder",
-    "AutoRouter",
 ]
 
 
@@ -101,7 +102,7 @@ class DecoderName:
         BP_OSD,
     )
 
-    #: Decoders that assume a graphlike (matching) problem — every qubit in at
+    #: Decoders that assume a graphlike (matching) problem - every qubit in at
     #: most two checks.  Routing one of these to a hyperedge / qLDPC problem is
     #: *invalid* (cannot guarantee ``H·c == s``); :class:`AutoRouter` guards
     #: against it by forcing :data:`BP_OSD`.
@@ -175,7 +176,7 @@ class HardwareProfile:
     gpu: bool = False
 
     @classmethod
-    def detect(cls) -> "HardwareProfile":
+    def detect(cls) -> HardwareProfile:
         """Probe the live machine through :mod:`gpu_backend` (CPU-safe)."""
         return cls(cuda_rust=bool(_gb.has_cuda_rust()), gpu=bool(_gb.gpu_available()))
 
@@ -195,10 +196,10 @@ HardwareLike = Union[None, HardwareProfile, Mapping[str, Any], str]
 def _resolve_hardware(hardware: HardwareLike) -> HardwareProfile:
     """Normalise the many accepted ``hardware`` forms to a :class:`HardwareProfile`.
 
-    * ``None`` — probe the live machine via :mod:`gpu_backend`.
-    * :class:`HardwareProfile` — used as-is.
-    * mapping — keys ``cuda_rust``/``cuda`` and ``gpu``/``gpu_available``/``cupy``.
-    * string — ``"cpu"``/``"none"`` (no GPU), ``"cuda"``/``"cuda_rust"`` (Rust CUDA +
+    * ``None`` - probe the live machine via :mod:`gpu_backend`.
+    * :class:`HardwareProfile` - used as-is.
+    * mapping - keys ``cuda_rust``/``cuda`` and ``gpu``/``gpu_available``/``cupy``.
+    * string - ``"cpu"``/``"none"`` (no GPU), ``"cuda"``/``"cuda_rust"`` (Rust CUDA +
       device), ``"gpu"``/``"cupy"`` (CuPy device only), ``"all"`` (everything).
     """
     if hardware is None:
@@ -407,7 +408,7 @@ def recommend(
     code_family:
         Code family label (``"surface"``, ``"toric"``, ``"repetition"``,
         ``"qldpc"``, ``"bivariate_bicycle"``, ``"hypergraph_product"``,
-        ``"color"``, …) or a :class:`qector_decoder_v3.codes.Code` instance, whose
+        ``"color"``, ...) or a :class:`qector_decoder_v3.codes.Code` instance, whose
         structure is used directly.  ``None`` leaves the family unknown.
     distance, n_qubits:
         Code metadata steering the small-vs-large accuracy trade-off.
@@ -417,7 +418,7 @@ def recommend(
         ``"accuracy"`` (exact / near-optimal MWPM), ``"speed"`` (lowest-overhead
         Union-Find / GPU batch), or ``"balanced"`` (default heuristic).
     hardware:
-        ``None`` to probe the live machine, or an explicit override — a
+        ``None`` to probe the live machine, or an explicit override - a
         :class:`HardwareProfile`, a mapping, or a string (see
         :func:`_resolve_hardware`).
     graphlike:
@@ -603,7 +604,7 @@ class AutoRouter:
             ``(batch, n_qubits)`` correction.
         **ctx:
             ``code_family``, ``distance``, ``priority``, ``hardware``,
-            ``n_qubits`` — per-call overrides.
+            ``n_qubits`` - per-call overrides.
 
         Returns
         -------

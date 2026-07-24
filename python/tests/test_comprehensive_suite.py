@@ -6,29 +6,30 @@ DecoderPool, BP-OSD, sliding window, hybrid decoder, type stability, boundary co
 Run with:  pytest python/tests/test_comprehensive_suite.py -v
 """
 
-import sys
-import os
 import gc
+import os
+import sys
 import time
+
 import numpy as np
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from qector_decoder_v3 import (
-    codes,
-    UnionFindDecoder,
-    FastUnionFindDecoder,
+    AutoDecoder,
+    BeliefMatching,
     BlossomDecoder,
-    SparseBlossomDecoder,
-    CPUBatchDecoder,
     BPOSDDecoder,
+    CPUBatchDecoder,
     DecoderPool,
-    get_decoder,
+    FastUnionFindDecoder,
     HybridDecoder,
     PredecodedDecoder,
-    BeliefMatching,
-    AutoDecoder,
+    SparseBlossomDecoder,
+    UnionFindDecoder,
+    codes,
+    get_decoder,
 )
 
 np.random.seed(42)
@@ -99,7 +100,7 @@ def test_syndrome_faithfulness_multi_seed(seed):
 
 
 # =====================================================================
-# 2. ZERO SYNDROME (no errors) — should return zero correction
+# 2. ZERO SYNDROME (no errors) - should return zero correction
 # =====================================================================
 @pytest.mark.parametrize("dist", [3, 5, 7, 9])
 def test_zero_syndrome_returns_zero(dist):
@@ -119,7 +120,7 @@ def test_zero_syndrome_returns_zero(dist):
 
 
 # =====================================================================
-# 3. FULL SYNDROME (all 1s) — should decode without error
+# 3. FULL SYNDROME (all 1s) - should decode without error
 # =====================================================================
 @pytest.mark.parametrize("dist", [3, 5, 7])
 def test_full_syndrome_does_not_crash(dist):
@@ -219,7 +220,7 @@ def test_bposd_surface(dist):
 
 
 def test_bposd_batch_decode():
-    """BP-OSD does not have batch_decode — should not have the attribute."""
+    """BP-OSD does not have batch_decode - should not have the attribute."""
     code = codes.repetition_code(5)
     c2q, nq = code.check_to_qubits, code.n_qubits
     dec = BPOSDDecoder(c2q, nq, 0.08)
@@ -412,7 +413,7 @@ def test_auto_decoder_decode():
 
 
 # =====================================================================
-# 13. REPRODUCIBILITY — same syndrome should give same correction
+# 13. REPRODUCIBILITY - same syndrome should give same correction
 # =====================================================================
 def test_deterministic_decode():
     code = codes.repetition_code(9)
@@ -452,7 +453,7 @@ def test_surface_code_all_decoders(dist):
 
 
 # =====================================================================
-# 15. EDGE CASE — SYNDROME VECTOR LENGTH MISMATCH
+# 15. EDGE CASE - SYNDROME VECTOR LENGTH MISMATCH
 # =====================================================================
 def test_wrong_syndrome_length():
     code = codes.repetition_code(5)
@@ -464,7 +465,7 @@ def test_wrong_syndrome_length():
 
 
 # =====================================================================
-# 16. EDGE CASE — NUMBER OF QUBITS MISMATCH
+# 16. EDGE CASE - NUMBER OF QUBITS MISMATCH
 # =====================================================================
 def test_wrong_correction_length():
     """decode should always return n_qubits-length array."""
@@ -505,7 +506,7 @@ def test_cold_path_construction():
 
 
 # =====================================================================
-# 19. MEMORY TEST — NO LEAKS ON REPEATED CONSTRUCTIONS
+# 19. MEMORY TEST - NO LEAKS ON REPEATED CONSTRUCTIONS
 # =====================================================================
 def test_no_memory_leak_on_repeated_decode():
     code = codes.repetition_code(7)
@@ -569,7 +570,7 @@ def test_sparse_blossom_same_as_blossom():
         syn = (errors @ H.T) & 1
         c1 = bloom.decode(syn)
         c2 = sparse.decode(syn)
-        # Both are MWPM — should give same correction
+        # Both are MWPM - should give same correction
         assert np.array_equal(c1, c2), f"Blossom variants differ at seed={seed}"
 
 

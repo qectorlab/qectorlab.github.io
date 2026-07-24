@@ -2,9 +2,9 @@
 
 import numpy as np
 import pytest
-from hypothesis import given, strategies as st
-
 import qector_decoder_v3 as qd
+from hypothesis import given
+from hypothesis import strategies as st
 
 
 @pytest.fixture
@@ -98,7 +98,7 @@ class TestUnionFindDecoder:
 
         A weight-4 check with syndrome [1] must receive an ODD-parity correction
         so that H @ correction == syndrome. The previous assertion (`corr == 1`)
-        encoded an over-flip bug — flipping all four qubits gives even parity (0),
+        encoded an over-flip bug - flipping all four qubits gives even parity (0),
         which does NOT reproduce syndrome [1].
         """
         checks = [[0, 1, 2, 3]]

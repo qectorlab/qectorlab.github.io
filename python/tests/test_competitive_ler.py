@@ -15,9 +15,9 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-import qector_decoder_v3 as qd  # noqa: E402
-from qector_decoder_v3 import dem  # noqa: E402
-from qector_decoder_v3.pymatching_compat import Matching  # noqa: E402
+import qector_decoder_v3 as qd
+from qector_decoder_v3 import dem
+from qector_decoder_v3.pymatching_compat import Matching
 
 
 def _wilson(k, n, z=1.959963985):
@@ -82,7 +82,7 @@ def test_ler_parity_with_pymatching(d):
     # The two logical-error-rate confidence intervals must overlap (parity).
     assert q_lo <= p_hi and p_lo <= q_hi, (
         f"d={d}: QECTOR LER {q_err / shots:.4f} [{q_lo:.4f},{q_hi:.4f}] vs "
-        f"PyMatching {p_err / shots:.4f} [{p_lo:.4f},{p_hi:.4f}] — intervals disjoint"
+        f"PyMatching {p_err / shots:.4f} [{p_lo:.4f},{p_hi:.4f}] - intervals disjoint"
     )
     # QECTOR should never be dramatically worse.
     assert q_err <= p_err + 3 * math.sqrt(max(p_err, 1))

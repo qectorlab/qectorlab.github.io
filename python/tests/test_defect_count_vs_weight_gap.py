@@ -4,7 +4,7 @@ A failing candidate-set heuristic shows up as the weight gap increasing with the
 number of defects (denser syndromes => more chances to miss the optimal pairing).
 This test builds the (defect_count, excess_weight) scatter and asserts there is no
 meaningful positive correlation and the gap stays tiny across the whole defect
-range — i.e. adaptive-k scales with defect count as intended.
+range - i.e. adaptive-k scales with defect count as intended.
 """
 
 import numpy as np
@@ -13,7 +13,7 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-from qector_decoder_v3 import dem, pymatching_compat  # noqa: E402
+from qector_decoder_v3 import dem, pymatching_compat
 
 
 def _scatter(d, shots, seed=20260622, noise=0.005):

@@ -1,5 +1,5 @@
 """
-QECTOR Qiskit Plugin — intégration optionnelle avec l'écosystème Qiskit.
+QECTOR Qiskit Plugin - intégration optionnelle avec l'écosystème Qiskit.
 
 Permet d'utiliser QECTOR comme decoder par défaut pour les résultats
 de circuits de codes de surface Qiskit.
@@ -13,7 +13,7 @@ Usage (avec Qiskit installé) ::
     result = job.result()  # qiskit.result.Result
     decoded = decoder(result)
 
-Usage (sans Qiskit — mode dict brut) ::
+Usage (sans Qiskit - mode dict brut) ::
 
     raw = {"counts": {"0x0": 400, "0x3": 100}}
     out = decode_qiskit_result(raw, code_distance=3)
@@ -29,7 +29,7 @@ import numpy as np
 
 from . import BlossomDecoder, generate_surface_code_checks
 
-# Import optionnel de Qiskit — le plugin reste importable sans Qiskit
+# Import optionnel de Qiskit - le plugin reste importable sans Qiskit
 # ------------------------------------------------------------------------
 try:
     from qiskit.result import Result as _QiskitResult
@@ -61,7 +61,7 @@ def _bitstring_to_syndrome(bitstring: str, n_checks: int) -> List[int]:
         val = int(bitstring, 16)
         return [(val >> i) & 1 for i in range(n_checks)]
 
-    # Chaîne binaire : '0101...' — on inverse pour que le LSB soit en index 0
+    # Chaîne binaire : '0101...' - on inverse pour que le LSB soit en index 0
     bits = [int(c) for c in bitstring][::-1]
     if len(bits) < n_checks:
         bits += [0] * (n_checks - len(bits))
@@ -84,7 +84,7 @@ def decode_qiskit_result(
         Résultat d'un job Qiskit. Si Qiskit n'est pas installé, un dict
         avec la clé ``counts`` est accepté.
     code_distance : int
-        Distance du code de surface (ex: 3, 5, 7, …).
+        Distance du code de surface (ex: 3, 5, 7, ...).
     shots : int, optionnel
         Nombre de shots. Déduit automatiquement de ``result`` si absent.
     n_qubits : int, optionnel
@@ -94,8 +94,8 @@ def decode_qiskit_result(
     -------
     dict
         {
-            "correction": np.ndarray — correction pour chaque shot,
-            "syndrome": np.ndarray — syndrome déduit,
+            "correction": np.ndarray - correction pour chaque shot,
+            "syndrome": np.ndarray - syndrome déduit,
             "metadata": {
                 "decoder": "QECTOR Blossom",
                 "code_distance": int,

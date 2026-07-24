@@ -1,9 +1,9 @@
-"""Tests for qector_decoder_v3.gpu_backend — the CuPy GPU backend abstraction.
+"""Tests for qector_decoder_v3.gpu_backend - the CuPy GPU backend abstraction.
 
 Covers BOTH paths:
   * the CPU-fallback path (runs everywhere, including CuPy-less machines), and
   * the real GPU path (guarded with ``skipif(not gpu_available())`` so it only
-    runs where a usable CUDA device + CuPy are present — e.g. this machine's
+    runs where a usable CUDA device + CuPy are present - e.g. this machine's
     GTX 1660 Ti with cupy 14.x).
 """
 
@@ -11,7 +11,6 @@ from types import ModuleType
 
 import numpy as np
 import pytest
-
 from qector_decoder_v3 import gpu_backend as gb
 
 GPU = gb.gpu_available()

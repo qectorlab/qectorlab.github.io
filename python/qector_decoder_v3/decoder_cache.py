@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.decoder_cache — LRU-decoder cache and factory functions.
+qector_decoder_v3.decoder_cache - LRU-decoder cache and factory functions.
 
 Caches decoder instances by ``(checks_tuple, n_qubits, decoder_type)`` so
 repeated construction of identical decoders is free after the first call.
@@ -23,7 +23,7 @@ from typing import Optional, Tuple
 
 import numpy as _np
 
-__all__ = ["get_decoder", "clear_decoder_cache", "get_decoder_pool"]
+__all__ = ["clear_decoder_cache", "get_decoder", "get_decoder_pool"]
 
 
 def _normalize_decoder_name(name: str) -> str:
@@ -70,7 +70,7 @@ def get_decoder(
     Args:
         checks_tuple: Ideally ``tuple(tuple(c) for c in check_to_qubits)``,
             but a plain list of lists (the format returned directly by
-            ``generate_repetition_code_checks`` etc.) is also accepted — it
+            ``generate_repetition_code_checks`` etc.) is also accepted - it
             is normalized to a canonical hashable tuple here before the
             cache lookup, so the LRU cache still hits on repeated calls with
             equal values either way. Passing a tuple directly on a hot path
@@ -112,7 +112,7 @@ def get_decoder_pool(
     """Get a multi-process :class:`DecoderPool`, constructed once and cached.
 
     Args:
-        checks_tuple: ``tuple(tuple(c) for c in check_to_qubits)`` — hashable.
+        checks_tuple: ``tuple(tuple(c) for c in check_to_qubits)`` - hashable.
         n_qubits: Number of data qubits.
         decoder_type: Which decoder to use in each worker.
         n_workers: Number of worker processes (default: ``os.cpu_count()``).

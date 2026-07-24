@@ -10,13 +10,12 @@ report's structural and order-statistic invariants:
 * the run is syndrome-faithful, and
 * ``n_qubits`` grows with distance (d^2 for the rotated surface code).
 
-Only order-statistic and faithfulness facts are asserted — never wall-clock
-thresholds — so the test does not flake under machine load.
+Only order-statistic and faithfulness facts are asserted - never wall-clock
+thresholds - so the test does not flake under machine load.
 """
 
 import numpy as np
 import pytest
-
 from qector_decoder_v3 import benchmarking as bm
 from qector_decoder_v3 import codes
 

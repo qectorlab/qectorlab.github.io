@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.bposd — belief propagation + ordered-statistics decoding.
+qector_decoder_v3.bposd - belief propagation + ordered-statistics decoding.
 
 A self-contained Python BP-OSD for general (LDPC / non-graphlike) CSS codes,
 built on the shared vectorised min-sum BP. When BP alone explains the syndrome it
@@ -7,7 +7,7 @@ returns immediately; otherwise an **exact GF(2) ordered-statistics** post-proces
 (OSD-0, with an optional small combination sweep OSD-w) produces a guaranteed
 syndrome-consistent correction using BP's reliabilities.
 
-This is the path for codes matching cannot handle — bivariate-bicycle,
+This is the path for codes matching cannot handle - bivariate-bicycle,
 hypergraph-product, bicycle. It is cross-validated against the reference ``ldpc``
 package's BP-OSD in the test suite.
 
@@ -127,7 +127,7 @@ class BpOsdDecoder:
         When a CUDA device is usable (and ``use_gpu`` is not ``False``), the BP stage
         for the whole batch is run **once** on the GPU via
         :class:`qector_decoder_v3.bp_cupy.BatchedBpDecoder`. Shots that BP already
-        explains (``H @ c == s``) are returned directly (the OSD-0 fast path — no
+        explains (``H @ c == s``) are returned directly (the OSD-0 fast path - no
         ordered-statistics work); only the residual non-converged shots are sent
         through the exact GF(2) OSD post-process, seeded with that shot's GPU BP
         reliabilities. The result is bit-for-bit a valid BP-OSD output and matches

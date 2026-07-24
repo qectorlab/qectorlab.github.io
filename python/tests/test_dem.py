@@ -1,4 +1,4 @@
-"""Tests for qector_decoder_v3.dem — the Stim DEM loader.
+"""Tests for qector_decoder_v3.dem - the Stim DEM loader.
 
 These run without Stim installed: DEM text is parsed directly.  They lock in the
 correct detector-graph semantics (mechanisms = columns, detectors = rows) that
@@ -6,9 +6,7 @@ replaced the earlier broken stim_compat heuristic.
 """
 
 import numpy as np
-
 from qector_decoder_v3 import dem
-
 
 REP_DEM = """
 error(0.1) D0 L0

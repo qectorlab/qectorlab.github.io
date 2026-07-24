@@ -2,12 +2,11 @@
 
 After feeding several ``update(...)`` rounds, ``flush()`` must clear the buffered
 history so that the next decode reproduces exactly what a freshly-constructed
-decoder produces — i.e. no stale carryover survives a flush.  Asserted via
+decoder produces - i.e. no stale carryover survives a flush.  Asserted via
 bit-identical corrections and the core invariant ``(H @ corr) & 1 == s``.
 """
 
 import numpy as np
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 

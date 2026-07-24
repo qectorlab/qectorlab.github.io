@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.bp_cupy — batched, GPU-resident belief propagation.
+qector_decoder_v3.bp_cupy - batched, GPU-resident belief propagation.
 
 This module is the batched counterpart of the single-shot, edge-vectorised BP in
 :mod:`qector_decoder_v3._bp_core`. Where ``_bp_core`` runs one syndrome at a time
@@ -18,7 +18,7 @@ Design goals
 * **GPU-resident.** The Tanner incidence (``ic``/``ie``), the prior LLRs and all
   message buffers are built **once** on the device in :meth:`__init__`. Per call,
   only the syndrome stack is moved host→device and only the corrections (and
-  optionally the posterior LLRs / convergence mask) are moved device→host — the
+  optionally the posterior LLRs / convergence mask) are moved device→host - the
   minimal possible traffic across the PCIe boundary.
 * **Faithful semantics.** The recurrences are a line-for-line batched port of
   :func:`_bp_core.min_sum_bp` (normalised min-sum, ``alpha`` == ``ms_scale``) and
@@ -67,8 +67,8 @@ class BatchedBpDecoder:
     """Batched belief-propagation decoder over a fixed GF(2) check matrix ``H``.
 
     The decoder is built once for a given ``H`` (and prior model) and then decodes
-    arbitrarily many syndrome stacks. All device-resident state — the Tanner
-    incidence, the prior log-likelihood ratios and the reusable scratch buffers —
+    arbitrarily many syndrome stacks. All device-resident state - the Tanner
+    incidence, the prior log-likelihood ratios and the reusable scratch buffers -
     is allocated in :meth:`__init__`, so steady-state decoding moves only the
     syndromes in and the corrections out.
 

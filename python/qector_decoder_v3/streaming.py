@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.streaming — a higher-level Python streaming / multi-round
+qector_decoder_v3.streaming - a higher-level Python streaming / multi-round
 decode *orchestration* layer.
 
 The compiled Rust core already exports two low-level streaming primitives,
@@ -8,15 +8,15 @@ The compiled Rust core already exports two low-level streaming primitives,
 **not** shadow or reuse those names.  Instead it provides a thin, dependency-free
 Python orchestration built *on top of* the ordinary single-shot decoders:
 
-* :class:`StreamingSession` — feed syndrome rounds in one at a time; each round is
+* :class:`StreamingSession` - feed syndrome rounds in one at a time; each round is
   decoded immediately by an inner decoder and held in a sliding *commit buffer* of
   ``window_size`` rounds.  Once a round ages out of the window it is **committed**
   (released, in order).  :meth:`StreamingSession.flush` commits whatever remains.
-* :func:`sliding_window_decode` — a batched convenience that decodes an entire
+* :func:`sliding_window_decode` - a batched convenience that decodes an entire
   multi-round stream (single shot *or* many shots) window-by-window and returns a
   :class:`StreamingResult`.
 
-Decoding model (read this — it is an honest, deliberately simple model)
+Decoding model (read this - it is an honest, deliberately simple model)
 ----------------------------------------------------------------------
 Each *round* carries one spatial syndrome ``s_t`` over the code's ``n_checks``
 checks, and is decoded **independently** by the inner decoder:
@@ -29,9 +29,9 @@ of that round's syndrome.  Two consequences this layer guarantees and tests:
   correction (``H @ c == s (mod 2)``), every *committed* correction is valid by
   construction.  This layer never weakens that bar.
 * **Window-invariance / full-decode equivalence (stateless decoders).**  For a
-  *stateless* inner decoder — i.e. ``decode``/``batch_decode`` is a pure function of
+  *stateless* inner decoder - i.e. ``decode``/``batch_decode`` is a pure function of
   the syndrome, true of the package's Union-Find family and exact
-  ``BlossomDecoder`` — the committed correction for round ``t`` is ``inner.decode(s_t)``
+  ``BlossomDecoder`` - the committed correction for round ``t`` is ``inner.decode(s_t)``
   regardless of ``window_size`` or whether the rounds were decoded one-at-a-time
   (:class:`StreamingSession`) or in batched windows (:func:`sliding_window_decode`).
   So streaming reproduces a single full per-round decode bit-for-bit; the window
@@ -43,7 +43,7 @@ of that round's syndrome.  Two consequences this layer guarantees and tests:
   bit-for-bit window-invariance is forfeit, and the layer never claims otherwise.
 
 This layer does **not** claim to implement full space-time (circuit-level)
-matching with time-like edges — that would be a different, heavier construction.
+matching with time-like edges - that would be a different, heavier construction.
 
 Telemetry is **real**: per-window wall time is measured with
 :func:`time.perf_counter` around the inner-decoder call only, and the GPU helpers
@@ -70,17 +70,18 @@ from __future__ import annotations
 
 import time
 from collections import deque
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Optional, Sequence
+from typing import Any, Optional
 
 import numpy as np
 
 from . import gpu_backend as _gb
 
 __all__ = [
-    "StreamingTelemetry",
     "StreamingResult",
     "StreamingSession",
+    "StreamingTelemetry",
     "sliding_window_decode",
 ]
 
@@ -97,10 +98,10 @@ def _resolve_default_decoder(check_to_qubits: list[list[int]], n_qubits: int) ->
     the *name* of a decoder class, which is instantiated as
     ``Cls(check_to_qubits, n_qubits)`` and sanity-checked with a trivial decode.
     Any failure (routing absent, odd signature, non-graphlike-only decoder, bad
-    instance) degrades cleanly to ``FastUnionFindDecoder`` — the routing module is
+    instance) degrades cleanly to ``FastUnionFindDecoder`` - the routing module is
     an optional convenience, never a hard dependency.
     """
-    try:  # optional routing hook — guard the import + call + instantiation fully
+    try:  # optional routing hook - guard the import + call + instantiation fully
         from . import routing as _routing  # type: ignore[attr-defined]
 
         rec = getattr(_routing, "recommend_decoder", None)
@@ -281,7 +282,7 @@ class StreamingResult:
         ``(n_shots, n_rounds, n_qubits)`` for a batch.  ``uint8``.
     syndromes:
         The syndrome rounds that were decoded, same leading shape as
-        ``corrections`` but with ``n_checks`` trailing — used for validity checks.
+        ``corrections`` but with ``n_checks`` trailing - used for validity checks.
     telemetry:
         The :class:`StreamingTelemetry` for the run.
     logical_flips:
@@ -318,7 +319,7 @@ class StreamingResult:
 
 
 # ---------------------------------------------------------------------------
-# StreamingSession — incremental window + commit
+# StreamingSession - incremental window + commit
 # ---------------------------------------------------------------------------
 class StreamingSession:
     """Incremental multi-round decode with a sliding commit buffer.
@@ -343,8 +344,8 @@ class StreamingSession:
         Inner decoder instance (anything with ``.decode``).  Defaults to
         ``routing.recommend_decoder(...)`` if available, else ``FastUnionFindDecoder``.
     logicals:
-        Optional logical observables — a ``(n_logicals, n_qubits)`` matrix or a
-        list of qubit-index sets — used to compute logical flips on committed rounds.
+        Optional logical observables - a ``(n_logicals, n_qubits)`` matrix or a
+        list of qubit-index sets - used to compute logical flips on committed rounds.
     prefer_gpu:
         If not ``None``, sets the global GPU preference for the duration of the
         session's vectorised math (logical flips / validity).  Detection still

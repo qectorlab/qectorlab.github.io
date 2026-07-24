@@ -1,4 +1,4 @@
-"""Tests for qector_decoder_v3.sinter_compat — Sinter integration.
+"""Tests for qector_decoder_v3.sinter_compat - Sinter integration.
 
 Runs a small real ``sinter.collect`` with QECTOR decoders. The key assertions:
 the decoders are accepted by Sinter, bit-packing is correct (sane LERs, not ~0.5),
@@ -11,7 +11,7 @@ stim = pytest.importorskip("stim")
 sinter = pytest.importorskip("sinter")
 pymatching = pytest.importorskip("pymatching")
 
-from qector_decoder_v3.sinter_compat import qector_sinter_decoders  # noqa: E402
+from qector_decoder_v3.sinter_compat import qector_sinter_decoders
 
 
 def _tasks():

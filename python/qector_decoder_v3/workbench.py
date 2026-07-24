@@ -1,9 +1,9 @@
 """
-qector_decoder_v3.workbench — the QECTOR Workbench application controller.
+qector_decoder_v3.workbench - the QECTOR Workbench application controller.
 
 A headless, fully-testable backend for the QECTOR desktop Workbench.  It loads
 real ``.stim`` / ``.dem`` files, runs real decode benchmarks through a cancelable
-background job queue, and exports the resulting artifacts to JSON / CSV / PDF —
+background job queue, and exports the resulting artifacts to JSON / CSV / PDF -
 every number traced to a real decode (no fabricated data).  A thin GUI (see
 ``rest_api`` / the ``run-qector`` skill) wraps this controller; the controller is
 what the test-suite drives, so the GUI stays a presentation shell.
@@ -45,7 +45,7 @@ import numpy as np
 from . import benchmarking as _bm
 from . import codes as _codes
 
-__all__ = ["Workbench", "Job", "WorkbenchError"]
+__all__ = ["Job", "Workbench", "WorkbenchError"]
 
 
 class WorkbenchError(RuntimeError):
@@ -307,7 +307,8 @@ class Workbench:
     def _ler(self, kind, code, ler_ctx, shots) -> Optional[float]:
         """Real LER from Stim shots for a stim-loaded problem (graphlike only)."""
         try:
-            import stim  # noqa: F401
+            import stim
+
             from . import pymatching_compat
 
             circuit = ler_ctx["circuit"]
@@ -496,7 +497,7 @@ class Workbench:
             fig = plt.figure(figsize=(8.27, 11.69))
             fig.clf()
             txt = [
-                "QECTOR Workbench — Benchmark Report",
+                "QECTOR Workbench - Benchmark Report",
                 "",
                 f"git commit : {env.get('git_commit')}",
                 f"platform   : {env.get('platform')}",
@@ -507,7 +508,7 @@ class Workbench:
             ]
             for r in rows[:30]:
                 txt.append(
-                    f"  {r.get('decoder'):16s} {str(r.get('code')):18s} "
+                    f"  {r.get('decoder'):16s} {r.get('code')!s:18s} "
                     f"faithful={r.get('syndrome_faithful')} "
                     f"p50={r.get('latency_us', {}).get('p50', 0):.2f}us"
                 )

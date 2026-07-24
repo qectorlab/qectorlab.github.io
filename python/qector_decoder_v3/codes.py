@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.codes — Code-family helpers.
+qector_decoder_v3.codes - Code-family helpers.
 
 Construct the parity-check structure (``check_to_qubits``) for the common QEC
 code families used to benchmark and validate decoders, in the exact format the
@@ -14,7 +14,7 @@ qubit appears in at most two checks, so the Union-Find / Blossom / Sparse-Blosso
 build arbitrary CSS parity checks for the LDPC / BP-OSD path.
 
 Every generator is validated empirically by the syndrome-faithfulness test suite
-(``H @ decode(s) == s (mod 2)``) — see ``python/tests/test_codes.py``.
+(``H @ decode(s) == s (mod 2)``) - see ``python/tests/test_codes.py``.
 
 Examples
 --------
@@ -27,24 +27,25 @@ Examples
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, List, Optional, Sequence, Tuple
+from typing import Any, List, Optional, Tuple
 
 import numpy as np
 
 __all__ = [
     "Code",
+    "bicycle_code",
+    "bivariate_bicycle_code",
+    "from_parity_check_matrix",
+    "heavy_hex_code",
+    "hypergraph_product",
+    "list_codes",
     "repetition_code",
     "ring_code",
     "rotated_surface_code",
-    "unrotated_surface_code",
     "toric_code",
-    "heavy_hex_code",
-    "from_parity_check_matrix",
-    "hypergraph_product",
-    "bivariate_bicycle_code",
-    "bicycle_code",
-    "list_codes",
+    "unrotated_surface_code",
 ]
 
 
@@ -98,7 +99,7 @@ class Code:
         return H
 
     # convenient alias
-    def H(self) -> np.ndarray:  # noqa: N802 - matches QEC convention
+    def H(self) -> np.ndarray:
         return self.parity_check_matrix()
 
     def logicals_matrix(self) -> Optional[np.ndarray]:
@@ -155,7 +156,7 @@ def repetition_code(distance: int) -> Code:
     """Open 1D repetition code: ``d`` qubits in a line, ``d-1`` weight-2 checks.
 
     The two end qubits are boundary edges (degree 1).  Logical observable is a
-    single boundary-crossing edge ``{0}`` — verified valid because every residual
+    single boundary-crossing edge ``{0}`` - verified valid because every residual
     error after matching lies in ``ker(H) = {0, all-ones}`` and ``{0}``
     distinguishes them.
     """
@@ -197,7 +198,7 @@ def ring_code(n: int) -> Code:
 # Surface codes
 # ---------------------------------------------------------------------------
 def rotated_surface_code(distance: int) -> Code:
-    """Rotated surface code, single (Z) sector — a matching graph.
+    """Rotated surface code, single (Z) sector - a matching graph.
 
     ``d*d`` data qubits on a square grid; weight-4 plaquette checks on the
     sublattice ``(r+c) even`` plus weight-2 boundary checks so that each interior
@@ -238,7 +239,7 @@ def rotated_surface_code(distance: int) -> Code:
 
 
 def unrotated_surface_code(distance: int) -> Code:
-    """Unrotated (planar) surface code, single sector — a matching graph.
+    """Unrotated (planar) surface code, single sector - a matching graph.
 
     Data qubits on the edges of a ``d x d`` vertex lattice; Z-stabilizers on the
     vertex stars (weight 2/3/4, boundary qubits degree 1).  Matches the
@@ -280,7 +281,7 @@ def unrotated_surface_code(distance: int) -> Code:
 
 
 def toric_code(size: int) -> Code:
-    """Toric code on an ``L x L`` torus, single (vertex/Z) sector — matching graph.
+    """Toric code on an ``L x L`` torus, single (vertex/Z) sector - matching graph.
 
     ``2*L^2`` qubits live on the edges of the torus; the ``L^2`` vertex checks
     each touch four edges and every edge is shared by exactly two vertices.
@@ -480,7 +481,7 @@ def bicycle_code(n_circulant: int, weight: int = 4, seed: int = 0) -> Tuple[Code
 
     Builds two sparse circulants ``A`` and ``B`` of size ``n_circulant`` (each with
     ``weight//2`` ones per row) and forms ``Hx = [A | B]``, ``Hz = [B^T | A^T]``.
-    Circulants commute, so ``Hx Hz^T = AB + BA = 2AB = 0 (mod 2)`` — a valid CSS
+    Circulants commute, so ``Hx Hz^T = AB + BA = 2AB = 0 (mod 2)`` - a valid CSS
     code on ``2*n_circulant`` qubits. Decode with BP-OSD.
     """
     n = int(n_circulant)
@@ -505,16 +506,16 @@ def bicycle_code(n_circulant: int, weight: int = 4, seed: int = 0) -> Tuple[Code
 
 
 def hypergraph_product(H1: Any, H2: Optional[Any] = None) -> Tuple[Code, Code]:
-    """Tillich–Zémor hypergraph-product CSS code from seed matrix/matrices.
+    """Tillich-Zémor hypergraph-product CSS code from seed matrix/matrices.
 
     Given a single seed ``H1`` (then ``H2 = H1``) or two seeds, returns
-    ``(code_x, code_z)`` — the X- and Z-sector :class:`Code` objects of the
+    ``(code_x, code_z)`` - the X- and Z-sector :class:`Code` objects of the
     resulting CSS code.  The classic GF(2) construction:
 
         Hx = [ H1 ⊗ I_{n2} | I_{r1} ⊗ H2^T ]
         Hz = [ I_{n1} ⊗ H2 | H1^T ⊗ I_{r2} ]
 
-    These sectors are generally **not** graphlike — decode with BP-OSD.
+    These sectors are generally **not** graphlike - decode with BP-OSD.
     """
     A = _to_dense_binary(H1)
     B = _to_dense_binary(H2) if H2 is not None else A

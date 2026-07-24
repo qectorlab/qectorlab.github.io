@@ -11,7 +11,7 @@ import numpy as np
 
 
 def build_incidence(H: np.ndarray):
-    """Return (ic, ie) — check and edge index per nonzero of H."""
+    """Return (ic, ie) - check and edge index per nonzero of H."""
     ic, ie = np.nonzero(H)
     return ic.astype(np.int64), ie.astype(np.int64)
 

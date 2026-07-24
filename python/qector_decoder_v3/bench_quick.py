@@ -1,6 +1,7 @@
-"""bench_quick — smoke diagnostic for qector-decoder-v3 v0.6.8"""
+"""bench_quick - smoke diagnostic for qector-decoder-v3 v0.6.9"""
 
 from __future__ import annotations
+
 import platform
 import sys
 import time
@@ -17,7 +18,7 @@ def _ver():
 
             return v
         except Exception:
-            return "0.6.8-unknown"
+            return "0.6.9-unknown"
 
 
 def _detect_avx2():
@@ -64,7 +65,8 @@ def main():
 
     try:
         import numpy as np
-        from . import UnionFindDecoder, BlossomDecoder
+
+        from . import BlossomDecoder, UnionFindDecoder
 
         checks = [[0, 1], [1, 2], [2, 3], [3, 4]]
         nq = 5

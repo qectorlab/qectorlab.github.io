@@ -10,6 +10,22 @@ environment so report figures trace back to a specific build.
 ### Notes
 - v0.6.8 hotfix published to PyPI, superseding the broken v0.6.7.
 
+## [0.6.9] - 2026-07-24
+
+### Added
+- **Task A — Exact log-domain BP**: `BpMethod{MinSum,Exact}` enum in `bp_osd.rs`, default `Exact`. `phi(x) = -ln(tanh(x/2))` via hybrid exact (<0.25) + 65536-entry interpolated LUT ([0.25, 20]) + 0.0 (≥20). Deterministic reliability ranking (`rel_key` 1e-6 quantization + index tie-break) fixes float-noise OSD-0 basis flipping. PyO3 `bp_method` kwarg (`"exact"`/`"min_sum"`).
+- **Task B — Higher-order OSD**: true combination-sweep OSD-1/2 in `bp_osd.rs` — flip subsets of W≤12 least-reliable selected columns, residual GF(2) re-solve with syndrome pre-subtraction, min-weight faithful candidate wins. PyO3 `osd_order` kwarg (0 default preserved, non-breaking).
+- **Task C — GNN-enhanced belief matching**: `GNNBeliefMatcher` class in `belief_matching.py` — end-to-end GNN-guided MWPM pipeline (`DetectorGraph` → `GNNPredecoder.predict_with_node_probs` → per-edge weights → max-per-qubit fan-in → `SparseBlossomDecoder.decode_with_weights` → faithfulness fallback). Optional synthetic training (`train_samples`/`error_rate`/`train_epochs`/`seed`). `decode_with_gnn` one-shot helper. Both re-exported at package top level.
+- **`BPOSDDecoder` Python wrapper** now forwards `bp_method`/`osd_order` kwargs (additive, default-preserving).
+- **`backend.py`**: batch-decode 1D-output reshape fix (handles decoders returning flat arrays for 2D input).
+- **`stripe_integration.py`**: `create_license_token` import fallback when `generate_license_keys` is absent.
+
+### Fixed
+- **blossom.rs boundary bug**: boundary node matched without `boundary_spt`, panicking on odd-defect boundary-less codes.
+
+### Performance / internals (dev.md items, this cycle)
+- f32 GNN stack (Task 2.1); seeded GNN init (6.5); hybrid hot-path allocations (6.7); word-packed GF(2) solver `src/gf2.rs` shared by BP-OSD and Blossom (1.1); hyperedge `BestEffortVerified` policy (7.2); mwpm dense fallback threshold (4.1); RadixHeap SmallVec buckets (4.4); sliding-window bit-packed history (5.2); latency quantiles (5.4); NoHashHasher lookup table (2.3); safetensors strict shape guard (2.4).
+
 ## [0.6.8] - 2026-07-22
 
 ### Fixed

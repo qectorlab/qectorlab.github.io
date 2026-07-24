@@ -1,0 +1,132 @@
+{
+  "suite_name": "EPIC QECTOR Industrial Stress & Accessibility Benchmark",
+  "version": "v0.6.9",
+  "timestamp": "2026-07-24 17:44:22",
+  "total_execution_time_sec": 24.25,
+  "pillars": {
+    "pillar_1_dem_surface_code": {
+      "pymatching": {
+        "init_ms": 6.204,
+        "decode_sec": 0.0257,
+        "throughput_shots_per_sec": 388776.8,
+        "logical_error_rate": 0.011,
+        "errors": 110
+      },
+      "qector_blossom": {
+        "decode_sec": 0.0028,
+        "throughput_shots_per_sec": 3607373.5,
+        "syndrome_valid_pct": 100.0,
+        "speedup_vs_pymatching": 9.28
+      },
+      "qector_fast_uf": {
+        "decode_sec": 0.0013,
+        "throughput_shots_per_sec": 7970032.7,
+        "syndrome_valid_pct": 100.0,
+        "speedup_vs_pymatching": 20.5
+      }
+    },
+    "pillar_2_qldpc_bposd": {
+      "ldpc_bposd": {
+        "init_ms": 1.147,
+        "throughput_shots_per_sec": 53070.4,
+        "valid_pct": 100.0,
+        "mean_latency_us": 8.99,
+        "p50_us": 9.4,
+        "p99_us": 17.62
+      },
+      "qector_bposd": {
+        "init_ms": 0.113,
+        "throughput_shots_per_sec": 31673.3,
+        "valid_pct": 100.0,
+        "mean_latency_us": 31.3,
+        "p50_us": 28.8,
+        "p99_us": 40.8,
+        "speedup_vs_ldpc_library": 0.6
+      }
+    },
+    "pillar_3_extreme_scaling": {
+      "distances": [
+        {
+          "distance": 3,
+          "qubits": 9,
+          "checks": 9,
+          "throughput_shots_per_sec": 15315342.9,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0033
+        },
+        {
+          "distance": 5,
+          "qubits": 25,
+          "checks": 25,
+          "throughput_shots_per_sec": 5197019.0,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0096
+        },
+        {
+          "distance": 7,
+          "qubits": 49,
+          "checks": 49,
+          "throughput_shots_per_sec": 1819783.2,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0275
+        },
+        {
+          "distance": 9,
+          "qubits": 81,
+          "checks": 81,
+          "throughput_shots_per_sec": 540042.0,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0926
+        },
+        {
+          "distance": 15,
+          "qubits": 225,
+          "checks": 225,
+          "throughput_shots_per_sec": 78842.8,
+          "valid_pct": 100.0,
+          "execution_sec": 0.6342
+        },
+        {
+          "distance": 21,
+          "qubits": 441,
+          "checks": 441,
+          "throughput_shots_per_sec": 34362.6,
+          "valid_pct": 100.0,
+          "execution_sec": 1.4551
+        }
+      ]
+    },
+    "pillar_4_temporal_streaming": {
+      "distance": 5,
+      "rounds": 20,
+      "window_size": 3,
+      "n_sessions": 1000,
+      "execution_sec": 0.1357,
+      "streaming_sessions_per_sec": 7366.8
+    },
+    "pillar_5_multithread_and_gpu": {
+      "cpu_single_thread": {
+        "throughput": 2030184.8,
+        "time_sec": 0.0493
+      },
+      "cpu_multi_thread_8": {
+        "throughput": 3236442.3,
+        "time_sec": 0.0309,
+        "scaling_vs_single_thread": 1.59
+      },
+      "cuda_gpu": {
+        "available": true,
+        "throughput": 3654332.6
+      }
+    },
+    "pillar_6_cost_roi_index": {
+      "compute_hours_per_billion_shots_pymatching": 0.71,
+      "compute_hours_per_billion_shots_qector": 0.08,
+      "cost_per_billion_shots_pymatching_usd": 0.04,
+      "cost_per_billion_shots_qector_usd": 0.0,
+      "net_compute_savings_usd": 0.03,
+      "cost_reduction_pct": 89.2,
+      "overall_market_acceleration": 9.28
+    }
+  }
+}

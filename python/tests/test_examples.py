@@ -1,8 +1,8 @@
 """Regression tests for verifying that all example scripts run successfully."""
 
+import os
 import subprocess
 import sys
-import os
 from pathlib import Path
 
 import pytest

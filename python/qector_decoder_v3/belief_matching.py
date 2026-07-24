@@ -1,15 +1,15 @@
 """
-qector_decoder_v3.belief_matching — belief-propagation + MWPM (belief-matching).
+qector_decoder_v3.belief_matching - belief-propagation + MWPM (belief-matching).
 
 Plain minimum-weight perfect matching on a *decomposed* (graphlike) detector
-error model discards the X–Z correlations that the decomposition split apart.
+error model discards the X-Z correlations that the decomposition split apart.
 **Belief-matching** (Higgott et al., 2023) recovers them and achieves a **lower
 logical error rate than plain MWPM/PyMatching** at the same noise.
 
 The architecture (matching the reference ``beliefmatching`` package, but using
 QECTOR's exact weighted Blossom for the matching step):
 
-  1. Build two views of the DEM — the **hyperedge** check matrix (one column per
+  1. Build two views of the DEM - the **hyperedge** check matrix (one column per
      full error mechanism, correlations intact) and the **edge** check matrix
      (the graphlike decomposition), plus the hyperedge→edge map.
   2. Run **sum-product BP** on the hyperedge graph with per-mechanism priors.
@@ -38,10 +38,15 @@ from typing import Any, Dict, FrozenSet, List, Set, Tuple
 
 import numpy as np
 
-from . import BlossomDecoder
+from . import BlossomDecoder, DetectorGraph, GNNPredecoder, SparseBlossomDecoder
 from ._bp_core import build_incidence, sum_product_bp
 
-__all__ = ["BeliefMatching", "build_matching_matrices"]
+__all__ = [
+    "BeliefMatching",
+    "GNNBeliefMatcher",
+    "build_matching_matrices",
+    "decode_with_gnn",
+]
 
 
 @dataclass
@@ -161,7 +166,7 @@ class BeliefMatching:
         # pick a worse logical coset than MWPM (hurts at small d). Off by default:
         # always reweight + match, which is never worse than plain matching.
         # (The matching step is exact weighted MWPM, rebuilt per shot with BP's
-        # posteriors — this is the high-accuracy path, slower than plain MWPM.)
+        # posteriors - this is the high-accuracy path, slower than plain MWPM.)
         self.bp_shortcut = bool(bp_shortcut)
         self.n_checks = matrices.num_detectors
         self.num_observables = matrices.num_observables
@@ -180,15 +185,15 @@ class BeliefMatching:
 
     # -- constructors ------------------------------------------------------
     @classmethod
-    def from_detector_error_model(cls, dem: Any, max_iter: int = 20) -> "BeliefMatching":
+    def from_detector_error_model(cls, dem: Any, max_iter: int = 20) -> BeliefMatching:
         return cls(build_matching_matrices(dem), max_iter=max_iter)
 
     @classmethod
-    def from_stim_circuit(cls, circuit, max_iter: int = 20) -> "BeliefMatching":
+    def from_stim_circuit(cls, circuit, max_iter: int = 20) -> BeliefMatching:
         return cls.from_detector_error_model(circuit.detector_error_model(decompose_errors=True), max_iter=max_iter)
 
     @classmethod
-    def from_numpy_h(cls, H, error_rate: float = 0.05, max_iter: int = 20) -> "BeliefMatching":
+    def from_numpy_h(cls, H, error_rate: float = 0.05, max_iter: int = 20) -> BeliefMatching:
         """Construct from a raw NumPy parity-check matrix ``H`` (n_checks x n_qubits).
 
         Builds the internal ``_Matrices`` from a dense parity-check matrix.
@@ -292,3 +297,159 @@ class BeliefMatching:
             f"<BeliefMatching detectors={self.n_checks} hyperedges={self._n_hyper} "
             f"edges={self._n_edges} max_iter={self.max_iter}>"
         )
+
+
+# =============================================================================
+# Task C - GNN-Enhanced MWPM (belief matching via learned dynamic weights)
+# =============================================================================
+#
+# Mirrors the native Rust pipeline in `src/hybrid_decoder.rs::decode_hybrid`:
+#   1. Build a DetectorGraph for the syndrome.
+#   2. GNN forward -> per-edge adjusted weights (positive, softplus).
+#   3. Map edge -> qubit via `graph.edge_qubit_id` and hand the pairs to
+#      `SparseBlossomDecoder.decode_with_weights`, whose integer cost is
+#      `cost = clamp(weight_scale / weight, 1, 100000)` - a LARGE weight means
+#      a CHEAP edge, i.e. the matcher prefers flipping qubits the GNN scored
+#      highly (see src/sparse_blossom.rs:473-478). The native decoder verifies
+#      the correction and falls back to exact Blossom internally, so the
+#      output is always syndrome-faithful; we additionally re-check in Python
+#      and fall back to the static-weight decode (never worse than MWPM).
+
+
+class GNNBeliefMatcher:
+    """End-to-end GNN-guided minimum-weight perfect matching decoder.
+
+    The GNN predicts contextual per-qubit weights from the actual syndrome
+    (correlated-noise aware); the region-growing blossom then priorities the
+    predicted physical error paths over naive static graph distances.
+
+    Parameters
+    ----------
+    check_to_qubits:
+        ``check -> [qubit indices]`` adjacency of the code (graphlike for
+        MWPM to apply).
+    n_qubits:
+        Total qubit count; inferred from the checks when omitted.
+    gnn:
+        Optional pre-configured GNN. Any object with
+        ``predict_with_node_probs(graph) -> (edge_weights, node_probs)``
+        works (duck-type seam for testing/custom models). When omitted a
+        fresh :class:`GNNPredecoder` is built with `hidden_size`/`n_layers`.
+    hidden_size, n_layers:
+        Architecture of the default GNN.
+    train_samples:
+        When > 0, quick-train the GNN on synthetic i.i.d. Bernoulli noise at
+        `error_rate` before first use (targets: weight 10.0 for flipped
+        qubits, 1.0 otherwise - the convention the native hybrid decoder's
+        heuristic uses).
+    error_rate, train_epochs, seed:
+        Noise level / epochs / RNG seed for the optional synthetic training.
+    """
+
+    def __init__(
+        self,
+        check_to_qubits,
+        n_qubits=None,
+        *,
+        gnn=None,
+        hidden_size: int = 32,
+        n_layers: int = 2,
+        train_samples: int = 0,
+        error_rate: float = 0.05,
+        train_epochs: int = 3,
+        seed=None,
+    ):
+        c2q = [list(map(int, check)) for check in check_to_qubits]
+        if n_qubits is None:
+            n_qubits = 1 + max((q for check in c2q for q in check), default=-1)
+        self._c2q = c2q
+        self.n_qubits = int(n_qubits)
+        self.n_checks = len(c2q)
+
+        self._decoder = SparseBlossomDecoder(c2q, self.n_qubits)
+
+        if gnn is None:
+            gnn = GNNPredecoder(
+                DetectorGraph.NODE_FEAT_DIM,
+                DetectorGraph.EDGE_FEAT_DIM,
+                int(hidden_size),
+                int(n_layers),
+            )
+        self._gnn = gnn
+
+        # Dense H for the faithfulness re-check.
+        self._H = np.zeros((self.n_checks, self.n_qubits), dtype=np.uint8)
+        for ci, qs in enumerate(c2q):
+            for q in qs:
+                self._H[ci, q] ^= 1
+
+        if train_samples > 0:
+            self._synthetic_train(int(train_samples), float(error_rate), int(train_epochs), seed)
+
+    # -- training ----------------------------------------------------------
+    def _synthetic_train(self, n_samples: int, error_rate: float, n_epochs: int, seed) -> None:
+        rng = np.random.default_rng(seed)
+        graphs, targets = [], []
+        for _ in range(n_samples):
+            error = (rng.random(self.n_qubits) < error_rate).astype(np.uint8)
+            syndrome = (self._H @ error) & 1
+            graph = DetectorGraph(self._c2q, syndrome.tolist(), n_qubits=self.n_qubits)
+            # Per-edge target weights: edge e touches qubit edge_qubit_id[e];
+            # high weight (cheap cost) where the true error flipped the qubit.
+            eqid = np.asarray(graph.edge_qubit_id, dtype=np.int64)
+            tgt = np.where(error[eqid] == 1, 10.0, 1.0)
+            graphs.append(graph)
+            targets.append(tgt.tolist())
+        self._gnn.train(graphs, targets, int(n_epochs))
+
+    # -- decoding ----------------------------------------------------------
+    def _dynamic_weights(self, syndrome: np.ndarray):
+        """GNN per-qubit weight overrides for `syndrome` (hybrid_decoder.rs mapping)."""
+        graph = DetectorGraph(self._c2q, syndrome.tolist(), n_qubits=self.n_qubits)
+        edge_weights, _node_probs = self._gnn.predict_with_node_probs(graph)
+        eqid = graph.edge_qubit_id
+        # Keep the GNN's strongest opinion per qubit (several graph edges can
+        # share one physical qubit): max weight = cheapest cost = most blamed.
+        best = {}
+        for q, w in zip(eqid, edge_weights):
+            q = int(q)
+            w = float(w)
+            if w > best.get(q, 0.0):
+                best[q] = w
+        return [(q, w) for q, w in best.items()]
+
+    def decode(self, syndrome) -> np.ndarray:
+        s = np.asarray(syndrome, dtype=np.uint8).reshape(-1)
+        if s.shape[0] != self.n_checks:
+            raise ValueError(f"syndrome length {s.shape[0]} != n_checks {self.n_checks}")
+        weights = self._dynamic_weights(s)
+        corr = np.asarray(self._decoder.decode_with_weights(s, weights), dtype=np.uint8)
+        # Faithfulness is guaranteed natively (Blossom fallback); belt-and-braces:
+        # if anything ever slips through, the static-weight decode is never
+        # worse than plain MWPM.
+        if not np.array_equal((self._H @ corr) & 1, s):
+            corr = np.asarray(self._decoder.decode(s), dtype=np.uint8)
+        return corr
+
+    def batch_decode(self, syndromes) -> np.ndarray:
+        arr = np.asarray(syndromes, dtype=np.uint8)
+        if arr.ndim != 2:
+            raise ValueError(f"shots must be 2D, got shape {arr.shape}")
+        return np.stack([self.decode(arr[i]) for i in range(arr.shape[0])]).astype(np.uint8)
+
+    # -- accessors ---------------------------------------------------------
+    @property
+    def gnn(self):
+        return self._gnn
+
+    @property
+    def decoder(self):
+        return self._decoder
+
+    def __repr__(self) -> str:  # pragma: no cover
+        return f"<GNNBeliefMatcher checks={self.n_checks} qubits={self.n_qubits}>"
+
+
+def decode_with_gnn(check_to_qubits, n_qubits, syndrome, **kwargs) -> np.ndarray:
+    """One-shot GNN-guided MWPM decode (see :class:`GNNBeliefMatcher`)."""
+    return GNNBeliefMatcher(check_to_qubits, n_qubits, **kwargs).decode(syndrome)

@@ -1,8 +1,7 @@
-"""Tests for qector_decoder_v3.backend — automatic backend selection."""
+"""Tests for qector_decoder_v3.backend - automatic backend selection."""
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 from qector_decoder_v3.backend import AutoDecoder, Backend, BackendConfig

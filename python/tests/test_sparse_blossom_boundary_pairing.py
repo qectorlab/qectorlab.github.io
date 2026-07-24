@@ -7,16 +7,15 @@ returns syndrome-faithful corrections and compare its Hamming weight to the exac
 MWPM weight (``BlossomDecoder``) for:
 
 * every single isolated defect (one check lit), including the two near the
-  boundary — here SparseBlossom is exactly optimal (weight equals exact MWPM),
+  boundary - here SparseBlossom is exactly optimal (weight equals exact MWPM),
   and the boundary defects have minimal weight 1; and
-* every defect pair — here SparseBlossom is near-optimal: never lighter than
+* every defect pair - here SparseBlossom is near-optimal: never lighter than
   exact, almost always equal, occasionally heavier by a small bounded amount
   when region growing pairs a defect to the boundary instead of to its partner.
 """
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 

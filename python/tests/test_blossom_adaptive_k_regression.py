@@ -17,7 +17,7 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-from qector_decoder_v3 import pymatching_compat  # noqa: E402
+from qector_decoder_v3 import pymatching_compat
 
 
 def _logical_errors(d, shots, seed, basis="x", noise=0.005):
@@ -50,7 +50,7 @@ def test_adaptive_k_no_logical_regression(d):
     slack = max(4, int(0.30 * p_err))
     assert q_err <= p_err + slack, (
         f"d={d}: QECTOR {q_err} logical errors vs PyMatching {p_err} (+{slack} slack) "
-        f"— the fixed-k regression has returned"
+        f"- the fixed-k regression has returned"
     )
 
 

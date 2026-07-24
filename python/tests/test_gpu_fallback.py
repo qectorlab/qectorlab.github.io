@@ -14,7 +14,6 @@ The invariant under test: the fallback must never diverge from CPU.
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 from qector_decoder_v3.backend import AutoDecoder, Backend, BackendConfig
@@ -35,7 +34,7 @@ def test_allow_gpu_false_routes_to_cpu_and_matches():
     ad = AutoDecoder(code.check_to_qubits, code.n_qubits, cfg)
     cpu = qd.CPUBatchDecoder(code.check_to_qubits, code.n_qubits)
 
-    # Every batch size — including a very large one — stays on a CPU backend.
+    # Every batch size - including a very large one - stays on a CPU backend.
     for n in (1, 7, 8, 64, 1024, 100000):
         assert ad.select(n) in (Backend.CPU_SINGLE, Backend.CPU_RAYON)
 

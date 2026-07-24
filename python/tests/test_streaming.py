@@ -2,18 +2,18 @@
 (:mod:`qector_decoder_v3.streaming`).
 
 These exercise the *Python* :class:`StreamingSession` / :func:`sliding_window_decode`
-orchestration — distinct from the compiled-core ``StreamingDecoder`` /
+orchestration - distinct from the compiled-core ``StreamingDecoder`` /
 ``SlidingWindowDecoder`` covered elsewhere.  The load-bearing assertions are:
 
-* **validity** — every committed correction satisfies ``H @ c == s (mod 2)``, for
+* **validity** - every committed correction satisfies ``H @ c == s (mod 2)``, for
   any inner decoder (this bar is never weakened);
-* **full-decode equivalence** — for a *stateless* inner decoder (Union-Find family,
+* **full-decode equivalence** - for a *stateless* inner decoder (Union-Find family,
   exact ``BlossomDecoder``) windowed streaming reproduces a single full per-round
   decode bit-for-bit, for any window size and for single-shot and batched streams;
-* **honest stateful caveat** — for a region-growing decoder
+* **honest stateful caveat** - for a region-growing decoder
   (``SparseBlossomDecoder``) the committed corrections stay valid but need not be
   window-invariant; we assert validity only, matching the module docstring;
-* **real telemetry** — measured round/window counts and per-window wall times are
+* **real telemetry** - measured round/window counts and per-window wall times are
   self-consistent (no fabricated latency).
 
 Equivalence assertions pass an *explicit* stateless decoder so they do not depend
@@ -24,12 +24,11 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 from qector_decoder_v3.streaming import (
-    StreamingSession,
     StreamingResult,
+    StreamingSession,
     StreamingTelemetry,
     sliding_window_decode,
 )
@@ -61,7 +60,7 @@ _CODES = [
     codes.rotated_surface_code(5),
 ]
 
-# decoders that are *stateless* (pure function of the syndrome) — the regime in
+# decoders that are *stateless* (pure function of the syndrome) - the regime in
 # which windowed streaming equals a single full decode bit-for-bit.
 _STATELESS = ["FastUnionFindDecoder", "BlossomDecoder", "UnionFindDecoder"]
 

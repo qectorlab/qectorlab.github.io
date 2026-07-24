@@ -3,13 +3,12 @@
 Rules locked here:
   * parallel mechanisms with the SAME observable mask keep that mask;
   * parallel mechanisms with DIFFERENT masks keep the lowest-weight (most likely)
-    member's mask (PyMatching semantics) — masks are NOT XOR'd together;
+    member's mask (PyMatching semantics) - masks are NOT XOR'd together;
   * mechanisms on different detector sets keep their own masks;
   * boundary edges (single detector) and hyperedges retain masks.
 """
 
 import numpy as np
-
 from qector_decoder_v3 import dem
 
 

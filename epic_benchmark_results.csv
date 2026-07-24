@@ -1,0 +1,8 @@
+Pillar,Benchmark Item,Metric Name,Value,Unit
+Pillar I,PyMatching v2.4.0,Throughput,388776.8,shots/sec
+Pillar I,QECTOR Blossom,Throughput,3607373.5,shots/sec
+Pillar I,QECTOR FastUF,Throughput,7970032.7,shots/sec
+Pillar II,ldpc Library BP-OSD,Throughput,53070.4,shots/sec
+Pillar II,QECTOR BP-OSD,Throughput,31673.3,shots/sec
+Pillar V,CPU Single Thread,Throughput,2030184.8,shots/sec
+Pillar V,CPU 8-Thread Pool,Throughput,3236442.3,shots/sec

@@ -2,9 +2,9 @@
 API REST minimale pour QECTOR.
 
 Expose :
-- POST /decode — décodage d'un syndrome
-- GET /health — health check
-- GET /version — version du package
+- POST /decode - décodage d'un syndrome
+- GET /health - health check
+- GET /version - version du package
 
 Dépendances optionnelles (une des deux) ::
 
@@ -27,7 +27,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-from . import UnionFindDecoder, BatchDecoder, __version__
+from . import BatchDecoder, UnionFindDecoder, __version__
 
 # --- Essai d'import FastAPI, fallback Flask -------------------------------
 _FRAMEWORK: Optional[str] = None
@@ -38,7 +38,7 @@ try:
     _FRAMEWORK = "fastapi"
 except ImportError:  # pragma: no cover
     try:
-        from flask import Flask, request, jsonify
+        from flask import Flask, jsonify, request
 
         _FRAMEWORK = "flask"
     except ImportError:
@@ -217,7 +217,7 @@ def run_server(host: str = "0.0.0.0", port: int = 8000, **kwargs: Any) -> None:
 
         uvicorn.run(app, host=host, port=port, **kwargs)
     else:
-        # Flask — threaded=True par défaut pour un minimum de concurrence
+        # Flask - threaded=True par défaut pour un minimum de concurrence
         app.run(host=host, port=port, threaded=True, **kwargs)
 
 

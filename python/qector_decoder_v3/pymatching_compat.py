@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.pymatching_compat — a PyMatching-compatible ``Matching`` API.
+qector_decoder_v3.pymatching_compat - a PyMatching-compatible ``Matching`` API.
 
 A drop-in replacement for the subset of ``pymatching.Matching`` most code uses,
 backed by QECTOR's Sparse-Blossom decoder.  Lets existing Stim/PyMatching
@@ -26,7 +26,8 @@ uniform-weight graphs and lands in the same logical coset otherwise).
 
 from __future__ import annotations
 
-from typing import Any, List, Optional, Sequence, Tuple, cast
+from collections.abc import Sequence
+from typing import Any, List, Optional, Tuple, cast
 
 import numpy as np
 
@@ -58,14 +59,14 @@ class Matching:
         weights: Any = None,
         faults_matrix: Any = None,
         **_: Any,
-    ) -> "Matching":
+    ) -> Matching:
         """Build from a parity-check matrix (rows=detectors, cols=edges)."""
         m = cls()
         m._init_from_check_matrix(H, weights, faults_matrix)
         return m
 
     @classmethod
-    def from_detector_error_model(cls, dem: Any) -> "Matching":
+    def from_detector_error_model(cls, dem: Any) -> Matching:
         """Build from a Stim ``DetectorErrorModel`` (object or ``.dem`` text).
 
         Parallel mechanisms between the same detectors are collapsed into one
@@ -221,7 +222,7 @@ class Matching:
 
         Uses a single batched Rust call (GIL released) and a vectorised
         observable mapping, so throughput is far higher than a Python per-shot
-        loop — this is the path to use for Monte-Carlo logical-error sampling.
+        loop - this is the path to use for Monte-Carlo logical-error sampling.
         """
         arr = np.asarray(shots, dtype=np.uint8)
         if arr.ndim != 2:

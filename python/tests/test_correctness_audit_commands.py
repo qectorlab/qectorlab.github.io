@@ -1,7 +1,7 @@
 """Miniature master correctness audit (docs/CORRECTNESS_AUDIT.md).
 
-docs/CORRECTNESS_AUDIT.md states the core invariant — every decoder must satisfy
-``H . decode(s) == s (mod 2)`` for every reachable syndrome — and that the GPU
+docs/CORRECTNESS_AUDIT.md states the core invariant - every decoder must satisfy
+``H . decode(s) == s (mod 2)`` for every reachable syndrome - and that the GPU
 batch paths are bit-identical to the CPU reference.
 
 This test compresses that audit: for rotated surface codes at d in (3, 5, 7) and
@@ -17,7 +17,6 @@ syndromes, asserting:
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 

@@ -1,10 +1,12 @@
-from __future__ import annotations
 
-from typing import Any, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any, Optional
+
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import TypeAlias
 
-_U8 = npt.NDArray[np.uint8]
+_U8: TypeAlias = npt.NDArray[np.uint8]
 
 class UnionFindDecoder:
     def __init__(self, check_to_qubits: Sequence[Sequence[int]], n_qubits: Optional[int] = None) -> None: ...

@@ -2,7 +2,7 @@
 
 Every decoder must satisfy ``H @ correction == syndrome (mod 2)`` for any
 reachable syndrome (one generated from a real error). The absence of this exact
-check is why the broken Union-Find / batch / GPU decoders went unnoticed — the
+check is why the broken Union-Find / batch / GPU decoders went unnoticed - the
 older tests only asserted output *shape*. These tests assert correctness itself,
 across rotated-surface, unrotated/planar-surface, ring (toric) and repetition
 codes, so the regression cannot recur silently.

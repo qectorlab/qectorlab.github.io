@@ -2,19 +2,18 @@
 
 Two failure modes are ruled out here:
 
-  1. *Silent slowdown / mis-routing* — after ``calibrate`` the router must use
+  1. *Silent slowdown / mis-routing* - after ``calibrate`` the router must use
      the GPU exactly when ``n >= gpu_threshold`` (and a GPU is available), and
      CPU otherwise.  If the GPU never beats CPU, calibration pins the threshold
-     enormous and routing stays CPU for all realistic sizes — that is the
+     enormous and routing stays CPU for all realistic sizes - that is the
      *correct* "no silent slowdown" outcome and we assert it explicitly.
-  2. *Silent divergence* — every batch actually routed to the GPU, plus a direct
+  2. *Silent divergence* - every batch actually routed to the GPU, plus a direct
      4096-shot ``CUDABatchDecoder`` call, must be bit-identical to the CPU
      reference.
 """
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 from qector_decoder_v3.backend import AutoDecoder, Backend

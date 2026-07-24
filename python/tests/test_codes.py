@@ -1,4 +1,4 @@
-"""Tests for qector_decoder_v3.codes — code-family helpers.
+"""Tests for qector_decoder_v3.codes - code-family helpers.
 
 Every matching-graph generator is validated for (a) graphlikeness and (b)
 syndrome-faithfulness against the live decoders.  The hypergraph-product helper
@@ -7,10 +7,8 @@ is checked for the CSS commutation condition ``Hx Hz^T = 0 (mod 2)``.
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
-
 
 MATCHING_CODES = [
     codes.repetition_code(7),

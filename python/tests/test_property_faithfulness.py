@@ -8,9 +8,9 @@ older shape-only tests missed.
 
 import numpy as np
 import pytest
-from hypothesis import given, settings, strategies as st
-
 import qector_decoder_v3 as qd
+from hypothesis import given, settings
+from hypothesis import strategies as st
 from qector_decoder_v3 import codes
 
 
@@ -28,7 +28,7 @@ def matching_graphs(draw):
 
     Every qubit is an edge between two distinct nodes drawn from ``n_checks``
     checks plus one virtual boundary node, so each qubit touches at most two
-    checks (degree <= 2) — a genuine matching graph.  Empty checks are bound to
+    checks (degree <= 2) - a genuine matching graph.  Empty checks are bound to
     the boundary with a fresh qubit so no check is degenerate.
     """
     n_checks = draw(st.integers(min_value=2, max_value=9))
@@ -56,9 +56,9 @@ def matching_graphs(draw):
 
 
 # The exact decoders (Blossom = exact MWPM, SparseBlossom = region-growing) are
-# guaranteed syndrome-faithful on *any* matching graph — verified to 0 failures
+# guaranteed syndrome-faithful on *any* matching graph - verified to 0 failures
 # over thousands of random graphs. UnionFind / FastUnionFind are fast *approximate*
-# decoders: faithful on proper QEC matching graphs (surface/repetition/toric — see
+# decoders: faithful on proper QEC matching graphs (surface/repetition/toric - see
 # test_syndrome_faithfulness.py and test_codes.py), but they can return an invalid
 # correction on rare adversarial degree-<=2 hypergraphs where a defect's only path
 # to the boundary threads through several checks. So this arbitrary-graph property

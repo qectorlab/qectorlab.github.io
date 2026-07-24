@@ -1,11 +1,11 @@
 """
-Release import & cryptographic verification test suite for QECTOR Decoder v3 v0.6.8.
+Release import & cryptographic verification test suite for QECTOR Decoder v3 v0.6.9.
 Covers tests 1 through 7 specified in gem.md.
 """
 
+import base64
 import os
 import sys
-import base64
 
 import pytest
 
@@ -23,10 +23,10 @@ def _create_token(receipt_id: str, email: str = "") -> str:
 
 
 def test_1_version_and_exports():
-    assert qd.__version__ == "0.6.8"
+    assert qd.__version__ == "0.6.9"
     assert hasattr(qd, "verify_license_token")
     assert hasattr(qd, "MAX_WORKERS")
-    assert getattr(qd, "__license__") == "LicenseRef-QECTOR-Source-Available"
+    assert qd.__license__ == "LicenseRef-QECTOR-Source-Available"
 
 
 def test_2_offline_ed25519_verification():

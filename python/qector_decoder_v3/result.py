@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.result — Rich decode results, diagnostics and debug output.
+qector_decoder_v3.result - Rich decode results, diagnostics and debug output.
 
 The bare decoders return a correction vector.  Research and engineering use often
 needs more: the correction in several encodings, the implied logical-observable
@@ -25,8 +25,9 @@ from __future__ import annotations
 
 import json
 import time
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Optional, Sequence
+from typing import Any, Optional
 
 import numpy as np
 
@@ -155,7 +156,7 @@ def decode_with_diagnostics(
     kind : str
         Decoder family to instantiate when ``decoder`` is not given.
     decoder : object, optional
-        A pre-built decoder exposing ``decode(syndrome)`` — reuse this for the
+        A pre-built decoder exposing ``decode(syndrome)`` - reuse this for the
         hot path instead of rebuilding.
     logicals : numpy.ndarray, optional
         ``(n_logicals, n_qubits)`` observable matrix; defaults to

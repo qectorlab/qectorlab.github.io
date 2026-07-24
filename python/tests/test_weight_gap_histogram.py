@@ -7,7 +7,7 @@ shots exactly optimal. This is the histogram the report shows; it locks the
 "never materially heavier" property.
 
 Weights are float sums whose summation order differs between QECTOR and
-PyMatching, so a shot is "optimal" when the gap is within TOL (1e-3) — far above
+PyMatching, so a shot is "optimal" when the gap is within TOL (1e-3) - far above
 that floating-point noise (~1e-7) and far below a real sub-optimality (~1.0).
 """
 
@@ -17,7 +17,7 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-from qector_decoder_v3 import dem, pymatching_compat  # noqa: E402
+from qector_decoder_v3 import dem, pymatching_compat
 
 TOL = 1e-3
 

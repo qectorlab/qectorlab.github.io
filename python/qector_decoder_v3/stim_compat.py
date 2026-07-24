@@ -1,5 +1,5 @@
 """
-Compatibilité Stim — Conversion et wrappers pour l'écosystème Stim.
+Compatibilité Stim - Conversion et wrappers pour l'écosystème Stim.
 
 .. deprecated::
     This module is deprecated since v0.6.4. Use ``qector_decoder_v3.dem`` instead.
@@ -36,7 +36,7 @@ from typing import Any, List, Optional, Tuple, cast
 
 import numpy as np
 
-from . import UnionFindDecoder, BatchDecoder
+from . import BatchDecoder, UnionFindDecoder
 
 _DEPRECATION_MSG = (
     "stim_compat is deprecated since v0.6.4. "
@@ -44,7 +44,7 @@ _DEPRECATION_MSG = (
     "See the migration guide at https://qector.store/docs/migration-v0.6.4"
 )
 
-# Import optionnel de stim — le module reste importable sans Stim
+# Import optionnel de stim - le module reste importable sans Stim
 # ----------------------------------------------------------------
 try:
     import stim as _stim

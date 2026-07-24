@@ -8,7 +8,7 @@ measurement flips, decodes the detector samples with QECTOR's PyMatching-compat
 
 * predictions have the right shape (one bit per observable), and
 * QECTOR's logical error rate is within a Wilson-CI slack of upstream PyMatching
-  on the SAME shots — i.e. the time edges are wired up correctly.
+  on the SAME shots - i.e. the time edges are wired up correctly.
 """
 
 import math
@@ -19,8 +19,8 @@ import pytest
 stim = pytest.importorskip("stim")
 pymatching = pytest.importorskip("pymatching")
 
-import qector_decoder_v3 as qd  # noqa: E402
-from qector_decoder_v3 import pymatching_compat  # noqa: E402
+import qector_decoder_v3 as qd
+from qector_decoder_v3 import pymatching_compat
 
 
 def _wilson(k, n, z=1.959963985):

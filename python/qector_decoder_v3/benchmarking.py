@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.benchmarking — reproducible, statistically-honest benchmarks.
+qector_decoder_v3.benchmarking - reproducible, statistically-honest benchmarks.
 
 A benchmark is only credible if someone else can reproduce it and if it reports
 tail latency, not just an average.  This harness captures everything needed for
@@ -36,19 +36,20 @@ import subprocess
 import sys
 import time
 import tracemalloc
-from typing import Any, Callable, Dict, List, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any, Callable, Dict, List, Optional
 
 import numpy as np
 
 __all__ = [
+    "BenchmarkReport",
+    "benchmark_decoder",
     "capture_environment",
     "git_commit",
     "percentiles",
     "time_iterations",
-    "benchmark_decoder",
-    "BenchmarkReport",
-    "write_json",
     "write_csv",
+    "write_json",
 ]
 
 

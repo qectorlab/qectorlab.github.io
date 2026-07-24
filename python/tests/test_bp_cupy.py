@@ -1,14 +1,14 @@
-"""Tests for qector_decoder_v3.bp_cupy — batched GPU belief propagation.
+"""Tests for qector_decoder_v3.bp_cupy - batched GPU belief propagation.
 
 Coverage, per the module's contract:
 
-* **Validity** — on shots the batched BP marks converged, the correction satisfies
+* **Validity** - on shots the batched BP marks converged, the correction satisfies
   the GF(2) syndrome equation ``H @ c == s (mod 2)`` (the load-bearing bar).
-* **Parity** — the NumPy backend is *bit-identical* to the single-shot
+* **Parity** - the NumPy backend is *bit-identical* to the single-shot
   :mod:`qector_decoder_v3._bp_core` (max posterior difference 0.0), and on the GPU
   the batched result lands in the **same logical class** as the CPU result for every
   converged shot (residual difference inside the stabiliser row space).
-* **CPU fallback** — with CuPy disabled (``has_cupy`` monkeypatched to ``False``)
+* **CPU fallback** - with CuPy disabled (``has_cupy`` monkeypatched to ``False``)
   the decoder transparently runs on NumPy and still produces valid corrections.
 
 GPU-only assertions are guarded with ``skipif(not gpu_available())`` so the file
@@ -20,8 +20,8 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-
-from qector_decoder_v3 import codes, gpu_backend as gb
+from qector_decoder_v3 import codes
+from qector_decoder_v3 import gpu_backend as gb
 from qector_decoder_v3._bp_core import build_incidence, min_sum_bp, sum_product_bp
 from qector_decoder_v3.bp_cupy import BatchedBpDecoder, batched_bp_decode
 from qector_decoder_v3.bposd import BpOsdDecoder
@@ -187,7 +187,7 @@ def test_gpu_matches_cpu_same_logical_class(bp_method):
     """On converged shots the GPU correction is logically equivalent to the CPU one.
 
     Both backends reproduce the syndrome, so their difference lies in ``ker(Hx)``;
-    "logically equivalent" means that difference is a stabiliser — i.e. inside the
+    "logically equivalent" means that difference is a stabiliser - i.e. inside the
     GF(2) row space of ``Hz`` (the established CSS criterion used elsewhere in the
     suite). The vast majority also match bit-for-bit.
     """
@@ -335,7 +335,7 @@ def test_bposd_gpu_and_cpu_batch_both_valid_and_mostly_equivalent():
     through to OSD are *not* required to agree across backends: OSD is an explicit
     heuristic whose column ordering depends on the tiny floating-point differences
     between the GPU and CPU posteriors, so two equally valid solutions in different
-    logical classes are an honest, expected outcome — not an error.
+    logical classes are an honest, expected outcome - not an error.
     """
     cx, cz = _bb72()
     Hx = cx.parity_check_matrix().astype(np.uint8)

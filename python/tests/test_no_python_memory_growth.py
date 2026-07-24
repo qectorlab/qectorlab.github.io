@@ -13,7 +13,6 @@ import gc
 import tracemalloc
 
 import numpy as np
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes
 

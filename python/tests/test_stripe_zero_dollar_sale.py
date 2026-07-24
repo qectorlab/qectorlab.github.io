@@ -4,16 +4,16 @@ Bulletproof Stripe $0 test sale → Ed25519 license token → activation verific
 
 import json
 import os
-import numpy as np
-import pytest
 from unittest.mock import patch
 
+import numpy as np
+import pytest
 import qector_decoder_v3 as qd
+from qector_decoder_v3.license import verify_license_token
 from qector_decoder_v3.stripe_integration import (
     create_checkout_session,
     handle_stripe_webhook_payload,
 )
-from qector_decoder_v3.license import verify_license_token
 
 
 def test_zero_dollar_checkout_session_creation():
@@ -55,7 +55,7 @@ def test_zero_dollar_webhook_issues_valid_token():
     }
     payload_bytes = json.dumps(payload_dict).encode("utf-8")
 
-    # 1. Process Stripe Webhook payload — token issuance
+    # 1. Process Stripe Webhook payload - token issuance
     webhook_result = handle_stripe_webhook_payload(payload=payload_bytes, sig_header="")
     assert webhook_result["issued"] is True
     assert webhook_result["receipt_id"] == receipt_id
@@ -65,16 +65,16 @@ def test_zero_dollar_webhook_issues_valid_token():
     assert issued_token is not None
     assert issued_token.startswith(f"{receipt_id}.")
 
-    # 2. Ed25519 cryptographic signature verification — with explicit email
+    # 2. Ed25519 cryptographic signature verification - with explicit email
     assert verify_license_token(issued_token, test_email) is True
 
-    # 3. Ed25519 verification — case-insensitive email
+    # 3. Ed25519 verification - case-insensitive email
     assert verify_license_token(issued_token, "TEST_SALE_USER@QECTOR.STORE") is True
 
-    # 4. Ed25519 verification — wrong email rejected
+    # 4. Ed25519 verification - wrong email rejected
     assert verify_license_token(issued_token, "wrong_user@qector.store") is False
 
-    # 5. Self-contained 3-part token verification — no email needed (email embedded)
+    # 5. Self-contained 3-part token verification - no email needed (email embedded)
     assert verify_license_token(issued_token) is True
 
 

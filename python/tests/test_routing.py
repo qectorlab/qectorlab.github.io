@@ -1,15 +1,15 @@
-"""Tests for qector_decoder_v3.routing — intelligent decoder router.
+"""Tests for qector_decoder_v3.routing - intelligent decoder router.
 
 Two things are checked:
 
-1. **Policy** — ``recommend_decoder`` picks the documented decoder across code
+1. **Policy** - ``recommend_decoder`` picks the documented decoder across code
    families, sizes, priorities, and hardware states.  Hardware is exercised both
    via the explicit ``hardware=`` override (deterministic on any machine) and via
    monkeypatching ``gpu_backend.has_cuda_rust`` / ``gpu_backend.gpu_available``
    (the live-detection path).
-2. **Correctness** — ``AutoRouter`` actually constructs the chosen decoder and
+2. **Correctness** - ``AutoRouter`` actually constructs the chosen decoder and
    decodes real instances, and every returned correction satisfies the only
-   validity bar that matters, ``H·c == s (mod 2)`` — including the safety
+   validity bar that matters, ``H·c == s (mod 2)`` - including the safety
    guarantee that a non-graphlike (hyperedge) problem is *never* sent to a
    matching-only decoder, even when mislabelled.
 """
@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-
 import qector_decoder_v3 as qd
 from qector_decoder_v3 import codes, routing
 from qector_decoder_v3.routing import (

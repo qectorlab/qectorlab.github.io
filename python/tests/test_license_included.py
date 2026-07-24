@@ -9,6 +9,7 @@ its metadata. This test asserts:
 """
 
 import os
+
 import tomllib
 
 
@@ -33,12 +34,12 @@ def test_license_file_exists_and_non_empty():
     # The QECTOR Decoder Source-Available License: proprietary, with a free
     # non-commercial grant and a paid commercial requirement.
     # Accept either the historic title-cased heading or the current all-caps
-    # title — the LICENSE file's actual heading is "QECTOR SOURCE-AVAILABLE LICENSE".
+    # title - the LICENSE file's actual heading is "QECTOR SOURCE-AVAILABLE LICENSE".
     text_lower = text.lower()
     assert "qector" in text_lower and "source-available" in text_lower
     assert "all rights reserved" in text_lower
     # The license file currently says "commercial use restrictions" and references
-    # Section 3 — accept any of the well-known phrasings used across revisions.
+    # Section 3 - accept any of the well-known phrasings used across revisions.
     assert (
         "commercial use requires a paid license" in text_lower
         or "commercial use" in text_lower

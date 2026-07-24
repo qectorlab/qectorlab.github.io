@@ -1,0 +1,87 @@
+{
+  "suite_name": "HYPER-SCALE INDUSTRIAL HARDWARE DESTRUCTION BENCHMARK",
+  "version": "v0.6.9",
+  "timestamp": "2026-07-24 17:56:18",
+  "total_execution_time_sec": 136.51,
+  "tests": {
+    "test_1_hyper_cpu_batch": {
+      "shots": 5000000,
+      "throughput_shots_sec": 9752643.7,
+      "time_sec": 0.5127
+    },
+    "test_2_hyper_distance_scaling": {
+      "distances": [
+        {
+          "distance": 3,
+          "qubits": 9,
+          "checks": 9,
+          "throughput_shots_sec": 20678246.5,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0005
+        },
+        {
+          "distance": 7,
+          "qubits": 49,
+          "checks": 49,
+          "throughput_shots_sec": 6612007.4,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0015
+        },
+        {
+          "distance": 15,
+          "qubits": 225,
+          "checks": 225,
+          "throughput_shots_sec": 338977.3,
+          "valid_pct": 100.0,
+          "execution_sec": 0.0295
+        },
+        {
+          "distance": 21,
+          "qubits": 441,
+          "checks": 441,
+          "throughput_shots_sec": 99062.0,
+          "valid_pct": 100.0,
+          "execution_sec": 0.1009
+        },
+        {
+          "distance": 31,
+          "qubits": 961,
+          "checks": 961,
+          "throughput_shots_sec": 26013.5,
+          "valid_pct": 100.0,
+          "execution_sec": 0.3844
+        },
+        {
+          "distance": 45,
+          "qubits": 2025,
+          "checks": 2025,
+          "throughput_shots_sec": 9137.1,
+          "valid_pct": 100.0,
+          "execution_sec": 1.0944
+        }
+      ]
+    },
+    "test_3_high_order_bposd": {
+      "shots": 500,
+      "throughput_shots_sec": 31.0,
+      "mean_latency_us": 32288.56
+    },
+    "test_4_gpu_hyper_saturation": {
+      "cuda": {
+        "throughput": 1307084.0,
+        "time_sec": 0.7651,
+        "accuracy": 100.0
+      },
+      "opencl": {
+        "throughput": 7858113.9,
+        "time_sec": 0.1273,
+        "accuracy": 100.0
+      }
+    },
+    "test_5_100k_allocations_soak": {
+      "iterations": 100000,
+      "rate_per_sec": 5641.1,
+      "time_sec": 17.7269
+    }
+  }
+}

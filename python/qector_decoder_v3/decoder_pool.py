@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.decoder_pool — Multi-process decoder pool.
+qector_decoder_v3.decoder_pool - Multi-process decoder pool.
 
 Distributes batch decoding across multiple worker processes for
 near-linear speedup on multi-core machines.
@@ -131,13 +131,13 @@ class DecoderPool:
             self._c2q = []
         self._nq = int(n_qubits) if n_qubits is not None else None
         self._decoder_type = str(decoder_type)
-        self._pool: Optional["_mp.pool.Pool"] = None
+        self._pool: Optional[_mp.pool.Pool] = None
 
     def decode(self, syndromes) -> np.ndarray:
         """Decode a batch of syndromes.
 
         On Windows, uses single-process Rayon parallel (``batch_decode_par``
-        or ``batch_decode_simd``) for all batch sizes — this is 50-500x faster
+        or ``batch_decode_simd``) for all batch sizes - this is 50-500x faster
         than multi-process due to spawn overhead.
 
         On Linux/macOS, uses multi-process pool for batches > 100K.

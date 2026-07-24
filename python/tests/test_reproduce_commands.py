@@ -28,7 +28,7 @@ def _repo_root():
 
 # Scripts referenced by docs/REPRODUCE.md that expose an argparse CLI.
 # (run_scaling_benchmark.py is intentionally excluded: it is not an argparse CLI
-# — it runs a full benchmark immediately and ignores --help, so a `--help` smoke
+# - it runs a full benchmark immediately and ignores --help, so a `--help` smoke
 # test would execute the whole sweep rather than just parsing arguments.)
 _REPRODUCE_SCRIPTS = [
     "run_competitive_benchmark.py",

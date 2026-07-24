@@ -1,5 +1,5 @@
 """
-qector_decoder_v3.dem — Stim Detector Error Model (DEM) loader.
+qector_decoder_v3.dem - Stim Detector Error Model (DEM) loader.
 
 A correct, dependency-free parser that turns a Stim ``DetectorErrorModel`` (a
 ``stim.DetectorErrorModel`` object **or** a ``.dem`` text file) into the matching
@@ -12,11 +12,11 @@ problem QECTOR decodes:
 
 This replaces the earlier heuristic in :mod:`qector_decoder_v3.stim_compat`, which
 conflated detector indices with qubit indices and produced an incorrect ``H``.
-Here, ``H[detector, mechanism] = 1`` iff the error mechanism flips that detector —
+Here, ``H[detector, mechanism] = 1`` iff the error mechanism flips that detector -
 exactly the detector graph PyMatching / Stim use.
 
-The parser handles the full flattened DEM grammar — ``error``, ``detector``,
-``logical_observable``, ``shift_detectors`` and ``repeat { ... }`` blocks —
+The parser handles the full flattened DEM grammar - ``error``, ``detector``,
+``logical_observable``, ``shift_detectors`` and ``repeat { ... }`` blocks -
 without needing Stim installed.  When given a live ``stim.DetectorErrorModel`` it
 is flattened first for exactness.
 
@@ -34,17 +34,18 @@ from __future__ import annotations
 
 import math
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, List, Sequence, Tuple
+from typing import Any, List, Tuple
 
 import numpy as np
 
 __all__ = [
-    "DemModel",
     "DemError",
-    "parse_dem",
-    "load_dem_file",
+    "DemModel",
     "from_stim",
+    "load_dem_file",
+    "parse_dem",
 ]
 
 
@@ -99,11 +100,11 @@ class DemModel:
         return all(e.is_graphlike for e in self.errors)
 
     # -- graph collapse ----------------------------------------------------
-    def collapse_to_graph(self) -> "DemModel":
+    def collapse_to_graph(self) -> DemModel:
         """Collapse parallel mechanisms into one min-weight edge per detector set.
 
         A circuit-level DEM (``decompose_errors=True``) has many parallel
-        mechanisms between the same pair of detectors — different fault locations
+        mechanisms between the same pair of detectors - different fault locations
         that flip the same detectors. A matching decoder only ever uses the
         lowest-weight edge between two detectors, so decoding over every raw
         mechanism is wasted work (QECTOR was ~100x slower than PyMatching at
