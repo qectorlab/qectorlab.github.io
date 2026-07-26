@@ -6,7 +6,7 @@ const navLinks = [
   { label: 'Decoder', href: '/decoder' },
   { label: 'Benchmarks', href: '/benchmarks' },
   { label: 'Workbench', href: '/workbench' },
-  { label: 'SATI CODEX', href: '/sati-codex' },
+  { label: 'MCP Server', href: '/mcp-server' },
   { label: 'SATI OS', href: '/sati-os' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact', href: '/contact' },

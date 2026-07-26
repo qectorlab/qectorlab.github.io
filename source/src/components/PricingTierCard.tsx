@@ -54,6 +54,10 @@ export default function PricingTierCard({
   const accentCheck = accent === 'gold' ? 'text-gold-400' : 'text-cyan-300';
   const accentRibbon = accent === 'gold' ? 'bg-gold-400 text-void' : 'bg-cyan-300 text-void';
   const ctaClass = accent === 'gold' ? 'btn-gold' : 'btn-cyan';
+  const isExternal = /^https?:\/\//i.test(ctaHref);
+  const ctaBaseClass = `block w-full text-center py-2.5 rounded-lg font-medium text-sm transition-all ${
+    featured ? ctaClass : 'btn-outline'
+  }`;
 
   return (
     <div className={`card-surface flex flex-col relative ${centered ? 'text-center' : ''} ${featured ? accentBorder : ''} ${className}`}>
@@ -84,9 +88,19 @@ export default function PricingTierCard({
           ))}
         </ul>
       )}
-      <Link to={ctaHref} className={`w-full text-center py-2.5 rounded-lg font-medium text-sm transition-all ${featured ? ctaClass : 'btn-outline'}`}>
-        {ctaLabel}
-      </Link>
+      {/* An absolute URL (a Stripe payment link) must be a real anchor. Passing
+          one to <Link to> makes react-router treat it as an in-app path and
+          navigate to /https:/buy.stripe.com/... instead of leaving the site --
+          which is why every paid tier previously had no working purchase path. */}
+      {isExternal ? (
+        <a href={ctaHref} className={ctaBaseClass} rel="noopener">
+          {ctaLabel}
+        </a>
+      ) : (
+        <Link to={ctaHref} className={ctaBaseClass}>
+          {ctaLabel}
+        </Link>
+      )}
     </div>
   );
 }

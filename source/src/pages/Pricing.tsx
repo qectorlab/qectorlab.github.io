@@ -191,8 +191,8 @@ export default function Pricing() {
                   'Integration support call (1 hour)',
                 ]}
                 centered
-                ctaLabel="Buy Now"
-                ctaHref="#evaluation"
+                ctaLabel="Start 60-Day Evaluation — $499"
+                ctaHref="https://buy.stripe.com/9B6aEZ3VL8W60xk9bYeUU01"
               />
               <PricingTierCard
                 name="Solo / Indie Commercial"
@@ -207,7 +207,8 @@ export default function Pricing() {
                   'Benchmark artifact access',
                 ]}
                 centered
-                ctaLabel="Contact Sales"
+                ctaLabel="Subscribe — $1,299/yr"
+                ctaHref="https://buy.stripe.com/4gMaEZ3VL4FQfsecoaeUU03"
               />
               <PricingTierCard
                 name="Startup / Growth Team"
@@ -226,7 +227,8 @@ export default function Pricing() {
                   'Integration support (2 hours)',
                 ]}
                 centered
-                ctaLabel="Contact Sales"
+                ctaLabel="Subscribe — $4,499/yr"
+                ctaHref="https://buy.stripe.com/00w9AV8c15JU2Fs87UeUU04"
               />
               <PricingTierCard
                 name="Professional / Lab"
@@ -243,7 +245,8 @@ export default function Pricing() {
                   'Dedicated integration support',
                 ]}
                 centered
-                ctaLabel="Contact Sales"
+                ctaLabel="Subscribe — $11,500/yr"
+                ctaHref="https://buy.stripe.com/8x2bJ38c15JU3Jw87UeUU05"
               />
               <PricingTierCard
                 name="Enterprise R&D"
@@ -260,7 +263,8 @@ export default function Pricing() {
                   'Rust source access (on request)',
                 ]}
                 centered
-                ctaLabel="Contact Sales"
+                ctaLabel="Talk to Engineering"
+                ctaHref="/contact"
               />
               <PricingTierCard
                 name="SaaS / Hosted API / OEM"
@@ -277,9 +281,35 @@ export default function Pricing() {
                   'Priority feature development',
                 ]}
                 centered
-                ctaLabel="Contact Sales"
+                ctaLabel="Discuss Licensing"
+                ctaHref="/contact"
               />
             </div>
+
+            {/* Perpetual alternative for Solo. The product and price already
+                existed in Stripe but appeared nowhere on the site, so it was
+                unsellable -- and buyers who refuse subscriptions had no option
+                between the 60-day evaluation and a recurring plan. */}
+            <div className="mt-6 p-5 rounded-2xl border border-cyan-300/20 bg-cyan-300/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="text-primary font-semibold text-sm">
+                  Prefer to own it outright?
+                </p>
+                <p className="text-secondary text-sm mt-1">
+                  <strong className="text-cyan-300">Solo / Indie Perpetual — $899 one-time.</strong>{' '}
+                  Same rights as the annual plan for the major version you buy, with patch
+                  updates included. No renewal, no subscription.
+                </p>
+              </div>
+              <a
+                href="https://buy.stripe.com/6oU9AVdwl6NY2Fs3REeUU02"
+                className="btn-outline whitespace-nowrap text-center"
+                rel="noopener"
+              >
+                Buy perpetual — $899
+              </a>
+            </div>
+
             <p className="text-xs text-muted-foreground text-center mt-4">
               What remains free: Workbench GUI, public PyPI package (non-commercial), all GitHub artifacts.
               Source-available under PolyForm Noncommercial. Commercial use requires a license.

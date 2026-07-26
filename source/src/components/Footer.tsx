@@ -11,7 +11,7 @@ const productLinks: LinkItem[] = [
   { label: 'Decoder v3', href: '/decoder' },
   { label: 'SATI OS', href: '/sati-os' },
   { label: 'Workbench', href: '/workbench' },
-  { label: 'SATI CODEX', href: '/sati-codex' },
+  { label: 'MCP Server', href: '/mcp-server' },
   { label: 'Evidence & Reports', href: '/evidence' },
   { label: 'Changelog', href: '/changelog' },
   { label: 'Pricing', href: '/pricing' },

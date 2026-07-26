@@ -12,7 +12,7 @@ const About = lazy(() => import('./pages/About'));
 const Decoder = lazy(() => import('./pages/Decoder'));
 const Benchmarks = lazy(() => import('./pages/Benchmarks'));
 const Workbench = lazy(() => import('./pages/Workbench'));
-const SatiCodex = lazy(() => import('./pages/SatiCodex'));
+const McpServer = lazy(() => import('./pages/McpServer'));
 const SatiOs = lazy(() => import('./pages/SatiOs'));
 const Pricing = lazy(() => import('./pages/Pricing'));
 const Commercial = lazy(() => import('./pages/Commercial'));
@@ -40,7 +40,7 @@ export default function App() {
             <Route path="/decoder" element={<Decoder />} />
             <Route path="/benchmarks" element={<Benchmarks />} />
             <Route path="/workbench" element={<Workbench />} />
-            <Route path="/sati-codex" element={<SatiCodex />} />
+            <Route path="/mcp-server" element={<McpServer />} />
             <Route path="/sati-os" element={<SatiOs />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/commercial" element={<Commercial />} />
