@@ -21,6 +21,7 @@ export default function Manual() {
     { id: 'benchmarking', title: '5. Running Benchmarks', icon: <ChartIcon className="w-4 h-4" /> },
     { id: 'configuration', title: '6. Configuration', icon: <SettingsIcon className="w-4 h-4" /> },
     { id: 'troubleshooting', title: '7. Troubleshooting', icon: <HelpCircle className="w-4 h-4" /> },
+    { id: 'package-reference', title: '8. Package Reference (v0.6.9)', icon: <BookOpen className="w-4 h-4" /> },
   ];
 
   // Render individual sections beautifully
@@ -353,6 +354,99 @@ prediction = decoder.decode(syndrome)`}
                   <strong>Fix:</strong> Lower the `batch_size` argument in your `GpuBatchDecoder` instantiation. For exceptionally large code distances (d &gt; 15), prefer the linear-scaling `UnionFindDecoder` which reduces memory demands.
                 </p>
               </div>
+            </div>
+          </div>
+        );
+
+      case 'package-reference':
+        return (
+          <div className="space-y-8">
+            <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <h3 className="text-primary font-bold text-lg">QECTOR Decoder v3 — Extended Reference (package only)</h3>
+                <p className="text-muted-foreground text-xs">Version: 0.6.9 · PyPI: qector-decoder-v3 · Backend: Rust + PyO3</p>
+              </div>
+              <a
+                href="/docs/reference.md"
+                target="_blank"
+                download="QECTOR Decoder v3 - Reference (package only).md"
+                className="btn-cyan text-xs py-2 px-4"
+              >
+                Download Reference (.md)
+              </a>
+            </div>
+
+            <div>
+              <h3 className="text-primary font-semibold text-base mb-3">1. Installation &amp; Platforms</h3>
+              <CodeBlock
+                code={`pip install qector-decoder-v3==0.6.9\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching\npip install "qector-decoder-v3[bench]"   # benchmarks\npip install "qector-decoder-v3[all]"     # full research stack`}
+                language="bash"
+                filename="terminal"
+              />
+              <div className="mt-3 border border-gridline bg-void/30 rounded-xl overflow-hidden text-xs">
+                <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Python</span><span className="text-primary font-mono">3.9 – 3.13</span></div>
+                <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Platforms</span><span className="text-primary">Linux x86_64 (manylinux), Windows x64, macOS arm64</span></div>
+                <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">License</span><span className="text-primary">Source-available (Free academic / non-commercial)</span></div>
+                <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Startup Notice</span><span className="text-primary font-mono">Suppressed with QECTOR_SILENT=1</span></div>
+                <div className="p-2.5 flex justify-between"><span className="text-muted-foreground">Licence Env</span><span className="text-primary font-mono">QECTOR_LICENSE (Ed25519 token)</span></div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-primary font-semibold text-base mb-3">2. Core Architecture</h3>
+              <ul className="list-disc list-inside space-y-1.5 text-secondary text-xs leading-relaxed">
+                <li><strong>Rust Core (compiled extension):</strong> Matching, UF, batch CPU/GPU algorithms.</li>
+                <li><strong>Python Surface:</strong> Clean API, Stim/Sinter compat, belief/GNN layers, licensing.</li>
+                <li><strong>Zero-copy NumPy:</strong> Direct memory access; GIL-free parallel decoding paths.</li>
+                <li><strong>Version Symbol:</strong> <code className="text-cyan-300">qector_decoder_v3.__version__ == "0.6.9"</code></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-primary font-semibold text-base mb-3">3. Decoder Families &amp; Incidence Rules</h3>
+              <p className="text-muted-foreground text-xs mb-3">
+                <strong className="text-cyan-300">Graph-like rule (UF family):</strong> Every qubit must participate in at most two checks (participation &le; 2). Matrices violating this raise a clear error (<code className="text-red-400">-32602</code>). <code className="text-cyan-300">BlossomDecoder</code>, <code className="text-cyan-300">SparseBlossomDecoder</code>, and <code className="text-cyan-300">BpOsdDecoder</code> accept general hyperedge codes.
+              </p>
+              <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden text-xs">
+                <div className="grid grid-cols-4 p-2.5 font-bold border-b border-gridline bg-surface/30">
+                  <span>Class</span><span>Best for</span><span>Status</span><span>Graph-like?</span>
+                </div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">UnionFindDecoder</span><span>Low-latency approximate</span><span>Stable</span><span>Yes (participation &le; 2)</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">FastUnionFindDecoder</span><span>Faster UF hot path</span><span>Stable</span><span>Yes</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BlossomDecoder</span><span>Exact MWPM / PyMatching parity</span><span>Stable</span><span>No (Hyperedge OK)</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">SparseBlossomDecoder</span><span>Near-optimal matching</span><span>Experimental</span><span>Prefer graph-like</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BeliefMatching</span><span>Correlated-noise accuracy</span><span>Research</span><span>Prefer graph-like</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BpOsdDecoder</span><span>LDPC / qLDPC</span><span>Experimental</span><span>No (Hyperedge OK)</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BatchDecoder</span><span>High-throughput CPU batch</span><span>Stable</span><span>Yes for UF batch</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">CUDABatchDecoder</span><span>GPU batch (NVIDIA)</span><span>Runtime-dependent</span><span>—</span></div>
+                <div className="grid grid-cols-4 p-2.5"><span className="font-mono text-cyan-300">AutoDecoder</span><span>7-tier self-debugging fallback</span><span>Stable</span><span>—</span></div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-primary font-semibold text-base mb-3">4. Code Generators</h3>
+              <CodeBlock
+                code={`from qector_decoder_v3 import (\n    generate_repetition_code_checks,  # (checks, n_qubits) - Graph-like\n    generate_ring_code_checks,        # (checks, n_qubits) - Graph-like\n    generate_surface_code_checks,     # hyperedge-style surface (participation > 2)\n    generate_toy_code_checks,\n)`}
+                language="python"
+                filename="python"
+              />
+            </div>
+
+            <div>
+              <h3 className="text-primary font-semibold text-base mb-3">5. Package MCP Server &amp; Hyperedge Workaround</h3>
+              <CodeBlock
+                code={`from qector_decoder_v3 import run_mcp_server\nrun_mcp_server()   # JSON-RPC 2.0 stdio server (decode_syndrome, benchmark_decoder, get_decoder_info)`}
+                language="python"
+                filename="mcp_server.py"
+              />
+              <p className="text-muted-foreground text-xs mt-2 mb-3">
+                If the package MCP rejects hyperedge surface matrices (UF gate <code className="text-red-400">-32602</code>), use the Python API hyperedge pattern:
+              </p>
+              <CodeBlock
+                code={`import numpy as np\nfrom qector_decoder_v3 import BlossomDecoder, SparseBlossomDecoder, BpOsdDecoder\n\ndef decode_hyperedge(checks, n_qubits, syndrome, kind="Blossom", **opts):\n    syn = np.asarray(syndrome, dtype=np.uint8).ravel()\n    if kind in ("Blossom", "blossom"):\n        return BlossomDecoder(checks, n_qubits).decode(syn)\n    if kind in ("SparseBlossom", "sparse_blossom"):\n        return SparseBlossomDecoder(checks, n_qubits).decode(syn)\n    if kind.lower() in ("bposd", "bp_osd"):\n        H = np.zeros((len(checks), n_qubits), dtype=np.uint8)\n        for i, c in enumerate(checks):\n            for q in c: H[i, q] ^= 1\n        return BpOsdDecoder(H, error_rate=opts.get("error_rate", 0.05)).decode(syn)\n    raise ValueError(f"unsupported kind: {kind}")`}
+                language="python"
+                filename="hyperedge_workaround.py"
+              />
             </div>
           </div>
         );

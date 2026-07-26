@@ -22,6 +22,7 @@ export default function Docs() {
   const docLinks = [
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
+    { title: 'Package Reference (v0.6.9)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
     { title: 'Installation Guide', desc: 'Platform-specific setup instructions', href: '/installer' },
     { title: 'Benchmarks', desc: 'Performance comparisons and validation data', href: '/benchmarks' },
     { title: 'Evidence & Reports', desc: 'Validation artifacts and reproducibility data', href: '/evidence' },
