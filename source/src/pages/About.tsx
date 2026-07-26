@@ -155,7 +155,7 @@ export default function About() {
               <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench are the high-performance decoder library + professional GUI. Broader QECTOR vision (LCL-833, full SATI CODEX theoretical work) is research context - see GitHub for details.</p>
               <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                 <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
-                <li><strong className="text-primary">Free Qector Workbench v3.4</strong>: Professional GUI, MCP, benchmarks (fully free)</li>
+                <li><strong className="text-primary">Free Qector Workbench v3.5.0</strong>: Professional GUI, MCP, benchmarks (fully free)</li>
                 <li><strong className="text-primary">SATI OS</strong>: Full commercial stack on top (GUI + HALs + support)</li>
                 <li><strong className="text-primary">Research</strong>: SATI CODEX / LCL-833 theoretical work, "Mastering QEC" book - see decoder repo README for deep integration and Zenodo papers</li>
               </ul>

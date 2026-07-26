@@ -13,7 +13,7 @@ export default function Changelog() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Latest: v{pypiVersion} Decoder + free Workbench GUI v3.4.0 (live from PyPI RSS)
+            Latest: v{pypiVersion} Decoder + free Workbench GUI v3.5.0 (live from PyPI RSS)
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Changelog</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -28,12 +28,12 @@ export default function Changelog() {
           {/* Vertical neon timeline line */}
           <div className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-300 via-gold-400/30 to-transparent shadow-[0_0_8px_rgba(103,232,249,0.5)]" />
 
-          {/* Latest Decoder + Free Workbench v3.4.0 */}
+          {/* Latest Decoder + Free Workbench v3.5.0 */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
-              version={`v${pypiVersion} Decoder + new free Workbench v3.4.0 - 2026`}
+              version={`v${pypiVersion} Decoder + new free Workbench v3.5.0 - 2026`}
               note={
                 <>
                   Exact release dates on{' '}
@@ -42,8 +42,8 @@ export default function Changelog() {
               }
               items={[
                 `New QECTOR Decoder v3 (v${pypiVersion}): full validation, hypergraph rejection support, sdist + wheels`,
-                'New Zenodo dataset & master report integration with 1,858 timing measurements across 6 topologies up to distance 19 (DOI: 10.5281/zenodo.21339300)',
-                'New free QectorWorkbench GUI v3.4.0: 10/10 polished CustomTkinter app, 25 MCP tools (all verified), premium multi-format docs generator',
+                'New Zenodo dataset & master report integration with 1,858 timing measurements across 6 topologies up to distance 19 (DOI: 10.5281/zenodo.21501377)',
+                'New free QectorWorkbench GUI v3.5.0: 10/10 polished CustomTkinter app, 25 MCP tools (all verified), premium multi-format docs generator',
                 'Production packaging: clean PyInstaller + Inno Setup bundles with manifests and checksums',
                 'Repo hygiene and all docs updated for the new decoder + new free workbench',
               ]}
@@ -57,8 +57,8 @@ export default function Changelog() {
               version="v0.6.9 - 2026-07-24"
               items={[
                 'Production release with top-tier benchmark suite, hyper saturation suite, and Stripe live integration',
-                'MCP Server integration (protocol 2024-11-05, qector-mcp) exposing 19 verified decoder types',
-                'Added 200-status SPA route shells for all 19 application routes and /success checkout flow',
+                'MCP Server integration (protocol 2024-11-05, qector-mcp) exposing 15+ decoder types',
+                'Added 200-status SPA route shells for all application routes and /success checkout flow',
               ]}
             />
           </div>
@@ -69,7 +69,7 @@ export default function Changelog() {
             <ChangelogEntry
               version="v0.6.8 - 2026-07-22"
               items={[
-                'Fixed _guard() in Rust/PyO3 bindings preventing HybridCascadeDecoder import',
+                'Fixed _guard() handling for gated research decoders; public wheels expose HybridDecoder (UF + Blossom routing)',
                 'New CPU/CUDA bit-exact validation: CUDA decoder row-identical to CPU Union-Find at d=3-19',
                 'Faithfulness verified: H·c = s on 100% of shots across all 8 decoders at d=3-19',
                 'Benchmark release with 8 SVG charts, 20 JSON data files, and full PDF report',

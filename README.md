@@ -2,7 +2,7 @@
 
 **Live site: [https://qector.store](https://qector.store)**
 
-QECTOR Decoder v3: production-grade, simulation-validated quantum error correction decoder library (Rust + Python). Exact MWPM parity with PyMatching through d=15. +35.7% LER reduction with Belief-Matching at d=5. GPU batch (CUDA/OpenCL) bit-identical to CPU. BP-OSD for qLDPC. Free professional Workbench GUI.
+QECTOR Decoder v3: production-grade, simulation-validated quantum error correction decoder library (Rust + Python). Exact MWPM parity with PyMatching through d=15. +35.7% LER reduction with Belief-Matching at d=5. GPU batch (CUDA/OpenCL) bit-identical to CPU. BP-OSD for qLDPC. Free professional Workbench GUI v3.5.0 (Zenodo: https://doi.org/10.5281/zenodo.21360433).
 
 **Important licensing**: QECTOR Decoder v3 is **Source-Available (not free)** for commercial use. The Workbench GUI app is free for everyone. See /pricing and /commercial on the site.
 
@@ -12,7 +12,7 @@ This repo serves the static GitHub Pages site (CNAME qector.store). Source in `s
 ```bash
 pip install qector-decoder-v3
 # Free GUI (recommended for most)
-# https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0
+# https://doi.org/10.5281/zenodo.21360433
 ```
 
 Reproducible claims and artifacts: https://github.com/GuillaumeLessard/qector-decoder
@@ -35,7 +35,7 @@ All numbers backed by public SHA-256 artifacts, seeds, and harness in the decode
 - /decoder , /workbench , /sati-os , /sati-codex , /evidence , /about
 
 ## Branding & Scope
-- qectorlab brand for the Workbench + site
+- qectorlab brand for the website and Workbench distribution; decoder source-of-truth is the GuillaumeLessard/qector-decoder repo
 - Decoder core maintained at https://github.com/GuillaumeLessard/qector-decoder
 - Creator: Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions
 - Related: SATI CODEX (LCL-833 / LCL-832), "Mastering QEC" book

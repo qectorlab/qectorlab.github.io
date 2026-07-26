@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 16 production and research QEC decoding algorithms in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
+        description="QECTOR Decoder v3 - 20+ production and research decoder families in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
       />
       <JsonLd
         data={{
@@ -54,13 +54,13 @@ export default function Decoder() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse-dot" />
-            v{pypiVersion} (Source-Available) · New Free Workbench GUI v3.4 (CustomTkinter + 25 MCP tools)
+            v{pypiVersion} (Source-Available) · New Free Workbench GUI v3.5.0 (CustomTkinter + 25 MCP tools)
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Rust-core Python library implementing 16 QEC decoders from exact MWPM to GPU batch.
+            Rust-core Python library implementing 20+ decoder classes from exact MWPM to GPU batch.
             Exact parity with PyMatching through d=15. +35.7% accuracy gain with Belief-Matching.
             Stim-native. PyPI binary wheels. All benchmarks published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
@@ -104,7 +104,7 @@ export default function Decoder() {
                 { name: 'Blossom MWPM', tag: 'Exact', color: 'gold', desc: 'Adaptive-k minimum-weight perfect matching. Exact LER parity with PyMatching through d=15. The reference decoder for surface codes.' },
                 { name: 'Belief Matching', tag: 'Best LER', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. +35.7% LER reduction vs plain MWPM at d=5. Use when accuracy matters more than latency.' },
                 { name: 'BP-OSD', tag: 'qLDPC', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. Required for qLDPC codes where matching decoders cannot be applied.' },
-                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. Fastest option at large code distances - trades some LER accuracy for speed.' },
+                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes - trades some LER accuracy for speed.' },
                 { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for ring-like detector graphs. Lower latency than exact Blossom, close to optimal.' },
                 { name: 'GPU Batch', tag: 'Parallel', color: 'gold', desc: 'Native CUDA/OpenCL batch decoding. Bit-identical corrections to CPU MWPM. Throughput advantage grows with batch size.' },
               ].map((algo) => (
@@ -121,7 +121,7 @@ export default function Decoder() {
             <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental - Research Stage</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { name: 'Hybrid / Cascade', desc: 'HybridCascadeDecoder combining multiple decoder strategies for mixed code families. Research-stage.' },
+                { name: 'Hybrid Decoder', desc: 'HybridDecoder routes between Union-Find and Blossom based on code properties. Research-stage.' },
                 { name: 'Predecoded Decoder', desc: 'Wraps pre-existing decoding results for integration into QECTOR pipelines. Useful for hybrid workflows.' },
                 { name: 'Lookup-Table Decoder', desc: 'Precomputed correction table for small codes or syndrome subspaces. Fast but limited to small distances.' },
                 { name: 'Sliding Window', desc: 'Sliding-window variant for streaming syndrome data. Trade-offs between latency and accuracy under investigation.' },

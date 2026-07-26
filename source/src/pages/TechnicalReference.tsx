@@ -34,7 +34,7 @@ correction = decoder.decode(syndrome)`
     {
       name: 'BeliefMatchingDecoder',
       signature: 'BeliefMatchingDecoder(dem: stim.DetectorErrorModel, *, bp_iters: int = 30, max_paths: int = 10, bp_method: str = "product_sum")',
-      desc: 'Top-tier accuracy decoder. Uses Belief Propagation (BP) preprocessing to compute edge probabilities, and then matches on a reweighted Blossom matching graph. Achieves +35.7% LER reduction vs plain MWPM.',
+      desc: 'Top-tier accuracy decoder. Uses Belief Propagation (BP) preprocessing to compute edge probabilities, and then matches on a reweighted Blossom matching graph. Achieved +35.7% LER reduction vs plain MWPM at d=5 under circuit-level depolarizing noise in published artifacts.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'bp_iters', type: 'int', default: '30', desc: 'Max iterations for Belief Propagation' },

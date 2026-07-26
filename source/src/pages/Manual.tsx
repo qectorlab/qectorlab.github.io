@@ -31,7 +31,7 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-base leading-relaxed">
-              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. It provides ten battle-tested algorithms integrated into a high-performance compiled Rust core with a plug-and-play Python API.
+              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. It provides 20+ decoder families and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
             </p>
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
@@ -152,7 +152,7 @@ print(f"Decoded accurately: {is_correct}")`}
             <div>
               <h3 className="text-primary font-semibold text-sm mb-2">Using Belief-Matching</h3>
               <p className="text-secondary text-xs mb-2">
-                Simply swap the class to `BeliefMatchingDecoder` to achieve 35.7% accuracy gains:
+                Simply swap the class to `BeliefMatchingDecoder` to achieve 35.7% LER reduction at d=5, circuit-level noise:
               </p>
               <CodeBlock
                 filename="belief_matching.py"
@@ -169,7 +169,7 @@ prediction = decoder.decode(syndrome)`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR includes ten decoders categorized into production-grade and research-grade algorithms. Choose based on code type and speed/accuracy tradeoffs:
+              QECTOR includes 20+ decoder families and helpers categorized into production-grade and research-grade. Choose based on code type and speed/accuracy tradeoffs:
             </p>
 
             <div className="overflow-x-auto">
@@ -186,7 +186,7 @@ prediction = decoder.decode(syndrome)`}
                 <tbody className="divide-y divide-gridline">
                   {[
                     { name: 'Blossom (MWPM)', target: 'CSS, Surface', speed: 'Fast (UF pre-match)', accuracy: 'Exact Optimal', tier: 'Production' },
-                    { name: 'Belief-Matching', target: 'CSS, Surface', speed: 'Moderate', accuracy: 'Maximum (+35.7%)', tier: 'Production' },
+                    { name: 'Belief-Matching', target: 'CSS, Surface', speed: 'Moderate', accuracy: 'Maximum at d=5 (+35.7%)', tier: 'Production' },
                     { name: 'BP-OSD', target: 'qLDPC, LDPC', speed: 'Moderate', accuracy: 'Optimal for qLDPC', tier: 'Production' },
                     { name: 'Union-Find', target: 'Large Surface', speed: 'Near-linear O(N)', accuracy: 'Approximate', tier: 'Production' },
                     { name: 'GPU Batch', target: 'Any (Batch)', speed: 'High Throughput', accuracy: 'Identical to CPU', tier: 'Production' },
@@ -450,7 +450,7 @@ prediction = decoder.decode(syndrome)`}
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-base mb-3">6. HybridCascade Wheel Status &amp; Manual Cascade Pattern</h3>
+              <h3 className="text-primary font-semibold text-base mb-3">6. Hybrid / HybridCascade Wheel Status &amp; Manual Cascade Pattern</h3>
               <p className="text-muted-foreground text-xs leading-relaxed mb-3">
                 <strong className="text-cyan-300">Wheel Status:</strong> Public PyPI wheels (v0.6.9) ship a compiled Rust extension where <code className="text-cyan-300">HybridCascadeDecoder</code> is gated behind an unexported feature flag (raising <code className="text-red-400">RuntimeError</code> on instantiation). Use <code className="text-cyan-300">HybridDecoder</code> (UF + Blossom routing) or the manual cascade pattern below:
               </p>
@@ -509,7 +509,7 @@ prediction = decoder.decode(syndrome)`}
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">User Manual</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Complete guide to QECTOR Decoder v3 - installation, all ten decoders,
+            Complete guide to QECTOR Decoder v3 - installation, all decoder families,
             GPU batch workflows, benchmarking, diagnostics, and ecosystem integration.
           </p>
         </div>

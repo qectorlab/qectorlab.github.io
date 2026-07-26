@@ -33,7 +33,7 @@ export default function Benchmarks() {
     <>
       <SEO
         title="Benchmarks · QECTOR"
-        description="Head-to-head benchmarks: QECTOR vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain, 98.3% optimal shots. All simulation-validated with GitHub artifacts."
+        description="Head-to-head LER parity: QECTOR-Blossom vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain at d=5, 98.3% optimal shots. All simulation-validated with GitHub and Zenodo artifacts."
       />
       <JsonLd
         data={{
@@ -57,7 +57,7 @@ export default function Benchmarks() {
             <NeuralReveal text="Head-to-Head Benchmarks" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Head-to-head against PyMatching on rotated surface codes using Stim circuit-level noise.
+            LER parity against PyMatching on rotated surface codes using Stim circuit-level noise.
             Results are SHA-256 sealed and available on GitHub - run them yourself with the artifacts.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -129,7 +129,7 @@ export default function Benchmarks() {
               <tbody>
                 {[
                   { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: 'Validated', status: 'Validated' },
-                  { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
+                  { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Slower, more accurate', status: 'Validated' },
                   { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Validated', status: 'Validated' },
                   { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Validated' },
                   { algo: 'Union-Find', dist: 'd = 3 - 21', ler: '~1.5× higher LER', speed: '10-50× faster', status: 'Validated' },

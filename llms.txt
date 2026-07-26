@@ -2,7 +2,7 @@
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. Ten battle-tested decoding algorithms: Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, EBP, Restart Belief, KAT/QCT, Astra GNN, and GPU Batch (CUDA/OpenCL + FPGA emulator).
+QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. Public Python API includes 20+ decoder families and helpers: UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder / CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder, HybridDecoder, PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, GNNBeliefMatcher, GNNPredecoder, NeuralPredecoder, DecoderPool, LERBenchmark, plus code generators and Stim/Sinter compatibility. Status ranges from stable (UF, Blossom, batch, AutoDecoder) to experimental/research (GNN, Neural, streaming).
 
 ## Official links
 
@@ -16,8 +16,9 @@ QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. Ten battle-tested 
 ## External records
 
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
-- GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
-- GitHub: https://github.com/GuillaumeLessard/qector-decoder (reproducible artifacts and validation)
+- Decoder repository (canonical): https://github.com/GuillaumeLessard/qector-decoder
+- Decoder artifacts and validation: https://github.com/GuillaumeLessard/qector-decoder
+- Free Workbench GUI v3.5.0 (Zenodo): https://doi.org/10.5281/zenodo.21360433
 
 ## Recommended install command
 
@@ -26,5 +27,5 @@ pip install qector-decoder-v3
 ## Boundaries
 
 - Commercial use requires written licensing.
-- Benchmark claims should be tied to published artifacts and local reproduction.
-- PyMatching and Stim remain important reference tools.
+- Benchmark claims are tied to published artifacts and must be reproduced on target hardware; PyMatching remains the reference for standard MWPM latency on surface-code workloads.
+- The decoder package is source-available, not open-source.

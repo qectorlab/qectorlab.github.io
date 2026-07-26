@@ -14,7 +14,7 @@ import CodeBlock from '../components/CodeBlock';
 const TOOLS = [
   {
     name: 'decode_syndrome',
-    desc: 'Decode a quantum error correction syndrome using any of 19 supported decoder types: UnionFind, FastUnionFind, Blossom, SparseBlossom, BPOSD, BatchedBp, LookupTable, Predecoded, Hybrid, Auto, SlidingWindow, Streaming, HybridCascade, NeuralPredecoder, GNNPredecoder, GNNBeliefMatcher.',
+    desc: 'Decode a quantum error correction syndrome using any of 15+ supported decoder types: UnionFind, FastUnionFind, Blossom, SparseBlossom, BPOSD, Batch, LookupTable, Predecoded, Hybrid, Auto, SlidingWindow, Streaming, NeuralPredecoder, GNNPredecoder, GNNBeliefMatcher.',
     required: ['check_to_qubits', 'syndrome'],
     optional: ['n_qubits', 'decoder_type', 'error_rate'],
     returns: 'correction (binary array matching n_qubits)',
@@ -75,7 +75,7 @@ export default function McpServer() {
     <>
       <SEO
         title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 19 decoders including Union-Find, Blossom MWPM, BP-OSD, and GNN belief matchers to any MCP client."
+        description="Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 15+ decoder types including Union-Find, Blossom MWPM, BP-OSD, batch and GNN belief matchers to any MCP client."
       />
       <JsonLd
         data={{
@@ -216,7 +216,7 @@ export default function McpServer() {
             <ul className="space-y-3 text-secondary text-sm leading-relaxed">
               <li>
                 <strong className="text-primary">Graph-like vs Hyperedge incidence.</strong>{' '}
-                MCP <code className="text-cyan-300">decode_syndrome</code> validates that every qubit touches at most two checks (participation &le; 2). For graph-like codes (repetition, ring, Stim decomposed DEMs), all 19 decoders operate with 100% syndrome faithfulness.
+                MCP <code className="text-cyan-300">decode_syndrome</code> validates that every qubit touches at most two checks (participation &le; 2). For graph-like codes (repetition, ring, Stim decomposed DEMs), all decoder types operate with 100% syndrome faithfulness.
               </li>
               <li>
                 <strong className="text-primary">Surface Code / Hyperedge Workaround.</strong>{' '}

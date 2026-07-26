@@ -141,7 +141,7 @@ export default function Home() {
             className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-            16 production and research decoders including MWPM, Belief-Matching, BP-OSD, and GPU batch decoding.{' '}
+            20+ production and research decoder classes including MWPM, Belief-Matching, BP-OSD, and GPU batch decoding.{' '}
             <span className="text-primary font-semibold">Exact parity with PyMatching through d=15.</span>{' '}
             All claims backed by reproducible artifacts.
           </p>
@@ -154,11 +154,11 @@ export default function Home() {
               Explore the Decoder
             </Link>
             <a
-              href="https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0"
+              href="https://doi.org/10.5281/zenodo.21360433"
               className="btn-outline text-base px-8 py-4 text-sm sm:text-base"
               target="_blank" rel="noopener noreferrer"
             >
-              Free Workbench GUI
+              Free Workbench GUI v3.5.0
             </a>
           </div>
 
@@ -214,7 +214,7 @@ export default function Home() {
               { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
               { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
-              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.4', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0' },
+              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.5.0', href: 'https://doi.org/10.5281/zenodo.21360433' },
             ].map((pill) => (
               <TrustSignal
                 key={pill.label}
@@ -342,7 +342,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                  16 Decoders · Unified API
+                  20+ Decoders · Unified API
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Battle-Tested Decoding Algorithms
@@ -419,7 +419,7 @@ export default function Home() {
                 <tbody>
                   {[
                     { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: 'Validated', status: 'Validated' },
-                    { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Comparable', status: 'Validated' },
+                    { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Slower, more accurate', status: 'Validated' },
                     { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Validated', status: 'Validated' },
                     { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },
                   ].map((row, i) => (
@@ -522,7 +522,7 @@ export default function Home() {
 
               <div className="border-t border-gridline/60 pt-4 mt-4 text-left space-y-2">
                 {[
-                  'Full QECTOR Decoder v3 (all 10 algorithms)',
+                  'Full QECTOR Decoder v3 (all decoder families)',
                   'CPU + CUDA/OpenCL batch decoding',
                   'Written license agreement',
                   'Priority email support (2 business day response)',

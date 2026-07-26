@@ -34,7 +34,7 @@ export default function Workbench() {
 
       {/* New free QECTOR Workbench note */}
       <div className="bg-emerald-950/50 border-b border-emerald-500/30 py-2 text-center text-sm">
-        <span className="text-emerald-400 font-semibold">New &amp; Free:</span> QECTOR Workbench v3.4.0 GUI for the Decoder - <a href="https://github.com/qectorlab/qector-decoder-workbench/releases/tag/v3.4.0" className="underline hover:text-emerald-300" target="_blank" rel="noopener noreferrer">Download the production package</a> (CustomTkinter, 25 MCP tools, 10/10 polished).
+        <span className="text-emerald-400 font-semibold">New &amp; Free:</span> QECTOR Workbench v3.5.0 GUI for the Decoder - <a href="https://doi.org/10.5281/zenodo.21360433" className="underline hover:text-emerald-300" target="_blank" rel="noopener noreferrer">Download the production package</a> (CustomTkinter, 25 MCP tools, 10/10 polished).
       </div>
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
@@ -49,7 +49,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Desktop GUI, FastAPI REST, dual CLI, MCP server, and{' '}
             <span className="text-cyan-300 font-semibold">17 hardware abstraction adapters</span> across 21 backend targets -
-            SATI OS is the full suite. It integrates the new QECTOR Decoder v3 (Source-Available, not free, v{pypiVersion}) and the new free QectorWorkbench GUI v3.4.0 (CustomTkinter, 25 tools, premium docs) with advanced commercial layers: 17 HAL adapters, expanded MCP, REST/CLI, and production support.
+            SATI OS is the full suite. It integrates the new QECTOR Decoder v3 (Source-Available, not free, v{pypiVersion}) and the new free QectorWorkbench GUI v3.5.0 (CustomTkinter, 25 tools, premium docs) with advanced commercial layers: 17 HAL adapters, expanded MCP, REST/CLI, and production support.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/contact" className="btn-cyan">Get License Key</Link>
@@ -118,7 +118,7 @@ export default function Workbench() {
           {/* Status */}
           <EvidenceBlock
             title="Release Status"
-            statement={`SATI OS v1.0.0 is the full commercial suite. The core is the Source-Available (not free) QECTOR Decoder v3 (v${pypiVersion}) + the new free QectorWorkbench GUI v3.4.0 (open, polished, MCP-enabled). SATI OS adds the complete production stack (39 panels, 122 routes, 17 HAL adapters, 93+ tool MCP) plus commercial licensing and support.`}
+            statement={`SATI OS v1.0.0 is the full commercial suite. The core is the Source-Available (not free) QECTOR Decoder v3 (v${pypiVersion}) + the new free QectorWorkbench GUI v3.5.0 (open, polished, MCP-enabled). SATI OS adds the complete production stack (39 panels, 122 routes, 17 HAL adapters, 93+ tool MCP) plus commercial licensing and support.`}
           />
 
           {/* Install */}
