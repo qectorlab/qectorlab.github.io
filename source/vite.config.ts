@@ -3,6 +3,53 @@ import fs from "fs"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 import { inspectAttr } from 'kimi-plugin-inspect-react'
+import { PRERENDER_ROUTE_MAP, buildJsonLdGraph, SITE_URL, type PrerenderRoute } from './src/lib/prerenderData'
+
+// Escape text for use inside a double-quoted HTML attribute.
+function escAttr(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+// Replace the capture-group-safe way: replacer functions avoid $-reference pitfalls.
+function setTag(html: string, re: RegExp, value: string): string {
+  return html.replace(re, (_m, pre: string, post: string) => `${pre}${escAttr(value)}${post}`)
+}
+
+// Inject route-specific SEO + static content into a built HTML shell.
+// Turns the empty SPA shell into a prerendered page: crawlers and no-JS
+// agents get a real title, real meta tags, JSON-LD, and readable body text.
+// React replaces the static body on mount (createRoot clears #root).
+function applyRouteSeo(shell: string, route: PrerenderRoute): string {
+  const url = `${SITE_URL}${route.path === '/' ? '/' : route.path}`
+  let html = shell
+
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>${escAttr(route.title)}</title>`)
+  html = setTag(html, /(<meta name="description" content=")[^"]*(")/, route.description)
+  if (route.noindex) {
+    html = html.replace(/(<meta name="robots" content=")[^"]*(")/, '$1noindex, follow$2')
+  }
+  html = setTag(html, /(<link rel="canonical" href=")[^"]*(")/, url)
+  html = setTag(html, /(<meta property="og:title" content=")[^"]*(")/, route.title)
+  html = setTag(html, /(<meta property="og:description" content=")[^"]*(")/, route.description)
+  html = setTag(html, /(<meta property="og:url" content=")[^"]*(")/, url)
+  html = setTag(html, /(<meta name="twitter:title" content=")[^"]*(")/, route.title)
+  html = setTag(html, /(<meta name="twitter:description" content=")[^"]*(")/, route.description)
+
+  // JSON-LD (escape </ inside the JSON so a stray "</script>" can never break out)
+  const jsonLd = JSON.stringify(buildJsonLdGraph(route)).replace(/<\//g, '<\\/')
+  html = html.replace(
+    '</head>',
+    `    <script type="application/ld+json">${jsonLd}</script>\n  </head>`
+  )
+
+  // Static, crawlable body content. React clears it on mount; no-JS agents keep it.
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root">${route.body}</div>\n    <noscript><p style="font-family:system-ui;padding:1rem;text-align:center;color:#94a3b8;">This page is fully interactive with JavaScript enabled. The text above is the static summary of ${escAttr(url)}.</p></noscript>`
+  )
+
+  return html
+}
 
 // https://vite.dev/config/
 // Cloudflare Rocket Loader rewrites <script type="module"> to
@@ -43,28 +90,51 @@ function ghPagesSpaShell(): import('vite').Plugin {
     apply: 'build',
     closeBundle() {
       const dist = path.resolve(__dirname, 'dist')
-      const shell = fs.readFileSync(path.join(dist, 'index.html'))
+      const shell = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
-      // Unknown-path fallback.
-      fs.writeFileSync(path.join(dist, '404.html'), shell)
+      // ── base index.html (route /) ──────────────────────────────────────────
+      const homeMeta = PRERENDER_ROUTE_MAP['/']
+      if (!homeMeta) this.error('gh-pages-spa-shell: Missing prerender data for "/".')
+      fs.writeFileSync(path.join(dist, 'index.html'), applyRouteSeo(shell, homeMeta))
 
+      // ── 404 unknown-path fallback (keep SEO-poor so it does not compete) ──
+      const _404html = applyRouteSeo(shell, {
+        path: '/404',
+        title: 'Page Not Found · QECTOR',
+        description: 'The requested page could not be found.',
+        noindex: true,
+        heading: '',
+        body: '',
+      })
+      fs.writeFileSync(path.join(dist, '404.html'), _404html)
+
+      // ── route shells: one dist/<path>/index.html per real route ────────────
       const app = fs.readFileSync(path.resolve(__dirname, 'src/App.tsx'), 'utf8')
-      const routes = [...app.matchAll(/<Route\s+path="([^"]+)"/g)]
+      const routePaths = [...app.matchAll(/<Route\s+path="([^"]+)"/g)]
         .map((m) => m[1])
         .filter((p) => p !== '*' && p !== '/' && !p.includes(':'))
 
-      if (routes.length === 0) {
-        // Parsing App.tsx is the single source of truth; if the shape of that
-        // file changes, fail loudly rather than shipping 404s again.
+      if (routePaths.length === 0) {
         this.error('gh-pages-spa-shell: no routes parsed from src/App.tsx')
       }
 
-      for (const route of routes) {
-        const dir = path.join(dist, route.replace(/^\//, ''))
+      for (const routePath of routePaths) {
+        const meta = PRERENDER_ROUTE_MAP[routePath]
+        if (!meta) {
+          // Adding a <Route> to App.tsx without adding its metadata to
+          // prerenderData.ts is a build error — every route needs a shell.
+          this.error(
+            `gh-pages-spa-shell: Missing prerender data for "${routePath}". ` +
+              `Add an entry to src/lib/prerenderData.ts`
+          )
+        }
+        const dir = path.join(dist, routePath.replace(/^\//, ''))
         fs.mkdirSync(dir, { recursive: true })
-        fs.writeFileSync(path.join(dir, 'index.html'), shell)
+        fs.writeFileSync(path.join(dir, 'index.html'), applyRouteSeo(shell, meta))
       }
-      console.log(`gh-pages-spa-shell: emitted 200-status shells for ${routes.length} routes`)
+      console.log(
+        `gh-pages-spa-shell: emitted prerendered 200-status shells for ${routePaths.length} routes`
+      )
     },
   }
 }

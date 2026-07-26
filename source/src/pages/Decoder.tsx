@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 - ten battle-tested QEC decoding algorithms in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
+        description="QECTOR Decoder v3 - 16 production and research QEC decoding algorithms in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
       />
       <JsonLd
         data={{
@@ -60,7 +60,7 @@ export default function Decoder() {
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Rust-core Python library implementing ten QEC decoders from exact MWPM to GPU batch.
+            Rust-core Python library implementing 16 QEC decoders from exact MWPM to GPU batch.
             Exact parity with PyMatching through d=15. +35.7% accuracy gain with Belief-Matching.
             Stim-native. PyPI binary wheels. All benchmarks published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
@@ -121,10 +121,12 @@ export default function Decoder() {
             <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental - Research Stage</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { name: 'EBP', desc: 'Enhanced belief propagation for harder LDPC/qLDPC instances where standard BP-OSD stalls.' },
-                { name: 'Restart Belief', desc: 'BP with restart strategies to escape local minima on degenerate syndromes.' },
-                { name: 'KAT / QCT', desc: 'Transformer-based decoder for maximum-accuracy offline analysis. High latency - not for real-time use.' },
-                { name: 'Astra GNN', desc: 'Graph neural network decoder. Research benchmarking only. Not validated for production workloads.' },
+                { name: 'Hybrid / Cascade', desc: 'HybridCascadeDecoder combining multiple decoder strategies for mixed code families. Research-stage.' },
+                { name: 'Predecoded Decoder', desc: 'Wraps pre-existing decoding results for integration into QECTOR pipelines. Useful for hybrid workflows.' },
+                { name: 'Lookup-Table Decoder', desc: 'Precomputed correction table for small codes or syndrome subspaces. Fast but limited to small distances.' },
+                { name: 'Sliding Window', desc: 'Sliding-window variant for streaming syndrome data. Trade-offs between latency and accuracy under investigation.' },
+                { name: 'Streaming Decoder', desc: 'Continuous syndrome-stream decoding for real-time feedback loops. Latency-optimized under test.' },
+                { name: 'GNN Belief Matcher', desc: 'Graph neural network enhanced belief propagation. Research benchmarking only — not validated for production.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}

@@ -1,5 +1,6 @@
-Contact: admin@qector.store
-Preferred-Languages: en, fr
+Contact: mailto:admin@qector.store
+Contact: https://qector.store/contact
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en
 Canonical: https://qector.store/.well-known/security.txt
-Policy: https://qector.store/license
-Expires: 2027-06-25T00:00:00Z
+Policy: https://qector.store/terms

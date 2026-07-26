@@ -1,30 +1,35 @@
-# QECTOR Decoder v3
+# QECTOR Decoder v3 (v0.6.9)
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder v3 is distributed on PyPI as qector-decoder-v3. Ten battle-tested decoding algorithms: Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, EBP, Restart Belief, KAT/QCT, Astra GNN, and GPU Batch (CUDA/OpenCL + FPGA emulator).
+QECTOR Decoder v3 is distributed on PyPI as `qector-decoder-v3==0.6.9`. 
+
+Algorithms: UnionFind, FastUnionFind, Blossom MWPM (exact PyMatching LER parity), SparseBlossom, BeliefMatching (+35.7% LER reduction at d=5 under depolarizing circuit noise), BpOsd / BPOSD (qLDPC), BatchDecoder, CUDABatchDecoder / OpenCLBatchDecoder, AutoDecoder (7-tier fallback), HybridDecoder, PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, and GNNBeliefMatcher.
 
 ## Official links
 
 - Website: https://qector.store/
 - Install guide: https://qector.store/installer
 - Documentation hub: https://qector.store/docs
+- User Manual: https://qector.store/manual
+- Technical Reference: https://qector.store/technical-reference
 - Benchmark artifacts: https://qector.store/benchmarks
+- Evidence & Reports: https://qector.store/evidence
 - Commercial licensing: https://qector.store/commercial
 - Contact: https://qector.store/contact
 
 ## External records
 
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
-- GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
-- GitHub: https://github.com/GuillaumeLessard/qector-decoder (reproducible artifacts and validation)
+- Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
+- Artifacts & Verification Repository: https://github.com/GuillaumeLessard/qector-decoder
 
 ## Recommended install command
 
-pip install qector-decoder-v3
+pip install qector-decoder-v3==0.6.9
 
-## Boundaries
+## Boundaries & Licensing
 
-- Commercial use requires written licensing.
-- Benchmark claims should be tied to published artifacts and local reproduction.
-- PyMatching and Stim remain important reference tools.
+- Free academic, personal, and non-commercial research use.
+- Commercial production use requires a commercial licence.
+- All numeric benchmark claims link to reproducible artifacts and local benchmark harnesses.

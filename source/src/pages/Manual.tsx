@@ -190,8 +190,8 @@ prediction = decoder.decode(syndrome)`}
                     { name: 'BP-OSD', target: 'qLDPC, LDPC', speed: 'Moderate', accuracy: 'Optimal for qLDPC', tier: 'Production' },
                     { name: 'Union-Find', target: 'Large Surface', speed: 'Near-linear O(N)', accuracy: 'Approximate', tier: 'Production' },
                     { name: 'GPU Batch', target: 'Any (Batch)', speed: 'High Throughput', accuracy: 'Identical to CPU', tier: 'Production' },
-                    { name: 'EBP / Restart Belief', target: 'Degenerate LDPC', speed: 'Iterative', accuracy: 'High', tier: 'Research' },
-                    { name: 'KAT / Astra GNN', target: 'Surface, Research', speed: 'Slow (Offline)', accuracy: 'Neural-enhanced', tier: 'Research' },
+                    { name: 'Hybrid / Cascade', target: 'Degenerate, mixed', speed: 'Iterative', accuracy: 'High', tier: 'Research' },
+                    { name: 'GNN Belief Matcher', target: 'Surface, Research', speed: 'Slow (Offline)', accuracy: 'Neural-enhanced', tier: 'Research' },
                   ].map((row) => (
                     <tr key={row.name} className="hover:bg-surface/20 transition-colors">
                       <td className="p-3 font-semibold text-primary">{row.name}</td>

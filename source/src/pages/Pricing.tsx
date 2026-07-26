@@ -1,40 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { SEO } from '../lib/seo';
+import { SEO, JsonLd } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import EvidenceBlock from '../components/EvidenceBlock';
+import { FAQ_ITEMS } from '../lib/faqData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const faqItems = [
-  {
-    q: 'How is the license delivered?',
-    a: 'Automatically, by email, within minutes of payment. You receive an Ed25519-signed license token tied to your checkout email — set it as QECTOR_LICENSE and it verifies offline against a public key embedded in the package, so it works air-gapped and in CI with no license server and no phone-home. There are no software lockouts: your team keeps using the standard pip install qector-decoder-v3 package as-is, and the token plus your Stripe receipt are what procurement and audit need.'
-  },
-  {
-    q: 'What happens after the 60-day evaluation expires?',
-    a: 'The $499 evaluation is a flat, non-recurring 60-day window. If you need to extend or convert to an annual license, contact licensing@qector.store. The evaluation fee is 100% creditable toward any annual license.'
-  },
-  {
-    q: 'Can I redistribute QECTOR inside my product?',
-    a: 'No — standard tiers cover internal use only. Enterprise OEM licenses cover redistribution, SaaS hosting, and hardware bundling. Email licensing@qector.store for a custom agreement.'
-  },
-  {
-    q: 'Do I need a license for non-commercial research?',
-    a: 'No. Non-commercial, academic, and personal use is free under the PolyForm Noncommercial license. Only commercial deployment requires a paid tier.'
-  },
-  {
-    q: 'What about academic discounts?',
-    a: 'Yes — academic institutions receive 40% off any annual tier. Contact licensing@qector.store with your .edu domain to verify.'
-  },
-  {
-    q: 'Can we get a signed corporate EULA or tax form?',
-    a: 'Yes. If procurement requires a signed PDF agreement, vendor profile, or W-8/W-9, email your request with your Stripe invoice number to licensing@qector.store.'
-  },
-];
 
 const evaluationSteps = [
   { step: '1', title: 'Contact', desc: 'Reach out with your use case and team size.' },
@@ -44,7 +18,7 @@ const evaluationSteps = [
 ];
 
 const includedItems = [
-  'Full QECTOR Decoder v3 package (all 10 algorithms)',
+  'Full QECTOR Decoder v3 package (all decoders)',
   'CPU + CUDA batch decoding paths',
   'Commercial use rights (internal evaluation)',
   'Written license agreement',
@@ -82,6 +56,17 @@ export default function Pricing() {
       <SEO
         title="Pricing · QECTOR"
         description="QECTOR Decoder v3 commercial licensing. Self-serve evaluation from $499. Annual tiers from $1,299. Enterprise and OEM available."
+      />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: FAQ_ITEMS.map((f) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        }}
       />
 
       {/* HERO */}
@@ -182,7 +167,7 @@ export default function Pricing() {
                 period="/ 60 days"
                 desc="Unlimited internal seats. 100% credit toward annual license. Self-serve."
                 features={[
-                  'Full decoder v3 (all 10 algorithms)',
+                  'Full decoder v3 (all decoders)',
                   'CPU + CUDA/OpenCL batch decoding',
                   'Commercial use rights (internal)',
                   'Written license agreement',
@@ -200,7 +185,7 @@ export default function Pricing() {
                 period="/ year"
                 desc="Single named user. Also $899 one-time perpetual."
                 features={[
-                  'Full decoder v3 (all 10 algorithms)',
+                  'Full decoder v3 (all decoders)',
                   'Commercial R&D rights',
                   'Single named user',
                   'Priority email support',
@@ -218,7 +203,7 @@ export default function Pricing() {
                 featured
                 featuredLabel="Recommended"
                 features={[
-                  'Full decoder v3 (all 10 algorithms)',
+                  'Full decoder v3 (all decoders)',
                   'Up to 10 named users',
                   'Advanced BP-OSD/LDPC workflows',
                   'CPU + CUDA/OpenCL batch decoding',
@@ -236,7 +221,7 @@ export default function Pricing() {
                 period="/ year"
                 desc="Up to 25 named users. Validation Report Package credit."
                 features={[
-                  'Full decoder v3 (all 10 algorithms)',
+                  'Full decoder v3 (all decoders)',
                   'Up to 25 named users',
                   'All advanced workflows',
                   'CPU + CUDA/OpenCL batch decoding',
@@ -254,7 +239,7 @@ export default function Pricing() {
                 period="/ year"
                 desc="Custom user volume. Dedicated support."
                 features={[
-                  'Full decoder v3 (all 10 algorithms)',
+                  'Full decoder v3 (all decoders)',
                   'Unlimited named users',
                   'All advanced workflows + custom builds',
                   'CPU + CUDA/OpenCL batch decoding',
@@ -344,7 +329,7 @@ export default function Pricing() {
 
             <div className="border-t border-gridline/60 pt-4 mt-4 text-left space-y-2 max-w-md mx-auto">
               {[
-                'Full QECTOR Decoder v3 (all 10 algorithms)',
+                'Full QECTOR Decoder v3 (all decoders)',
                 'CPU + CUDA/OpenCL batch decoding',
                 'Unlimited internal seats',
                 'Written license agreement',
@@ -487,7 +472,7 @@ export default function Pricing() {
               Frequently Asked Questions
             </h3>
             <div className="space-y-6 text-left">
-              {faqItems.map((item, idx) => (
+              {FAQ_ITEMS.map((item, idx) => (
                 <div key={idx} className="card-surface bg-[#0b1329]/40 border-gridline/40 p-5 rounded-xl">
                   <h4 className="text-sm font-semibold text-primary mb-2 flex items-start gap-2">
                     <span className="text-cyan-300">Q:</span>

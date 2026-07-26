@@ -16,7 +16,7 @@ export default function Installer() {
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Installation</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             QECTOR Decoder v3 ships as a Rust-compiled Python wheel.
-            One command on <span className="text-cyan-300 font-semibold">Linux, macOS ARM64/x86, and Windows</span>.
+            One command on <span className="text-cyan-300 font-semibold">Linux, macOS ARM64, and Windows</span>.
             GPU backends optional.
           </p>
           <div className="inline-block px-6 py-3 bg-void border border-gridline rounded-xl font-mono text-sm text-cyan-300">
@@ -43,10 +43,13 @@ export default function Installer() {
           <div className="card-surface border-cyan-300/20">
             <h2 className="text-xl font-bold mb-4 text-cyan-300">Quick Install (Recommended)</h2>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground">
-              <div>pip install qector-decoder-v3</div>
+              <div>pip install qector-decoder-v3=={pypiVersion}</div>
             </div>
             <p className="text-secondary text-sm mt-3">
               This installs the latest stable release with pre-compiled binary wheels.
+            </p>
+            <p className="text-secondary text-xs mt-2">
+              Optional extras: <code className="text-cyan-300 font-mono text-xs">[stim]</code> (Stim/Sinter/PyMatching), <code className="text-cyan-300 font-mono text-xs">[bench]</code> (benchmark harness), <code className="text-cyan-300 font-mono text-xs">[all]</code> (full environment).
             </p>
           </div>
 
@@ -54,9 +57,9 @@ export default function Installer() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Verify Installation</h2>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
-              <div>python -c "import qector; print(qector.__version__)"</div>
+              <div>python -c "import qector_decoder_v3; print(qector_decoder_v3.__version__)"</div>
               <div className="text-green-400 font-semibold"># Should print: {pypiVersion}</div>
-              <div className="mt-2">python -m qector.validate -quick</div>
+              <div className="mt-2">python -c "from qector_decoder_v3 import BlossomDecoder, UnionFindDecoder; print('QECTOR OK')"</div>
               <div className="text-green-400"># Should print: QECTOR OK</div>
             </div>
           </div>
@@ -71,7 +74,7 @@ export default function Installer() {
               </div>
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">macOS</h3>
-                <p className="text-secondary text-sm">Universal2 wheels for both Apple Silicon (ARM64) and Intel (x86_64). macOS 12+ required.</p>
+                <p className="text-secondary text-sm">ARM64 wheels for Apple Silicon (M1+). macOS 12+ required.</p>
               </div>
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">Windows</h3>
@@ -83,13 +86,12 @@ export default function Installer() {
           {/* GPU Setup */}
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">GPU Batch Decoding Setup</h2>
+            <p className="text-secondary text-sm mb-3">Install the full environment including all GPU dependencies via the <code className="text-cyan-300 font-mono text-xs">[all]</code> extra, which includes CUDA and OpenCL support:</p>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
-              <div className="text-cyan-300"># CUDA backend (requires NVIDIA GPU)</div>
-              <div>pip install qector-decoder-v3[cuda]</div>
-              <div className="mt-2 text-cyan-300"># OpenCL backend (broader compatibility)</div>
-              <div>pip install qector-decoder-v3[opencl]</div>
+              <div className="text-cyan-300"># Full environment with GPU backends</div>
+              <div>pip install "qector-decoder-v3[all]"</div>
               <div className="mt-2 text-cyan-300"># Verify GPU detection</div>
-              <div>python -m qector.validate -gpu</div>
+              <div>python -c "from qector_decoder_v3 import CUDABatchDecoder; print('CUDA available:', CUDABatchDecoder.is_available())"</div>
             </div>
           </div>
 

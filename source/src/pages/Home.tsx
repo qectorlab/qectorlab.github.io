@@ -4,7 +4,6 @@ import { SEO, JsonLd } from '../lib/seo';
 import TrustSignal from '../components/TrustSignal';
 import SectionHeader from '../components/SectionHeader';
 import AlgorithmCard from '../components/AlgorithmCard';
-import MetricCard from '../components/MetricCard';
 import EvidenceBlock from '../components/EvidenceBlock';
 import QECSimulator from '../components/QECSimulator';
 import gsap from 'gsap';
@@ -142,7 +141,7 @@ export default function Home() {
             className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-            10 battle-tested algorithms including MWPM, Belief-Matching, BP-OSD, and GPU batch decoding.{' '}
+            16 production and research decoders including MWPM, Belief-Matching, BP-OSD, and GPU batch decoding.{' '}
             <span className="text-primary font-semibold">Exact parity with PyMatching through d=15.</span>{' '}
             All claims backed by reproducible artifacts.
           </p>
@@ -163,9 +162,20 @@ export default function Home() {
             </a>
           </div>
 
+          {/* Quickstart */}
+          <div className="max-w-2xl mx-auto mb-10">
+            <div className="p-4 bg-void/70 border border-cyan-300/15 rounded-2xl backdrop-blur-sm text-left">
+              <div className="text-xs text-cyan-300 font-semibold tracking-wider mb-2">Quick start</div>
+              <pre className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed overflow-x-auto">
+                <span className="text-cyan-300">$</span> pip install qector-decoder-v3{'\n'}
+                <span className="text-cyan-300">$</span> python -c &quot;from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')&quot;
+              </pre>
+            </div>
+          </div>
+
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="10+" label="Decoding Algorithms" />
-            <CounterStat value="29K+" label="Monthly Cluster Pulls" />
+            <CounterStat value="16+" label="Decoding Algorithms" />
+            <CounterStat value="1,858+" label="Benchmark Measurements" />
             <CounterStat value="d=15" label="Validated MWPM Parity" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
           </div>
@@ -299,7 +309,7 @@ export default function Home() {
                 },
                 {
                   title: 'qLDPC Support',
-                  tag: 'BP-OSD + EBP',
+                  tag: 'BP-OSD (qLDPC)',
                   desc: 'Matching decoders break on qLDPC codes. BP-OSD handles what Blossom cannot. Required for non-CSS codes and bivariate bicycle codes.',
                   proof: 'Non-CSS + bivariate bicycle codes',
                 },
@@ -332,24 +342,27 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                  10 Decoders · Unified API
+                  16 Decoders · Unified API
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Battle-Tested Decoding Algorithms
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
-                  MWPM, Belief-Matching, BP-OSD, Union-Find, GPU Batch, EBP, Restart Belief, KAT/QCT, Astra GNN, and
-                  FPGA emulator — all accessible through a consistent Python API.
+                  Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
+                  AutoDecoder, Hybrid, Predecoded, Sliding Window, Streaming, and GNN Belief Matcher — all accessible through a consistent Python API.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: '\u2705 Exact Parity', desc: 'QECTOR-Blossom matches PyMatching LER from d=3 to d=15 (adaptive-k MWPM)' },
-                    { label: '\uD83D\uDCC8 +35.7% Advantage', desc: 'Belief-matching LER reduction vs PyMatching at d=5 (circuit-level noise)' },
-                    { label: '\uD83C\uDFAF 98.3% Optimal', desc: 'Shots with exact minimum weight at d=9 (median gap ≈ 0)' },
-                    { label: '\u26A1 GPU Batch', desc: 'CUDA peak: 13.5M shots/s. OpenCL: cross-platform. Bit-identical to CPU.' },
-                  ].map((metric) => (
-                    <MetricCard key={metric.label} label={metric.label} desc={metric.desc} variant="compact" />
+                    { label: ' Exact LER Parity', desc: 'QECTOR-Blossom matches PyMatching LER output exactly from d=3 to d=15 (adaptive-k MWPM).' },
+                    { label: ' +35.7% LER Reduction', desc: 'Belief-Matching LER reduction vs plain MWPM at d=5 under depolarizing circuit noise.' },
+                    { label: ' 100% Syndrome Faithful', desc: 'All graph-like decoders guarantee H · corr ≡ syndrome (mod 2) on valid syndromes.' },
+                    { label: ' GPU Batch Acceleration', desc: 'CUDA & OpenCL device pipelines for high-throughput batching — bit-identical to CPU output.' },
+                  ].map((item) => (
+                    <div key={item.label} className="p-4 bg-void/50 border border-gridline/50 rounded-xl">
+                      <div className="text-cyan-300 font-semibold text-sm mb-1">{item.label}</div>
+                      <div className="text-muted-foreground text-xs leading-relaxed">{item.desc}</div>
+                    </div>
                   ))}
                 </div>
 
@@ -463,7 +476,7 @@ export default function Home() {
                 Start Your Evaluation
               </h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
-                $499 for a 60-day commercial evaluation. Unlimited internal seats, all 10 decoders,
+                $499 for a 60-day commercial evaluation. Unlimited internal seats, all decoders,
                 GPU batch paths, priority support, and full validation artifact access.
                 100% credit toward any annual license.
               </p>
@@ -493,7 +506,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 to-transparent pointer-events-none" />
               <div className="mb-6">
                 <h3 className="text-4xl font-extrabold text-primary">$499</h3>
-                <p className="text-muted-foreground text-xs mt-1">Unlimited internal seats · All 10 algorithms · Priority support</p>
+                <p className="text-muted-foreground text-xs mt-1">Unlimited internal seats · All decoders · Priority support</p>
               </div>
 
               <div className="flex justify-center mb-4 min-h-[50px]">
