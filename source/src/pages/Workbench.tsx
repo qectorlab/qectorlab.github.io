@@ -38,16 +38,44 @@ export default function Workbench() {
     if (el) sectionsRef.current[index] = el;
   };
 
+  const decodersList = [
+    { kind: 'hybrid_cascade', tput: '362,845 decodes/s', lat: '2.60 µs', ler: '0.10', type: 'Graphlike', desc: 'Union-Find pre-filter + Blossom/BP-OSD escalation.' },
+    { kind: 'fast_union_find', tput: '349,895 decodes/s', lat: '2.40 µs', ler: '0.10', type: 'Graphlike', desc: 'Ultra-fast approximate Union-Find variant.' },
+    { kind: 'lookup_table', tput: '337,610 decodes/s', lat: '2.40 µs', ler: '0.10', type: 'Small (<20 checks)', desc: 'Exhaustive syndrome lookup table.' },
+    { kind: 'union_find', tput: '295,508 decodes/s', lat: '2.40 µs', ler: '0.10', type: 'Graphlike', desc: 'Standard cluster-growth Union-Find decoder.' },
+    { kind: 'blossom', tput: '261,917 decodes/s', lat: '2.90 µs', ler: '0.08', type: 'Universal', desc: 'Weight-optimal exact MWPM matching (PyMatching LER parity).' },
+    { kind: 'sparse_blossom', tput: '146,757 decodes/s', lat: '4.05 µs', ler: '0.08', type: 'Graphlike', desc: 'Region-growing blossom variant for sparse error graphs.' },
+    { kind: 'hybrid', tput: '138,812 decodes/s', lat: '4.10 µs', ler: '0.08', type: 'Graphlike', desc: 'Multi-strategy adaptive solver.' },
+    { kind: 'predecoded', tput: '82,850 decodes/s', lat: '12.00 µs', ler: '0.08', type: 'Graphlike', desc: 'Fast pre-decoding pass prior to matching.' },
+    { kind: 'auto', tput: '61,125 decodes/s', lat: '13.60 µs', ler: '0.10', type: 'Graphlike', desc: 'Self-selecting 7-tier heuristic selector.' },
+    { kind: 'bp_osd', tput: '26,162 decodes/s', lat: '34.75 µs', ler: '0.10', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered statistics decoding.' },
+    { kind: 'gnn_belief_matching', tput: '6,520 decodes/s', lat: '147.15 µs', ler: '0.08', type: 'Graphlike', desc: 'GNN-guided edge-weighted matching with fallback.' },
+    { kind: 'belief_matching', tput: '1,001 decodes/s', lat: '988.05 µs', ler: '0.02 (Best)', type: 'Universal', desc: 'BP posteriors reweight Blossom matching (+35.7% accuracy gain).' },
+    { kind: 'auto_router', tput: '40 decodes/s', lat: '25.45 ms', ler: '0.08', type: 'Universal', desc: 'Policy router: matching for graphlike, BP-OSD for qLDPC.' },
+  ];
+
+  const codeFamilies = [
+    { name: 'repetition', params: 'distance (int)', decoders: '13 / 13', desc: '1D chain parity-check code.' },
+    { name: 'ring', params: 'distance (int)', decoders: '13 / 13', desc: 'Periodic 1D chain.' },
+    { name: 'rotated_surface', params: 'distance (int)', decoders: '13 / 13', desc: 'Standard rotated surface code.' },
+    { name: 'unrotated_surface', params: 'distance (int)', decoders: '12 / 13', desc: 'Square lattice surface code.' },
+    { name: 'toric', params: 'distance (int)', decoders: '12 / 13', desc: 'Toric code with periodic boundaries.' },
+    { name: 'heavy_hex', params: 'distance (int)', decoders: '13 / 13', desc: 'IBM heavy-hex lattice.' },
+    { name: 'hypergraph_product', params: 'distance (int)', decoders: '13 / 13', desc: 'CSS code from repetition seed.' },
+    { name: 'bicycle', params: 'circulant size (int)', decoders: '13 / 13', desc: 'qLDPC bicycle code.' },
+    { name: 'bivariate_bicycle', params: 'preset index (int)', decoders: '9 / 13', desc: 'IBM bivariate bicycle presets (qLDPC).' },
+  ];
+
   return (
     <>
       <SEO
-        title="QECTOR Workbench v3.5.1 · Free QEC Desktop App & MCP Server"
-        description="QECTOR Workbench v3.5.1 — Free cross-platform desktop GUI (Windows, Linux, macOS) for QECTOR Decoder v3. 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and offline decoding."
+        title="QECTOR Workbench v3.5.1 · 47 MCP Tools · 13 Decoders · 9 Code Families"
+        description="QECTOR Workbench v3.5.1 — Free cross-platform desktop GUI & MCP server for QECTOR Decoder v3. 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and 362k decodes/s throughput."
       />
 
-      {/* Free QECTOR Workbench Notice */}
+      {/* Top Notice */}
       <div className="bg-emerald-950/50 border-b border-emerald-500/30 py-2.5 text-center text-sm px-4">
-        <span className="text-emerald-400 font-semibold">Free &amp; Open Application:</span> QECTOR Workbench v3.5.1 (CustomTkinter GUI + 47 MCP tools) —{' '}
+        <span className="text-emerald-400 font-semibold">Free Desktop Application:</span> QECTOR Workbench v3.5.1 (CustomTkinter GUI + 47 MCP Tools) —{' '}
         <a
           href="https://doi.org/10.5281/zenodo.21363016"
           className="underline hover:text-emerald-300 transition-colors"
@@ -63,16 +91,16 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            v3.5.1 Released · 47 MCP Tools · 13 Decoders · 9 Code Families · Windows &amp; Linux Apps
+            Workbench 3.5.1 · Backend qector_decoder_v3 {pypiVersion || '0.6.9'} · 47 MCP Tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Workbench v3.5.1" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            The free desktop application and MCP server for{' '}
-            <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span> (v{pypiVersion}).
-            CustomTkinter GUI, visual circuit builder, syndrome inspector, 47 AI model tools, REST engine, and dual CLI.
-            On first launch, it automatically fetches and installs <code className="text-cyan-300">qector-decoder-v3</code> from PyPI, then runs 100% offline.
+            The free cross-platform desktop application (Windows, Linux, macOS) and Model Context Protocol server for{' '}
+            <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.
+            Includes 13 decoders, 9 quantum code families, visual circuit builder, 47 AI model tools, REST engine, and dual CLI.
+            On first launch, it automatically installs <code className="text-cyan-300">qector-decoder-v3</code> from PyPI, operating 100% offline afterwards.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
@@ -83,23 +111,23 @@ export default function Workbench() {
             >
               Download Workbench App (Zenodo)
             </a>
-            <Link to="/docs" className="btn-outline">
-              View Documentation
+            <Link to="/technical-reference" className="btn-outline">
+              Technical Reference
             </Link>
           </div>
         </div>
       </section>
 
       <section className="section-padding pb-24">
-        <div className="max-w-5xl mx-auto space-y-12">
+        <div className="max-w-6xl mx-auto space-y-14">
 
           {/* Stats Grid */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: 'v3.5.1', label: 'App Release' },
-              { value: '47', label: 'MCP Tools' },
+              { value: 'v3.5.1', label: 'Workbench Release' },
+              { value: '47', label: 'MCP Server Tools' },
               { value: '13', label: 'Decoder Algorithms' },
-              { value: '9', label: 'Code Families' },
+              { value: '9', label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
                 <div className="text-cyan-300 font-bold text-3xl mb-1">{s.value}</div>
@@ -108,14 +136,75 @@ export default function Workbench() {
             ))}
           </div>
 
-          {/* Core App Features */}
-          <div ref={(el) => addRef(el, 1)}>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Workbench Features</h2>
+          {/* Decoders Benchmark Table */}
+          <div ref={(el) => addRef(el, 1)} className="card-surface space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold">13 Integrated Decoders &amp; Benchmark Data</h2>
+                <p className="text-secondary text-sm mt-1">
+                  Measured on rotated_surface (d=5, n=25 qubits, p=0.05 noise, 50 shots).
+                </p>
+              </div>
+              <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
+                qector_decoder_v3 v{pypiVersion || '0.6.9'}
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
+                    <th className="py-3 px-3">Decoder Kind</th>
+                    <th className="py-3 px-3">Throughput</th>
+                    <th className="py-3 px-3">p50 Latency</th>
+                    <th className="py-3 px-3">LER (d=5)</th>
+                    <th className="py-3 px-3">Compatibility</th>
+                    <th className="py-3 px-3">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gridline/50">
+                  {decodersList.map((d) => (
+                    <tr key={d.kind} className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3 px-3 font-mono font-semibold text-primary">{d.kind}</td>
+                      <td className="py-3 px-3 text-cyan-300 font-mono font-semibold">{d.tput}</td>
+                      <td className="py-3 px-3 text-secondary font-mono">{d.lat}</td>
+                      <td className="py-3 px-3 text-gold-400 font-mono font-semibold">{d.ler}</td>
+                      <td className="py-3 px-3 text-muted-foreground text-xs">{d.type}</td>
+                      <td className="py-3 px-3 text-secondary text-xs">{d.desc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 9 Code Families */}
+          <div ref={(el) => addRef(el, 2)}>
+            <h2 className="text-2xl font-bold mb-6">9 Supported Code Families</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {codeFamilies.map((c) => (
+                <div key={c.name} className="p-4 bg-void border border-gridline rounded-xl space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-cyan-300 font-bold">{c.name}</span>
+                    <span className="text-[11px] px-2 py-0.5 bg-surface border border-gridline rounded text-secondary font-mono">
+                      {c.decoders} decoders
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted-foreground font-mono">Param: {c.params}</div>
+                  <p className="text-xs text-secondary">{c.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Application Features */}
+          <div ref={(el) => addRef(el, 3)}>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Workbench Components</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
                   name: 'CustomTkinter GUI',
-                  desc: 'Polished cross-platform desktop UI (Windows, Linux, macOS). Visual circuit builder, syndrome viewer, and decoder comparison dashboard.',
+                  desc: 'Polished cross-platform desktop UI (Windows, Linux, macOS). Visual circuit builder, syndrome viewer, and decoder performance dashboard.',
                 },
                 {
                   name: '47 MCP Tools',
@@ -144,16 +233,16 @@ export default function Workbench() {
           </div>
 
           {/* Interactive Sandbox */}
-          <div ref={(el) => addRef(el, 2)} className="space-y-6">
+          <div ref={(el) => addRef(el, 4)} className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold">Decoder Sandbox</h2>
             <p className="text-secondary text-sm">
-              Below is an interactive sandbox replicating the basic topological 1D/2D planar code matching module inside QECTOR Workbench. Click to inject errors and inspect Blossom correction paths in real time.
+              Below is an interactive sandbox replicating the basic topological planar code matching module inside QECTOR Workbench. Click to inject errors and inspect Blossom correction paths in real time.
             </p>
             <QECSimulator />
           </div>
 
           {/* Archival Records & DOIs */}
-          <div ref={(el) => addRef(el, 3)}>
+          <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
               title="Archival Documentation & DOIs"
               statement="QECTOR Workbench v3.5.1 documentation and performance benchmark datasets are archived with permanent Digital Object Identifiers (DOIs) on Zenodo."
@@ -167,7 +256,7 @@ export default function Workbench() {
               >
                 <div className="text-xs text-muted-foreground uppercase mb-1">User Manual &amp; Licensing</div>
                 <div className="text-cyan-300 font-mono text-sm font-semibold">DOI: 10.5281/zenodo.21363016</div>
-                <div className="text-xs text-secondary mt-1">Full manual, Windows &amp; Linux editions</div>
+                <div className="text-xs text-secondary mt-1">Full manual, Windows, Linux, macOS editions</div>
               </a>
 
               <a
@@ -195,31 +284,43 @@ export default function Workbench() {
           </div>
 
           {/* Installation & Operating System Guides */}
-          <div ref={(el) => addRef(el, 4)} className="card-surface space-y-6">
+          <div ref={(el) => addRef(el, 6)} className="card-surface space-y-6">
             <h2 className="text-2xl font-bold">App Installation &amp; Execution</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-4 bg-void border border-gridline rounded-xl space-y-2">
-                <h3 className="text-cyan-300 font-semibold text-base">Windows Edition (10 / 11 x64)</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">Windows Edition</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Distributed as a standalone Windows app (<code className="text-cyan-300">QECTOR_User_Manual_Windows.pdf</code> reference). No separate Python or pip setup required.
+                  Standalone Windows app (<code className="text-cyan-300">QECTOR_User_Manual_Windows.pdf</code> reference).
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Run <code className="text-cyan-300">qector-workbench.exe</code> or launch shortcut.</li>
-                  <li>First launch connects to PyPI to fetch <code className="text-cyan-300">qector-decoder-v3==0.6.9</code>.</li>
-                  <li>Operates 100% offline after initial setup.</li>
+                  <li>Run <code className="text-cyan-300">qector-workbench.exe</code>.</li>
+                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code> on first launch.</li>
+                  <li>100% offline after setup.</li>
                 </ul>
               </div>
 
               <div className="p-4 bg-void border border-gridline rounded-xl space-y-2">
-                <h3 className="text-cyan-300 font-semibold text-base">Linux Edition (Ubuntu / Debian / RHEL)</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">Linux Edition</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Cross-platform Python application (<code className="text-cyan-300">QECTOR_User_Manual_Linux.pdf</code> reference).
+                  Python application (<code className="text-cyan-300">QECTOR_User_Manual_Linux.pdf</code> reference).
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Requires system <code className="text-cyan-300">python3</code> and <code className="text-cyan-300">python3-pip</code>.</li>
-                  <li>Launch command: <code className="text-cyan-300">python3 -m qector_workbench</code>.</li>
-                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code> on first launch.</li>
+                  <li>Requires <code className="text-cyan-300">python3</code> and <code className="text-cyan-300">python3-pip</code>.</li>
+                  <li>Launch: <code className="text-cyan-300">python3 -m qector_workbench</code>.</li>
+                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code>.</li>
+                </ul>
+              </div>
+
+              <div className="p-4 bg-void border border-gridline rounded-xl space-y-2">
+                <h3 className="text-cyan-300 font-semibold text-base">macOS Edition</h3>
+                <p className="text-secondary text-xs leading-relaxed">
+                  Apple Silicon / Intel (<code className="text-cyan-300">QECTOR_User_Manual_macOS.pdf</code> reference).
+                </p>
+                <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
+                  <li>Run <code className="text-cyan-300">qector-workbench.app</code>.</li>
+                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code>.</li>
+                  <li>No separate pip setup required.</li>
                 </ul>
               </div>
             </div>

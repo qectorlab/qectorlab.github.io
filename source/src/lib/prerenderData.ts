@@ -301,18 +301,42 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Free cross-platform desktop application (CustomTkinter GUI), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.6.9). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
         ) +
+        h2('13 Integrated Decoders &amp; Measured Benchmarks') +
+        table(
+          ['Decoder Kind', 'Throughput', 'p50 Latency', 'LER (d=5)', 'Compatibility'],
+          [
+            ['hybrid_cascade', '362,845 decodes/s', '2.60 µs', '0.10', 'Graphlike'],
+            ['fast_union_find', '349,895 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
+            ['lookup_table', '337,610 decodes/s', '2.40 µs', '0.10', 'Small (<20 checks)'],
+            ['union_find', '295,508 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
+            ['blossom', '261,917 decodes/s', '2.90 µs', '0.08', 'Universal (PyMatching Parity)'],
+            ['sparse_blossom', '146,757 decodes/s', '4.05 µs', '0.08', 'Graphlike'],
+            ['hybrid', '138,812 decodes/s', '4.10 µs', '0.08', 'Graphlike'],
+            ['predecoded', '82,850 decodes/s', '12.00 µs', '0.08', 'Graphlike'],
+            ['auto', '61,125 decodes/s', '13.60 µs', '0.10', 'Graphlike'],
+            ['bp_osd', '26,162 decodes/s', '34.75 µs', '0.10', 'Universal / qLDPC'],
+            ['gnn_belief_matching', '6,520 decodes/s', '147.15 µs', '0.08', 'Graphlike'],
+            ['belief_matching', '1,001 decodes/s', '988.05 µs', '0.02 (Best)', 'Universal'],
+            ['auto_router', '40 decodes/s', '25.45 ms', '0.08', 'Universal Policy Router'],
+          ]
+        ) +
+        h2('9 Quantum Code Families') +
+        ul([
+          'repetition — 1D chain parity-check code (13 decoders).',
+          'ring — Periodic 1D chain (13 decoders).',
+          'rotated_surface — Standard rotated surface code (13 decoders).',
+          'unrotated_surface — Square lattice surface code (12 decoders).',
+          'toric — Toric code with periodic boundaries (12 decoders).',
+          'heavy_hex — IBM heavy-hex lattice (13 decoders).',
+          'hypergraph_product — CSS code from repetition seed (13 decoders).',
+          'bicycle — qLDPC bicycle code (13 decoders).',
+          'bivariate_bicycle — IBM bivariate bicycle presets (9 decoders).',
+        ]) +
         h2('Archival records &amp; DOIs') +
         ul([
           'User Manual &amp; Licensing — <a href="https://doi.org/10.5281/zenodo.21363016" style="color:#67e8f9;">DOI 10.5281/zenodo.21363016</a>',
           'Performance Benchmarks — <a href="https://doi.org/10.5281/zenodo.21339300" style="color:#67e8f9;">DOI 10.5281/zenodo.21339300</a>',
           'Architecture Whitepaper — <a href="https://doi.org/10.5281/zenodo.21320543" style="color:#67e8f9;">DOI 10.5281/zenodo.21320543</a>',
-        ]) +
-        h2('Components') +
-        ul([
-          'CustomTkinter Desktop GUI — cross-platform interface with visual circuit builder, syndrome inspector, and decoder performance dashboard.',
-          '47 MCP Tools — Model Context Protocol server connecting AI assistants directly to decoder execution.',
-          'FastAPI REST Server — embedded OpenAPI REST engine for remote decoding.',
-          'Dual CLI Harness — rich interactive terminal and headless batch CLI.',
         ])
     ),
   },
