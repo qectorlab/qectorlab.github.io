@@ -212,28 +212,20 @@ export default function McpServer() {
 
           {/* NOTES */}
           <div className="card-surface">
-            <h2 className="text-2xl font-bold mb-4">Operational notes</h2>
+            <h2 className="text-2xl font-bold mb-4">Operational & Hyperedge Guidance</h2>
             <ul className="space-y-3 text-secondary text-sm leading-relaxed">
               <li>
-                <strong className="text-primary">Code format.</strong>{' '}
-                <code className="text-cyan-300">check_to_qubits</code> is a list of checks,
-                each the list of qubit indices it measures. Union-Find requires every qubit
-                to touch at most two checks; codes with genuine hyperedges are rejected with
-                a clear error rather than decoded incorrectly — use the Blossom or cascade
-                tool for those.
+                <strong className="text-primary">Graph-like vs Hyperedge incidence.</strong>{' '}
+                MCP <code className="text-cyan-300">decode_syndrome</code> validates that every qubit touches at most two checks (participation &le; 2). For graph-like codes (repetition, ring, Stim decomposed DEMs), all 19 decoders operate with 100% syndrome faithfulness.
               </li>
               <li>
-                <strong className="text-primary">Syndrome faithfulness.</strong> Blossom and
-                the cascade fall back to an exact GF(2) solve when matching cannot reproduce
-                the syndrome, so a returned correction always satisfies{' '}
-                <code className="text-cyan-300">H · correction == syndrome (mod 2)</code>{' '}
-                for any reachable syndrome.
+                <strong className="text-primary">Surface Code / Hyperedge Workaround.</strong>{' '}
+                For raw hyperedge check matrices (such as <code className="text-cyan-300">generate_surface_code_checks</code> where qubit participation &gt; 2), use the direct Python API (<code className="text-cyan-300">BlossomDecoder</code>, <code className="text-cyan-300">SparseBlossomDecoder</code>, <code className="text-cyan-300">BpOsdDecoder</code>, or <code className="text-cyan-300">AutoDecoder</code>) or decompose Stim circuit errors into a graph-like DEM via <code className="text-cyan-300">decompose_errors=True</code>.
               </li>
               <li>
-                <strong className="text-primary">Batching.</strong> Prefer{' '}
-                <code className="text-cyan-300">batch_decode_blossom</code> over repeated
-                single calls — it decodes across all cores with the GIL released, so
-                throughput scales with core count instead of round-trips.
+                <strong className="text-primary">Syndrome Faithfulness &amp; Real Benchmark Sweep.</strong>{' '}
+                Verified 100% syndrome-faithful across all tested distances d=3–19. Explore the raw trial data in the{' '}
+                <a href="/json/benchmarks/mcp_sweep_v0.6.9.json" target="_blank" className="text-cyan-300 hover:underline">v0.6.9 MCP Sweep Dataset (JSON)</a>.
               </li>
               <li>
                 <strong className="text-primary">Licensing.</strong> Academic and personal
