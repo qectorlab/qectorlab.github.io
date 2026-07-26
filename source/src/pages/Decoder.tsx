@@ -81,7 +81,7 @@ export default function Decoder() {
               { label: 'Exact Parity', value: 'd=3-15', desc: 'MWPM LER matches PyMatching across all tested distances' },
               { label: '+35.7% Gain', value: 'Belief-Match', desc: 'LER reduction vs PyMatching at d=5, circuit-level noise' },
               { label: '98.3% Optimal', value: 'd=9', desc: 'Shots achieving exact minimum-weight correction' },
-              { label: '832 / 832 Tests', value: '100% Pass', desc: 'Validation and Stim comparison tests passing successfully' },
+              { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} desc={m.desc} centered />
             ))}
@@ -144,7 +144,7 @@ export default function Decoder() {
             <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Technical Specifications</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                ['Languages', 'Rust core (PyO3) / Python 3.10+ API'],
+                ['Languages', 'Rust core (PyO3) / Python 3.9–3.13 API'],
                 ['Platforms', 'Linux, macOS ARM64/x86, Windows'],
                 ['GPU', 'CUDA 11.8+ / OpenCL 2.0+'],
                 ['QEC Library', 'Stim (quantum-circuit noise simulation)'],

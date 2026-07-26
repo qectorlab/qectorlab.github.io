@@ -325,6 +325,24 @@ export default function Workbench() {
               </div>
             </div>
 
+            {/* Troubleshooting & Error Resolution */}
+            <div className="p-5 bg-red-950/40 border border-red-500/30 rounded-xl space-y-3">
+              <h3 className="text-red-400 font-bold text-base flex items-center gap-2">
+                <span>⚠️ Troubleshooting: "QECTOR Decoder unavailable"</span>
+              </h3>
+              <p className="text-secondary text-xs leading-relaxed">
+                If the desktop app displays the dialog <em>"QECTOR could not start because qector-decoder-v3 is unavailable... another QECTOR instance is installing the decoder"</em>:
+              </p>
+              <div className="bg-void/80 p-3 rounded-lg border border-gridline font-mono text-xs text-cyan-300 space-y-1">
+                <div>1. Ensure 64-bit CPython (3.9–3.13) with pip is installed on PATH.</div>
+                <div>2. If Python is not on PATH, set the environment variable: <span className="text-gold-400">set QECTOR_PYTHON=C:\Python312\python.exe</span></div>
+                <div>3. Or manually pre-install the backend wheel: <span className="text-gold-400">pip install qector-decoder-v3==0.6.9</span></div>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                <strong>Environment Variables:</strong> <code className="text-cyan-300">QECTOR_PYTHON</code> (CPython path), <code className="text-cyan-300">QECTOR_DATA_DIR</code> (custom data directory), <code className="text-cyan-300">QECTOR_AUTO_UPGRADE=0</code> (disable background upgrade checks).
+              </p>
+            </div>
+
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl text-xs text-secondary leading-relaxed">
               <strong>Offline Operation:</strong> The application is distributed without embedding the heavy decoder binary wheels directly. On first launch, it connects to PyPI to install the verified backend wheel. After that initial setup, QECTOR Workbench operates completely offline with zero network requirement.
             </div>
