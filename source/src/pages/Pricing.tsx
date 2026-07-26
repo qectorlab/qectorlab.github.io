@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 const faqItems = [
   {
     q: 'How is the license delivered?',
-    a: 'There are no license keys, tokens, or software lockouts. Your Stripe receipt serves as your active legal contract. Your team continues using the standard pip install qector-decoder-v3 package as-is.'
+    a: 'Automatically, by email, within minutes of payment. You receive an Ed25519-signed license token tied to your checkout email — set it as QECTOR_LICENSE and it verifies offline against a public key embedded in the package, so it works air-gapped and in CI with no license server and no phone-home. There are no software lockouts: your team keeps using the standard pip install qector-decoder-v3 package as-is, and the token plus your Stripe receipt are what procurement and audit need.'
   },
   {
     q: 'What happens after the 60-day evaluation expires?',
@@ -296,17 +296,17 @@ export default function Pricing() {
                   Prefer to own it outright?
                 </p>
                 <p className="text-secondary text-sm mt-1">
-                  <strong className="text-cyan-300">Solo / Indie Perpetual — $899 one-time.</strong>{' '}
+                  <strong className="text-cyan-300">Solo / Indie Perpetual — $3,299 one-time.</strong>{' '}
                   Same rights as the annual plan for the major version you buy, with patch
-                  updates included. No renewal, no subscription.
+                  updates included. Pays for itself against the annual plan in year three.
                 </p>
               </div>
               <a
-                href="https://buy.stripe.com/6oU9AVdwl6NY2Fs3REeUU02"
+                href="https://buy.stripe.com/fZu28t2RH8W6dk61JweUU06"
                 className="btn-outline whitespace-nowrap text-center"
                 rel="noopener"
               >
-                Buy perpetual — $899
+                Buy perpetual — $3,299
               </a>
             </div>
 
