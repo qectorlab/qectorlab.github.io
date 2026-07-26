@@ -12,7 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
 const REPORTS_DATA = [
   {
     title: 'Zenodo Benchmark Master Report (v0.6.9)',
-    desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies. DOI: 10.5281/zenodo.21501377.',
+    desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies. DOI: 10.5281/zenodo.21339300.',
+    status: 'Validated',
+    proof: 'DOI: 10.5281/zenodo.21339300',
+  },
+  {
+    title: 'Zenodo Edge-Hardware Benchmark Dataset (v0.6.8 / v0.6.9)',
+    desc: 'Edge-hardware validation dataset and SHA-256 sealed artifact package. DOI: 10.5281/zenodo.21501377.',
     status: 'Validated',
     proof: 'DOI: 10.5281/zenodo.21501377',
   },
@@ -35,11 +41,6 @@ const REPORTS_DATA = [
     title: 'Optimal Shot Analysis',
     desc: '98.3% of shots achieve exact minimum-weight correction at d=9. Medium gap analysis shows zero median deviation from optimal.',
     status: 'Validated',
-  },
-  {
-    title: 'SATI CODEX Certificate',
-    desc: 'Formal re-derivable certificate for [[832,10,4]] LCL-832 CSS code. 19/19 algebraic checks passed. SHA-256 sealed artifact.',
-    status: 'Certified',
   },
   {
     title: 'IBM Hardware Execution Log',
@@ -85,7 +86,7 @@ export default function Evidence() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Every public claim is backed by a verifiable artifact. Validation reports, benchmark data,
-            and IBM hardware job IDs - all archived with the decoder source on GitHub.
+            and IBM hardware job IDs — all archived with the decoder source on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>

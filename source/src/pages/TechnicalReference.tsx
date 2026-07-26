@@ -27,8 +27,8 @@ export default function TechnicalReference() {
         { name: 'adaptive_k', type: 'bool', default: 'True', desc: 'Enable Union-Find pre-filtering to compress graph' },
         { name: 'timeout', type: 'float', default: 'None', desc: 'Max seconds allowed to match a syndrome' },
       ],
-      example: `import qector
-decoder = qector.BlossomDecoder(dem)
+      example: `import qector_decoder_v3 as qd
+decoder = qd.BlossomDecoder(dem)
 correction = decoder.decode(syndrome)`
     },
     {
@@ -41,8 +41,8 @@ correction = decoder.decode(syndrome)`
         { name: 'max_paths', type: 'int', default: '10', desc: 'Max alternative paths for match reweighting' },
         { name: 'bp_method', type: 'str', default: '"product_sum"', desc: 'BP update equation to resolve constraints' },
       ],
-      example: `import qector
-decoder = qector.BeliefMatchingDecoder(dem, bp_iters=30)
+      example: `import qector_decoder_v3 as qd
+decoder = qd.BeliefMatchingDecoder(dem, bp_iters=30)
 correction = decoder.decode(syndrome)`
     },
     {
@@ -54,8 +54,8 @@ correction = decoder.decode(syndrome)`
         { name: 'osd_order', type: 'int', default: '40', desc: 'OSD search order limit' },
         { name: 'osd_method', type: 'str', default: '"osd_cs"', desc: 'OSD resolution method' },
       ],
-      example: `import qector
-decoder = qector.BpOsdDecoder(dem, osd_order=40)
+      example: `import qector_decoder_v3 as qd
+decoder = qd.BpOsdDecoder(dem, osd_order=40)
 correction = decoder.decode(syndrome)`
     },
     {
@@ -66,23 +66,34 @@ correction = decoder.decode(syndrome)`
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'use_combined', type: 'bool', default: 'True', desc: 'Enable combined cluster growth constraints' },
       ],
-      example: `import qector
-decoder = qector.UnionFindDecoder(dem)
+      example: `import qector_decoder_v3 as qd
+decoder = qd.UnionFindDecoder(dem)
 correction = decoder.decode(syndrome)`
     },
     {
-      name: 'GpuBatchDecoder',
-      signature: 'GpuBatchDecoder(dem: stim.DetectorErrorModel, *, backend: str = "cuda", batch_size: int = 1000)',
-      desc: 'Parallel batch decoder. Implements CUDA and OpenCL device pipelines to solve thousands of syndromes concurrently. Bit-identical to CPU MWPM output.',
+      name: 'CPUBatchDecoder',
+      signature: 'CPUBatchDecoder(dem: stim.DetectorErrorModel, *, num_threads: int = 0)',
+      desc: 'Multi-threaded CPU batch decoder. Leverages Rayon parallelism across CPU cores to decode thousands of syndromes concurrently with zero-copy NumPy buffers.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
-        { name: 'backend', type: 'str', default: '"cuda"', desc: 'GPU platform backend: "cuda" or "opencl"' },
-        { name: 'batch_size', type: 'int', default: '1000', desc: 'Parallel batch sizing in device memory' },
+        { name: 'num_threads', type: 'int', default: '0', desc: 'Number of worker threads (0 = auto-detect physical cores)' },
       ],
-      example: `import qector
-decoder = qector.GpuBatchDecoder(dem, backend="cuda", batch_size=2048)
-# Decodes 2D numpy array of syndromes in one call
-corrections = decoder.decode_batch(syndromes_array)`
+      example: `import qector_decoder_v3 as qd
+decoder = qd.CPUBatchDecoder(dem, num_threads=8)
+corrections = decoder.decode_batch(syndromes_matrix)`
+    },
+    {
+      name: 'GpuBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder',
+      signature: 'CUDABatchDecoder(dem: stim.DetectorErrorModel, *, batch_size: int = 2048)',
+      desc: 'Native GPU batch decoders. Implements CUDA and OpenCL device pipelines to solve thousands of syndromes in parallel. Bit-identical to CPU MWPM output. Check availability with CUDABatchDecoder.is_available().',
+      parameters: [
+        { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
+        { name: 'batch_size', type: 'int', default: '2048', desc: 'Parallel batch sizing in GPU VRAM' },
+      ],
+      example: `import qector_decoder_v3 as qd
+if qd.CUDABatchDecoder.is_available():
+    decoder = qd.CUDABatchDecoder(dem, batch_size=4096)
+    corrections = decoder.decode_batch(syndromes_array)`
     },
     {
       name: 'SparseBlossomDecoder',
@@ -91,9 +102,109 @@ corrections = decoder.decode_batch(syndromes_array)`
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
       ],
-      example: `import qector
-decoder = qector.SparseBlossomDecoder(dem)
+      example: `import qector_decoder_v3 as qd
+decoder = qd.SparseBlossomDecoder(dem)
 correction = decoder.decode(syndrome)`
+    },
+    {
+      name: 'get_decoder / clear_decoder_cache',
+      signature: 'get_decoder(dem_or_h, decoder_type: str = "auto", **kwargs)',
+      desc: 'Cached decoder factory for instantiating and caching decoders by error model hash to avoid redundant graph construction.',
+      parameters: [
+        { name: 'dem_or_h', type: 'Union[stim.DetectorErrorModel, np.ndarray]', default: 'Required', desc: 'Detector model or H matrix' },
+        { name: 'decoder_type', type: 'str', default: '"auto"', desc: 'Target decoder family name' },
+      ],
+      example: `import qector_decoder_v3 as qd
+decoder = qd.get_decoder(dem, decoder_type="blossom")
+qd.clear_decoder_cache()`
+    },
+    {
+      name: 'decode_mmap / decode_with_diagnostics',
+      signature: 'decode_mmap(decoder, input_filepath: str, output_filepath: str)',
+      desc: 'Out-of-core memory-mapped file decoder for processing gigabyte-scale syndrome files on disk without loading entire matrices into RAM. Returns structured DecodeResult.',
+      parameters: [
+        { name: 'decoder', type: 'DecoderInstance', default: 'Required', desc: 'Initialized decoder instance' },
+        { name: 'input_filepath', type: 'str', default: 'Required', desc: 'Path to binary syndrome file' },
+        { name: 'output_filepath', type: 'str', default: 'Required', desc: 'Path to write binary correction results' },
+      ],
+      example: `import qector_decoder_v3 as qd
+res = qd.decode_mmap(decoder, "syndromes.bin", "corrections.bin")
+print(res.shots_processed, res.latency_seconds)`
+    },
+    {
+      name: 'Workbench API',
+      signature: 'Workbench(config: Optional[dict] = None)',
+      desc: 'High-level orchestration and benchmarking engine for configuring decoding pipelines, running multi-decoder comparative sweeps, and exporting performance reports.',
+      parameters: [
+        { name: 'config', type: 'dict', default: 'None', desc: 'Workbench configuration dictionary' },
+      ],
+      example: `import qector_decoder_v3 as qd
+wb = qd.Workbench()
+results = wb.benchmark(dem, shots=100000)`
+    },
+    {
+      name: 'stim_compat & sinter_compat',
+      signature: 'sinter_compat.qector_sinter_decoders()',
+      desc: 'Ecosystem integration helpers providing native compatibility with Stim circuits and Sinter benchmarking harnesses.',
+      parameters: [
+        { name: 'sinter_decoders', type: 'dict', default: 'Required', desc: 'Sinter compiled decoder mapping' },
+      ],
+      example: `import sinter
+from qector_decoder_v3.sinter_compat import qector_sinter_decoders
+decoders = qector_sinter_decoders()`
+    },
+    {
+      name: 'license.verify_license_token',
+      signature: 'license.verify_license_token(token: str) -> bool',
+      desc: 'Offline Ed25519 cryptographic signature verification function for commercial evaluation and production license tokens.',
+      parameters: [
+        { name: 'token', type: 'str', default: 'Required', desc: 'Signed JWT/Ed25519 license token string' },
+      ],
+      example: `from qector_decoder_v3.license import verify_license_token
+is_valid = verify_license_token(token_str)`
+    },
+    {
+      name: 'HybridDecoder & HybridCascadeDecoder',
+      signature: 'HybridCascadeDecoder(dem: stim.DetectorErrorModel)  # Feature-gated / source build',
+      desc: 'Experimental decoders combining fast Union-Find pre-filtering with exact Blossom fallback for ambiguous clusters. Note: HybridCascadeDecoder requires full-feature source build and may raise unavailable in standard pre-compiled wheels.',
+      parameters: [
+        { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
+      ],
+      example: `import qector_decoder_v3 as qd
+# Research / full-feature build required
+decoder = qd.HybridDecoder(dem)`
+    },
+    {
+      name: 'PredecodedDecoder & LookupTableDecoder',
+      signature: 'LookupTableDecoder(code_matrix: np.ndarray)',
+      desc: 'Research decoders for lookup-table fast matching on small stabilizer codes and wrapping pre-calculated decoding results for pipeline benchmarking.',
+      parameters: [
+        { name: 'code_matrix', type: 'np.ndarray', default: 'Required', desc: 'Parity check matrix' },
+      ],
+      example: `import qector_decoder_v3 as qd
+decoder = qd.LookupTableDecoder(H_matrix)`
+    },
+    {
+      name: 'SlidingWindowDecoder & StreamingDecoder',
+      signature: 'StreamingDecoder(dem: stim.DetectorErrorModel, window_size: int = 5)',
+      desc: 'Experimental decoders designed for real-time streaming syndrome data across sliding temporal measurement windows.',
+      parameters: [
+        { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model' },
+        { name: 'window_size', type: 'int', default: '5', desc: 'Number of measurement rounds per window' },
+      ],
+      example: `import qector_decoder_v3 as qd
+decoder = qd.StreamingDecoder(dem, window_size=5)`
+    },
+    {
+      name: 'GNNBeliefMatcher & NeuralPredecoder & GNNTrainer',
+      signature: 'GNNBeliefMatcher(dem: stim.DetectorErrorModel, model_path: str)',
+      desc: 'Research-stage graph neural network modules for learning error graph edge weights and neural pre-decoding. Not validated for production use.',
+      parameters: [
+        { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model' },
+        { name: 'model_path', type: 'str', default: 'Required', desc: 'Path to trained GNN weights file' },
+      ],
+      example: `import qector_decoder_v3 as qd
+matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
     },
   ];
 

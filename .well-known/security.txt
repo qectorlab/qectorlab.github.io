@@ -1,6 +1,6 @@
 Contact: mailto:admin@qector.store
-Expires: 2027-07-26T00:00:00.000Z
-Acknowledgments: https://qector.store/about
+Contact: https://qector.store/contact
+Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en
 Canonical: https://qector.store/.well-known/security.txt
 Policy: https://qector.store/terms

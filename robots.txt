@@ -5,14 +5,30 @@ Crawl-delay: 0
 User-agent: ChatGPT-User
 Allow: /docs
 Allow: /manual
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
 
 User-agent: GPTBot
 Allow: /docs
 Allow: /manual
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
 
 User-agent: CCBot
 Allow: /docs
 Allow: /manual
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
+
+User-agent: Claude-Web
+Allow: /docs
+Allow: /manual
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
 
 Sitemap: https://qector.store/sitemap.xml
 Host: https://qector.store

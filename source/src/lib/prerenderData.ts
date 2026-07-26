@@ -294,23 +294,26 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'SATI OS Workbench - full-stack QEC workbench with GUI, FastAPI REST, dual CLI, MCP server, headless engine, and 17 HAL adapters. Free QectorWorkbench GUI available.',
-    heading: 'SATI OS Workbench',
+      'QECTOR Workbench v3.5.1 — Free cross-platform desktop GUI (Windows, Linux, macOS), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, FastAPI REST, dual CLI, and offline execution.',
+    heading: 'QECTOR Workbench v3.5.1',
     body: page(
-      h1('SATI OS Workbench') +
+      h1('QECTOR Workbench v3.5.1') +
         p(
-          'Desktop GUI, FastAPI REST, dual CLI, MCP server, and 17 hardware abstraction adapters across 21 backend targets. Integrates QECTOR Decoder v3 (source-available) and the free QectorWorkbench GUI v3.5.0 (CustomTkinter, 25 MCP tools, Zenodo: https://doi.org/10.5281/zenodo.21360433).'
+          'Free cross-platform desktop application (CustomTkinter GUI), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.6.9). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
         ) +
+        h2('Archival records &amp; DOIs') +
+        ul([
+          'User Manual &amp; Licensing — <a href="https://doi.org/10.5281/zenodo.21363016" style="color:#67e8f9;">DOI 10.5281/zenodo.21363016</a>',
+          'Performance Benchmarks — <a href="https://doi.org/10.5281/zenodo.21339300" style="color:#67e8f9;">DOI 10.5281/zenodo.21339300</a>',
+          'Architecture Whitepaper — <a href="https://doi.org/10.5281/zenodo.21320543" style="color:#67e8f9;">DOI 10.5281/zenodo.21320543</a>',
+        ]) +
         h2('Components') +
         ul([
-          'Desktop GUI — cross-platform interface with visual circuit builder and decoder comparison dashboard.',
-          'FastAPI REST server — full remote decoder access with OpenAPI docs.',
-          'Dual CLI — interactive and headless batch modes for CI/CD.',
-          'MCP server — Model Context Protocol tools for AI-assistant integration.',
-          'Headless engine — HPC and cloud deployment without GUI.',
-          'HAL adapters — IBM Quantum, AWS Braket, Azure Quantum, and custom backends.',
-        ]) +
-        p('Workbench configurations verified on IBM Quantum hardware (ibm_fez, ibm_kingston): GHZ entanglement fidelity F=0.874 at 7 qubits; repetition-code bit-flip suppression Λ≈2.5–3.5.')
+          'CustomTkinter Desktop GUI — cross-platform interface with visual circuit builder, syndrome inspector, and decoder performance dashboard.',
+          '47 MCP Tools — Model Context Protocol server connecting AI assistants directly to decoder execution.',
+          'FastAPI REST Server — embedded OpenAPI REST engine for remote decoding.',
+          'Dual CLI Harness — rich interactive terminal and headless batch CLI.',
+        ])
     ),
   },
   {
@@ -391,16 +394,16 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/sati-os',
-    title: 'SATI OS · QECTOR',
+    title: 'SATI OS · Technology Integrated into QECTOR Workbench',
     description:
-      'SATI OS - Full-stack Quantum Error Correction Operating Suite. Available soon. Contact us for beta testing and early access.',
-    heading: 'SATI OS',
+      'SATI OS technology is integrated into QECTOR Workbench v3.5.1 and QECTOR Decoder v3. Explore the free desktop application.',
+    heading: 'SATI OS Technology Integrated',
     body: page(
-      h1('SATI OS') +
+      h1('SATI OS → QECTOR Workbench') +
         p(
-          'SATI OS is the full-stack quantum error correction operating suite built around QECTOR Decoder v3: unified GUI, REST API, CLI, MCP server, and hardware abstraction across 17 adapters. Currently in final preparation — available soon.'
+          'SATI OS features are fully integrated into QECTOR Workbench v3.5.1 and QECTOR Decoder v3. The desktop GUI, 47 MCP tools, FastAPI REST engine, dual CLI, and decoder suite are available directly in the free QECTOR Workbench desktop application.'
         ) +
-        p('For beta testing and early access, contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>.')
+        p('Explore the <a href="/workbench" style="color:#67e8f9;">QECTOR Workbench page</a>.')
     ),
   },
   {
@@ -495,8 +498,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Technical Reference') +
         p(
-          'API reference for the qector_decoder_v3 package: decoder classes (UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder, DecoderPool), parity-check input formats, Stim detector-error-model import, batch decoding semantics, and AutoDecoder\u2019s 7-tier fallback policy.'
+          'API reference for qector_decoder_v3 0.6.9 package: stable and experimental decoders, utilities, and helper functions.'
         ) +
+        h2('Stable decoders') +
+        p('UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder (7-tier fallback), DecoderPool, get_decoder, clear_decoder_cache, decode_mmap, DecodeResult, decode_with_diagnostics, Workbench.') +
+        h2('Experimental / research decoders') +
+        p('HybridDecoder, HybridCascadeDecoder (full-feature / source build; public wheels may raise unavailable), PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, GNNBeliefMatcher, NeuralPredecoder, GNNPredecoder, GNNTrainer, LERBenchmark.') +
+        h2('Utilities &amp; integration') +
+        p('stim_compat.from_stim_detector_error_model, sinter_compat.qector_sinter_decoders, codes helpers, license.verify_license_token, run_mcp_server.') +
         pre(
           `from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder\nfrom qector_decoder_v3.stim_compat import from_stim_detector_error_model`
         )

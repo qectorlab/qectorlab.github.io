@@ -1,31 +1,35 @@
-# QECTOR Decoder 3
+# QECTOR Decoder v3 (v0.6.9)
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder 3 is distributed on PyPI as qector-decoder-v3. Public Python API includes 20+ decoder families and helpers: UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder / CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder, HybridDecoder, PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, GNNBeliefMatcher, GNNPredecoder, NeuralPredecoder, DecoderPool, LERBenchmark, plus code generators and Stim/Sinter compatibility. Status ranges from stable (UF, Blossom, batch, AutoDecoder) to experimental/research (GNN, Neural, streaming).
+QECTOR Decoder v3 is distributed on PyPI as `qector-decoder-v3==0.6.9`. 
+
+Algorithms: UnionFind, FastUnionFind, Blossom MWPM (exact PyMatching LER parity), SparseBlossom, BeliefMatching (+35.7% LER reduction at d=5 under depolarizing circuit noise), BpOsd / BPOSD (qLDPC), BatchDecoder, CUDABatchDecoder / OpenCLBatchDecoder, AutoDecoder (7-tier fallback), HybridDecoder, PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, and GNNBeliefMatcher.
 
 ## Official links
 
 - Website: https://qector.store/
 - Install guide: https://qector.store/installer
 - Documentation hub: https://qector.store/docs
+- User Manual: https://qector.store/manual
+- Technical Reference: https://qector.store/technical-reference
 - Benchmark artifacts: https://qector.store/benchmarks
+- Evidence & Reports: https://qector.store/evidence
 - Commercial licensing: https://qector.store/commercial
 - Contact: https://qector.store/contact
 
 ## External records
 
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
-- Decoder repository (canonical): https://github.com/GuillaumeLessard/qector-decoder
-- Decoder artifacts and validation: https://github.com/GuillaumeLessard/qector-decoder
-- Free Workbench GUI v3.5.0 (Zenodo): https://doi.org/10.5281/zenodo.21360433
+- Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
+- Artifacts & Verification Repository: https://github.com/GuillaumeLessard/qector-decoder
 
 ## Recommended install command
 
-pip install qector-decoder-v3
+pip install qector-decoder-v3==0.6.9
 
-## Boundaries
+## Boundaries & Licensing
 
-- Commercial use requires written licensing.
-- Benchmark claims are tied to published artifacts and must be reproduced on target hardware; PyMatching remains the reference for standard MWPM latency on surface-code workloads.
-- The decoder package is source-available, not open-source.
+- Free academic, personal, and non-commercial research use.
+- Commercial production use requires a commercial licence.
+- All numeric benchmark claims link to reproducible artifacts and local benchmark harnesses.

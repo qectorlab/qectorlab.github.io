@@ -90,7 +90,7 @@ export default function PricingTierCard({
       )}
       {/* An absolute URL (a Stripe payment link) must be a real anchor. Passing
           one to <Link to> makes react-router treat it as an in-app path and
-          navigate to /https:/buy.stripe.com/... instead of leaving the site --
+          navigate to /https:/buy.stripe.com/... instead of leaving the site —
           which is why every paid tier previously had no working purchase path. */}
       {isExternal ? (
         <a href={ctaHref} className={ctaBaseClass} rel="noopener">

@@ -273,7 +273,7 @@ export default function Pricing() {
 
             {/* Perpetual alternative for Solo. The product and price already
                 existed in Stripe but appeared nowhere on the site, so it was
-                unsellable -- and buyers who refuse subscriptions had no option
+                unsellable — and buyers who refuse subscriptions had no option
                 between the 60-day evaluation and a recurring plan. */}
             <div className="mt-6 p-5 rounded-2xl border border-cyan-300/20 bg-cyan-300/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>

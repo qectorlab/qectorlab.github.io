@@ -7,7 +7,7 @@ import CodeBlock from '../components/CodeBlock';
  *
  * Documents the JSON-RPC 2.0 MCP server shipped in the native extension
  * (src/mcp_server.rs, server name "qector-mcp", protocol 2024-11-05). Every
- * tool listed here is read from the actual `tools/list` payload -- if a tool is
+ * tool listed here is read from the actual `tools/list` payload — if a tool is
  * added or renamed in the Rust source, this page must be updated with it.
  */
 

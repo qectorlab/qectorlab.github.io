@@ -9,8 +9,7 @@ interface LinkItem {
 
 const productLinks: LinkItem[] = [
   { label: 'Decoder v3', href: '/decoder' },
-  { label: 'SATI OS', href: '/sati-os' },
-  { label: 'Workbench', href: '/workbench' },
+  { label: 'Workbench v3.5.1', href: '/workbench' },
   { label: 'MCP Server', href: '/mcp-server' },
   { label: 'Evidence & Reports', href: '/evidence' },
   { label: 'Changelog', href: '/changelog' },
@@ -83,10 +82,10 @@ export default function Footer() {
               <p className="text-xs text-muted-foreground">Created by Guillaume Lessard (ORCID) / iD01t Productions</p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
-                  { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion} + Workbench v3.5.0`, href: 'https://pypi.org/project/qector-decoder-v3/' },
-                  { icon: '\uD83D\uDCD6', label: 'Mastering QEC', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ' },
-                  { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
+                  { icon: '📋', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
+                  { icon: '📦', label: `PyPI v${pypiVersion} + Workbench v3.5.1`, href: 'https://pypi.org/project/qector-decoder-v3/' },
+                  { icon: '📖', label: 'Mastering QEC', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ' },
+                  { icon: '🆔', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
                 ].map((pill) => (
                   <a
                     key={pill.label}
