@@ -7,6 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# act local runner artifacts
+act.err
+act.log
+act_proc.xml
+act.exe
+
 node_modules
 dist
 dist-ssr
