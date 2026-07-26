@@ -209,7 +209,7 @@ export default function Benchmarks() {
 
           {/* Speed Comparison */}
           <div ref={(el) => addRef(el, 6)} className="card-surface">
-            <h3 className="text-cyan-300 font-semibold mb-4">Performance Characteristics (v0.6.8)</h3>
+            <h3 className="text-cyan-300 font-semibold mb-4">Performance Characteristics (v0.6.9)</h3>
             <p className="text-muted-foreground text-xs mb-4">PyMatching remains the speed leader for standard MWPM latency on surface-code workloads. QECTOR's value is multi-algorithm diversity and reproducibility. GPU batch decoding peaks at 13.5M shots/s on GTX 1660 Ti (d=3).</p>
             <div className="space-y-4">
               {[
@@ -246,7 +246,7 @@ export default function Benchmarks() {
             <div className="card-surface">
               <h3 className="text-cyan-300 font-semibold mb-3">Faithfulness — 100% Verified</h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
-                Every decoder in the v0.6.8 benchmark suite reproduces the parity-check equation
+                Every decoder in the v0.6.9 benchmark suite reproduces the parity-check equation
                 <code className="text-cyan-300 mx-1">H·c = s</code> on 100% of shots across all distances d=3–19.
                 This includes FastUnionFind, UnionFind, Blossom, SparseBlossom, BatchDecoder, CPUBatchDecoder,
                 and CUDABatch(GPU) — verified at 5,000 shots per distance.

@@ -12,7 +12,7 @@
   "wheel_pyd": "qector_decoder_v3.cp311-win_amd64.pyd",
   "wheel_pyd_sha256": "e3a24f442cc595dc73e0821ff32e3a09d7cd518b6bb5786966e5fb7760d16676",
   "packages": {
-    "qector-decoder-v3": "0.6.7",
+    "qector-decoder-v3": "0.6.9",
     "numpy": "2.2.6",
     "pymatching": "2.4.0",
     "stim": "1.16.0",

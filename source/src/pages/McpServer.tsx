@@ -14,52 +14,24 @@ import CodeBlock from '../components/CodeBlock';
 const TOOLS = [
   {
     name: 'decode_syndrome',
-    desc: 'Decode a single syndrome with the Union-Find decoder. Fastest path; graphlike (matching) codes.',
+    desc: 'Decode a quantum error correction syndrome using any of 19 supported decoder types: UnionFind, FastUnionFind, Blossom, SparseBlossom, BPOSD, BatchedBp, LookupTable, Predecoded, Hybrid, Auto, SlidingWindow, Streaming, HybridCascade, NeuralPredecoder, GNNPredecoder, GNNBeliefMatcher.',
     required: ['check_to_qubits', 'syndrome'],
-    optional: ['n_qubits'],
-    returns: 'correction, n_qubits, n_checks',
-  },
-  {
-    name: 'decode_syndrome_blossom',
-    desc: 'Decode with the exact Blossom (MWPM) decoder. Weight-optimal matching, with a GF(2) safety net that guarantees H·correction == syndrome on any code, including hypergraphs.',
-    required: ['check_to_qubits', 'syndrome'],
-    optional: ['n_qubits'],
-    returns: 'correction, n_qubits, n_checks',
-  },
-  {
-    name: 'batch_decode_blossom',
-    desc: 'Batch-decode many syndromes with Blossom across all cores (Rayon-parallel, GIL released).',
-    required: ['check_to_qubits', 'syndromes_flat', 'batch_size'],
-    optional: ['n_qubits'],
-    returns: 'corrections_flat, n_qubits, n_checks, batch_size',
-  },
-  {
-    name: 'decode_syndrome_cascade',
-    desc: 'Hybrid cascade: a fast Union-Find pre-filter that escalates only hard or high-weight syndromes to Blossom. Returns pre-filter/escalation counters so you can tune the trade-off.',
-    required: ['check_to_qubits', 'syndrome'],
-    optional: ['n_qubits', 'max_accept_weight'],
-    returns: 'correction, prefilter_hits, escalations, n_qubits, n_checks',
+    optional: ['n_qubits', 'decoder_type', 'error_rate'],
+    returns: 'correction (binary array matching n_qubits)',
   },
   {
     name: 'benchmark_decoder',
-    desc: 'Run a latency benchmark and return mean / p50 / p99 microseconds plus throughput.',
+    desc: 'Run a performance latency benchmark for the selected decoder topology and return execution metrics.',
     required: ['check_to_qubits'],
     optional: ['n_qubits', 'n_samples', 'seed'],
     returns: 'latency percentiles, throughput, version, timestamp',
   },
   {
-    name: 'run_ler_benchmark',
-    desc: 'Run the logical-error-rate benchmark across code distances and families (rotated surface, toric, unrotated, color).',
-    required: [],
-    optional: [],
-    returns: 'per-config LER results as JSON',
-  },
-  {
     name: 'get_decoder_info',
-    desc: 'Report version, available decoder types and compiled capabilities (CUDA, OpenCL, gRPC, metrics).',
+    desc: 'Report system version (v0.6.9), available decoder types, and compiled capabilities.',
     required: [],
     optional: [],
-    returns: 'version, decoder_types, capabilities',
+    returns: 'version ("0.6.9"), decoder_types, capabilities',
   },
 ];
 
@@ -77,11 +49,12 @@ const CALL_EXAMPLE = `{
   "id": 1,
   "method": "tools/call",
   "params": {
-    "name": "decode_syndrome_cascade",
+    "name": "decode_syndrome",
     "arguments": {
       "check_to_qubits": [[0, 1], [1, 2], [2, 3], [3, 4]],
       "n_qubits": 5,
-      "syndrome": [1, 1, 0, 0]
+      "syndrome": [0, 1, 0, 0],
+      "decoder_type": "SparseBlossom"
     }
   }
 }`;
@@ -92,7 +65,7 @@ const RESPONSE_EXAMPLE = `{
   "result": {
     "content": [{
       "type": "text",
-      "text": "{\\n  \\"correction\\": [0, 1, 0, 0, 0],\\n  \\"prefilter_hits\\": 1,\\n  \\"escalations\\": 0,\\n  \\"n_qubits\\": 5,\\n  \\"n_checks\\": 4\\n}"
+      "text": "{\\n  \\"correction\\": [1, 1, 0, 0, 0]\\n}"
     }]
   }
 }`;
@@ -102,7 +75,7 @@ export default function McpServer() {
     <>
       <SEO
         title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. Seven JSON-RPC tools exposing Union-Find, Blossom MWPM, hybrid cascade decoding and benchmarks to any MCP client."
+        description="Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 19 decoders including Union-Find, Blossom MWPM, BP-OSD, and GNN belief matchers to any MCP client."
       />
       <JsonLd
         data={{
