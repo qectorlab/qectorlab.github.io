@@ -174,7 +174,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="16+" label="Decoding Algorithms" />
+            <CounterStat value="19" label="Decoder Algorithms" />
             <CounterStat value="1,858+" label="Benchmark Measurements" />
             <CounterStat value="d=15" label="Validated MWPM Parity" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
@@ -304,13 +304,13 @@ export default function Home() {
                 {
                   title: 'Exact MWPM — Validated',
                   tag: 'Blossom + Belief-Matching',
-                  desc: 'Exact LER parity with PyMatching through d=15. Add BP preprocessing for +35.7% accuracy gain at d=5. These are the production decoders.',
+                  desc: 'Exact LER parity with PyMatching through d=15. Add BP preprocessing for +35.7% LER reduction at d=5 under depolarizing circuit noise. These are the production decoders.',
                   proof: 'd = 3-15 · exact LER parity',
                 },
                 {
                   title: 'qLDPC Support',
                   tag: 'BP-OSD (qLDPC)',
-                  desc: 'Matching decoders break on qLDPC codes. BP-OSD handles what Blossom cannot. Required for non-CSS codes and bivariate bicycle codes.',
+                  desc: 'Matching decoders break on qLDPC codes. BP-OSD handles what Blossom cannot. Recommended for non-CSS codes and bivariate bicycle codes.',
                   proof: 'Non-CSS + bivariate bicycle codes',
                 },
                 {

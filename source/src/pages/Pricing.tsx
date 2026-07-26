@@ -140,7 +140,7 @@ export default function Pricing() {
                   <li>• Written license agreement</li>
                   <li>• Priority support and response SLAs</li>
                   <li>• Full access to validation artifacts and reproduction harnesses</li>
-                  <li>• IBM Quantum evaluation pathway</li>
+                  <li>• Hardware evaluation support (IBM Quantum evaluation under commercial pilot)</li>
                   <li>• Custom integration guidance and onboarding</li>
                 </ul>
                 <p className="text-xs text-muted-foreground mt-2">Source-Available under PolyForm Noncommercial. Commercial use requires a license.</p>
