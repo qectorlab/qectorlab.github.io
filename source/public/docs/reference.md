@@ -214,7 +214,9 @@ Workbench MCP (47 tools) is a separate product surface and is not part of this p
 
 ---
 
-### 8\. Hyperedge workaround (package only)
+### 8\. Hyperedge & HybridCascade Workarounds (package only)
+
+#### A. Hyperedge Workaround (high-degree incidence matrices)
 
 ```
 import numpy as np
@@ -238,7 +240,66 @@ def decode_hyperedge(checks, n_qubits, syndrome, kind="Blossom", **opts):
     raise ValueError(f"unsupported kind for hyperedge: {kind}")
 ```
 
-MCP \+ fallback pattern: try package MCP; on message containing "hyperedge" / "weight ≤ 2" / "participates in", call decode\_hyperedge (or BlossomDecoder directly).
+MCP + fallback pattern: try package MCP; on message containing "hyperedge" / "weight ≤ 2" / "participates in", call decode_hyperedge (or BlossomDecoder directly).
+
+#### B. HybridCascadeDecoder Wheel Status & Manual Cascade Pattern
+
+**Root Cause**: Public PyPI wheels (including v0.6.9) ship a compiled Rust core where `HybridCascadeDecoder` is gated behind an unexported feature flag. Instantiating `HybridCascadeDecoder()` triggers `_guard("HybridCascadeDecoder")` and raises `RuntimeError`. Public wheels expose `HybridDecoder` (UF + Blossom routing).
+
+**Quick Diagnostic**:
+```python
+import qector_decoder_v3 as qd
+print("version:", qd.__version__)
+print("native has HybridCascadeDecoder:", hasattr(qd.qector_decoder_v3, "HybridCascadeDecoder"))
+print("native has HybridDecoder:", hasattr(qd.qector_decoder_v3, "HybridDecoder"))
+```
+
+**Manual Cascade Pattern (works on all public PyPI wheels)**:
+```python
+import numpy as np
+from qector_decoder_v3 import (
+    UnionFindDecoder,
+    FastUnionFindDecoder,
+    BlossomDecoder,
+    BpOsdDecoder,
+    generate_parity_check_matrix,
+)
+
+def cascade_decode(check_to_qubits, n_qubits, syndrome, error_rate=0.05, use_bposd=False):
+    """
+    Tier 1: Fast UF / Union-Find (low-latency approximate).
+    Tier 2: Blossom / BP-OSD (exact MWPM or qLDPC escalation).
+    """
+    syndrome = np.asarray(syndrome, dtype=np.uint8).ravel()
+    H = generate_parity_check_matrix(check_to_qubits, n_qubits)
+
+    # Tier 1: Fast UF
+    try:
+        uf = FastUnionFindDecoder(check_to_qubits, n_qubits)
+        corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()
+        if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):
+            return corr, "fast_union_find"
+    except Exception:
+        pass
+
+    try:
+        uf = UnionFindDecoder(check_to_qubits, n_qubits)
+        corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()
+        if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):
+            return corr, "union_find"
+    except Exception:
+        pass
+
+    # Tier 2: Exact / higher-accuracy escalation
+    if use_bposd:
+        dec = BpOsdDecoder(H, error_rate=error_rate, osd_order=0)
+        corr = np.asarray(dec.decode(syndrome), dtype=np.uint8).ravel()
+        return corr, "bp_osd"
+
+    dec = BlossomDecoder(check_to_qubits, n_qubits)
+    corr = np.asarray(dec.decode(syndrome), dtype=np.uint8).ravel()
+    return corr, "blossom"
+```
 
 ---
 

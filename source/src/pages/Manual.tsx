@@ -448,6 +448,18 @@ prediction = decoder.decode(syndrome)`}
                 filename="hyperedge_workaround.py"
               />
             </div>
+
+            <div>
+              <h3 className="text-primary font-semibold text-base mb-3">6. HybridCascade Wheel Status &amp; Manual Cascade Pattern</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed mb-3">
+                <strong className="text-cyan-300">Wheel Status:</strong> Public PyPI wheels (v0.6.9) ship a compiled Rust extension where <code className="text-cyan-300">HybridCascadeDecoder</code> is gated behind an unexported feature flag (raising <code className="text-red-400">RuntimeError</code> on instantiation). Use <code className="text-cyan-300">HybridDecoder</code> (UF + Blossom routing) or the manual cascade pattern below:
+              </p>
+              <CodeBlock
+                code={`import numpy as np\nfrom qector_decoder_v3 import (\n    UnionFindDecoder,\n    FastUnionFindDecoder,\n    BlossomDecoder,\n    BpOsdDecoder,\n    generate_parity_check_matrix,\n)\n\ndef cascade_decode(check_to_qubits, n_qubits, syndrome, error_rate=0.05, use_bposd=False):\n    """Tier 1: Fast UF / Union-Find. Tier 2: Blossom / BP-OSD escalation."""\n    syndrome = np.asarray(syndrome, dtype=np.uint8).ravel()\n    H = generate_parity_check_matrix(check_to_qubits, n_qubits)\n\n    # Tier 1: Fast UF\n    for UF in (FastUnionFindDecoder, UnionFindDecoder):\n        try:\n            uf = UF(check_to_qubits, n_qubits)\n            corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()\n            if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):\n                return corr, uf.__class__.__name__\n        except Exception:\n            pass\n\n    # Tier 2: Exact Blossom / BP-OSD escalation\n    if use_bposd:\n        return np.asarray(BpOsdDecoder(H, error_rate=error_rate, osd_order=0).decode(syndrome), dtype=np.uint8).ravel(), "bp_osd"\n    return np.asarray(BlossomDecoder(check_to_qubits, n_qubits).decode(syndrome), dtype=np.uint8).ravel(), "blossom"`}
+                language="python"
+                filename="cascade_decode.py"
+              />
+            </div>
           </div>
         );
 
