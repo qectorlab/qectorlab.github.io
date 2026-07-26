@@ -26,6 +26,7 @@ const TechnicalReference = lazy(() => import('./pages/TechnicalReference'));
 const Docs = lazy(() => import('./pages/Docs'));
 const Installer = lazy(() => import('./pages/Installer'));
 const Manual = lazy(() => import('./pages/Manual'));
+const Success = lazy(() => import('./pages/Success'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 export default function App() {
@@ -53,6 +54,9 @@ export default function App() {
             <Route path="/docs" element={<Docs />} />
             <Route path="/installer" element={<Installer />} />
             <Route path="/manual" element={<Manual />} />
+            {/* Stripe success_url target. Must stay in sync with
+                stripe_integration.py::create_checkout_session. */}
+            <Route path="/success" element={<Success />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

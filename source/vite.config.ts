@@ -19,17 +19,52 @@ function cfRocketBypass(): import('vite').Plugin {
   }
 }
 
-// GitHub Pages SPA routing: every 404 is served by 404.html, which must be
-// an exact copy of index.html so the React router can take over.  We
-// generate it here so it always matches (same hashes, same attributes).
+// GitHub Pages SPA routing.
+//
+// Two problems, one plugin:
+//
+// 1. Unknown paths. GitHub Pages serves 404.html, which must be an exact copy of
+//    index.html so the React router can take over. Generated here so it always
+//    matches (same asset hashes, same attributes).
+//
+// 2. *Known* paths. Pages has no rewrite rule, so a direct hit on /pricing also
+//    fell through to 404.html — the page rendered, but the response carried HTTP
+//    404. That is invisible in a browser and very visible to Google (routes were
+//    not indexable) and to Stripe (cancel_url / success_url both answered 404).
+//    The `_redirects` file in this repo is Netlify/Cloudflare-Pages syntax and is
+//    ignored by GitHub Pages, so it never addressed this.
+//
+//    Emitting dist/<route>/index.html for every real route makes each one a
+//    genuine 200. Routes are parsed straight out of App.tsx rather than kept in a
+//    second list here, so a new <Route> can never silently miss a directory.
 function ghPagesSpaShell(): import('vite').Plugin {
   return {
     name: 'gh-pages-spa-shell',
     apply: 'build',
     closeBundle() {
-      const src = path.resolve(__dirname, 'dist/index.html')
-      const dest = path.resolve(__dirname, 'dist/404.html')
-      fs.copyFileSync(src, dest)
+      const dist = path.resolve(__dirname, 'dist')
+      const shell = fs.readFileSync(path.join(dist, 'index.html'))
+
+      // Unknown-path fallback.
+      fs.writeFileSync(path.join(dist, '404.html'), shell)
+
+      const app = fs.readFileSync(path.resolve(__dirname, 'src/App.tsx'), 'utf8')
+      const routes = [...app.matchAll(/<Route\s+path="([^"]+)"/g)]
+        .map((m) => m[1])
+        .filter((p) => p !== '*' && p !== '/' && !p.includes(':'))
+
+      if (routes.length === 0) {
+        // Parsing App.tsx is the single source of truth; if the shape of that
+        // file changes, fail loudly rather than shipping 404s again.
+        this.error('gh-pages-spa-shell: no routes parsed from src/App.tsx')
+      }
+
+      for (const route of routes) {
+        const dir = path.join(dist, route.replace(/^\//, ''))
+        fs.mkdirSync(dir, { recursive: true })
+        fs.writeFileSync(path.join(dir, 'index.html'), shell)
+      }
+      console.log(`gh-pages-spa-shell: emitted 200-status shells for ${routes.length} routes`)
     },
   }
 }
