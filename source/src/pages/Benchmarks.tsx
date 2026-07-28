@@ -33,7 +33,7 @@ export default function Benchmarks() {
     <>
       <SEO
         title="Benchmarks · QECTOR"
-        description="Head-to-head LER parity: QECTOR-Blossom vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain at d=5, 98.3% optimal shots. All simulation-validated with GitHub and Zenodo artifacts."
+        description="Head-to-head LER parity: QECTOR-Blossom vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain at d=5, 98.3% optimal shots. All simulation-validated with GitHub artifacts."
       />
       <JsonLd
         data={{
@@ -62,7 +62,6 @@ export default function Benchmarks() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Artifacts →</a>
-            <a href="https://zenodo.org/records/21501377" target="_blank" rel="noopener noreferrer" className="btn-gold">Zenodo Dataset (v0.6.9) →</a>
             <Link to="/evidence" className="btn-outline">All Reports</Link>
           </div>
           <p className="text-xs text-muted-foreground mt-2">Reproduction: git clone https://github.com/GuillaumeLessard/qector-decoder ; cd qector-decoder ; python -m qector.bench --repro --d 15</p>
@@ -105,13 +104,12 @@ export default function Benchmarks() {
               <a href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/artifacts" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">Direct link to artifact bundle on GitHub →</a>
             </div>
             <div className="card-surface">
-              <h3 className="text-xl font-bold mb-3">Zenodo Benchmark Dataset (v0.6.6)</h3>
+              <h3 className="text-xl font-bold mb-3">Benchmark Master Report (v0.6.6)</h3>
                 <p className="text-secondary text-sm mb-4">
                   The QECTOR Decoder v3 Benchmark Master Report aggregates 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies.
                 </p>
                 <div className="flex gap-4">
-                  <a href="https://zenodo.org/records/21501377" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">Zenodo Record →</a>
-                  <a href="https://doi.org/10.5281/zenodo.21501377" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">DOI: 10.5281/zenodo.21501377 →</a>
+                  <a href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/benchmark_results" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">View on GitHub →</a>
                 </div>
             </div>
           </div>

@@ -77,12 +77,12 @@ export default function Workbench() {
       <div className="bg-emerald-950/50 border-b border-emerald-500/30 py-2.5 text-center text-sm px-4">
         <span className="text-emerald-400 font-semibold">Free Desktop Application:</span> QECTOR Workbench v3.5.1 (CustomTkinter GUI + 47 MCP Tools) —{' '}
         <a
-          href="https://doi.org/10.5281/zenodo.21363016"
+          href="https://github.com/qectorlab/qector-decoder-workbench/releases/"
           className="underline hover:text-emerald-300 transition-colors"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Download User Manual &amp; Package (DOI: 10.5281/zenodo.21363016)
+          Download User Manual &amp; Package
         </a>
       </div>
 
@@ -104,12 +104,12 @@ export default function Workbench() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
-              href="https://doi.org/10.5281/zenodo.21363016"
+              href="https://github.com/qectorlab/qector-decoder-workbench/releases/"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-cyan"
             >
-              Download Workbench App (Zenodo)
+              Download Workbench App
             </a>
             <Link to="/technical-reference" className="btn-outline">
               Technical Reference
@@ -241,45 +241,41 @@ export default function Workbench() {
             <QECSimulator />
           </div>
 
-          {/* Archival Records & DOIs */}
+          {/* Documentation & Reference */}
           <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
-              title="Archival Documentation & DOIs"
-              statement="QECTOR Workbench v3.5.1 documentation and performance benchmark datasets are archived with permanent Digital Object Identifiers (DOIs) on Zenodo."
+              title="Documentation &amp; Reference"
+              statement="QECTOR Workbench v3.5.1 documentation and performance benchmark datasets are published alongside the app release and on this site."
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a
-                href="https://doi.org/10.5281/zenodo.21363016"
+                href="https://github.com/qectorlab/qector-decoder-workbench/releases/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-void border border-gridline rounded-xl hover:border-cyan-300/40 transition-colors"
               >
                 <div className="text-xs text-muted-foreground uppercase mb-1">User Manual &amp; Licensing</div>
-                <div className="text-cyan-300 font-mono text-sm font-semibold">DOI: 10.5281/zenodo.21363016</div>
+                <div className="text-cyan-300 font-mono text-sm font-semibold">GitHub Releases</div>
                 <div className="text-xs text-secondary mt-1">Full manual, Windows, Linux, macOS editions</div>
               </a>
 
-              <a
-                href="https://doi.org/10.5281/zenodo.21339300"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/benchmarks"
                 className="p-4 bg-void border border-gridline rounded-xl hover:border-cyan-300/40 transition-colors"
               >
                 <div className="text-xs text-muted-foreground uppercase mb-1">Performance Benchmarks</div>
-                <div className="text-cyan-300 font-mono text-sm font-semibold">DOI: 10.5281/zenodo.21339300</div>
+                <div className="text-cyan-300 font-mono text-sm font-semibold">qector.store/benchmarks</div>
                 <div className="text-xs text-secondary mt-1">Master report, 1,858 timing measurements</div>
-              </a>
+              </Link>
 
-              <a
-                href="https://doi.org/10.5281/zenodo.21320543"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/technical-reference"
                 className="p-4 bg-void border border-gridline rounded-xl hover:border-cyan-300/40 transition-colors"
               >
                 <div className="text-xs text-muted-foreground uppercase mb-1">Architecture Whitepaper</div>
-                <div className="text-cyan-300 font-mono text-sm font-semibold">DOI: 10.5281/zenodo.21320543</div>
+                <div className="text-cyan-300 font-mono text-sm font-semibold">qector.store/technical-reference</div>
                 <div className="text-xs text-secondary mt-1">Technical specification &amp; design</div>
-              </a>
+              </Link>
             </div>
           </div>
 

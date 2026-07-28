@@ -1,6 +1,6 @@
 # QECTOR - qectorlab.github.io
 
-**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v3.5.0 (Zenodo: https://doi.org/10.5281/zenodo.21360433)) under the qectorlab brand.**
+**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v3.5.0, see qector.store) under the qectorlab brand.**
 
 **Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
 
@@ -9,7 +9,7 @@
 ## Quick Start
 ```bash
 pip install qector-decoder-v3
-# Free GUI v3.5.0 (Zenodo: https://doi.org/10.5281/zenodo.21360433)
+# Free GUI v3.5.0: https://qector.store
 ```
 
 ## Key Claims + Evidence (all on GitHub)
@@ -30,7 +30,7 @@ See qector.store/commercial for tiers (Researcher/Academic, Commercial Deploymen
 ## Links
 - Store: https://qector.store
 - Decoder: https://github.com/GuillaumeLessard/qector-decoder
-- Workbench (free): https://doi.org/10.5281/zenodo.21360433
+- Workbench (free): https://qector.store
 - PyPI: https://pypi.org/project/qector-decoder-v3/
 - ORCID: https://orcid.org/0009-0000-3465-3753
 - Book: Mastering QEC on Google Play

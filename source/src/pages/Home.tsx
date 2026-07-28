@@ -154,7 +154,7 @@ export default function Home() {
               Explore the Decoder
             </Link>
             <a
-              href="https://doi.org/10.5281/zenodo.21360433"
+              href="https://github.com/qectorlab/qector-decoder-workbench/releases/"
               className="btn-outline text-base px-8 py-4 text-sm sm:text-base"
               target="_blank" rel="noopener noreferrer"
             >
@@ -214,7 +214,7 @@ export default function Home() {
               { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
               { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
-              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.5.0', href: 'https://doi.org/10.5281/zenodo.21360433' },
+              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.5.0', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/' },
             ].map((pill) => (
               <TrustSignal
                 key={pill.label}

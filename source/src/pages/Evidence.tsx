@@ -11,16 +11,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const REPORTS_DATA = [
   {
-    title: 'Zenodo Benchmark Master Report (v0.6.9)',
-    desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies. DOI: 10.5281/zenodo.21339300.',
+    title: 'Benchmark Master Report (v0.6.9)',
+    desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies.',
     status: 'Validated',
-    proof: 'DOI: 10.5281/zenodo.21339300',
   },
   {
-    title: 'Zenodo Edge-Hardware Benchmark Dataset (v0.6.8 / v0.6.9)',
-    desc: 'Edge-hardware validation dataset and SHA-256 sealed artifact package. DOI: 10.5281/zenodo.21501377.',
+    title: 'Edge-Hardware Benchmark Dataset (v0.6.8 / v0.6.9)',
+    desc: 'Edge-hardware validation dataset and SHA-256 sealed artifact package.',
     status: 'Validated',
-    proof: 'DOI: 10.5281/zenodo.21501377',
   },
   {
     title: 'MWPM LER Parity Validation',
@@ -113,15 +111,15 @@ export default function Evidence() {
               </div>
             </a>
             <a
-              href="https://zenodo.org/records/21501377"
+              href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/benchmark_results"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gold-400/10 border border-gold-400/20 rounded-2xl hover:bg-gold-400/20 transition-all"
             >
               <span className="text-2xl">📊</span>
               <div className="text-left">
-                <div className="text-gold-400 font-semibold">Zenodo Benchmark Artifacts</div>
-                <div className="text-muted-foreground text-sm">DOI: 10.5281/zenodo.21501377</div>
+                <div className="text-gold-400 font-semibold">Benchmark Artifacts</div>
+                <div className="text-muted-foreground text-sm">github.com/GuillaumeLessard/qector-decoder</div>
               </div>
             </a>
           </div>
@@ -183,14 +181,13 @@ export default function Evidence() {
               If you use QECTOR Decoder v3 or its benchmark artifacts in academic research, please cite our software artifact release:
             </p>
             <pre className="p-4 bg-void border border-gridline rounded-xl text-xs text-muted-foreground font-mono overflow-x-auto select-all">
-{`@software{qector_decoder_v3_2026,
-  author       = {Lessard, Guillaume},
-  title        = {QECTOR Decoder v3: High-Performance QEC Decoder Package},
-  year         = {2026},
-  publisher    = {Zenodo},
-  version      = {0.6.9},
-  doi          = {10.5281/zenodo.21501377},
-  url          = {https://doi.org/10.5281/zenodo.21501377}
+{`@software{lessard2026qector,
+  author  = {Guillaume Lessard},
+  title   = {{QECTOR Decoder v3}: Rust/Python Quantum Error Correction Decoding Platform},
+  year    = {2026},
+  version = {0.6.9},
+  url     = {https://www.qector.store},
+  note    = {Source-available. Commercial license required for commercial use.}
 }`}
             </pre>
           </div>
@@ -198,7 +195,7 @@ export default function Evidence() {
           {/* Transparency */}
           <EvidenceBlock
             title="Our Transparency Commitment"
-            statement={`We publish all validation results - passes, non-passes, and known limitations. All numeric claims link to Zenodo and GitHub artifact releases. We do not hide non-passes behind aggregate statistics.`}
+            statement={`We publish all validation results - passes, non-passes, and known limitations. All numeric claims link to GitHub artifact releases. We do not hide non-passes behind aggregate statistics.`}
           />
 
         </div>

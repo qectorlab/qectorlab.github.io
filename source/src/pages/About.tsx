@@ -145,7 +145,7 @@ export default function About() {
                   <li>Reproducibility first - every claim ships with verifiable artifacts</li>
                   <li>Honest documentation - Decoder is Source-Available (not free); Workbench GUI app is free</li>
                   <li>Simulation-validated before any public benchmark claim</li>
-                  <li>Full provenance trail - DOI, SHA-256 bundles, IBM job IDs</li>
+                  <li>Full provenance trail - SHA-256 bundles, IBM job IDs</li>
                   <li>No vendor lock-in - pluggable CodeProvider architecture</li>
                   <li>Transparent validation reports with non-pass classification</li>
                 </ul>
@@ -157,7 +157,7 @@ export default function About() {
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
                   <li><strong className="text-primary">Free QECTOR Workbench v3.5.1</strong>: Professional GUI, 47 MCP tools, benchmarks (fully free)</li>
                   <li><strong className="text-primary">SATI OS</strong>: Full commercial stack on top (GUI + HALs + support)</li>
-                  <li><strong className="text-primary">Research</strong>: SATI CODEX / LCL-833 theoretical work, "Mastering QEC" book - see decoder repo README for deep integration and Zenodo papers</li>
+                  <li><strong className="text-primary">Research</strong>: SATI CODEX / LCL-833 theoretical work, "Mastering QEC" book - see decoder repo README for deep integration and published papers</li>
                 </ul>
               </div>
             </div>

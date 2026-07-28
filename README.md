@@ -2,7 +2,7 @@
 
 **Live site: [https://qector.store](https://qector.store)**
 
-QECTOR Decoder v3: production-grade, simulation-validated quantum error correction decoder library (Rust + Python). Exact MWPM parity with PyMatching through d=15. +35.7% LER reduction with Belief-Matching at d=5. GPU batch (CUDA/OpenCL) bit-identical to CPU. BP-OSD for qLDPC. Free professional Workbench GUI v3.5.0 (Zenodo: https://doi.org/10.5281/zenodo.21360433).
+QECTOR Decoder v3: production-grade, simulation-validated quantum error correction decoder library (Rust + Python). Exact MWPM parity with PyMatching through d=15. +35.7% LER reduction with Belief-Matching at d=5. GPU batch (CUDA/OpenCL) bit-identical to CPU. BP-OSD for qLDPC. Free professional Workbench GUI v3.5.0 (see qector.store).
 
 **Important licensing**: QECTOR Decoder v3 is **Source-Available (not free)** for commercial use. The Workbench GUI app is free for everyone. See /pricing and /commercial on the site.
 
@@ -12,7 +12,7 @@ This repo serves the static GitHub Pages site (CNAME qector.store). Source in `s
 ```bash
 pip install qector-decoder-v3
 # Free GUI (recommended for most)
-# https://doi.org/10.5281/zenodo.21360433
+# Download: https://qector.store
 ```
 
 Reproducible claims and artifacts: https://github.com/GuillaumeLessard/qector-decoder

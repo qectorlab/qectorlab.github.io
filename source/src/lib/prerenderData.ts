@@ -157,7 +157,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           `PyPI package: <a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3 ${DECODER_VERSION}</a>`,
           `Artifacts and reproduction harness: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
-          'Zenodo benchmark datasets: DOI 10.5281/zenodo.21501377 (edge-hardware, v0.6.8) and DOI 10.5281/zenodo.21339300 (105-run master report).',
+          'Benchmark datasets: edge-hardware sweep (v0.6.8) and 105-run master report, published in the reproduction harness above.',
         ])
     ),
     jsonLdExtra: [
@@ -211,12 +211,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/benchmarks',
     title: 'Benchmarks · QECTOR',
     description:
-      'Head-to-head benchmarks: QECTOR vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain, 100% syndrome faithfulness. All simulation-validated with GitHub and Zenodo artifacts.',
+      'Head-to-head benchmarks: QECTOR vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain, 100% syndrome faithfulness. All simulation-validated with GitHub artifacts.',
     heading: 'Head-to-Head Benchmarks',
     body: page(
       h1('Head-to-Head Benchmarks') +
         p(
-          'Head-to-head against PyMatching on rotated surface codes using Stim circuit-level noise. Results are SHA-256 sealed and published on GitHub and Zenodo — run them yourself with the published harness.'
+          'Head-to-head against PyMatching on rotated surface codes using Stim circuit-level noise. Results are SHA-256 sealed and published on GitHub — run them yourself with the published harness.'
         ) +
         h2('MWPM LER parity (circuit-level, p=0.001)') +
         table(
@@ -247,8 +247,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ]) +
         h2('Datasets') +
         ul([
-          'Edge-hardware dataset (v0.6.8): <a href="https://doi.org/10.5281/zenodo.21501377" style="color:#67e8f9;">DOI 10.5281/zenodo.21501377</a> — exact PyMatching parity at p∈[0.002, 0.008], d∈{3,5,7,9}.',
-          'Zenodo benchmark dataset (v0.6.8 edge / 0.6.9 package): <a href="https://doi.org/10.5281/zenodo.21501377" style="color:#67e8f9;">DOI 10.5281/zenodo.21501377</a> — 1,858 timing measurements, 105 runs, 6 topologies.',
+          'Edge-hardware dataset (v0.6.8): exact PyMatching parity at p∈[0.002, 0.008], d∈{3,5,7,9}.',
+          'Benchmark dataset (v0.6.8 edge / 0.6.9 package): 1,858 timing measurements, 105 runs, 6 topologies.',
           `GitHub artifacts: <a href="${GITHUB_URL}" style="color:#67e8f9;">${GITHUB_URL.replace('https://', '')}</a>`,
         ])
     ),
@@ -263,17 +263,17 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/evidence',
     title: 'Evidence & Reports · QECTOR',
     description:
-      'Validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. SHA-256 sealed on GitHub and Zenodo.',
+      'Validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. SHA-256 sealed on GitHub.',
     heading: 'Evidence & Reports',
     body: page(
       h1('Evidence & Reports') +
         p(
-          'Every public claim is backed by a verifiable artifact: validation reports, benchmark data, SHA-256 manifests, and IBM hardware job IDs — archived with the decoder source on GitHub and mirrored on Zenodo.'
+          'Every public claim is backed by a verifiable artifact: validation reports, benchmark data, SHA-256 manifests, and IBM hardware job IDs — archived with the decoder source on GitHub.'
         ) +
         h2('Artifact index') +
         ul([
-          'Zenodo edge-hardware benchmark dataset (v0.6.8) — DOI 10.5281/zenodo.21501377 (CC-BY-4.0).',
-          'Zenodo benchmark dataset (v0.6.8 edge / 0.6.9 package) — DOI 10.5281/zenodo.21501377: 1,858 timing measurements, 105 runs, 6 topologies.',
+          'Edge-hardware benchmark dataset (v0.6.8) — CC-BY-4.0.',
+          'Benchmark dataset (v0.6.8 edge / 0.6.9 package) — 1,858 timing measurements, 105 runs, 6 topologies.',
           'MWPM LER parity validation — exact parity QECTOR-Blossom vs PyMatching, d=3 to d=15.',
           'Belief-Matching gain report — +35.7% LER reduction at d=5, circuit-level noise.',
           'GPU batch bit-identity — CUDA/OpenCL corrections byte-for-byte equal to CPU.',
@@ -332,11 +332,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'bicycle — qLDPC bicycle code (13 decoders).',
           'bivariate_bicycle — IBM bivariate bicycle presets (9 decoders).',
         ]) +
-        h2('Archival records &amp; DOIs') +
+        h2('Documentation &amp; reference') +
         ul([
-          'User Manual &amp; Licensing — <a href="https://doi.org/10.5281/zenodo.21363016" style="color:#67e8f9;">DOI 10.5281/zenodo.21363016</a>',
-          'Performance Benchmarks — <a href="https://doi.org/10.5281/zenodo.21339300" style="color:#67e8f9;">DOI 10.5281/zenodo.21339300</a>',
-          'Architecture Whitepaper — <a href="https://doi.org/10.5281/zenodo.21320543" style="color:#67e8f9;">DOI 10.5281/zenodo.21320543</a>',
+          `User Manual &amp; Licensing — <a href="${SITE_URL}/manual" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/manual</a>`,
+          `Performance Benchmarks — <a href="${SITE_URL}/benchmarks" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/benchmarks</a>`,
+          `Architecture &amp; Technical Reference — <a href="${SITE_URL}/technical-reference" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/technical-reference</a>`,
         ])
     ),
   },
@@ -448,7 +448,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           'CUDA decoder row-identical to CPU Union-Find at d=3–19; faithfulness H·c = s on 100% of shots.',
           'Benchmark release: 8 SVG charts, 20 JSON data files, full PDF report; peak 13.49M shots/s CUDA, 5.21M shots/s CPU.',
-          'Zenodo edge-hardware dataset published (DOI 10.5281/zenodo.21501377).',
+          'Edge-hardware dataset published (v0.6.8).',
         ]) +
         h2('Earlier') +
         p('v0.5.x release train: GPU batch decoder, Belief-Matching configurable BP iterations, BP-OSD for qLDPC, sigstore-attested wheels, initial public PyPI release. Full history on the PyPI project page.')
