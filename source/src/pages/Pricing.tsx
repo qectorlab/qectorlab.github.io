@@ -183,7 +183,7 @@ export default function Pricing() {
                 name="Solo / Indie Commercial"
                 price="$1,299"
                 period="/ year"
-                desc="Single named user. Also $899 one-time perpetual."
+                 desc="Single named user. Also $3,299 one-time perpetual."
                 features={[
                   'Full decoder v3 (all decoders)',
                   'Commercial R&D rights',

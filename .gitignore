@@ -40,6 +40,9 @@ lint-output.txt
 # Temp scripts
 create_live_links.py
 get_links.py
+cleanup_dupes.py
+create_webhook.py
+update_product_descriptions.py
 
 # Deploy keys
 id_qector_deploy

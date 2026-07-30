@@ -15,11 +15,11 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'What happens after the 60-day evaluation expires?',
-    a: 'The $499 evaluation is a flat, non-recurring 60-day window. If you need to extend or convert to an annual license, contact licensing@qector.store. The evaluation fee is 100% creditable toward any annual license.'
+    a: 'The $499 evaluation is a flat, non-recurring 60-day window. If you need to extend or convert to an annual license, contact admin@qector.store. The evaluation fee is 100% creditable toward any annual license.'
   },
   {
     q: 'Can I redistribute QECTOR inside my product?',
-    a: 'No — standard tiers cover internal use only. Enterprise OEM licenses cover redistribution, SaaS hosting, and hardware bundling. Email licensing@qector.store for a custom agreement.'
+    a: 'No — standard tiers cover internal use only. Enterprise OEM licenses cover redistribution, SaaS hosting, and hardware bundling. Email admin@qector.store for a custom agreement.'
   },
   {
     q: 'Do I need a license for non-commercial research?',
@@ -27,10 +27,10 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'What about academic discounts?',
-    a: 'Yes — academic institutions receive 40% off any annual tier. Contact licensing@qector.store with your .edu domain to verify.'
+    a: 'Yes — academic institutions receive 40% off any annual tier. Contact admin@qector.store with your .edu domain to verify.'
   },
   {
     q: 'Can we get a signed corporate EULA or tax form?',
-    a: 'Yes. If procurement requires a signed PDF agreement, vendor profile, or W-8/W-9, email your request with your Stripe invoice number to licensing@qector.store.'
+    a: 'Yes. If procurement requires a signed PDF agreement, vendor profile, or W-8/W-9, email your request with your Stripe invoice number to admin@qector.store.'
   },
 ];

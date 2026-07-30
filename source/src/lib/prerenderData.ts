@@ -364,7 +364,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         FAQ_ITEMS.map(
           (f) => `<h3 style="font-size:1rem;font-weight:600;color:#f1f5f9;margin:1rem 0 0.25rem;">${f.q}</h3><p style="color:#b6c2d2;margin:0 0 0.5rem;">${f.a}</p>`
         ).join('') +
-        p('Contact: <a href="mailto:licensing@qector.store" style="color:#67e8f9;">licensing@qector.store</a>')
+        p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
     jsonLdExtra: [
       {
@@ -394,7 +394,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'IBM Quantum hardware evaluation pathway under commercial pilot.',
           'Academic institutions: 40% discount on annual tiers.',
         ]) +
-        p('Contact <a href="mailto:licensing@qector.store" style="color:#67e8f9;">licensing@qector.store</a> or see <a href="/pricing" style="color:#67e8f9;">pricing</a>.')
+        p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> or see <a href="/pricing" style="color:#67e8f9;">pricing</a>.')
     ),
   },
   {
@@ -464,7 +464,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
       h1('Contact') +
         ul([
           'General & support: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>',
-          'Licensing & procurement: <a href="mailto:licensing@qector.store" style="color:#67e8f9;">licensing@qector.store</a>',
+          'Licensing & procurement: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>',
           `Decoder artifacts & issues: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
         ]) +
         p('Typical response time: 1 business day for licensing, 2 business days for evaluation support.')
@@ -566,7 +566,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'QECTOR Decoder v3 is source-available under the PolyForm Noncommercial License 1.0.0: free for personal, academic, and non-commercial research use. Company use, funded institutional work, SaaS, OEM integration, redistribution, or commercial benchmarking requires a commercial license.'
         ) +
         p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
-        p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · Contact <a href="mailto:licensing@qector.store" style="color:#67e8f9;">licensing@qector.store</a>')
+        p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
   {
@@ -594,7 +594,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Use of the QECTOR website and software is governed by the PolyForm Noncommercial License 1.0.0 for community use, or by a written commercial license agreement for paid tiers. Benchmarks and validation artifacts may be republished with attribution. No warranty is provided; see the license for the full terms.'
         ) +
-        p('Contact <a href="mailto:licensing@qector.store" style="color:#67e8f9;">licensing@qector.store</a>')
+        p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
   {
@@ -621,7 +621,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Purchase complete') +
         p(
-          'Thank you. Your QECTOR Decoder v3 licence token is issued automatically by email within minutes of payment. Set it as the QECTOR_LICENSE environment variable; verification is offline. If the email does not arrive, contact licensing@qector.store with your Stripe receipt.'
+          'Thank you. Your QECTOR Decoder v3 licence token is issued automatically by email within minutes of payment. Set it as the QECTOR_LICENSE environment variable; verification is offline. If the email does not arrive, contact admin@qector.store with your Stripe receipt.'
         )
     ),
   },
