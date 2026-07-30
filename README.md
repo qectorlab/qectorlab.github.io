@@ -8,16 +8,6 @@ QECTOR Decoder v3: production-grade, simulation-validated quantum error correcti
 
 **Important licensing**: QECTOR Decoder v3 is **Source-Available (not free)** for commercial use. The Workbench GUI app is free for everyone. See /pricing and /commercial on the site.
 
-This repo serves the static GitHub Pages site (CNAME qector.store). Source in `source/`.
-
-## Quick Start
-
-```bash
-pip install qector-decoder-v3
-# Free GUI (recommended for most)
-# Download: https://qector.store
-```
-
 Reproducible claims and artifacts: https://github.com/GuillaumeLessard/qector-decoder
 
 ## Verified Claims (see /benchmarks and GitHub artifacts)
@@ -30,14 +20,6 @@ Reproducible claims and artifacts: https://github.com/GuillaumeLessard/qector-de
 
 All numbers backed by public SHA-256 artifacts, seeds, and harness in the decoder repo.
 
-## Key Pages on Site
-
-- / : Homepage with Validation Report table + interactive simulator
-- /changelog : Version history (PyPI RSS powered)
-- /benchmarks : Full tables + Methodology & Reproducibility + direct repro commands + artifact links
-- /pricing : Transparent tiers, honesty register, Source-Available language
-- /commercial : Evaluation pilots, free vs licensed split, tiers (Researcher/Academic/Commercial/Enterprise)
-- /decoder , /workbench , /sati-os , /sati-codex , /evidence , /about
 
 ## Branding & Scope
 
@@ -46,25 +28,6 @@ All numbers backed by public SHA-256 artifacts, seeds, and harness in the decode
 - Creator: Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions
 - Related: SATI CODEX (LCL-833 / LCL-832), "Mastering QEC" book
 
-## Local Development (source/)
 
-```bash
-cd source
-npm install
-npm run dev
-npm run build   # outputs to source/dist
-```
-
-## Deploy
-
-GitHub Actions (`.github/workflows/deploy.yml`) builds `source/` on push to main and deploys `source/dist` via Pages.
-
-## Files of Note
-
-- CNAME, _redirects, 404.html (SPA support), sitemap.xml, robots.txt, llms*.txt, ai.txt
-- source/ : full Vite + React 19 + TS + Tailwind app
-- root published files: current live snapshot (CI keeps in sync on deploy)
-
-Primary source of truth for code + validation: the qector-decoder repo. This site presents it professionally.
 
 Created by Guillaume Lessard. All rights and research under iD01t Productions.
