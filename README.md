@@ -8,19 +8,6 @@ QECTOR Decoder v3: production-grade, simulation-validated quantum error correcti
 
 **Important licensing**: QECTOR Decoder v3 is **Source-Available (not free)** for commercial use. The Workbench GUI app is free for everyone. See /pricing and /commercial on the site.
 
-Reproducible claims and artifacts: https://github.com/GuillaumeLessard/qector-decoder
-
-## Verified Claims (see /benchmarks and GitHub artifacts)
-
-- Exact MWPM parity d=3 to d=15 vs PyMatching
-- Belief-Matching: -35.7% LER at d=5 (circuit noise)
-- 98.3% optimal shots at d=9
-- GPU batch: native, bit-identical output
-- Full Stim / Sinter / PyMatching / Qiskit compatible
-
-All numbers backed by public SHA-256 artifacts, seeds, and harness in the decoder repo.
-
-
 ## Branding & Scope
 
 - qectorlab brand for the website and Workbench distribution; decoder source-of-truth is the GuillaumeLessard/qector-decoder repo
