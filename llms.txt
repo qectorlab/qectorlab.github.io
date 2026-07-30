@@ -1,8 +1,8 @@
-# QECTOR Decoder v3 (v0.6.9)
+# QECTOR Decoder v3 (v0.7.0)
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder v3 is distributed on PyPI as `qector-decoder-v3==0.6.9`. 
+QECTOR Decoder v3 is distributed on PyPI as `qector-decoder-v3==0.7.0`. 
 
 Algorithms: UnionFind, FastUnionFind, Blossom MWPM (exact PyMatching LER parity), SparseBlossom, BeliefMatching (+35.7% LER reduction at d=5 under depolarizing circuit noise), BpOsd / BPOSD (qLDPC), BatchDecoder, CUDABatchDecoder / OpenCLBatchDecoder, AutoDecoder (7-tier fallback), HybridDecoder, PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, and GNNBeliefMatcher.
 
@@ -26,7 +26,7 @@ Algorithms: UnionFind, FastUnionFind, Blossom MWPM (exact PyMatching LER parity)
 
 ## Recommended install command
 
-pip install qector-decoder-v3==0.6.9
+pip install qector-decoder-v3==0.7.0
 
 ## Boundaries & Licensing
 

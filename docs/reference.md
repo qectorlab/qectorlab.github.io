@@ -1,14 +1,14 @@
 QECTOR Decoder v3 — Extended Reference (package only)  
-Version: 0.6.9 · PyPI: qector-decoder-v3 · Backend: Rust \+ PyO3
+Version: 0.7.0 · PyPI: qector-decoder-v3 · Backend: Rust \+ PyO3
 
-This document covers only the installable Python package qector-decoder-v3==0.6.9. It does not describe the Workbench GUI or the Workbench’s 47-tool MCP server.
+This document covers only the installable Python package qector-decoder-v3==0.7.0. It does not describe the Workbench GUI or the Workbench’s 47-tool MCP server.
 
 ---
 
 ### 1\. Installation and platforms
 
 ```
-pip install qector-decoder-v3==0.6.9
+pip install qector-decoder-v3==0.7.0
 pip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching
 pip install "qector-decoder-v3[bench]"   # benchmarks
 pip install "qector-decoder-v3[all]"     # full research stack
@@ -30,7 +30,7 @@ pip install "qector-decoder-v3[all]"     # full research stack
 * Python surface — API, Stim/Sinter compat, belief/GNN, licensing  
 * Zero-copy NumPy where possible; GIL-free decode on native paths
 
-Public version string: qector\_decoder\_v3.\_\_version\_\_ \== "0.6.9".
+Public version string: qector\_decoder\_v3.\_\_version\_\_ \== "0.7.0".
 
 ---
 
@@ -132,7 +132,7 @@ from qector_decoder_v3 import BeliefMatching, BpOsdDecoder
 import numpy as np
 
 H = np.array([[1,1,0,0,0],[0,1,1,0,0],[0,0,1,1,0],[0,0,0,1,1]], dtype=np.uint8)
-bm = BeliefMatching.from_numpy_h(H)          # v0.6.9: returns length-n_qubits vector
+bm = BeliefMatching.from_numpy_h(H)          # v0.7.0: returns length-n_qubits vector
 print(bm.decode(np.array([0,1,0,0], dtype=np.uint8)))
 
 bp = BpOsdDecoder(H, error_rate=0.05, osd_order=0, bp_method="exact")
@@ -160,13 +160,13 @@ Licence
 ```
 from qector_decoder_v3.license import verify_license_token
 verify_license_token("")                    # False
-verify_license_token("garbage")             # False (no raise; hardened in 0.6.9)
+verify_license_token("garbage")             # False (no raise; hardened in 0.7.0)
 verify_license_token("academic")            # True (dev override)
 ```
 
 ---
 
-### 6\. v0.6.9 package highlights
+### 6\. v0.7.0 package highlights
 
 | Area | Change |
 | ----- | ----- |
@@ -244,7 +244,7 @@ MCP + fallback pattern: try package MCP; on message containing "hyperedge" / "we
 
 #### B. HybridCascadeDecoder Wheel Status & Manual Cascade Pattern
 
-**Root Cause**: Public PyPI wheels (including v0.6.9) ship a compiled Rust core where `HybridCascadeDecoder` is gated behind an unexported feature flag. Instantiating `HybridCascadeDecoder()` triggers `_guard("HybridCascadeDecoder")` and raises `RuntimeError`. Public wheels expose `HybridDecoder` (UF + Blossom routing).
+**Root Cause**: Public PyPI wheels (including v0.7.0) ship a compiled Rust core where `HybridCascadeDecoder` is gated behind an unexported feature flag. Instantiating `HybridCascadeDecoder()` triggers `_guard("HybridCascadeDecoder")` and raises `RuntimeError`. Public wheels expose `HybridDecoder` (UF + Blossom routing).
 
 **Quick Diagnostic**:
 ```python
@@ -347,7 +347,7 @@ Optional extra: pip install "qector-decoder-v3\[stim\]".
 
 ---
 
-### 12\. Practical recommendations (v0.6.9 package)
+### 12\. Practical recommendations (v0.7.0 package)
 
 | Goal | Choice |
 | ----- | ----- |
@@ -369,7 +369,7 @@ Optional extra: pip install "qector-decoder-v3\[stim\]".
 
 ---
 
-Package: qector-decoder-v3==0.6.9  
+Package: qector-decoder-v3==0.7.0  
 Docs / site: [https://www.qector.store](https://www.qector.store/) · [https://pypi.org/project/qector-decoder-v3/](https://pypi.org/project/qector-decoder-v3/)  
 Repository: [https://github.com/GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
 

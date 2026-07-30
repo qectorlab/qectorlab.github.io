@@ -28,10 +28,10 @@ const TOOLS = [
   },
   {
     name: 'get_decoder_info',
-    desc: 'Report system version (v0.6.9), available decoder types, and compiled capabilities.',
+    desc: 'Report system version (v0.7.0), available decoder types, and compiled capabilities.',
     required: [],
     optional: [],
-    returns: 'version ("0.6.9"), decoder_types, capabilities',
+    returns: 'version ("0.7.0"), decoder_types, capabilities',
   },
 ];
 
@@ -225,7 +225,7 @@ export default function McpServer() {
               <li>
                 <strong className="text-primary">Syndrome Faithfulness &amp; Real Benchmark Sweep.</strong>{' '}
                 Verified 100% syndrome-faithful across all tested distances d=3–19. Explore the raw trial data in the{' '}
-                <a href="/json/benchmarks/mcp_sweep_v0.6.9.json" target="_blank" className="text-cyan-300 hover:underline">v0.6.9 MCP Sweep Dataset (JSON)</a>.
+                <a href="/json/benchmarks/mcp_sweep_v0.7.0.json" target="_blank" className="text-cyan-300 hover:underline">v0.7.0 MCP Sweep Dataset (JSON)</a>.
               </li>
               <li>
                 <strong className="text-primary">Licensing.</strong> Academic and personal

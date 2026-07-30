@@ -11,12 +11,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 const REPORTS_DATA = [
   {
-    title: 'Benchmark Master Report (v0.6.9)',
+    title: 'Benchmark Master Report (v0.7.0)',
     desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies.',
     status: 'Validated',
   },
   {
-    title: 'Edge-Hardware Benchmark Dataset (v0.6.8 / v0.6.9)',
+    title: 'Edge-Hardware Benchmark Dataset (v0.6.8 / v0.7.0)',
     desc: 'Edge-hardware validation dataset and SHA-256 sealed artifact package.',
     status: 'Validated',
   },
@@ -166,7 +166,7 @@ export default function Evidence() {
             </p>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground">
               <div className="text-cyan-300 mb-2"># Quick validation</div>
-              <div>pip install qector-decoder-v3==0.6.9</div>
+              <div>pip install qector-decoder-v3==0.7.0</div>
               <div>python -c &quot;import qector_decoder_v3 as qd; print(qd.__version__)&quot;</div>
               <div className="mt-2"># Full harness + artifacts</div>
               <div>git clone https://github.com/GuillaumeLessard/qector-decoder</div>
@@ -185,7 +185,7 @@ export default function Evidence() {
   author  = {Guillaume Lessard},
   title   = {{QECTOR Decoder v3}: Rust/Python Quantum Error Correction Decoding Platform},
   year    = {2026},
-  version = {0.6.9},
+  version = {0.7.0},
   url     = {https://www.qector.store},
   note    = {Source-available. Commercial license required for commercial use.}
 }`}

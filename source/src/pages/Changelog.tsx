@@ -50,11 +50,11 @@ export default function Changelog() {
             />
           </div>
 
-          {/* v0.6.9 */}
+          {/* v0.7.0 */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <ChangelogEntry
-              version="v0.6.9 - 2026-07-24"
+              version="v0.7.0 - 2026-07-24"
               items={[
                 'Production release with top-tier benchmark suite, hyper saturation suite, and Stripe live integration',
                 'MCP Server integration (protocol 2024-11-05, qector-mcp) exposing 15+ decoder types',

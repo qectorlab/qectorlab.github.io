@@ -513,7 +513,7 @@ export default function Home() {
                 <div
                   dangerouslySetInnerHTML={{
                     __html: `<stripe-buy-button
-                      buy-button-id="buy_btn_1TsoKxRsa9cg9l8A7ExMmc77"
+                      buy-button-id="plink_1TyqVURsa9cg9l8A7pqvFRey"
                       publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
                     ></stripe-buy-button>`
                   }}

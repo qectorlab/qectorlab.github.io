@@ -1,4 +1,4 @@
-# QECTOR Decoder v3 (v0.6.9) Full Context
+# QECTOR Decoder v3 (v0.7.0) Full Context
 
 QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction decoder package by Guillaume Lessard / QECTOR Lab.
 
@@ -31,7 +31,7 @@ QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction
 
 ## Public Install
 
-pip install qector-decoder-v3==0.6.9
+pip install qector-decoder-v3==0.7.0
 
 ## Verification Command
 

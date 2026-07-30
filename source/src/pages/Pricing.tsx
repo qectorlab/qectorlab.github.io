@@ -177,7 +177,7 @@ export default function Pricing() {
                 ]}
                 centered
                 ctaLabel="Start 60-Day Evaluation — $499"
-                ctaHref="https://buy.stripe.com/9B6aEZ3VL8W60xk9bYeUU01"
+                ctaHref="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
               />
               <PricingTierCard
                 name="Solo / Indie Commercial"
@@ -193,7 +193,7 @@ export default function Pricing() {
                 ]}
                 centered
                 ctaLabel="Subscribe — $1,299/yr"
-                ctaHref="https://buy.stripe.com/4gMaEZ3VL4FQfsecoaeUU03"
+                ctaHref="https://buy.stripe.com/cNi9AV63TfkubbY87UeUU09"
               />
               <PricingTierCard
                 name="Startup / Growth Team"
@@ -213,7 +213,7 @@ export default function Pricing() {
                 ]}
                 centered
                 ctaLabel="Subscribe — $4,499/yr"
-                ctaHref="https://buy.stripe.com/00w9AV8c15JU2Fs87UeUU04"
+                ctaHref="https://buy.stripe.com/14A5kF4ZP5JU7ZMdseeUU0c"
               />
               <PricingTierCard
                 name="Professional / Lab"
@@ -231,7 +231,7 @@ export default function Pricing() {
                 ]}
                 centered
                 ctaLabel="Subscribe — $11,500/yr"
-                ctaHref="https://buy.stripe.com/8x2bJ38c15JU3Jw87UeUU05"
+                ctaHref="https://buy.stripe.com/28EeVf1ND0pA6VIewieUU0d"
               />
               <PricingTierCard
                 name="Enterprise R&D"
@@ -287,7 +287,7 @@ export default function Pricing() {
                 </p>
               </div>
               <a
-                href="https://buy.stripe.com/fZu28t2RH8W6dk61JweUU06"
+                href="https://buy.stripe.com/3cI14p77Xdcm0xk2NAeUU0e"
                 className="btn-outline whitespace-nowrap text-center"
                 rel="noopener"
               >
@@ -320,7 +320,7 @@ export default function Pricing() {
               <div
                 dangerouslySetInnerHTML={{
                   __html: `<stripe-buy-button
-                    buy-button-id="buy_btn_1TsoKxRsa9cg9l8A7ExMmc77"
+                    buy-button-id="plink_1TyqVURsa9cg9l8A7pqvFRey"
                     publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
                   ></stripe-buy-button>`
                 }}

@@ -1,7 +1,7 @@
 {
   "meta": {
     "package": "qector-decoder-v3",
-    "version": "0.6.9",
+    "version": "0.7.0",
     "distances": [3, 5, 7, 9, 11, 13, 15, 17, 19],
     "decoder_types": [
       "UnionFind", "FastUnionFind", "Blossom", "SparseBlossom", "bposd",
@@ -20,7 +20,7 @@
       "info": {
         "capabilities": ["decode", "batch_decode", "parallel_batch_decode", "benchmark"],
         "decoder_types": ["UnionFind", "FastUnionFind", "Blossom", "SlidingWindow", "Streaming"],
-        "version": "0.6.9"
+        "version": "0.7.0"
       }
     },
     {
@@ -220,7 +220,7 @@
         "n_samples": 64,
         "throughput": 2113354,
         "timestamp": "2026-07-26T07:24:55.368128781+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -239,7 +239,7 @@
         "n_samples": 64,
         "throughput": 1441195,
         "timestamp": "2026-07-26T07:24:55.374053831+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -258,7 +258,7 @@
         "n_samples": 64,
         "throughput": 924966,
         "timestamp": "2026-07-26T07:24:55.380150729+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -277,7 +277,7 @@
         "n_samples": 64,
         "throughput": 507467,
         "timestamp": "2026-07-26T07:24:55.388490330+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -296,7 +296,7 @@
         "n_samples": 64,
         "throughput": 334827,
         "timestamp": "2026-07-26T07:24:55.398592614+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -315,7 +315,7 @@
         "n_samples": 64,
         "throughput": 221400,
         "timestamp": "2026-07-26T07:24:55.411231099+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -334,7 +334,7 @@
         "n_samples": 64,
         "throughput": 157225,
         "timestamp": "2026-07-26T07:24:55.426493343+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -353,7 +353,7 @@
         "n_samples": 64,
         "throughput": 119739,
         "timestamp": "2026-07-26T07:24:55.444667934+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     },
@@ -372,7 +372,7 @@
         "n_samples": 64,
         "throughput": 86981,
         "timestamp": "2026-07-26T07:24:55.466669895+00:00",
-        "version": "0.6.9"
+        "version": "0.7.0"
       },
       "status": "ok"
     }

@@ -37,6 +37,10 @@ info.md
 # Lint output
 lint-output.txt
 
+# Temp scripts
+create_live_links.py
+get_links.py
+
 # Deploy keys
 id_qector_deploy
 id_qector_deploy.pub

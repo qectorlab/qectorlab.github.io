@@ -91,7 +91,7 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            Workbench 3.5.1 · Backend qector_decoder_v3 {pypiVersion || '0.6.9'} · 47 MCP Tools
+            Workbench 3.5.1 · Backend qector_decoder_v3 {pypiVersion || '0.7.0'} · 47 MCP Tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Workbench v3.5.1" className="text-4xl md:text-6xl font-extrabold" />
@@ -146,7 +146,7 @@ export default function Workbench() {
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
-                qector_decoder_v3 v{pypiVersion || '0.6.9'}
+                qector_decoder_v3 v{pypiVersion || '0.7.0'}
               </span>
             </div>
 
@@ -291,7 +291,7 @@ export default function Workbench() {
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
                   <li>Run <code className="text-cyan-300">qector-workbench.exe</code>.</li>
-                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code> on first launch.</li>
+                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.7.0</code> on first launch.</li>
                   <li>100% offline after setup.</li>
                 </ul>
               </div>
@@ -304,7 +304,7 @@ export default function Workbench() {
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
                   <li>Requires <code className="text-cyan-300">python3</code> and <code className="text-cyan-300">python3-pip</code>.</li>
                   <li>Launch: <code className="text-cyan-300">python3 -m qector_workbench</code>.</li>
-                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code>.</li>
+                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.7.0</code>.</li>
                 </ul>
               </div>
 
@@ -315,7 +315,7 @@ export default function Workbench() {
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
                   <li>Run <code className="text-cyan-300">qector-workbench.app</code>.</li>
-                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.6.9</code>.</li>
+                  <li>Auto-installs <code className="text-cyan-300">qector-decoder-v3==0.7.0</code>.</li>
                   <li>No separate pip setup required.</li>
                 </ul>
               </div>
@@ -332,7 +332,7 @@ export default function Workbench() {
               <div className="bg-void/80 p-3 rounded-lg border border-gridline font-mono text-xs text-cyan-300 space-y-1">
                 <div>1. Ensure 64-bit CPython (3.9–3.13) with pip is installed on PATH.</div>
                 <div>2. If Python is not on PATH, set the environment variable: <span className="text-gold-400">set QECTOR_PYTHON=C:\Python312\python.exe</span></div>
-                <div>3. Or manually pre-install the backend wheel: <span className="text-gold-400">pip install qector-decoder-v3==0.6.9</span></div>
+                <div>3. Or manually pre-install the backend wheel: <span className="text-gold-400">pip install qector-decoder-v3==0.7.0</span></div>
               </div>
               <p className="text-xs text-muted-foreground">
                 <strong>Environment Variables:</strong> <code className="text-cyan-300">QECTOR_PYTHON</code> (CPython path), <code className="text-cyan-300">QECTOR_DATA_DIR</code> (custom data directory), <code className="text-cyan-300">QECTOR_AUTO_UPGRADE=0</code> (disable background upgrade checks).

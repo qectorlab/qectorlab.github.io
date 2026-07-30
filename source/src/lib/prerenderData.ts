@@ -21,7 +21,7 @@ import { FAQ_ITEMS } from './faqData';
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
 export const OG_IMAGE = 'https://qector.store/assets/og-image.png';
-export const DECODER_VERSION = '0.6.9';
+export const DECODER_VERSION = '0.7.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const GITHUB_URL = 'https://github.com/GuillaumeLessard/qector-decoder';
 
@@ -248,7 +248,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Datasets') +
         ul([
           'Edge-hardware dataset (v0.6.8): exact PyMatching parity at p∈[0.002, 0.008], d∈{3,5,7,9}.',
-          'Benchmark dataset (v0.6.8 edge / 0.6.9 package): 1,858 timing measurements, 105 runs, 6 topologies.',
+          'Benchmark dataset (v0.6.8 edge / 0.7.0 package): 1,858 timing measurements, 105 runs, 6 topologies.',
           `GitHub artifacts: <a href="${GITHUB_URL}" style="color:#67e8f9;">${GITHUB_URL.replace('https://', '')}</a>`,
         ])
     ),
@@ -273,7 +273,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Artifact index') +
         ul([
           'Edge-hardware benchmark dataset (v0.6.8) — CC-BY-4.0.',
-          'Benchmark dataset (v0.6.8 edge / 0.6.9 package) — 1,858 timing measurements, 105 runs, 6 topologies.',
+          'Benchmark dataset (v0.6.8 edge / 0.7.0 package) — 1,858 timing measurements, 105 runs, 6 topologies.',
           'MWPM LER parity validation — exact parity QECTOR-Blossom vs PyMatching, d=3 to d=15.',
           'Belief-Matching gain report — +35.7% LER reduction at d=5, circuit-level noise.',
           'GPU batch bit-identity — CUDA/OpenCL corrections byte-for-byte equal to CPU.',
@@ -299,7 +299,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR Workbench v3.5.1') +
         p(
-          'Free cross-platform desktop application (CustomTkinter GUI), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.6.9). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
+          'Free cross-platform desktop application (CustomTkinter GUI), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.7.0). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
         ) +
         h2('13 Integrated Decoders &amp; Measured Benchmarks') +
         table(
@@ -434,11 +434,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/changelog',
     title: 'Changelog · QECTOR',
     description:
-      'Version history for QECTOR Decoder v3. Current release: v0.6.9. PyPI release train, feature additions, and validation milestones.',
+      'Version history for QECTOR Decoder v3. Current release: v0.7.0. PyPI release train, feature additions, and validation milestones.',
     heading: 'Changelog',
     body: page(
       h1('Changelog') +
-        h2('v0.6.9 — 2026-07-24 (current)') +
+        h2('v0.7.0 — 2026-07-24 (current)') +
         ul([
           'Production release with top-tier benchmark suite, hyper saturation suite, and Stripe live integration.',
           'MCP Server integration (protocol 2024-11-05, qector-mcp) exposing 15+ decoder types.',
@@ -522,7 +522,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Technical Reference') +
         p(
-          'API reference for qector_decoder_v3 0.6.9 package: stable and experimental decoders, utilities, and helper functions.'
+          'API reference for qector_decoder_v3 0.7.0 package: stable and experimental decoders, utilities, and helper functions.'
         ) +
         h2('Stable decoders') +
         p('UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder (7-tier fallback), DecoderPool, get_decoder, clear_decoder_cache, decode_mmap, DecodeResult, decode_with_diagnostics, Workbench.') +

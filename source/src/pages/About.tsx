@@ -171,7 +171,7 @@ export default function About() {
                   { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
                   { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated. SATI OS desktop UI scaffolded.' },
                   { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends achieving byte-for-byte identical corrections to CPU.' },
-                  { year: '2025 Q4-2026', event: `v${pypiVersion || '0.6.9'} Decoder (Source-Available) + free QECTOR Workbench GUI v3.5.1 (47 MCP tools). SATI OS full suite on top.` },
+                  { year: '2025 Q4-2026', event: `v${pypiVersion || '0.7.0'} Decoder (Source-Available) + free QECTOR Workbench GUI v3.5.1 (47 MCP tools). SATI OS full suite on top.` },
                   { year: '2026 Q2', event: 'QECTOR Workbench v3.5.1 release. Features CustomTkinter GUI, FastAPI server, dual CLIs, 47 MCP tools, and offline PyPI auto-installer.' },
                 ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">

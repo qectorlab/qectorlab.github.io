@@ -1,5 +1,5 @@
 export const APP_CONFIG = {
-  version: '0.6.9',
+  version: '0.7.0',
   pypiPackage: 'qector-decoder-v3',
   contactEndpoint: import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined,
   ogImage: 'https://qector.store/assets/og-image.png',
