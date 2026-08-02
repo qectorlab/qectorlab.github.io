@@ -9,7 +9,7 @@ interface AlgorithmCardProps {
   badge?: { label: string; color: BadgeColor };
   /** What it is and why it matters, plain language first */
   desc: string;
-  /** Optional single concrete fact/number to anchor the claim, e.g. "d = 3-15, exact parity" */
+  /** Optional single concrete fact/number to anchor the claim, e.g. "54/54 points verified" */
   proof?: string;
   /** Dims the card for research-stage / experimental entries */
   muted?: boolean;

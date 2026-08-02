@@ -11,34 +11,29 @@ gsap.registerPlugin(ScrollTrigger);
 
 const REPORTS_DATA = [
   {
-    title: 'Benchmark Master Report (v0.7.0)',
-    desc: 'Comprehensive dataset containing 1,858 timing measurements from 105 runs (p=0.05, distances d=3 to d=19) across Heavy Hex, Repetition, Ring, Rotated/Unrotated Surface, and Toric topologies.',
-    status: 'Validated',
+    title: 'Verified v0.7.0 Benchmark Set — REPORT.md',
+    desc: 'Self-benchmark report measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13): 13 MCP tools operational, 54 benchmark points, 0 unfaithful corrections, 42/42 syndrome-faithfulness cases.',
+    status: 'Verified',
   },
   {
-    title: 'Edge-Hardware Benchmark Dataset (v0.6.8 / v0.7.0)',
-    desc: 'Edge-hardware validation dataset and SHA-256 sealed artifact package.',
-    status: 'Validated',
+    title: 'Verified v0.7.0 Benchmark Set — summary.json',
+    desc: 'Machine-readable summary: package qector-decoder-v3 0.7.0, MCP stdio JSON-RPC 2.0, timestamp 2026-08-02T05:59:13Z, tools_count 13, correctness_cases 42, benchmark_points 54, peak_throughput_shots_per_s 11,540,387.',
+    status: 'Verified',
   },
   {
-    title: 'MWPM LER Parity Validation',
-    desc: 'Exact LER parity between QECTOR-Blossom and PyMatching verified across distances d=3 to d=15. Full Stim circuit files, exact parameters, and expected outputs included.',
-    status: 'Validated',
+    title: 'Verified v0.7.0 Benchmark Set — benchmarks.csv',
+    desc: 'Full 54-row sweep: repetition (n=5…65) and ring (n=16…48) parity-check codes, six decoder kinds, throughput and latency percentiles, n_unfaithful = 0 on every row.',
+    status: 'Verified',
   },
   {
-    title: 'Belief-Matching Gain Report',
-    desc: '+35.7% LER reduction vs PyMatching at d=5 under circuit-level noise. BP preprocessing parameters, reweighting factors, and convergence criteria documented.',
-    status: 'Validated',
+    title: 'Apple-to-Apple vs PyMatching',
+    desc: 'VERIFIED_APPLE_TO_APPLE_REPORT.pdf: synchronized batch comparison. QECTOR is comparable to PyMatching; PyMatching is often slightly ahead on the synchronized batch. No speedup multiplier is claimed.',
+    status: 'Verified',
   },
   {
-    title: 'GPU Batch Bit-Identity',
-    desc: 'CUDA and OpenCL batch decoders produce bit-identical corrections to CPU MWPM. Byte-for-byte verified on 10,000 random syndromes per distance.',
-    status: 'Validated',
-  },
-  {
-    title: 'Optimal Shot Analysis',
-    desc: '98.3% of shots achieve exact minimum-weight correction at d=9. Medium gap analysis shows zero median deviation from optimal.',
-    status: 'Validated',
+    title: 'Withdrawn Pre-v0.7.0 Tables',
+    desc: 'Four benchmark tables published in earlier documentation (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn. Do not cite them.',
+    status: 'Withdrawn',
   },
   {
     title: 'IBM Hardware Execution Log',
@@ -77,14 +72,14 @@ export default function Evidence() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            SHA-256 Manifests · Stim Cross-Validation · IBM Hardware Job IDs
+            Verified v0.7.0 Artifacts · Apple-to-Apple vs PyMatching · IBM Hardware Job IDs
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Every public claim is backed by a verifiable artifact. Validation reports, benchmark data,
-            and IBM hardware job IDs — all archived with the decoder source on GitHub.
+            Every public claim is backed by a verifiable artifact: the verified v0.7.0 benchmark set,
+            the apple-to-apple PyMatching report, and IBM hardware job IDs — all archived on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>
@@ -126,7 +121,7 @@ export default function Evidence() {
 
           {/* Status Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg mx-auto">
-            {['All', 'Validated', 'Certified', 'Hardware'].map((status) => (
+            {['All', 'Verified', 'Withdrawn', 'Hardware'].map((status) => (
               <button
                 key={status}
                 onClick={() => setSelectedStatus(status)}
@@ -149,7 +144,7 @@ export default function Evidence() {
                 title={report.title}
                 badge={{
                   label: report.status,
-                  color: report.status === 'Validated' ? 'green' : report.status === 'Certified' ? 'cyan' : 'gold',
+                  color: report.status === 'Verified' ? 'green' : report.status === 'Withdrawn' ? 'gold' : 'gold',
                 }}
                 desc={report.desc}
                 proof={report.proof}
@@ -161,16 +156,17 @@ export default function Evidence() {
           <div ref={(el) => addRef(el, 2)} className="card-surface">
             <h3 className="text-cyan-300 font-semibold mb-3">Reproducing Our Results</h3>
             <p className="text-secondary text-sm leading-relaxed mb-4">
-              All artifacts include: Stim circuit definitions, exact noise parameters, decoder configuration files,
-              expected output hashes, and reproduction instructions.
+              The verified v0.7.0 set is four artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf),
+              published at <Link to="/benchmarks/v0.7.0/REPORT.md" className="text-cyan-300 hover:underline">qector.store/benchmarks/v0.7.0</Link> and on GitHub.
+              Run the harness yourself:
             </p>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground">
               <div className="text-cyan-300 mb-2"># Quick validation</div>
               <div>pip install qector-decoder-v3==0.7.0</div>
               <div>python -c &quot;import qector_decoder_v3 as qd; print(qd.__version__)&quot;</div>
-              <div className="mt-2"># Full harness + artifacts</div>
-              <div>git clone https://github.com/GuillaumeLessard/qector-decoder</div>
-              <div>cd qector-decoder</div>
+              <div className="mt-2"># Benchmark harness ships with the package</div>
+              <div>qector benchmark --verify</div>
+              <div>python -m qector.validate</div>
             </div>
           </div>
 

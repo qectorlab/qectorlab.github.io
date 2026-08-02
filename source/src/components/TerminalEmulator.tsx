@@ -97,13 +97,12 @@ export default function TerminalEmulator() {
       setLines((prev) => [
         ...prev,
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: 'Decoder           | Logical Error Rate | Speed (shots/s)', type: 'info' },
+        { text: 'Decoder           | Result', type: 'info' },
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: 'PyMatching        | 0.0079             | 145,210', type: 'output' },
-        { text: 'QECTOR-Blossom    | 0.0079             | 1,085,412 (7.4x)', type: 'success' },
-        { text: 'QECTOR-BeliefMatch| 0.0056             | 412,987   (2.8x)', type: 'success' },
+        { text: 'blossom           | 54/54 points, 0 unfaithful', type: 'success' },
+        { text: 'belief_matching   | 54/54 points, 0 unfaithful', type: 'success' },
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: '✓ Parity match verified. Belief-Matching LER reduction: +29.1%', type: 'success' },
+        { text: '✓ Verification passed. Full sweep and PDF report in /benchmarks/v0.7.0/', type: 'success' },
       ]);
     } else {
       await sleep(150);

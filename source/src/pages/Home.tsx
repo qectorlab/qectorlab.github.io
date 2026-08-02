@@ -73,7 +73,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains."
+        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. 16 decoder classes, verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s."
       />
       <JsonLd
         data={{
@@ -123,7 +123,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-xs text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} · Validated MWPM Parity to d=15 · Changelog →</span>
+            <span>v{pypiVersion} · Verified Benchmark Set: 54/54 points, 0 unfaithful · Changelog →</span>
           </Link>
 
           <h1
@@ -141,8 +141,9 @@ export default function Home() {
             className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-            20+ production and research decoder classes including MWPM, Belief-Matching, BP-OSD, and GPU batch decoding.{' '}
-            <span className="text-primary font-semibold">Exact parity with PyMatching through d=15.</span>{' '}
+            16 decoder classes from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
+            <span className="text-primary font-semibold">Verified v0.7.0 benchmark set:</span> peak 11.5M shots/s,
+            54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.
             All claims backed by reproducible artifacts.
           </p>
 
@@ -158,7 +159,7 @@ export default function Home() {
               className="btn-outline text-base px-8 py-4 text-sm sm:text-base"
               target="_blank" rel="noopener noreferrer"
             >
-              Free Workbench GUI v3.5.0
+              Free Workbench GUI v0.5.2
             </a>
           </div>
 
@@ -174,9 +175,9 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="19" label="Decoder Algorithms" />
-            <CounterStat value="1,858+" label="Benchmark Measurements" />
-            <CounterStat value="d=15" label="Validated MWPM Parity" />
+            <CounterStat value="16" label="Decoder Algorithms" />
+            <CounterStat value="54/54" label="Verified Benchmark Points" />
+            <CounterStat value="11.5M/s" label="Peak MCP Throughput" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
           </div>
         </div>
@@ -214,7 +215,7 @@ export default function Home() {
               { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
               { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
-              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v3.5.0', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/' },
+              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v0.5.2', href: 'https://github.com/qectorlab/qector-decoder-workbench/releases/' },
             ].map((pill) => (
               <TrustSignal
                 key={pill.label}
@@ -253,7 +254,7 @@ export default function Home() {
               {
                 step: '02',
                 title: 'Decode',
-                desc: 'Access 10+ Rust-accelerated decoders through a unified Python API. Swap algorithms without changing your pipeline.',
+                desc: 'Access 16 Rust-accelerated decoders through a unified Python API. Swap algorithms without changing your pipeline.',
                 detail: 'from qector_decoder_v3 import BlossomDecoder, BPOSODecoder',
                 code: true,
               },
@@ -302,10 +303,10 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Exact MWPM — Validated',
-                  tag: 'Blossom + Belief-Matching',
-                  desc: 'Exact LER parity with PyMatching through d=15. Add BP preprocessing for +35.7% LER reduction at d=5 under depolarizing circuit noise. These are the production decoders.',
-                  proof: 'd = 3-15 · exact LER parity',
+                  title: 'Blossom MWPM — Exact',
+                  tag: 'Blossom',
+                  desc: 'Weight-optimal exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.',
+                  proof: 'Exact optimal matching · Stim-native',
                 },
                 {
                   title: 'qLDPC Support',
@@ -316,8 +317,8 @@ export default function Home() {
                 {
                   title: 'Speed When You Need It',
                   tag: 'Union-Find + GPU Batch',
-                  desc: 'Near-linear Union-Find for large-distance real-time decoding. Native CUDA/OpenCL GPU batch for throughput-bound workloads — bit-identical to CPU.',
-                  proof: 'Bit-identical CPU ↔ GPU output',
+                  desc: 'Near-linear Union-Find for large-distance real-time decoding. Native CUDA/OpenCL GPU batch for throughput-bound workloads.',
+                  proof: 'Verified peak 11.5M shots/s (MCP)',
                 },
                 {
                   title: 'One Library, Pluggable',
@@ -342,22 +343,22 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                  20+ Decoders · Unified API
+                  16 Decoders · Unified API
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Battle-Tested Decoding Algorithms
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
                   Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
-                  AutoDecoder, Hybrid, Predecoded, Sliding Window, Streaming, and GNN Belief Matcher — all accessible through a consistent Python API.
+                  AutoDecoder, Hybrid, Predecoded, and two-stage, ambiguity-cluster and colour-code decoders — all accessible through a consistent Python API.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: ' Exact LER Parity', desc: 'QECTOR-Blossom matches PyMatching LER output exactly from d=3 to d=15 (adaptive-k MWPM).' },
-                    { label: ' +35.7% LER Reduction', desc: 'Belief-Matching LER reduction vs plain MWPM at d=5 under depolarizing circuit noise.' },
-                    { label: ' 100% Syndrome Faithful', desc: 'All graph-like decoders guarantee H · corr ≡ syndrome (mod 2) on valid syndromes.' },
-                    { label: ' GPU Batch Acceleration', desc: 'CUDA & OpenCL device pipelines for high-throughput batching — bit-identical to CPU output.' },
+                    { label: ' Verified 11.5M shots/s', desc: 'Peak MCP self-benchmark throughput (FastUnionFind, 5-qubit repetition code).' },
+                    { label: ' 54/54 Points · 0 Unfaithful', desc: 'Every correction verified against its parity-check equation across the full sweep.' },
+                    { label: ' 42/42 Faithfulness Cases', desc: 'All syndrome-faithfulness cases passed in the verified v0.7.0 set.' },
+                    { label: ' GPU Batch Acceleration', desc: 'CUDA & OpenCL device pipelines for high-throughput batch decoding.' },
                   ].map((item) => (
                     <div key={item.label} className="p-4 bg-void/50 border border-gridline/50 rounded-xl">
                       <div className="text-cyan-300 font-semibold text-sm mb-1">{item.label}</div>
@@ -394,11 +395,11 @@ export default function Home() {
             <div ref={(el) => addRef(el, 9)}>
               <SectionHeader
                 eyebrow="Performance"
-                heading={<h2 className="text-3xl md:text-4xl font-bold">Head-to-Head Benchmarks</h2>}
+                heading={<h2 className="text-3xl md:text-4xl font-bold">Verified v0.7.0 Benchmarks</h2>}
               />
               <EvidenceBlock
-                title="Validation Report"
-                statement="Every figure below comes from the official Validation Report with reproducible artifacts on GitHub, including the full simulation code, seeds, and raw output."
+                title="Verified Benchmark Set"
+                statement="One set, four artifacts, fully reproducible: peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 benchmark points with zero unfaithful corrections, 42/42 syndrome-faithfulness cases, 13 MCP tools — measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13)."
                 href="https://github.com/GuillaumeLessard/qector-decoder"
                 linkLabel="GitHub Artifacts →"
                 className="max-w-3xl mx-auto mb-6"
@@ -409,28 +410,32 @@ export default function Home() {
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-gridline">
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Algorithm</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Code Distance</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">LER vs PyMatching</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Speed vs PyMatching</th>
+                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Code</th>
+                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">n</th>
+                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Decoder</th>
+                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Throughput (shots/s)</th>
+                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Unfaithful</th>
                     <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    { algo: 'QECTOR-Blossom (MWPM)', dist: 'd = 3 - 15', ler: 'Exact parity', speed: 'Validated', status: 'Validated' },
-                    { algo: 'Belief-Matching', dist: 'd = 5', ler: '\u221235.7% LER', speed: 'Slower, more accurate', status: 'Validated' },
-                    { algo: 'QECTOR-Blossom', dist: 'd = 9', ler: '98.3% optimal shots', speed: 'Validated', status: 'Validated' },
-                    { algo: 'GPU Batch Decoder', dist: 'Any', ler: 'Bit-identical to CPU', speed: 'Native CUDA / OpenCL', status: 'Available' },
+                    { code: 'repetition', n: '5', algo: 'FastUnionFind', tput: '11,540,387', status: 'Verified' },
+                    { code: 'repetition', n: '5', algo: 'UnionFind', tput: '11,462,979', status: 'Verified' },
+                    { code: 'repetition', n: '5', algo: 'Blossom', tput: '8,262,646', status: 'Verified' },
+                    { code: 'repetition', n: '9', algo: 'FastUnionFind', tput: '10,000,813', status: 'Verified' },
+                    { code: 'repetition', n: '17', algo: 'FastUnionFind', tput: '4,472,615', status: 'Verified' },
+                    { code: 'ring', n: '16', algo: 'FastUnionFind', tput: '7,687,193', status: 'Verified' },
                   ].map((row, i) => (
                     <tr key={i} className="border-b border-gridline/50 hover:bg-surface/50 transition-colors">
+                      <td className="py-4 px-4 text-primary font-mono text-sm">{row.code}</td>
+                      <td className="py-4 px-4 text-secondary text-sm">{row.n}</td>
                       <td className="py-4 px-4 text-primary font-semibold text-sm">{row.algo}</td>
-                      <td className="py-4 px-4 text-secondary text-sm">{row.dist}</td>
-                      <td className="py-4 px-4 text-green-400 font-semibold text-sm">{row.ler}</td>
-                      <td className="py-4 px-4 text-secondary text-sm">{row.speed}</td>
+                      <td className="py-4 px-4 text-green-400 font-mono font-semibold text-sm">{row.tput}</td>
+                      <td className="py-4 px-4 text-secondary text-sm">0</td>
                       <td className="py-4 px-4">
                         <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
-                          row.status === 'Validated'
+                          row.status === 'Verified'
                             ? 'bg-green-400/10 text-green-400 border border-green-400/20'
                             : 'bg-cyan-300/10 text-cyan-300 border border-cyan-300/20'
                         }`}>

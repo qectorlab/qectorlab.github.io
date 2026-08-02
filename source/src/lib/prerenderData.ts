@@ -54,7 +54,7 @@ const softwareNode = {
   '@type': 'SoftwareApplication',
   name: 'QECTOR Decoder v3',
   description:
-    'Production-grade poly-algorithmic quantum error correction decoder for Python with exact MWPM parity to PyMatching and measurable Belief-Matching accuracy gains on tested circuit-noise workloads.',
+    'Production-grade poly-algorithmic quantum error correction decoder for Python. Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Linux, macOS, Windows',
   programmingLanguage: 'Python',
@@ -131,33 +131,33 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding with exact MWPM parity to PyMatching and measurable Belief-Matching gains.',
+      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. 16 decoder classes, verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library of 20+ production and research quantum error correction decoders — MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, GPU batch and more — behind one consistent API, with exact logical-error-rate parity to PyMatching through distance 15.'
+          'QECTOR Decoder v3 is a Rust-core Python library of 16 production and research quantum error correction decoders — MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, GPU batch and more — behind one consistent API, with a verified v0.7.0 benchmark set.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
         ) +
-        h2('Validated claims, each linked to an artifact') +
+        h2('Verified v0.7.0 benchmark set') +
         ul([
-          'Exact LER parity with PyMatching from d=3 to d=15 (adaptive-k MWPM; Stim circuit-level noise).',
-          '+35.7% LER reduction with Belief-Matching vs plain MWPM at d=5 under depolarizing circuit noise (p=0.001).',
-          '100% syndrome faithfulness: every graph-like decoder satisfies H · correction ≡ syndrome (mod 2), d=3–19.',
-          'CUDA / OpenCL batch decoding bit-identical to CPU output; peak 13.5M shots/s on a GTX 1660 Ti (d=3).',
-          'PyMatching remains the latency leader for standard MWPM — QECTOR\u2019s value is multi-algorithm diversity, accuracy modes, and reproducibility.',
+          'Peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server).',
+          '54/54 benchmark points with zero unfaithful corrections (repetition n=5–65, ring n=16–48).',
+          '42/42 syndrome-faithfulness cases passed.',
+          '13 MCP tools operational (MCP stdio, JSON-RPC 2.0).',
+          'PyMatching is comparable and often slightly ahead on synchronized batch decoding — QECTOR\u2019s value is multi-algorithm diversity and reproducibility.',
         ]) +
         h2('The decoders') +
         p(
-          'UnionFind, FastUnionFind, Blossom MWPM, SparseBlossom, BeliefMatching, BP-OSD (qLDPC), BatchDecoder, CUDA and OpenCL batch decoders, AutoDecoder (7-tier fallback), plus research-stage Hybrid/Cascade, Predecoded, Lookup-Table, Sliding-Window, Streaming, and GNN Belief Matcher decoders.'
+          'UnionFind, FastUnionFind, Blossom MWPM, SparseBlossom, BeliefMatching, BP-OSD (qLDPC), batch decoders (CPU / CUDA / OpenCL), AutoDecoder (7-tier fallback), plus colour-code, two-stage and ambiguity-cluster decoders.'
         ) +
         h2('Evidence') +
         ul([
           `PyPI package: <a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3 ${DECODER_VERSION}</a>`,
           `Artifacts and reproduction harness: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
-          'Benchmark datasets: edge-hardware sweep (v0.6.8) and 105-run master report, published in the reproduction harness above.',
+          'Verified set (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) published at /benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn.',
         ])
     ),
     jsonLdExtra: [
@@ -170,26 +170,26 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 - 20+ production and research decoder families in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding.',
+      'QECTOR Decoder v3 - 16 decoder classes in a single Python library. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s, native GPU batch decoding.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 20+ decoder classes from exact MWPM to GPU batch. Exact parity with PyMatching through d=15. +35.7% accuracy gain with Belief-Matching. Stim-native, PyPI binary wheels, all benchmarks published on GitHub.'
+          'Rust-core Python library implementing 16 decoder classes from exact MWPM to GPU batch. Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
-        h2('Production decoders — validated') +
+        h2('Production decoders') +
         ul([
-          '<strong>BlossomDecoder</strong> — adaptive-k minimum-weight perfect matching; exact LER parity with PyMatching through d=15.',
-          '<strong>BeliefMatching</strong> — BP preprocessing + reweighted exact MWPM; +35.7% LER reduction at d=5, circuit-level noise.',
+          '<strong>BlossomDecoder</strong> — exact minimum-weight perfect matching for graph-like codes.',
+          '<strong>BeliefMatching</strong> — BP preprocessing + reweighted exact MWPM.',
           '<strong>BpOsdDecoder</strong> — belief propagation + ordered statistics decoding for qLDPC codes.',
           '<strong>UnionFindDecoder / FastUnionFindDecoder</strong> — near-linear approximate decoding; high-throughput option for graph-like codes.',
           '<strong>SparseBlossomDecoder</strong> — region-growing near-optimal matching.',
-          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — bit-identical to CPU, throughput scales with batch size.',
+          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — native GPU batch pipelines.',
           '<strong>AutoDecoder</strong> — 7-tier backend fallback (CUDA → OpenCL → CPU Rayon → CPU Batch → CPU Single → Blossom → Lookup/Python).',
         ]) +
         h2('Research-stage decoders') +
         ul([
-          'HybridDecoder', 'PredecodedDecoder', 'LookupTableDecoder', 'SlidingWindowDecoder', 'StreamingDecoder', 'GNNBeliefMatcher', 'GNNPredecoder', 'NeuralPredecoder', 'DecoderPool', 'LERBenchmark',
+          'HybridDecoder', 'PredecodedDecoder', 'ColourCodeDecoder', 'TwoStageDecoder', 'AmbiguityClusterDecoder', 'DecoderPool', 'LERBenchmark',
         ]) +
         h2('Technical specifications') +
         table(
@@ -211,51 +211,41 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/benchmarks',
     title: 'Benchmarks · QECTOR',
     description:
-      'Head-to-head benchmarks: QECTOR vs PyMatching. Exact MWPM parity, +35.7% Belief-Matching gain, 100% syndrome faithfulness. All simulation-validated with GitHub artifacts.',
-    heading: 'Head-to-Head Benchmarks',
+      'Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, 13 MCP tools. Four reproducible artifacts, apple-to-apple vs PyMatching.',
+    heading: 'Verified v0.7.0 Benchmarks',
     body: page(
-      h1('Head-to-Head Benchmarks') +
+      h1('Verified v0.7.0 Benchmarks') +
         p(
-          'Head-to-head against PyMatching on rotated surface codes using Stim circuit-level noise. Results are SHA-256 sealed and published on GitHub — run them yourself with the published harness.'
+          'One set, four artifacts, fully reproducible. Measured with the qector-decoder-v3 0.7.0 package MCP server on Linux (glibc 2.35, Python 3.12.13) at 2026-08-02T05:59:13Z. Published as benchmarks.csv, REPORT.md, summary.json, and VERIFIED_APPLE_TO_APPLE_REPORT.pdf.'
         ) +
-        h2('MWPM LER parity (circuit-level, p=0.001)') +
-        table(
-          ['Distance', 'QECTOR-Blossom LER', 'PyMatching LER', 'Result'],
-          [
-            ['d=3', '0.0117', '0.0117', 'exact match'],
-            ['d=5', '0.0079', '0.0079', 'exact match'],
-            ['d=7', '0.0051', '0.0050', 'exact match'],
-            ['d=9', '0.0030', '0.0031', 'exact match'],
-            ['d=11', '0.0018', '0.0018', 'exact match'],
-          ]
-        ) +
-        h2('Belief-Matching gain (d=5, p=0.001)') +
-        table(
-          ['Decoder', 'LER'],
-          [
-            ['Plain MWPM', '0.0088'],
-            ['QECTOR Belief-Matching', '0.0056 (+35.7% reduction)'],
-          ]
-        ) +
-        h2('Throughput and faithfulness') +
+        h2('Headline numbers') +
         ul([
-          'Peak CPU throughput: 5,212,664 shots/s (Blossom, d=3, 200k shots).',
-          'Peak CUDA throughput: 13,487,996 shots/s (GTX 1660 Ti, d=3 batch decoder), bit-identical to CPU.',
-          'Edge hardware (HP dual-core, 3.1 GB RAM): Union-Find sustains 1.62×10^5 shots/s at d=9 on the same box (workload-dependent; see artifact).',
-          'Faithfulness: H · c = s on 100% of shots for all 8 benchmarked decoders, d=3–19.',
-          'PyMatching remains the speed leader for standard MWPM latency on surface codes; QECTOR targets multi-algorithm diversity and reproducibility.',
+          'Peak throughput: 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, 8,000 samples).',
+          '54/54 benchmark points with zero unfaithful corrections (repetition n=5–65, ring n=16–48).',
+          '42/42 syndrome-faithfulness cases passed.',
+          '13 MCP tools operational (MCP stdio, JSON-RPC 2.0).',
         ]) +
-        h2('Datasets') +
+        h2('vs PyMatching — verified apple-to-apple') +
+        p(
+          'Synchronized CPU batch comparison: QECTOR is comparable to PyMatching; PyMatching is often slightly ahead on the synchronized batch. No speedup multiplier is claimed. The verified report is published as VERIFIED_APPLE_TO_APPLE_REPORT.pdf.'
+        ) +
+        h2('Withdrawn tables') +
+        p(
+          'Four pre-v0.7.0 comparison tables published in earlier documentation (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn. Do not cite them; no benchmark figures are published for this release beyond the verified set.'
+        ) +
+        h2('Run it yourself') +
+        pre(
+          `pip install "qector-decoder-v3==${DECODER_VERSION}[bench]"\nqector benchmark --verify\npython -m qector.validate`
+        ) +
         ul([
-          'Edge-hardware dataset (v0.6.8): exact PyMatching parity at p∈[0.002, 0.008], d∈{3,5,7,9}.',
-          'Benchmark dataset (v0.6.8 edge / 0.7.0 package): 1,858 timing measurements, 105 runs, 6 topologies.',
           `GitHub artifacts: <a href="${GITHUB_URL}" style="color:#67e8f9;">${GITHUB_URL.replace('https://', '')}</a>`,
+          'Artifacts also published at /benchmarks/v0.7.0/ (REPORT.md, summary.json, benchmarks.csv, PDF).',
         ])
     ),
     jsonLdExtra: [
       techArticleNode(
-        'QECTOR QEC Decoder Benchmarks & Validation Report',
-        'Verification of exact LER parity with PyMatching up to d=15 and +35.7% accuracy gains with Belief-Matching.'
+        'QECTOR Verified v0.7.0 Benchmark Set',
+        'Peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, 13 MCP tools; apple-to-apple vs PyMatching with no speedup multiplier claimed.'
       ),
     ],
   },
@@ -270,14 +260,13 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Every public claim is backed by a verifiable artifact: validation reports, benchmark data, SHA-256 manifests, and IBM hardware job IDs — archived with the decoder source on GitHub.'
         ) +
-        h2('Artifact index') +
+        h2('Verified v0.7.0 artifact set') +
         ul([
-          'Edge-hardware benchmark dataset (v0.6.8) — CC-BY-4.0.',
-          'Benchmark dataset (v0.6.8 edge / 0.7.0 package) — 1,858 timing measurements, 105 runs, 6 topologies.',
-          'MWPM LER parity validation — exact parity QECTOR-Blossom vs PyMatching, d=3 to d=15.',
-          'Belief-Matching gain report — +35.7% LER reduction at d=5, circuit-level noise.',
-          'GPU batch bit-identity — CUDA/OpenCL corrections byte-for-byte equal to CPU.',
-          'Optimal-shot analysis — 98.3% of shots achieve exact minimum-weight correction at d=9.',
+          'REPORT.md — v0.7.0 self-benchmark report (Linux glibc 2.35, Python 3.12.13): 13 MCP tools, 54 benchmark points, 0 unfaithful, 42/42 faithfulness cases.',
+          'summary.json — machine-readable benchmark summary (timestamp 2026-08-02T05:59:13Z).',
+          'benchmarks.csv — full 54-row sweep: repetition n=5–65 and ring n=16–48, six decoder kinds.',
+          'VERIFIED_APPLE_TO_APPLE_REPORT.pdf — synchronized vs PyMatching: comparable, PyMatching often slightly ahead on the batch; no speedup multiplier claimed.',
+          'Pre-v0.7.0 comparison tables (MWPM parity, Belief-Matching gain, GPU bit-identity, optimal-shot analysis) are formally withdrawn — do not cite them.',
         ]) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"\n\ngit clone ${GITHUB_URL}`
@@ -286,7 +275,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [
       techArticleNode(
         'QECTOR Evidence & Validation Reports',
-        'Index of reproducible artifacts: benchmark datasets, parity validations, and hardware execution logs.'
+        'Verified v0.7.0 artifact set: REPORT.md, summary.json, benchmarks.csv, and the apple-to-apple PyMatching PDF. Pre-v0.7.0 comparison tables formally withdrawn.'
       ),
     ],
   },
@@ -294,44 +283,34 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench v3.5.1 — Free cross-platform desktop GUI (Windows, Linux, macOS), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, FastAPI REST, dual CLI, and offline execution.',
-    heading: 'QECTOR Workbench v3.5.1',
+      'QECTOR Workbench v0.5.2 — Free cross-platform desktop GUI (Windows, Linux, macOS), 56 MCP tools, 16 decoders, 10 code families, visual circuit builder, FastAPI REST, dual CLI, and offline execution.',
+    heading: 'QECTOR Workbench v0.5.2',
     body: page(
-      h1('QECTOR Workbench v3.5.1') +
+      h1('QECTOR Workbench v0.5.2') +
         p(
-          'Free cross-platform desktop application (CustomTkinter GUI), 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.7.0). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
+          'Free cross-platform desktop application (CustomTkinter GUI), 56 MCP tools, 16 decoders, 10 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.7.0). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
         ) +
-        h2('13 Integrated Decoders &amp; Measured Benchmarks') +
-        table(
-          ['Decoder Kind', 'Throughput', 'p50 Latency', 'LER (d=5)', 'Compatibility'],
-          [
-            ['hybrid_cascade', '362,845 decodes/s', '2.60 µs', '0.10', 'Graphlike'],
-            ['fast_union_find', '349,895 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
-            ['lookup_table', '337,610 decodes/s', '2.40 µs', '0.10', 'Small (<20 checks)'],
-            ['union_find', '295,508 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
-            ['blossom', '261,917 decodes/s', '2.90 µs', '0.08', 'Universal (PyMatching Parity)'],
-            ['sparse_blossom', '146,757 decodes/s', '4.05 µs', '0.08', 'Graphlike'],
-            ['hybrid', '138,812 decodes/s', '4.10 µs', '0.08', 'Graphlike'],
-            ['predecoded', '82,850 decodes/s', '12.00 µs', '0.08', 'Graphlike'],
-            ['auto', '61,125 decodes/s', '13.60 µs', '0.10', 'Graphlike'],
-            ['bp_osd', '26,162 decodes/s', '34.75 µs', '0.10', 'Universal / qLDPC'],
-            ['gnn_belief_matching', '6,520 decodes/s', '147.15 µs', '0.08', 'Graphlike'],
-            ['belief_matching', '1,001 decodes/s', '988.05 µs', '0.02 (Best)', 'Universal'],
-            ['auto_router', '40 decodes/s', '25.45 ms', '0.08', 'Universal Policy Router'],
-          ]
-        ) +
-        h2('9 Quantum Code Families') +
+        h2('16 Integrated Decoders') +
         ul([
-          'repetition — 1D chain parity-check code (13 decoders).',
-          'ring — Periodic 1D chain (13 decoders).',
-          'rotated_surface — Standard rotated surface code (13 decoders).',
-          'unrotated_surface — Square lattice surface code (12 decoders).',
-          'toric — Toric code with periodic boundaries (12 decoders).',
-          'heavy_hex — IBM heavy-hex lattice (13 decoders).',
-          'hypergraph_product — CSS code from repetition seed (13 decoders).',
-          'bicycle — qLDPC bicycle code (13 decoders).',
-          'bivariate_bicycle — IBM bivariate bicycle presets (9 decoders).',
+          'hybrid_cascade', 'fast_union_find', 'lookup_table', 'union_find', 'blossom', 'sparse_blossom', 'hybrid', 'predecoded', 'auto', 'bp_osd', 'gnn_belief_matching', 'belief_matching', 'auto_router', 'colour_code', 'two_stage', 'ambiguity_cluster',
         ]) +
+        h2('10 Quantum Code Families') +
+        ul([
+          'repetition — 1D chain parity-check code.',
+          'ring — Periodic 1D chain.',
+          'rotated_surface — Standard rotated surface code.',
+          'unrotated_surface — Square lattice surface code.',
+          'toric — Toric code with periodic boundaries.',
+          'heavy_hex — IBM heavy-hex lattice.',
+          'hypergraph_product — CSS code from repetition seed.',
+          'bicycle — qLDPC bicycle code.',
+          'bivariate_bicycle — IBM bivariate bicycle presets.',
+          'color_code — triangular colour code.',
+        ]) +
+        h2('Benchmark policy') +
+        p(
+          'No benchmark figures are published for this release beyond the verified v0.7.0 set at /benchmarks (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf). The Workbench ships a benchmark harness so you can measure on your own hardware.'
+        ) +
         h2('Documentation &amp; reference') +
         ul([
           `User Manual &amp; Licensing — <a href="${SITE_URL}/manual" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/manual</a>`,
@@ -409,7 +388,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: a production-grade, honestly-benchmarked quantum error correction decoder for Python.'
         ) +
         ul([
-          'Every numeric claim is simulation-validated with Stim + PyMatching cross-validation and linked to a public artifact.',
+          'Every published number is part of the verified v0.7.0 artifact set and linked to a public artifact; pre-v0.7.0 comparison tables are formally withdrawn.',
           'IBM Quantum hardware runs are real but limited in scope; job IDs are published with the evidence.',
           'SATI CODEX / LCL-833 theoretical work is research context — the shipping product is the decoder and its workbench.',
         ]) +
@@ -420,12 +399,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/sati-os',
     title: 'SATI OS · Technology Integrated into QECTOR Workbench',
     description:
-      'SATI OS technology is integrated into QECTOR Workbench v3.5.1 and QECTOR Decoder v3. Explore the free desktop application.',
+      'SATI OS technology is integrated into QECTOR Workbench v0.5.2 and QECTOR Decoder v3. Explore the free desktop application.',
     heading: 'SATI OS Technology Integrated',
     body: page(
       h1('SATI OS → QECTOR Workbench') +
         p(
-          'SATI OS features are fully integrated into QECTOR Workbench v3.5.1 and QECTOR Decoder v3. The desktop GUI, 47 MCP tools, FastAPI REST engine, dual CLI, and decoder suite are available directly in the free QECTOR Workbench desktop application.'
+          'SATI OS features are fully integrated into QECTOR Workbench v0.5.2 and QECTOR Decoder v3. The desktop GUI, 56 MCP tools, FastAPI REST engine, dual CLI, and decoder suite are available directly in the free QECTOR Workbench desktop application.'
         ) +
         p('Explore the <a href="/workbench" style="color:#67e8f9;">QECTOR Workbench page</a>.')
     ),
@@ -434,21 +413,22 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/changelog',
     title: 'Changelog · QECTOR',
     description:
-      'Version history for QECTOR Decoder v3. Current release: v0.7.0. PyPI release train, feature additions, and validation milestones.',
+      'Version history for QECTOR Decoder v3. Current release: v0.7.0 with the verified benchmark set; pre-v0.7.0 comparison tables formally withdrawn. PyPI release train.',
     heading: 'Changelog',
     body: page(
       h1('Changelog') +
         h2('v0.7.0 — 2026-07-24 (current)') +
         ul([
-          'Production release with top-tier benchmark suite, hyper saturation suite, and Stripe live integration.',
-          'MCP Server integration (protocol 2024-11-05, qector-mcp) exposing 15+ decoder types.',
+          'Production release with benchmark suite, hyper saturation suite, and Stripe live integration.',
+          'MCP Server integration (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools.',
           '200-status route shells for all application routes and the /success checkout flow.',
+          'Verified benchmark set published: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s. Pre-v0.7.0 comparison tables formally withdrawn.',
         ]) +
         h2('v0.6.8 — 2026-07-22') +
         ul([
           'CUDA decoder row-identical to CPU Union-Find at d=3–19; faithfulness H·c = s on 100% of shots.',
-          'Benchmark release: 8 SVG charts, 20 JSON data files, full PDF report; peak 13.49M shots/s CUDA, 5.21M shots/s CPU.',
-          'Edge-hardware dataset published (v0.6.8).',
+          'Benchmark release: SVG charts, JSON data files, full PDF report; peak 13.49M shots/s CUDA, 5.21M shots/s CPU — withdrawn with the v0.7.0 verified set, do not cite.',
+          'Edge-hardware dataset published (v0.6.8) — withdrawn, do not cite.',
         ]) +
         h2('Earlier') +
         p('v0.5.x release train: GPU batch decoder, Belief-Matching configurable BP iterations, BP-OSD for qLDPC, sigstore-attested wheels, initial public PyPI release. Full history on the PyPI project page.')
@@ -503,7 +483,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           ['Decoder', 'Target code', 'Speed', 'Accuracy', 'Tier'],
           [
             ['Blossom (MWPM)', 'CSS, Surface', 'Fast (UF pre-match)', 'Exact optimal', 'Production'],
-            ['Belief-Matching', 'CSS, Surface', 'Moderate', 'Maximum (+35.7%)', 'Production'],
+            ['Belief-Matching', 'CSS, Surface', 'Moderate', 'High', 'Production'],
             ['BP-OSD', 'qLDPC, LDPC', 'Moderate', 'Optimal for qLDPC', 'Production'],
             ['Union-Find', 'Large surface', 'Near-linear O(N)', 'Approximate', 'Production'],
             ['GPU Batch', 'Any (batch)', 'High throughput', 'Identical to CPU', 'Production'],
@@ -527,7 +507,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Stable decoders') +
         p('UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder (7-tier fallback), DecoderPool, get_decoder, clear_decoder_cache, decode_mmap, DecodeResult, decode_with_diagnostics, Workbench.') +
         h2('Experimental / research decoders') +
-        p('HybridDecoder, HybridCascadeDecoder (full-feature / source build; public wheels may raise unavailable), PredecodedDecoder, LookupTableDecoder, SlidingWindowDecoder, StreamingDecoder, GNNBeliefMatcher, NeuralPredecoder, GNNPredecoder, GNNTrainer, LERBenchmark.') +
+        p('HybridDecoder, HybridCascadeDecoder (full-feature / source build; public wheels may raise unavailable), PredecodedDecoder, ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder, DecoderPool, LERBenchmark.') +
         h2('Utilities &amp; integration') +
         p('stim_compat.from_stim_detector_error_model, sinter_compat.qector_sinter_decoders, codes helpers, license.verify_license_token, run_mcp_server.') +
         pre(
@@ -601,12 +581,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/mcp-server',
     title: 'MCP Server · QECTOR Decoder v3',
     description:
-      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 15+ decoder types including Union-Find, Blossom MWPM, BP-OSD, batch and GNN belief matchers to any MCP client.',
+      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 13 verified tools across 16 decoder types to any MCP client.',
     heading: 'QECTOR MCP Server',
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (protocol 2024-11-05, qector-mcp) that exposes 15+ decoder types — Union-Find, Blossom MWPM, BP-OSD, batch and GPU decoders, GNN belief matchers — as JSON-RPC 2.0 tools to any MCP-compatible AI client.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 16 decoder types — decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder — to any MCP-compatible AI client. Verified in the v0.7.0 benchmark set: 42/42 faithfulness cases, 54/54 points with zero unfaithful corrections.'
         ) +
         pre(`pip install qector-decoder-v3==${DECODER_VERSION}\n# then register the qector-mcp server with your MCP client`)
     ),

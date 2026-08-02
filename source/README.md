@@ -1,6 +1,6 @@
 # QECTOR - qectorlab.github.io
 
-**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v3.5.0, see qector.store) under the qectorlab brand.**
+**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v0.5.2, see qector.store) under the qectorlab brand.**
 
 **Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
 
@@ -9,18 +9,20 @@
 ## Quick Start
 ```bash
 pip install qector-decoder-v3
-# Free GUI v3.5.0: https://qector.store
+# Free GUI v0.5.2: https://qector.store
 ```
 
 ## Key Claims + Evidence (all on GitHub)
-- Exact MWPM parity with PyMatching through d=15
-- +35.7% LER reduction with Belief-Matching at d=5
-- GPU batch (CUDA/OpenCL) bit-identical to CPU
+- Verified benchmark set v0.7.0: 54/54 points, 0 unfaithful (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf)
+- Peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, 8,000 samples) on the package MCP server
+- 42/42 syndrome-faithfulness cases passed; 13 MCP tools operational
+- Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on synchronized batch — no speedup multiplier claimed
 - BP-OSD for qLDPC
 - Hypergraph-safe Union-Find (recent releases)
 - Full Stim + Sinter + PyMatching compatible
+- Pre-v0.7.0 comparison tables are formally withdrawn (do not cite them); the benchmark harness ships with the package (`qector benchmark --verify`)
 
-Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (e.g. stim_ler_d13_d15.json, full harness)
+Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (benchmarks under `benchmarks/v0.7.0/`, full harness)
 
 ## Commercial
 Source-Available (PolyForm Noncommercial for non-comm). Commercial use requires license.
@@ -105,7 +107,7 @@ When adding new interactive UI, match these patterns: real semantics over ARIA w
 
 ## Content & claims policy
 
-Numbers used across the site (exact MWPM parity to d=15, +35.7% Belief-Matching LER reduction, 98.3% optimal shots at d=9, 832/832 tests) are simulation-validated with reproducible artifacts in the decoder repository. Do not edit these figures without updating the underlying validation report - the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
+Numbers used across the site (verified benchmark set: 54/54 points with 0 unfaithful, peak 11,540,387 shots/s, 42/42 faithfulness cases, 13 MCP tools) are from the verified v0.7.0 release artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) and the v0.7.0 user manual. Pre-v0.7.0 comparison tables are formally withdrawn — do not cite them. Do not edit these figures without updating the underlying verified artifacts - the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
 
 ## Deployment
 

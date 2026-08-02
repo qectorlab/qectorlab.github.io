@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 20+ production and research decoder families in a single Python library. Exact MWPM parity to PyMatching, measurable accuracy gains, native GPU batch decoding."
+        description="QECTOR Decoder v3 - 16 decoder classes in a single Python library. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s, native GPU batch decoding."
       />
       <JsonLd
         data={{
@@ -54,15 +54,15 @@ export default function Decoder() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse-dot" />
-            v{pypiVersion} (Source-Available) · New Free Workbench GUI v3.5.0 (CustomTkinter + 25 MCP tools)
+            v{pypiVersion} (Source-Available) · New Free Workbench GUI v0.5.2 (CustomTkinter + 56 MCP tools)
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Rust-core Python library implementing 20+ decoder classes from exact MWPM to GPU batch.
-            Exact parity with PyMatching through d=15. +35.7% accuracy gain with Belief-Matching.
-            Stim-native. PyPI binary wheels. All benchmarks published on{' '}
+            Rust-core Python library implementing 16 decoder classes from exact MWPM to GPU batch.
+            Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.
+            Stim-native. PyPI binary wheels. All artifacts published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -78,9 +78,9 @@ export default function Decoder() {
           {/* Core Metrics */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Exact Parity', value: 'd=3-15', desc: 'MWPM LER matches PyMatching across all tested distances' },
-              { label: '+35.7% Gain', value: 'Belief-Match', desc: 'LER reduction vs PyMatching at d=5, circuit-level noise' },
-              { label: '98.3% Optimal', value: 'd=9', desc: 'Shots achieving exact minimum-weight correction' },
+              { label: 'Verified Points', value: '54/54', desc: 'Benchmark sweep points with zero unfaithful corrections (repetition n=5–65, ring n=16–48)' },
+              { label: 'Peak Throughput', value: '11.5M/s', desc: 'FastUnionFind, 5-qubit repetition code, package MCP server' },
+              { label: 'Faithfulness', value: '42/42', desc: 'Syndrome-faithfulness cases passed in the verified v0.7.0 set' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} desc={m.desc} centered />
@@ -93,20 +93,20 @@ export default function Decoder() {
               align="left"
               maxWidth="max-w-none"
               heading="Decoding Algorithms"
-              description="Production decoders are validated against PyMatching with artifacts on GitHub. Experimental decoders are research-stage."
+              description="Production decoders with a verified v0.7.0 benchmark set; artifacts on GitHub. Experimental decoders are research-stage."
               className="mb-6"
             />
 
             {/* Production */}
-            <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production - Validated</h3>
+            <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
-                { name: 'Blossom MWPM', tag: 'Exact', color: 'gold', desc: 'Adaptive-k minimum-weight perfect matching. Exact LER parity with PyMatching through d=15. The reference decoder for surface codes.' },
-                { name: 'Belief Matching', tag: 'Best LER', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. +35.7% LER reduction vs plain MWPM at d=5. Use when accuracy matters more than latency.' },
+                { name: 'Blossom MWPM', tag: 'Exact', color: 'gold', desc: 'Exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.' },
+                { name: 'Belief Matching', tag: 'Accuracy', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. Use when accuracy matters more than latency.' },
                 { name: 'BP-OSD', tag: 'qLDPC', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. Required for qLDPC codes where matching decoders cannot be applied.' },
                 { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes - trades some LER accuracy for speed.' },
                 { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for ring-like detector graphs. Lower latency than exact Blossom, close to optimal.' },
-                { name: 'GPU Batch', tag: 'Parallel', color: 'gold', desc: 'Native CUDA/OpenCL batch decoding. Bit-identical corrections to CPU MWPM. Throughput advantage grows with batch size.' },
+                { name: 'GPU Batch', tag: 'Parallel', color: 'gold', desc: 'Native CUDA/OpenCL batch decoding. Throughput advantage grows with batch size.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}
@@ -124,9 +124,9 @@ export default function Decoder() {
                 { name: 'Hybrid Decoder', desc: 'HybridDecoder routes between Union-Find and Blossom based on code properties. Research-stage.' },
                 { name: 'Predecoded Decoder', desc: 'Wraps pre-existing decoding results for integration into QECTOR pipelines. Useful for hybrid workflows.' },
                 { name: 'Lookup-Table Decoder', desc: 'Precomputed correction table for small codes or syndrome subspaces. Fast but limited to small distances.' },
-                { name: 'Sliding Window', desc: 'Sliding-window variant for streaming syndrome data. Trade-offs between latency and accuracy under investigation.' },
-                { name: 'Streaming Decoder', desc: 'Continuous syndrome-stream decoding for real-time feedback loops. Latency-optimized under test.' },
-                { name: 'GNN Belief Matcher', desc: 'Graph neural network enhanced belief propagation. Research benchmarking only — not validated for production.' },
+                { name: 'Colour Code Decoder', desc: 'Native colour-code decoder over undecomposed detector error models. Research-stage.' },
+                { name: 'Two-Stage Decoder', desc: 'Two-stage decoding pipeline for degenerate codes. Research-stage.' },
+                { name: 'Ambiguity Cluster', desc: 'Ambiguity-cluster resolution decoder. Research-stage.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}
@@ -164,7 +164,7 @@ export default function Decoder() {
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="All benchmark claims are simulation-validated using Stim + PyMatching cross-validation. Reproducible artifacts are on GitHub. Exact parity through d=15, full Stim integration."
+              statement="Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s. Reproducible artifacts are on GitHub and at qector.store/benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn."
               href="https://github.com/GuillaumeLessard/qector-decoder"
               linkLabel="GitHub Artifacts &amp; Harness →"
             />

@@ -14,10 +14,45 @@ import CodeBlock from '../components/CodeBlock';
 const TOOLS = [
   {
     name: 'decode_syndrome',
-    desc: 'Decode a quantum error correction syndrome using any of 15+ supported decoder types: UnionFind, FastUnionFind, Blossom, SparseBlossom, BPOSD, Batch, LookupTable, Predecoded, Hybrid, Auto, SlidingWindow, Streaming, NeuralPredecoder, GNNPredecoder, GNNBeliefMatcher.',
+    desc: 'Decode a quantum error correction syndrome using any of 16 supported decoder types: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade, gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code.',
     required: ['check_to_qubits', 'syndrome'],
     optional: ['n_qubits', 'decoder_type', 'error_rate'],
     returns: 'correction (binary array matching n_qubits)',
+  },
+  {
+    name: 'batch_decode',
+    desc: 'Decode many syndromes in one call over the chosen batch backend (cpu / cuda / opencl).',
+    required: ['family', 'distance'],
+    optional: ['decoder_name', 'error_rate', 'backend', 'seed', 'n_shots'],
+    returns: 'batch correction results and per-shot status',
+  },
+  {
+    name: 'decode_hyperedge',
+    desc: 'Decode a syndrome against a raw hyperedge check matrix using Blossom / SparseBlossom / BP-OSD / Auto.',
+    required: ['check_matrix', 'syndrome'],
+    optional: ['decoder_type', 'error_rate'],
+    returns: 'correction (binary array)',
+  },
+  {
+    name: 'decode_syndrome_blossom',
+    desc: 'Exact Blossom MWPM decode of a graph-like syndrome.',
+    required: ['check_to_qubits', 'syndrome'],
+    optional: ['n_qubits'],
+    returns: 'correction (binary array)',
+  },
+  {
+    name: 'batch_decode_blossom',
+    desc: 'Batch exact Blossom MWPM decoding with per-shot results.',
+    required: ['family', 'distance'],
+    optional: ['error_rate', 'seed', 'n_shots'],
+    returns: 'batch correction results',
+  },
+  {
+    name: 'decode_syndrome_cascade',
+    desc: 'Cascade decode: Union-Find first, escalate to Blossom/BP-OSD only when needed.',
+    required: ['check_to_qubits', 'syndrome'],
+    optional: ['n_qubits', 'error_rate', 'use_bposd'],
+    returns: 'correction and escalation path report',
   },
   {
     name: 'benchmark_decoder',
@@ -27,11 +62,46 @@ const TOOLS = [
     returns: 'latency percentiles, throughput, version, timestamp',
   },
   {
+    name: 'run_ler_benchmark',
+    desc: 'Run a logical-error-rate (LER) benchmark on a code family. Cross-noise-model rows are rejected by ler.assert_comparable.',
+    required: ['family', 'distance', 'error_rate'],
+    optional: ['decoder_name', 'n_shots', 'seed'],
+    returns: 'logical error rate estimate with confidence data',
+  },
+  {
     name: 'get_decoder_info',
     desc: 'Report system version (v0.7.0), available decoder types, and compiled capabilities.',
     required: [],
     optional: [],
     returns: 'version ("0.7.0"), decoder_types, capabilities',
+  },
+  {
+    name: 'get_backend_health',
+    desc: 'Probe cpu / cuda / opencl backends and report availability plus probed device details.',
+    required: [],
+    optional: ['backend'],
+    returns: 'health status per backend',
+  },
+  {
+    name: 'clear_decoder_cache',
+    desc: 'Clear the internal decoder instance cache (frees native memory).',
+    required: [],
+    optional: [],
+    returns: 'cleared count',
+  },
+  {
+    name: 'get_server_env',
+    desc: 'Report the MCP server runtime environment (OS, Python version, package version).',
+    required: [],
+    optional: [],
+    returns: 'runtime environment summary',
+  },
+  {
+    name: 'recommend_decoder',
+    desc: 'Recommend a decoder for a code family based on the compatibility matrix and priority (balanced / speed / accuracy).',
+    required: ['family'],
+    optional: ['distance', 'priority'],
+    returns: 'recommended decoder and rationale',
   },
 ];
 
@@ -75,7 +145,7 @@ export default function McpServer() {
     <>
       <SEO
         title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 15+ decoder types including Union-Find, Blossom MWPM, BP-OSD, batch and GNN belief matchers to any MCP client."
+        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 16 decoder types. 42/42 faithfulness cases, 54/54 benchmark points with zero unfaithful corrections."
       />
       <JsonLd
         data={{
@@ -101,8 +171,8 @@ export default function McpServer() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Give any MCP-capable assistant direct access to production quantum error
-            correction. Seven tools covering Union-Find, exact Blossom MWPM, hybrid
-            cascade decoding and benchmarking — decoding runs in native Rust, not in
+            correction. Thirteen verified tools covering Union-Find, exact Blossom MWPM,
+            BP-OSD, cascade decoding and benchmarking — decoding runs in native Rust, not in
             the model.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -158,7 +228,7 @@ export default function McpServer() {
           <div>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Tools</h2>
             <p className="text-secondary text-sm mb-6">
-              Seven tools, returned verbatim by <code className="text-cyan-300">tools/list</code>.
+              13 tools, returned verbatim by <code className="text-cyan-300">tools/list</code>.
             </p>
             <div className="space-y-4">
               {TOOLS.map((t) => (
@@ -223,9 +293,10 @@ export default function McpServer() {
                 For raw hyperedge check matrices (such as <code className="text-cyan-300">generate_surface_code_checks</code> where qubit participation &gt; 2), use the direct Python API (<code className="text-cyan-300">BlossomDecoder</code>, <code className="text-cyan-300">SparseBlossomDecoder</code>, <code className="text-cyan-300">BpOsdDecoder</code>, or <code className="text-cyan-300">AutoDecoder</code>) or decompose Stim circuit errors into a graph-like DEM via <code className="text-cyan-300">decompose_errors=True</code>.
               </li>
               <li>
-                <strong className="text-primary">Syndrome Faithfulness &amp; Real Benchmark Sweep.</strong>{' '}
-                Verified 100% syndrome-faithful across all tested distances d=3–19. Explore the raw trial data in the{' '}
-                <a href="/json/benchmarks/mcp_sweep_v0.7.0.json" target="_blank" className="text-cyan-300 hover:underline">v0.7.0 MCP Sweep Dataset (JSON)</a>.
+                <strong className="text-primary">Verified v0.7.0 Benchmark Set.</strong>{' '}
+                Verified with the package MCP server on Linux (glibc 2.35, Python 3.12.13): 42/42 syndrome-faithfulness cases passed, 54/54 benchmark points with zero unfaithful corrections, peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code). Explore the four artifacts in the{' '}
+                <Link to="/benchmarks" className="text-cyan-300 hover:underline">verified benchmark set</Link>{' '}
+                or run <code className="text-cyan-300">qector benchmark --verify</code> / <code className="text-cyan-300">python -m qector.validate</code> yourself.
               </li>
               <li>
                 <strong className="text-primary">Licensing.</strong> Academic and personal

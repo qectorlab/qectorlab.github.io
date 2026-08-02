@@ -21,7 +21,7 @@ export default function TechnicalReference() {
     {
       name: 'BlossomDecoder',
       signature: 'BlossomDecoder(dem: stim.DetectorErrorModel, *, adaptive_k: bool = True, timeout: Optional[float] = None)',
-      desc: 'Minimum-weight perfect matching (MWPM) decoder for CSS stabilizer codes. Uses an exact matching solver to pair syndrome checks. Matches PyMatching LER output exactly through distance 15.',
+      desc: 'Minimum-weight perfect matching (MWPM) decoder for CSS stabilizer codes. Uses an exact matching solver to pair syndrome checks.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'adaptive_k', type: 'bool', default: 'True', desc: 'Enable Union-Find pre-filtering to compress graph' },
@@ -34,7 +34,7 @@ correction = decoder.decode(syndrome)`
     {
       name: 'BeliefMatchingDecoder',
       signature: 'BeliefMatchingDecoder(dem: stim.DetectorErrorModel, *, bp_iters: int = 30, max_paths: int = 10, bp_method: str = "product_sum")',
-      desc: 'Top-tier accuracy decoder. Uses Belief Propagation (BP) preprocessing to compute edge probabilities, and then matches on a reweighted Blossom matching graph. Achieved +35.7% LER reduction vs plain MWPM at d=5 under circuit-level depolarizing noise in published artifacts.',
+      desc: 'Top-tier accuracy decoder. Uses Belief Propagation (BP) preprocessing to compute edge probabilities, and then matches on a reweighted Blossom matching graph. Use when accuracy matters more than latency.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'bp_iters', type: 'int', default: '30', desc: 'Max iterations for Belief Propagation' },
@@ -85,7 +85,7 @@ corrections = decoder.decode_batch(syndromes_matrix)`
     {
       name: 'GpuBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder',
       signature: 'CUDABatchDecoder(dem: stim.DetectorErrorModel, *, batch_size: int = 2048)',
-      desc: 'Native GPU batch decoders. Implements CUDA and OpenCL device pipelines to solve thousands of syndromes in parallel. Bit-identical to CPU MWPM output. Check availability with CUDABatchDecoder.is_available().',
+      desc: 'Native GPU batch decoders. Implements CUDA and OpenCL device pipelines to solve thousands of syndromes in parallel. Check availability with CUDABatchDecoder.is_available().',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'batch_size', type: 'int', default: '2048', desc: 'Parallel batch sizing in GPU VRAM' },
@@ -185,20 +185,19 @@ decoder = qd.HybridDecoder(dem)`
 decoder = qd.LookupTableDecoder(H_matrix)`
     },
     {
-      name: 'SlidingWindowDecoder & StreamingDecoder',
-      signature: 'StreamingDecoder(dem: stim.DetectorErrorModel, window_size: int = 5)',
-      desc: 'Experimental decoders designed for real-time streaming syndrome data across sliding temporal measurement windows.',
+      name: 'ColourCodeDecoder, TwoStageDecoder & AmbiguityClusterDecoder',
+      signature: 'ColourCodeDecoder(dem: stim.DetectorErrorModel)',
+      desc: 'Research decoders: native colour-code decoding over undecomposed detector error models (color_code family), two-stage decoding pipelines, and ambiguity-cluster resolution.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model' },
-        { name: 'window_size', type: 'int', default: '5', desc: 'Number of measurement rounds per window' },
       ],
       example: `import qector_decoder_v3 as qd
-decoder = qd.StreamingDecoder(dem, window_size=5)`
+decoder = qd.ColourCodeDecoder(dem)`
     },
     {
-      name: 'GNNBeliefMatcher & NeuralPredecoder & GNNTrainer',
+      name: 'GNNBeliefMatcher',
       signature: 'GNNBeliefMatcher(dem: stim.DetectorErrorModel, model_path: str)',
-      desc: 'Research-stage graph neural network modules for learning error graph edge weights and neural pre-decoding. Not validated for production use.',
+      desc: 'Research-stage graph neural network enhanced belief propagation module. Not validated for production use.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model' },
         { name: 'model_path', type: 'str', default: 'Required', desc: 'Path to trained GNN weights file' },

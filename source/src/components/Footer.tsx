@@ -9,7 +9,7 @@ interface LinkItem {
 
 const productLinks: LinkItem[] = [
   { label: 'Decoder v3', href: '/decoder' },
-  { label: 'Workbench v3.5.1', href: '/workbench' },
+  { label: 'Workbench v0.5.2', href: '/workbench' },
   { label: 'MCP Server', href: '/mcp-server' },
   { label: 'Evidence & Reports', href: '/evidence' },
   { label: 'Changelog', href: '/changelog' },
@@ -77,13 +77,13 @@ export default function Footer() {
                 QECTOR
               </Link>
               <p className="text-secondary text-sm leading-relaxed max-w-sm mb-6">
-                QECTOR Decoder v3 under the qectorlab brand. Exact MWPM parity with PyMatching through d=15. +35.7% LER reduction with Belief-Matching. All benchmarks and artifacts on GitHub.
+                QECTOR Decoder v3 under the qectorlab brand. Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases. Artifacts on GitHub.
               </p>
               <p className="text-xs text-muted-foreground">Created by Guillaume Lessard (ORCID) / iD01t Productions</p>
               <div className="flex flex-wrap gap-2">
                 {[
                   { icon: '📋', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
-                  { icon: '📦', label: `PyPI v${pypiVersion} + Workbench v3.5.1`, href: 'https://pypi.org/project/qector-decoder-v3/' },
+                  { icon: '📦', label: `PyPI v${pypiVersion} + Workbench v0.5.2`, href: 'https://pypi.org/project/qector-decoder-v3/' },
                   { icon: '📖', label: 'Mastering QEC', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ' },
                   { icon: '🆔', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
                 ].map((pill) => (

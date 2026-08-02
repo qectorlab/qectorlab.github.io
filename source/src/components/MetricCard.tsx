@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 type MetricCardVariant = 'default' | 'gold' | 'compact';
 
 interface MetricCardProps {
-  /** Short label/headline for the metric, e.g. "+35.7% Advantage" */
+  /** Short label/headline for the metric, e.g. "Peak Throughput" */
   label: string;
-  /** Optional large prominent value shown between label and desc, e.g. "d=3-15" */
+  /** Optional large prominent value shown between label and desc, e.g. "11.5M/s" */
   value?: string;
   /** Supporting explanation, one to two sentences */
   desc: string;

@@ -7,6 +7,10 @@ QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction
 - https://qector.store/
 - https://qector.store/decoder
 - https://qector.store/benchmarks
+- https://qector.store/benchmarks/v0.7.0/REPORT.md
+- https://qector.store/benchmarks/v0.7.0/summary.json
+- https://qector.store/benchmarks/v0.7.0/benchmarks.csv
+- https://qector.store/benchmarks/v0.7.0/VERIFIED_APPLE_TO_APPLE_REPORT.pdf
 - https://qector.store/evidence
 - https://qector.store/workbench
 - https://qector.store/pricing
@@ -36,3 +40,19 @@ pip install qector-decoder-v3==0.7.0
 ## Verification Command
 
 python -c "import qector_decoder_v3 as qd; print(qd.__version__)"
+
+## Benchmark Policy (v0.7.0)
+
+The only citable benchmark figures are the verified v0.7.0 artifacts at /benchmarks/v0.7.0/: REPORT.md, summary.json, benchmarks.csv (54 rows, zero unfaithful corrections), and VERIFIED_APPLE_TO_APPLE_REPORT.pdf. Peak throughput 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server); 42/42 syndrome-faithfulness cases; 13 MCP tools. Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on the synchronized batch — no speedup multiplier claimed. Pre-v0.7.0 comparison tables are formally withdrawn.
+
+## Verified Tools (MCP, 13)
+
+decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder.
+
+## Decoders & Families
+
+16 decoder kinds: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade, gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code. 10 code families: repetition, ring, rotated_surface, unrotated_surface, toric, heavy_hex, hypergraph_product, bicycle, bivariate_bicycle, color_code.
+
+## Workbench App
+
+QECTOR Workbench v0.5.2: free cross-platform GUI (Windows, Linux, macOS), 56 MCP tools, 16 decoders, 10 code families, offline operation. GitHub: https://github.com/qectorlab/qector-decoder-workbench/releases/

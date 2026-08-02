@@ -39,43 +39,47 @@ export default function Workbench() {
   };
 
   const decodersList = [
-    { kind: 'hybrid_cascade', tput: '362,845 decodes/s', lat: '2.60 µs', ler: '0.10', type: 'Graphlike', desc: 'Union-Find pre-filter + Blossom/BP-OSD escalation.' },
-    { kind: 'fast_union_find', tput: '349,895 decodes/s', lat: '2.40 µs', ler: '0.10', type: 'Graphlike', desc: 'Ultra-fast approximate Union-Find variant.' },
-    { kind: 'lookup_table', tput: '337,610 decodes/s', lat: '2.40 µs', ler: '0.10', type: 'Small (<20 checks)', desc: 'Exhaustive syndrome lookup table.' },
-    { kind: 'union_find', tput: '295,508 decodes/s', lat: '2.40 µs', ler: '0.10', type: 'Graphlike', desc: 'Standard cluster-growth Union-Find decoder.' },
-    { kind: 'blossom', tput: '261,917 decodes/s', lat: '2.90 µs', ler: '0.08', type: 'Universal', desc: 'Weight-optimal exact MWPM matching (PyMatching LER parity).' },
-    { kind: 'sparse_blossom', tput: '146,757 decodes/s', lat: '4.05 µs', ler: '0.08', type: 'Graphlike', desc: 'Region-growing blossom variant for sparse error graphs.' },
-    { kind: 'hybrid', tput: '138,812 decodes/s', lat: '4.10 µs', ler: '0.08', type: 'Graphlike', desc: 'Multi-strategy adaptive solver.' },
-    { kind: 'predecoded', tput: '82,850 decodes/s', lat: '12.00 µs', ler: '0.08', type: 'Graphlike', desc: 'Fast pre-decoding pass prior to matching.' },
-    { kind: 'auto', tput: '61,125 decodes/s', lat: '13.60 µs', ler: '0.10', type: 'Graphlike', desc: 'Self-selecting 7-tier heuristic selector.' },
-    { kind: 'bp_osd', tput: '26,162 decodes/s', lat: '34.75 µs', ler: '0.10', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered statistics decoding.' },
-    { kind: 'gnn_belief_matching', tput: '6,520 decodes/s', lat: '147.15 µs', ler: '0.08', type: 'Graphlike', desc: 'GNN-guided edge-weighted matching with fallback.' },
-    { kind: 'belief_matching', tput: '1,001 decodes/s', lat: '988.05 µs', ler: '0.02 (Best)', type: 'Universal', desc: 'BP posteriors reweight Blossom matching (+35.7% accuracy gain).' },
-    { kind: 'auto_router', tput: '40 decodes/s', lat: '25.45 ms', ler: '0.08', type: 'Universal', desc: 'Policy router: matching for graphlike, BP-OSD for qLDPC.' },
+    { kind: 'hybrid_cascade', type: 'Graphlike', desc: 'Union-Find pre-filter + Blossom/BP-OSD escalation.' },
+    { kind: 'fast_union_find', type: 'Graphlike', desc: 'Ultra-fast approximate Union-Find variant.' },
+    { kind: 'lookup_table', type: 'Small (<20 checks)', desc: 'Exhaustive syndrome lookup table.' },
+    { kind: 'union_find', type: 'Graphlike', desc: 'Standard cluster-growth Union-Find decoder.' },
+    { kind: 'blossom', type: 'Universal', desc: 'Weight-optimal exact MWPM matching.' },
+    { kind: 'sparse_blossom', type: 'Graphlike', desc: 'Region-growing blossom variant for sparse error graphs.' },
+    { kind: 'hybrid', type: 'Graphlike', desc: 'Multi-strategy adaptive solver.' },
+    { kind: 'predecoded', type: 'Graphlike', desc: 'Fast pre-decoding pass prior to matching.' },
+    { kind: 'auto', type: 'Graphlike', desc: 'Self-selecting 7-tier heuristic selector.' },
+    { kind: 'bp_osd', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered statistics decoding.' },
+    { kind: 'gnn_belief_matching', type: 'Graphlike', desc: 'GNN-guided edge-weighted matching with fallback.' },
+    { kind: 'belief_matching', type: 'Universal', desc: 'BP posteriors reweight Blossom matching.' },
+    { kind: 'auto_router', type: 'Universal', desc: 'Policy router: matching for graphlike, BP-OSD for qLDPC.' },
+    { kind: 'colour_code', type: 'Triangular colour code', desc: 'Colour-code decoder for triangular colour lattices.' },
+    { kind: 'two_stage', type: 'Graphlike', desc: 'Two-stage decoding pipeline.' },
+    { kind: 'ambiguity_cluster', type: 'Graphlike', desc: 'Ambiguity-cluster resolution decoder.' },
   ];
 
   const codeFamilies = [
-    { name: 'repetition', params: 'distance (int)', decoders: '13 / 13', desc: '1D chain parity-check code.' },
-    { name: 'ring', params: 'distance (int)', decoders: '13 / 13', desc: 'Periodic 1D chain.' },
-    { name: 'rotated_surface', params: 'distance (int)', decoders: '13 / 13', desc: 'Standard rotated surface code.' },
-    { name: 'unrotated_surface', params: 'distance (int)', decoders: '12 / 13', desc: 'Square lattice surface code.' },
-    { name: 'toric', params: 'distance (int)', decoders: '12 / 13', desc: 'Toric code with periodic boundaries.' },
-    { name: 'heavy_hex', params: 'distance (int)', decoders: '13 / 13', desc: 'IBM heavy-hex lattice.' },
-    { name: 'hypergraph_product', params: 'distance (int)', decoders: '13 / 13', desc: 'CSS code from repetition seed.' },
-    { name: 'bicycle', params: 'circulant size (int)', decoders: '13 / 13', desc: 'qLDPC bicycle code.' },
-    { name: 'bivariate_bicycle', params: 'preset index (int)', decoders: '9 / 13', desc: 'IBM bivariate bicycle presets (qLDPC).' },
+    { name: 'repetition', params: 'distance (int)', decoders: '16 / 16', desc: '1D chain parity-check code.' },
+    { name: 'ring', params: 'distance (int)', decoders: '16 / 16', desc: 'Periodic 1D chain.' },
+    { name: 'rotated_surface', params: 'distance (int)', decoders: '16 / 16', desc: 'Standard rotated surface code.' },
+    { name: 'unrotated_surface', params: 'distance (int)', decoders: '15 / 16', desc: 'Square lattice surface code (lookup_table refused >20 checks).' },
+    { name: 'toric', params: 'distance (int)', decoders: '15 / 16', desc: 'Toric code with periodic boundaries.' },
+    { name: 'heavy_hex', params: 'distance (int)', decoders: '16 / 16', desc: 'IBM heavy-hex lattice.' },
+    { name: 'hypergraph_product', params: 'distance (int)', decoders: '16 / 16', desc: 'CSS code from repetition seed.' },
+    { name: 'bicycle', params: 'circulant size (int)', decoders: '16 / 16', desc: 'qLDPC bicycle code.' },
+    { name: 'bivariate_bicycle', params: 'preset index (int)', decoders: '13 / 16', desc: 'IBM bivariate bicycle presets (qLDPC).' },
+    { name: 'color_code', params: 'triangular size (int)', decoders: '5 / 16', desc: 'Triangular & 2D 4.8.8 colour codes.' },
   ];
 
   return (
     <>
       <SEO
-        title="QECTOR Workbench v3.5.1 · 47 MCP Tools · 13 Decoders · 9 Code Families"
-        description="QECTOR Workbench v3.5.1 — Free cross-platform desktop GUI & MCP server for QECTOR Decoder v3. 47 MCP tools, 13 decoders, 9 code families, visual circuit builder, and 362k decodes/s throughput."
+        title="QECTOR Workbench v0.5.2 · 56 MCP Tools · 16 Decoders · 10 Code Families"
+        description="QECTOR Workbench v0.5.2 — Free cross-platform desktop GUI & MCP server for QECTOR Decoder v3. 56 MCP tools, 16 decoders, 10 code families, visual circuit builder, and offline execution."
       />
 
       {/* Top Notice */}
       <div className="bg-emerald-950/50 border-b border-emerald-500/30 py-2.5 text-center text-sm px-4">
-        <span className="text-emerald-400 font-semibold">Free Desktop Application:</span> QECTOR Workbench v3.5.1 (CustomTkinter GUI + 47 MCP Tools) —{' '}
+        <span className="text-emerald-400 font-semibold">Free Desktop Application:</span> QECTOR Workbench v0.5.2 (CustomTkinter GUI + 56 MCP Tools) —{' '}
         <a
           href="https://github.com/qectorlab/qector-decoder-workbench/releases/"
           className="underline hover:text-emerald-300 transition-colors"
@@ -91,15 +95,15 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            Workbench 3.5.1 · Backend qector_decoder_v3 {pypiVersion || '0.7.0'} · 47 MCP Tools
+            Workbench 0.5.2 · Backend qector_decoder_v3 {pypiVersion || '0.7.0'} · 56 MCP Tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-            <NeuralReveal text="QECTOR Workbench v3.5.1" className="text-4xl md:text-6xl font-extrabold" />
+            <NeuralReveal text="QECTOR Workbench v0.5.2" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free cross-platform desktop application (Windows, Linux, macOS) and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.
-            Includes 13 decoders, 9 quantum code families, visual circuit builder, 47 AI model tools, REST engine, and dual CLI.
+            Includes 16 decoders, 10 quantum code families, visual circuit builder, 56 AI model tools, REST engine, and dual CLI.
             On first launch, it automatically installs <code className="text-cyan-300">qector-decoder-v3</code> from PyPI, operating 100% offline afterwards.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -124,10 +128,10 @@ export default function Workbench() {
           {/* Stats Grid */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: 'v3.5.1', label: 'Workbench Release' },
-              { value: '47', label: 'MCP Server Tools' },
-              { value: '13', label: 'Decoder Algorithms' },
-              { value: '9', label: 'Quantum Code Families' },
+              { value: 'v0.5.2', label: 'Workbench Release' },
+              { value: '56', label: 'MCP Server Tools' },
+              { value: '16', label: 'Decoder Algorithms' },
+              { value: '10', label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
                 <div className="text-cyan-300 font-bold text-3xl mb-1">{s.value}</div>
@@ -136,13 +140,13 @@ export default function Workbench() {
             ))}
           </div>
 
-          {/* Decoders Benchmark Table */}
+          {/* Decoders Table */}
           <div ref={(el) => addRef(el, 1)} className="card-surface space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-bold">13 Integrated Decoders &amp; Benchmark Data</h2>
+                <h2 className="text-2xl font-bold">16 Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  Measured on rotated_surface (d=5, n=25 qubits, p=0.05 noise, 50 shots).
+                  All 16 decoder kinds exposed through the Workbench MCP server. No benchmark figures are published for this release beyond the verified v0.7.0 set — run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -155,9 +159,6 @@ export default function Workbench() {
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
                     <th className="py-3 px-3">Decoder Kind</th>
-                    <th className="py-3 px-3">Throughput</th>
-                    <th className="py-3 px-3">p50 Latency</th>
-                    <th className="py-3 px-3">LER (d=5)</th>
                     <th className="py-3 px-3">Compatibility</th>
                     <th className="py-3 px-3">Description</th>
                   </tr>
@@ -166,9 +167,6 @@ export default function Workbench() {
                   {decodersList.map((d) => (
                     <tr key={d.kind} className="hover:bg-surface/30 transition-colors">
                       <td className="py-3 px-3 font-mono font-semibold text-primary">{d.kind}</td>
-                      <td className="py-3 px-3 text-cyan-300 font-mono font-semibold">{d.tput}</td>
-                      <td className="py-3 px-3 text-secondary font-mono">{d.lat}</td>
-                      <td className="py-3 px-3 text-gold-400 font-mono font-semibold">{d.ler}</td>
                       <td className="py-3 px-3 text-muted-foreground text-xs">{d.type}</td>
                       <td className="py-3 px-3 text-secondary text-xs">{d.desc}</td>
                     </tr>
@@ -178,9 +176,9 @@ export default function Workbench() {
             </div>
           </div>
 
-          {/* 9 Code Families */}
+          {/* 10 Code Families */}
           <div ref={(el) => addRef(el, 2)}>
-            <h2 className="text-2xl font-bold mb-6">9 Supported Code Families</h2>
+            <h2 className="text-2xl font-bold mb-6">10 Supported Code Families</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {codeFamilies.map((c) => (
                 <div key={c.name} className="p-4 bg-void border border-gridline rounded-xl space-y-2">
@@ -207,7 +205,7 @@ export default function Workbench() {
                   desc: 'Polished cross-platform desktop UI (Windows, Linux, macOS). Visual circuit builder, syndrome viewer, and decoder performance dashboard.',
                 },
                 {
-                  name: '47 MCP Tools',
+                  name: '56 MCP Tools',
                   desc: 'Native Model Context Protocol integration. Connect AI agents (Claude, Cursor, Antigravity) directly to decoder benchmarking and execution.',
                 },
                 {
@@ -245,7 +243,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
               title="Documentation &amp; Reference"
-              statement="QECTOR Workbench v3.5.1 documentation and performance benchmark datasets are published alongside the app release and on this site."
+              statement="QECTOR Workbench v0.5.2 documentation and the verified v0.7.0 benchmark set are published alongside the app release and on this site."
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a
@@ -265,7 +263,7 @@ export default function Workbench() {
               >
                 <div className="text-xs text-muted-foreground uppercase mb-1">Performance Benchmarks</div>
                 <div className="text-cyan-300 font-mono text-sm font-semibold">qector.store/benchmarks</div>
-                <div className="text-xs text-secondary mt-1">Master report, 1,858 timing measurements</div>
+                <div className="text-xs text-secondary mt-1">Verified v0.7.0 set · 54/54 points, 0 unfaithful</div>
               </Link>
 
               <Link

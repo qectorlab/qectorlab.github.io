@@ -31,7 +31,7 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-base leading-relaxed">
-              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. It provides 20+ decoder families and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
+              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. It provides 16 decoder classes and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
             </p>
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
@@ -43,12 +43,12 @@ export default function Manual() {
               <h3 className="text-primary font-semibold text-lg mb-3">Key Highlights</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Exact MWPM Parity</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">Matches PyMatching LER exact calculations through distance 15, verified via cross-simulation.</p>
+                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Verified v0.7.0 Benchmarks</h4>
+                  <p className="text-muted-foreground text-xs leading-relaxed">54/54 benchmark points with zero unfaithful corrections, 42/42 faithfulness cases; no other figures published for this release.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Measurable Accuracy Gains</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">+35.7% logical error rate reduction at distance 5 with Belief-Matching under depolarizing noise.</p>
+                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Multi-Algorithm Diversity</h4>
+                  <p className="text-muted-foreground text-xs leading-relaxed">16 decoder classes from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Rust compiled speed</h4>
@@ -152,7 +152,7 @@ print(f"Decoded accurately: {is_correct}")`}
             <div>
               <h3 className="text-primary font-semibold text-sm mb-2">Using Belief-Matching</h3>
               <p className="text-secondary text-xs mb-2">
-                Simply swap the class to `BeliefMatchingDecoder` to achieve 35.7% LER reduction at d=5, circuit-level noise:
+                Swap the class to `BeliefMatchingDecoder` to use BP pre-processing + reweighted exact MWPM:
               </p>
               <CodeBlock
                 filename="belief_matching.py"
@@ -169,7 +169,7 @@ prediction = decoder.decode(syndrome)`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR includes 20+ decoder families and helpers categorized into production-grade and research-grade. Choose based on code type and speed/accuracy tradeoffs:
+              QECTOR includes 16 decoder classes categorized into production-grade and research-grade. Choose based on code type and speed/accuracy tradeoffs:
             </p>
 
             <div className="overflow-x-auto">
@@ -186,12 +186,12 @@ prediction = decoder.decode(syndrome)`}
                 <tbody className="divide-y divide-gridline">
                   {[
                     { name: 'Blossom (MWPM)', target: 'CSS, Surface', speed: 'Fast (UF pre-match)', accuracy: 'Exact Optimal', tier: 'Production' },
-                    { name: 'Belief-Matching', target: 'CSS, Surface', speed: 'Moderate', accuracy: 'Maximum at d=5 (+35.7%)', tier: 'Production' },
+                    { name: 'Belief-Matching', target: 'CSS, Surface', speed: 'Moderate', accuracy: 'High', tier: 'Production' },
                     { name: 'BP-OSD', target: 'qLDPC, LDPC', speed: 'Moderate', accuracy: 'Optimal for qLDPC', tier: 'Production' },
                     { name: 'Union-Find', target: 'Large Surface', speed: 'Near-linear O(N)', accuracy: 'Approximate', tier: 'Production' },
-                    { name: 'GPU Batch', target: 'Any (Batch)', speed: 'High Throughput', accuracy: 'Identical to CPU', tier: 'Production' },
+                    { name: 'GPU Batch', target: 'Any (Batch)', speed: 'High Throughput', accuracy: 'Parallel', tier: 'Production' },
                     { name: 'Hybrid / Cascade', target: 'Degenerate, mixed', speed: 'Iterative', accuracy: 'High', tier: 'Research' },
-                    { name: 'GNN Belief Matcher', target: 'Surface, Research', speed: 'Slow (Offline)', accuracy: 'Neural-enhanced', tier: 'Research' },
+                    { name: 'Colour Code', target: 'Triangular colour code', speed: 'Moderate', accuracy: 'Native', tier: 'Research' },
                   ].map((row) => (
                     <tr key={row.name} className="hover:bg-surface/20 transition-colors">
                       <td className="p-3 font-semibold text-primary">{row.name}</td>
@@ -232,15 +232,18 @@ prediction = decoder.decode(syndrome)`}
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Head-to-head Benchmarking vs PyMatching</h3>
+              <h3 className="text-primary font-semibold text-sm mb-2">Benchmarking vs PyMatching</h3>
               <p className="text-secondary text-xs mb-2">
-                Simulates rotated surface code distance 5 and matches corrections:
+                Runs the synchronized apple-to-apple comparison against PyMatching (same syndromes, same batch API). Results are published as the verified report:
               </p>
               <CodeBlock
                 code="python -m qector.benchmark -vs-pymatching -distance 5 -shots 100000"
                 filename="terminal"
                 language="bash"
               />
+              <p className="text-secondary text-xs mt-2">
+                On the synchronized batch curve, QECTOR is comparable to PyMatching — PyMatching is often slightly ahead. No speedup multiplier is claimed.
+              </p>
             </div>
 
             <div>
@@ -413,7 +416,7 @@ prediction = decoder.decode(syndrome)`}
                 </div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">UnionFindDecoder</span><span>Low-latency approximate</span><span>Stable</span><span>Yes (participation &le; 2)</span></div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">FastUnionFindDecoder</span><span>Faster UF hot path</span><span>Stable</span><span>Yes</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BlossomDecoder</span><span>Exact MWPM / PyMatching parity</span><span>Stable</span><span>No (Hyperedge OK)</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BlossomDecoder</span><span>Exact MWPM</span><span>Stable</span><span>No (Hyperedge OK)</span></div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">SparseBlossomDecoder</span><span>Near-optimal matching</span><span>Experimental</span><span>Prefer graph-like</span></div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BeliefMatching</span><span>Correlated-noise accuracy</span><span>Research</span><span>Prefer graph-like</span></div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BpOsdDecoder</span><span>LDPC / qLDPC</span><span>Experimental</span><span>No (Hyperedge OK)</span></div>

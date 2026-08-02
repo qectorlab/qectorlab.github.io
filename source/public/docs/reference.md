@@ -1,7 +1,7 @@
-QECTOR Decoder v3 — Extended Reference (package only)  
+﻿QECTOR Decoder v3 — Extended Reference (package only)  
 Version: 0.7.0 · PyPI: qector-decoder-v3 · Backend: Rust \+ PyO3
 
-This document covers only the installable Python package qector-decoder-v3==0.7.0. It does not describe the Workbench GUI or the Workbench’s 47-tool MCP server.
+This document covers only the installable Python package qector-decoder-v3==0.7.0. It does not describe the Workbench GUI or the Workbench’s 56-tool MCP server.
 
 ---
 
@@ -40,7 +40,7 @@ Public version string: qector\_decoder\_v3.\_\_version\_\_ \== "0.7.0".
 | ----- | ----- | ----- | ----- |
 | UnionFindDecoder | Low-latency approximate | Stable | Yes (weight ≤ 2 / participation ≤ 2\) |
 | FastUnionFindDecoder | Faster UF hot path | Stable | Yes |
-| BlossomDecoder | Exact MWPM / PyMatching parity | Stable | No |
+| BlossomDecoder | Exact MWPM | Stable | No |
 | SparseBlossomDecoder | Near-optimal matching | Experimental | Prefer graph-like |
 | BeliefMatching | Correlated-noise accuracy | Research | Prefer graph-like |
 | BpOsdDecoder / BPOSDDecoder | LDPC / qLDPC | Experimental | No |
@@ -51,7 +51,7 @@ Public version string: qector\_decoder\_v3.\_\_version\_\_ \== "0.7.0".
 | HybridDecoder | UF \+ Blossom routing | Experimental | Prefer graph-like |
 | PredecodedDecoder | Easy-syndrome prefilter | Experimental | Prefer graph-like |
 | LookupTableDecoder | Small codes only | Experimental | Small *n\_checks* |
-| SlidingWindowDecoder / StreamingDecoder | Multi-round / streaming | Experimental | — |
+| TwoStageDecoder / AmbiguityClusterDecoder | Multi-round / ambiguity-cluster | Experimental | — |
 | GNNBeliefMatcher / GNNPredecoder | GNN-guided matching | Research | Prefer graph-like |
 | NeuralPredecoder | Learned predecoder | Research | — |
 | Workbench | High-level orchestration | Stable | — |
@@ -160,7 +160,7 @@ Licence
 ```
 from qector_decoder_v3.license import verify_license_token
 verify_license_token("")                    # False
-verify_license_token("garbage")             # False (no raise; hardened in 0.7.0)
+verify_license_token("garbage")             # False (no raise; hardened)
 verify_license_token("academic")            # True (dev override)
 ```
 
@@ -197,26 +197,34 @@ from qector_decoder_v3 import run_mcp_server
 run_mcp_server()   # JSON-RPC 2.0 on stdin/stdout
 ```
 
-Tools (3)
+Tools (13, verified in the v0.7.0 benchmark set)
 
 | Tool | Role |
 | ----- | ----- |
-| decode\_syndrome | Single syndrome; accepts undocumented decoder\_type |
-| benchmark\_decoder | Simple latency harness |
-| get\_decoder\_info | Version \+ partial capability list |
+| decode\_syndrome | Single syndrome; accepts decoder\_type |
+| batch\_decode | Batch decode over cpu / cuda / opencl backends |
+| decode\_hyperedge | Decode against a raw hyperedge check matrix |
+| decode\_syndrome\_blossom | Exact Blossom MWPM decode |
+| batch\_decode\_blossom | Batch exact Blossom MWPM decoding |
+| decode\_syndrome\_cascade | Union-Find first, Blossom/BP-OSD escalation |
+| benchmark\_decoder | Latency / throughput harness |
+| run\_ler\_benchmark | Logical-error-rate benchmark (comparable rows only) |
+| get\_decoder\_info | Version \+ capability list |
+| get\_backend\_health | cpu / cuda / opencl probe |
+| clear\_decoder\_cache | Clear native decoder cache |
+| get\_server\_env | Runtime environment summary |
+| recommend\_decoder | Decoder recommendation per code family |
 
 decoder\_type values that route successfully (graph-like codes):  
-UnionFind, FastUnionFind, Blossom, SparseBlossom, bposd, LookupTable, SlidingWindow, Streaming, Auto, Hybrid, BeliefMatching, Predecoded, GNNBeliefMatcher, Batch, … (case variants often accepted).
+UnionFind, FastUnionFind, Blossom, SparseBlossom, bposd, LookupTable, Auto, Hybrid, BeliefMatching, Predecoded, GNNBeliefMatcher, Batch, … (case variants often accepted).
 
 Limitation: the package MCP applies a UF-style structural gate (qubit participation ≤ 2). Hyperedge matrices (including generate\_surface\_code\_checks) are rejected for all decoder\_type values with error −32602. There is no argument that disables this gate.
 
-Workbench MCP (47 tools) is a separate product surface and is not part of this package reference.
+Workbench MCP (56 tools) is a separate product surface and is not part of this package reference.
 
 ---
 
-### 8\. Hyperedge & HybridCascade Workarounds (package only)
-
-#### A. Hyperedge Workaround (high-degree incidence matrices)
+### 8\. Hyperedge workaround (package only)
 
 ```
 import numpy as np
@@ -240,66 +248,7 @@ def decode_hyperedge(checks, n_qubits, syndrome, kind="Blossom", **opts):
     raise ValueError(f"unsupported kind for hyperedge: {kind}")
 ```
 
-MCP + fallback pattern: try package MCP; on message containing "hyperedge" / "weight ≤ 2" / "participates in", call decode_hyperedge (or BlossomDecoder directly).
-
-#### B. HybridCascadeDecoder Wheel Status & Manual Cascade Pattern
-
-**Root Cause**: Public PyPI wheels (including v0.7.0) ship a compiled Rust core where `HybridCascadeDecoder` is gated behind an unexported feature flag. Instantiating `HybridCascadeDecoder()` triggers `_guard("HybridCascadeDecoder")` and raises `RuntimeError`. Public wheels expose `HybridDecoder` (UF + Blossom routing).
-
-**Quick Diagnostic**:
-```python
-import qector_decoder_v3 as qd
-print("version:", qd.__version__)
-print("native has HybridCascadeDecoder:", hasattr(qd.qector_decoder_v3, "HybridCascadeDecoder"))
-print("native has HybridDecoder:", hasattr(qd.qector_decoder_v3, "HybridDecoder"))
-```
-
-**Manual Cascade Pattern (works on all public PyPI wheels)**:
-```python
-import numpy as np
-from qector_decoder_v3 import (
-    UnionFindDecoder,
-    FastUnionFindDecoder,
-    BlossomDecoder,
-    BpOsdDecoder,
-    generate_parity_check_matrix,
-)
-
-def cascade_decode(check_to_qubits, n_qubits, syndrome, error_rate=0.05, use_bposd=False):
-    """
-    Tier 1: Fast UF / Union-Find (low-latency approximate).
-    Tier 2: Blossom / BP-OSD (exact MWPM or qLDPC escalation).
-    """
-    syndrome = np.asarray(syndrome, dtype=np.uint8).ravel()
-    H = generate_parity_check_matrix(check_to_qubits, n_qubits)
-
-    # Tier 1: Fast UF
-    try:
-        uf = FastUnionFindDecoder(check_to_qubits, n_qubits)
-        corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()
-        if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):
-            return corr, "fast_union_find"
-    except Exception:
-        pass
-
-    try:
-        uf = UnionFindDecoder(check_to_qubits, n_qubits)
-        corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()
-        if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):
-            return corr, "union_find"
-    except Exception:
-        pass
-
-    # Tier 2: Exact / higher-accuracy escalation
-    if use_bposd:
-        dec = BpOsdDecoder(H, error_rate=error_rate, osd_order=0)
-        corr = np.asarray(dec.decode(syndrome), dtype=np.uint8).ravel()
-        return corr, "bp_osd"
-
-    dec = BlossomDecoder(check_to_qubits, n_qubits)
-    corr = np.asarray(dec.decode(syndrome), dtype=np.uint8).ravel()
-    return corr, "blossom"
-```
+MCP \+ fallback pattern: try package MCP; on message containing "hyperedge" / "weight ≤ 2" / "participates in", call decode\_hyperedge (or BlossomDecoder directly).
 
 ---
 
@@ -321,12 +270,16 @@ Failed backends are health-scored and suspended; reset\_backend\_health() re-ena
 
 ### 10\. Validated claims (package artefacts)
 
-* MWPM parity with PyMatching on tested surface distances (LER counts match; latency is workload-dependent; PyMatching often faster on standard MWPM).  
-* Belief-matching LER reduction on low-distance circuit-level noise (research path; much slower).  
-* GPU batch bit-identical to CPU when CUDA/OpenCL builds and hardware are available.  
-* Faithfulness: corrections satisfy *Hc*≡*s*(mod2) on successful graph-like trials in package tests (including exhaustive repetition d=5).
+The only citable figures for this release are the verified v0.7.0 benchmark set: REPORT.md, summary.json, benchmarks.csv (54 rows, zero unfaithful corrections), and VERIFIED_APPLE_TO_APPLE_REPORT.pdf.
 
-Regenerate benchmarks on target hardware before publishing numbers.
+* Peak throughput: 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, 8,000 samples) — package MCP server, Linux glibc 2.35, Python 3.12.13.
+* 54/54 benchmark points with zero unfaithful corrections (repetition n=5–65, ring n=16–48; unionfind, fastunionfind, blossom, sparseblossom, bposd, auto).
+* 42/42 syndrome-faithfulness cases passed.
+* 13 MCP tools operational (MCP stdio, JSON-RPC 2.0).
+* Apple-to-apple vs PyMatching: comparable; PyMatching often slightly ahead on the synchronized batch. No speedup multiplier is claimed.
+* Pre-v0.7.0 comparison tables (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn — do not cite them.
+
+Run the harness yourself: qector benchmark --verify or python -m qector.validate. Regenerate benchmarks on target hardware before publishing numbers.
 
 ---
 
@@ -363,7 +316,7 @@ Optional extra: pip install "qector-decoder-v3\[stim\]".
 
 ### 13\. What this package is not
 
-* Not the Workbench application (no 47-tool MCP, no GUI).  
+* Not the Workbench application (no 56-tool MCP, no GUI).  
 * Not a drop-in claim of universal PyMatching replacement (honest latency positioning in docs).  
 * Not open-source: source-available; commercial use requires a licence.
 
