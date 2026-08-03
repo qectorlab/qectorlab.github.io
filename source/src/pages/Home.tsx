@@ -514,15 +514,16 @@ export default function Home() {
                 <p className="text-muted-foreground text-xs mt-1">Unlimited internal seats · All decoders · Priority support</p>
               </div>
 
-              <div className="flex justify-center mb-4 min-h-[50px]">
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: `<stripe-buy-button
-                      buy-button-id="plink_1TyqVURsa9cg9l8A7pqvFRey"
-                      publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
-                    ></stripe-buy-button>`
-                  }}
-                />
+              <div className="flex justify-center mb-6">
+                <a
+                  href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
+                  className="btn-cyan text-base font-bold py-3.5 px-8 rounded-xl shadow-lg shadow-cyan-300/20 inline-flex items-center gap-2 hover:scale-[1.02] transition-all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>Start 60-Day Evaluation — $499</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
               </div>
 
               <div className="border-t border-gridline/60 pt-4 mt-4 text-left space-y-2">

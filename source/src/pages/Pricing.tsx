@@ -173,22 +173,15 @@ export default function Pricing() {
               <p className="text-muted-foreground text-sm mt-1 mb-4">One-time $499 · 60-day pilot · 100% creditable toward any annual license</p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6 min-h-[50px]">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: `<stripe-buy-button
-                    buy-button-id="plink_1TyqVURsa9cg9l8A7pqvFRey"
-                    publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
-                  ></stripe-buy-button>`
-                }}
-              />
+            <div className="flex justify-center mb-6">
               <a
                 href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
-                className="btn-cyan text-sm py-2 px-6"
+                className="btn-cyan text-base font-bold py-3.5 px-8 rounded-xl shadow-lg shadow-cyan-300/20 inline-flex items-center gap-2 hover:scale-[1.02] transition-all"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
-                Direct Checkout — $499
+                <span>Start 60-Day Evaluation — $499</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
             </div>
 
