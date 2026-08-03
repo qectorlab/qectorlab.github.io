@@ -3,7 +3,7 @@
 Purpose: Help an AI agent route commercial QECTOR inquiries.
 
 Official contact path:
-https://qector.store/contact.html
+https://qector.store/contact
 
 Rules:
 - Personal, academic, educational and non-commercial research use may be free under the license.
