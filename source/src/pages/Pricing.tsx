@@ -158,33 +158,79 @@ export default function Pricing() {
             </p>
           </div>
 
-          {/* ALL TIER CARDS */}
-          <div ref={(el) => addRef(el, 2)}>
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Choose Your Tier</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <PricingTierCard
-                name="Commercial Evaluation License"
-                price="$499"
-                period="/ 60 days"
-                desc="Unlimited internal seats for 60 days. Evaluation and pilot work, not production. 100% creditable within 90 days."
-                features={[
-                  'Full decoder v3 (all decoders)',
-                  'CPU + CUDA/OpenCL batch decoding',
-                  'Evaluation & pilot rights (internal, not production)',
-                  'Written license agreement',
-                  'Benchmark artifact package',
-                  'Priority email support',
-                  'Integration support call (1 hour)',
-                ]}
-                centered
-                ctaLabel="Start 60-Day Evaluation — $499"
-                ctaHref="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
+          {/* $499 STRIPE EVALUATION SHOWCASE */}
+          <div
+            id="evaluation"
+            ref={(el) => addRef(el, 2)}
+            className="card-surface border-cyan-300/35 neon-border-cyan relative overflow-hidden p-8 rounded-2xl bg-void/80 text-center scroll-mt-32"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 to-transparent pointer-events-none" />
+            <div className="mb-6">
+              <span className="px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider">
+                Self-Serve · Instant Clearance
+              </span>
+              <h2 className="text-3xl font-extrabold text-primary mt-3">Commercial Evaluation License</h2>
+              <p className="text-muted-foreground text-sm mt-1 mb-4">One-time $499 · 60-day pilot · 100% creditable toward any annual license</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6 min-h-[50px]">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `<stripe-buy-button
+                    buy-button-id="plink_1TyqVURsa9cg9l8A7pqvFRey"
+                    publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
+                  ></stripe-buy-button>`
+                }}
               />
+              <a
+                href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
+                className="btn-cyan text-sm py-2 px-6"
+                target="_blank"
+                rel="noopener"
+              >
+                Direct Checkout — $499
+              </a>
+            </div>
+
+            <div className="border-t border-gridline/60 pt-4 text-left space-y-2 max-w-md mx-auto">
+              {[
+                'Full QECTOR Decoder v3 (all decoders)',
+                'CPU + CUDA/OpenCL batch decoding',
+                'Unlimited internal seats for 60 days',
+                'Written license agreement',
+                'Priority email support (2 business day response)',
+                'Benchmark artifact package',
+                '100% credit toward any annual license bought within 90 days',
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm text-secondary">
+                  <span className="text-green-400">✓</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-gridline/60 pt-4 mt-6 text-left max-w-md mx-auto">
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                💡 <strong>Coupon Instructions:</strong> If you have an academic discount or partner referral coupon, enter it on the Stripe checkout page.
+              </p>
+              <p className="text-xs text-muted-foreground leading-relaxed mt-2 italic">
+                <strong>Note:</strong> Scoped to internal evaluation, architecture design, and threshold optimization. Does not grant production deployment rights or commercial redistribution.
+              </p>
+              <p className="text-xs text-muted-foreground leading-relaxed mt-2">
+                <strong>At day 60:</strong> evaluation rights end. Decoding keeps working (no hard stop) and licensing notice returns on import. Move to an annual tier to continue commercial use.
+              </p>
+            </div>
+          </div>
+
+          {/* ALL PRODUCTION TIER CARDS */}
+          <div ref={(el) => addRef(el, 3)}>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Production &amp; Annual License Tiers</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <PricingTierCard
                 name="Solo / Indie Commercial"
                 price="$1,299"
                 period="/ year"
-                desc="Production rights, single named user. Also $3,299 one-time perpetual."
+                desc="Production rights for a single named user. Also $3,299 one-time perpetual."
                 features={[
                   'Full decoder v3 (all decoders)',
                   'Commercial R&D rights',
@@ -200,7 +246,7 @@ export default function Pricing() {
                 name="Startup / Growth Team"
                 price="$4,499"
                 period="/ year"
-                desc="Up to 10 named users. Advanced workflows."
+                desc="Up to 10 named users. Advanced BP-OSD/LDPC workflows."
                 featured
                 featuredLabel="Recommended"
                 features={[
@@ -238,7 +284,7 @@ export default function Pricing() {
                 name="Enterprise R&D"
                 price="$28,000+"
                 period="/ year"
-                desc="Custom user volume. Dedicated support."
+                desc="Custom user volume. Dedicated support engineer."
                 features={[
                   'Full decoder v3 (all decoders)',
                   'Unlimited named users',
@@ -256,7 +302,7 @@ export default function Pricing() {
                 name="SaaS / Hosted API / OEM"
                 price="Custom"
                 period=""
-                desc="Contact sales for custom terms."
+                desc="Contact sales for custom distribution terms."
                 accent="gold"
                 features={[
                   'Redistribution rights',
@@ -272,10 +318,7 @@ export default function Pricing() {
               />
             </div>
 
-            {/* Perpetual alternative for Solo. The product and price already
-                existed in Stripe but appeared nowhere on the site, so it was
-                unsellable — and buyers who refuse subscriptions had no option
-                between the 60-day evaluation and a recurring plan. */}
+            {/* Perpetual alternative for Solo */}
             <div className="mt-6 p-5 rounded-2xl border border-cyan-300/20 bg-cyan-300/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="text-primary font-semibold text-sm">
@@ -290,6 +333,7 @@ export default function Pricing() {
               <a
                 href="https://buy.stripe.com/3cI14p77Xdcm0xk2NAeUU0e"
                 className="btn-outline whitespace-nowrap text-center"
+                target="_blank"
                 rel="noopener"
               >
                 Buy perpetual — $3,299
@@ -301,10 +345,7 @@ export default function Pricing() {
               Source-available under PolyForm Noncommercial. Commercial use requires a license.
             </p>
 
-            {/* Procurement-facing disclosures. These three questions (currency,
-                delivery time, refundability) arrive in almost every pre-sales
-                email and are the first things Stripe asks for in a dispute, so
-                they belong next to the prices rather than buried in the FAQ. */}
+            {/* Procurement disclosures */}
             <div className="mt-4 p-4 rounded-xl border border-gridline bg-surface/60 text-xs text-muted-foreground leading-relaxed space-y-1.5">
               <p>
                 <strong className="text-secondary">Tax:</strong> all prices are in <strong className="text-secondary">USD</strong> and
@@ -318,63 +359,6 @@ export default function Pricing() {
                 <strong className="text-secondary">Refunds:</strong> tokens are delivered instantly, so all sales are final. The $499
                 evaluation is the creditable way to try first — see the{' '}
                 <Link to="/refund" className="text-cyan-300 hover:underline">refund policy</Link>.
-              </p>
-            </div>
-          </div>
-
-          {/* $499 STRIPE BUY BUTTON */}
-          <div
-            id="evaluation"
-            ref={(el) => addRef(el, 3)}
-            className="card-surface border-cyan-300/35 neon-border-cyan relative overflow-hidden p-8 rounded-2xl bg-void/80 text-center scroll-mt-32"
-          >
-            <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 to-transparent pointer-events-none" />
-            <div className="mb-6">
-              <span className="px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider">
-                Self-Serve · Instant Clearance
-              </span>
-              <h2 className="text-3xl font-extrabold text-primary mt-3">Commercial Evaluation License</h2>
-              <p className="text-muted-foreground text-sm mt-1 mb-4">One-time $499 · 60-day pilot · Fully creditable toward any annual license</p>
-            </div>
-
-            <div className="flex justify-center mb-4 min-h-[50px]">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: `<stripe-buy-button
-                    buy-button-id="plink_1TyqVURsa9cg9l8A7pqvFRey"
-                    publishable-key="pk_live_51TslzuRsa9cg9l8AusKfWUqqji6ewsc5fIg04BCsvxHtZUhYJ84YXV7Xa9RPvBXTPdAx5vC3xtKRuxJ1hwZFioAl00axAE5v3I"
-                  ></stripe-buy-button>`
-                }}
-              />
-            </div>
-
-            <div className="border-t border-gridline/60 pt-4 mt-4 text-left space-y-2 max-w-md mx-auto">
-              {[
-                'Full QECTOR Decoder v3 (all decoders)',
-                'CPU + CUDA/OpenCL batch decoding',
-                'Unlimited internal seats',
-                'Written license agreement',
-                'Priority email support (2 business day response)',
-                'Benchmark artifact package',
-                '100% credit toward annual license',
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm text-secondary">
-                  <span className="text-green-400">✓</span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-gridline/60 pt-4 mt-6 text-left max-w-md mx-auto">
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                💡 <strong>Coupon Instructions:</strong> If you have an academic discount or partner referral coupon, enter it on the Stripe checkout page.
-              </p>
-              <p className="text-xs text-muted-foreground leading-relaxed mt-2 italic">
-                <strong>Note:</strong> This tier covers internal evaluation, architecture design, and threshold optimization workflows only. It does not grant production deployment rights, commercial software/hardware redistribution, or SaaS hosting rights.
-              </p>
-              <p className="text-xs text-muted-foreground leading-relaxed mt-2">
-                <strong>At day 60:</strong> the token expires and your commercial evaluation rights end. Nothing is disabled — the
-                licensing notice simply returns on import and decoding keeps working. Move to an annual tier to continue commercial use.
               </p>
             </div>
           </div>
