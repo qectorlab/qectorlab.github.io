@@ -198,7 +198,7 @@ export default function Contact() {
           <div className="max-w-4xl mx-auto mt-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center">Book a 30-minute call</h2>
             <p className="text-secondary text-sm mb-6 text-center">
-              Decoder audit, licensing questions, or an integration walkthrough — booked directly with Guillaume Lessard.
+              Decoder audit, licensing questions, or an integration walkthrough, booked directly with Guillaume Lessard.
             </p>
             <CalendlyWidget url={CALENDLY_URL} />
           </div>

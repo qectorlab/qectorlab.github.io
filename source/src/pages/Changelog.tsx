@@ -33,7 +33,7 @@ export default function Changelog() {
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
-              version={`v${pypiVersion} Decoder + free Workbench v0.5.2 - 2026`}
+              version={`v${pypiVersion} Decoder + free Workbench v0.5.2 (2026)`}
               note={
                 <>
                   Exact release dates on{' '}
@@ -44,11 +44,11 @@ export default function Changelog() {
                 `New QECTOR Decoder v3 (v${pypiVersion}): full validation, hypergraph rejection support, sdist + wheels`,
                 'Verified v0.7.0 benchmark set published: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s',
                 'Free QECTOR Workbench v0.5.2 (current): 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',
-                'Workbench v0.5.2 ships fully self-contained — it bundles its own Python runtime, scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is needed',
+                'Workbench v0.5.2 ships fully self-contained, bundling its own Python runtime, scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is needed',
                 'Workbench distribution split by platform: portable Windows x64 executable (qector-decoder-workbench-windows) and native Linux x64 Debian packages for Ubuntu/Debian/Mint and antiX/MX (qector-decoder-workbench-linux)',
-                'Note on numbering: earlier Workbench builds were published as v3.5.x. The shipping product version is v0.5.2 — the Windows release retains a legacy v3.5.2 git tag, but its title, notes, and asset filenames all read v0.5.2',
+                'Note on numbering: earlier Workbench builds were published as v3.5.x. The shipping product version is v0.5.2 (the Windows release retains a legacy v3.5.2 git tag, but its title, notes, and asset filenames all read v0.5.2)',
                 'Production packaging: clean PyInstaller + Inno Setup bundles with manifests and checksums',
-                'Pre-v0.7.0 benchmark comparison tables formally withdrawn — only the verified set is citable',
+                'Pre-v0.7.0 benchmark comparison tables formally withdrawn: only the verified set is citable',
               ]}
             />
           </div>
@@ -57,7 +57,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <ChangelogEntry
-              version="v0.7.0 - 2026-07-24"
+              version="v0.7.0 · 2026-07-24"
               items={[
                 'Production release with benchmark suite, hyper saturation suite, and Stripe live integration',
                 'MCP Server integration (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools',
@@ -70,14 +70,14 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <ChangelogEntry
-              version="v0.6.8 - 2026-07-22"
+              version="v0.6.8 · 2026-07-22"
               items={[
                 'Fixed _guard() handling for gated research decoders; public wheels expose HybridDecoder (UF + Blossom routing)',
                 'New CPU/CUDA bit-exact validation: CUDA decoder row-identical to CPU Union-Find at d=3-19',
                 'Faithfulness verified: H·c = s on 100% of shots across all 8 decoders at d=3-19',
-                'Benchmark release with SVG charts, JSON data files, and full PDF report (superseded — withdrawn with the v0.7.0 verified set)',
-                'GPU throughput peak: 13,487,996 shots/s on GTX 1660 Ti (d=3, batch decoder) — withdrawn, do not cite',
-                'Peak CPU throughput: 5,212,664 shots/s (Blossom, d=3, 200k shots) — withdrawn, do not cite',
+                'Benchmark release with SVG charts, JSON data files, and full PDF report (superseded: withdrawn with the v0.7.0 verified set)',
+                'GPU throughput peak: 13,487,996 shots/s on GTX 1660 Ti (d=3, batch decoder) (withdrawn, do not cite)',
+                'Peak CPU throughput: 5,212,664 shots/s (Blossom, d=3, 200k shots) (withdrawn, do not cite)',
                 'Website updated with v0.6.8 benchmark artifacts, charts, and validation data',
               ]}
             />
@@ -87,7 +87,7 @@ export default function Changelog() {
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <ChangelogEntry
-              version="v0.5.7 - 2026"
+              version="v0.5.7 · 2026"
               items={[
                 'Sigstore attestation for PyPI wheels',
                 'Performance regression fixes in BP-OSD path',

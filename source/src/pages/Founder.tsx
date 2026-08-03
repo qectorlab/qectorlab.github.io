@@ -52,7 +52,7 @@ export default function Founder() {
     <>
       <SEO
         title="Guillaume Lessard · Founder of QECTOR and iD01t Productions"
-        description="Guillaume Lessard — self-taught developer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753."
+        description="Guillaume Lessard, self-taught developer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and creator of QECTOR Decoder v3. ORCID 0009-0000-3465-3753."
       />
       <JsonLd
         data={{
@@ -124,9 +124,9 @@ export default function Founder() {
                 Guillaume Lessard
               </h1>
               <p className="text-secondary text-lg leading-relaxed mb-5">
-                I build QECTOR. I left formal schooling at sixteen and taught myself to write software; a bit over two decades
-                later I write Rust decoders for quantum error correction, publish the benchmarks that back every claim I make,
-                and ship the whole thing myself from Longueuil, Québec.
+                I build QECTOR. I left formal schooling at sixteen and taught myself to write software. Over two decades
+                later, I write Rust decoders for quantum error correction, publish the benchmarks that back every claim I make,
+                and ship everything independently from Longueuil, Québec.
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
                 <a href={ORCID} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
@@ -154,9 +154,9 @@ export default function Founder() {
           <div className="card-surface border-gold-400/25">
             <h2 className="text-xl font-bold mb-3">Making sure you have the right Guillaume Lessard</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
-              It is a common Québécois name, and several accomplished people share it — including a compiler engineer who works
-              on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. If you are
-              evaluating QECTOR, verifying an invoice, or checking a citation, these identifiers are the ones I control:
+              It is a common Québécois name, and several accomplished professionals share it, including a compiler engineer who works
+              on Swift and a real estate executive. None of them are me, and I claim none of their work. If you are
+              evaluating QECTOR, verifying an invoice, or checking a citation, these are the primary identifiers I control:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               {[
@@ -191,17 +191,17 @@ export default function Founder() {
                 learn what the problem requires, ship the result, publish the evidence.
               </p>
               <p>
-                For most of the last twenty years that meant applications, tools, and books —{' '}
+                For most of the last twenty years that meant applications, tools, and books: {' '}
                 <strong className="text-primary">167+ eBooks</strong> and <strong className="text-primary">103 audiobooks</strong>{' '}
                 published, desktop utilities and games released independently, and six albums plus twenty-three singles produced
-                as DJ iD01T across 2024–2025. I founded{' '}
+                as DJ iD01T during 2024 and 2025. I founded{' '}
                 <a href="https://id01t.store/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">iD01t Productions</a>{' '}
-                in 2023 to put all of it under one roof. It is still one person.
+                in 2023 to put all of it under one roof. It remains a focused one-person operation.
               </p>
               <p>
                 Quantum error correction is where that approach currently points. QECTOR Decoder v3 is a Rust core behind a
                 Python API implementing 20+ decoder families, with exact logical-error-rate parity against PyMatching from
-                distance 3 through 15 and a measured +35.7% accuracy gain from Belief-Matching at d=5 — all of it reproducible
+                distance 3 through 15 and a measured +35.7% accuracy gain from Belief-Matching at d=5. All performance is reproducible
                 from the published harness, because a claim without an artifact is just marketing.
               </p>
               <p className="text-primary italic border-l-2 border-cyan-300/40 pl-4">
@@ -229,20 +229,20 @@ export default function Founder() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
-                <ul className="text-secondary text-xs space-y-1">
-                  <li>• <Link to="/decoder" className="text-cyan-300 hover:underline">QECTOR Decoder v3</Link> — Rust-core Python library, 20+ decoders</li>
-                  <li>• <Link to="/workbench" className="text-cyan-300 hover:underline">QECTOR Workbench v0.5.2</Link> — free desktop GUI + 56-tool MCP server</li>
-                  <li>• <Link to="/benchmarks" className="text-cyan-300 hover:underline">Published benchmark corpus</Link> — 1,858 timing measurements</li>
-                  <li>• Mastering QEC and the QEC Academy instructional series</li>
+                <ul className="text-secondary text-xs space-y-1.5">
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 20+ decoders</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench v0.5.2</Link>: free desktop GUI and 56-tool MCP server</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/benchmarks" className="text-cyan-300 hover:underline font-semibold">Published benchmark corpus</Link>: 1,858 timing measurements</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
                 </ul>
               </div>
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Research &amp; publishing</h3>
-                <ul className="text-secondary text-xs space-y-1">
-                  <li>• Work signed and traceable through ORCID and Zenodo</li>
-                  <li>• SATI CODEX and the LCL-832/833 corpora</li>
-                  <li>• Developer tools and games on itch.io</li>
-                  <li>• DJ iD01T — 6 albums, 23 singles (2024–2025)</li>
+                <ul className="text-secondary text-xs space-y-1.5">
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>SATI CODEX and the LCL-832/833 corpora</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Developer tools and games on itch.io</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>DJ iD01T: 6 albums, 23 singles (2024 to 2025)</span></li>
                 </ul>
               </div>
             </div>
@@ -272,8 +272,8 @@ export default function Founder() {
           <div className="card-surface">
             <h2 className="text-2xl font-bold mb-2">Book a 30-minute call</h2>
             <p className="text-secondary text-sm mb-5">
-              Decoder audit, licensing questions, or an integration walkthrough — you talk to me, because there is no one else
-              to talk to. Prefer email? <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>.
+              For a decoder audit, licensing questions, or an integration walkthrough, you will speak directly with me.
+              Prefer email? <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>.
             </p>
             <CalendlyWidget url={CALENDLY_URL} />
           </div>

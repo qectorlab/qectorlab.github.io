@@ -172,7 +172,7 @@ export default function McpServer() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Give any MCP-capable assistant direct access to production quantum error
             correction. Thirteen verified tools covering Union-Find, exact Blossom MWPM,
-            BP-OSD, cascade decoding and benchmarking — decoding runs in native Rust, not in
+            BP-OSD, cascade decoding and benchmarking, with decoding running in native Rust, not in
             the model.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -299,8 +299,7 @@ export default function McpServer() {
                 or run <code className="text-cyan-300">qector benchmark --verify</code> / <code className="text-cyan-300">python -m qector.validate</code> yourself.
               </li>
               <li>
-                <strong className="text-primary">Licensing.</strong> Academic and personal
-                use is free. Commercial use requires a licence — see{' '}
+                <strong className="text-primary">Licensing.</strong> Academic, research and personal use is free. Commercial use requires a license; see{' '}
                 <Link to="/pricing" className="text-cyan-300">Pricing</Link>.
               </li>
             </ul>

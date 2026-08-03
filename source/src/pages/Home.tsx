@@ -296,14 +296,14 @@ export default function Home() {
               <SectionHeader
                 eyebrow="Why QECTOR"
                 heading={<h2 className="text-3xl md:text-4xl font-bold">More Than Just MWPM</h2>}
-                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, GPU batch and real-time workloads each demand different decoders. QECTOR gives you all of them in one Python library with a consistent API — and every claim is backed by reproducible GitHub artifacts."
+                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, GPU batch and real-time workloads each demand different decoders. QECTOR gives you all of them in one Python library with a consistent API, and every claim is backed by reproducible GitHub artifacts."
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Blossom MWPM — Exact',
+                  title: 'Blossom MWPM (Exact)',
                   tag: 'Blossom',
                   desc: 'Weight-optimal exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.',
                   proof: 'Exact optimal matching · Stim-native',
@@ -350,7 +350,7 @@ export default function Home() {
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
                   Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
-                  AutoDecoder, Hybrid, Predecoded, and two-stage, ambiguity-cluster and colour-code decoders — all accessible through a consistent Python API.
+                  AutoDecoder, Hybrid, Predecoded, and two-stage, ambiguity-cluster and colour-code decoders, all accessible through a consistent Python API.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -399,7 +399,7 @@ export default function Home() {
               />
               <EvidenceBlock
                 title="Verified Benchmark Set"
-                statement="One set, four artifacts, fully reproducible: peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 benchmark points with zero unfaithful corrections, 42/42 syndrome-faithfulness cases, 13 MCP tools — measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13)."
+                statement="One set, four artifacts, fully reproducible: peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 benchmark points with zero unfaithful corrections, 42/42 syndrome-faithfulness cases, 13 MCP tools, measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13)."
                 href="https://github.com/GuillaumeLessard/qector-decoder"
                 linkLabel="GitHub Artifacts →"
                 className="max-w-3xl mx-auto mb-6"
@@ -468,7 +468,7 @@ export default function Home() {
               <p className="text-secondary text-sm leading-relaxed mb-4">
                 Our PyPI package includes <code className="text-cyan-300 bg-cyan-300/5 px-1.5 py-0.5 rounded border border-cyan-300/10 font-mono text-xs">Other/Proprietary License</code> metadata that triggers
                 enterprise compliance scanners (Snyk, Black Duck, FOSSA). A commercial receipt clears your entire
-                engineering stack instantly — no license keys, no friction.
+                engineering stack instantly, with no license keys or friction.
               </p>
               <Link to="/commercial" className="text-cyan-300 text-sm font-medium hover:underline">
                 Learn about licensing →

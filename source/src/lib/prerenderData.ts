@@ -422,7 +422,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/guillaume-lessard',
     title: 'Guillaume Lessard · Founder of QECTOR and iD01t Productions',
     description:
-      'Guillaume Lessard — self-taught developer, author and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
+      'Guillaume Lessard, self-taught developer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
     heading: 'Guillaume Lessard',
     body: page(
       h1('Guillaume Lessard') +
