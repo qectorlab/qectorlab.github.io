@@ -5,6 +5,7 @@ import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import EvidenceBlock from '../components/EvidenceBlock';
 import { FAQ_ITEMS } from '../lib/faqData';
+import { CALENDLY_URL } from '../lib/config';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -55,7 +56,7 @@ export default function Pricing() {
     <>
       <SEO
         title="Pricing · QECTOR"
-        description="QECTOR Decoder v3 commercial licensing. Self-serve evaluation from $499. Annual tiers from $1,299. Enterprise and OEM available."
+        description="QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD."
       />
       <JsonLd
         data={{
@@ -127,7 +128,7 @@ export default function Pricing() {
                 <h3 className="text-emerald-400 font-semibold mb-2">Free (Source-Available)</h3>
                 <ul className="text-secondary text-sm space-y-1">
                   <li>• QECTOR Decoder v3 PyPI package (non-commercial use)</li>
-                  <li>• Qector Workbench GUI v3.4 (full featured, 25+ MCP tools)</li>
+                  <li>• Qector Workbench GUI v0.5.2 (full featured, 56 MCP tools)</li>
                   <li>• Public benchmarks, artifacts, and validation on GitHub</li>
                   <li>• Documentation and examples</li>
                   <li>• Community issues and discussions</li>
@@ -165,11 +166,11 @@ export default function Pricing() {
                 name="Commercial Evaluation License"
                 price="$499"
                 period="/ 60 days"
-                desc="Unlimited internal seats. 100% credit toward annual license. Self-serve."
+                desc="Unlimited internal seats for 60 days. Evaluation and pilot work, not production. 100% creditable within 90 days."
                 features={[
                   'Full decoder v3 (all decoders)',
                   'CPU + CUDA/OpenCL batch decoding',
-                  'Commercial use rights (internal)',
+                  'Evaluation & pilot rights (internal, not production)',
                   'Written license agreement',
                   'Benchmark artifact package',
                   'Priority email support',
@@ -183,7 +184,7 @@ export default function Pricing() {
                 name="Solo / Indie Commercial"
                 price="$1,299"
                 period="/ year"
-                 desc="Single named user. Also $3,299 one-time perpetual."
+                desc="Production rights, single named user. Also $3,299 one-time perpetual."
                 features={[
                   'Full decoder v3 (all decoders)',
                   'Commercial R&D rights',
@@ -299,6 +300,26 @@ export default function Pricing() {
               What remains free: Workbench GUI, public PyPI package (non-commercial), all GitHub artifacts.
               Source-available under PolyForm Noncommercial. Commercial use requires a license.
             </p>
+
+            {/* Procurement-facing disclosures. These three questions (currency,
+                delivery time, refundability) arrive in almost every pre-sales
+                email and are the first things Stripe asks for in a dispute, so
+                they belong next to the prices rather than buried in the FAQ. */}
+            <div className="mt-4 p-4 rounded-xl border border-gridline bg-surface/60 text-xs text-muted-foreground leading-relaxed space-y-1.5">
+              <p>
+                <strong className="text-secondary">Tax:</strong> all prices are in <strong className="text-secondary">USD</strong> and
+                exclude tax. Stripe adds applicable sales tax, GST/HST, or VAT at checkout based on your billing location.
+              </p>
+              <p>
+                <strong className="text-secondary">Delivery:</strong> your license token is emailed within 10 minutes of payment —
+                check your spam folder before contacting support.
+              </p>
+              <p>
+                <strong className="text-secondary">Refunds:</strong> tokens are delivered instantly, so all sales are final. The $499
+                evaluation is the creditable way to try first — see the{' '}
+                <Link to="/refund" className="text-cyan-300 hover:underline">refund policy</Link>.
+              </p>
+            </div>
           </div>
 
           {/* $499 STRIPE BUY BUTTON */}
@@ -349,8 +370,46 @@ export default function Pricing() {
                 💡 <strong>Coupon Instructions:</strong> If you have an academic discount or partner referral coupon, enter it on the Stripe checkout page.
               </p>
               <p className="text-xs text-muted-foreground leading-relaxed mt-2 italic">
-                <strong>Note:</strong> This tier covers internal R&D, architecture design, and threshold optimization workflows only. It does not grant commercial software/hardware redistribution or SaaS hosting rights.
+                <strong>Note:</strong> This tier covers internal evaluation, architecture design, and threshold optimization workflows only. It does not grant production deployment rights, commercial software/hardware redistribution, or SaaS hosting rights.
               </p>
+              <p className="text-xs text-muted-foreground leading-relaxed mt-2">
+                <strong>At day 60:</strong> the token expires and your commercial evaluation rights end. Nothing is disabled — the
+                licensing notice simply returns on import and decoding keeps working. Move to an annual tier to continue commercial use.
+              </p>
+            </div>
+          </div>
+
+          {/* ACTIVATION / ENV VARS — previously documented only on PyPI, which
+              meant buyers could not see before paying what the package actually
+              does without a token. Stating the notice behaviour plainly here is
+              what keeps the "no lockouts" claim honest. */}
+          <div ref={(el) => addRef(el, 3.5)} className="card-surface">
+            <h2 className="text-2xl font-bold mb-3">Activating Your License</h2>
+            <p className="text-secondary text-sm mb-4">
+              Everyone installs the same wheel — there is no separate commercial build and no feature gating. If{' '}
+              <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> is not set, a licensing notice prints on
+              import. That is expected for non-commercial use. Setting your token stops the notice; decoding runs either way,
+              with no hard stop.
+            </p>
+            <pre className="bg-void border border-gridline rounded-xl p-4 text-xs font-mono text-cyan-300 overflow-x-auto">
+{`# Commercial use: activate with the Ed25519 token from your licence email
+export QECTOR_LICENSE="<your-token>"
+
+# Optional: suppress the licensing notice in CI logs
+export QECTOR_SILENT=1
+
+# Windows PowerShell
+$env:QECTOR_LICENSE = "<your-token>"`}
+            </pre>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div className="p-3 bg-surface border border-gridline rounded-xl">
+                <p className="text-primary font-mono text-xs mb-1">QECTOR_LICENSE</p>
+                <p className="text-secondary text-xs">Your Ed25519 token, tied to your checkout email. Verified offline against a public key embedded in the package — no license server, no phone-home, works air-gapped.</p>
+              </div>
+              <div className="p-3 bg-surface border border-gridline rounded-xl">
+                <p className="text-primary font-mono text-xs mb-1">QECTOR_SILENT=1</p>
+                <p className="text-secondary text-xs">Suppresses the startup licensing notice. Safe in any tier, including non-commercial use — it changes logging only, never decoder behaviour or results.</p>
+              </div>
             </div>
           </div>
 
@@ -364,7 +423,7 @@ export default function Pricing() {
             </div>
             <p className="text-secondary text-sm mb-4">The recommended fast-track entry point for teams seeking immediate, defensible proof of workflow value.</p>
             <ul className="text-secondary text-sm space-y-1.5">
-              <li>• 60-day Commercial Evaluation License for up to 3 named users</li>
+              <li>• 60-day Commercial Evaluation License with unlimited internal seats</li>
               <li>• Execution of up to 3 customer-specified or standard benchmark workloads using QECTOR</li>
               <li>• Complete reproducible artifact bundles (environment snapshots, input hashes, LER curves, timing data, manifest)</li>
               <li>• Comparative analysis against PyMatching / Stim baselines where applicable</li>
@@ -488,7 +547,12 @@ export default function Pricing() {
 
           {/* FINAL CTA */}
           <div className="text-center py-8">
-            <Link to="/contact" className="btn-cyan text-lg px-10 py-4">Contact Sales for Custom Licensing</Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link to="/contact" className="btn-cyan text-lg px-10 py-4">Contact Sales for Custom Licensing</Link>
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="btn-outline text-lg px-10 py-4">
+                Book a 30-min decoder audit
+              </a>
+            </div>
             <p className="text-muted-foreground text-sm mt-4">Typical response time: 1 business day</p>
           </div>
 

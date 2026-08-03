@@ -18,6 +18,7 @@ const productLinks: LinkItem[] = [
 
 const companyLinks: LinkItem[] = [
   { label: 'About', href: '/about' },
+  { label: 'Guillaume Lessard', href: '/guillaume-lessard' },
   { label: 'Commercial', href: '/commercial' },
   { label: 'Contact', href: '/contact' },
   { label: 'GitHub', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
@@ -131,6 +132,7 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               <Link to="/privacy" className="text-xs text-muted-foreground hover:text-cyan-300 transition-colors">Privacy</Link>
               <Link to="/terms" className="text-xs text-muted-foreground hover:text-cyan-300 transition-colors">Terms</Link>
+              <Link to="/refund" className="text-xs text-muted-foreground hover:text-cyan-300 transition-colors">Refunds</Link>
               <Link to="/license" className="text-xs text-muted-foreground hover:text-cyan-300 transition-colors">License</Link>
             </div>
           </div>

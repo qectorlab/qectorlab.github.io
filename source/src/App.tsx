@@ -20,6 +20,8 @@ const Contact = lazy(() => import('./pages/Contact'));
 const License = lazy(() => import('./pages/License'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
+const Refund = lazy(() => import('./pages/Refund'));
+const Founder = lazy(() => import('./pages/Founder'));
 const Evidence = lazy(() => import('./pages/Evidence'));
 const Changelog = lazy(() => import('./pages/Changelog'));
 const TechnicalReference = lazy(() => import('./pages/TechnicalReference'));
@@ -48,6 +50,8 @@ export default function App() {
             <Route path="/license" element={<License />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/guillaume-lessard" element={<Founder />} />
             <Route path="/evidence" element={<Evidence />} />
             <Route path="/changelog" element={<Changelog />} />
             <Route path="/technical-reference" element={<TechnicalReference />} />

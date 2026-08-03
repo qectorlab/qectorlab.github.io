@@ -68,6 +68,37 @@ export default function License() {
             </p>
           </div>
 
+          {/* Commercial addendum. Buyers and their legal teams need to know
+              exactly what the paid tier changes over PolyForm Noncommercial —
+              and, just as importantly, what it does not change in the package. */}
+          <div className="card-surface border-gold-400/25">
+            <h2 className="text-xl font-bold mb-4">Commercial Addendum — What a Paid License Changes</h2>
+            <ul className="space-y-2 text-secondary text-sm">
+              <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.</li>
+              <li>• <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
+              <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> to your Ed25519 token. Verification is offline against a public key embedded in the package — no license server, no phone-home, works air-gapped.</li>
+              <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). No functionality is gated, degraded, or disabled.</li>
+              <li>• No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.</li>
+            </ul>
+            <p className="text-secondary text-sm leading-relaxed mt-4">
+              Tokens are delivered instantly and all sales are final — see the{' '}
+              <Link to="/refund" className="text-cyan-300 hover:underline">Refund Policy</Link>. The $499 evaluation is the
+              creditable way to evaluate before committing.
+            </p>
+          </div>
+
+          <div className="card-surface">
+            <h2 className="text-xl font-bold mb-4">Full License Text</h2>
+            <p className="text-secondary text-sm leading-relaxed">
+              The complete, authoritative PolyForm Noncommercial License 1.0.0 text is published at{' '}
+              <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">
+                polyformproject.org/licenses/noncommercial/1.0.0
+              </a>{' '}
+              and is bundled verbatim with every package distribution (<code className="text-cyan-300 font-mono text-xs">LICENSE</code> in the wheel and sdist).
+              The summaries on this page are for orientation only; where they differ from the license text, the license text governs.
+            </p>
+          </div>
+
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Third-Party Licenses</h2>
             <p className="text-secondary text-sm leading-relaxed">

@@ -22,6 +22,29 @@ export default function Terms() {
       <section className="section-padding pb-24">
         <div className="max-w-3xl mx-auto space-y-8">
 
+          {/* Seller identity block. Stripe and EU/UK distance-selling rules
+              expect an identifiable seller and address before the first sale;
+              omitting it is what turns a routine chargeback into a lost one. */}
+          <div className="card-surface border-cyan-300/25">
+            <h2 className="text-xl font-bold mb-4">Who You Are Buying From</h2>
+            <p className="text-secondary text-sm leading-relaxed mb-3">
+              QECTOR software and commercial licenses are sold by{' '}
+              <strong className="text-primary">Guillaume Lessard</strong>, sole proprietor, trading as
+              iD01t Productions, Québec, Canada.
+            </p>
+            <p className="text-secondary text-sm leading-relaxed mb-3">
+              Registered address: 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7.
+              <br />
+              Contact: <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>
+            </p>
+            <p className="text-secondary text-sm leading-relaxed">
+              All prices are quoted and charged in <strong className="text-primary">US dollars (USD)</strong>, exclusive of tax.
+              Stripe processes all payments and adds applicable sales tax, GST/HST, or VAT at checkout based on your billing
+              location; card details never reach QECTOR systems. License tokens are delivered instantly by email and all sales
+              are final — see the <a href="/refund" className="text-cyan-300 hover:underline">Refund Policy</a>.
+            </p>
+          </div>
+
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Acceptance of Terms</h2>
             <p className="text-secondary text-sm leading-relaxed">

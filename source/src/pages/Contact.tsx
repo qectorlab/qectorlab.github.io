@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 import { SEO, JsonLd } from '../lib/seo';
-import { APP_CONFIG } from '../lib/config';
+import { APP_CONFIG, CALENDLY_URL } from '../lib/config';
+import CalendlyWidget from '../components/CalendlyWidget';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -111,7 +113,9 @@ export default function Contact() {
               <div className="card-surface">
                 <h3 className="text-primary font-semibold mb-2">Links</h3>
                 <div className="flex flex-col gap-2">
+                  <Link to="/guillaume-lessard" className="text-cyan-300 text-sm hover:underline">About Guillaume Lessard</Link>
                   <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">ORCID</a>
+                  <a href="https://www.linkedin.com/in/qector/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">LinkedIn</a>
                   <a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">QEC Book</a>
                 </div>
               </div>
@@ -186,6 +190,17 @@ export default function Contact() {
                 )}
               </div>
             </div>
+          </div>
+
+          {/* BOOKING — an alternative to the form for people who would rather
+              just talk. Placed after the form so the form stays the primary
+              path for procurement and written enquiries. */}
+          <div className="max-w-4xl mx-auto mt-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center">Book a 30-minute call</h2>
+            <p className="text-secondary text-sm mb-6 text-center">
+              Decoder audit, licensing questions, or an integration walkthrough — booked directly with Guillaume Lessard.
+            </p>
+            <CalendlyWidget url={CALENDLY_URL} />
           </div>
         </div>
       </section>

@@ -30,7 +30,7 @@ export default function SatiOs() {
           </p>
 
           <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto leading-relaxed mb-10">
-            The full-stack GUI, 56 MCP tools, FastAPI REST engine, dual CLI, and decoder suite are available directly in the free QECTOR Workbench desktop application.
+            The full-stack GUI, 56-tool MCP server, 16 decoders, and 10 code families are available directly in the free QECTOR Workbench desktop application for Windows x64 and Linux x64.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

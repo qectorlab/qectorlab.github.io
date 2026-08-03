@@ -33,7 +33,7 @@ export default function Changelog() {
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
-              version={`v${pypiVersion} Decoder + new free Workbench v0.5.2 - 2026`}
+              version={`v${pypiVersion} Decoder + free Workbench v0.5.2 - 2026`}
               note={
                 <>
                   Exact release dates on{' '}
@@ -42,8 +42,11 @@ export default function Changelog() {
               }
               items={[
                 `New QECTOR Decoder v3 (v${pypiVersion}): full validation, hypergraph rejection support, sdist + wheels`,
-                'Verified v0.7.0 benchmark set published: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s, 13 MCP tools',
-                'New free QectorWorkbench GUI v0.5.2: polished CustomTkinter app, 56 MCP tools (all tested), multi-format docs generator',
+                'Verified v0.7.0 benchmark set published: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s',
+                'Free QECTOR Workbench v0.5.2 (current): 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',
+                'Workbench v0.5.2 ships fully self-contained — it bundles its own Python runtime, scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is needed',
+                'Workbench distribution split by platform: portable Windows x64 executable (qector-decoder-workbench-windows) and native Linux x64 Debian packages for Ubuntu/Debian/Mint and antiX/MX (qector-decoder-workbench-linux)',
+                'Note on numbering: earlier Workbench builds were published as v3.5.x. The shipping product version is v0.5.2 — the Windows release retains a legacy v3.5.2 git tag, but its title, notes, and asset filenames all read v0.5.2',
                 'Production packaging: clean PyInstaller + Inno Setup bundles with manifests and checksums',
                 'Pre-v0.7.0 benchmark comparison tables formally withdrawn — only the verified set is citable',
               ]}

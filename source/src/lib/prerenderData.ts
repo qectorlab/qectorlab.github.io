@@ -283,18 +283,46 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench v0.5.2 — Free cross-platform desktop GUI (Windows, Linux, macOS), 56 MCP tools, 16 decoders, 10 code families, visual circuit builder, FastAPI REST, dual CLI, and offline execution.',
+      'QECTOR Workbench v0.5.2 — free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Self-contained: no system Python, pip, or internet required.',
     heading: 'QECTOR Workbench v0.5.2',
     body: page(
       h1('QECTOR Workbench v0.5.2') +
         p(
-          'Free cross-platform desktop application (CustomTkinter GUI), 56 MCP tools, 16 decoders, 10 code families, visual circuit builder, and offline decoding engine for QECTOR Decoder v3 (qector-decoder-v3==0.7.0). Distributed as a standalone desktop app; on first launch it automatically fetches and installs the decoder backend from PyPI, then works 100% offline.'
+          'Free desktop application (CustomTkinter GUI) and Model Context Protocol server for QECTOR Decoder v3: 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, and a visual circuit builder. Ships as a portable Windows x64 executable and native Linux x64 Debian packages, each fully self-contained — it bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is required. No macOS build is currently published.'
         ) +
-        h2('16 Integrated Decoders') +
+        h2('Downloads') +
         ul([
-          'hybrid_cascade', 'fast_union_find', 'lookup_table', 'union_find', 'blossom', 'sparse_blossom', 'hybrid', 'predecoded', 'auto', 'bp_osd', 'gnn_belief_matching', 'belief_matching', 'auto_router', 'colour_code', 'two_stage', 'ambiguity_cluster',
+          'Windows x64 — portable <code>QectorWorkbench-Portable.exe</code>, no installer and no admin rights: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
+          'Linux x64 — Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
+          'Headless MCP server on either platform: <code>--mcp</code> (56-tool stdio JSON-RPC 2.0, no display needed).',
+          'Linux baseline glibc 2.31: Ubuntu 20.04+, Debian 11+, Mint 20+, antiX 21+ / MX 21+, Fedora 32+, openSUSE Leap 15.3+.',
+          'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
+        h2('Modules') +
+        p(
+          'Eight modules ship in v0.5.2: Code Explorer (build and inspect codes, Tanner graph and parity-check matrix views, decoder recommendation), Decoder Lab (interactive decode runs with syndrome-validity and logical-failure reporting), Benchmark (throughput and latency percentiles with JSON export and session comparison), Batch &amp; Streaming (batch decoding and sliding-window streaming, with cpu / cpu_parallel / cuda / opencl backend probing), Hardware, Diagnostics, Documentation, and Console.'
+        ) +
+        h2('Measured Benchmarks (13 of 16 decoders)') +
+        table(
+          ['Decoder Kind', 'Throughput', 'p50 Latency', 'LER (d=5)', 'Compatibility'],
+          [
+            ['hybrid_cascade', '362,845 decodes/s', '2.60 µs', '0.10', 'Graphlike'],
+            ['fast_union_find', '349,895 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
+            ['lookup_table', '337,610 decodes/s', '2.40 µs', '0.10', 'Small (<20 checks)'],
+            ['union_find', '295,508 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
+            ['blossom', '261,917 decodes/s', '2.90 µs', '0.08', 'Universal (PyMatching Parity)'],
+            ['sparse_blossom', '146,757 decodes/s', '4.05 µs', '0.08', 'Graphlike'],
+            ['hybrid', '138,812 decodes/s', '4.10 µs', '0.08', 'Graphlike'],
+            ['predecoded', '82,850 decodes/s', '12.00 µs', '0.08', 'Graphlike'],
+            ['auto', '61,125 decodes/s', '13.60 µs', '0.10', 'Graphlike'],
+            ['bp_osd', '26,162 decodes/s', '34.75 µs', '0.10', 'Universal / qLDPC'],
+            ['gnn_belief_matching', '6,520 decodes/s', '147.15 µs', '0.08', 'Graphlike'],
+            ['belief_matching', '1,001 decodes/s', '988.05 µs', '0.02 (Best)', 'Universal'],
+            ['auto_router', '40 decodes/s', '25.45 ms', '0.08', 'Universal Policy Router'],
+          ]
+        ) +
         h2('10 Quantum Code Families') +
+        p('Workbench v0.5.2 covers 10 code families including qLDPC and colour codes:') +
         ul([
           'repetition — 1D chain parity-check code.',
           'ring — Periodic 1D chain.',
@@ -304,7 +332,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'heavy_hex — IBM heavy-hex lattice.',
           'hypergraph_product — CSS code from repetition seed.',
           'bicycle — qLDPC bicycle code.',
-          'bivariate_bicycle — IBM bivariate bicycle presets.',
+          'bivariate_bicycle — IBM bivariate bicycle presets (qLDPC).',
           'color_code — triangular colour code.',
         ]) +
         h2('Benchmark policy') +
@@ -323,21 +351,35 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/pricing',
     title: 'Pricing · QECTOR',
     description:
-      'QECTOR Decoder v3 commercial licensing. Self-serve evaluation from $499. Annual tiers from $1,299. Enterprise and OEM available.',
+      'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD.',
     heading: 'Pricing & Licensing',
     body: page(
       h1('Pricing & Licensing') +
         p(
-          'QECTOR Decoder v3 is source-available: free for non-commercial, academic, and personal use under PolyForm Noncommercial 1.0.0. Commercial deployment requires a paid license.'
+          'QECTOR Decoder v3 is source-available: free for non-commercial, academic, and personal use under PolyForm Noncommercial 1.0.0. Commercial deployment requires a paid license. All prices are in US dollars (USD) and exclude tax.'
         ) +
         table(
-          ['Tier', 'Price', 'Use case'],
+          ['Tier', 'Price (USD)', 'Seats', 'Use case'],
           [
-            ['Community (non-commercial)', '$0', 'Research, academic, personal projects'],
-            ['Commercial evaluation', '$499 one-time', '60-day pilot, unlimited internal seats, 100% credit toward annual'],
-            ['Annual commercial', 'from $1,299/yr', 'Production deployment, priority support'],
-            ['Enterprise / OEM', 'custom', 'Redistribution, SaaS hosting, hardware bundling'],
+            ['Community (non-commercial)', '$0', 'Unlimited', 'Research, academic, personal projects'],
+            ['Commercial evaluation', '$499 one-time', 'Unlimited internal', '60-day evaluation and pilot work. Not production. 100% creditable toward an annual tier bought within 90 days'],
+            ['Solo / Indie commercial', '$1,299 / yr', '1 named user', 'Production internal use, priority email support'],
+            ['Solo / Indie perpetual', '$3,299 one-time', '1 named user', 'Same rights as annual for the major version purchased, patch updates included'],
+            ['Startup / Growth', '$4,499 / yr', 'Up to 10', 'Production internal use, advanced BP-OSD/LDPC workflows'],
+            ['Professional / Lab', '$11,500 / yr', 'Up to 25', 'Production internal use, SLA, validation report package credit'],
+            ['Enterprise R&amp;D', 'from $28,000 / yr', 'Unlimited', 'Dedicated support engineer, custom builds, Rust source access on request'],
+            ['Enterprise / OEM / SaaS', 'Custom', 'Custom', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
           ]
+        ) +
+        p(
+          '<strong>Tax:</strong> prices are in USD and exclude tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout based on your billing location. <strong>Delivery:</strong> your license token is emailed within 10 minutes of payment — check your spam folder before contacting support. <strong>Refunds:</strong> tokens are delivered instantly, so all sales are final — see the <a href="/refund" style="color:#67e8f9;">refund policy</a>; the $499 evaluation is the creditable way to try before committing.'
+        ) +
+        h2('Activating your license') +
+        p(
+          'Everyone installs the same wheel — there is no separate commercial build and no feature gating. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Setting the token stops the notice; decoding runs either way, with no hard stop.'
+        ) +
+        pre(
+          `# Commercial use: activate with the Ed25519 token from your licence email\nexport QECTOR_LICENSE="<your-token>"\n\n# Optional: suppress the licensing notice in CI logs\nexport QECTOR_SILENT=1\n\n# Verification is offline against a public key in the package.\n# No licence server, no phone-home, works air-gapped.`
         ) +
         h2('Frequently asked questions') +
         FAQ_ITEMS.map(
@@ -377,6 +419,103 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     ),
   },
   {
+    path: '/guillaume-lessard',
+    title: 'Guillaume Lessard · Founder of QECTOR and iD01t Productions',
+    description:
+      'Guillaume Lessard — self-taught developer, author and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
+    heading: 'Guillaume Lessard',
+    body: page(
+      h1('Guillaume Lessard') +
+        p(
+          'Founder, developer, author and independent researcher, based in Longueuil, Québec. I build QECTOR: I left formal schooling at sixteen and taught myself to write software, and a bit over two decades later I write Rust decoders for quantum error correction, publish the benchmarks behind every claim, and ship the whole thing myself.'
+        ) +
+        h2('Making sure you have the right Guillaume Lessard') +
+        p(
+          'It is a common Québécois name shared by several accomplished people — including a compiler engineer working on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. The identifiers below are the ones I control.'
+        ) +
+        table(
+          ['Identifier', 'Value'],
+          [
+            ['ORCID', `<a href="https://orcid.org/0009-0000-3465-3753" style="color:#67e8f9;">0009-0000-3465-3753</a>`],
+            ['GitHub', `<a href="https://github.com/qectorlab" style="color:#67e8f9;">github.com/qectorlab</a>`],
+            ['PyPI', `<a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3</a>`],
+            ['Studio', `<a href="https://id01t.store/" style="color:#67e8f9;">iD01t Productions</a>, Longueuil, Québec (founded 2023)`],
+            ['itch.io', `<a href="https://id01t.itch.io/" style="color:#67e8f9;">id01t.itch.io</a>`],
+            ['Email', `<a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>`],
+          ]
+        ) +
+        h2('Background') +
+        p(
+          'No degree. I left school at sixteen and learned to program because I wanted to make things that worked. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T across 2024–2025. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
+        ) +
+        h2('Skills') +
+        ul([
+          'Systems and performance — Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
+          'Python engineering — Python 3.9–3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, sigstore attestation.',
+          'Quantum error correction — MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
+          'Applications and desktop — CustomTkinter GUI, self-contained runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
+          'Web and product — React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
+          'Writing and publishing — technical documentation, long-form instructional writing, audiobook production, electronic music production.',
+        ]) +
+        h2('Selected work') +
+        ul([
+          `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a> — Rust-core Python library, 20+ decoder families, exact MWPM parity with PyMatching d=3–15.`,
+          `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.2</a> — free desktop GUI and 56-tool MCP server for Windows and Linux.`,
+          `<a href="/benchmarks" style="color:#67e8f9;">Published benchmark corpus</a> — 1,858 timing measurements across 6 topologies.`,
+          'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
+        ]) +
+        p('Book a 30-minute call: <a href="https://calendly.com/qector-info/30min" style="color:#67e8f9;">calendly.com/qector-info/30min</a> · <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+    ),
+    jsonLdExtra: [
+      {
+        '@type': 'Person',
+        '@id': `${SITE_URL}/guillaume-lessard#person`,
+        name: 'Guillaume Lessard',
+        givenName: 'Guillaume',
+        familyName: 'Lessard',
+        identifier: '0009-0000-3465-3753',
+        jobTitle: 'Founder, Developer and Independent Researcher',
+        description:
+          'Self-taught developer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
+        image: `${SITE_URL}/assets/g.png`,
+        url: `${SITE_URL}/guillaume-lessard`,
+        email: 'admin@qector.store',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '2004 De Lorimier',
+          addressLocality: 'Longueuil',
+          addressRegion: 'QC',
+          postalCode: 'J4K 3H7',
+          addressCountry: 'CA',
+        },
+        worksFor: {
+          '@type': 'Organization',
+          name: 'iD01t Productions',
+          url: 'https://id01t.store/',
+          foundingDate: '2023',
+        },
+        knowsAbout: [
+          'Quantum error correction',
+          'Minimum-weight perfect matching decoders',
+          'Belief propagation and OSD decoding',
+          'Rust',
+          'Python',
+          'GPU batch computing',
+          'Technical writing',
+        ],
+        sameAs: [
+          'https://orcid.org/0009-0000-3465-3753',
+          'https://github.com/GuillaumeLessard',
+          'https://github.com/qectorlab',
+          PYPI_URL,
+          'https://id01t.itch.io/',
+          'https://id01t.store/',
+          'https://www.linkedin.com/in/qector/',
+        ],
+      },
+    ],
+  },
+  {
     path: '/about',
     title: 'About · QECTOR',
     description:
@@ -404,7 +543,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('SATI OS → QECTOR Workbench') +
         p(
-          'SATI OS features are fully integrated into QECTOR Workbench v0.5.2 and QECTOR Decoder v3. The desktop GUI, 56 MCP tools, FastAPI REST engine, dual CLI, and decoder suite are available directly in the free QECTOR Workbench desktop application.'
+          'SATI OS features are fully integrated into QECTOR Workbench v0.5.2 and QECTOR Decoder v3. The desktop GUI, 56-tool MCP server, 16 decoders, and 10 code families are available directly in the free QECTOR Workbench desktop application for Windows x64 and Linux x64.'
         ) +
         p('Explore the <a href="/workbench" style="color:#67e8f9;">QECTOR Workbench page</a>.')
     ),
@@ -545,8 +684,17 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'QECTOR Decoder v3 is source-available under the PolyForm Noncommercial License 1.0.0: free for personal, academic, and non-commercial research use. Company use, funded institutional work, SaaS, OEM integration, redistribution, or commercial benchmarking requires a commercial license.'
         ) +
+        h2('Commercial addendum — what a paid licence changes') +
+        ul([
+          'Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.',
+          'Internal use only. Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.',
+          'Activated by setting <code>QECTOR_LICENSE</code> to your Ed25519 token; verification is offline, with no licence server and no phone-home.',
+          'The package is byte-identical for licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>); no functionality is gated or disabled.',
+          'No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.',
+        ]) +
+        p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a> — also bundled with the package distribution.') +
         p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
-        p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+        p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
   {
@@ -574,7 +722,45 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Use of the QECTOR website and software is governed by the PolyForm Noncommercial License 1.0.0 for community use, or by a written commercial license agreement for paid tiers. Benchmarks and validation artifacts may be republished with attribution. No warranty is provided; see the license for the full terms.'
         ) +
+        p(
+          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Licence tokens are delivered instantly and all sales are final — see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
+        ) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+    ),
+  },
+  {
+    path: '/refund',
+    title: 'Refund Policy · QECTOR',
+    description:
+      'QECTOR Decoder v3 refund policy. Licence tokens are delivered instantly and are non-refundable; the $499 60-day evaluation is the creditable way to evaluate before committing.',
+    heading: 'Refund Policy',
+    body: page(
+      h1('Refund Policy') +
+        p(
+          'QECTOR commercial licences are digital goods: an Ed25519-signed token issued and emailed within minutes of payment. Because the licensed rights and the token are delivered in full and immediately, commercial licences are non-refundable and all sales are final. This applies to the Commercial Evaluation Licence, all annual tiers, and the perpetual licence.'
+        ) +
+        h2('Evaluate first') +
+        ul([
+          'The $499 Commercial Evaluation Licence is a flat, non-recurring 60-day licence with unlimited internal seats, for benchmarking and pilot work.',
+          'It does not auto-renew and is not a subscription.',
+          'It is 100% creditable toward any annual tier purchased within 90 days of the evaluation start — $499 then Solo/Indie means you pay $800, not $1,299.',
+          'To claim the credit, email your Stripe invoice number to admin@qector.store.',
+        ]) +
+        h2('Delivery problems are fixed, not refunded') +
+        p(
+          'If a token never arrives, is tied to the wrong email, or fails offline verification, that is a delivery fault on our side. Email admin@qector.store with your Stripe invoice number and we reissue it at no cost — please do not open a dispute. Tokens usually arrive in under 10 minutes; check your spam folder first.'
+        ) +
+        h2('Exceptions') +
+        ul([
+          'Duplicate purchases of the same tier for the same organisation, and charges made in obvious error, are refunded in full on request within 30 days.',
+          'Annual licences are term licences that do not auto-renew, so there is nothing to cancel; stopping use partway through a term does not generate a partial refund.',
+          'Nothing in this policy waives non-waivable statutory consumer rights where they apply.',
+        ]) +
+        h2('Currency, tax, and seller') +
+        p(
+          'All prices are quoted and charged in US dollars (USD), exclusive of tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout. Licences are sold by Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Payments are processed by Stripe and card details never reach QECTOR systems.'
+        ) +
+        p('Refund and billing questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> · See also <a href="/terms" style="color:#67e8f9;">terms</a> and <a href="/license" style="color:#67e8f9;">licence</a>.')
     ),
   },
   {
