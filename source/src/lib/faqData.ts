@@ -25,7 +25,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'How many seats does each tier cover, and what counts as production?',
-    a: 'The $499 evaluation covers unlimited internal seats for 60 days, but it is scoped to evaluation and pilot work — benchmarking, integration testing, threshold studies, and architecture assessment. It does not grant production rights. Annual tiers grant production rights for internal use and are seat-counted: Solo/Indie $1,299/yr (1 named user), Startup/Growth $4,499/yr (up to 10), Professional/Lab $11,500/yr (up to 25), Enterprise R&D from $28,000/yr (unlimited). A Solo/Indie perpetual license is also available at $3,299 one-time.'
+    a: 'The $499 evaluation covers unlimited internal seats for 60 days, but it is scoped to evaluation and pilot work — benchmarking, integration testing, threshold studies, and architecture assessment. It does not grant production rights. Annual tiers grant production rights for internal use and are seat-counted: Solo/Indie $1,299/yr (1 named user), Startup/Growth $4,499/yr (up to 10), Professional/Lab $11,500/yr (up to 25), Enterprise R&D $28,000/yr (unlimited seats and logical qubits, dedicated support engineer, custom builds). A Solo/Indie perpetual license is also available at $3,299 one-time for v3.x (all v3.x patch/minor updates included; major version upgrades such as v4.0 are a new license).'
   },
   {
     q: 'Is a hosted or customer-facing API covered by an annual tier?',

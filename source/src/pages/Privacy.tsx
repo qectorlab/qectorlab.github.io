@@ -3,7 +3,7 @@ import { SEO } from '../lib/seo';
 export default function Privacy() {
   return (
     <>
-      <SEO title="Privacy Policy · QECTOR" description="Privacy policy for QECTOR website and services." noindex />
+      <SEO title="Privacy Policy · QECTOR" description="Privacy policy for QECTOR website and services." />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />

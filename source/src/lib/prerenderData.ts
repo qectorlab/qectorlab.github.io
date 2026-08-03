@@ -177,19 +177,19 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Rust-core Python library implementing 16 decoder classes from exact MWPM to GPU batch. Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
-        h2('Production decoders') +
+        h2('Production decoders (Stable)') +
         ul([
-          '<strong>BlossomDecoder</strong> — exact minimum-weight perfect matching for graph-like codes.',
-          '<strong>BeliefMatching</strong> — BP preprocessing + reweighted exact MWPM.',
-          '<strong>BpOsdDecoder</strong> — belief propagation + ordered statistics decoding for qLDPC codes.',
-          '<strong>UnionFindDecoder / FastUnionFindDecoder</strong> — near-linear approximate decoding; high-throughput option for graph-like codes.',
-          '<strong>SparseBlossomDecoder</strong> — region-growing near-optimal matching.',
-          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — native GPU batch pipelines.',
-          '<strong>AutoDecoder</strong> — 7-tier backend fallback (CUDA → OpenCL → CPU Rayon → CPU Batch → CPU Single → Blossom → Lookup/Python).',
+          '<strong>UnionFindDecoder / FastUnionFindDecoder</strong> — near-linear time approximate decoding for graph-like codes.',
+          '<strong>BlossomDecoder</strong> — exact minimum-weight perfect matching reference decoder for surface codes.',
+          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — native parallel CPU and CUDA/OpenCL batch pipelines.',
         ]) +
-        h2('Research-stage decoders') +
+        h2('Experimental &amp; research decoders') +
         ul([
-          'HybridDecoder', 'PredecodedDecoder', 'ColourCodeDecoder', 'TwoStageDecoder', 'AmbiguityClusterDecoder', 'DecoderPool', 'LERBenchmark',
+          '<strong>BpOsdDecoder / BPOSDDecoder</strong> — belief propagation + ordered statistics decoding for qLDPC codes (experimental).',
+          '<strong>BeliefMatching</strong> — BP preprocessing + reweighted exact MWPM for correlated noise (research path).',
+          '<strong>SparseBlossomDecoder</strong> — region-growing near-optimal matching (experimental).',
+          '<strong>AutoDecoder / HybridDecoder</strong> — adaptive fallback and routing between Union-Find and Blossom.',
+          '<strong>ColourCodeDecoder / TwoStageDecoder / PredecodedDecoder</strong> — specialized research workflows.',
         ]) +
         h2('Technical specifications') +
         table(
@@ -364,10 +364,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['Community (non-commercial)', '$0', 'Unlimited', 'Research, academic, personal projects'],
             ['Commercial evaluation', '$499 one-time', 'Unlimited internal', '60-day evaluation and pilot work. Not production. 100% creditable toward an annual tier bought within 90 days'],
             ['Solo / Indie commercial', '$1,299 / yr', '1 named user', 'Production internal use, priority email support'],
-            ['Solo / Indie perpetual', '$3,299 one-time', '1 named user', 'Same rights as annual for the major version purchased, patch updates included'],
+            ['Solo / Indie perpetual', '$3,299 one-time', '1 named user', 'Same rights as annual for v3.x (all v3.x patch/minor updates included; major version upgrades such as v4.0 are a new license)'],
             ['Startup / Growth', '$4,499 / yr', 'Up to 10', 'Production internal use, advanced BP-OSD/LDPC workflows'],
             ['Professional / Lab', '$11,500 / yr', 'Up to 25', 'Production internal use, SLA, validation report package credit'],
-            ['Enterprise R&amp;D', 'from $28,000 / yr', 'Unlimited', 'Dedicated support engineer, custom builds, Rust source access on request'],
+            ['Enterprise R&amp;D', '$28,000 / yr', 'Unlimited seats &amp; qubits', 'Dedicated support engineer, custom builds, Rust source access on request'],
             ['Enterprise / OEM / SaaS', 'Custom', 'Custom', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
           ]
         ) +

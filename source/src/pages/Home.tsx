@@ -211,11 +211,11 @@ export default function Home() {
         <div className="section-padding">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
             {[
-              { icon: '\uD83D\uDCCB', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
-              { icon: '\uD83D\uDCD6', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
-              { icon: '\uD83D\uDCE6', label: `PyPI v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
-              { icon: '\uD83D\uDCCB', label: 'ORCID', href: 'https://orcid.org/0009-0000-3465-3753' },
-              { icon: '\uD83D\uDDA5\uFE0F', label: 'Free Workbench GUI v0.5.2', href: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest' },
+              { icon: '📋', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
+              { icon: '📖', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
+              { icon: '📦', label: `PyPI Wheel v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
+              { icon: '🖥️', label: 'Free Workbench App v0.5.2', href: '/workbench' },
+              { icon: '🆔', label: 'ORCID 0009-0000-3465-3753', href: 'https://orcid.org/0009-0000-3465-3753' },
             ].map((pill) => (
               <TrustSignal
                 key={pill.label}

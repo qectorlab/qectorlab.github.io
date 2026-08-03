@@ -98,15 +98,13 @@ export default function Decoder() {
             />
 
             {/* Production */}
-            <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production</h3>
+            <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production Stable Decoders</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
-                { name: 'Blossom MWPM', tag: 'Exact', color: 'gold', desc: 'Exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.' },
-                { name: 'Belief Matching', tag: 'Accuracy', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. Use when accuracy matters more than latency.' },
-                { name: 'BP-OSD', tag: 'qLDPC', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. Required for qLDPC codes where matching decoders cannot be applied.' },
-                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes - trades some LER accuracy for speed.' },
-                { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for ring-like detector graphs. Lower latency than exact Blossom, close to optimal.' },
-                { name: 'GPU Batch', tag: 'Parallel', color: 'gold', desc: 'Native CUDA/OpenCL batch decoding. Throughput advantage grows with batch size.' },
+                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes — trades some LER accuracy for speed.' },
+                { name: 'Fast Union-Find', tag: 'Hot Path', color: 'green', desc: 'Optimized Union-Find hot path for low-latency real-time decoding pipelines.' },
+                { name: 'Blossom MWPM', tag: 'Exact Reference', color: 'gold', desc: 'Exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.' },
+                { name: 'CPU & GPU Batch Decoder', tag: 'Parallel', color: 'gold', desc: 'Native C++ / CUDA / OpenCL batch decoding. Throughput advantage grows with batch size.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}
@@ -117,21 +115,21 @@ export default function Decoder() {
               ))}
             </div>
 
-            {/* Experimental */}
-            <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental - Research Stage</h3>
+            {/* Experimental & Research */}
+            <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental &amp; Research Decoders</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { name: 'Hybrid Decoder', desc: 'HybridDecoder routes between Union-Find and Blossom based on code properties. Research-stage.' },
-                { name: 'Predecoded Decoder', desc: 'Wraps pre-existing decoding results for integration into QECTOR pipelines. Useful for hybrid workflows.' },
-                { name: 'Lookup-Table Decoder', desc: 'Precomputed correction table for small codes or syndrome subspaces. Fast but limited to small distances.' },
-                { name: 'Colour Code Decoder', desc: 'Native colour-code decoder over undecomposed detector error models. Research-stage.' },
-                { name: 'Two-Stage Decoder', desc: 'Two-stage decoding pipeline for degenerate codes. Research-stage.' },
-                { name: 'Ambiguity Cluster', desc: 'Ambiguity-cluster resolution decoder. Research-stage.' },
+                { name: 'BP-OSD', tag: 'qLDPC Research', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. Experimental path for qLDPC codes where matching decoders cannot be applied.' },
+                { name: 'Belief-Matching', tag: 'Correlated Noise', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. Research path for correlated noise scenarios.' },
+                { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for detector graphs. Lower latency than exact Blossom.' },
+                { name: 'Hybrid & AutoDecoder', tag: 'Adaptive Routing', color: 'cyan', desc: 'AutoDecoder and HybridDecoder route between Union-Find and Blossom based on code properties.' },
+                { name: 'Lookup-Table Decoder', tag: 'Small Codes', color: 'gold', desc: 'Precomputed correction table for small codes or syndrome subspaces.' },
+                { name: 'Colour Code / Two-Stage', tag: 'Research', color: 'purple', desc: 'Native colour-code decoder and two-stage ambiguity-cluster decoders.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}
                   title={algo.name}
-                  badge={{ label: 'Experimental', color: 'gold' }}
+                  badge={{ label: algo.tag, color: 'gold' }}
                   desc={algo.desc}
                   muted
                 />

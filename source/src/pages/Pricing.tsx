@@ -282,12 +282,12 @@ export default function Pricing() {
               />
               <PricingTierCard
                 name="Enterprise R&D"
-                price="$28,000+"
+                price="$28,000"
                 period="/ year"
-                desc="Custom user volume. Dedicated support engineer."
+                desc="Unlimited seats &amp; logical qubits, dedicated support engineer, and custom builds."
                 features={[
                   'Full decoder v3 (all decoders)',
-                  'Unlimited named users',
+                  'Unlimited named users & logical qubits',
                   'All advanced workflows + custom builds',
                   'CPU + CUDA/OpenCL batch decoding',
                   'Dedicated support engineer',
@@ -326,8 +326,7 @@ export default function Pricing() {
                 </p>
                 <p className="text-secondary text-sm mt-1">
                   <strong className="text-cyan-300">Solo / Indie Perpetual — $3,299 one-time.</strong>{' '}
-                  Same rights as the annual plan for the major version you buy, with patch
-                  updates included. Pays for itself against the annual plan in year three.
+                  Same rights as annual for single named user on v3.x (all v3.x patch/minor updates included). Major version upgrades (e.g. v4.0) are a new license. Pays for itself against the annual plan in year three.
                 </p>
               </div>
               <a
