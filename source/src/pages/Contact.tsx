@@ -133,7 +133,7 @@ export default function Contact() {
                       <span className="text-green-400 text-2xl" aria-hidden="true">✓</span>
                     </div>
                     <h3 className="text-primary font-bold text-xl mb-2">Message Sent</h3>
-                    <p className="text-secondary">We'll get back to you within 1 business day.</p>
+                    <p className="text-secondary">We will get back to you within one business day.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} method="POST" className="space-y-5">

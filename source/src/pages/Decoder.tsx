@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description="QECTOR Decoder v3 – 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{

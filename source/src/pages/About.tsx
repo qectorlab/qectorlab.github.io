@@ -190,7 +190,7 @@ export default function About() {
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
               No universal benchmark figures are published on this site, because results depend on your hardware; the qector bench harness ships with the package so you can measure on your own machines. The decoder reached its first stable release on 2026-08-06 (v1.0.0). IBM hardware runs are real but limited in scope.
               QECTOR Decoder is Source-Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
-              What you see is what you get.
+              Documented behavior is what ships.
             </p>
           </div>
         </div>

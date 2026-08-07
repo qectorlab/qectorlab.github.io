@@ -93,13 +93,13 @@ export default function Workbench() {
       src: '/assets/w1.png',
       alt: 'QECTOR Workbench Code Explorer tab showing a rotated_surface distance-5 code with its Tanner graph, properties panel and decoder recommendation.',
       title: 'Code Explorer',
-      caption: 'Build and inspect codes. Here rotated_surface d=5 (25 qubits, 12 checks, rate 0.52) with its Tanner graph and parity-check matrix, plus an analysis panel recommending union_find on CUDA at batch size 1024.',
+      caption: 'Build and inspect codes. Here, a rotated_surface d=5 code (25 qubits, 12 checks, rate 0.52) with its Tanner graph and parity-check matrix, plus an analysis panel recommending union_find on CUDA at batch size 1024.',
     },
     {
       src: '/assets/ww2.png',
       alt: 'QECTOR Workbench Decoder Laboratory tab running the fast_union_find decoder with resilient fallback enabled, showing syndrome validity and logical failure status.',
       title: 'Decoder Laboratory',
-      caption: 'Test decoders interactively on the current code. Each run reports Hamming weight, syndrome validity, and logical failure alongside the raw error, syndrome, and correction vectors: with resilient fallback toggleable.',
+      caption: 'Test decoders interactively on the current code. Each run reports Hamming weight, syndrome validity, and logical failure alongside the raw error, syndrome, and correction vectors, with a toggleable resilient fallback.',
     },
     {
       src: '/assets/w4.png',

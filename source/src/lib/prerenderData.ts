@@ -130,7 +130,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
@@ -169,7 +169,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 – 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +

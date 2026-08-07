@@ -242,7 +242,7 @@ prediction = decoder.decode(syndrome)`}
             <div>
               <h3 className="text-primary font-semibold text-sm mb-2">Throughput via qector bench</h3>
               <p className="text-secondary text-xs mb-2">
-                Generates a rotated surface-code circuit in-memory (Stim) and decodes the requested shots, printing one honest rate line:
+                Generates a rotated surface-code circuit in-memory (Stim) and decodes the requested shots, printing a machine-conditional rate line:
               </p>
               <CodeBlock
                 code="qector bench --distance 5 --rounds 5 --shots 10000 --decoder blossom --noise 0.001"
@@ -508,7 +508,7 @@ prediction = decoder.decode(syndrome)`}
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">User Manual</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Complete guide to QECTOR Decoder v3 - installation, all decoder families,
+            Complete guide to QECTOR Decoder v3 – installation, all decoder families,
             GPU batch workflows, benchmarking, diagnostics, and ecosystem integration.
           </p>
         </div>

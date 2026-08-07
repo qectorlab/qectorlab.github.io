@@ -294,7 +294,7 @@ export default function McpServer() {
               </li>
               <li>
                 <strong className="text-primary">Measure on Your Own Hardware.</strong>{' '}
-                No universal benchmark figures are published on the site, because results depend on your hardware, drivers, and workloads. Validate and measure with the shipped harness: <code className="text-cyan-300">qector bench</code> prints one honest, machine-conditional rate line, and <code className="text-cyan-300">qector-doctor</code> reports why a decoder is available or unavailable on your machine.
+                No universal benchmark figures are published on the site, because results depend on your hardware, drivers, and workloads. Validate and measure with the shipped harness: <code className="text-cyan-300">qector bench</code> prints one machine-conditional rate line, and <code className="text-cyan-300">qector-doctor</code> reports why a decoder is available or unavailable on your machine.
               </li>
               <li>
                 <strong className="text-primary">Licensing.</strong> Academic, research and personal use is free. Commercial use requires a license; see{' '}

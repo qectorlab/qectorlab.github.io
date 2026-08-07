@@ -18,7 +18,7 @@ const platformLinks: LinkItem[] = [
 ];
 
 const researchLinks: LinkItem[] = [
-  { label: 'Evidence & Provenance', href: '/evidence' },
+  { label: 'Evidence & Reports', href: '/evidence' },
   { label: 'Technical Reference', href: '/technical-reference' },
   { label: 'Package User Manual', href: '/manual' },
   { label: 'Documentation Hub', href: '/docs' },

@@ -73,7 +73,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description="QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -142,7 +142,7 @@ export default function Home() {
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
             25+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
-            <span className="text-primary font-semibold">v1.0.0: first stable release:</span> API stability tiers,
+            <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
             A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             All claims backed by reproducible artifacts.
@@ -248,7 +248,7 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Install',
-                desc: 'pip install qector-decoder-v3 into any Python 3.10+ environment alongside your existing Stim or PyMatching workflow.',
+                desc: 'pip install qector-decoder-v3 into any Python 3.9+ environment alongside your existing Stim or PyMatching workflow.',
                 detail: 'pip install qector-decoder-v3',
                 code: true,
               },
@@ -256,7 +256,7 @@ export default function Home() {
                 step: '02',
                 title: 'Decode',
                 desc: 'Access 25+ Rust-accelerated decoder configurations through a unified Python API. Swap algorithms without changing your pipeline.',
-                detail: 'from qector_decoder_v3 import BlossomDecoder, BPOSODecoder',
+                detail: 'from qector_decoder_v3 import BlossomDecoder, BpOsdDecoder',
                 code: true,
               },
               {
@@ -347,7 +347,7 @@ export default function Home() {
                   25+ Decoder Configs · Unified API
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Battle-Tested Decoding Algorithms
+                  Production-Grade Decoding Algorithms
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
                   Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
