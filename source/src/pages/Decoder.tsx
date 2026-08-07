@@ -168,7 +168,7 @@ export default function Decoder() {
               linkLabel="GitHub Artifacts &amp; Harness →"
             />
             <div className="flex flex-wrap gap-4 mt-3 px-1">
-              <Link to="/evidence" className="text-cyan-300 text-sm hover:underline">Evidence Reports →</Link>
+              <Link to="/evidence" className="text-cyan-300 text-sm hover:underline">Evidence &amp; Reports →</Link>
             </div>
           </div>
 
