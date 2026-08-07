@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 16 decoder classes in a single Python library. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s, native GPU batch decoding."
+        description="QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s."
       />
       <JsonLd
         data={{
@@ -60,8 +60,9 @@ export default function Decoder() {
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Rust-core Python library implementing 16 decoder classes from exact MWPM to GPU batch.
-            Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.
+            Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch.
+            v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI.
+            Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections.
             Stim-native. PyPI binary wheels. All artifacts published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
           </p>
@@ -78,9 +79,9 @@ export default function Decoder() {
           {/* Core Metrics */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Verified Points', value: '54/54', desc: 'Benchmark sweep points with zero unfaithful corrections (repetition n=5–65, ring n=16–48)' },
+              { label: 'Verified Points', value: '54/54', desc: 'Benchmark sweep points with zero unfaithful corrections (repetition n=5–65, ring n=16–48), verified v0.7.0 set' },
               { label: 'Peak Throughput', value: '11.5M/s', desc: 'FastUnionFind, 5-qubit repetition code, package MCP server' },
-              { label: 'Faithfulness', value: '42/42', desc: 'Syndrome-faithfulness cases passed in the verified v0.7.0 set' },
+              { label: 'Stable API', value: 'v1.0.0', desc: 'First stable release with documented API stability tiers' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} desc={m.desc} centered />
@@ -93,7 +94,7 @@ export default function Decoder() {
               align="left"
               maxWidth="max-w-none"
               heading="Decoding Algorithms"
-              description="Production decoders with a verified v0.7.0 benchmark set; artifacts on GitHub. Experimental decoders are research-stage."
+              description="Production decoders with a verified v0.7.0 benchmark set; artifacts on GitHub. Experimental decoders are research-stage. v1.0.0 freezes the public API under documented stability tiers."
               className="mb-6"
             />
 
@@ -104,7 +105,7 @@ export default function Decoder() {
                 { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes — trades some LER accuracy for speed.' },
                 { name: 'Fast Union-Find', tag: 'Hot Path', color: 'green', desc: 'Optimized Union-Find hot path for low-latency real-time decoding pipelines.' },
                 { name: 'Blossom MWPM', tag: 'Exact Reference', color: 'gold', desc: 'Exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.' },
-                { name: 'CPU & GPU Batch Decoder', tag: 'Parallel', color: 'gold', desc: 'Native C++ / CUDA / OpenCL batch decoding. Throughput advantage grows with batch size.' },
+                { name: 'CPU & GPU Batch Decoder', tag: 'Parallel', color: 'gold', desc: 'Native CUDA / OpenCL batch decoding. Throughput advantage grows with batch size; CUDA accepts edge_weights and precision="f64" in v1.0.0.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}
@@ -119,12 +120,12 @@ export default function Decoder() {
             <h3 className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-3">Experimental &amp; Research Decoders</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { name: 'BP-OSD', tag: 'qLDPC Research', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. Experimental path for qLDPC codes where matching decoders cannot be applied.' },
+                { name: 'BP-OSD', tag: 'qLDPC Research', color: 'purple', desc: 'Belief propagation + ordered statistics decoding. v1.0.0 adds Relay-BP schedules, CS-OSD(lambda, w) and LLR damping.' },
                 { name: 'Belief-Matching', tag: 'Correlated Noise', color: 'cyan', desc: 'BP pre-processing + reweighted exact MWPM. Research path for correlated noise scenarios.' },
-                { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for detector graphs. Lower latency than exact Blossom.' },
+                { name: 'Sparse Blossom', tag: 'Near-Optimal', color: 'gold', desc: 'Region-growing blossom variant for detector graphs. Zero-allocation hot path in v1.0.0.' },
                 { name: 'Hybrid & AutoDecoder', tag: 'Adaptive Routing', color: 'cyan', desc: 'AutoDecoder and HybridDecoder route between Union-Find and Blossom based on code properties.' },
                 { name: 'Lookup-Table Decoder', tag: 'Small Codes', color: 'gold', desc: 'Precomputed correction table for small codes or syndrome subspaces.' },
-                { name: 'Colour Code / Two-Stage', tag: 'Research', color: 'purple', desc: 'Native colour-code decoder and two-stage ambiguity-cluster decoders.' },
+                { name: 'Colour Code / Two-Stage / Ambiguity-Cluster', tag: 'Research', color: 'purple', desc: 'New v1.0.0 families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder.' },
               ].map((algo) => (
                 <AlgorithmCard
                   key={algo.name}
@@ -162,7 +163,7 @@ export default function Decoder() {
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s. Reproducible artifacts are on GitHub and at qector.store/benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn."
+              statement="Last published verified benchmark set (v0.7.0): 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s. v1.0.0 (2026-08-06) is the first stable release. Reproducible artifacts are on GitHub and at qector.store/benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn."
               href="https://github.com/GuillaumeLessard/qector-decoder"
               linkLabel="GitHub Artifacts &amp; Harness →"
             />

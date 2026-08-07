@@ -21,7 +21,7 @@ import { FAQ_ITEMS } from './faqData';
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
 export const OG_IMAGE = 'https://qector.store/assets/og-image.png';
-export const DECODER_VERSION = '0.7.0';
+export const DECODER_VERSION = '1.0.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const GITHUB_URL = 'https://github.com/GuillaumeLessard/qector-decoder';
 
@@ -54,7 +54,7 @@ const softwareNode = {
   '@type': 'SoftwareApplication',
   name: 'QECTOR Decoder v3',
   description:
-    'Production-grade poly-algorithmic quantum error correction decoder for Python. Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.',
+    'Production-grade poly-algorithmic quantum error correction decoder for Python. v1.0.0 first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI. Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Linux, macOS, Windows',
   programmingLanguage: 'Python',
@@ -131,23 +131,23 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. 16 decoder classes, verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
+      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library of 16 production and research quantum error correction decoders — MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, GPU batch and more — behind one consistent API, with a verified v0.7.0 benchmark set.'
+          'QECTOR Decoder v3 is a Rust-core Python library of 25+ production and research quantum error correction decoder configurations — MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, GPU batch and more — behind one consistent API. v1.0.0 is the first stable release, with API stability tiers, a qector CLI and qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
         ) +
-        h2('Verified v0.7.0 benchmark set') +
+        h2('v1.0.0 — first stable release') +
         ul([
-          'Peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server).',
-          '54/54 benchmark points with zero unfaithful corrections (repetition n=5–65, ring n=16–48).',
-          '42/42 syndrome-faithfulness cases passed.',
-          '13 MCP tools operational (MCP stdio, JSON-RPC 2.0).',
-          'PyMatching is comparable and often slightly ahead on synchronized batch decoding — QECTOR\u2019s value is multi-algorithm diversity and reproducibility.',
+          'Semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental).',
+          'Sinter entry points (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered — sinter.collect() works with no custom_decoders=.',
+          'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in cluster_bposd). Relay-BP schedules, CS-OSD(lambda, w) and LLR damping in BP-OSD.',
+          'qector decode / qector bench / qector serve CLI and qector-doctor (15-check environment diagnostic).',
+          'Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections.',
         ]) +
         h2('The decoders') +
         p(
@@ -157,7 +157,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           `PyPI package: <a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3 ${DECODER_VERSION}</a>`,
           `Artifacts and reproduction harness: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
-          'Verified set (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) published at /benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn.',
+          'Verified v0.7.0 set (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) published at /benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn.',
         ])
     ),
     jsonLdExtra: [
@@ -170,36 +170,36 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 - 16 decoder classes in a single Python library. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s, native GPU batch decoding.',
+      'QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 16 decoder classes from exact MWPM to GPU batch. Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
+          'Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
         h2('Production decoders (Stable)') +
         ul([
           '<strong>UnionFindDecoder / FastUnionFindDecoder</strong> — near-linear time approximate decoding for graph-like codes.',
           '<strong>BlossomDecoder</strong> — exact minimum-weight perfect matching reference decoder for surface codes.',
-          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — native parallel CPU and CUDA/OpenCL batch pipelines.',
+          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — native parallel CPU and CUDA/OpenCL batch pipelines; CUDA accepts edge_weights and precision="f64" in v1.0.0.',
         ]) +
         h2('Experimental &amp; research decoders') +
         ul([
-          '<strong>BpOsdDecoder / BPOSDDecoder</strong> — belief propagation + ordered statistics decoding for qLDPC codes (experimental).',
+          '<strong>BpOsdDecoder / BPOSDDecoder</strong> — belief propagation + ordered statistics decoding for qLDPC codes; v1.0.0 adds Relay-BP, CS-OSD(lambda, w) and LLR damping.',
           '<strong>BeliefMatching</strong> — BP preprocessing + reweighted exact MWPM for correlated noise (research path).',
-          '<strong>SparseBlossomDecoder</strong> — region-growing near-optimal matching (experimental).',
+          '<strong>SparseBlossomDecoder</strong> — region-growing near-optimal matching; zero-allocation hot path in v1.0.0 (experimental).',
           '<strong>AutoDecoder / HybridDecoder</strong> — adaptive fallback and routing between Union-Find and Blossom.',
-          '<strong>ColourCodeDecoder / TwoStageDecoder / PredecodedDecoder</strong> — specialized research workflows.',
+          '<strong>ColourCodeDecoder / TwoStageDecoder / AmbiguityClusterDecoder / PredecodedDecoder</strong> — specialized research workflows, new families in v1.0.0.',
         ]) +
         h2('Technical specifications') +
         table(
           ['Key', 'Value'],
           [
             ['Languages', 'Rust core (PyO3) / Python 3.9–3.13 API'],
-            ['Platforms', 'Linux x86_64, macOS ARM64/x86_64, Windows x64'],
-            ['GPU', 'CUDA 11.8+ / OpenCL 2.0+ (optional)'],
-            ['QEC library', 'Stim / Sinter / PyMatching compatible'],
-            ['Packaging', 'PyPI binary wheels (manylinux, macOS, Windows) + sdist'],
+            ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (15 binary wheels)'],
+            ['GPU', 'CUDA ships in the wheel; OpenCL via source build'],
+            ['QEC library', 'Stim / Sinter / PyMatching / qiskit-qec compatible'],
+            ['Packaging', 'PyPI binary wheels (cp39–cp313, 3 platforms), Trusted Publishing + Sigstore'],
             ['License', 'PolyForm Noncommercial 1.0.0 (community) / Commercial'],
           ]
         ) +
@@ -216,7 +216,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Verified v0.7.0 Benchmarks') +
         p(
-          'One set, four artifacts, fully reproducible. Measured with the qector-decoder-v3 0.7.0 package MCP server on Linux (glibc 2.35, Python 3.12.13) at 2026-08-02T05:59:13Z. Published as benchmarks.csv, REPORT.md, summary.json, and VERIFIED_APPLE_TO_APPLE_REPORT.pdf.'
+          'One set, four artifacts, fully reproducible. Measured with the qector-decoder-v3 0.7.0 package MCP server on Linux (glibc 2.35, Python 3.12.13) at 2026-08-02T05:59:13Z. Published as benchmarks.csv, REPORT.md, summary.json, and VERIFIED_APPLE_TO_APPLE_REPORT.pdf. v1.0.0 (2026-08-06) is the first stable release; it keeps this verified set citable and ships honest benchmarking methodology (qector bench, the ler module) that publishes no new headline figures.'
         ) +
         h2('Headline numbers') +
         ul([
@@ -233,9 +233,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Four pre-v0.7.0 comparison tables published in earlier documentation (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn. Do not cite them; no benchmark figures are published for this release beyond the verified set.'
         ) +
-        h2('Run it yourself') +
+        h2('Run it yourself (v1.0.0)') +
         pre(
-          `pip install "qector-decoder-v3==${DECODER_VERSION}[bench]"\nqector benchmark --verify\npython -m qector.validate`
+          `pip install "qector-decoder-v3==${DECODER_VERSION}[bench]"\nqector-doctor            # 15-check environment diagnostic\nqector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001`
         ) +
         ul([
           `GitHub artifacts: <a href="${GITHUB_URL}" style="color:#67e8f9;">${GITHUB_URL.replace('https://', '')}</a>`,
@@ -266,6 +266,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'summary.json — machine-readable benchmark summary (timestamp 2026-08-02T05:59:13Z).',
           'benchmarks.csv — full 54-row sweep: repetition n=5–65 and ring n=16–48, six decoder kinds.',
           'VERIFIED_APPLE_TO_APPLE_REPORT.pdf — synchronized vs PyMatching: comparable, PyMatching often slightly ahead on the batch; no speedup multiplier claimed.',
+          'Official v1.0.0 user manual and extended reference (2026-08-06, DOI 10.5281/zenodo.21363016) distributed with qector-decoder-v3==1.0.0.',
           'Pre-v0.7.0 comparison tables (MWPM parity, Belief-Matching gain, GPU bit-identity, optimal-shot analysis) are formally withdrawn — do not cite them.',
         ]) +
         pre(
@@ -527,7 +528,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: a production-grade, honestly-benchmarked quantum error correction decoder for Python.'
         ) +
         ul([
-          'Every published number is part of the verified v0.7.0 artifact set and linked to a public artifact; pre-v0.7.0 comparison tables are formally withdrawn.',
+          'Every published number is part of the verified v0.7.0 artifact set and linked to a public artifact; pre-v0.7.0 comparison tables are formally withdrawn. v1.0.0 (2026-08-06) is the first stable release of the decoder.',
           'IBM Quantum hardware runs are real but limited in scope; job IDs are published with the evidence.',
           'SATI CODEX / LCL-833 theoretical work is research context — the shipping product is the decoder and its workbench.',
         ]) +
@@ -552,11 +553,29 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/changelog',
     title: 'Changelog · QECTOR',
     description:
-      'Version history for QECTOR Decoder v3. Current release: v0.7.0 with the verified benchmark set; pre-v0.7.0 comparison tables formally withdrawn. PyPI release train.',
+      'Version history for QECTOR Decoder v3. Current release: v1.0.0 (2026-08-06), the first stable release. PyPI release train.',
     heading: 'Changelog',
     body: page(
       h1('Changelog') +
-        h2('v0.7.0 — 2026-07-24 (current)') +
+        h2('v1.0.0 — 2026-08-06 (current, first stable release)') +
+        ul([
+          'Semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental / Internal detail).',
+          'Ecosystem entry points registered: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin — sinter.collect() works without custom_decoders=.',
+          'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in method="cluster_bposd").',
+          'Relay-BP layered serial BP schedule (bp_method="relay"), CS-OSD(lambda, w) with configurable osd_lambda, and LLR message damping in bposd.py.',
+          'CUDABatchDecoder / OpenCLBatchDecoder accept edge_weights; precision="f64" for double-precision weighted growth.',
+          'qector decode / qector bench / qector serve CLI plus qector-doctor (15-check environment diagnostic).',
+          'pymatching submodule shim: from qector_decoder_v3.pymatching import Matching.',
+          'SparseBlossomDecoder hot path is now zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed.',
+          'Licence hardening: v2 tokens carry tier + expiry; malformed tokens return False; unreadable key files report invalid.',
+          '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
+          'Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).',
+        ]) +
+        h2('v0.7.1 — 2026-08-04') +
+        ul([
+          'CLI qector decode crash fix (nonexistent import); MCP ping implemented; MCP no longer responds to notifications.',
+        ]) +
+        h2('v0.7.0 — 2026-07-24') +
         ul([
           'Production release with benchmark suite, hyper saturation suite, and Stripe live integration.',
           'MCP Server integration (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools.',
@@ -641,14 +660,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Technical Reference') +
         p(
-          'API reference for qector_decoder_v3 0.7.0 package: stable and experimental decoders, utilities, and helper functions.'
+          'API reference for qector_decoder_v3 1.0.0 package: stable and experimental decoders, utilities, and helper functions. v1.0.0 is the first stable release.'
         ) +
         h2('Stable decoders') +
         p('UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder (7-tier fallback), DecoderPool, get_decoder, clear_decoder_cache, decode_mmap, DecodeResult, decode_with_diagnostics, Workbench.') +
         h2('Experimental / research decoders') +
         p('HybridDecoder, HybridCascadeDecoder (full-feature / source build; public wheels may raise unavailable), PredecodedDecoder, ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder, DecoderPool, LERBenchmark.') +
         h2('Utilities &amp; integration') +
-        p('stim_compat.from_stim_detector_error_model, sinter_compat.qector_sinter_decoders, codes helpers, license.verify_license_token, run_mcp_server.') +
+        p('stim_compat.from_stim_detector_error_model, sinter_compat.qector_sinter_decoders (registered entry points), qiskit_plugin, pymatching shim (from qector_decoder_v3.pymatching import Matching), codes helpers, license.verify_license_token, run_mcp_server, qector decode / bench / serve CLI, qector-doctor.') +
         pre(
           `from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder\nfrom qector_decoder_v3.stim_compat import from_stim_detector_error_model`
         )
@@ -662,14 +681,15 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     heading: 'Installation',
     body: page(
       h1('Installation') +
-        p('QECTOR Decoder v3 ships as a Rust-compiled Python wheel for Python 3.9–3.13 on Linux x86_64, macOS (ARM64/x86_64), and Windows x64.') +
+        p('QECTOR Decoder v3 ships as a Rust-compiled Python wheel for Python 3.9–3.13 on Linux x86_64 (manylinux_2_17), macOS 11.0+ (arm64), and Windows amd64 — 15 binary wheels, no sdist.') +
         pre(
-          `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC\npip install "qector-decoder-v3[bench]"  # Benchmark harness\npip install "qector-decoder-v3[all]"    # Full environment\n\n# Verify\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
+          `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"  # Benchmark harness\npip install "qector-decoder-v3[all]"    # Full environment\n\n# Verify\nqector-doctor            # 15-check environment diagnostic\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
         ) +
         ul([
-          'Linux: manylinux2014 wheels (Ubuntu 20.04+, Debian 11+, RHEL 8+).',
-          'macOS: universal2 wheels, macOS 12+.',
-          'Windows: 10/11 x64 wheels; GPU batch requires NVIDIA CUDA 11.8+.',
+          'Linux: manylinux_2_17 x86_64 wheels (Ubuntu 20.04+, Debian 11+, RHEL 8+).',
+          'macOS: arm64 wheels, macOS 11.0+.',
+          'Windows: amd64 wheels, Python 3.9–3.13.',
+          'CUDA batch path ships in every wheel; OpenCL kernels require a source build (opencl_is_available() is False on wheels by design).',
         ])
     ),
   },
@@ -767,14 +787,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/mcp-server',
     title: 'MCP Server · QECTOR Decoder v3',
     description:
-      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 13 verified tools across 16 decoder types to any MCP client.',
+      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 13 verified tools across 25+ decoder configurations to any MCP client.',
     heading: 'QECTOR MCP Server',
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 16 decoder types — decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder — to any MCP-compatible AI client. Verified in the v0.7.0 benchmark set: 42/42 faithfulness cases, 54/54 points with zero unfaithful corrections.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 25+ decoder configurations — decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder — to any MCP-compatible AI client. Verified in the v0.7.0 benchmark set: 42/42 faithfulness cases, 54/54 points with zero unfaithful corrections. Ships in every v1.0.0 wheel.'
         ) +
-        pre(`pip install qector-decoder-v3==${DECODER_VERSION}\n# then register the qector-mcp server with your MCP client`)
+        pre(`pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3; qector_decoder_v3.run_mcp_server()"`)
     ),
   },
   {

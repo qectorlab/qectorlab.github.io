@@ -70,10 +70,10 @@ const TOOLS = [
   },
   {
     name: 'get_decoder_info',
-    desc: 'Report system version (v0.7.0), available decoder types, and compiled capabilities.',
+    desc: 'Report system version (v1.0.0), available decoder types, and compiled capabilities.',
     required: [],
     optional: [],
-    returns: 'version ("0.7.0"), decoder_types, capabilities',
+    returns: 'version ("1.0.0"), decoder_types, capabilities',
   },
   {
     name: 'get_backend_health',
@@ -145,7 +145,7 @@ export default function McpServer() {
     <>
       <SEO
         title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 16 decoder types. 42/42 faithfulness cases, 54/54 benchmark points with zero unfaithful corrections."
+        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 25+ decoder configurations. 42/42 faithfulness cases, 54/54 benchmark points with zero unfaithful corrections."
       />
       <JsonLd
         data={{
@@ -296,7 +296,7 @@ export default function McpServer() {
                 <strong className="text-primary">Verified v0.7.0 Benchmark Set.</strong>{' '}
                 Verified with the package MCP server on Linux (glibc 2.35, Python 3.12.13): 42/42 syndrome-faithfulness cases passed, 54/54 benchmark points with zero unfaithful corrections, peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code). Explore the four artifacts in the{' '}
                 <Link to="/benchmarks" className="text-cyan-300 hover:underline">verified benchmark set</Link>{' '}
-                or run <code className="text-cyan-300">qector benchmark --verify</code> / <code className="text-cyan-300">python -m qector.validate</code> yourself.
+                or run <code className="text-cyan-300">qector bench</code> / <code className="text-cyan-300">qector-doctor</code> yourself with the v1.0.0 package.
               </li>
               <li>
                 <strong className="text-primary">Licensing.</strong> Academic, research and personal use is free. Commercial use requires a license; see{' '}

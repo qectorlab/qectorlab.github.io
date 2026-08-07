@@ -171,8 +171,9 @@ export default function About() {
                   { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
                   { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated. SATI OS desktop UI scaffolded.' },
                   { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends achieving byte-for-byte identical corrections to CPU.' },
-                  { year: '2025 Q4–2026', event: `v${pypiVersion || '0.7.0'} Decoder (Source-Available) + free QECTOR Workbench GUI v0.5.2 (56 MCP tools). SATI OS full suite on top.` },
+                  { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI v0.5.2 (56 MCP tools). SATI OS full suite on top.` },
                   { year: '2026 Q2', event: 'QECTOR Workbench v0.5.2 release. CustomTkinter GUI, 56-tool MCP server, 16 decoders, and 10 code families, shipped fully self-contained for Windows x64 and Linux x64, requiring no system Python, pip, or internet connection.' },
+                  { year: '2026 Q3', event: 'QECTOR Decoder v3 v1.0.0 — first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation, official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).' },
                 ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
                   <span className="text-cyan-300 font-mono text-sm min-w-[80px] pt-0.5">{item.year}</span>
@@ -187,7 +188,7 @@ export default function About() {
             <h3 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h3>
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
-              All published numbers come from the verified v0.7.0 artifact set (54/54 points, zero unfaithful corrections, 42/42 faithfulness cases); pre-v0.7.0 comparison tables are formally withdrawn. IBM hardware runs are real but limited in scope.
+              All published numbers come from the verified v0.7.0 artifact set (54/54 points, zero unfaithful corrections, 42/42 faithfulness cases); pre-v0.7.0 comparison tables are formally withdrawn. The decoder reached its first stable release on 2026-08-06 (v1.0.0). IBM hardware runs are real but limited in scope.
               QECTOR Decoder is Source-Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
               What you see is what you get.
             </p>

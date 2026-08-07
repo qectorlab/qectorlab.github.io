@@ -2,6 +2,8 @@
 
 **Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v0.5.2, see qector.store) under the qectorlab brand.**
 
+**Current stable release: QECTOR Decoder v3 v1.0.0 (2026-08-06) — first stable release. 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation. Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).**
+
 **Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
 
 **Created by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. qectorlab org for Workbench and branding; decoder repo maintained under founder account.**
@@ -13,14 +15,14 @@ pip install qector-decoder-v3
 ```
 
 ## Key Claims + Evidence (all on GitHub)
-- Verified benchmark set v0.7.0: 54/54 points, 0 unfaithful (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf)
+- Stable release v1.0.0 (2026-08-06, commit 75cd45c): 25+ decoder configurations; API stability tiers (stable/beta/experimental); Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping; ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder
+- Verified benchmark set v0.7.0 (last published verified set): 54/54 points, 0 unfaithful (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf)
 - Peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, 8,000 samples) on the package MCP server
 - 42/42 syndrome-faithfulness cases passed; 13 MCP tools operational
 - Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on synchronized batch — no speedup multiplier claimed
-- BP-OSD for qLDPC
-- Hypergraph-safe Union-Find (recent releases)
-- Full Stim + Sinter + PyMatching compatible
-- Pre-v0.7.0 comparison tables are formally withdrawn (do not cite them); the benchmark harness ships with the package (`qector benchmark --verify`)
+- BP-OSD for qLDPC; Hypergraph-safe Union-Find
+- Full Stim + Sinter + PyMatching compatible; `sinter.collect()` needs no custom_decoders=
+- Pre-v0.7.0 comparison tables are formally withdrawn (do not cite them); v1.0.0 publishes no new headline figures — run `qector bench` for your own hardware
 
 Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (benchmarks under `benchmarks/v0.7.0/`, full harness)
 
@@ -107,7 +109,7 @@ When adding new interactive UI, match these patterns: real semantics over ARIA w
 
 ## Content & claims policy
 
-Numbers used across the site (verified benchmark set: 54/54 points with 0 unfaithful, peak 11,540,387 shots/s, 42/42 faithfulness cases, 13 MCP tools) are from the verified v0.7.0 release artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) and the v0.7.0 user manual. Pre-v0.7.0 comparison tables are formally withdrawn — do not cite them. Do not edit these figures without updating the underlying verified artifacts - the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
+Numbers used across the site (verified benchmark set: 54/54 points with 0 unfaithful, peak 11,540,387 shots/s, 42/42 faithfulness cases, 13 MCP tools) are from the verified v0.7.0 release artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) and the v0.7.0 user manual. Pre-v0.7.0 comparison tables are formally withdrawn — do not cite them. v1.0.0 facts (first stable, 25+ decoder configurations, release date 2026-08-06, commit 75cd45c, 15 wheels, DOI 10.5281/zenodo.21363016, PolyForm Noncommercial 1.0.0) are from the official v1.0.0 user manual (DOI 10.5281/zenodo.21363016). Do not edit these figures without updating the underlying verified artifacts - the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
 
 ## Deployment
 

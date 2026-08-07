@@ -89,7 +89,7 @@ export default function Footer() {
 
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-400/10 border border-green-400/25 rounded-full text-xs font-mono text-green-400">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span>Verified v0.7.0 Release Train · Live PyPI v{pypiVersion}</span>
+                <span>v1.0.0 Stable Release Train · Live PyPI v{pypiVersion}</span>
               </div>
 
               <p className="text-secondary text-sm leading-relaxed max-w-md">

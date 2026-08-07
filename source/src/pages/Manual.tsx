@@ -21,7 +21,7 @@ export default function Manual() {
     { id: 'benchmarking', title: '5. Running Benchmarks', icon: <ChartIcon className="w-4 h-4" /> },
     { id: 'configuration', title: '6. Configuration', icon: <SettingsIcon className="w-4 h-4" /> },
     { id: 'troubleshooting', title: '7. Troubleshooting', icon: <HelpCircle className="w-4 h-4" /> },
-    { id: 'package-reference', title: '8. Package Reference (v0.7.0)', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'package-reference', title: '8. Package Reference (v1.0.0)', icon: <BookOpen className="w-4 h-4" /> },
   ];
 
   // Render individual sections beautifully
@@ -31,24 +31,28 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-base leading-relaxed">
-              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. It provides 16 decoder classes and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
+              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. v1.0.0 is the first stable release: it provides 25+ decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
             </p>
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
               <p className="text-secondary text-sm leading-relaxed">
-                <strong className="text-primary">Ecosystem Native:</strong> Swappable backend design. You can easily plug QECTOR into Stim, PyMatching, Sinter, and Qiskit pipelines with minimal API modifications.
+                <strong className="text-primary">Ecosystem Native:</strong> Swappable backend design. You can easily plug QECTOR into Stim, PyMatching, Sinter, and Qiskit pipelines with minimal API modifications — v1.0.0 registers Sinter and qiskit-qec entry points so <code className="text-cyan-300">sinter.collect()</code> works with no <code className="text-cyan-300">custom_decoders=</code>.
               </p>
             </div>
             <div>
               <h3 className="text-primary font-semibold text-lg mb-3">Key Highlights</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-void border border-gridline rounded-xl">
+                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">v1.0.0 — First Stable Release</h4>
+                  <p className="text-muted-foreground text-xs leading-relaxed">API stability tiers, Relay-BP, CS-OSD(lambda, w), colour-code cluster_bposd, qector CLI + qector-doctor, Sinter/qiskit entry points, pymatching shim.</p>
+                </div>
+                <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Verified v0.7.0 Benchmarks</h4>
                   <p className="text-muted-foreground text-xs leading-relaxed">54/54 benchmark points with zero unfaithful corrections, 42/42 faithfulness cases; no other figures published for this release.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Multi-Algorithm Diversity</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">16 decoder classes from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed">25+ decoder configurations from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Rust compiled speed</h4>
@@ -169,7 +173,7 @@ prediction = decoder.decode(syndrome)`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR includes 16 decoder classes categorized into production-grade and research-grade. Choose based on code type and speed/accuracy tradeoffs:
+              QECTOR includes 25+ decoder configurations categorized into stable, workload-sensitive, and experimental/research tiers. Choose based on code type and speed/accuracy tradeoffs:
             </p>
 
             <div className="overflow-x-auto">
@@ -223,33 +227,24 @@ prediction = decoder.decode(syndrome)`}
             </p>
 
             <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Verify All Tests</h3>
+              <h3 className="text-primary font-semibold text-sm mb-2">Environment Diagnostic</h3>
               <CodeBlock
-                code="python -m qector.validate -all"
-                filename="terminal"
-                language="bash"
-              />
-            </div>
-
-            <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Benchmarking vs PyMatching</h3>
-              <p className="text-secondary text-xs mb-2">
-                Runs the synchronized apple-to-apple comparison against PyMatching (same syndromes, same batch API). Results are published as the verified report:
-              </p>
-              <CodeBlock
-                code="python -m qector.benchmark -vs-pymatching -distance 5 -shots 100000"
+                code="qector-doctor"
                 filename="terminal"
                 language="bash"
               />
               <p className="text-secondary text-xs mt-2">
-                On the synchronized batch curve, QECTOR is comparable to PyMatching — PyMatching is often slightly ahead. No speedup multiplier is claimed.
+                15-check diagnostic that reports PASS / WARN / FAIL per check and explains WHY a decoder is unavailable on your machine. Full report via <code className="text-cyan-300">qector-doctor --json</code>.
               </p>
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Benchmarking GPU Batch Througput</h3>
+              <h3 className="text-primary font-semibold text-sm mb-2">Throughput via qector bench</h3>
+              <p className="text-secondary text-xs mb-2">
+                Generates a rotated surface-code circuit in-memory (Stim) and decodes the requested shots, printing one honest rate line:
+              </p>
               <CodeBlock
-                code="python -m qector.benchmark -gpu -batch-size 1000 -distance 7"
+                code="qector bench --distance 5 --rounds 5 --shots 10000 --decoder blossom --noise 0.001"
                 filename="terminal"
                 language="bash"
               />
@@ -367,7 +362,7 @@ prediction = decoder.decode(syndrome)`}
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl flex items-center justify-between flex-wrap gap-4">
               <div>
                 <h3 className="text-primary font-bold text-lg">QECTOR Decoder v3 — Extended Reference (package only)</h3>
-                <p className="text-muted-foreground text-xs">Version: 0.7.0 · PyPI: qector-decoder-v3 · Backend: Rust + PyO3</p>
+                <p className="text-muted-foreground text-xs">Version: 1.0.0 · PyPI: qector-decoder-v3 · Backend: Rust + PyO3</p>
               </div>
               <a
                 href="/docs/reference.md"
@@ -382,7 +377,7 @@ prediction = decoder.decode(syndrome)`}
             <div>
               <h3 className="text-primary font-semibold text-base mb-3">1. Installation &amp; Platforms</h3>
               <CodeBlock
-                code={`pip install qector-decoder-v3==0.7.0\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching\npip install "qector-decoder-v3[bench]"   # benchmarks\npip install "qector-decoder-v3[all]"     # full research stack`}
+                code={`pip install qector-decoder-v3==1.0.0\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"   # benchmarks\npip install "qector-decoder-v3[all]"     # full research stack`}
                 language="bash"
                 filename="terminal"
               />
@@ -401,7 +396,7 @@ prediction = decoder.decode(syndrome)`}
                 <li><strong>Rust Core (compiled extension):</strong> Matching, UF, batch CPU/GPU algorithms.</li>
                 <li><strong>Python Surface:</strong> Clean API, Stim/Sinter compat, belief/GNN layers, licensing.</li>
                 <li><strong>Zero-copy NumPy:</strong> Direct memory access; GIL-free parallel decoding paths.</li>
-                <li><strong>Version Symbol:</strong> <code className="text-cyan-300">qector_decoder_v3.__version__ == "0.7.0"</code></li>
+                <li><strong>Version Symbol:</strong> <code className="text-cyan-300">qector_decoder_v3.__version__ == "1.0.0"</code></li>
               </ul>
             </div>
 
@@ -455,7 +450,7 @@ prediction = decoder.decode(syndrome)`}
             <div>
               <h3 className="text-primary font-semibold text-base mb-3">6. Hybrid / HybridCascade Wheel Status &amp; Manual Cascade Pattern</h3>
               <p className="text-muted-foreground text-xs leading-relaxed mb-3">
-                <strong className="text-cyan-300">Wheel Status:</strong> Public PyPI wheels (v0.7.0) ship a compiled Rust extension where <code className="text-cyan-300">HybridCascadeDecoder</code> is gated behind an unexported feature flag (raising <code className="text-red-400">RuntimeError</code> on instantiation). Use <code className="text-cyan-300">HybridDecoder</code> (UF + Blossom routing) or the manual cascade pattern below:
+                <strong className="text-cyan-300">Wheel Status:</strong> Public PyPI wheels (v1.0.0) ship a compiled Rust extension where <code className="text-cyan-300">HybridCascadeDecoder</code> is gated behind an unexported feature flag (raising <code className="text-red-400">RuntimeError</code> on instantiation). Use <code className="text-cyan-300">HybridDecoder</code> (UF + Blossom routing) or the manual cascade pattern below:
               </p>
               <CodeBlock
                 code={`import numpy as np\nfrom qector_decoder_v3 import (\n    UnionFindDecoder,\n    FastUnionFindDecoder,\n    BlossomDecoder,\n    BpOsdDecoder,\n    generate_parity_check_matrix,\n)\n\ndef cascade_decode(check_to_qubits, n_qubits, syndrome, error_rate=0.05, use_bposd=False):\n    """Tier 1: Fast UF / Union-Find. Tier 2: Blossom / BP-OSD escalation."""\n    syndrome = np.asarray(syndrome, dtype=np.uint8).ravel()\n    H = generate_parity_check_matrix(check_to_qubits, n_qubits)\n\n    # Tier 1: Fast UF\n    for UF in (FastUnionFindDecoder, UnionFindDecoder):\n        try:\n            uf = UF(check_to_qubits, n_qubits)\n            corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()\n            if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):\n                return corr, uf.__class__.__name__\n        except Exception:\n            pass\n\n    # Tier 2: Exact Blossom / BP-OSD escalation\n    if use_bposd:\n        return np.asarray(BpOsdDecoder(H, error_rate=error_rate, osd_order=0).decode(syndrome), dtype=np.uint8).ravel(), "bp_osd"\n    return np.asarray(BlossomDecoder(check_to_qubits, n_qubits).decode(syndrome), dtype=np.uint8).ravel(), "blossom"`}

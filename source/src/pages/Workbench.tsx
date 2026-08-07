@@ -7,7 +7,6 @@ import EvidenceBlock from '../components/EvidenceBlock';
 import QECSimulator from '../components/QECSimulator';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,7 +25,6 @@ const LINUX_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-li
 
 export default function Workbench() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
-  const { version: pypiVersion } = usePyPIVersion();
 
   useEffect(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
@@ -154,7 +152,7 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            Workbench {WORKBENCH_VERSION} · Bundled backend qector_decoder_v3 {pypiVersion || '0.7.0'} · 56 MCP Tools
+            Workbench {WORKBENCH_VERSION} · Bundled backend qector_decoder_v3 0.7.0 · 56 MCP Tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text={`QECTOR Workbench ${WORKBENCH_VERSION}`} className="text-4xl md:text-6xl font-extrabold" />
@@ -299,7 +297,7 @@ export default function Workbench() {
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
-                qector_decoder_v3 v{pypiVersion || '0.7.0'}
+                qector_decoder_v3 v0.7.0 (bundled)
               </span>
             </div>
 

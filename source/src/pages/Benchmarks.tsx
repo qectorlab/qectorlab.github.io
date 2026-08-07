@@ -105,15 +105,17 @@ export default function Benchmarks() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Verified v0.7.0 Benchmark Set · MCP Self-Benchmark
+            Verified v0.7.0 Benchmark Set · MCP Self-Benchmark · v1.0.0 Stable (2026-08-06)
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Verified v0.7.0 Benchmarks" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            One set, four artifacts, fully reproducible. The figures below were measured with the package MCP server
-            on Linux (glibc 2.35, Python 3.12.13) and published with their raw data: REPORT.md, summary.json,
+            This is the last published verified set, measured with the qector-decoder-v3 0.7.0 package MCP server
+            on Linux (glibc 2.35, Python 3.12.13) and published with its raw data: REPORT.md, summary.json,
             benchmarks.csv, and a verified apple-to-apple comparison with PyMatching.
+            v1.0.0 (2026-08-06) is the first stable release; it publishes no new headline figures and ships
+            the honest benchmarking methodology (qector bench, the ler module) to measure on your own hardware.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="/benchmarks/v0.7.0/REPORT.md" target="_blank" rel="noopener noreferrer" className="btn-cyan">Full Report (REPORT.md) →</a>
@@ -216,9 +218,11 @@ export default function Benchmarks() {
             title="Run it yourself"
             statement={
               <>
-                Everything above is reproducible: the harness ships with the package
-                (<code className="text-cyan-300">qector benchmark</code> and <code className="text-cyan-300">python -m qector.validate</code>),
-                and the raw artifacts are published at <code className="text-cyan-300">/benchmarks/v0.7.0/</code>.
+                Everything above is reproducible. With the v1.0.0 package the benchmark harness is{' '}
+                <code className="text-cyan-300">qector bench</code> (throughput) and the{' '}
+                <code className="text-cyan-300">ler</code> module (logical error rate);{' '}
+                <code className="text-cyan-300">qector-doctor</code> explains why any decoder is unavailable on your machine.
+                The raw artifacts are published at <code className="text-cyan-300">/benchmarks/v0.7.0/</code>.
                 No figure on this page describes a machine that is not yours.
               </>
             }

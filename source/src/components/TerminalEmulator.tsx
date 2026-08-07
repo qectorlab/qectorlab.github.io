@@ -39,8 +39,8 @@ export default function TerminalEmulator() {
         { text: 'Available commands:', type: 'info' },
         { text: '  help                        - Show this menu', type: 'output' },
         { text: '  pip install qector-decoder-v3- Install QECTOR packages', type: 'output' },
-        { text: '  python -m qector.validate -quick  - Run rapid syndrome validator', type: 'output' },
-        { text: '  python -m qector.benchmark -distance 5 - Run matching LER comparison', type: 'output' },
+        { text: '  qector-doctor               - Run the 15-check environment diagnostic', type: 'output' },
+        { text: '  qector bench -d 5           - Run a v1.0.0 throughput benchmark', type: 'output' },
         { text: '  clear                       - Clear the terminal screen', type: 'output' },
       ]);
     } else if (trimmed === 'clear') {
@@ -58,51 +58,39 @@ export default function TerminalEmulator() {
         { text: '✓ Signature verified: Cosign cert subject CN matches guillaume@qector.store', type: 'success' },
         { text: 'Successfully installed latest qector-decoder-v3 (from PyPI RSS)', type: 'success' },
       ]);
-    } else if (trimmed === 'python -m qector.validate -quick') {
+    } else if (trimmed === 'qector-doctor') {
       await sleep(300);
-      setLines((prev) => [...prev, { text: 'Initializing SATI validation harness...', type: 'output' }]);
+      setLines((prev) => [...prev, { text: 'qector-doctor v1.0.0 — 15-check environment diagnostic', type: 'output' }]);
+      await sleep(500);
+      setLines((prev) => [
+        ...prev,
+        { text: '[ 1/15] Python version (3.9-3.13) ............ PASS', type: 'success' },
+        { text: '[ 2/15] qector_decoder_v3 import, v1.0.0 ..... PASS', type: 'success' },
+        { text: '[ 3/15] NumPy bounds (>=1.24,<2.3) .......... PASS', type: 'success' },
+        { text: '[ 4/15] Licence resolution state ............. PASS', type: 'success' },
+        { text: '[ 5/15] CPU core decoders .................... PASS', type: 'success' },
+        { text: '[ 6/15] AVX2 batch path ..................... PASS', type: 'success' },
+        { text: '[ 7/15] CUDA device probe ................... WARN (no NVIDIA GPU found)', type: 'info' },
+        { text: '[ 8/15] Stim import + DEM conversion ......... PASS', type: 'success' },
+        { text: '[ 9/15] Sinter entry points ................. PASS', type: 'success' },
+        { text: '[10/15] MCP server cold-start round-trip ..... PASS', type: 'success' },
+        { text: '✓ 10 PASS, 1 WARN — decode ready (see qector-doctor --json for the full report)', type: 'success' },
+      ]);
+    } else if (trimmed === 'qector bench -d 5' || trimmed === 'qector bench --distance 5') {
       await sleep(400);
       setLines((prev) => [
         ...prev,
-        { text: 'Running test 1/5: Check simple d=3 CSS Blossom... [PASS]', type: 'success' },
-      ]);
-      await sleep(300);
-      setLines((prev) => [
-        ...prev,
-        { text: 'Running test 2/5: Check BP-OSD decoding index... [PASS]', type: 'success' },
-      ]);
-      await sleep(300);
-      setLines((prev) => [
-        ...prev,
-        { text: 'Running test 3/5: CUDA execution compatibility... [PASS]', type: 'success' },
-      ]);
-      await sleep(200);
-      setLines((prev) => [
-        ...prev,
-        { text: 'Running test 4/5: Verification checks for [[832,10,4]]... [PASS]', type: 'success' },
-        { text: 'Running test 5/5: Stim parity validation (1,000 shots)... [PASS]', type: 'success' },
-      ]);
-      await sleep(200);
-      setLines((prev) => [
-        ...prev,
-        { text: '✓ QECTOR OK (All 5 verification suites passed successfully)', type: 'success' },
-      ]);
-    } else if (trimmed === 'python -m qector.benchmark -distance 5') {
-      await sleep(400);
-      setLines((prev) => [
-        ...prev,
-        { text: 'Simulating rotated surface code (d=5, p=0.001, 100,000 shots)...', type: 'output' },
+        { text: 'Generating rotated surface code (d=5, rounds=5, noise=0.001, 10,000 shots)...', type: 'output' },
       ]);
       await sleep(1000);
       setLines((prev) => [
         ...prev,
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: 'Decoder           | Result', type: 'info' },
+        { text: 'Decoder           | Throughput', type: 'info' },
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: 'blossom           | 54/54 points, 0 unfaithful', type: 'success' },
-        { text: 'belief_matching   | 54/54 points, 0 unfaithful', type: 'success' },
+        { text: 'blossom           | 8,262,646 shots/s (5-qubit repetition, verified set)', type: 'success' },
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: '✓ Verification passed. Full sweep and PDF report in /benchmarks/v0.7.0/', type: 'success' },
+        { text: '✓ Machine-conditional rate printed; no universal figure claimed. See /benchmarks/v0.7.0/ for the verified set.', type: 'success' },
       ]);
     } else {
       await sleep(150);

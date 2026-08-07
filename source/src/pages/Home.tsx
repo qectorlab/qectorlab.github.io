@@ -73,7 +73,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. 16 decoder classes, verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s."
+        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s."
       />
       <JsonLd
         data={{
@@ -123,7 +123,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-xs text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} · Verified Benchmark Set: 54/54 points, 0 unfaithful · Changelog →</span>
+            <span>v{pypiVersion} · First Stable Release · Changelog →</span>
           </Link>
 
           <h1
@@ -141,9 +141,10 @@ export default function Home() {
             className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-            16 decoder classes from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
-            <span className="text-primary font-semibold">Verified v0.7.0 benchmark set:</span> peak 11.5M shots/s,
-            54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.
+            25+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
+            <span className="text-primary font-semibold">v1.0.0 — first stable release:</span> API stability tiers,
+            Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
+            Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections.
             All claims backed by reproducible artifacts.
           </p>
 
@@ -175,7 +176,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="16" label="Decoder Algorithms" />
+            <CounterStat value="25+" label="Decoder Configs" />
             <CounterStat value="54/54" label="Verified Benchmark Points" />
             <CounterStat value="11.5M/s" label="Peak MCP Throughput" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
@@ -254,14 +255,14 @@ export default function Home() {
               {
                 step: '02',
                 title: 'Decode',
-                desc: 'Access 16 Rust-accelerated decoders through a unified Python API. Swap algorithms without changing your pipeline.',
+                desc: 'Access 25+ Rust-accelerated decoder configurations through a unified Python API. Swap algorithms without changing your pipeline.',
                 detail: 'from qector_decoder_v3 import BlossomDecoder, BPOSODecoder',
                 code: true,
               },
               {
                 step: '03',
                 title: 'Validate',
-                desc: 'Every claim is backed by SHA-256 sealed artifacts on GitHub. Run python -m qector.validate to verify on your own hardware.',
+                desc: 'Every claim is backed by SHA-256 sealed artifacts on GitHub. Run qector-doctor for a 15-check environment diagnostic on your own hardware.',
                 detail: 'reproducible artifacts · SHA-256 sealed',
                 code: false,
               },
@@ -343,7 +344,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                  16 Decoders · Unified API
+                  25+ Decoder Configs · Unified API
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Battle-Tested Decoding Algorithms
@@ -355,10 +356,10 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: ' Verified 11.5M shots/s', desc: 'Peak MCP self-benchmark throughput (FastUnionFind, 5-qubit repetition code).' },
+                    { label: ' Verified 11.5M shots/s', desc: 'Peak MCP self-benchmark throughput (FastUnionFind, 5-qubit repetition code), verified v0.7.0 set.' },
                     { label: ' 54/54 Points · 0 Unfaithful', desc: 'Every correction verified against its parity-check equation across the full sweep.' },
-                    { label: ' 42/42 Faithfulness Cases', desc: 'All syndrome-faithfulness cases passed in the verified v0.7.0 set.' },
-                    { label: ' GPU Batch Acceleration', desc: 'CUDA & OpenCL device pipelines for high-throughput batch decoding.' },
+                    { label: ' v1.0.0 First Stable', desc: 'API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor.' },
+                    { label: ' GPU Batch Acceleration', desc: 'CUDA path ships in every wheel (edge_weights, precision="f64"); OpenCL via source build.' },
                   ].map((item) => (
                     <div key={item.label} className="p-4 bg-void/50 border border-gridline/50 rounded-xl">
                       <div className="text-cyan-300 font-semibold text-sm mb-1">{item.label}</div>
@@ -399,7 +400,7 @@ export default function Home() {
               />
               <EvidenceBlock
                 title="Verified Benchmark Set"
-                statement="One set, four artifacts, fully reproducible: peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 benchmark points with zero unfaithful corrections, 42/42 syndrome-faithfulness cases, 13 MCP tools, measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13)."
+                statement="The last published verified set (v0.7.0): four artifacts, fully reproducible: peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 benchmark points with zero unfaithful corrections, 42/42 syndrome-faithfulness cases, 13 MCP tools, measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13)."
                 href="https://github.com/GuillaumeLessard/qector-decoder"
                 linkLabel="GitHub Artifacts →"
                 className="max-w-3xl mx-auto mb-6"

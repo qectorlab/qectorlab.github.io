@@ -31,6 +31,11 @@ const REPORTS_DATA = [
     status: 'Verified',
   },
   {
+    title: 'Official User Manual v1.0.0',
+    desc: 'QECTOR Decoder v3 User Manual and Extended Reference, v1.0.0 (2026-08-06, DOI 10.5281/zenodo.21363016) — distributed with qector-decoder-v3==1.0.0 and at /docs/reference.md.',
+    status: 'Verified',
+  },
+  {
     title: 'Withdrawn Pre-v0.7.0 Tables',
     desc: 'Four benchmark tables published in earlier documentation (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn. Do not cite them.',
     status: 'Withdrawn',
@@ -72,7 +77,7 @@ export default function Evidence() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Verified v0.7.0 Artifacts · Apple-to-Apple vs PyMatching · IBM Hardware Job IDs
+            Verified v0.7.0 Artifacts · Official v1.0.0 Manual · Apple-to-Apple vs PyMatching · IBM Hardware Job IDs
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
@@ -162,11 +167,12 @@ export default function Evidence() {
             </p>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground">
               <div className="text-cyan-300 mb-2"># Quick validation</div>
-              <div>pip install qector-decoder-v3==0.7.0</div>
+              <div>pip install qector-decoder-v3==1.0.0</div>
               <div>python -c &quot;import qector_decoder_v3 as qd; print(qd.__version__)&quot;</div>
-              <div className="mt-2"># Benchmark harness ships with the package</div>
-              <div>qector benchmark --verify</div>
-              <div>python -m qector.validate</div>
+              <div className="mt-2"># 15-check environment diagnostic (v1.0.0)</div>
+              <div>qector-doctor</div>
+              <div className="mt-2"># Throughput benchmark on a generated surface-code circuit</div>
+              <div>qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001</div>
             </div>
           </div>
 
@@ -181,9 +187,9 @@ export default function Evidence() {
   author  = {Guillaume Lessard},
   title   = {{QECTOR Decoder v3}: Rust/Python Quantum Error Correction Decoding Platform},
   year    = {2026},
-  version = {0.7.0},
+  version = {1.0.0},
   url     = {https://www.qector.store},
-  note    = {Source-available. Commercial license required for commercial use.}
+  note    = {Source-available under PolyForm Noncommercial 1.0.0. Commercial license required for commercial use.}
 }`}
             </pre>
           </div>

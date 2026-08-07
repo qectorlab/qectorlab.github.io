@@ -1,6 +1,6 @@
-# QECTOR Decoder v3 (v0.7.0) Full Context
+# QECTOR Decoder v3 (v1.0.0) Full Context
 
-QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction decoder package by Guillaume Lessard / QECTOR Lab.
+QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction decoder package by Guillaume Lessard / QECTOR Lab. v1.0.0 (2026-08-06) is the first stable release.
 
 ## Primary Pages & Sitemap
 
@@ -31,19 +31,26 @@ QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction
 ## External Records
 
 - PyPI Package: https://pypi.org/project/qector-decoder-v3/
+- Release 1.0.0: https://pypi.org/project/qector-decoder-v3/1.0.0/
 - Primary GitHub Repository: https://github.com/GuillaumeLessard/qector-decoder
+- Official User Manual v1.0.0 (DOI 10.5281/zenodo.21363016)
 
 ## Public Install
 
-pip install qector-decoder-v3==0.7.0
+pip install qector-decoder-v3==1.0.0
 
 ## Verification Command
 
-python -c "import qector_decoder_v3 as qd; print(qd.__version__)"
+- python -c "import qector_decoder_v3 as qd; print(qd.__version__)" → 1.0.0
+- qector-doctor (15-point environment check)
 
-## Benchmark Policy (v0.7.0)
+## Stable Release Facts (v1.0.0, 2026-08-06, commit 75cd45c)
 
-The only citable benchmark figures are the verified v0.7.0 artifacts at /benchmarks/v0.7.0/: REPORT.md, summary.json, benchmarks.csv (54 rows, zero unfaithful corrections), and VERIFIED_APPLE_TO_APPLE_REPORT.pdf. Peak throughput 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server); 42/42 syndrome-faithfulness cases; 13 MCP tools. Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on the synchronized batch — no speedup multiplier claimed. Pre-v0.7.0 comparison tables are formally withdrawn.
+First stable release: 25+ decoder configurations across API stability tiers (stable/beta/experimental). New families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder. Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping in BP-OSD. CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) and qiskit-qec plugin registered — `sinter.collect()` needs no custom_decoders=. CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor`. `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313, Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation, no sdist. PolyForm Noncommercial 1.0.0. OpenCL and HybridCascadeDecoder are source-build only (not in wheels).
+
+## Benchmark Policy
+
+The only citable benchmark figures are the verified v0.7.0 artifacts at /benchmarks/v0.7.0/: REPORT.md, summary.json, benchmarks.csv (54 rows, zero unfaithful corrections), and VERIFIED_APPLE_TO_APPLE_REPORT.pdf. Peak throughput 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server); 42/42 syndrome-faithfulness cases; 13 MCP tools. Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on the synchronized batch — no speedup multiplier claimed. Pre-v0.7.0 comparison tables are formally withdrawn. v1.0.0 publishes no new headline figures — run `qector bench` for your own hardware.
 
 ## Verified Tools (MCP, 13)
 
@@ -51,8 +58,8 @@ decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_
 
 ## Decoders & Families
 
-16 decoder kinds: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade, gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code. 10 code families: repetition, ring, rotated_surface, unrotated_surface, toric, heavy_hex, hypergraph_product, bicycle, bivariate_bicycle, color_code.
+25+ decoder configurations in v1.0.0: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade (source builds), gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code (opt-in cluster_bposd), plus options (relay BP, CS-OSD, LLR damping, CUDA f64 edge_weights). 10 code families: repetition, ring, rotated_surface, unrotated_surface, toric, heavy_hex, hypergraph_product, bicycle, bivariate_bicycle, color_code.
 
 ## Workbench App
 
-QECTOR Workbench v0.5.2: free cross-platform GUI (Windows, Linux, macOS), 56 MCP tools, 16 decoders, 10 code families, offline operation. GitHub: https://github.com/qectorlab/qector-decoder-workbench/releases/
+QECTOR Workbench v0.5.2: free cross-platform GUI (Windows, Linux, macOS), 56 MCP tools, 16 decoders, 10 code families, offline operation, bundled qector_decoder_v3 0.7.0 backend. GitHub: https://github.com/qectorlab/qector-decoder-workbench/releases/

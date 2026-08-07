@@ -15,8 +15,9 @@ export default function Installer() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Installation</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            QECTOR Decoder v3 ships as a Rust-compiled Python wheel.
-            One command on <span className="text-cyan-300 font-semibold">Linux, macOS ARM64, and Windows</span>.
+            QECTOR Decoder v3 ships as a Rust-compiled Python wheel (v1.0.0: 15 binary wheels for CPython 3.9–3.13,
+            no sdist).
+            One command on <span className="text-cyan-300 font-semibold">Linux x86_64, macOS ARM64, and Windows amd64</span>.
             GPU backends optional.
           </p>
           <div className="inline-block px-6 py-3 bg-void border border-gridline rounded-xl font-mono text-sm text-cyan-300">
@@ -59,6 +60,8 @@ export default function Installer() {
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
               <div>python -c "import qector_decoder_v3; print(qector_decoder_v3.__version__)"</div>
               <div className="text-green-400 font-semibold"># Should print: {pypiVersion}</div>
+              <div className="mt-2">qector-doctor</div>
+              <div className="text-green-400"># 15-check environment diagnostic; reports PASS / WARN / FAIL per check</div>
               <div className="mt-2">python -c "from qector_decoder_v3 import BlossomDecoder, UnionFindDecoder; print('QECTOR OK')"</div>
               <div className="text-green-400"># Should print: QECTOR OK</div>
             </div>
@@ -70,15 +73,15 @@ export default function Installer() {
             <div className="space-y-4">
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">Linux</h3>
-                <p className="text-secondary text-sm">Manylinux2014 wheels provided. Tested on Ubuntu 20.04+, Debian 11+, RHEL 8+.</p>
+                <p className="text-secondary text-sm">manylinux_2_17 x86_64 wheels provided. Tested on Ubuntu 20.04+, Debian 11+, RHEL 8+.</p>
               </div>
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">macOS</h3>
-                <p className="text-secondary text-sm">ARM64 wheels for Apple Silicon (M1+). macOS 12+ required.</p>
+                <p className="text-secondary text-sm">ARM64 wheels for Apple Silicon (M1+). macOS 11.0+ required.</p>
               </div>
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">Windows</h3>
-                <p className="text-secondary text-sm">Windows 10/11 x64 wheels. GPU batch decoding requires NVIDIA GPU with CUDA 11.8+.</p>
+                <p className="text-secondary text-sm">Windows 10/11 amd64 wheels for Python 3.9–3.13. GPU batch decoding requires an NVIDIA GPU (WDDM driver mode).</p>
               </div>
             </div>
           </div>
@@ -86,12 +89,13 @@ export default function Installer() {
           {/* GPU Setup */}
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">GPU Batch Decoding Setup</h2>
-            <p className="text-secondary text-sm mb-3">Install the full environment including all GPU dependencies via the <code className="text-cyan-300 font-mono text-xs">[all]</code> extra, which includes CUDA and OpenCL support:</p>
+            <p className="text-secondary text-sm mb-3">The CUDA batch path ships <em>in</em> every v1.0.0 wheel (NVIDIA driver in WDDM mode on Windows). Install the <code className="text-cyan-300 font-mono text-xs">[cuda]</code> or <code className="text-cyan-300 font-mono text-xs">[cupy]</code> extras for GPU-resident work, or <code className="text-cyan-300 font-mono text-xs">[all]</code> for everything. OpenCL kernels are not compiled into any wheel and require a source build.</p>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
-              <div className="text-cyan-300"># Full environment with GPU backends</div>
+              <div className="text-cyan-300"># Full environment with GPU extras</div>
               <div>pip install "qector-decoder-v3[all]"</div>
               <div className="mt-2 text-cyan-300"># Verify GPU detection</div>
               <div>python -c "from qector_decoder_v3 import CUDABatchDecoder; print('CUDA available:', CUDABatchDecoder.is_available())"</div>
+              <div className="text-green-400"># Note: opencl_is_available() is False on wheels by design (no OpenCL kernels)</div>
             </div>
           </div>
 
