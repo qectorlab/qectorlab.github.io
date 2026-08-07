@@ -238,10 +238,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench v0.5.2: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Self-contained: no system Python, pip, or internet required.',
-    heading: 'QECTOR Workbench v0.5.2',
+      'QECTOR Workbench v0.5.3: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Self-contained: no system Python, pip, or internet required.',
+    heading: 'QECTOR Workbench v0.5.3',
     body: page(
-      h1('QECTOR Workbench v0.5.2') +
+      h1('QECTOR Workbench v0.5.3') +
         p(
           'Free desktop application (CustomTkinter GUI) and Model Context Protocol server for QECTOR Decoder v3: 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, and a visual circuit builder. Ships as a portable Windows x64 executable and native Linux x64 Debian packages, each fully self-contained: it bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is required. No macOS build is currently published.'
         ) +
@@ -253,12 +253,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Linux baseline glibc 2.31: Ubuntu 20.04+, Debian 11+, Mint 20+, antiX 21+ / MX 21+, Fedora 32+, openSUSE Leap 15.3+.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
-        h2('Modules') +
+        h2('Workspaces') +
         p(
-          'Eight modules ship in v0.5.2: Code Explorer (build and inspect codes, Tanner graph and parity-check matrix views, decoder recommendation), Decoder Lab (interactive decode runs with syndrome-validity and logical-failure reporting), Benchmark (throughput and latency percentiles with JSON export and session comparison), Batch &amp; Streaming (batch decoding and sliding-window streaming, with cpu / cpu_parallel / cuda / opencl backend probing), Hardware, Diagnostics, Documentation, and Console.'
+          'Nine workspaces ship in v0.5.3: Code Explorer (build and inspect codes, Tanner graph and parity-check matrix views, decoder recommendation), Decoder Lab (interactive decode runs with syndrome-validity and logical-failure reporting), Benchmark (throughput and latency percentiles with JSON export and session comparison), Batch &amp; Streaming (batch decoding and sliding-window streaming, with cpu / cpu_parallel / cuda / opencl backend probing), Hardware, Diagnostics, Documentation Studio, Lab &amp; Personal Info (deposit profile and licence-key install), and a live Console.'
         ) +
         h2('10 Quantum Code Families') +
-        p('Workbench v0.5.2 covers 10 code families including qLDPC and colour codes:') +
+        p('Workbench v0.5.3 covers 10 code families including qLDPC and colour codes:') +
         ul([
           'repetition: 1D chain parity-check code.',
           'ring: Periodic 1D chain.',
@@ -395,7 +395,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Selected work') +
         ul([
           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 25+ decoder configurations, first stable release v1.0.0.`,
-          `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.2</a>: free desktop GUI and 56-tool MCP server for Windows and Linux.`,
+          `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.3</a>: free desktop GUI and 56-tool MCP server for Windows and Linux.`,
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
         ]) +
@@ -473,12 +473,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/sati-os',
     title: 'SATI OS · Technology Integrated into QECTOR Workbench',
     description:
-      'SATI OS technology is integrated into QECTOR Workbench v0.5.2 and QECTOR Decoder v3. Explore the free desktop application.',
+      'SATI OS technology is integrated into QECTOR Workbench v0.5.3 and QECTOR Decoder v3. Explore the free desktop application.',
     heading: 'SATI OS Technology Integrated',
     body: page(
       h1('SATI OS → QECTOR Workbench') +
         p(
-          'SATI OS features are fully integrated into QECTOR Workbench v0.5.2 and QECTOR Decoder v3. The desktop GUI, 56-tool MCP server, 16 decoders, and 10 code families are available directly in the free QECTOR Workbench desktop application for Windows x64 and Linux x64.'
+          'SATI OS features are fully integrated into QECTOR Workbench v0.5.3 and QECTOR Decoder v3. The desktop GUI, 56-tool MCP server, 16 decoders, and 10 code families are available directly in the free QECTOR Workbench desktop application for Windows x64 and Linux x64.'
         ) +
         p('Explore the <a href="/workbench" style="color:#67e8f9;">QECTOR Workbench page</a>.')
     ),

@@ -11,7 +11,7 @@ export default function Changelog() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Latest: v1.0.0 Decoder (first stable release) · free Workbench GUI v0.5.2 (live from PyPI RSS)
+            Latest: v1.0.0 Decoder (first stable release, live from PyPI RSS) · Workbench GUI v0.5.3
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Changelog</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -49,7 +49,7 @@ export default function Changelog() {
                 'SparseBlossomDecoder hot path zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed; licence hardening (v2 tokens with tier + expiry)',
                 '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64) with PyPI Trusted Publishing + Sigstore; no sdist',
                 'Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016)',
-                'Free QECTOR Workbench v0.5.2 (current): 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',
+                'Free QECTOR Workbench v0.5.3 (current): 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',
                 'No universal benchmark figures are published on the site; qector bench ships with the package for measuring on your own hardware',
               ]}
             />

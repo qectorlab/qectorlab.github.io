@@ -57,4 +57,4 @@ decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_
 
 ## Workbench App
 
-QECTOR Workbench v0.5.2: free cross-platform GUI (Windows, Linux, macOS), 56 MCP tools, 16 decoders, 10 code families, offline operation, bundled qector_decoder_v3 0.7.0 backend. GitHub: https://github.com/qectorlab/qector-decoder-workbench/releases/
+QECTOR Workbench v0.5.3: free desktop GUI (Windows x64 and Linux x64; no macOS build published), 56 MCP tools, 16 decoders, 10 code families, offline operation, bundled qector_decoder_v3 0.7.0 backend. GitHub: https://github.com/qectorlab/qector-decoder-workbench/releases/

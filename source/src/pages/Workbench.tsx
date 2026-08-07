@@ -12,14 +12,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Workbench release facts are taken verbatim from the published GitHub
 // releases, not from marketing copy:
-//   Windows: qectorlab/qector-decoder-workbench-windows (tag v3.5.2)
-//   Linux  : qectorlab/qector-decoder-workbench-linux   (tag v0.5.2)
-// Both ship the SAME product version, v0.5.2: the release titles, bodies, and
-// asset filenames (QectorWorkbench-v0.5.2-*-x64-Public.zip) all say v0.5.2.
-// Only the Windows *git tag* reads v3.5.2. The site previously advertised
-// "v3.5.1", a macOS build, and a first-launch PyPI download: none of which
-// match what ships. Verify against the release pages before editing numbers.
-const WORKBENCH_VERSION = 'v0.5.2';
+//   Windows: qectorlab/qector-decoder-workbench-windows (tag v0.5.3)
+//   Linux  : qectorlab/qector-decoder-workbench-linux   (tag v0.5.3)
+// Both ship the SAME product version, v0.5.3: the release titles, bodies, and
+// asset filenames (QectorWorkbench-v0.5.3-*-x64-Public.zip) all say v0.5.3.
+// The site previously advertised "v3.5.1", a macOS build, and a first-launch
+// PyPI download: none of which match what ships. Verify against the release
+// pages before editing numbers.
+const WORKBENCH_VERSION = 'v0.5.3';
 const WIN_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest';
 const LINUX_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest';
 
@@ -49,9 +49,8 @@ export default function Workbench() {
     if (el) sectionsRef.current[index] = el;
   };
 
-  // Decoder coverage against the qector_decoder_v3 backend. The v0.5.2
-  // app ships 16 decoders, so the three additions are deliberately absent here
-  // rather than filled with invented numbers.
+  // Decoder coverage against the qector_decoder_v3 backend. The v0.5.3
+  // app ships 16 decoders, all listed below from the release manifest.
   const decodersList = [
     { kind: 'hybrid_cascade', type: 'Graphlike', desc: 'Union-Find pre-filter + Blossom/BP-OSD escalation.' },
     { kind: 'fast_union_find', type: 'Graphlike', desc: 'Ultra-fast approximate Union-Find variant.' },
@@ -97,8 +96,8 @@ export default function Workbench() {
     },
     {
       src: '/assets/ww2.png',
-      alt: 'QECTOR Workbench Decoder Laboratory tab running the fast_union_find decoder with resilient fallback enabled, showing syndrome validity and logical failure status.',
-      title: 'Decoder Laboratory',
+      alt: 'QECTOR Workbench Decoder Lab tab running the fast_union_find decoder with resilient fallback enabled, showing syndrome validity and logical failure status.',
+      title: 'Decoder Lab',
       caption: 'Test decoders interactively on the current code. Each run reports Hamming weight, syndrome validity, and logical failure alongside the raw error, syndrome, and correction vectors, with a toggleable resilient fallback.',
     },
     {
@@ -115,7 +114,8 @@ export default function Workbench() {
     },
   ];
 
-  // The eight modules along the top of the application window.
+  // The workspaces ship in v0.5.3 as described by the Windows release notes:
+  // eight GUI tabs plus a live Console.
   const modules = [
     'Code Explorer',
     'Decoder Lab',
@@ -123,7 +123,8 @@ export default function Workbench() {
     'Batch & Streaming',
     'Hardware',
     'Diagnostics',
-    'Documentation',
+    'Documentation Studio',
+    'Lab & Personal Info',
     'Console',
   ];
 
@@ -203,7 +204,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 0.5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
-              Eight modules ship in {WORKBENCH_VERSION}:{' '}
+              Nine workspaces ship in {WORKBENCH_VERSION}:{' '}
               {modules.map((m, i) => (
                 <span key={m}>
                   <span className="text-primary font-medium">{m}</span>
@@ -256,13 +257,13 @@ export default function Workbench() {
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
                 <h3 className="text-cyan-300 font-semibold text-base">Linux x64</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Distro-tuned Debian packages. Bundles Python 3.11 and Tcl/Tk: no system Python required.
+                  Native Debian package for amd64, bundling its own Python 3.11 runtime and Tcl/Tk: no system Python required.
                 </p>
                 <div className="bg-void/80 p-3 rounded-lg border border-gridline font-mono text-[11px] text-cyan-300 space-y-1 overflow-x-auto">
                   <div># Ubuntu / Debian / Mint</div>
-                  <div>sudo apt install ./qector-workbench_0.5.2_amd64_ubuntu.deb</div>
+                  <div>sudo apt install ./qector-workbench_0.5.3_amd64.deb</div>
                   <div className="pt-1"># antiX / MX Linux</div>
-                  <div>sudo dpkg -i ./qector-workbench_0.5.2_amd64_antix.deb</div>
+                  <div>sudo dpkg -i ./qector-workbench_0.5.3_amd64.deb</div>
                   <div>sudo apt-get -f install</div>
                 </div>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
@@ -300,9 +301,8 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Workbench {WORKBENCH_VERSION} ships <strong className="text-secondary">16 decoders</strong>. The 13 below are the
-              ones exposed through the MCP server in this build; per-decoder data for the remaining three is added with the next
-              Workbench release rather than estimated here.
+              Workbench {WORKBENCH_VERSION} ships <strong className="text-secondary">16 decoders</strong>; all 16 are listed
+              below and exposed through the Workbench MCP server in this build.
             </p>
 
             <div className="overflow-x-auto">
@@ -352,11 +352,11 @@ export default function Workbench() {
               {[
                 {
                   name: 'Desktop GUI',
-                  desc: 'CustomTkinter desktop UI for Windows and Linux. Visual circuit builder, syndrome viewer, and decoder performance dashboard.',
+                  desc: 'CustomTkinter desktop UI for Windows and Linux. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3–d63 on supported families.',
                 },
                 {
                   name: '56 MCP Tools',
-                  desc: 'Native Model Context Protocol server over stdio JSON-RPC 2.0, launched with --mcp and usable headlessly with no display. Connects AI agents directly to decoder benchmarking and execution.',
+                  desc: 'Native Model Context Protocol server over stdio JSON-RPC 2.0, launched with --mcp and usable headlessly with no display. Connects AI agents directly to decoder execution and benchmarking.',
                 },
                 {
                   name: 'Fully Self-Contained',
@@ -364,15 +364,23 @@ export default function Workbench() {
                 },
                 {
                   name: 'Self / Auto-Debug Layer',
-                  desc: 'Verifies H·c == s on every decode, with automatic multi-decoder fallback when a decoder fails to produce a faithful correction.',
+                  desc: 'Verifies H·c == s on every decode with a full attempt trace, and falls back across decoders automatically when a decoder fails to produce a faithful correction.',
+                },
+                {
+                  name: 'Hardware Dashboard',
+                  desc: 'Auto-detects CUDA, OpenCL, and CPU backends, and reports OpenCL absence honestly: it names why a backend is unavailable rather than printing a bare N/A.',
+                },
+                {
+                  name: 'Lab & Personal Info',
+                  desc: 'Deposit profile (author, ORCID, affiliation, DOI, funding, keywords) for generated reports, plus decoder licence-key installation with a live tier readout.',
                 },
                 {
                   name: 'Documentation Export',
-                  desc: 'Export in Markdown, HTML, JSON, LaTeX, PDF, and SVG, with citation metadata.',
+                  desc: 'Export in Markdown, HTML, JSON, LaTeX, PDF, and SVG, plus .zenodo.json and CITATION.cff deposit sidecars: a five-figure publication suite in 8 formats.',
                 },
                 {
                   name: 'Bundled Manuals & EULA',
-                  desc: 'Each release ships an API Reference, MCP Integration Guide, Quick Start Guide, a per-OS User Manual, a machine-readable LLM manual, and EULA.txt.',
+                  desc: 'Each release ships an API Reference, MCP Integration Guide, Quick Start Guide, a per-OS User Manual, a machine-readable LLM manual, and EULA.txt, with SHA-256 checksums for every file.',
                 },
               ].map((f) => (
                 <AlgorithmCard key={f.name} title={f.name} desc={f.desc} />

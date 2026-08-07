@@ -10,7 +10,7 @@ interface LinkItem {
 
 const platformLinks: LinkItem[] = [
   { label: 'QECTOR Decoder v3', href: '/decoder', badge: 'Library' },
-  { label: 'Workbench GUI v0.5.2', href: '/workbench', badge: 'Desktop App' },
+  { label: 'Workbench GUI v0.5.3', href: '/workbench', badge: 'Desktop App' },
   { label: '56-Tool MCP Server', href: '/mcp-server', badge: 'MCP' },
   { label: 'Installer & App Bundles', href: '/installer' },
   { label: 'Pricing & Licensing', href: '/pricing' },
@@ -113,7 +113,7 @@ export default function Footer() {
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface/80 border border-gold-400/30 rounded-lg text-xs text-gold-400 font-mono hover:bg-gold-400/10 transition-colors"
                   >
                     <span>💻</span>
-                    <span>Workbench App v0.5.2 (Free GUI)</span>
+                    <span>Workbench App v0.5.3 (Free GUI)</span>
                   </Link>
                   <a
                     href="https://github.com/GuillaumeLessard/qector-decoder"
@@ -180,7 +180,7 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <span className="text-cyan-300 text-base shrink-0">💡</span>
               <span>
-                <strong className="text-secondary">Distribution note:</strong> PyPI (<code className="text-cyan-300 font-mono">qector-decoder-v3</code>) is the Python library wheel. The free <strong className="text-secondary">QECTOR Workbench GUI v0.5.2</strong> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64, requiring no system Python or pip.
+                <strong className="text-secondary">Distribution note:</strong> PyPI (<code className="text-cyan-300 font-mono">qector-decoder-v3</code>) is the Python library wheel. The free <strong className="text-secondary">QECTOR Workbench GUI v0.5.3</strong> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64, requiring no system Python or pip.
               </span>
             </div>
             <Link to="/installer" className="text-cyan-300 hover:underline shrink-0 font-semibold text-xs">
