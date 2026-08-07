@@ -5,7 +5,7 @@ type MetricCardVariant = 'default' | 'gold' | 'compact';
 interface MetricCardProps {
   /** Short label/headline for the metric, e.g. "Peak Throughput" */
   label: string;
-  /** Optional large prominent value shown between label and desc, e.g. "11.5M/s" */
+  /** Optional large prominent value shown between label and desc, e.g. "1.0.0" */
   value?: string;
   /** Supporting explanation, one to two sentences */
   desc: string;

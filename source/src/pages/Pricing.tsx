@@ -129,7 +129,7 @@ export default function Pricing() {
                 <ul className="text-secondary text-sm space-y-1">
                   <li>• QECTOR Decoder v3 PyPI package (non-commercial use)</li>
                   <li>• Qector Workbench GUI v0.5.2 (full featured, 56 MCP tools)</li>
-                  <li>• Public benchmarks, artifacts, and validation on GitHub</li>
+                  <li>• Validation artifacts and reproducibility evidence on GitHub</li>
                   <li>• Documentation and examples</li>
                   <li>• Community issues and discussions</li>
                 </ul>
@@ -180,7 +180,7 @@ export default function Pricing() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span>Start 60-Day Evaluation — $499</span>
+                <span>Start 60-Day Evaluation: $499</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
             </div>
@@ -232,7 +232,7 @@ export default function Pricing() {
                   'Benchmark artifact access',
                 ]}
                 centered
-                ctaLabel="Subscribe — $1,299/yr"
+                ctaLabel="Subscribe: $1,299/yr"
                 ctaHref="https://buy.stripe.com/cNi9AV63TfkubbY87UeUU09"
               />
               <PricingTierCard
@@ -252,7 +252,7 @@ export default function Pricing() {
                   'Integration support (2 hours)',
                 ]}
                 centered
-                ctaLabel="Subscribe — $4,499/yr"
+                ctaLabel="Subscribe: $4,499/yr"
                 ctaHref="https://buy.stripe.com/14A5kF4ZP5JU7ZMdseeUU0c"
               />
               <PricingTierCard
@@ -270,7 +270,7 @@ export default function Pricing() {
                   'Dedicated integration support',
                 ]}
                 centered
-                ctaLabel="Subscribe — $11,500/yr"
+                ctaLabel="Subscribe: $11,500/yr"
                 ctaHref="https://buy.stripe.com/28EeVf1ND0pA6VIewieUU0d"
               />
               <PricingTierCard
@@ -318,7 +318,7 @@ export default function Pricing() {
                   Prefer to own it outright?
                 </p>
                 <p className="text-secondary text-sm mt-1">
-                  <strong className="text-cyan-300">Solo / Indie Perpetual — $3,299 one-time.</strong>{' '}
+                  <strong className="text-cyan-300">Solo / Indie Perpetual: $3,299 one-time.</strong>{' '}
                   Same rights as annual for single named user on v3.x (all v3.x patch/minor updates included). Major version upgrades (e.g. v4.0) are a new license. Pays for itself against the annual plan in year three.
                 </p>
               </div>
@@ -328,7 +328,7 @@ export default function Pricing() {
                 target="_blank"
                 rel="noopener"
               >
-                Buy perpetual — $3,299
+                Buy perpetual: $3,299
               </a>
             </div>
 
@@ -344,25 +344,25 @@ export default function Pricing() {
                 exclude tax. Stripe adds applicable sales tax, GST/HST, or VAT at checkout based on your billing location.
               </p>
               <p>
-                <strong className="text-secondary">Delivery:</strong> your license token is emailed within 10 minutes of payment —
-                check your spam folder before contacting support.
+                <strong className="text-secondary">Delivery:</strong> your license token is emailed within 10 minutes of payment.
+                Check your spam folder before contacting support.
               </p>
               <p>
                 <strong className="text-secondary">Refunds:</strong> tokens are delivered instantly, so all sales are final. The $499
-                evaluation is the creditable way to try first — see the{' '}
+                evaluation is the creditable way to try first: see the{' '}
                 <Link to="/refund" className="text-cyan-300 hover:underline">refund policy</Link>.
               </p>
             </div>
           </div>
 
-          {/* ACTIVATION / ENV VARS — previously documented only on PyPI, which
+          {/* ACTIVATION / ENV VARS: previously documented only on PyPI, which
               meant buyers could not see before paying what the package actually
               does without a token. Stating the notice behaviour plainly here is
               what keeps the "no lockouts" claim honest. */}
           <div ref={(el) => addRef(el, 3.5)} className="card-surface">
             <h2 className="text-2xl font-bold mb-3">Activating Your License</h2>
             <p className="text-secondary text-sm mb-4">
-              Everyone installs the same wheel — there is no separate commercial build and no feature gating. If{' '}
+              Everyone installs the same wheel: there is no separate commercial build and no feature gating. If{' '}
               <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> is not set, a licensing notice prints on
               import. That is expected for non-commercial use. Setting your token stops the notice; decoding runs either way,
               with no hard stop.
@@ -380,11 +380,11 @@ $env:QECTOR_LICENSE = "<your-token>"`}
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div className="p-3 bg-surface border border-gridline rounded-xl">
                 <p className="text-primary font-mono text-xs mb-1">QECTOR_LICENSE</p>
-                <p className="text-secondary text-xs">Your Ed25519 token, tied to your checkout email. Verified offline against a public key embedded in the package — no license server, no phone-home, works air-gapped.</p>
+                <p className="text-secondary text-xs">Your Ed25519 token, tied to your checkout email. Verified offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</p>
               </div>
               <div className="p-3 bg-surface border border-gridline rounded-xl">
                 <p className="text-primary font-mono text-xs mb-1">QECTOR_SILENT=1</p>
-                <p className="text-secondary text-xs">Suppresses the startup licensing notice. Safe in any tier, including non-commercial use — it changes logging only, never decoder behaviour or results.</p>
+                <p className="text-secondary text-xs">Suppresses the startup licensing notice. Safe in any tier, including non-commercial use: it changes logging only, never decoder behaviour or results.</p>
               </div>
             </div>
           </div>

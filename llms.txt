@@ -8,7 +8,7 @@ Stable release v1.0.0: 25+ decoder configurations across stability tiers (stable
 
 Algorithms (25+ configurations): UnionFind, FastUnionFind, Blossom MWPM (exact), SparseBlossom, BeliefMatching, BpOsd / BPOSD (qLDPC), BatchDecoder, CUDABatchDecoder, AutoDecoder (7-tier fallback), HybridDecoder, PredecodedDecoder, LookupTableDecoder, AutoRouter, GNNBeliefMatcher, ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder, plus per-decoder options (relay BP, CS-OSD, LLR damping, CUDA f64 edge_weights, etc.). The Workbench app also integrates the QECTOR Workbench v0.5.2 GUI (56 MCP tools, 10 code families).
 
-Verified benchmark figures (last published verified set, v0.7.0 — the only citable figures): peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server), 54/54 benchmark points with zero unfaithful corrections (repetition n=5–65, ring n=16–48), 42/42 syndrome-faithfulness cases, 13 MCP tools operational. Measured on Linux (glibc 2.35, Python 3.12.13), timestamp 2026-08-02T05:59:13Z. Apple-to-apple vs PyMatching: comparable; PyMatching is often slightly ahead on the synchronized batch. No speedup multiplier is claimed. Pre-v0.7.0 comparison tables are formally withdrawn — do not cite them. v1.0.0 publishes no new headline figures — run `qector bench` for your own hardware.
+No universal benchmark figures are published on the website, because results depend on specific hardware, drivers, and workloads. The package ships `qector bench` (throughput and LER harness printing one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic), so you can validate and measure on your own machines. Validation and reproducibility evidence (SHA-256 sealed artifact manifests, syndromic H·c = s harness, IBM hardware execution logs) is published on GitHub and at https://qector.store/evidence.
 
 ## Official links
 
@@ -17,7 +17,6 @@ Verified benchmark figures (last published verified set, v0.7.0 — the only cit
 - Documentation hub: https://qector.store/docs
 - User Manual: https://qector.store/manual
 - Technical Reference: https://qector.store/technical-reference
-- Benchmark artifacts: https://qector.store/benchmarks (verified set at https://qector.store/benchmarks/v0.7.0/)
 - Evidence & Reports: https://qector.store/evidence
 - Commercial licensing: https://qector.store/commercial
 - Contact: https://qector.store/contact
@@ -42,4 +41,4 @@ pip install qector-decoder-v3==1.0.0
 
 - Free academic, personal, and non-commercial research use (PolyForm Noncommercial 1.0.0).
 - Commercial production use requires a commercial licence.
-- The only citable benchmark figures are the verified v0.7.0 artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf); the benchmark harness ships with the package (`qector bench`, `qector-doctor`).
+- No universal benchmark figures are published on the website; the benchmark harness ships with the package (`qector bench`, `qector-doctor`), and validation artifacts are published on GitHub and at https://qector.store/evidence.

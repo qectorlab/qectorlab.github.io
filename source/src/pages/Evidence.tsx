@@ -11,34 +11,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const REPORTS_DATA = [
   {
-    title: 'Verified v0.7.0 Benchmark Set — REPORT.md',
-    desc: 'Self-benchmark report measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13): 13 MCP tools operational, 54 benchmark points, 0 unfaithful corrections, 42/42 syndrome-faithfulness cases.',
-    status: 'Verified',
-  },
-  {
-    title: 'Verified v0.7.0 Benchmark Set — summary.json',
-    desc: 'Machine-readable summary: package qector-decoder-v3 0.7.0, MCP stdio JSON-RPC 2.0, timestamp 2026-08-02T05:59:13Z, tools_count 13, correctness_cases 42, benchmark_points 54, peak_throughput_shots_per_s 11,540,387.',
-    status: 'Verified',
-  },
-  {
-    title: 'Verified v0.7.0 Benchmark Set — benchmarks.csv',
-    desc: 'Full 54-row sweep: repetition (n=5…65) and ring (n=16…48) parity-check codes, six decoder kinds, throughput and latency percentiles, n_unfaithful = 0 on every row.',
-    status: 'Verified',
-  },
-  {
-    title: 'Apple-to-Apple vs PyMatching',
-    desc: 'VERIFIED_APPLE_TO_APPLE_REPORT.pdf: synchronized batch comparison. QECTOR is comparable to PyMatching; PyMatching is often slightly ahead on the synchronized batch. No speedup multiplier is claimed.',
-    status: 'Verified',
-  },
-  {
     title: 'Official User Manual v1.0.0',
-    desc: 'QECTOR Decoder v3 User Manual and Extended Reference, v1.0.0 (2026-08-06, DOI 10.5281/zenodo.21363016) — distributed with qector-decoder-v3==1.0.0 and at /docs/reference.md.',
+    desc: 'QECTOR Decoder v3 User Manual and Extended Reference, v1.0.0 (2026-08-06, DOI 10.5281/zenodo.21363016): distributed with qector-decoder-v3==1.0.0 and at /docs/reference.md.',
     status: 'Verified',
   },
   {
-    title: 'Withdrawn Pre-v0.7.0 Tables',
-    desc: 'Four benchmark tables published in earlier documentation (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn. Do not cite them.',
-    status: 'Withdrawn',
+    title: 'SHA-256 Sealed Artifact Manifests',
+    desc: 'Source and artifact releases are SHA-256 sealed on GitHub, so every published build can be reproduced and verified byte-for-byte.',
+    status: 'Verified',
+  },
+  {
+    title: 'Syndromic Validation Harness',
+    desc: 'Decode runs verify H·c = s on every shot through the self-debugging harness shipped in the package, with the harness published on GitHub.',
+    status: 'Verified',
   },
   {
     title: 'IBM Hardware Execution Log',
@@ -77,18 +62,18 @@ export default function Evidence() {
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Verified v0.7.0 Artifacts · Official v1.0.0 Manual · Apple-to-Apple vs PyMatching · IBM Hardware Job IDs
+            Verified v1.0.0 Manual · SHA-256 Sealed Manifests · IBM Hardware Job IDs
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Every public claim is backed by a verifiable artifact: the verified v0.7.0 benchmark set,
-            the apple-to-apple PyMatching report, and IBM hardware job IDs — all archived on GitHub.
+            Every public claim is backed by a verifiable artifact: validation reports, SHA-256 sealed manifests,
+            and IBM hardware job IDs, all archived on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>
-            <Link to="/benchmarks" className="btn-outline">Benchmark Details</Link>
+            <Link to="/technical-reference" className="btn-outline">Technical Reference</Link>
           </div>
         </div>
       </section>
@@ -111,22 +96,20 @@ export default function Evidence() {
               </div>
             </a>
             <a
-              href="https://github.com/GuillaumeLessard/qector-decoder/tree/main/benchmark_results"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/docs/reference.md"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gold-400/10 border border-gold-400/20 rounded-2xl hover:bg-gold-400/20 transition-all"
             >
-              <span className="text-2xl">📊</span>
+              <span className="text-2xl">📘</span>
               <div className="text-left">
-                <div className="text-gold-400 font-semibold">Benchmark Artifacts</div>
-                <div className="text-muted-foreground text-sm">github.com/GuillaumeLessard/qector-decoder</div>
+                <div className="text-gold-400 font-semibold">Official User Manual v1.0.0</div>
+                <div className="text-muted-foreground text-sm">qector.store/docs/reference.md</div>
               </div>
             </a>
           </div>
 
           {/* Status Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg mx-auto">
-            {['All', 'Verified', 'Withdrawn', 'Hardware'].map((status) => (
+            {['All', 'Verified', 'Hardware'].map((status) => (
               <button
                 key={status}
                 onClick={() => setSelectedStatus(status)}
@@ -149,7 +132,7 @@ export default function Evidence() {
                 title={report.title}
                 badge={{
                   label: report.status,
-                  color: report.status === 'Verified' ? 'green' : report.status === 'Withdrawn' ? 'gold' : 'gold',
+                  color: report.status === 'Verified' ? 'green' : 'gold',
                 }}
                 desc={report.desc}
                 proof={report.proof}
@@ -159,11 +142,11 @@ export default function Evidence() {
 
           {/* Reproducibility */}
           <div ref={(el) => addRef(el, 2)} className="card-surface">
-            <h3 className="text-cyan-300 font-semibold mb-3">Reproducing Our Results</h3>
+            <h3 className="text-cyan-300 font-semibold mb-3">Verify on Your Own Machine</h3>
             <p className="text-secondary text-sm leading-relaxed mb-4">
-              The verified v0.7.0 set is four artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf),
-              published at <Link to="/benchmarks/v0.7.0/REPORT.md" className="text-cyan-300 hover:underline">qector.store/benchmarks/v0.7.0</Link> and on GitHub.
-              Run the harness yourself:
+              No universal benchmark figures are published on this site, because results depend on your hardware.
+              The package ships the qector-doctor environment diagnostic and the qector bench harness so you can
+              validate and measure on your own machines. Run them yourself:
             </p>
             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground">
               <div className="text-cyan-300 mb-2"># Quick validation</div>
@@ -180,7 +163,7 @@ export default function Evidence() {
           <div className="card-surface">
             <h3 className="text-cyan-300 font-semibold mb-3">How to Cite QECTOR</h3>
             <p className="text-secondary text-xs leading-relaxed mb-3">
-              If you use QECTOR Decoder v3 or its benchmark artifacts in academic research, please cite our software artifact release:
+              If you use QECTOR Decoder v3 or its validation artifacts in academic research, please cite our software artifact release:
             </p>
             <pre className="p-4 bg-void border border-gridline rounded-xl text-xs text-muted-foreground font-mono overflow-x-auto select-all">
 {`@software{lessard2026qector,
@@ -197,7 +180,7 @@ export default function Evidence() {
           {/* Transparency */}
           <EvidenceBlock
             title="Our Transparency Commitment"
-            statement={`We publish all validation results - passes, non-passes, and known limitations. All numeric claims link to GitHub artifact releases. We do not hide non-passes behind aggregate statistics.`}
+            statement={`We publish all validation results: passes, non-passes, and known limitations. All numeric claims link to GitHub artifact releases. We do not hide non-passes behind aggregate statistics.`}
           />
 
         </div>

@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router';
 const navLinks = [
   { label: 'Platform', href: '/' },
   { label: 'Decoder', href: '/decoder' },
-  { label: 'Benchmarks', href: '/benchmarks' },
   { label: 'Workbench', href: '/workbench' },
   { label: 'MCP Server', href: '/mcp-server' },
   { label: 'Evidence', href: '/evidence' },

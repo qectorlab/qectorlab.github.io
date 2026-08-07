@@ -10,7 +10,6 @@ import Home from './pages/Home';
 // so first paint doesn't pay for pages most visitors never open.
 const About = lazy(() => import('./pages/About'));
 const Decoder = lazy(() => import('./pages/Decoder'));
-const Benchmarks = lazy(() => import('./pages/Benchmarks'));
 const Workbench = lazy(() => import('./pages/Workbench'));
 const McpServer = lazy(() => import('./pages/McpServer'));
 const SatiOs = lazy(() => import('./pages/SatiOs'));
@@ -40,7 +39,6 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/decoder" element={<Decoder />} />
-            <Route path="/benchmarks" element={<Benchmarks />} />
             <Route path="/workbench" element={<Workbench />} />
             <Route path="/mcp-server" element={<McpServer />} />
             <Route path="/sati-os" element={<SatiOs />} />

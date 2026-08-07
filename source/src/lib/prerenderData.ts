@@ -1,4 +1,4 @@
-// Prerender route data — the single source of truth for the static HTML shells
+// Prerender route data: the single source of truth for the static HTML shells
 // emitted per route at build time (see ghPagesSpaShell in vite.config.ts).
 //
 // Why this exists: qector.store is a client-rendered SPA. Without prerendering,
@@ -54,7 +54,7 @@ const softwareNode = {
   '@type': 'SoftwareApplication',
   name: 'QECTOR Decoder v3',
   description:
-    'Production-grade poly-algorithmic quantum error correction decoder for Python. v1.0.0 first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI. Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases.',
+    'Production-grade poly-algorithmic quantum error correction decoder for Python. v1.0.0 first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware.',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Linux, macOS, Windows',
   programmingLanguage: 'Python',
@@ -108,7 +108,6 @@ const table = (head: string[], rows: string[][]) =>
 const NAV_LINKS: [string, string][] = [
   ['/', 'Home'],
   ['/decoder', 'Decoder'],
-  ['/benchmarks', 'Benchmarks'],
   ['/evidence', 'Evidence'],
   ['/pricing', 'Pricing'],
   ['/installer', 'Install'],
@@ -131,23 +130,23 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
+      'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library of 25+ production and research quantum error correction decoder configurations — MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, GPU batch and more — behind one consistent API. v1.0.0 is the first stable release, with API stability tiers, a qector CLI and qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library of 25+ production and research quantum error correction decoder configurations, from MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, and GPU batch, all behind one consistent API. v1.0.0 is the first stable release, with API stability tiers, a qector CLI and qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
         ) +
-        h2('v1.0.0 — first stable release') +
+        h2('v1.0.0: first stable release') +
         ul([
           'Semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental).',
-          'Sinter entry points (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered — sinter.collect() works with no custom_decoders=.',
+          'Sinter entry points (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered: sinter.collect() works with no custom_decoders=.',
           'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in cluster_bposd). Relay-BP schedules, CS-OSD(lambda, w) and LLR damping in BP-OSD.',
           'qector decode / qector bench / qector serve CLI and qector-doctor (15-check environment diagnostic).',
-          'Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections.',
+          'A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.',
         ]) +
         h2('The decoders') +
         p(
@@ -157,7 +156,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           `PyPI package: <a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3 ${DECODER_VERSION}</a>`,
           `Artifacts and reproduction harness: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
-          'Verified v0.7.0 set (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) published at /benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn.',
+          'Validation reports, SHA-256 sealed manifests, and IBM hardware job IDs, archived with the decoder source on GitHub.',
         ])
     ),
     jsonLdExtra: [
@@ -170,26 +169,26 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
+      'QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
+          'Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
         h2('Production decoders (Stable)') +
         ul([
-          '<strong>UnionFindDecoder / FastUnionFindDecoder</strong> — near-linear time approximate decoding for graph-like codes.',
-          '<strong>BlossomDecoder</strong> — exact minimum-weight perfect matching reference decoder for surface codes.',
-          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong> — native parallel CPU and CUDA/OpenCL batch pipelines; CUDA accepts edge_weights and precision="f64" in v1.0.0.',
+          '<strong>UnionFindDecoder / FastUnionFindDecoder</strong>: near-linear time approximate decoding for graph-like codes.',
+          '<strong>BlossomDecoder</strong>: exact minimum-weight perfect matching reference decoder for surface codes.',
+          '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong>: native parallel CPU and CUDA/OpenCL batch pipelines; CUDA accepts edge_weights and precision="f64" in v1.0.0.',
         ]) +
         h2('Experimental &amp; research decoders') +
         ul([
-          '<strong>BpOsdDecoder / BPOSDDecoder</strong> — belief propagation + ordered statistics decoding for qLDPC codes; v1.0.0 adds Relay-BP, CS-OSD(lambda, w) and LLR damping.',
-          '<strong>BeliefMatching</strong> — BP preprocessing + reweighted exact MWPM for correlated noise (research path).',
-          '<strong>SparseBlossomDecoder</strong> — region-growing near-optimal matching; zero-allocation hot path in v1.0.0 (experimental).',
-          '<strong>AutoDecoder / HybridDecoder</strong> — adaptive fallback and routing between Union-Find and Blossom.',
-          '<strong>ColourCodeDecoder / TwoStageDecoder / AmbiguityClusterDecoder / PredecodedDecoder</strong> — specialized research workflows, new families in v1.0.0.',
+          '<strong>BpOsdDecoder / BPOSDDecoder</strong>: belief propagation + ordered statistics decoding for qLDPC codes; v1.0.0 adds Relay-BP, CS-OSD(lambda, w) and LLR damping.',
+          '<strong>BeliefMatching</strong>: BP preprocessing + reweighted exact MWPM for correlated noise (research path).',
+          '<strong>SparseBlossomDecoder</strong>: region-growing near-optimal matching; zero-allocation hot path in v1.0.0 (experimental).',
+          '<strong>AutoDecoder / HybridDecoder</strong>: adaptive fallback and routing between Union-Find and Blossom.',
+          '<strong>ColourCodeDecoder / TwoStageDecoder / AmbiguityClusterDecoder / PredecodedDecoder</strong>: specialized research workflows, new families in v1.0.0.',
         ]) +
         h2('Technical specifications') +
         table(
@@ -208,48 +207,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [{ ...softwareNode, url: abs('/decoder') }],
   },
   {
-    path: '/benchmarks',
-    title: 'Benchmarks · QECTOR',
-    description:
-      'Verified v0.7.0 benchmark set: peak 11.5M shots/s, 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, 13 MCP tools. Four reproducible artifacts, apple-to-apple vs PyMatching.',
-    heading: 'Verified v0.7.0 Benchmarks',
-    body: page(
-      h1('Verified v0.7.0 Benchmarks') +
-        p(
-          'One set, four artifacts, fully reproducible. Measured with the qector-decoder-v3 0.7.0 package MCP server on Linux (glibc 2.35, Python 3.12.13) at 2026-08-02T05:59:13Z. Published as benchmarks.csv, REPORT.md, summary.json, and VERIFIED_APPLE_TO_APPLE_REPORT.pdf. v1.0.0 (2026-08-06) is the first stable release; it keeps this verified set citable and ships honest benchmarking methodology (qector bench, the ler module) that publishes no new headline figures.'
-        ) +
-        h2('Headline numbers') +
-        ul([
-          'Peak throughput: 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, 8,000 samples).',
-          '54/54 benchmark points with zero unfaithful corrections (repetition n=5–65, ring n=16–48).',
-          '42/42 syndrome-faithfulness cases passed.',
-          '13 MCP tools operational (MCP stdio, JSON-RPC 2.0).',
-        ]) +
-        h2('vs PyMatching — verified apple-to-apple') +
-        p(
-          'Synchronized CPU batch comparison: QECTOR is comparable to PyMatching; PyMatching is often slightly ahead on the synchronized batch. No speedup multiplier is claimed. The verified report is published as VERIFIED_APPLE_TO_APPLE_REPORT.pdf.'
-        ) +
-        h2('Withdrawn tables') +
-        p(
-          'Four pre-v0.7.0 comparison tables published in earlier documentation (MWPM parity vs PyMatching at d=13/15, Belief-Matching LER gain at d=5/7, GPU bit-identity, native memory profile) are formally withdrawn. Do not cite them; no benchmark figures are published for this release beyond the verified set.'
-        ) +
-        h2('Run it yourself (v1.0.0)') +
-        pre(
-          `pip install "qector-decoder-v3==${DECODER_VERSION}[bench]"\nqector-doctor            # 15-check environment diagnostic\nqector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001`
-        ) +
-        ul([
-          `GitHub artifacts: <a href="${GITHUB_URL}" style="color:#67e8f9;">${GITHUB_URL.replace('https://', '')}</a>`,
-          'Artifacts also published at /benchmarks/v0.7.0/ (REPORT.md, summary.json, benchmarks.csv, PDF).',
-        ])
-    ),
-    jsonLdExtra: [
-      techArticleNode(
-        'QECTOR Verified v0.7.0 Benchmark Set',
-        'Peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, 13 MCP tools; apple-to-apple vs PyMatching with no speedup multiplier claimed.'
-      ),
-    ],
-  },
-  {
     path: '/evidence',
     title: 'Evidence & Reports · QECTOR',
     description:
@@ -258,16 +215,13 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Evidence & Reports') +
         p(
-          'Every public claim is backed by a verifiable artifact: validation reports, benchmark data, SHA-256 manifests, and IBM hardware job IDs — archived with the decoder source on GitHub.'
+          'Every public claim is backed by a verifiable artifact: validation reports, SHA-256 sealed manifests, and IBM hardware job IDs, all archived with the decoder source on GitHub.'
         ) +
-        h2('Verified v0.7.0 artifact set') +
+        h2('Evidence artifacts') +
         ul([
-          'REPORT.md — v0.7.0 self-benchmark report (Linux glibc 2.35, Python 3.12.13): 13 MCP tools, 54 benchmark points, 0 unfaithful, 42/42 faithfulness cases.',
-          'summary.json — machine-readable benchmark summary (timestamp 2026-08-02T05:59:13Z).',
-          'benchmarks.csv — full 54-row sweep: repetition n=5–65 and ring n=16–48, six decoder kinds.',
-          'VERIFIED_APPLE_TO_APPLE_REPORT.pdf — synchronized vs PyMatching: comparable, PyMatching often slightly ahead on the batch; no speedup multiplier claimed.',
-          'Official v1.0.0 user manual and extended reference (2026-08-06, DOI 10.5281/zenodo.21363016) distributed with qector-decoder-v3==1.0.0.',
-          'Pre-v0.7.0 comparison tables (MWPM parity, Belief-Matching gain, GPU bit-identity, optimal-shot analysis) are formally withdrawn — do not cite them.',
+          'Official v1.0.0 user manual and extended reference (2026-08-06, DOI 10.5281/zenodo.21363016), distributed with qector-decoder-v3==1.0.0.',
+          'Syndromic validation: decode runs verify H·c = s on every shot through the self-debugging harness.',
+          'SHA-256 sealed artifact manifests and IBM hardware job IDs archived on GitHub.',
         ]) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"\n\ngit clone ${GITHUB_URL}`
@@ -276,7 +230,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [
       techArticleNode(
         'QECTOR Evidence & Validation Reports',
-        'Verified v0.7.0 artifact set: REPORT.md, summary.json, benchmarks.csv, and the apple-to-apple PyMatching PDF. Pre-v0.7.0 comparison tables formally withdrawn.'
+        'Official v1.0.0 user manual (DOI 10.5281/zenodo.21363016), SHA-256 sealed validation artifacts, and IBM hardware job IDs.'
       ),
     ],
   },
@@ -284,17 +238,17 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench v0.5.2 — free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Self-contained: no system Python, pip, or internet required.',
+      'QECTOR Workbench v0.5.2: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Self-contained: no system Python, pip, or internet required.',
     heading: 'QECTOR Workbench v0.5.2',
     body: page(
       h1('QECTOR Workbench v0.5.2') +
         p(
-          'Free desktop application (CustomTkinter GUI) and Model Context Protocol server for QECTOR Decoder v3: 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, and a visual circuit builder. Ships as a portable Windows x64 executable and native Linux x64 Debian packages, each fully self-contained — it bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is required. No macOS build is currently published.'
+          'Free desktop application (CustomTkinter GUI) and Model Context Protocol server for QECTOR Decoder v3: 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, and a visual circuit builder. Ships as a portable Windows x64 executable and native Linux x64 Debian packages, each fully self-contained: it bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is required. No macOS build is currently published.'
         ) +
         h2('Downloads') +
         ul([
-          'Windows x64 — portable <code>QectorWorkbench-Portable.exe</code>, no installer and no admin rights: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
-          'Linux x64 — Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
+          'Windows x64: portable <code>QectorWorkbench-Portable.exe</code>, no installer and no admin rights: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
+          'Linux x64: Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
           'Headless MCP server on either platform: <code>--mcp</code> (56-tool stdio JSON-RPC 2.0, no display needed).',
           'Linux baseline glibc 2.31: Ubuntu 20.04+, Debian 11+, Mint 20+, antiX 21+ / MX 21+, Fedora 32+, openSUSE Leap 15.3+.',
           'SHA-256 checksums for every released file are published in the release notes.',
@@ -303,48 +257,28 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'Eight modules ship in v0.5.2: Code Explorer (build and inspect codes, Tanner graph and parity-check matrix views, decoder recommendation), Decoder Lab (interactive decode runs with syndrome-validity and logical-failure reporting), Benchmark (throughput and latency percentiles with JSON export and session comparison), Batch &amp; Streaming (batch decoding and sliding-window streaming, with cpu / cpu_parallel / cuda / opencl backend probing), Hardware, Diagnostics, Documentation, and Console.'
         ) +
-        h2('Measured Benchmarks (13 of 16 decoders)') +
-        table(
-          ['Decoder Kind', 'Throughput', 'p50 Latency', 'LER (d=5)', 'Compatibility'],
-          [
-            ['hybrid_cascade', '362,845 decodes/s', '2.60 µs', '0.10', 'Graphlike'],
-            ['fast_union_find', '349,895 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
-            ['lookup_table', '337,610 decodes/s', '2.40 µs', '0.10', 'Small (<20 checks)'],
-            ['union_find', '295,508 decodes/s', '2.40 µs', '0.10', 'Graphlike'],
-            ['blossom', '261,917 decodes/s', '2.90 µs', '0.08', 'Universal (PyMatching Parity)'],
-            ['sparse_blossom', '146,757 decodes/s', '4.05 µs', '0.08', 'Graphlike'],
-            ['hybrid', '138,812 decodes/s', '4.10 µs', '0.08', 'Graphlike'],
-            ['predecoded', '82,850 decodes/s', '12.00 µs', '0.08', 'Graphlike'],
-            ['auto', '61,125 decodes/s', '13.60 µs', '0.10', 'Graphlike'],
-            ['bp_osd', '26,162 decodes/s', '34.75 µs', '0.10', 'Universal / qLDPC'],
-            ['gnn_belief_matching', '6,520 decodes/s', '147.15 µs', '0.08', 'Graphlike'],
-            ['belief_matching', '1,001 decodes/s', '988.05 µs', '0.02 (Best)', 'Universal'],
-            ['auto_router', '40 decodes/s', '25.45 ms', '0.08', 'Universal Policy Router'],
-          ]
-        ) +
         h2('10 Quantum Code Families') +
         p('Workbench v0.5.2 covers 10 code families including qLDPC and colour codes:') +
         ul([
-          'repetition — 1D chain parity-check code.',
-          'ring — Periodic 1D chain.',
-          'rotated_surface — Standard rotated surface code.',
-          'unrotated_surface — Square lattice surface code.',
-          'toric — Toric code with periodic boundaries.',
-          'heavy_hex — IBM heavy-hex lattice.',
-          'hypergraph_product — CSS code from repetition seed.',
-          'bicycle — qLDPC bicycle code.',
-          'bivariate_bicycle — IBM bivariate bicycle presets (qLDPC).',
-          'color_code — triangular colour code.',
+          'repetition: 1D chain parity-check code.',
+          'ring: Periodic 1D chain.',
+          'rotated_surface: Standard rotated surface code.',
+          'unrotated_surface: Square lattice surface code.',
+          'toric: Toric code with periodic boundaries.',
+          'heavy_hex: IBM heavy-hex lattice.',
+          'hypergraph_product: CSS code from repetition seed.',
+          'bicycle: qLDPC bicycle code.',
+          'bivariate_bicycle: IBM bivariate bicycle presets (qLDPC).',
+          'color_code: triangular colour code.',
         ]) +
-        h2('Benchmark policy') +
+        h2('Performance measurement') +
         p(
-          'No benchmark figures are published for this release beyond the verified v0.7.0 set at /benchmarks (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf). The Workbench ships a benchmark harness so you can measure on your own hardware.'
+          'No benchmark figures are published on this site; results depend on specific hardware, drivers, and workloads. The Workbench ships a benchmark harness so you can measure on your own hardware.'
         ) +
         h2('Documentation &amp; reference') +
         ul([
-          `User Manual &amp; Licensing — <a href="${SITE_URL}/manual" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/manual</a>`,
-          `Performance Benchmarks — <a href="${SITE_URL}/benchmarks" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/benchmarks</a>`,
-          `Architecture &amp; Technical Reference — <a href="${SITE_URL}/technical-reference" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/technical-reference</a>`,
+          `User Manual &amp; Licensing: <a href="${SITE_URL}/manual" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/manual</a>`,
+          `Architecture &amp; Technical Reference: <a href="${SITE_URL}/technical-reference" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/technical-reference</a>`,
         ])
     ),
   },
@@ -373,11 +307,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           ]
         ) +
         p(
-          '<strong>Tax:</strong> prices are in USD and exclude tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout based on your billing location. <strong>Delivery:</strong> your license token is emailed within 10 minutes of payment — check your spam folder before contacting support. <strong>Refunds:</strong> tokens are delivered instantly, so all sales are final — see the <a href="/refund" style="color:#67e8f9;">refund policy</a>; the $499 evaluation is the creditable way to try before committing.'
+          '<strong>Tax:</strong> prices are in USD and exclude tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout based on your billing location. <strong>Delivery:</strong> your license token is emailed within 10 minutes of payment: check your spam folder before contacting support. <strong>Refunds:</strong> tokens are delivered instantly, so all sales are final: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>; the $499 evaluation is the creditable way to try before committing.'
         ) +
         h2('Activating your license') +
         p(
-          'Everyone installs the same wheel — there is no separate commercial build and no feature gating. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Setting the token stops the notice; decoding runs either way, with no hard stop.'
+          'Everyone installs the same wheel: there is no separate commercial build and no feature gating. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Setting the token stops the notice; decoding runs either way, with no hard stop.'
         ) +
         pre(
           `# Commercial use: activate with the Ed25519 token from your licence email\nexport QECTOR_LICENSE="<your-token>"\n\n# Optional: suppress the licensing notice in CI logs\nexport QECTOR_SILENT=1\n\n# Verification is offline against a public key in the package.\n# No licence server, no phone-home, works air-gapped.`
@@ -408,7 +342,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Enterprise & OEM Licensing') +
         p(
-          'Standard tiers cover internal use. Enterprise agreements cover redistribution, SaaS hosting, OEM integration, hardware bundling, and commercial benchmarking — with written contracts, SLAs, and procurement-friendly paperwork (W-8/W-9, vendor profiles, signed EULAs).'
+          'Standard tiers cover internal use. Enterprise agreements cover redistribution, SaaS hosting, OEM integration, hardware bundling, and commercial benchmarking: with written contracts, SLAs, and procurement-friendly paperwork (W-8/W-9, vendor profiles, signed EULAs).'
         ) +
         ul([
           'Custom scope: seats, sites, subsidiaries, and redistribution rights.',
@@ -428,11 +362,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Guillaume Lessard') +
         p(
-          'Founder, developer, author and independent researcher, based in Longueuil, Québec. I build QECTOR: I left formal schooling at sixteen and taught myself to write software, and a bit over two decades later I write Rust decoders for quantum error correction, publish the benchmarks behind every claim, and ship the whole thing myself.'
+          'Founder, developer, author and independent researcher, based in Longueuil, Québec. I build QECTOR: I grew up poor, quit school at sixteen, and taught myself to write software. A bit over two decades later, I write Rust decoders for quantum error correction, publish the evidence behind every claim, and ship the whole thing myself.'
         ) +
         h2('Making sure you have the right Guillaume Lessard') +
         p(
-          'It is a common Québécois name shared by several accomplished people — including a compiler engineer working on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. The identifiers below are the ones I control.'
+          'It is a common Québécois name shared by several accomplished people: including a compiler engineer working on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. The identifiers below are the ones I control.'
         ) +
         table(
           ['Identifier', 'Value'],
@@ -447,22 +381,22 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Background') +
         p(
-          'No degree. I left school at sixteen and learned to program because I wanted to make things that worked. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T across 2024–2025. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
+          'No degree. I grew up poor, quit school at sixteen, and learned to program because I wanted to make things that worked. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T across 2024–2025. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
         ) +
         h2('Skills') +
         ul([
-          'Systems and performance — Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
-          'Python engineering — Python 3.9–3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, sigstore attestation.',
-          'Quantum error correction — MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
-          'Applications and desktop — CustomTkinter GUI, self-contained runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
-          'Web and product — React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
-          'Writing and publishing — technical documentation, long-form instructional writing, audiobook production, electronic music production.',
+          'Systems and performance: Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
+          'Python engineering: Python 3.9–3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, sigstore attestation.',
+          'Quantum error correction: MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
+          'Applications and desktop: CustomTkinter GUI, self-contained runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
+          'Web and product: React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
+          'Writing and publishing: technical documentation, long-form instructional writing, audiobook production, electronic music production.',
         ]) +
         h2('Selected work') +
         ul([
-          `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a> — Rust-core Python library, 20+ decoder families, exact MWPM parity with PyMatching d=3–15.`,
-          `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.2</a> — free desktop GUI and 56-tool MCP server for Windows and Linux.`,
-          `<a href="/benchmarks" style="color:#67e8f9;">Published benchmark corpus</a> — 1,858 timing measurements across 6 topologies.`,
+          `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 25+ decoder configurations, first stable release v1.0.0.`,
+          `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.2</a>: free desktop GUI and 56-tool MCP server for Windows and Linux.`,
+          `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
         ]) +
         p('Book a 30-minute call: <a href="https://calendly.com/qector-info/30min" style="color:#67e8f9;">calendly.com/qector-info/30min</a> · <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
@@ -525,12 +459,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('About QECTOR') +
         p(
-          'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: a production-grade, honestly-benchmarked quantum error correction decoder for Python.'
+          'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: a production-grade, evidence-backed quantum error correction decoder for Python.'
         ) +
         ul([
-          'Every published number is part of the verified v0.7.0 artifact set and linked to a public artifact; pre-v0.7.0 comparison tables are formally withdrawn. v1.0.0 (2026-08-06) is the first stable release of the decoder.',
+          'No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. v1.0.0 (2026-08-06) is the first stable release of the decoder.',
           'IBM Quantum hardware runs are real but limited in scope; job IDs are published with the evidence.',
-          'SATI CODEX / LCL-833 theoretical work is research context — the shipping product is the decoder and its workbench.',
+          'SATI CODEX / LCL-833 theoretical work is research context: the shipping product is the decoder and its workbench.',
         ]) +
         p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -557,10 +491,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     heading: 'Changelog',
     body: page(
       h1('Changelog') +
-        h2('v1.0.0 — 2026-08-06 (current, first stable release)') +
+        h2('v1.0.0: 2026-08-06 (current, first stable release)') +
         ul([
           'Semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental / Internal detail).',
-          'Ecosystem entry points registered: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin — sinter.collect() works without custom_decoders=.',
+          'Ecosystem entry points registered: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin: sinter.collect() works without custom_decoders=.',
           'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in method="cluster_bposd").',
           'Relay-BP layered serial BP schedule (bp_method="relay"), CS-OSD(lambda, w) with configurable osd_lambda, and LLR message damping in bposd.py.',
           'CUDABatchDecoder / OpenCLBatchDecoder accept edge_weights; precision="f64" for double-precision weighted growth.',
@@ -571,22 +505,19 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
           'Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).',
         ]) +
-        h2('v0.7.1 — 2026-08-04') +
+        h2('v0.7.1: 2026-08-04') +
         ul([
           'CLI qector decode crash fix (nonexistent import); MCP ping implemented; MCP no longer responds to notifications.',
         ]) +
-        h2('v0.7.0 — 2026-07-24') +
+        h2('v0.7.0: 2026-07-24') +
         ul([
           'Production release with benchmark suite, hyper saturation suite, and Stripe live integration.',
           'MCP Server integration (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools.',
           '200-status route shells for all application routes and the /success checkout flow.',
-          'Verified benchmark set published: 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s. Pre-v0.7.0 comparison tables formally withdrawn.',
         ]) +
-        h2('v0.6.8 — 2026-07-22') +
+        h2('v0.6.8: 2026-07-22') +
         ul([
-          'CUDA decoder row-identical to CPU Union-Find at d=3–19; faithfulness H·c = s on 100% of shots.',
-          'Benchmark release: SVG charts, JSON data files, full PDF report; peak 13.49M shots/s CUDA, 5.21M shots/s CPU — withdrawn with the v0.7.0 verified set, do not cite.',
-          'Edge-hardware dataset published (v0.6.8) — withdrawn, do not cite.',
+          'Packaging and platform maintenance release.',
         ]) +
         h2('Earlier') +
         p('v0.5.x release train: GPU batch decoder, Belief-Matching configurable BP iterations, BP-OSD for qLDPC, sigstore-attested wheels, initial public PyPI release. Full history on the PyPI project page.')
@@ -617,11 +548,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Documentation Hub') +
         ul([
-          '<a href="/installer" style="color:#67e8f9;">Installation guide</a> — pip install on Linux, macOS, Windows.',
-          '<a href="/manual" style="color:#67e8f9;">User manual</a> — configuration, decoder selection, benchmarking, troubleshooting.',
-          '<a href="/technical-reference" style="color:#67e8f9;">Technical reference</a> — API parameters and module documentation.',
-          `<a href="${PYPI_URL}" style="color:#67e8f9;">PyPI project page</a> — canonical package documentation.`,
-          `<a href="${GITHUB_URL}" style="color:#67e8f9;">GitHub repository</a> — source, artifacts, validation harness.`,
+          '<a href="/installer" style="color:#67e8f9;">Installation guide</a>: pip install on Linux, macOS, Windows.',
+          '<a href="/manual" style="color:#67e8f9;">User manual</a>: configuration, decoder selection, benchmarking, troubleshooting.',
+          '<a href="/technical-reference" style="color:#67e8f9;">Technical reference</a>: API parameters and module documentation.',
+          `<a href="${PYPI_URL}" style="color:#67e8f9;">PyPI project page</a>: canonical package documentation.`,
+          `<a href="${GITHUB_URL}" style="color:#67e8f9;">GitHub repository</a>: source, artifacts, validation harness.`,
         ]) +
         p('Stim, PyMatching, Sinter, and Qiskit compatible.')
     ),
@@ -681,7 +612,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     heading: 'Installation',
     body: page(
       h1('Installation') +
-        p('QECTOR Decoder v3 ships as a Rust-compiled Python wheel for Python 3.9–3.13 on Linux x86_64 (manylinux_2_17), macOS 11.0+ (arm64), and Windows amd64 — 15 binary wheels, no sdist.') +
+        p('QECTOR Decoder v3 ships as a Rust-compiled Python wheel for Python 3.9–3.13 on Linux x86_64 (manylinux_2_17), macOS 11.0+ (arm64), and Windows amd64: 15 binary wheels, no sdist.') +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"  # Benchmark harness\npip install "qector-decoder-v3[all]"    # Full environment\n\n# Verify\nqector-doctor            # 15-check environment diagnostic\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
         ) +
@@ -704,7 +635,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p(
           'QECTOR Decoder v3 is source-available under the PolyForm Noncommercial License 1.0.0: free for personal, academic, and non-commercial research use. Company use, funded institutional work, SaaS, OEM integration, redistribution, or commercial benchmarking requires a commercial license.'
         ) +
-        h2('Commercial addendum — what a paid licence changes') +
+        h2('Commercial addendum: what a paid licence changes') +
         ul([
           'Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.',
           'Internal use only. Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.',
@@ -712,7 +643,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'The package is byte-identical for licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>); no functionality is gated or disabled.',
           'No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.',
         ]) +
-        p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a> — also bundled with the package distribution.') +
+        p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a>: also bundled with the package distribution.') +
         p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
         p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -726,7 +657,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Privacy Policy') +
         p(
-          'QECTOR collects the minimum data needed to operate: contact-form messages, licensing correspondence, and Stripe checkout records (processed by Stripe; card data never touches QECTOR servers). The decoder package performs no telemetry and no network calls — license verification is offline Ed25519 signature checking.'
+          'QECTOR collects the minimum data needed to operate: contact-form messages, licensing correspondence, and Stripe checkout records (processed by Stripe; card data never touches QECTOR servers). The decoder package performs no telemetry and no network calls: license verification is offline Ed25519 signature checking.'
         ) +
         p('Questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -743,7 +674,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Use of the QECTOR website and software is governed by the PolyForm Noncommercial License 1.0.0 for community use, or by a written commercial license agreement for paid tiers. Benchmarks and validation artifacts may be republished with attribution. No warranty is provided; see the license for the full terms.'
         ) +
         p(
-          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Licence tokens are delivered instantly and all sales are final — see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
+          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Licence tokens are delivered instantly and all sales are final: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
         ) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -763,12 +694,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           'The $499 Commercial Evaluation Licence is a flat, non-recurring 60-day licence with unlimited internal seats, for benchmarking and pilot work.',
           'It does not auto-renew and is not a subscription.',
-          'It is 100% creditable toward any annual tier purchased within 90 days of the evaluation start — $499 then Solo/Indie means you pay $800, not $1,299.',
+          'It is 100% creditable toward any annual tier purchased within 90 days of the evaluation start: $499 then Solo/Indie means you pay $800, not $1,299.',
           'To claim the credit, email your Stripe invoice number to admin@qector.store.',
         ]) +
         h2('Delivery problems are fixed, not refunded') +
         p(
-          'If a token never arrives, is tied to the wrong email, or fails offline verification, that is a delivery fault on our side. Email admin@qector.store with your Stripe invoice number and we reissue it at no cost — please do not open a dispute. Tokens usually arrive in under 10 minutes; check your spam folder first.'
+          'If a token never arrives, is tied to the wrong email, or fails offline verification, that is a delivery fault on our side. Email admin@qector.store with your Stripe invoice number and we reissue it at no cost: please do not open a dispute. Tokens usually arrive in under 10 minutes; check your spam folder first.'
         ) +
         h2('Exceptions') +
         ul([
@@ -792,7 +723,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 25+ decoder configurations — decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder — to any MCP-compatible AI client. Verified in the v0.7.0 benchmark set: 42/42 faithfulness cases, 54/54 points with zero unfaithful corrections. Ships in every v1.0.0 wheel.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 25+ decoder configurations (decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder) for any MCP-compatible AI client. Ships in every v1.0.0 wheel.'
         ) +
         pre(`pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3; qector_decoder_v3.run_mcp_server()"`)
     ),

@@ -18,7 +18,6 @@ const platformLinks: LinkItem[] = [
 ];
 
 const researchLinks: LinkItem[] = [
-  { label: 'Verified Benchmarks (54/54)', href: '/benchmarks' },
   { label: 'Evidence & Provenance', href: '/evidence' },
   { label: 'Technical Reference', href: '/technical-reference' },
   { label: 'Package User Manual', href: '/manual' },
@@ -93,7 +92,7 @@ export default function Footer() {
               </div>
 
               <p className="text-secondary text-sm leading-relaxed max-w-md">
-                High-performance quantum error correction library &amp; desktop workbench. 54/54 benchmark points verified with zero unfaithful corrections. Created by Guillaume Lessard at iD01t Productions.
+                High-performance quantum error correction library &amp; desktop workbench. v1.0.0 first stable release. No universal benchmark figures are published; qector bench ships for measuring on your own hardware. Created by Guillaume Lessard at iD01t Productions.
               </p>
 
               {/* Direct Quick Badges */}

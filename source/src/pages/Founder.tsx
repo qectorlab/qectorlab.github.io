@@ -10,9 +10,9 @@ import { CALENDLY_URL } from '../lib/config';
 //  1. Buyers of a one-person product want to know who is behind it.
 //  2. Entity disambiguation. "Guillaume Lessard" is a common Québécois name
 //     shared by other working professionals, and search engines currently
-//     conflate them. The Person JSON-LD below — with a sameAs list of
+//     conflate them. The Person JSON-LD below: with a sameAs list of
 //     identifiers that only this person controls (ORCID, GitHub, PyPI, itch.io,
-//     Zenodo) — is the mechanism that separates the entities. Keep sameAs
+//     Zenodo): is the mechanism that separates the entities. Keep sameAs
 //     accurate and exhaustive; that is what does the work, not the prose.
 //
 // Everything stated here is verifiable from a linked primary source. Do not add
@@ -124,8 +124,8 @@ export default function Founder() {
                 Guillaume Lessard
               </h1>
               <p className="text-secondary text-lg leading-relaxed mb-5">
-                I build QECTOR. I left formal schooling at sixteen and taught myself to write software. Over two decades
-                later, I write Rust decoders for quantum error correction, publish the benchmarks that back every claim I make,
+                I build QECTOR. I grew up poor, quit school at sixteen, and taught myself to write software. Two decades
+                later, I write Rust decoders for quantum error correction, publish the evidence that backs every claim I make,
                 and ship everything independently from Longueuil, Québec.
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
@@ -186,9 +186,9 @@ export default function Founder() {
             <h2 className="text-2xl font-bold mb-4">Background</h2>
             <div className="space-y-4 text-secondary text-sm leading-relaxed">
               <p>
-                I do not have a degree. I left school at sixteen and learned to program because I wanted to make things that
-                worked, and there was no one around to do it for me. That has been the method ever since: pick the problem,
-                learn what the problem requires, ship the result, publish the evidence.
+                I do not have a degree. I grew up poor, quit school at sixteen, and learned to program because I wanted to
+                make things that worked, and there was no one around to do it for me. That has been the method ever since:
+                pick the problem, learn what the problem requires, ship the result, publish the evidence.
               </p>
               <p>
                 For most of the last twenty years that meant applications, tools, and books: {' '}
@@ -200,9 +200,10 @@ export default function Founder() {
               </p>
               <p>
                 Quantum error correction is where that approach currently points. QECTOR Decoder v3 is a Rust core behind a
-                Python API implementing 20+ decoder families, with exact logical-error-rate parity against PyMatching from
-                distance 3 through 15 and a measured +35.7% accuracy gain from Belief-Matching at d=5. All performance is reproducible
-                from the published harness, because a claim without an artifact is just marketing.
+                Python API implementing 25+ decoder configurations, with v1.0.0 as the first stable release (2026-08-06).
+                No universal benchmark figures are published on the site, because results depend on your hardware; the
+                qector bench harness ships in the package so you can measure on your own machines. Every claim is backed by a
+                verifiable artifact, because a claim without an artifact is just marketing.
               </p>
               <p className="text-primary italic border-l-2 border-cyan-300/40 pl-4">
                 We ship. Even tired. Even messy. Still shipping.
@@ -230,9 +231,9 @@ export default function Founder() {
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 20+ decoders</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 25+ decoder configurations</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench v0.5.2</Link>: free desktop GUI and 56-tool MCP server</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/benchmarks" className="text-cyan-300 hover:underline font-semibold">Published benchmark corpus</Link>: 1,858 timing measurements</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
                 </ul>
               </div>

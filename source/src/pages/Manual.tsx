@@ -36,19 +36,19 @@ export default function Manual() {
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
               <p className="text-secondary text-sm leading-relaxed">
-                <strong className="text-primary">Ecosystem Native:</strong> Swappable backend design. You can easily plug QECTOR into Stim, PyMatching, Sinter, and Qiskit pipelines with minimal API modifications — v1.0.0 registers Sinter and qiskit-qec entry points so <code className="text-cyan-300">sinter.collect()</code> works with no <code className="text-cyan-300">custom_decoders=</code>.
+                <strong className="text-primary">Ecosystem Native:</strong> Swappable backend design. You can easily plug QECTOR into Stim, PyMatching, Sinter, and Qiskit pipelines with minimal API modifications: v1.0.0 registers Sinter and qiskit-qec entry points so <code className="text-cyan-300">sinter.collect()</code> works with no <code className="text-cyan-300">custom_decoders=</code>.
               </p>
             </div>
             <div>
               <h3 className="text-primary font-semibold text-lg mb-3">Key Highlights</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">v1.0.0 — First Stable Release</h4>
+                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">v1.0.0: First Stable Release</h4>
                   <p className="text-muted-foreground text-xs leading-relaxed">API stability tiers, Relay-BP, CS-OSD(lambda, w), colour-code cluster_bposd, qector CLI + qector-doctor, Sinter/qiskit entry points, pymatching shim.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Verified v0.7.0 Benchmarks</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">54/54 benchmark points with zero unfaithful corrections, 42/42 faithfulness cases; no other figures published for this release.</p>
+                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Measure on Your Hardware</h4>
+                  <p className="text-muted-foreground text-xs leading-relaxed">No universal benchmark figures are published; qector bench and qector-doctor ship with the package so you can validate and measure on your own machines.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Multi-Algorithm Diversity</h4>
@@ -223,7 +223,8 @@ prediction = decoder.decode(syndrome)`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              All published QECTOR benchmarks are fully reproducible. You can run benchmarks locally to verify exact error rate thresholds and performance.
+              Benchmarks are fully reproducible and machine-conditional: no universal figures are published on the site.
+              You can run benchmarks locally to verify error rate thresholds and performance on your own hardware.
             </p>
 
             <div>
@@ -361,7 +362,7 @@ prediction = decoder.decode(syndrome)`}
           <div className="space-y-8">
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl flex items-center justify-between flex-wrap gap-4">
               <div>
-                <h3 className="text-primary font-bold text-lg">QECTOR Decoder v3 — Extended Reference (package only)</h3>
+                <h3 className="text-primary font-bold text-lg">QECTOR Decoder v3: Extended Reference (package only)</h3>
                 <p className="text-muted-foreground text-xs">Version: 1.0.0 · PyPI: qector-decoder-v3 · Backend: Rust + PyO3</p>
               </div>
               <a
@@ -416,8 +417,8 @@ prediction = decoder.decode(syndrome)`}
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BeliefMatching</span><span>Correlated-noise accuracy</span><span>Research</span><span>Prefer graph-like</span></div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BpOsdDecoder</span><span>LDPC / qLDPC</span><span>Experimental</span><span>No (Hyperedge OK)</span></div>
                 <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BatchDecoder</span><span>High-throughput CPU batch</span><span>Stable</span><span>Yes for UF batch</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">CUDABatchDecoder</span><span>GPU batch (NVIDIA)</span><span>Runtime-dependent</span><span>—</span></div>
-                <div className="grid grid-cols-4 p-2.5"><span className="font-mono text-cyan-300">AutoDecoder</span><span>7-tier self-debugging fallback</span><span>Stable</span><span>—</span></div>
+                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">CUDABatchDecoder</span><span>GPU batch (NVIDIA)</span><span>Runtime-dependent</span><span>N/A</span></div>
+                <div className="grid grid-cols-4 p-2.5"><span className="font-mono text-cyan-300">AutoDecoder</span><span>7-tier self-debugging fallback</span><span>Stable</span><span>N/A</span></div>
               </div>
             </div>
 

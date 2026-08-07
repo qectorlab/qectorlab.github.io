@@ -60,7 +60,7 @@ export default function TerminalEmulator() {
       ]);
     } else if (trimmed === 'qector-doctor') {
       await sleep(300);
-      setLines((prev) => [...prev, { text: 'qector-doctor v1.0.0 — 15-check environment diagnostic', type: 'output' }]);
+      setLines((prev) => [...prev, { text: 'qector-doctor v1.0.0: 15-check environment diagnostic', type: 'output' }]);
       await sleep(500);
       setLines((prev) => [
         ...prev,
@@ -74,7 +74,7 @@ export default function TerminalEmulator() {
         { text: '[ 8/15] Stim import + DEM conversion ......... PASS', type: 'success' },
         { text: '[ 9/15] Sinter entry points ................. PASS', type: 'success' },
         { text: '[10/15] MCP server cold-start round-trip ..... PASS', type: 'success' },
-        { text: '✓ 10 PASS, 1 WARN — decode ready (see qector-doctor --json for the full report)', type: 'success' },
+        { text: '✓ 10 PASS, 1 WARN: decode ready (see qector-doctor --json for the full report)', type: 'success' },
       ]);
     } else if (trimmed === 'qector bench -d 5' || trimmed === 'qector bench --distance 5') {
       await sleep(400);
@@ -85,12 +85,9 @@ export default function TerminalEmulator() {
       await sleep(1000);
       setLines((prev) => [
         ...prev,
+        { text: 'blossom           | throughput printed for this machine only', type: 'success' },
         { text: '---------------------------------------------------------', type: 'info' },
-        { text: 'Decoder           | Throughput', type: 'info' },
-        { text: '---------------------------------------------------------', type: 'info' },
-        { text: 'blossom           | 8,262,646 shots/s (5-qubit repetition, verified set)', type: 'success' },
-        { text: '---------------------------------------------------------', type: 'info' },
-        { text: '✓ Machine-conditional rate printed; no universal figure claimed. See /benchmarks/v0.7.0/ for the verified set.', type: 'success' },
+        { text: '✓ Machine-conditional rate printed; no universal figure claimed. Results depend on your CPU, GPU, drivers, and workload. Run qector bench on your own hardware.', type: 'success' },
       ]);
     } else {
       await sleep(150);

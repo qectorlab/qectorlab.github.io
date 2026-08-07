@@ -40,7 +40,7 @@ export default function Changelog() {
               }
               items={[
                 'First stable (v1) release: semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental / Internal detail)',
-                'Ecosystem entry points: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered — sinter.collect() works without custom_decoders=',
+                'Ecosystem entry points: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered: sinter.collect() works without custom_decoders=',
                 'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in method="cluster_bposd")',
                 'Relay-BP layered serial BP schedule (bp_method="relay"), CS-OSD(lambda, w) with configurable osd_lambda, and LLR message damping in BP-OSD',
                 'Weighted Union-Find on GPU: CUDABatchDecoder / OpenCLBatchDecoder accept edge_weights, plus precision="f64" double-precision growth',
@@ -48,9 +48,9 @@ export default function Changelog() {
                 'pymatching submodule shim (from qector_decoder_v3.pymatching import Matching); DemModel.make_decoder covers all nine shipped native families',
                 'SparseBlossomDecoder hot path zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed; licence hardening (v2 tokens with tier + expiry)',
                 '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64) with PyPI Trusted Publishing + Sigstore; no sdist',
-                'Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016); last published verified benchmark set remains the v0.7.0 set at /benchmarks',
+                'Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016)',
                 'Free QECTOR Workbench v0.5.2 (current): 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',
-                'Pre-v0.7.0 benchmark comparison tables formally withdrawn: only the verified set is citable',
+                'No universal benchmark figures are published on the site; qector bench ships with the package for measuring on your own hardware',
               ]}
             />
           </div>
@@ -87,12 +87,7 @@ export default function Changelog() {
               version="v0.6.8 · 2026-07-22"
               items={[
                 'Fixed _guard() handling for gated research decoders; public wheels expose HybridDecoder (UF + Blossom routing)',
-                'New CPU/CUDA bit-exact validation: CUDA decoder row-identical to CPU Union-Find at d=3-19',
-                'Faithfulness verified: H·c = s on 100% of shots across all 8 decoders at d=3-19',
-                'Benchmark release with SVG charts, JSON data files, and full PDF report (superseded: withdrawn with the v0.7.0 verified set)',
-                'GPU throughput peak: 13,487,996 shots/s on GTX 1660 Ti (d=3, batch decoder) (withdrawn, do not cite)',
-                'Peak CPU throughput: 5,212,664 shots/s (Blossom, d=3, 200k shots) (withdrawn, do not cite)',
-                'Website updated with v0.6.8 benchmark artifacts, charts, and validation data',
+                'Website updated with validation data',
               ]}
             />
           </div>

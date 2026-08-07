@@ -46,7 +46,7 @@ export default function Refund() {
           </div>
 
           <div className="card-surface border-cyan-300/25">
-            <h2 className="text-xl font-bold mb-4">Evaluate first — that is what the $499 tier is for</h2>
+            <h2 className="text-xl font-bold mb-4">Evaluate first: that is what the $499 tier is for</h2>
             <p className="text-secondary text-sm leading-relaxed mb-3">
               We would rather you test than request a refund. The Commercial Evaluation License is a flat, non-recurring
               <strong className="text-primary"> $499</strong> for 60 days with unlimited internal seats, intended for
@@ -55,21 +55,21 @@ export default function Refund() {
             <ul className="text-secondary text-sm space-y-1.5">
               <li>• It does not auto-renew and is not a subscription.</li>
               <li>• It is 100% creditable toward any annual tier purchased within 90 days of your evaluation start.</li>
-              <li>• Example: $499 evaluation, then Solo/Indie within the window — you pay $800, not $1,299.</li>
+              <li>• Example: $499 evaluation, then Solo/Indie within the window: you pay $800, not $1,299.</li>
               <li>• To claim the credit, email your Stripe invoice number to admin@qector.store and we invoice the difference.</li>
             </ul>
           </div>
 
           <div className="card-surface">
-            <h2 className="text-xl font-bold mb-4">Delivery problems are not refund matters — we fix them</h2>
+            <h2 className="text-xl font-bold mb-4">Delivery problems are not refund matters: we fix them</h2>
             <p className="text-secondary text-sm leading-relaxed mb-3">
               If your token never arrives, arrives corrupted, is tied to the wrong email, or fails offline verification,
-              that is a delivery fault on our side. Do not open a dispute — email{' '}
+              that is a delivery fault on our side. Do not open a dispute: email{' '}
               <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> with your
               Stripe invoice number and we will reissue or correct it, at no cost and with no expiry on that obligation.
             </p>
             <p className="text-secondary text-sm leading-relaxed">
-              Tokens usually arrive in under 10 minutes. If it has been longer, check your spam folder first — automated
+              Tokens usually arrive in under 10 minutes. If it has been longer, check your spam folder first: automated
               license mail is a common false positive.
             </p>
           </div>
@@ -86,7 +86,7 @@ export default function Refund() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Cancelling an annual license</h2>
             <p className="text-secondary text-sm leading-relaxed">
-              Annual licenses are term licenses, not recurring subscriptions — they do not auto-renew, so there is nothing
+              Annual licenses are term licenses, not recurring subscriptions: they do not auto-renew, so there is nothing
               to cancel. Your rights simply run for the term you paid for, and we contact you before the term ends.
               Stopping use partway through a term does not generate a partial refund.
             </p>

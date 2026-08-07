@@ -6,11 +6,6 @@ QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction
 
 - https://qector.store/
 - https://qector.store/decoder
-- https://qector.store/benchmarks
-- https://qector.store/benchmarks/v0.7.0/REPORT.md
-- https://qector.store/benchmarks/v0.7.0/summary.json
-- https://qector.store/benchmarks/v0.7.0/benchmarks.csv
-- https://qector.store/benchmarks/v0.7.0/VERIFIED_APPLE_TO_APPLE_REPORT.pdf
 - https://qector.store/evidence
 - https://qector.store/workbench
 - https://qector.store/pricing
@@ -46,11 +41,11 @@ pip install qector-decoder-v3==1.0.0
 
 ## Stable Release Facts (v1.0.0, 2026-08-06, commit 75cd45c)
 
-First stable release: 25+ decoder configurations across API stability tiers (stable/beta/experimental). New families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder. Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping in BP-OSD. CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) and qiskit-qec plugin registered — `sinter.collect()` needs no custom_decoders=. CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor`. `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313, Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation, no sdist. PolyForm Noncommercial 1.0.0. OpenCL and HybridCascadeDecoder are source-build only (not in wheels).
+First stable release: 25+ decoder configurations across API stability tiers (stable/beta/experimental). New families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder. Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping in BP-OSD. CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) and qiskit-qec plugin registered: `sinter.collect()` needs no custom_decoders=. CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor`. `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313, Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation, no sdist. PolyForm Noncommercial 1.0.0. OpenCL and HybridCascadeDecoder are source-build only (not in wheels).
 
 ## Benchmark Policy
 
-The only citable benchmark figures are the verified v0.7.0 artifacts at /benchmarks/v0.7.0/: REPORT.md, summary.json, benchmarks.csv (54 rows, zero unfaithful corrections), and VERIFIED_APPLE_TO_APPLE_REPORT.pdf. Peak throughput 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, package MCP server); 42/42 syndrome-faithfulness cases; 13 MCP tools. Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on the synchronized batch — no speedup multiplier claimed. Pre-v0.7.0 comparison tables are formally withdrawn. v1.0.0 publishes no new headline figures — run `qector bench` for your own hardware.
+No universal benchmark figures are published on the website, because results depend on specific hardware, drivers, and workloads. The package ships `qector bench` (throughput and LER harness printing one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic), so you can validate and measure on your own machines. Validation and reproducibility evidence (SHA-256 sealed artifact manifests, syndromic H·c = s harness, IBM hardware execution logs) is published on GitHub and at https://qector.store/evidence.
 
 ## Verified Tools (MCP, 13)
 

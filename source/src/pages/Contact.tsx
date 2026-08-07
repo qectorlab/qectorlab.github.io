@@ -192,7 +192,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* BOOKING — an alternative to the form for people who would rather
+          {/* BOOKING: an alternative to the form for people who would rather
               just talk. Placed after the form so the form stays the primary
               path for procurement and written enquiries. */}
           <div className="max-w-4xl mx-auto mt-16">

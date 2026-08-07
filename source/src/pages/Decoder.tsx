@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s."
+        description="QECTOR Decoder v3 - 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -62,13 +62,13 @@ export default function Decoder() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch.
             v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI.
-            Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections.
+            A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             Stim-native. PyPI binary wheels. All artifacts published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="btn-cyan">pip install qector-decoder-v3</a>
-            <Link to="/benchmarks" className="btn-outline">View Benchmarks</Link>
+            <Link to="/workbench" className="btn-outline">Free Workbench GUI</Link>
           </div>
         </div>
       </section>
@@ -79,8 +79,8 @@ export default function Decoder() {
           {/* Core Metrics */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Verified Points', value: '54/54', desc: 'Benchmark sweep points with zero unfaithful corrections (repetition n=5–65, ring n=16–48), verified v0.7.0 set' },
-              { label: 'Peak Throughput', value: '11.5M/s', desc: 'FastUnionFind, 5-qubit repetition code, package MCP server' },
+              { label: 'Decoder Configs', value: '25+', desc: 'From exact MWPM to GPU batch, across documented stability tiers' },
+              { label: 'Binary Wheels', value: '15', desc: 'Python 3.9–3.13 on Windows amd64, Linux x86_64, macOS arm64, Sigstore-attested' },
               { label: 'Stable API', value: 'v1.0.0', desc: 'First stable release with documented API stability tiers' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
@@ -94,7 +94,7 @@ export default function Decoder() {
               align="left"
               maxWidth="max-w-none"
               heading="Decoding Algorithms"
-              description="Production decoders with a verified v0.7.0 benchmark set; artifacts on GitHub. Experimental decoders are research-stage. v1.0.0 freezes the public API under documented stability tiers."
+              description="Production decoders with validation artifacts on GitHub. Experimental decoders are research-stage. v1.0.0 freezes the public API under documented stability tiers. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
               className="mb-6"
             />
 
@@ -102,7 +102,7 @@ export default function Decoder() {
             <h3 className="text-xs font-semibold text-cyan-300 uppercase tracking-widest mb-3">Production Stable Decoders</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
-                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes — trades some LER accuracy for speed.' },
+                { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes: trades some LER accuracy for speed.' },
                 { name: 'Fast Union-Find', tag: 'Hot Path', color: 'green', desc: 'Optimized Union-Find hot path for low-latency real-time decoding pipelines.' },
                 { name: 'Blossom MWPM', tag: 'Exact Reference', color: 'gold', desc: 'Exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.' },
                 { name: 'CPU & GPU Batch Decoder', tag: 'Parallel', color: 'gold', desc: 'Native CUDA / OpenCL batch decoding. Throughput advantage grows with batch size; CUDA accepts edge_weights and precision="f64" in v1.0.0.' },
@@ -163,12 +163,11 @@ export default function Decoder() {
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="Last published verified benchmark set (v0.7.0): 54/54 points with zero unfaithful corrections, 42/42 faithfulness cases, peak 11.5M shots/s. v1.0.0 (2026-08-06) is the first stable release. Reproducible artifacts are on GitHub and at qector.store/benchmarks/v0.7.0/. Pre-v0.7.0 comparison tables are formally withdrawn."
+              statement="v1.0.0 (2026-08-06) is the first stable release. Decode runs are syndrome-validated (H·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
               href="https://github.com/GuillaumeLessard/qector-decoder"
               linkLabel="GitHub Artifacts &amp; Harness →"
             />
             <div className="flex flex-wrap gap-4 mt-3 px-1">
-              <Link to="/benchmarks" className="text-cyan-300 text-sm hover:underline">Full Benchmarks →</Link>
               <Link to="/evidence" className="text-cyan-300 text-sm hover:underline">Evidence Reports →</Link>
             </div>
           </div>

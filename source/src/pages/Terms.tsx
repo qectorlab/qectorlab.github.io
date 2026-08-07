@@ -41,7 +41,7 @@ export default function Terms() {
               All prices are quoted and charged in <strong className="text-primary">US dollars (USD)</strong>, exclusive of tax.
               Stripe processes all payments and adds applicable sales tax, GST/HST, or VAT at checkout based on your billing
               location; card details never reach QECTOR systems. License tokens are delivered instantly by email and all sales
-              are final — see the <a href="/refund" className="text-cyan-300 hover:underline">Refund Policy</a>.
+              are final: see the <a href="/refund" className="text-cyan-300 hover:underline">Refund Policy</a>.
             </p>
           </div>
 

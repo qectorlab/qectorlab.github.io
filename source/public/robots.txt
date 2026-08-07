@@ -1,4 +1,4 @@
-# qector.store — all crawlers may read the whole site.
+# qector.store : all crawlers may read the whole site.
 #
 # Note on the named-agent groups below: robots.txt gives a matching agent its
 # OWN group, and the wildcard group is then ignored entirely for that agent.
@@ -11,7 +11,7 @@ User-agent: *
 Allow: /
 Crawl-delay: 0
 
-# Search engines — explicit for clarity.
+# Search engines: explicit for clarity.
 User-agent: Googlebot
 Allow: /
 

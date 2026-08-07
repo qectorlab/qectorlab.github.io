@@ -1,13 +1,13 @@
 # Netlify / Cloudflare Pages header syntax. GitHub Pages ignores this file, so
-# none of it is enforced on the current apex deployment — it is kept correct so
+# none of it is enforced on the current apex deployment: it is kept correct so
 # that moving the site behind Cloudflare Pages does not silently break checkout
 # or booking.
 #
 # CSP third-party allowances, and why each is required:
-#   js.stripe.com        — Stripe buy-button script on /pricing
-#   assets.calendly.com  — Calendly inline embed loader
-#   calendly.com         — the Calendly booking iframe itself (frame-src)
-#   fonts.googleapis.com / fonts.gstatic.com — webfont CSS + font files
+#   js.stripe.com        : Stripe buy-button script on /pricing
+#   assets.calendly.com  : Calendly inline embed loader
+#   calendly.com         : the Calendly booking iframe itself (frame-src)
+#   fonts.googleapis.com / fonts.gstatic.com : webfont CSS + font files
 # The previous policy allowed only 'self' plus one inline hash, which would have
 # blocked the Stripe button and the Calendly widget outright.
 #

@@ -44,7 +44,7 @@ export default function Success() {
               <div className="text-cyan-300 font-semibold text-xs uppercase tracking-wider mb-2">
                 Stripe reference
               </div>
-              {/* Rendered as text, never as markup — the value comes from the URL. */}
+              {/* Rendered as text, never as markup: the value comes from the URL. */}
               <code className="text-secondary text-sm break-all">{sessionId}</code>
             </div>
           )}
@@ -77,7 +77,7 @@ export default function Success() {
               </li>
               <li>
                 <strong className="text-primary">3. Verify.</strong> Confirm the signature
-                validates — this makes no network call:
+                validates: this makes no network call:
                 <div className="mt-2 p-4 bg-void rounded-xl">
                   <code className="text-cyan-300 text-sm break-all">
                     python -c "import qector_decoder_v3 as q; print(q._is_license_active())"

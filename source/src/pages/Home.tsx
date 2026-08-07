@@ -73,7 +73,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s."
+        description="QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -142,9 +142,9 @@ export default function Home() {
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
             25+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
-            <span className="text-primary font-semibold">v1.0.0 — first stable release:</span> API stability tiers,
+            <span className="text-primary font-semibold">v1.0.0: first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
-            Last published verified benchmark set (v0.7.0): peak 11.5M shots/s, 54/54 points with zero unfaithful corrections.
+            A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             All claims backed by reproducible artifacts.
           </p>
 
@@ -177,8 +177,8 @@ export default function Home() {
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
             <CounterStat value="25+" label="Decoder Configs" />
-            <CounterStat value="54/54" label="Verified Benchmark Points" />
-            <CounterStat value="11.5M/s" label="Peak MCP Throughput" />
+            <CounterStat value="3" label="OS Platforms" />
+            <CounterStat value="15" label="Binary Wheels" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
           </div>
         </div>
@@ -319,7 +319,7 @@ export default function Home() {
                   title: 'Speed When You Need It',
                   tag: 'Union-Find + GPU Batch',
                   desc: 'Near-linear Union-Find for large-distance real-time decoding. Native CUDA/OpenCL GPU batch for throughput-bound workloads.',
-                  proof: 'Verified peak 11.5M shots/s (MCP)',
+                  proof: 'Native CPU + GPU batch paths',
                 },
                 {
                   title: 'One Library, Pluggable',
@@ -356,10 +356,10 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: ' Verified 11.5M shots/s', desc: 'Peak MCP self-benchmark throughput (FastUnionFind, 5-qubit repetition code), verified v0.7.0 set.' },
-                    { label: ' 54/54 Points · 0 Unfaithful', desc: 'Every correction verified against its parity-check equation across the full sweep.' },
                     { label: ' v1.0.0 First Stable', desc: 'API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor.' },
+                    { label: ' 15 Binary Wheels', desc: 'Python 3.9–3.13 across Windows amd64, Linux x86_64, and macOS arm64, Sigstore-attested on PyPI.' },
                     { label: ' GPU Batch Acceleration', desc: 'CUDA path ships in every wheel (edge_weights, precision="f64"); OpenCL via source build.' },
+                    { label: ' Reproducible Harness', desc: 'qector bench ships with the package; measure on your own hardware, no universal figures claimed.' },
                   ].map((item) => (
                     <div key={item.label} className="p-4 bg-void/50 border border-gridline/50 rounded-xl">
                       <div className="text-cyan-300 font-semibold text-sm mb-1">{item.label}</div>
@@ -389,68 +389,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== BENCHMARKS ===== */}
-      <section id="benchmarks-section" className="py-20 md:py-28 relative">
+      {/* ===== MEASURE ON YOUR OWN HARDWARE ===== */}
+      <section className="py-20 md:py-28 relative">
         <div className="section-padding relative z-10">
           <div className="max-w-6xl mx-auto">
             <div ref={(el) => addRef(el, 9)}>
               <SectionHeader
                 eyebrow="Performance"
-                heading={<h2 className="text-3xl md:text-4xl font-bold">Verified v0.7.0 Benchmarks</h2>}
+                heading={<h2 className="text-3xl md:text-4xl font-bold">Measure on Your Own Hardware</h2>}
               />
               <EvidenceBlock
-                title="Verified Benchmark Set"
-                statement="The last published verified set (v0.7.0): four artifacts, fully reproducible: peak 11.5M shots/s (FastUnionFind, 5-qubit repetition code), 54/54 benchmark points with zero unfaithful corrections, 42/42 syndrome-faithfulness cases, 13 MCP tools, measured with the package MCP server on Linux (glibc 2.35, Python 3.12.13)."
+                title="Reproducible Benchmark Harness"
+                statement="No universal benchmark figures are published on this site, because results depend on your hardware, drivers, and workloads. The qector bench harness ships with the package so you can measure logical error rates and throughput on your own machines."
                 href="https://github.com/GuillaumeLessard/qector-decoder"
                 linkLabel="GitHub Artifacts →"
                 className="max-w-3xl mx-auto mb-6"
               />
             </div>
 
-            <div ref={(el) => addRef(el, 10)} className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b border-gridline">
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Code</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">n</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Decoder</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Throughput (shots/s)</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Unfaithful</th>
-                    <th className="text-left py-4 px-4 text-cyan-300 font-semibold text-sm uppercase tracking-wider">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { code: 'repetition', n: '5', algo: 'FastUnionFind', tput: '11,540,387', status: 'Verified' },
-                    { code: 'repetition', n: '5', algo: 'UnionFind', tput: '11,462,979', status: 'Verified' },
-                    { code: 'repetition', n: '5', algo: 'Blossom', tput: '8,262,646', status: 'Verified' },
-                    { code: 'repetition', n: '9', algo: 'FastUnionFind', tput: '10,000,813', status: 'Verified' },
-                    { code: 'repetition', n: '17', algo: 'FastUnionFind', tput: '4,472,615', status: 'Verified' },
-                    { code: 'ring', n: '16', algo: 'FastUnionFind', tput: '7,687,193', status: 'Verified' },
-                  ].map((row, i) => (
-                    <tr key={i} className="border-b border-gridline/50 hover:bg-surface/50 transition-colors">
-                      <td className="py-4 px-4 text-primary font-mono text-sm">{row.code}</td>
-                      <td className="py-4 px-4 text-secondary text-sm">{row.n}</td>
-                      <td className="py-4 px-4 text-primary font-semibold text-sm">{row.algo}</td>
-                      <td className="py-4 px-4 text-green-400 font-mono font-semibold text-sm">{row.tput}</td>
-                      <td className="py-4 px-4 text-secondary text-sm">0</td>
-                      <td className="py-4 px-4">
-                        <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
-                          row.status === 'Verified'
-                            ? 'bg-green-400/10 text-green-400 border border-green-400/20'
-                            : 'bg-cyan-300/10 text-cyan-300 border border-cyan-300/20'
-                        }`}>
-                          {row.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div ref={(el) => addRef(el, 10)} className="max-w-3xl mx-auto">
+              <div className="p-5 bg-void/50 border border-gridline/50 rounded-xl font-mono text-xs text-muted-foreground leading-relaxed overflow-x-auto">
+                <div><span className="text-cyan-300">$</span> pip install "qector-decoder-v3[bench]"</div>
+                <div><span className="text-cyan-300">$</span> qector-doctor</div>
+                <div><span className="text-cyan-300">$</span> qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001</div>
+                <div className="text-green-400 mt-2">✓ Logical error rates and throughput written as reproducible JSON</div>
+              </div>
             </div>
 
             <div className="text-center mt-8 flex flex-wrap justify-center gap-3">
-              <Link to="/benchmarks" className="btn-cyan">Full Benchmark Report →</Link>
               <Link to="/evidence" className="btn-outline">Evidence &amp; Reports</Link>
             </div>
           </div>
@@ -522,7 +488,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span>Start 60-Day Evaluation — $499</span>
+                  <span>Start 60-Day Evaluation: $499</span>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </a>
               </div>

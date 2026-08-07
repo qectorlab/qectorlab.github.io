@@ -11,7 +11,7 @@ interface SEOProps {
 
 export function SEO({
   title = 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
-  description = 'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Verified v0.7.0 benchmark set: 54/54 points with zero unfaithful corrections, peak 11.5M shots/s.',
+  description = 'QECTOR Decoder v3 - Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware.',
   ogImage = APP_CONFIG.ogImage,
   noindex = false,
 }: SEOProps) {

@@ -7,7 +7,7 @@ import CodeBlock from '../components/CodeBlock';
  *
  * Documents the JSON-RPC 2.0 MCP server shipped in the native extension
  * (src/mcp_server.rs, server name "qector-mcp", protocol 2024-11-05). Every
- * tool listed here is read from the actual `tools/list` payload — if a tool is
+ * tool listed here is read from the actual `tools/list` payload: if a tool is
  * added or renamed in the Rust source, this page must be updated with it.
  */
 
@@ -145,7 +145,7 @@ export default function McpServer() {
     <>
       <SEO
         title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 25+ decoder configurations. 42/42 faithfulness cases, 54/54 benchmark points with zero unfaithful corrections."
+        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 25+ decoder configurations. No universal benchmark figures published; qector bench ships for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -293,10 +293,8 @@ export default function McpServer() {
                 For raw hyperedge check matrices (such as <code className="text-cyan-300">generate_surface_code_checks</code> where qubit participation &gt; 2), use the direct Python API (<code className="text-cyan-300">BlossomDecoder</code>, <code className="text-cyan-300">SparseBlossomDecoder</code>, <code className="text-cyan-300">BpOsdDecoder</code>, or <code className="text-cyan-300">AutoDecoder</code>) or decompose Stim circuit errors into a graph-like DEM via <code className="text-cyan-300">decompose_errors=True</code>.
               </li>
               <li>
-                <strong className="text-primary">Verified v0.7.0 Benchmark Set.</strong>{' '}
-                Verified with the package MCP server on Linux (glibc 2.35, Python 3.12.13): 42/42 syndrome-faithfulness cases passed, 54/54 benchmark points with zero unfaithful corrections, peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code). Explore the four artifacts in the{' '}
-                <Link to="/benchmarks" className="text-cyan-300 hover:underline">verified benchmark set</Link>{' '}
-                or run <code className="text-cyan-300">qector bench</code> / <code className="text-cyan-300">qector-doctor</code> yourself with the v1.0.0 package.
+                <strong className="text-primary">Measure on Your Own Hardware.</strong>{' '}
+                No universal benchmark figures are published on the site, because results depend on your hardware, drivers, and workloads. Validate and measure with the shipped harness: <code className="text-cyan-300">qector bench</code> prints one honest, machine-conditional rate line, and <code className="text-cyan-300">qector-doctor</code> reports why a decoder is available or unavailable on your machine.
               </li>
               <li>
                 <strong className="text-primary">Licensing.</strong> Academic, research and personal use is free. Commercial use requires a license; see{' '}

@@ -96,7 +96,7 @@ export default function NeuralReveal({
 
   useEffect(() => {
     if (!triggerOnView) {
-      // Not gated on viewport — start immediately. React 19 linter flags the
+      // Not gated on viewport: start immediately. React 19 linter flags the
       // setState inside, but the alternative (running on every render) is
       // strictly worse. The animation is idempotent thanks to the `started`
       // guard inside startAnimation.

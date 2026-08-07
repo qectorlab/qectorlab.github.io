@@ -16,15 +16,13 @@ pip install qector-decoder-v3
 
 ## Key Claims + Evidence (all on GitHub)
 - Stable release v1.0.0 (2026-08-06, commit 75cd45c): 25+ decoder configurations; API stability tiers (stable/beta/experimental); Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping; ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder
-- Verified benchmark set v0.7.0 (last published verified set): 54/54 points, 0 unfaithful (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf)
-- Peak 11,540,387 shots/s (FastUnionFind, 5-qubit repetition code, 8,000 samples) on the package MCP server
-- 42/42 syndrome-faithfulness cases passed; 13 MCP tools operational
-- Apple-to-apple vs PyMatching: comparable, PyMatching often slightly ahead on synchronized batch — no speedup multiplier claimed
+- No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads
+- The package ships the benchmark harness (`qector bench` prints one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic) so results can be reproduced on your own machines
+- Validation reports, SHA-256 sealed artifact manifests, and IBM hardware execution logs are published on GitHub and at https://qector.store/evidence
 - BP-OSD for qLDPC; Hypergraph-safe Union-Find
 - Full Stim + Sinter + PyMatching compatible; `sinter.collect()` needs no custom_decoders=
-- Pre-v0.7.0 comparison tables are formally withdrawn (do not cite them); v1.0.0 publishes no new headline figures — run `qector bench` for your own hardware
 
-Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (benchmarks under `benchmarks/v0.7.0/`, full harness)
+Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (validation + harness, full evidence)
 
 ## Commercial
 Source-Available (PolyForm Noncommercial for non-comm). Commercial use requires license.
@@ -51,7 +49,7 @@ Primary source of truth: decoder repo README. This bridge has quick-start, claim
 | UI primitives | shadcn/ui on top of Radix UI |
 | Motion | GSAP + ScrollTrigger for section reveals |
 | 3D / visuals | `three`, `@react-three/fiber`, `@react-three/drei` (where used) |
-| Charts | Inline SVG for benchmark visuals; `recharts` available |
+| Charts | Inline SVG for data visuals; `recharts` available |
 | SEO | Custom `SEO` / `JsonLd` helpers in `src/lib/seo.tsx` (per-page title, description, structured data) |
 
 ## Getting started
@@ -92,7 +90,7 @@ src/
 
 ### Shared component pattern
 
-Cards, section headers, and evidence blocks are intentionally centralized (`components/*.tsx`, not `ui/*`) so that every page - Home, Decoder, Benchmarks, Evidence, Pricing, Evidence reports - renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
+Cards, section headers, and evidence blocks are intentionally centralized (`components/*.tsx`, not `ui/*`) so that every page - Home, Decoder, Evidence, Pricing, Docs - renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
 
 ## Accessibility
 
@@ -109,7 +107,7 @@ When adding new interactive UI, match these patterns: real semantics over ARIA w
 
 ## Content & claims policy
 
-Numbers used across the site (verified benchmark set: 54/54 points with 0 unfaithful, peak 11,540,387 shots/s, 42/42 faithfulness cases, 13 MCP tools) are from the verified v0.7.0 release artifacts (REPORT.md, summary.json, benchmarks.csv, VERIFIED_APPLE_TO_APPLE_REPORT.pdf) and the v0.7.0 user manual. Pre-v0.7.0 comparison tables are formally withdrawn — do not cite them. v1.0.0 facts (first stable, 25+ decoder configurations, release date 2026-08-06, commit 75cd45c, 15 wheels, DOI 10.5281/zenodo.21363016, PolyForm Noncommercial 1.0.0) are from the official v1.0.0 user manual (DOI 10.5281/zenodo.21363016). Do not edit these figures without updating the underlying verified artifacts - the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx` / `Benchmarks.tsx`.
+No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads; the `qector bench` harness and `qector-doctor` diagnostic ship with the package so results can be reproduced on your own machines. v1.0.0 facts (first stable, 25+ decoder configurations, release date 2026-08-06, commit 75cd45c, 15 wheels, DOI 10.5281/zenodo.21363016, PolyForm Noncommercial 1.0.0) are from the official v1.0.0 user manual (DOI 10.5281/zenodo.21363016). Validation reports and SHA-256 sealed manifests are published on GitHub and linked from `Evidence.tsx`. Do not reintroduce published performance figures without a citable, hardware-specific artifact: the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx`.
 
 ## Deployment
 

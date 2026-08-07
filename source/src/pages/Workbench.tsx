@@ -12,12 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Workbench release facts are taken verbatim from the published GitHub
 // releases, not from marketing copy:
-//   Windows — qectorlab/qector-decoder-workbench-windows (tag v3.5.2)
-//   Linux   — qectorlab/qector-decoder-workbench-linux   (tag v0.5.2)
+//   Windows: qectorlab/qector-decoder-workbench-windows (tag v3.5.2)
+//   Linux  : qectorlab/qector-decoder-workbench-linux   (tag v0.5.2)
 // Both ship the SAME product version, v0.5.2: the release titles, bodies, and
 // asset filenames (QectorWorkbench-v0.5.2-*-x64-Public.zip) all say v0.5.2.
 // Only the Windows *git tag* reads v3.5.2. The site previously advertised
-// "v3.5.1", a macOS build, and a first-launch PyPI download — none of which
+// "v3.5.1", a macOS build, and a first-launch PyPI download: none of which
 // match what ships. Verify against the release pages before editing numbers.
 const WORKBENCH_VERSION = 'v0.5.2';
 const WIN_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest';
@@ -49,8 +49,7 @@ export default function Workbench() {
     if (el) sectionsRef.current[index] = el;
   };
 
-  // Measured on rotated_surface (d=5, n=25, p=0.05, 50 shots) against the
-  // qector_decoder_v3 backend. This is the published benchmark set; the v0.5.2
+  // Decoder coverage against the qector_decoder_v3 backend. The v0.5.2
   // app ships 16 decoders, so the three additions are deliberately absent here
   // rather than filled with invented numbers.
   const decodersList = [
@@ -86,9 +85,9 @@ export default function Workbench() {
   ];
 
   // Screenshots live in /public/assets and are served from /assets/*.png.
-  // Captions describe only what is actually visible in each capture — the
+  // Captions describe only what is actually visible in each capture: the
   // figures shown are one operator's run on their own hardware, not a
-  // published benchmark, and are labelled as such.
+  // published benchmark figure.
   const screenshots = [
     {
       src: '/assets/w1.png',
@@ -100,7 +99,7 @@ export default function Workbench() {
       src: '/assets/ww2.png',
       alt: 'QECTOR Workbench Decoder Laboratory tab running the fast_union_find decoder with resilient fallback enabled, showing syndrome validity and logical failure status.',
       title: 'Decoder Laboratory',
-      caption: 'Test decoders interactively on the current code. Each run reports Hamming weight, syndrome validity, and logical failure alongside the raw error, syndrome, and correction vectors — with resilient fallback toggleable.',
+      caption: 'Test decoders interactively on the current code. Each run reports Hamming weight, syndrome validity, and logical failure alongside the raw error, syndrome, and correction vectors: with resilient fallback toggleable.',
     },
     {
       src: '/assets/w4.png',
@@ -132,12 +131,12 @@ export default function Workbench() {
     <>
       <SEO
         title={`QECTOR Workbench ${WORKBENCH_VERSION} · 56 MCP Tools · 16 Decoders · 10 Code Families`}
-        description={`QECTOR Workbench ${WORKBENCH_VERSION} — free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Fully self-contained: no system Python, pip, or internet required.`}
+        description={`QECTOR Workbench ${WORKBENCH_VERSION}: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Fully self-contained: no system Python, pip, or internet required.`}
       />
 
       {/* Top Notice */}
       <div className="bg-emerald-950/50 border-b border-emerald-500/30 py-2.5 text-center text-sm px-4">
-        <span className="text-emerald-400 font-semibold">Free Desktop Application:</span> QECTOR Workbench {WORKBENCH_VERSION} (56 MCP tools) —{' '}
+        <span className="text-emerald-400 font-semibold">Free Desktop Application:</span> QECTOR Workbench {WORKBENCH_VERSION} (56 MCP tools):{' '}
         <a href={WIN_RELEASES} className="underline hover:text-emerald-300 transition-colors" target="_blank" rel="noopener noreferrer">
           Windows
         </a>{' '}
@@ -161,7 +160,7 @@ export default function Workbench() {
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
             16 decoders, 10 quantum code families, visual circuit builder, and a 56-tool MCP server.
-            Ships as a portable Windows executable and native Linux packages — each one{' '}
+            Ships as a portable Windows executable and native Linux packages: each one{' '}
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
           </p>
@@ -230,9 +229,8 @@ export default function Workbench() {
               ))}
             </div>
             <p className="text-xs text-muted-foreground mt-3">
-              Figures shown in these captures are single runs on one operator's machine, included to show the interface — not
-              published benchmark results. See <Link to="/benchmarks" className="text-cyan-300 hover:underline">benchmarks</Link> for
-              the artifact-backed dataset.
+              Figures shown in these captures are single runs on one operator's machine, included to show the interface: not
+              published benchmark results. No universal figures are published; run the included harness to measure your own hardware.
             </p>
           </div>
 
@@ -258,7 +256,7 @@ export default function Workbench() {
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
                 <h3 className="text-cyan-300 font-semibold text-base">Linux x64</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Distro-tuned Debian packages. Bundles Python 3.11 and Tcl/Tk — no system Python required.
+                  Distro-tuned Debian packages. Bundles Python 3.11 and Tcl/Tk: no system Python required.
                 </p>
                 <div className="bg-void/80 p-3 rounded-lg border border-gridline font-mono text-[11px] text-cyan-300 space-y-1 overflow-x-auto">
                   <div># Ubuntu / Debian / Mint</div>
@@ -279,7 +277,7 @@ export default function Workbench() {
             </div>
 
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl text-xs text-secondary leading-relaxed">
-              <strong className="text-primary">Linux compatibility:</strong> built on a glibc 2.31 baseline — Ubuntu 20.04+,
+              <strong className="text-primary">Linux compatibility:</strong> built on a glibc 2.31 baseline: Ubuntu 20.04+,
               Debian 11+, Linux Mint 20+, antiX 21+ / MX 21+, Fedora 32+, openSUSE Leap 15.3+, and newer.
               <br />
               <strong className="text-primary">Verify your download:</strong> SHA-256 checksums for every file are published in
@@ -287,13 +285,13 @@ export default function Workbench() {
             </div>
           </div>
 
-          {/* Decoders Benchmark Table */}
+          {/* Decoders Table */}
           <div ref={(el) => addRef(el, 1)} className="card-surface space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-bold">Integrated Decoders &amp; Benchmark Data</h2>
+                <h2 className="text-2xl font-bold">Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  All 16 decoder kinds exposed through the Workbench MCP server. No benchmark figures are published for this release beyond the verified v0.7.0 set — run the included harness to measure your own hardware.
+                  All 16 decoder kinds exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -303,8 +301,8 @@ export default function Workbench() {
 
             <p className="text-xs text-muted-foreground leading-relaxed">
               Workbench {WORKBENCH_VERSION} ships <strong className="text-secondary">16 decoders</strong>. The 13 below are the
-              ones covered by the published benchmark run; per-decoder figures for the remaining three are republished with the
-              next benchmark sweep rather than estimated here.
+              ones exposed through the MCP server in this build; per-decoder data for the remaining three is added with the next
+              Workbench release rather than estimated here.
             </p>
 
             <div className="overflow-x-auto">
@@ -395,7 +393,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
               title="Documentation &amp; Reference"
-              statement={`QECTOR Workbench ${WORKBENCH_VERSION} documentation and the verified v0.7.0 benchmark set are published alongside the app release and on this site. Manuals ship inside each release alongside SHA-256 checksums.`}
+              statement={`QECTOR Workbench ${WORKBENCH_VERSION} documentation is published alongside the app release and on this site. No universal benchmark figures are published; run the included harness to measure your own hardware. Manuals ship inside each release alongside SHA-256 checksums.`}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a
@@ -410,12 +408,12 @@ export default function Workbench() {
               </a>
 
               <Link
-                to="/benchmarks"
+                to="/evidence"
                 className="p-4 bg-void border border-gridline rounded-xl hover:border-cyan-300/40 transition-colors"
               >
-                <div className="text-xs text-muted-foreground uppercase mb-1">Performance Benchmarks</div>
-                <div className="text-cyan-300 font-mono text-sm font-semibold">qector.store/benchmarks</div>
-                <div className="text-xs text-secondary mt-1">Verified v0.7.0 set · 54/54 points, 0 unfaithful</div>
+                <div className="text-xs text-muted-foreground uppercase mb-1">Validation &amp; Evidence</div>
+                <div className="text-cyan-300 font-mono text-sm font-semibold">qector.store/evidence</div>
+                <div className="text-xs text-secondary mt-1">Validation reports and SHA-256 sealed artifact manifests</div>
               </Link>
 
               <Link

@@ -15,7 +15,7 @@ interface SectionHeaderProps {
 /**
  * SectionHeader
  * Consistent eyebrow + heading + description pattern for every major
- * section across the site (Platform, Benchmarks, Evidence, Pricing, etc).
+ * section across the site (Platform, Evidence, Pricing, etc).
  */
 export default function SectionHeader({
   eyebrow,
