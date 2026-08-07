@@ -135,20 +135,26 @@ export default function NeuralReveal({
     <div ref={containerRef} className={`inline-block ${className}`}>
       <Tag className="font-mono" aria-label={text}>
         <span aria-hidden="true">
-          {displayChars.map((char, i) => (
-            <span
-              key={i}
-              className={`inline-block transition-opacity duration-100 ${
-                resolved[i] ? 'opacity-100' : 'opacity-70'
-              }`}
-              style={{
-                color: resolved[i] ? undefined : '#67e8f9',
-                textShadow: resolved[i] ? undefined : '0 0 8px rgba(103, 232, 249, 0.5)',
-              }}
-            >
-              {char}
-            </span>
-          ))}
+          {displayChars.map((char, i) =>
+            char === ' ' ? (
+              // Keep spaces as real text nodes: an inline-block box containing
+              // only a space renders zero-width and is dropped on copy-paste.
+              ' '
+            ) : (
+              <span
+                key={i}
+                className={`inline-block transition-opacity duration-100 ${
+                  resolved[i] ? 'opacity-100' : 'opacity-70'
+                }`}
+                style={{
+                  color: resolved[i] ? undefined : '#67e8f9',
+                  textShadow: resolved[i] ? undefined : '0 0 8px rgba(103, 232, 249, 0.5)',
+                }}
+              >
+                {char}
+              </span>
+            )
+          )}
         </span>
       </Tag>
     </div>
