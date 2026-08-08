@@ -79,7 +79,7 @@ export default function Decoder() {
           {/* Core Metrics */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Decoder Configs', value: '25+', desc: 'From exact MWPM to GPU batch, across documented stability tiers' },
+              { label: 'Decoder Configs', value: '15+', desc: 'From exact MWPM to GPU batch, across documented stability tiers' },
               { label: 'Binary Wheels', value: '15', desc: 'Python 3.9–3.13 on Windows amd64, Linux x86_64, macOS arm64, Sigstore-attested' },
               { label: 'Stable API', value: 'v1.0.0', desc: 'First stable release with documented API stability tiers' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },

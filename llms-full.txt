@@ -41,7 +41,7 @@ pip install qector-decoder-v3==1.0.0
 
 ## Stable Release Facts (v1.0.0, 2026-08-06, commit 75cd45c)
 
-First stable release: 25+ decoder configurations across API stability tiers (stable/beta/experimental). New families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder. Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping in BP-OSD. CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) and qiskit-qec plugin registered: `sinter.collect()` needs no custom_decoders=. CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor`. `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313, Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation, no sdist. PolyForm Noncommercial 1.0.0. OpenCL and HybridCascadeDecoder are source-build only (not in wheels).
+First stable release: 15+ decoder configurations across API stability tiers (stable/beta/experimental). New families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder. Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping in BP-OSD. CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) and qiskit-qec plugin registered: `sinter.collect()` needs no custom_decoders=. CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor`. `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313, Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation, no sdist. PolyForm Noncommercial 1.0.0. OpenCL and HybridCascadeDecoder are source-build only (not in wheels).
 
 ## Benchmark Policy
 
@@ -53,7 +53,7 @@ decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_
 
 ## Decoders & Families
 
-25+ decoder configurations in v1.0.0: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade (source builds), gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code (opt-in cluster_bposd), plus options (relay BP, CS-OSD, LLR damping, CUDA f64 edge_weights). 10 code families: repetition, ring, rotated_surface, unrotated_surface, toric, heavy_hex, hypergraph_product, bicycle, bivariate_bicycle, color_code.
+15+ decoder configurations in v1.0.0: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade (source builds), gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code (opt-in cluster_bposd), plus options (relay BP, CS-OSD, LLR damping, CUDA f64 edge_weights). 10 code families: repetition, ring, rotated_surface, unrotated_surface, toric, heavy_hex, hypergraph_product, bicycle, bivariate_bicycle, color_code.
 
 ## Workbench App
 

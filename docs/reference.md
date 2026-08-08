@@ -106,7 +106,7 @@ tools to measure this on your own hardware; no claim is made that any single num
 
 QECTOR Decoder v3 is a production-grade, source-available quantum-error-correction
 decoding platform: a compiled Rust core (PyO3) with a Python 3.9 to 3.13 surface. It decodes
-syndromes from stabiliser/qLDPC circuits with 25+ decoder configurations, feeds
+syndromes from stabiliser/qLDPC circuits with 15+ decoder configurations, feeds
 Stim/Sinter workflows, integrates with PyMatching and qiskit-qec, and can sit behind an
 MCP server or a local CLI.
 
