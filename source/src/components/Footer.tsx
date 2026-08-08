@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
+import NeuralReveal from './NeuralReveal';
 
 interface LinkItem {
   label: string;
@@ -75,14 +76,14 @@ export default function Footer() {
             
             {/* Column 1 & 2: Brand Header & Status */}
             <div className="lg:col-span-2 space-y-6">
-              <Link to="/" className="inline-flex items-center gap-2.5 text-cyan-300 font-extrabold text-2xl tracking-tight hover:opacity-90 transition-opacity">
-                <img src="/assets/icon.jpg" alt="QECTOR" width="32" height="32" className="shrink-0 rounded" />
-                <span>QECTOR</span>
+              <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors">
+                <img src="/assets/icon.jpg" alt="QECTOR" width="36" height="36" className="shrink-0 rounded-lg shadow-[0_0_15px_rgba(103,232,249,0.3)] border border-cyan-300/20" />
+                <NeuralReveal text="QECTOR" className="font-extrabold text-3xl tracking-tighter" />
               </Link>
 
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-400/10 border border-green-400/25 rounded-full text-xs font-mono text-green-400">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span>v1.0.0 Stable Release Train · Live PyPI v{pypiVersion}</span>
+              <div className="inline-flex items-start sm:items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/25 rounded-xl sm:rounded-full text-xs font-mono text-green-400 max-w-full">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mt-1 sm:mt-0 shrink-0" />
+                <span className="leading-relaxed">v1.0.0 Stable Release Train · Live PyPI v{pypiVersion}</span>
               </div>
 
               <p className="text-secondary text-sm leading-relaxed max-w-md">
@@ -171,8 +172,8 @@ export default function Footer() {
 
           {/* Distinction Banner Box */}
           <div className="mt-12 p-4 rounded-xl border border-gridline bg-surface/40 text-xs text-muted-foreground leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-cyan-300 text-base shrink-0">💡</span>
+            <div className="flex items-start gap-3">
+              <span className="text-cyan-300 text-base shrink-0 mt-0.5">💡</span>
               <span>
                 <strong className="text-secondary">Distribution note:</strong> PyPI (<code className="text-cyan-300 font-mono">qector-decoder-v3</code>) is the Python library wheel. The free <strong className="text-secondary">QECTOR Workbench GUI v0.5.3</strong> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64, requiring no system Python or pip.
               </span>
@@ -187,11 +188,11 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gridline bg-void/80">
         <div className="section-padding py-6">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-            <div>
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-4 text-xs text-muted-foreground">
+            <div className="leading-relaxed max-w-md md:max-w-none">
               &copy; 2026 QECTOR Lab / iD01t Productions, Longueuil, QC, Canada - admin@qector.store. All rights reserved.
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-5">
+            <div className="flex flex-wrap items-center justify-start md:justify-end gap-x-5 gap-y-3">
               <Link to="/privacy" className="hover:text-cyan-300 transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms of Service</Link>
               <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund Policy</Link>

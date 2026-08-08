@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router';
+import NeuralReveal from './NeuralReveal';
 
 const navLinks = [
   { label: 'Platform', href: '/' },
@@ -83,10 +84,10 @@ export default function Navigation() {
             {/* Logo */}
             <Link
               to="/"
-              className="flex items-center gap-2 text-cyan-300 font-bold text-lg tracking-tight hover:text-cyan-200 transition-colors"
+              className="flex items-center gap-2.5 text-cyan-300 hover:text-cyan-100 transition-colors"
             >
-              <img src="/assets/icon.jpg" alt="QECTOR" width="28" height="28" className="rounded" />
-              <span>QECTOR</span>
+              <img src="/assets/icon.jpg" alt="QECTOR" width="32" height="32" className="rounded-md shadow-[0_0_10px_rgba(103,232,249,0.2)] border border-cyan-300/20" />
+              <NeuralReveal text="QECTOR" className="font-extrabold text-xl tracking-tight" />
             </Link>
 
             {/* Desktop Links */}
