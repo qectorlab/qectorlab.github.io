@@ -21,7 +21,7 @@ export default function NeuralReveal({
   // contains the real text (e.g. QECTOR) instead of underscores.
   const [displayChars, setDisplayChars] = useState<string[]>(text.split(''));
   const [resolved, setResolved] = useState<boolean[]>(text.split('').map(() => true));
-  const [started, setStarted] = useState(false);
+  const startedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -30,8 +30,8 @@ export default function NeuralReveal({
   const resolvedRef = useRef<boolean[]>(text.split('').map(() => true));
 
   const startAnimation = useCallback(() => {
-    if (started) return;
-    setStarted(true);
+    if (startedRef.current) return;
+    startedRef.current = true;
 
     const prefersReducedMotion =
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -95,7 +95,7 @@ export default function NeuralReveal({
       if (intervalRef.current) clearInterval(intervalRef.current);
     }, scrambleDuration + 500);
     timeoutsRef.current.push(cleanup);
-  }, [text, scrambleDuration, started]);
+  }, [text, scrambleDuration]);
 
   useEffect(() => {
     if (!triggerOnView) {
