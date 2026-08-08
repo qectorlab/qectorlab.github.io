@@ -31,7 +31,10 @@ const companyLinks: LinkItem[] = [
   { label: 'iD01t Productions', href: 'https://id01t.store/', external: true },
   { label: 'Commercial Licensing', href: '/commercial' },
   { label: 'Contact Engineering', href: '/contact' },
-  { label: 'GitHub Repository', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
+  { label: 'EULA & License', href: '/license' },
+  { label: 'Terms of Service', href: '/terms' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Refund Policy', href: '/refund' },
 ];
 
 function FooterLink({ href, external, badge, children }: { href: string; external?: boolean; badge?: string; children: React.ReactNode }) {
