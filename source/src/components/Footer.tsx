@@ -68,77 +68,43 @@ function FooterLink({ href, external, badge, children }: { href: string; externa
 export default function Footer() {
   const { version: pypiVersion } = usePyPIVersion();
   return (
-    <footer className="border-t border-cyan-300/15 bg-void/95 relative overflow-hidden text-left">
+    <footer className="border-t border-cyan-900/40 bg-void/95 relative overflow-hidden text-left">
       {/* Top Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-cyan-300/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-16 bg-gradient-to-b from-cyan-400/5 to-transparent blur-3xl pointer-events-none" />
 
       <div className="section-padding py-16 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Main Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
             
-            {/* Column 1 & 2: Brand Header & Status */}
+            {/* Column 1 & 2: Brand Header */}
             <div className="lg:col-span-2 space-y-6">
               <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors">
-                <img src="/assets/icon.jpg" alt="QECTOR" width="36" height="36" className="shrink-0 rounded-lg shadow-[0_0_15px_rgba(103,232,249,0.3)] border border-cyan-300/20" />
-                <NeuralReveal text="QECTOR" className="font-extrabold text-3xl tracking-tighter" />
+                <img src="/assets/icon.jpg" alt="QECTOR" width="32" height="32" className="shrink-0 rounded shadow-[0_0_10px_rgba(103,232,249,0.2)] border border-cyan-300/20" />
+                <NeuralReveal text="QECTOR" className="font-extrabold text-2xl tracking-tighter" />
               </Link>
 
-              <div className="inline-flex items-start sm:items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/25 rounded-xl sm:rounded-full text-xs font-mono text-green-400 max-w-full">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse mt-1 sm:mt-0 shrink-0" />
-                <span className="leading-relaxed">Stable Release Train · Live PyPI v{pypiVersion}</span>
-              </div>
-
-              <p className="text-secondary text-sm leading-relaxed max-w-md">
-                High-performance quantum error correction library and unified desktop workbench. This represents the first stable release train. Universal benchmark figures are intentionally withheld; utilize the <code className="text-xs bg-black/30 px-1 py-0.5 rounded text-cyan-300 border border-cyan-300/20 font-mono">qector bench</code> suite to verify raw decoding throughput directly on your own hardware architecture. Built by Guillaume Lessard at iD01t Productions.
+              <p className="text-secondary/80 text-sm leading-relaxed max-w-sm">
+                Production-grade quantum error correction decoding for Python. Built by Guillaume Lessard at iD01t Productions.
               </p>
 
-              {/* Direct Quick Badges */}
-              <div className="space-y-2 pt-2">
-                <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Official Packages &amp; Repositories</div>
-                <div className="flex flex-wrap gap-2">
-                  <a
-                    href="https://pypi.org/project/qector-decoder-v3/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface/80 border border-cyan-300/30 rounded-lg text-xs text-cyan-300 font-mono hover:bg-cyan-300/10 transition-colors"
-                  >
-                    <span>📦</span>
-                    <span>PyPI Wheel: qector-decoder-v3</span>
-                  </a>
-                  <Link
-                    to="/installer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface/80 border border-gold-400/30 rounded-lg text-xs text-gold-400 font-mono hover:bg-gold-400/10 transition-colors"
-                  >
-                    <span>💻</span>
-                    <span>Workbench App (Free GUI)</span>
-                  </Link>
-                  <a
-                    href="https://github.com/GuillaumeLessard/qector-decoder"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface/80 border border-gridline rounded-lg text-xs text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-colors"
-                  >
-                    <span>📋</span>
-                    <span>GitHub Artifacts</span>
-                  </a>
-                  <a
-                    href="https://orcid.org/0009-0000-3465-3753"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface/80 border border-gridline rounded-lg text-xs text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-colors"
-                  >
-                    <span>🆔</span>
-                    <span>ORCID 0009-0000-3465-3753</span>
-                  </a>
-                </div>
+              <div className="flex items-center gap-4 pt-2">
+                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors" aria-label="PyPI">
+                  <span className="text-sm font-mono border border-gridline rounded px-2 py-1 hover:border-cyan-300/30">v{pypiVersion}</span>
+                </a>
+                <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="GitHub">
+                  GitHub
+                </a>
+                <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="ORCID">
+                  ORCID
+                </a>
               </div>
             </div>
 
             {/* Column 3: Platform */}
-            <div className="space-y-4">
-              <h4 className="text-primary font-bold text-xs uppercase tracking-widest text-cyan-300">Platform</h4>
-              <div className="flex flex-col gap-2">
+            <div className="space-y-5">
+              <h4 className="text-white font-semibold text-sm tracking-wide">Platform</h4>
+              <div className="flex flex-col gap-3">
                 {platformLinks.map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
                     {link.label}
@@ -148,9 +114,9 @@ export default function Footer() {
             </div>
 
             {/* Column 4: Research */}
-            <div className="space-y-4">
-              <h4 className="text-primary font-bold text-xs uppercase tracking-widest text-cyan-300">Research &amp; Docs</h4>
-              <div className="flex flex-col gap-2">
+            <div className="space-y-5">
+              <h4 className="text-white font-semibold text-sm tracking-wide">Research &amp; Docs</h4>
+              <div className="flex flex-col gap-3">
                 {researchLinks.map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
                     {link.label}
@@ -160,10 +126,11 @@ export default function Footer() {
             </div>
 
             {/* Column 5: Company */}
-            <div className="space-y-4">
-              <h4 className="text-primary font-bold text-xs uppercase tracking-widest text-cyan-300">Company &amp; Legal</h4>
-              <div className="flex flex-col gap-2">
-                {companyLinks.map((link) => (
+            <div className="space-y-5">
+              <h4 className="text-white font-semibold text-sm tracking-wide">Company</h4>
+              <div className="flex flex-col gap-3">
+                {/* Omit legal links from this column, keep only company links */}
+                {companyLinks.slice(0, 5).map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
                     {link.label}
                   </FooterLink>
@@ -173,35 +140,27 @@ export default function Footer() {
 
           </div>
 
-          {/* Distinction Banner Box */}
-          <div className="mt-12 p-4 rounded-xl border border-gridline bg-surface/40 text-xs text-muted-foreground leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-start gap-3">
-              <span className="text-cyan-300 text-base shrink-0 mt-0.5">💡</span>
-              <span>
-                <strong className="text-secondary">Distribution note:</strong> PyPI (<code className="text-cyan-300 font-mono">qector-decoder-v3</code>) is the Python library wheel. The free <strong className="text-secondary">QECTOR Workbench GUI</strong> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64, requiring no system Python or pip.
-              </span>
+          <div className="mt-16 pt-8 border-t border-gridline flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="text-xs text-muted-foreground max-w-xl leading-relaxed">
+              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="text-cyan-300 hover:underline">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows &amp; Linux (no system Python required).
             </div>
-            <Link to="/installer" className="text-cyan-300 hover:underline shrink-0 font-semibold text-xs">
-              View App Installers →
-            </Link>
+            
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-muted-foreground">
+              <Link to="/privacy" className="hover:text-cyan-300 transition-colors">Privacy</Link>
+              <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms</Link>
+              <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund</Link>
+              <Link to="/license" className="hover:text-cyan-300 transition-colors">License</Link>
+              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security</a>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gridline bg-void/80">
-        <div className="section-padding py-6">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-4 text-xs text-muted-foreground">
-            <div className="leading-relaxed max-w-md md:max-w-none">
-              &copy; 2026 QECTOR Lab / iD01t Productions, Longueuil, QC, Canada - admin@qector.store. All rights reserved.
-            </div>
-            <div className="flex flex-wrap items-center justify-start md:justify-end gap-x-5 gap-y-3">
-              <Link to="/privacy" className="hover:text-cyan-300 transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms of Service</Link>
-              <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund Policy</Link>
-              <Link to="/license" className="hover:text-cyan-300 transition-colors">License Agreement</Link>
-              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security</a>
-            </div>
+      <div className="bg-[#050b14]">
+        <div className="section-padding py-4">
+          <div className="max-w-7xl mx-auto text-xs text-muted-foreground/70 text-center md:text-left">
+            &copy; 2026 QECTOR Lab / iD01t Productions. All rights reserved.
           </div>
         </div>
       </div>
