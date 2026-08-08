@@ -12,7 +12,7 @@ interface LinkItem {
 const platformLinks: LinkItem[] = [
   { label: 'QECTOR Decoder v3', href: '/decoder', badge: 'Library' },
   { label: 'Workbench GUI', href: '/workbench', badge: 'Desktop App' },
-  { label: '56-Tool MCP Server', href: '/mcp-server', badge: 'MCP' },
+  { label: 'QECTOR MCP Server', href: '/mcp-server', badge: 'MCP' },
   { label: 'Installer & App Bundles', href: '/installer' },
   { label: 'Pricing & Licensing', href: '/pricing' },
 ];

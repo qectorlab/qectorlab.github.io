@@ -160,7 +160,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            16 decoders, 10 quantum code families, visual circuit builder, and a 56-tool MCP server.
+            16 decoders, 10 quantum code families, visual circuit builder, and a comprehensive MCP server.
             Ships as a portable Windows executable and native Linux packages: each one{' '}
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
