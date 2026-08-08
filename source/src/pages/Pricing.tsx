@@ -128,7 +128,7 @@ export default function Pricing() {
                 <h3 className="text-emerald-400 font-semibold mb-2">Free (Source-Available)</h3>
                 <ul className="text-secondary text-sm space-y-1">
                   <li>• QECTOR Decoder v3 PyPI package (non-commercial use)</li>
-                  <li>• Qector Workbench GUI v0.5.3 (full featured, 56 MCP tools)</li>
+                  <li><span className="text-cyan-300">✓</span> Qector Workbench GUI (full featured, comprehensive MCP server)</li>
                   <li>• Validation artifacts and reproducibility evidence on GitHub</li>
                   <li>• Documentation and examples</li>
                   <li>• Community issues and discussions</li>

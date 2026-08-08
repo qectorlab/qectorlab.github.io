@@ -160,7 +160,7 @@ export default function Home() {
               className="btn-outline text-base px-8 py-4 text-sm sm:text-base"
               target="_blank" rel="noopener noreferrer"
             >
-              Free Workbench GUI v0.5.3
+              Free Workbench GUI
             </a>
           </div>
 
@@ -215,7 +215,7 @@ export default function Home() {
               { icon: '📋', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
               { icon: '📖', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
               { icon: '📦', label: `PyPI Wheel v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
-              { icon: '🖥️', label: 'Free Workbench App v0.5.3', href: '/workbench' },
+              { icon: '💻', label: 'Free Workbench App', href: '/workbench' },
               { icon: '🆔', label: 'ORCID 0009-0000-3465-3753', href: 'https://orcid.org/0009-0000-3465-3753' },
             ].map((pill) => (
               <TrustSignal
