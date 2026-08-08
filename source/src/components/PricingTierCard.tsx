@@ -25,8 +25,8 @@ interface PricingTierCardProps {
 /**
  * PricingTierCard
  * Shared card for a single pricing tier: name, price, description,
- * included/excluded features, and a CTA. Used across the Decoder, SATI OS,
- * and SATI CODEX pricing tables, which previously duplicated this markup
+ * included/excluded features, and a CTA. Used across pricing tables,
+ * which previously duplicated this markup
  * three times with only minor styling drift between them.
  *
  * Accessibility: included items use a checkmark, excluded items use a cross
