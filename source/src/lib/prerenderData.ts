@@ -357,12 +357,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/guillaume-lessard',
     title: 'Guillaume Lessard · Founder of QECTOR and iD01t Productions',
     description:
-      'Guillaume Lessard, self-taught developer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
+      'Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
     heading: 'Guillaume Lessard',
     body: page(
       h1('Guillaume Lessard') +
         p(
-          'Founder, developer, author and independent researcher, based in Longueuil, Québec. I build QECTOR: I grew up poor, quit school at sixteen, and taught myself to write software. A bit over two decades later, I write Rust decoders for quantum error correction, publish the evidence behind every claim, and ship the whole thing myself.'
+          'Founder, software engineer, author and independent researcher, based in Longueuil, Québec. I build QECTOR: I am a professional software engineer with over two decades of experience. Today, I write Rust decoders for quantum error correction, publish the evidence behind every claim, and ship the whole thing myself.'
         ) +
         h2('Making sure you have the right Guillaume Lessard') +
         p(
@@ -381,7 +381,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Background') +
         p(
-          'No degree. I grew up poor, quit school at sixteen, and learned to program because I wanted to make things that worked. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T across 2024–2025. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
+          'My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to make things that worked in the real world. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T across 2024–2025. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
         ) +
         h2('Skills') +
         ul([
@@ -409,9 +409,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         givenName: 'Guillaume',
         familyName: 'Lessard',
         identifier: '0009-0000-3465-3753',
-        jobTitle: 'Founder, Developer and Independent Researcher',
+        jobTitle: 'Founder, Software Engineer and Independent Researcher',
         description:
-          'Self-taught developer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
+          'Software engineer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
         image: `${SITE_URL}/assets/g.png`,
         url: `${SITE_URL}/guillaume-lessard`,
         email: 'admin@qector.store',

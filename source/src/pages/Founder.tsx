@@ -52,7 +52,7 @@ export default function Founder() {
     <>
       <SEO
         title="Guillaume Lessard · Founder of QECTOR and iD01t Productions"
-        description="Guillaume Lessard, self-taught developer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and creator of QECTOR Decoder v3. ORCID 0009-0000-3465-3753."
+        description="Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and creator of QECTOR Decoder v3. ORCID 0009-0000-3465-3753."
       />
       <JsonLd
         data={{
@@ -63,9 +63,9 @@ export default function Founder() {
           givenName: 'Guillaume',
           familyName: 'Lessard',
           identifier: '0009-0000-3465-3753',
-          jobTitle: 'Founder, Developer and Independent Researcher',
+          jobTitle: 'Founder, Software Engineer and Independent Researcher',
           description:
-            'Self-taught developer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
+            'Software engineer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
           image: 'https://qector.store/assets/g.png',
           url: 'https://qector.store/guillaume-lessard',
           email: 'admin@qector.store',
@@ -124,8 +124,8 @@ export default function Founder() {
                 Guillaume Lessard
               </h1>
               <p className="text-secondary text-lg leading-relaxed mb-5">
-                I build QECTOR. I grew up poor, quit school at sixteen, and taught myself to write software. Two decades
-                later, I write Rust decoders for quantum error correction, publish the evidence that backs every claim I make,
+                I build QECTOR. I am a professional software engineer with over two decades of experience. Today,
+                I write Rust decoders for quantum error correction, publish the evidence that backs every claim I make,
                 and ship everything independently from Longueuil, Québec.
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
@@ -186,8 +186,8 @@ export default function Founder() {
             <h2 className="text-2xl font-bold mb-4">Background</h2>
             <div className="space-y-4 text-secondary text-sm leading-relaxed">
               <p>
-                I do not have a degree. I grew up poor, quit school at sixteen, and learned to program because I wanted to
-                make things that worked, and there was no one around to do it for me. That has been the method ever since:
+                My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to
+                make things that worked in the real world. That has been the method ever since:
                 pick the problem, learn what the problem requires, ship the result, publish the evidence.
               </p>
               <p>
