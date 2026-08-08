@@ -87,7 +87,7 @@ export default function Footer() {
               </div>
 
               <p className="text-secondary text-sm leading-relaxed max-w-md">
-                High-performance quantum error correction library &amp; desktop workbench. v1.0.0 first stable release. No universal benchmark figures are published; qector bench ships for measuring on your own hardware. Created by Guillaume Lessard at iD01t Productions.
+                High-performance quantum error correction library and unified desktop workbench. This represents the first stable release train. Universal benchmark figures are intentionally withheld; utilize the <code className="text-xs bg-black/30 px-1 py-0.5 rounded text-cyan-300 border border-cyan-300/20 font-mono">qector bench</code> suite to verify raw decoding throughput directly on your own hardware architecture. Built by Guillaume Lessard at iD01t Productions.
               </p>
 
               {/* Direct Quick Badges */}
