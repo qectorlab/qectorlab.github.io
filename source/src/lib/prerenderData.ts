@@ -469,20 +469,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
-  {
-    path: '/sati-os',
-    title: 'SATI OS · Technology Integrated into QECTOR Workbench',
-    description:
-      'SATI OS technology is integrated into QECTOR Workbench v0.5.3 and QECTOR Decoder v3. Explore the free desktop application.',
-    heading: 'SATI OS Technology Integrated',
-    body: page(
-      h1('SATI OS → QECTOR Workbench') +
-        p(
-          'SATI OS features are fully integrated into QECTOR Workbench v0.5.3 and QECTOR Decoder v3. The desktop GUI, 56-tool MCP server, 16 decoders, and 10 code families are available directly in the free QECTOR Workbench desktop application for Windows x64 and Linux x64.'
-        ) +
-        p('Explore the <a href="/workbench" style="color:#67e8f9;">QECTOR Workbench page</a>.')
-    ),
-  },
+
   {
     path: '/changelog',
     title: 'Changelog · QECTOR',

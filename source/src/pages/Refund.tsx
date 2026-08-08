@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 
 // Refund policy. Required as a distinct, linkable page: Stripe asks for a
 // published refund policy on the first chargeback, and "all sales final" is
@@ -19,7 +20,7 @@ export default function Refund() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
             All prices in USD · Instant digital delivery · Last updated August 2026
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Refund Policy</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Refund Policy" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             QECTOR commercial licenses are digital goods delivered immediately on payment.
             All sales are final. The <Link to="/pricing" className="text-cyan-300 hover:underline">$499 evaluation</Link> exists

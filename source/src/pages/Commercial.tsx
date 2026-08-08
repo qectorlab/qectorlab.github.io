@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 
 export default function Commercial() {
   useEffect(() => {
@@ -15,7 +16,7 @@ export default function Commercial() {
       />
       <section className="py-24 md:py-32 section-padding text-center">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6">Enterprise & OEM Licensing</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-6"><NeuralReveal text="Enterprise & OEM Licensing" className="text-3xl md:text-5xl font-bold" /></h1>
           <p className="text-secondary text-lg mb-8">
             Custom licensing for redistribution, SaaS hosting, hardware bundling, and strategic partnerships.
           </p>

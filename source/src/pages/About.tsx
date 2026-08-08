@@ -156,7 +156,6 @@ export default function About() {
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
                   <li><strong className="text-primary">Free QECTOR Workbench v0.5.3</strong>: Professional GUI, 56 MCP tools, validation and benchmarking tools (fully free)</li>
-                  <li><strong className="text-primary">SATI OS</strong>: Full commercial stack on top (GUI + HALs + support)</li>
                   <li><strong className="text-primary">Research</strong>: SATI CODEX / LCL-833 theoretical work, "Mastering QEC" book (see decoder repo README for deep integration and published papers)</li>
                 </ul>
               </div>
@@ -169,9 +168,9 @@ export default function About() {
                 {[
                   { year: '2024', event: 'iD01t Productions established. Initial QEC research begins: CSS codes, surface code simulation with Stim, MWPM validation against PyMatching.' },
                   { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
-                  { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated. SATI OS desktop UI scaffolded.' },
+                  { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated.' },
                   { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends added to the batch decoding pipeline.' },
-                  { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI v0.5.3 (56 MCP tools). SATI OS full suite on top.` },
+                  { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI v0.5.3 (56 MCP tools).` },
                   { year: '2026 Q2', event: 'QECTOR Workbench v0.5.3 release. CustomTkinter GUI, 56-tool MCP server, 16 decoders, and 10 code families, shipped fully self-contained for Windows x64 and Linux x64, requiring no system Python, pip, or internet connection.' },
                   { year: '2026 Q3', event: 'QECTOR Decoder v3 v1.0.0: first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation, official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).' },
                 ].map((item) => (

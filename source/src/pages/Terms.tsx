@@ -1,4 +1,5 @@
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 
 export default function Terms() {
   return (
@@ -11,7 +12,7 @@ export default function Terms() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
             Governing Law: Québec, Canada · Last updated June 2026
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Terms of Service</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Terms of Service" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             By using QECTOR software or this website, you agree to these terms.
             Questions? <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>

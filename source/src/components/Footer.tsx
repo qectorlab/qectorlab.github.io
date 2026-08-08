@@ -14,7 +14,6 @@ const platformLinks: LinkItem[] = [
   { label: '56-Tool MCP Server', href: '/mcp-server', badge: 'MCP' },
   { label: 'Installer & App Bundles', href: '/installer' },
   { label: 'Pricing & Licensing', href: '/pricing' },
-  { label: 'SATI OS Commercial Stack', href: '/sati-os' },
 ];
 
 const researchLinks: LinkItem[] = [

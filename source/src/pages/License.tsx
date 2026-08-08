@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 
 export default function License() {
   return (
@@ -12,7 +13,7 @@ export default function License() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             PolyForm Noncommercial 1.0.0 · Free for Research · Commercial by Written Agreement
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">License</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="License" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             QECTOR Decoder v3 is <span className="text-primary font-semibold">Source-Available</span> (not free for commercial use).
             Free for personal, academic, and non-commercial research.

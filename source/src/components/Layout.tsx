@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -15,6 +19,40 @@ export default function Layout({ children }: LayoutProps) {
     // Move focus to main content on route change so screen reader users
     // land on the new page instead of staying on the old nav position.
     document.getElementById('main-content')?.focus();
+    
+    // Global reveal animation for top-tier aesthetics, robust against Suspense lazy loading
+    let observer: MutationObserver | null = null;
+    
+    const animateNodes = () => {
+      const elements = document.querySelectorAll('.card-surface:not(.gsap-revealed), .prose:not(.gsap-revealed)');
+      elements.forEach((el) => {
+        el.classList.add('gsap-revealed');
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          }
+        );
+      });
+    };
+
+    observer = new MutationObserver((mutations) => {
+      if (mutations.some(m => m.addedNodes.length > 0)) {
+        animateNodes();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    animateNodes(); // Initial check
+
+    return () => {
+      if (observer) observer.disconnect();
+    };
   }, [location.pathname]);
 
   return (
