@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { SEO, JsonLd } from '../lib/seo';
 import CodeBlock from '../components/CodeBlock';
 import TerminalEmulator from '../components/TerminalEmulator';
-import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
+import NeuralReveal from '../components/NeuralReveal';
+import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle, SparklesIcon, ChartIcon, SettingsIcon, BookOpen } from 'lucide-react';
 
 interface ManualSection {
   id: string;
@@ -506,7 +507,7 @@ prediction = decoder.decode(syndrome)`}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             10 Decoders · GPU Batch · Stim · Sinter · Qiskit
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">User Manual</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="User Manual" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Complete guide to QECTOR Decoder v3 – installation, all decoder families,
             GPU batch workflows, benchmarking, diagnostics, and ecosystem integration.

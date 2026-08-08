@@ -1,4 +1,5 @@
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 import ChangelogEntry from '../components/ChangelogEntry';
 
 export default function Changelog() {
@@ -13,7 +14,7 @@ export default function Changelog() {
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
             Latest: v1.0.0 Decoder (first stable release, live from PyPI RSS) · Workbench GUI v0.5.3
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Changelog</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Changelog" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Version history for QECTOR Decoder v3. Exact release dates on{' '}
             <a href="https://pypi.org/project/qector-decoder-v3/#history" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">PyPI</a>. All artifacts and validation on GitHub.

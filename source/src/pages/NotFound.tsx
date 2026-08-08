@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 
 export default function NotFound() {
   return (
@@ -9,7 +10,7 @@ export default function NotFound() {
       <section className="min-h-[70vh] flex items-center justify-center section-padding">
         <div className="text-center max-w-lg">
           <div className="text-8xl font-extrabold text-cyan-300/20 mb-4">404</div>
-          <h1 className="text-3xl font-bold mb-4">Page Not Found</h1>
+          <h1 className="text-3xl font-bold mb-4"><NeuralReveal text="Page Not Found" className="text-3xl font-bold" /></h1>
           <p className="text-secondary mb-8">
             The page you're looking for doesn't exist or has been moved.
           </p>

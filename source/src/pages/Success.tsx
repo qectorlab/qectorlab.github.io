@@ -1,5 +1,7 @@
 import { Link, useSearchParams } from 'react-router';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
+import CodeBlock from '../components/CodeBlock';
 
 /**
  * Stripe success_url landing page.
@@ -31,7 +33,7 @@ export default function Success() {
             Payment received
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-            Thank you
+            <NeuralReveal text="Thank you" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             Stripe has confirmed your payment. Your{' '}

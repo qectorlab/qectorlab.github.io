@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
 import { Search, ChevronDown, ChevronRight, Terminal, BookOpen, Layers } from 'lucide-react';
 import gsap from 'gsap';
@@ -239,7 +240,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             10 Decoder APIs · Stim DEM · PyO3 Zero-Copy NumPy
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Technical Reference</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Technical Reference" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Complete API documentation for QECTOR's decoders - signatures, parameter limits,
             and integration snippets for quantum pipelines.

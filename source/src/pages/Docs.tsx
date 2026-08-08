@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -41,7 +42,7 @@ export default function Docs() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             Python 3.9-3.13 · Linux · macOS · Windows
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Documentation</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Documentation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             Install, configure, and integrate QECTOR Decoder v3 with your QEC stack.
             Stim, PyMatching, Sinter, and Qiskit compatible.

@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { SEO, JsonLd } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
 
 /**
@@ -167,7 +168,7 @@ export default function McpServer() {
             JSON-RPC 2.0 · Protocol 2024-11-05 · Ships in the native extension
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-            MCP Server
+            <NeuralReveal text="Model Context Protocol Server" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Give any MCP-capable assistant direct access to production quantum error

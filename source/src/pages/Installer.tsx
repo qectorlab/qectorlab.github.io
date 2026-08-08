@@ -1,4 +1,5 @@
 import { SEO } from '../lib/seo';
+import NeuralReveal from '../components/NeuralReveal';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 export default function Installer() {
@@ -13,7 +14,7 @@ export default function Installer() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             PyPI Binary Wheels · AIO Installer · CUDA + OpenCL Optional
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Installation</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Installation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             QECTOR Decoder v3 ships as a Rust-compiled Python wheel (v1.0.0: 15 binary wheels for CPython 3.9–3.13,
             no sdist).
