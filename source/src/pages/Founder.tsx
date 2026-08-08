@@ -200,7 +200,7 @@ export default function Founder() {
               </p>
               <p>
                 Quantum error correction is where that approach currently points. QECTOR Decoder v3 is a Rust core behind a
-                Python API implementing 25+ decoder configurations, with v1.0.0 as the first stable release (2026-08-06).
+                Python API implementing 15+ decoder configurations, with v1.0.0 as the first stable release (2026-08-06).
                 No universal benchmark figures are published on the site, because results depend on your hardware; the
                 qector bench harness ships in the package so you can measure on your own machines. Every claim is backed by a
                 verifiable artifact, because a claim without an artifact is just marketing.
@@ -231,7 +231,7 @@ export default function Founder() {
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 25+ decoder configurations</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 15+ decoder configurations</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench v0.5.3</Link>: free desktop GUI and 56-tool MCP server</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>

@@ -31,7 +31,7 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-base leading-relaxed">
-              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. v1.0.0 is the first stable release: it provides 25+ decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
+              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. v1.0.0 is the first stable release: it provides 15+ decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
             </p>
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
@@ -52,7 +52,7 @@ export default function Manual() {
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Multi-Algorithm Diversity</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">25+ decoder configurations from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed">15+ decoder configurations from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Rust compiled speed</h4>
@@ -173,7 +173,7 @@ prediction = decoder.decode(syndrome)`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR includes 25+ decoder configurations categorized into stable, workload-sensitive, and experimental/research tiers. Choose based on code type and speed/accuracy tradeoffs:
+              QECTOR includes 15+ decoder configurations categorized into stable, workload-sensitive, and experimental/research tiers. Choose based on code type and speed/accuracy tradeoffs:
             </p>
 
             <div className="overflow-x-auto">

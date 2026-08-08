@@ -30,7 +30,7 @@ export default function Decoder() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 – 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description="QECTOR Decoder v3 – 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -60,7 +60,7 @@ export default function Decoder() {
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch.
+            Rust-core Python library implementing 15+ decoder configurations from exact MWPM to GPU batch.
             v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI.
             A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             Stim-native. PyPI binary wheels. All artifacts published on{' '}
@@ -103,7 +103,7 @@ export default function Decoder() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
                 { name: 'Union-Find', tag: 'Fastest', color: 'green', desc: 'Near-linear time approximate decoder. High-throughput option for graph-like codes: trades some LER accuracy for speed.' },
-                { name: 'Fast Union-Find', tag: 'Hot Path', color: 'green', desc: 'Optimized Union-Find hot path for low-latency real-time decoding pipelines.' },
+                { name: 'Fast Union-Find', tag: 'Hot Path', color: 'green', desc: 'Optimized Union-Find hot path for low-latency offline simulation pipelines.' },
                 { name: 'Blossom MWPM', tag: 'Exact Reference', color: 'gold', desc: 'Exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.' },
                 { name: 'CPU & GPU Batch Decoder', tag: 'Parallel', color: 'gold', desc: 'Native CUDA / OpenCL batch decoding. Throughput advantage grows with batch size; CUDA accepts edge_weights and precision="f64" in v1.0.0.' },
               ].map((algo) => (

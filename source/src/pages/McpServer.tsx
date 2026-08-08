@@ -145,7 +145,7 @@ export default function McpServer() {
     <>
       <SEO
         title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 25+ decoder configurations. No universal benchmark figures published; qector bench ships for measuring on your own hardware."
+        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 15+ decoder configurations. No universal benchmark figures published; qector bench ships for measuring on your own hardware."
       />
       <JsonLd
         data={{

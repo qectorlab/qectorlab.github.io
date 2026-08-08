@@ -61,7 +61,7 @@ correction = decoder.decode(syndrome)`
     {
       name: 'UnionFindDecoder',
       signature: 'UnionFindDecoder(dem: stim.DetectorErrorModel, *, use_combined: bool = True)',
-      desc: 'Near-linear time approximate decoder. Resolves syndromes by cluster growth and path compression. Scaling is O(N) making it ideal for large distance real-time systems.',
+      desc: 'Near-linear time approximate decoder. Resolves syndromes by cluster growth and path compression. Scaling is O(N) making it ideal for large distance offline simulations.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'use_combined', type: 'bool', default: 'True', desc: 'Enable combined cluster growth constraints' },

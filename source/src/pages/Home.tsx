@@ -73,7 +73,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description="QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 15+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -141,10 +141,10 @@ export default function Home() {
             className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-            25+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
+            15+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
             <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
-            A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
+            A reproducible offline benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             All claims backed by reproducible artifacts.
           </p>
 
@@ -176,7 +176,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="25+" label="Decoder Configs" />
+            <CounterStat value="15+" label="Decoder Configs" />
             <CounterStat value="3" label="OS Platforms" />
             <CounterStat value="15" label="Binary Wheels" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
@@ -255,7 +255,7 @@ export default function Home() {
               {
                 step: '02',
                 title: 'Decode',
-                desc: 'Access 25+ Rust-accelerated decoder configurations through a unified Python API. Swap algorithms without changing your pipeline.',
+                desc: 'Access 15+ Rust-accelerated decoder configurations through a unified Python API. Swap algorithms without changing your pipeline.',
                 detail: 'from qector_decoder_v3 import BlossomDecoder, BpOsdDecoder',
                 code: true,
               },
@@ -297,7 +297,7 @@ export default function Home() {
               <SectionHeader
                 eyebrow="Why QECTOR"
                 heading={<h2 className="text-3xl md:text-4xl font-bold">More Than Just MWPM</h2>}
-                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, GPU batch and real-time workloads each demand different decoders. QECTOR gives you all of them in one Python library with a consistent API, and every claim is backed by reproducible GitHub artifacts."
+                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, GPU batch and large-scale simulation workloads each demand different decoders. QECTOR gives you all of them in one Python library with a consistent API, and every claim is backed by reproducible GitHub artifacts."
               />
             </div>
 
@@ -318,7 +318,7 @@ export default function Home() {
                 {
                   title: 'Speed When You Need It',
                   tag: 'Union-Find + GPU Batch',
-                  desc: 'Near-linear Union-Find for large-distance real-time decoding. Native CUDA/OpenCL GPU batch for throughput-bound workloads.',
+                  desc: 'Near-linear Union-Find for large-distance offline simulation. Native CUDA/OpenCL GPU batch for throughput-bound workloads.',
                   proof: 'Native CPU + GPU batch paths',
                 },
                 {
@@ -344,7 +344,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                  25+ Decoder Configs · Unified API
+                  15+ Decoder Configs · Unified API
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Production-Grade Decoding Algorithms
