@@ -130,12 +130,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 15+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library of 25+ production and research quantum error correction decoder configurations, from MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, and GPU batch, all behind one consistent API. v1.0.0 is the first stable release, with API stability tiers, a qector CLI and qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library of 15+ production and research quantum error correction decoder configurations, from MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, and GPU batch, all behind one consistent API. v1.0.0 is the first stable release, with API stability tiers, a qector CLI and qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -169,12 +169,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 – 25+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 – 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 25+ decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
+          'Rust-core Python library implementing 15+ decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
         h2('Production decoders (Stable)') +
         ul([
@@ -394,7 +394,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ]) +
         h2('Selected work') +
         ul([
-          `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 25+ decoder configurations, first stable release v1.0.0.`,
+          `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 15+ decoder configurations, first stable release v1.0.0.`,
           `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.3</a>: free desktop GUI and 56-tool MCP server for Windows and Linux.`,
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
@@ -718,12 +718,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/mcp-server',
     title: 'MCP Server · QECTOR Decoder v3',
     description:
-      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 13 verified tools across 25+ decoder configurations to any MCP client.',
+      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 13 verified tools across 15+ decoder configurations to any MCP client.',
     heading: 'QECTOR MCP Server',
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 25+ decoder configurations (decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder) for any MCP-compatible AI client. Ships in every v1.0.0 wheel.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 15+ decoder configurations (decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder) for any MCP-compatible AI client. Ships in every v1.0.0 wheel.'
         ) +
         pre(`pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3; qector_decoder_v3.run_mcp_server()"`)
     ),
