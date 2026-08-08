@@ -3,7 +3,7 @@ import { SEO, JsonLd } from '../lib/seo';
 import CodeBlock from '../components/CodeBlock';
 import TerminalEmulator from '../components/TerminalEmulator';
 import NeuralReveal from '../components/NeuralReveal';
-import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle, SparklesIcon, ChartIcon, SettingsIcon, BookOpen } from 'lucide-react';
+import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface ManualSection {
   id: string;
