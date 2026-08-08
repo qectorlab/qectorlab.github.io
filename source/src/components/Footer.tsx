@@ -77,12 +77,7 @@ export default function Footer() {
             {/* Column 1 & 2: Brand Header & Status */}
             <div className="lg:col-span-2 space-y-6">
               <Link to="/" className="inline-flex items-center gap-2.5 text-cyan-300 font-extrabold text-2xl tracking-tight hover:opacity-90 transition-opacity">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                  <circle cx="16" cy="16" r="14" stroke="#67e8f9" strokeWidth="1.5" fill="none" />
-                  <circle cx="16" cy="16" r="6" fill="#67e8f9" fillOpacity="0.3" stroke="#67e8f9" strokeWidth="1" />
-                  <line x1="16" y1="2" x2="16" y2="30" stroke="#67e8f9" strokeWidth="0.5" opacity="0.5" />
-                  <line x1="2" y1="16" x2="30" y2="16" stroke="#67e8f9" strokeWidth="0.5" opacity="0.5" />
-                </svg>
+                <img src="/assets/icon.jpg" alt="QECTOR" width="32" height="32" className="shrink-0 rounded" />
                 <span>QECTOR</span>
               </Link>
 

@@ -46,7 +46,7 @@ const organizationNode = {
   '@type': 'Organization',
   name: SITE_NAME,
   url: SITE_URL + '/',
-  logo: `${SITE_URL}/assets/logo.svg`,
+  logo: `${SITE_URL}/assets/icon.jpg`,
   sameAs: [GITHUB_URL, PYPI_URL],
 };
 

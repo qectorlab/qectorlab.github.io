@@ -85,14 +85,7 @@ export default function Navigation() {
               to="/"
               className="flex items-center gap-2 text-cyan-300 font-bold text-lg tracking-tight hover:text-cyan-200 transition-colors"
             >
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="14" stroke="#67e8f9" strokeWidth="1.5" fill="none" />
-                <circle cx="16" cy="16" r="6" fill="#67e8f9" fillOpacity="0.3" stroke="#67e8f9" strokeWidth="1" />
-                <line x1="16" y1="2" x2="16" y2="30" stroke="#67e8f9" strokeWidth="0.5" opacity="0.5" />
-                <line x1="2" y1="16" x2="30" y2="16" stroke="#67e8f9" strokeWidth="0.5" opacity="0.5" />
-                <line x1="5" y1="5" x2="27" y2="27" stroke="#67e8f9" strokeWidth="0.5" opacity="0.3" />
-                <line x1="27" y1="5" x2="5" y2="27" stroke="#67e8f9" strokeWidth="0.5" opacity="0.3" />
-              </svg>
+              <img src="/assets/icon.jpg" alt="QECTOR" width="28" height="28" className="rounded" />
               <span>QECTOR</span>
             </Link>
 
