@@ -17,12 +17,17 @@ export default function NeuralReveal({
   className = '',
   as: Tag = 'span',
 }: NeuralRevealProps) {
-  const [displayChars, setDisplayChars] = useState<string[]>(text.split('').map(() => '_'));
-  const [resolved, setResolved] = useState<boolean[]>(text.split('').map(() => false));
+  // Initialize with the ACTUAL text so pre-rendered static HTML (SSG)
+  // contains the real text (e.g. QECTOR) instead of underscores.
+  const [displayChars, setDisplayChars] = useState<string[]>(text.split(''));
+  const [resolved, setResolved] = useState<boolean[]>(text.split('').map(() => true));
   const [started, setStarted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  
+  // Use a ref to track resolved state so the interval closure always sees the latest
+  const resolvedRef = useRef<boolean[]>(text.split('').map(() => true));
 
   const startAnimation = useCallback(() => {
     if (started) return;
@@ -32,10 +37,14 @@ export default function NeuralReveal({
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      setDisplayChars(text.split(''));
-      setResolved(text.split('').map(() => true));
       return;
     }
+
+    // Scramble immediately to start the animation
+    const initialResolved = text.split('').map(() => false);
+    setResolved(initialResolved);
+    resolvedRef.current = initialResolved;
+    setDisplayChars(text.split('').map(() => '_'));
 
     const totalChars = text.length;
     const charDelay = scrambleDuration / totalChars;
@@ -46,7 +55,7 @@ export default function NeuralReveal({
         const next = [...prev];
         const unresolvedIndices = next
           .map((_, i) => i)
-          .filter((i) => !resolved[i] && text[i] !== ' ');
+          .filter((i) => !resolvedRef.current[i] && text[i] !== ' ');
         if (unresolvedIndices.length === 0) {
           if (intervalRef.current) clearInterval(intervalRef.current);
           return next;
@@ -60,11 +69,8 @@ export default function NeuralReveal({
     // Resolve characters left to right
     for (let i = 0; i < totalChars; i++) {
       if (text[i] === ' ') {
-        setResolved((prev) => {
-          const next = [...prev];
-          next[i] = true;
-          return next;
-        });
+        resolvedRef.current[i] = true;
+        setResolved([...resolvedRef.current]);
         setDisplayChars((prev) => {
           const next = [...prev];
           next[i] = ' ';
@@ -73,11 +79,8 @@ export default function NeuralReveal({
         continue;
       }
       const timeout = setTimeout(() => {
-        setResolved((prev) => {
-          const next = [...prev];
-          next[i] = true;
-          return next;
-        });
+        resolvedRef.current[i] = true;
+        setResolved([...resolvedRef.current]);
         setDisplayChars((prev) => {
           const next = [...prev];
           next[i] = text[i];
@@ -92,7 +95,7 @@ export default function NeuralReveal({
       if (intervalRef.current) clearInterval(intervalRef.current);
     }, scrambleDuration + 500);
     timeoutsRef.current.push(cleanup);
-  }, [text, scrambleDuration, started, resolved]);
+  }, [text, scrambleDuration, started]);
 
   useEffect(() => {
     if (!triggerOnView) {
