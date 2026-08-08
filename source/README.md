@@ -1,0 +1,118 @@
+# QECTOR - qectorlab.github.io
+
+**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v0.5.3, see qector.store) under the qectorlab brand.**
+
+**Current stable release: QECTOR Decoder v3 v1.0.0 (2026-08-06) — first stable release. 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation. Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).**
+
+**Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
+
+**Created by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. qectorlab org for Workbench and branding; decoder repo maintained under founder account.**
+
+## Quick Start
+```bash
+pip install qector-decoder-v3
+# Free GUI v0.5.3: https://qector.store
+```
+
+## Key Claims + Evidence (all on GitHub)
+- Stable release v1.0.0 (2026-08-06, commit 75cd45c): 25+ decoder configurations; API stability tiers (stable/beta/experimental); Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping; ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder
+- No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads
+- The package ships the benchmark harness (`qector bench` prints one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic) so results can be reproduced on your own machines
+- Validation reports, SHA-256 sealed artifact manifests, and IBM hardware execution logs are published on GitHub and at https://qector.store/evidence
+- BP-OSD for qLDPC; Hypergraph-safe Union-Find
+- Full Stim + Sinter + PyMatching compatible; `sinter.collect()` needs no custom_decoders=
+
+Reproducible artifacts: https://github.com/GuillaumeLessard/qector-decoder (validation + harness, full evidence)
+
+## Commercial
+Source-Available (PolyForm Noncommercial for non-comm). Commercial use requires license.
+Free: Workbench GUI, public PyPI (non-comm), all artifacts.
+See qector.store/commercial for tiers (Researcher/Academic, Commercial Deployment, Enterprise + Support). Contact for eval.
+
+## Links
+- Store: https://qector.store
+- Decoder: https://github.com/GuillaumeLessard/qector-decoder
+- Workbench (free): https://qector.store
+- PyPI: https://pypi.org/project/qector-decoder-v3/
+- ORCID: https://orcid.org/0009-0000-3465-3753
+- Book: Mastering QEC on Google Play
+
+Primary source of truth: decoder repo README. This bridge has quick-start, claims, links.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | React 19 + TypeScript, built with Vite 7 |
+| Routing | `react-router` v7, route-based code splitting per page |
+| Styling | Tailwind CSS 3, `tailwindcss-animate` |
+| UI primitives | shadcn/ui on top of Radix UI |
+| Motion | GSAP + ScrollTrigger for section reveals |
+| 3D / visuals | `three`, `@react-three/fiber`, `@react-three/drei` (where used) |
+| Charts | Inline SVG for data visuals; `recharts` available |
+| SEO | Custom `SEO` / `JsonLd` helpers in `src/lib/seo.tsx` (per-page title, description, structured data) |
+
+## Getting started
+
+```bash
+npm install
+npm run dev        # local dev server with HMR
+npm run build       # type-check (tsc -b) + production build to dist/
+npm run preview     # preview the production build locally
+npm run lint         # eslint
+```
+
+Node 18+ is recommended. The production build type-checks the whole project before bundling - a failing `tsc -b` will fail the build.
+
+## Project structure
+
+```
+src/
+  components/       Shared UI building blocks
+    ui/             shadcn/ui primitives (button, card, dialog, etc.)
+    Navigation.tsx  Site header, mobile menu, active-route highlighting
+    Footer.tsx      Site footer, link groups, legal links
+    Layout.tsx      Page shell: skip link, route-change focus management
+    SectionHeader.tsx    Eyebrow + heading + description pattern
+    MetricCard.tsx        Single validated number/claim (stat or note card)
+    AlgorithmCard.tsx     Decoder / evidence-report card with badge + proof
+    PricingTierCard.tsx   Pricing tier card (included/excluded features, CTA)
+    EvidenceBlock.tsx     Citable evidence unit linking to GitHub artifacts
+    ChangelogEntry.tsx    Single version/release entry
+    TrustSignal.tsx        External-link pill (PyPI, GitHub, ORCID…)
+    NeuralReveal.tsx       Decorative scramble-in text effect for headings
+  pages/            One file per route (see Navigation.tsx for the route list)
+  lib/
+    seo.tsx         <SEO> and <JsonLd> helpers
+    utils.ts        Class-name and misc utilities
+  hooks/            Shared hooks (e.g. use-mobile)
+```
+
+### Shared component pattern
+
+Cards, section headers, and evidence blocks are intentionally centralized (`components/*.tsx`, not `ui/*`) so that every page - Home, Decoder, Evidence, Pricing, Docs - renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
+
+## Accessibility
+
+The site targets WCAG 2.1 AA. Notable patterns in place:
+
+- Skip-to-content link and route-change focus management (`Layout.tsx`).
+- Keyboard-operable tab groups (`role="tablist"`/`"tab"`/`"tabpanel"`, arrow-key navigation) - see the product switcher on `Pricing.tsx`.
+- `NeuralReveal` (the scramble-in heading effect) exposes the final text via `aria-label` and hides the animated glyphs from assistive tech with `aria-hidden`; it also honors `prefers-reduced-motion` and skips the scramble entirely.
+- Decorative SVGs and background video are `aria-hidden`; data-bearing SVG charts use `role="img"` with a text `aria-label` that states the actual values, and the underlying data is also present in an adjacent HTML table where applicable.
+- Form fields use explicit `<label htmlFor>` / `id` pairing, not implicit/visual-only association.
+- Included/excluded feature lists (pricing cards) are distinguished by icon *and* text, not color alone.
+
+When adding new interactive UI, match these patterns: real semantics over ARIA when possible, decorative content hidden from AT, state changes (tabs, forms, filters) exposed via `aria-selected`/`aria-current`/`aria-live` as appropriate, and no information conveyed by color alone.
+
+## Content & claims policy
+
+No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads; the `qector bench` harness and `qector-doctor` diagnostic ship with the package so results can be reproduced on your own machines. v1.0.0 facts (first stable, 25+ decoder configurations, release date 2026-08-06, commit 75cd45c, 15 wheels, DOI 10.5281/zenodo.21363016, PolyForm Noncommercial 1.0.0) are from the official v1.0.0 user manual (DOI 10.5281/zenodo.21363016). Validation reports and SHA-256 sealed manifests are published on GitHub and linked from `Evidence.tsx`. Do not reintroduce published performance figures without a citable, hardware-specific artifact: the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx`.
+
+## Deployment
+
+The site is a static Vite build deployed to GitHub Pages from `qectorlab/qectorlab.github.io`. `npm run build` outputs to `dist/`; the deployed site is served from that output. SEO/crawler files (`robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt`) and `.well-known` metadata live in `public/` and are copied as-is.
+
+## License
+
+Site content and code are © Guillaume Lessard / iD01t Productions. The QECTOR Decoder itself is dual-licensed (PolyForm Noncommercial for community use, commercial licenses available) - see [`/license`](https://qector.store/license) on the live site for current terms.

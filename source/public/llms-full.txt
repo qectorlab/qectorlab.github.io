@@ -1,0 +1,60 @@
+# QECTOR Decoder v3 (v1.0.0) Full Context
+
+QECTOR Decoder v3 is a production-grade Python and Rust quantum error correction decoder package by Guillaume Lessard / QECTOR Lab. v1.0.0 (2026-08-06) is the first stable release.
+
+## Primary Pages & Sitemap
+
+- https://qector.store/
+- https://qector.store/decoder
+- https://qector.store/evidence
+- https://qector.store/workbench
+- https://qector.store/pricing
+- https://qector.store/commercial
+- https://qector.store/about
+- https://qector.store/sati-os
+- https://qector.store/mcp-server
+- https://qector.store/changelog
+- https://qector.store/contact
+- https://qector.store/docs
+- https://qector.store/manual
+- https://qector.store/technical-reference
+- https://qector.store/installer
+- https://qector.store/license
+- https://qector.store/privacy
+- https://qector.store/terms
+
+## External Records
+
+- PyPI Package: https://pypi.org/project/qector-decoder-v3/
+- Release 1.0.0: https://pypi.org/project/qector-decoder-v3/1.0.0/
+- Primary GitHub Repository: https://github.com/GuillaumeLessard/qector-decoder
+- Official User Manual v1.0.0 (DOI 10.5281/zenodo.21363016)
+
+## Public Install
+
+pip install qector-decoder-v3==1.0.0
+
+## Verification Command
+
+- python -c "import qector_decoder_v3 as qd; print(qd.__version__)" → 1.0.0
+- qector-doctor (15-point environment check)
+
+## Stable Release Facts (v1.0.0, 2026-08-06, commit 75cd45c)
+
+First stable release: 25+ decoder configurations across API stability tiers (stable/beta/experimental). New families: ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder. Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping in BP-OSD. CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) and qiskit-qec plugin registered: `sinter.collect()` needs no custom_decoders=. CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor`. `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313, Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation, no sdist. PolyForm Noncommercial 1.0.0. OpenCL and HybridCascadeDecoder are source-build only (not in wheels).
+
+## Benchmark Policy
+
+No universal benchmark figures are published on the website, because results depend on specific hardware, drivers, and workloads. The package ships `qector bench` (throughput and LER harness printing one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic), so you can validate and measure on your own machines. Validation and reproducibility evidence (SHA-256 sealed artifact manifests, syndromic H·c = s harness, IBM hardware execution logs) is published on GitHub and at https://qector.store/evidence.
+
+## Verified Tools (MCP, 13)
+
+decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder.
+
+## Decoders & Families
+
+25+ decoder configurations in v1.0.0: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade (source builds), gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code (opt-in cluster_bposd), plus options (relay BP, CS-OSD, LLR damping, CUDA f64 edge_weights). 10 code families: repetition, ring, rotated_surface, unrotated_surface, toric, heavy_hex, hypergraph_product, bicycle, bivariate_bicycle, color_code.
+
+## Workbench App
+
+QECTOR Workbench v0.5.3: free desktop GUI (Windows x64 and Linux x64; no macOS build published), 56 MCP tools, 16 decoders, 10 code families, offline operation, bundled qector_decoder_v3 0.7.0 backend. GitHub: https://github.com/qectorlab/qector-decoder-workbench/releases/

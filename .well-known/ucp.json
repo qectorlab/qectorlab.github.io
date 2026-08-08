@@ -1,0 +1,1 @@
+{"protocol":{"name":"ucp","version":"0.1"},"site":"https://qector.store","services":[{"name":"QECTOR commercial licensing","description":"Commercial licensing and evaluation inquiries for QECTOR Decoder v3.","endpoint":"https://qector.store/contact","type":"contact-form"}],"capabilities":{"payments":false,"checkout":false,"human_review_required":true}}

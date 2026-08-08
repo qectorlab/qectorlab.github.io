@@ -1,0 +1,30 @@
+# Netlify / Cloudflare Pages header syntax. GitHub Pages ignores this file, so
+# none of it is enforced on the current apex deployment: it is kept correct so
+# that moving the site behind Cloudflare Pages does not silently break checkout
+# or booking.
+#
+# CSP third-party allowances, and why each is required:
+#   js.stripe.com        : Stripe buy-button script on /pricing
+#   assets.calendly.com  : Calendly inline embed loader
+#   calendly.com         : the Calendly booking iframe itself (frame-src)
+#   fonts.googleapis.com / fonts.gstatic.com : webfont CSS + font files
+# The previous policy allowed only 'self' plus one inline hash, which would have
+# blocked the Stripe button and the Calendly widget outright.
+#
+# frame-src must be stated explicitly: it falls back to default-src ('self'),
+# so without it the Calendly and Stripe iframes are refused.
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-mDfvlEEbZ+pOz33Aj7pRtcA8xcbmfe1wOO1NaObDVDs=' https://js.stripe.com https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:; frame-src https://js.stripe.com https://hooks.stripe.com https://calendly.com; frame-ancestors 'none'
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/.well-known/*
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json
