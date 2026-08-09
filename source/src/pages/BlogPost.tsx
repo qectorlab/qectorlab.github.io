@@ -58,7 +58,7 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-emerald-500/30">
       <SEO 
-        title={`${postMeta.title} · QECTOR Blog`}
+        title={`${postMeta.title} - QECTOR Blog`}
         description={postMeta.description} 
       />
 

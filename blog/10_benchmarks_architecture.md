@@ -193,9 +193,9 @@ Example:
 ```
 $ python -m qector_doctor
 ✔ Wheel sync: blake3=4f2a... matches source tree
-✔ CPU: AMD Ryzen 9 7950X – AVX-512BF16+VPOPCNTDQ detected
-✔ CUDA: RTX 4090 – 16384 cores – driver 560.35 – VRAM 24GB
-✔ License: Enterprise – Fusion + GNN + CUDA unlocked
+✔ CPU: AMD Ryzen 9 7950X , AVX-512BF16+VPOPCNTDQ detected
+✔ CUDA: RTX 4090 , 16384 cores , driver 560.35 , VRAM 24GB
+✔ License: Enterprise , Fusion + GNN + CUDA unlocked
 Throughput probe d=9: UF-01 0.52µs (1.9M dec/s core) | Rayon16 11.5M | CUDA batch64k 43.2M
 ```
 

@@ -36,7 +36,7 @@ Post 8 addresses a different question: how do you route a syndrome to the right 
 In a real fault-tolerant stack three distributions coexist:
 
 * Ultra-low-latency regime: $d=3$ small surface codes for magic-state distillation, needing $45$ ns lookup.
-* Real-time logic regime: $d=7$–$11$ memory with sliding window $W$, needing sub-$\mu$s $O(n\alpha(n))$ Union-Find.
+* Real-time logic regime: $d=7$,$11$ memory with sliding window $W$, needing sub-$\mu$s $O(n\alpha(n))$ Union-Find.
 * High-accuracy batch regime: offline Monte-Carlo threshold estimation $N\ge 10^7$ shots, needing GPU bit-identical $4.8\times10^7$ shots/s.
 * Topological failure regime: random qLDPC hypergraphs where graphlike matching is undefined, needing relay BP-OSD.
 
@@ -50,7 +50,7 @@ Definition 1 (Syndrome Faithfulness). $Hc \equiv s\pmod{2}$.
 
 Definition 2 (Correction Validity). Let $e$ be physical error, $c$ correction. Success iff $c\oplus e\in \text{Ker}(H)$, failure iff $c\oplus e\in \text{Ker}(H)\setminus \text{Im}(H^T)$ (non-trivial logical).
 
-Below we prove each orchestrator preserves Definitions 1–2.
+Below we prove each orchestrator preserves Definitions 1,2.
 
 ![Orchestration Latency Distance](graphs/08_orchestration_latency_distance.png)
 *Figure 1: Orchestration latency vs code distance. AutoDecoder tracks optimal envelope: LUT 45 ns at $d=3$, FastUnionFind sub-$\mu$s to $d=11$, FusionMWPM kicks in at $N_{def}>40$ preserving $p_{th}=1.03\%$.*

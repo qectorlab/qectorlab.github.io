@@ -113,7 +113,7 @@ At $p=0.005$ on [[144,12,12]] BB code, mean $k_i = 2.3$, 92% of clusters $k_i \l
 
 ![Ambiguity Scaling](graphs/06_ai_ambiguity_scaling.png)
 
-*Figure 1: Left – cluster size distribution decays exponentially; Right – localized enumeration beats global Gaussian elimination by ~100�, at $p\le1\%$.*
+*Figure 1: Left , cluster size distribution decays exponentially; Right , localized enumeration beats global Gaussian elimination by ~100�, at $p\le1\%$.*
 
 Implementation notes in `qector-decoder-v3`:
 
@@ -194,7 +194,7 @@ Training: Supervised on 2M shots of [[144,12,12]] at $p\in[0.001,0.01]$, label =
 
 ![GNN Performance](graphs/06_ai_gnn_performance.png)
 
-*Figure 2: Left – learned bimodal weights separate reliable vs ambiguous edges; Right – GNN restores 30% of threshold lost to BP non-convergence on high-rate qLDPC.*
+*Figure 2: Left , learned bimodal weights separate reliable vs ambiguous edges; Right , GNN restores 30% of threshold lost to BP non-convergence on high-rate qLDPC.*
 
 Integration:
 

@@ -82,7 +82,7 @@ allocates per shot, trashing cache, invoking GC.
 UF-01 pre-allocates maximum envelope at construction:
 
 ```rust
-// fast_uf.rs – simplified public struct
+// fast_uf.rs , simplified public struct
 #[repr(C)]
 pub struct FastUnionFindDecoder {
   parent: Vec<i32>,   // DSU, len = Vmax
@@ -183,7 +183,7 @@ Theorem 2 (Correction Validity). For error $e$, $c\oplus e\in\ker(H)$; logical e
 
 *Proof.* $H(c\oplus e)=Hc\oplus He=s\oplus s=0$. ∎
 
-Theorem 3 (UF-01 Almost-Linear Time – Main Result). For $n=|V|+|E|$, UF-01 decodes in $O(n\alpha(n))$ amortized time, $O(V+E)$ space, zero heap allocation in hot path.
+Theorem 3 (UF-01 Almost-Linear Time , Main Result). For $n=|V|+|E|$, UF-01 decodes in $O(n\alpha(n))$ amortized time, $O(V+E)$ space, zero heap allocation in hot path.
 
 *Proof.*
 
@@ -198,7 +198,7 @@ Sum $O((V+E)\alpha(n))=O(n\alpha(n))$. Space flat vectors $O(V+E)$. Zero alloc b
 $\alpha(n)\le5$ for $n<10^{600}$, effectively linear. Contrast $O(N_{\text{defects}}^3)$ Blossom, $O(E\log V)$ SparseBlossom, $O(I_{bp}E+r^3+W^{\text{osd\_order}})$ BP-OSD.
 
 ![Complexity and Allocation](graphs/04_uf_complexity_alloc.png)
-*Fig 3 Left: Heap allocations per shot – generic UF allocates $O(d^2)$ HashMap entries, UF-01 zero. Right: Asymptotic $O(n\alpha(n))$ vs $O(N^3)$. At $n=10^4$, UF-01 is $\sim10^4\times$ faster in abstract cost.*
+*Fig 3 Left: Heap allocations per shot , generic UF allocates $O(d^2)$ HashMap entries, UF-01 zero. Right: Asymptotic $O(n\alpha(n))$ vs $O(N^3)$. At $n=10^4$, UF-01 is $\sim10^4\times$ faster in abstract cost.*
 
 ## 7. Weighted Growth, Erasures, and Boundaries
 
@@ -208,11 +208,11 @@ Erasure qubits (flagged loss) are handled by pre-union: all erased edges fused a
 
 ## 8. Benchmarks: Sub-Microsecond to d=11, 0.72% Threshold, 1.25e7 shots/s
 
-### Threshold – Fig 1
+### Threshold , Fig 1
 
-Rotated surface $d=3,5,7,9$, $10^6$ shots/point, phenomenological $p$. Blossom crossing $p_{\text{th}}\sim1.03\%$, UF-01 $\sim0.72\%$. 30% degradation due to unweighted growth ignoring $w$. Yet above hardware $0.2\%$; at $p=10^{-3}$, $P_L(d=9)\approx2\times10^{-7}$ for UF-01 vs $8\times10^{-9}$ Blossom – both well below $10^{-5}$ targets. Mitigation via weighted UF-01 + GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$ recovers ~0.88%.
+Rotated surface $d=3,5,7,9$, $10^6$ shots/point, phenomenological $p$. Blossom crossing $p_{\text{th}}\sim1.03\%$, UF-01 $\sim0.72\%$. 30% degradation due to unweighted growth ignoring $w$. Yet above hardware $0.2\%$; at $p=10^{-3}$, $P_L(d=9)\approx2\times10^{-7}$ for UF-01 vs $8\times10^{-9}$ Blossom , both well below $10^{-5}$ targets. Mitigation via weighted UF-01 + GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$ recovers ~0.88%.
 
-### Single-Shot Latency – Fig 2
+### Single-Shot Latency , Fig 2
 
 16-core Xeon Platinum 8358, AVX-512, 32KB L1, Rust 1.81 `-C target-cpu=native`.
 
@@ -239,10 +239,10 @@ Rayon `par_iter()` work-stealing, no locks:
 `qector-decoder-v3` is industrial-grade:
 
 * AutoDecoder $O(1)$ dispatch: `(d\cdot p,N,\text{topology})$ → LUT if $d\le3$, `CUDABatch/CPUBatch` if $N>1024$, else `FastUnionFind`. 5 ns dispatch via jump table.
-* TwoStageDecoder for CSS $X/Z$ correlated: $c_X\leftarrow\text{Decode}_X(s_X)$, $s'_Z=s_Z\oplus H_Zc_X$, $c_Z\leftarrow\text{Decode}_Z(s'_Z)$, $c=c_X\oplus c_Z$ – breaks degeneracy.
+* TwoStageDecoder for CSS $X/Z$ correlated: $c_X\leftarrow\text{Decode}_X(s_X)$, $s'_Z=s_Z\oplus H_Zc_X$, $c_Z\leftarrow\text{Decode}_Z(s'_Z)$, $c=c_X\oplus c_Z$ , breaks degeneracy.
 * StreamingDecoder sliding window: $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda_e^k s_{c,t-k}$ decays historical syndromes, constant-time eviction.
 * SIMD: `doctor.py` `Vector Unit Inspection` ensures `_mm512` enabled; fallback to AVX2 256-bit.
-* GPU bit-identity proof: `qector-doctor` asserts wheel build flags match runtime CPUID; ensures CUDA UF produces identical $c$ as CPU UF-01 for graphlike codes – critical for validation.
+* GPU bit-identity proof: `qector-doctor` asserts wheel build flags match runtime CPUID; ensures CUDA UF produces identical $c$ as CPU UF-01 for graphlike codes , critical for validation.
 
 Thus UF-01 is not standalone but pre-filter, batch worker, and streaming kernel.
 
@@ -263,7 +263,7 @@ This is industrial QEC: not just algorithm, but $\mu$arch.
 
 ## 10. Conclusion
 
-UF-01 proves that algorithm and engineering co-design wins. Parity invariant $\pi(C)$, merge XOR law $\pi(C_1\cup C_2)=\pi(C_1)\oplus\pi(C_2)$, and peeling $c_e=\pi(\text{child})$ give $O(n\alpha(n))$ time with zero allocations. We trade $\sim30\%$ threshold for $40\times$ latency, staying sub-microsecond to $d=11$, $45$ ns LUT to $d=3$, and $1.25\times10^7$–$4.8\times10^7$ shots/s at scale.
+UF-01 proves that algorithm and engineering co-design wins. Parity invariant $\pi(C)$, merge XOR law $\pi(C_1\cup C_2)=\pi(C_1)\oplus\pi(C_2)$, and peeling $c_e=\pi(\text{child})$ give $O(n\alpha(n))$ time with zero allocations. We trade $\sim30\%$ threshold for $40\times$ latency, staying sub-microsecond to $d=11$, $45$ ns LUT to $d=3$, and $1.25\times10^7$,$4.8\times10^7$ shots/s at scale.
 
 In fault-tolerant roadmaps, memory coherence is finite. Threshold is necessary; meeting the clock is sufficient. UF-01 meets the clock.
 
