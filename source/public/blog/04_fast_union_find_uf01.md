@@ -1,9 +1,9 @@
-# Zero-Allocation Fast Union-Find UF-01: Sub-Microsecond Decoding for Fault-Tolerant Surface Codes
+﻿# Zero-Allocation Fast Union-Find UF-01: Sub-Microsecond Decoding for Fault-Tolerant Surface Codes
 
 Author: Guillaume Lessard / qector.store  
-Series: qector-decoder-v3 v1.0.0 Deep Dive — Post 4  
+Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 4  
 Date: August 2026 | iD01t Productions, Longueuil, QC  
-Artifact: `fast_uf.rs` — `FastUnionFindDecoder` — 15-backend suite, Rayon + AVX-512 + PyO3
+Artifact: `fast_uf.rs` , `FastUnionFindDecoder` , 15-backend suite, Rayon + AVX-512 + PyO3
 
 
 ## Abstract
@@ -38,15 +38,15 @@ and the residual $c\oplus e$ is not logical:
 
 $$ c\oplus e\in\ker(H),\quad\text{logical error iff }c\oplus e\in\ker(H)\setminus\text{Im}(H^T) \tag{2} $$
 
-Equation (1) is Syndrome Faithfulness; (2) is Correction Validity — the core theorems that ground `qector-decoder-v3`.
+Equation (1) is Syndrome Faithfulness; (2) is Correction Validity , the core theorems that ground `qector-decoder-v3`.
 
 `BlossomDecoder` solves (1) exactly via Edmonds' blossom algorithm with LLR weights $w=-\ln(p/(1-p))$, achieving $p_{\text{th}}\approx1.03\%$ for rotated surface codes. Yet exactness costs $O(N_{\text{defects}}^3)$ time, $O(V^2)$ space. At $d=11$, $N_{\text{defects}}\sim30$ at $p=0.005$, Blossom latency $\sim16$ µs, `SparseBlossomDecoder` event-driven $O(E\log V)$ $\sim2.6$ µs. Superconducting qubits with $T_1\sim100$ µs demand $\le1$ µs feedback [5].
 
-Delfosse-Nickerson [6] changed scaling to almost-linear via Union-Find. But generic implementations allocate HashMap buckets, Vec per cluster, and priority queues per growth step — death by allocator in the hot path. In Python, this is $>50$ allocs/shot.
+Delfosse-Nickerson [6] changed scaling to almost-linear via Union-Find. But generic implementations allocate HashMap buckets, Vec per cluster, and priority queues per growth step , death by allocator in the hot path. In Python, this is $>50$ allocs/shot.
 
 UF-01 in `fast_uf.rs` is our answer: zero-alloc, cache-oblivious, parity-faithful UF with pre-allocated buffers, $O(n\alpha(n))$ time, validated by `qector-doctor doctor.py` wheel-sync, GPU & license tier, and AVX-512 inspection.
 
-In the 15-backend `qector-decoder-v3` suite — Blossom exact, SparseBlossom, FastUnionFind UF-01, BpOsd Exact/Relay ($O(I_{bp}E+r^3+W^{\text{osd\_order}})$), AmbiguityCluster ($O(I_{bp}E+\sum2^{k_i})$), SpaceTimeDecoder ($O(TV^3)$), AutoDecoder $O(1)$ dispatch, Cascade ~85k dec/s, TwoStage, Streaming with decay $\lambda^k$, LookupTable $O(1)$ 45ns $d=3$, GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, NeuralPredecoder Leaky-ReLU, FusionMWPM $>40$ defects, CUDABatch/OpenCLBatch $>4.5e7$ shots/s — UF-01 is the latency floor.
+In the 15-backend `qector-decoder-v3` suite , Blossom exact, SparseBlossom, FastUnionFind UF-01, BpOsd Exact/Relay ($O(I_{bp}E+r^3+W^{\text{osd\_order}})$), AmbiguityCluster ($O(I_{bp}E+\sum2^{k_i})$), SpaceTimeDecoder ($O(TV^3)$), AutoDecoder $O(1)$ dispatch, Cascade ~85k dec/s, TwoStage, Streaming with decay $\lambda^k$, LookupTable $O(1)$ 45ns $d=3$, GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, NeuralPredecoder Leaky-ReLU, FusionMWPM $>40$ defects, CUDABatch/OpenCLBatch $>4.5e7$ shots/s , UF-01 is the latency floor.
 
 ![Threshold Curves](graphs/04_uf_threshold_curves.png)
 *Fig 1: Logical threshold $P_L$ vs $p$ for rotated surface $d=3,5,7,9$. Blossom 1.03% vs UF-01 0.72% under phenomenological noise. Exact matching pays 30% threshold for cubic cost; UF trades accuracy for sub-µs latency.*
@@ -63,9 +63,9 @@ Let $G=(V,E)$ be the decoding graph: $V$ are $X$- or $Z$-checks, $E$ are data qu
 4. Termination: All clusters even or boundary-attached.
 5. Peeling: Build spanning forest of grown edges; emit correction via leaf elimination.
 
-This is not approximate matching — it's percolation ensuring $Hc=s$ without global optimization.
+This is not approximate matching , it's percolation ensuring $Hc=s$ without global optimization.
 
-Difference to MWPM: Blossom maintains dual variables $y_v$ and alternating trees; UF maintains only parity, rank, parent — $O(1)$ per node.
+Difference to MWPM: Blossom maintains dual variables $y_v$ and alternating trees; UF maintains only parity, rank, parent , $O(1)$ per node.
 
 ## 3. UF-01 Architecture: Zero-Allocation Engineering in `fast_uf.rs`
 
@@ -179,7 +179,7 @@ No Gaussian elimination; just parity propagation.
 
 ## 6. Correctness and Complexity: Theorem 3 $O(n\alpha(n))$ Proof
 
-Theorem 2 (Correction Validity). For error $e$, $c\oplus e\in\ker(H)$; logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H^T)$ — same as generic QEC core theorem.
+Theorem 2 (Correction Validity). For error $e$, $c\oplus e\in\ker(H)$; logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H^T)$ , same as generic QEC core theorem.
 
 *Proof.* $H(c\oplus e)=Hc\oplus He=s\oplus s=0$. ∎
 
@@ -219,9 +219,9 @@ Rotated surface $d=3,5,7,9$, $10^6$ shots/point, phenomenological $p$. Blossom c
 | d | UF-01 | LUT | Cascade | SparseBlossom | Blossom | Ambig | BP-OSD |
 |---|-------|-----|---------|---------------|---------|-------|--------|
 |3|0.18 µs|0.05 µs|0.22 µs|0.28 µs|0.35 µs|0.80 µs|2.8 µs|
-|7|0.48 µs|—|0.55 µs|1.2 µs|5.0 µs|5.6 µs|45 µs|
-|11|0.98 µs|—|1.05 µs|2.6 µs|18 µs|16 µs|170 µs|
-|19|2.6 µs|—|2.7 µs|7.2 µs|90 µs|42 µs|950 µs|
+|7|0.48 µs|,|0.55 µs|1.2 µs|5.0 µs|5.6 µs|45 µs|
+|11|0.98 µs|,|1.05 µs|2.6 µs|18 µs|16 µs|170 µs|
+|19|2.6 µs|,|2.7 µs|7.2 µs|90 µs|42 µs|950 µs|
 
 Sub-µs shaded up to $d=11.5$. This enables $k=1$ µs feed-forward in superconducting loops.
 
@@ -287,5 +287,5 @@ In fault-tolerant roadmaps, memory coherence is finite. Threshold is necessary; 
 Whitepaper mapping: `blossom.rs` $O(N^2_{\text{defects}})$, `sparse_blossom.rs` $O(E\log V)$ dynamic, `fast_uf.rs` $O(n\alpha(n))$ sub-µs, `bp_osd.rs` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$, `ambig_cluster.rs` $O(I_{bp}E+\sum2^{k_i})$, `space_time_decoder.rs` XOR diff $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, `auto_decoder.rs`, `cascade_decoder.rs` $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$, `two_stage_decoder.rs`, `streaming_decoder.rs` $S^{(t)}_c=\sum\lambda^k s_{c,t-k}$, `lookup_table.rs` $O(1)$ $n\le64$, `gnn_predecoder.rs` $w_{uv}=\text{softplus}(\text{MLP})$, `neural_predecoder.rs` Leaky-ReLU, `fusion_mwpm.rs` SolverSerial $>40$ defects, `cuda_batch.rs`/`opencl_batch.rs` bit-identical.
 
 
-*Next: Post 5 — BP-OSD Exact & Relay: When Loopy Hyperedges Need $GF(2)$ Rank.*  
+*Next: Post 5 , BP-OSD Exact & Relay: When Loopy Hyperedges Need $GF(2)$ Rank.*  
 *Code: [qector.store](https://qector.store) | Rust + PyO3 + Maturin + Rayon + AVX-512 | v1.0.0 | `qector-doctor` diagnostics*

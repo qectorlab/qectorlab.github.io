@@ -1,14 +1,14 @@
-# Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
+﻿# Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
 
-Author: Guillaume Lessard — qector.store / iD01t Productions (Longueuil, QC, Canada)  
-Series: qector-decoder-v3 Deep Dive — Post 3 of N  
-Version: v1.0.0 — August 2026  
+Author: Guillaume Lessard , qector.store / iD01t Productions (Longueuil, QC, Canada)  
+Series: qector-decoder-v3 Deep Dive , Post 3 of N  
+Version: v1.0.0 , August 2026  
 Engine: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing, AVX-512 SIMD
 
 
 ### Abstract
 
-Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50× reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
+Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50�, reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
 
 Keywords: Sparse Blossom, MWPM, Quantum Error Correction, Surface Code, Edmonds' Algorithm, Dual Variables, Event-Driven Decoding, Radix Heap, O(E log V), Region Growth, qector-decoder-v3
 
@@ -74,13 +74,13 @@ State machine:
 
 Formally, for a blossom $B$ formed at time $t_B$ containing regions $\{R_i\}$, we maintain invariant:
 
-$$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\text{Inner}(B)}(-1) - 0\right)dt' $$
+$$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\text{Inner}(B)}(-1), 0\right)dt' $$
 
 ensuring that for any internal tight edge $uv$ inside $B$, $y_u(t)+y_v(t)=w_{uv}$ is preserved because outer +1 and inner -1 cancel.
 
 Theorem 1 (Region Growth Invariant). Let $\mathcal{R}(t)$ be set of active regions at time $t$ obeying (1). If all tight edges are tracked and no dual constraint is violated for $t'<t$, then the dual solution $y(t)$ remains feasible for all $t$.
 
-*Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt - dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
+*Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt, dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
 
 This local dynamics eliminates $O(N^2)$ dual updates; only regions in conflict change.
 
@@ -132,7 +132,7 @@ $$T_{radix}=O(E_{adj}+E_{tight}+ V_D \log C) \approx O(E\log V) \text{ practical
 
 *Proof Sketch.* Each underlying graph edge is relaxed at most once during multi-source Dijkstra growth of regions (similar to Dial's algorithm). Each defect is inserted into tight graph when its region frontier meets another's, generating $O(\text{deg})$ events. Queue contains at most $O(E)$ events. Each tight edge causes at most O(1) blossom/tree operations (union-find for blossom nesting uses $\alpha(V)$). Hence dominant cost is queue ops. Binary heap gives log factor; radix heap leverages integer monotone queue (pop sequence is non-decreasing $t^*$) giving amortized $O(1)$. ∎
 
-Figure 2 right shows measured pop latency: radix heap maintains ~50-200 ns up to 4096 pending events, vs. binary heap's 250-2500 ns superlinear growth, directly translating to 2.8× single-shot latency improvement in qector benchmarks at $d=11$ (on reference M2 hardware).
+Figure 2 right shows measured pop latency: radix heap maintains ~50-200 ns up to 4096 pending events, vs. binary heap's 250-2500 ns superlinear growth, directly translating to 2.8�, single-shot latency improvement in qector benchmarks at $d=11$ (on reference M2 hardware).
 
 ![Event Queue](./graphs/03_sparse_event_queue_radix.png)
 
@@ -163,7 +163,7 @@ Theorem 4 (Sparse Blossom Correctness). The event-driven algorithm with states $
 
 - Data Layout: Struct-of-Arrays for cache friendliness; `Region { y: u32, state: i8, parent, blossom_parent, ... }` aligned to 64 bytes for AVX-512.
 - Event Queue: Custom `RadixHeap<u32>` with 64 buckets, inline unrolled loops, AVX2-optimized min-bucket scan. Fallback to binary heap if weights non-integerized (detected via doctor.py).
-- Dijkstra Forest: Multi-source growth uses `BinaryHeap` for model graph $G$, but limited to expanding regions—not all-pairs. Uses adjacency bitmask prefetch.
+- Dijkstra Forest: Multi-source growth uses `BinaryHeap` for model graph $G$, but limited to expanding regions,not all-pairs. Uses adjacency bitmask prefetch.
 - Threading: Not intra-shot parallel (matching is sequential), but inter-shot via Rayon work-stealing in `CUDABatch`? Actually sparse batch uses Rayon 16-core, each core decodes independent syndrome, achieving ~1.2e6 shots/s at $d=7$ $p=1\%$.
 - Faithfulness Guarantee: Post-match, syndrome faithfulness $Hc ≡ s \ (\text{mod }2)$ checked, correction validity $c⊕e∈Ker(H)$ asserted in debug builds, logical error detection $c⊕e∈Ker(H)\setminus Im(H^T)$ tracked for Monte Carlo.
 
@@ -185,7 +185,7 @@ Sparse Blossom reframes MWPM from dense cubic matching to kinetic geometry: regi
 
 In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap, zero-alloc reuse, and PyO3 Python bindings make it production-grade. Combined with `FastUnionFindDecoder`, `BpOsdDecoder`, `GNNPredecoder`, and GPU batch engines >4.5e7 shots/s, it forms a tiered decoding fabric bridging theoretical thresholds and large-scale hardware analysis.
 
-Next in series: Post 4 — FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
+Next in series: Post 4 , FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 
 
 ### 10. References
@@ -197,5 +197,5 @@ Next in series: Post 4 — FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling
 [5] A. G. Fowler et al., "Surface codes: Towards practical large-scale quantum computation," *Phys. Rev. A*, 86, 032324, 2012.
 [6] N. Delfosse & N. H. Nickerson, "Almost-linear time decoding of quantum surface codes via Union-Find," *Quantum*, 5, 595, 2021.
 [7] S. B. Bravyi & J. Haah, "Quantum self-correction in the 3D cubic code," *Phys. Rev. Lett.*, 111, 200501, 2013.
-[8] qector-decoder-v3 v1.0.0 Whitepaper, iD01t Productions, Longueuil, QC, Aug 2026 — 15 backends, thresholds, doctor.py, AVX-512.
-[9] M. Thorup, "On RAM Priority Queues," *SIAM J. Comput.*, 30(1), 86-109, 2000 — radix heap foundation.
+[8] qector-decoder-v3 v1.0.0 Whitepaper, iD01t Productions, Longueuil, QC, Aug 2026 , 15 backends, thresholds, doctor.py, AVX-512.
+[9] M. Thorup, "On RAM Priority Queues," *SIAM J. Comput.*, 30(1), 86-109, 2000 , radix heap foundation.

@@ -1,9 +1,9 @@
-# Exact Minimum-Weight Perfect Matching: The Blossom Decoder — Edmonds' Primal-Dual LP at the Heart of Topological QEC
+﻿# Exact Minimum-Weight Perfect Matching: The Blossom Decoder , Edmonds' Primal-Dual LP at the Heart of Topological QEC
 
-Author: Guillaume Lessard — qector.store (iD01t Productions, Longueuil, QC)  
-Engine: qector-decoder-v3 v1.0.0 — Industrial-Grade QEC Decoding in Rust + PyO3  
+Author: Guillaume Lessard , qector.store (iD01t Productions, Longueuil, QC)  
+Engine: qector-decoder-v3 v1.0.0 , Industrial-Grade QEC Decoding in Rust + PyO3  
 Date: August 2026  
-Module: `blossom.rs` — BlossomDecoder
+Module: `blossom.rs` , BlossomDecoder
 
 
 ## Abstract
@@ -26,7 +26,7 @@ Keywords: Quantum Error Correction, Surface Code, MWPM, Edmonds Blossom Algorith
 
 ## 1. Introduction: Why Exact Matching Matters
 
-Topological quantum memory [1,2] reduces quantum error correction to a classical statistical mechanics problem on a graph: defects — violations of stabilizer checks — must be paired at minimum cost. For graphlike CSS codes (planar and rotated surface, toric, unrotated), the decoding problem is precisely minimum-weight perfect matching on a graph whose vertices are defects plus boundary virtual nodes.
+Topological quantum memory [1,2] reduces quantum error correction to a classical statistical mechanics problem on a graph: defects , violations of stabilizer checks , must be paired at minimum cost. For graphlike CSS codes (planar and rotated surface, toric, unrotated), the decoding problem is precisely minimum-weight perfect matching on a graph whose vertices are defects plus boundary virtual nodes.
 
 While approximate Union-Find achieves $O(n\alpha(n))$ and sub-microsecond latency up to $d=11$ (on reference M2 hardware), it sacrifices ~30% of threshold ($0.72\%$ vs $1.03\%$ on rotated surface $d=3,5,7,9$). In fault-tolerant regimes near threshold, this factor translates to orders of magnitude in logical error rate $P_L$. The `BlossomDecoder` exists as the reference truth: exact MWPM with provable LP optimality, against which all heuristic backends (`SparseBlossomDecoder`, `FastUnionFindDecoder`, `CascadeDecoder`, `GNNPredecoder`) are validated.
 
@@ -46,7 +46,7 @@ $$
 
 where $p_{uv}$ is the probability of the minimum-weight error chain connecting $u$ and $v$ (Manhattan distance weighted by qubit LLRs from `GNNPredecoder` when enabled). For uniform depolarizing $p$, $w_{uv}\propto$ Manhattan length.
 
-Goal: select $c\in\mathbb{F}_2^{E_{comp}}$ indicating matched pairs such that every defect incident to exactly one matched edge — a perfect matching — of minimal total weight.
+Goal: select $c\in\mathbb{F}_2^{E_{comp}}$ indicating matched pairs such that every defect incident to exactly one matched edge , a perfect matching , of minimal total weight.
 
 ### 2.2 Primal Integer LP → LP Relaxation
 
@@ -65,9 +65,9 @@ $$
 \tag{1}
 $$
 
-where $\delta(v)$ is star at $v$, $E[B]$ edges internal to $B$. The odd-set inequalities cut off fractional vertices of the bipartite relaxation — these are blossom constraints.
+where $\delta(v)$ is star at $v$, $E[B]$ edges internal to $B$. The odd-set inequalities cut off fractional vertices of the bipartite relaxation , these are blossom constraints.
 
-Crucially, the constraint matrix is totally dual integral (TDI). Hence the LP relaxation $x_e\ge 0$ already yields $x_e\in\{0,1\}$ at optimum — no branch-and-bound needed. This is what makes Blossom polynomial.
+Crucially, the constraint matrix is totally dual integral (TDI). Hence the LP relaxation $x_e\ge 0$ already yields $x_e\in\{0,1\}$ at optimum , no branch-and-bound needed. This is what makes Blossom polynomial.
 
 In QEC parlance, $w_i$ is the chain LLR, $c_i$ the matching decision. Minimizing $\sum w_i c_i$ is equivalent to maximizing log-likelihood of error chains under independent noise.
 
@@ -115,13 +115,13 @@ Classical Edmonds with straightforward dual updates: $O(N^2M)=O(N^4)$ for dense 
 ### 4.2 Core Loop (Primal-Dual)
 
 ```rust
-// blossom.rs - simplified core
+// blossom.rs, simplified core
 loop {
   // 1. Grow alternating forest from exposed vertices within G_T
   // 2. If augmenting path found in G_T → augment, shrink forests
   // 3. Else if blossom (odd cycle) found → contract, push onto stack, y_B = 0
   // 4. Else // no augmenting path, no blossom
-  //    δ = min_{u∈outer, v∉forest} (w_uv - y_u - y_v - sum y_B) / 2
+  //    δ = min_{u∈outer, v∉forest} (w_uv, y_u, y_v, sum y_B) / 2
   //    y_outer += δ; y_inner -= δ; // preserves tightness
   //    if δ activates tight edge closing blossom → goto 3
   // 5. If |M| = N/2 break // perfect
@@ -130,12 +130,12 @@ loop {
 
 Key Rust optimizations:
 
-- Zero-allocation inner loop: matching vectors `[i32; MAXN]` on stack, no `Vec` resize during search — same philosophy as `FastUnionFindDecoder`'s UF-01.
+- Zero-allocation inner loop: matching vectors `[i32; MAXN]` on stack, no `Vec` resize during search , same philosophy as `FastUnionFindDecoder`'s UF-01.
 - AVX-512 distance: $w_{uv}$ recomputed on-the-fly for dual slack via `_mm512` for 16 int16 Manhattan distances in one op, then converted to LLR float32.
 - Blossom stack as inline array: fusion_blossom compatible `SolverSerial` data layout for fallback when $N>40$ in `FusionMWPMDecoder`.
 - Rayon batch: `qector.doctor` validates AVX-512 vs AVX2 fallback; batch of syndromes split via work-stealing.
 
-Blossom contraction uses union-find with parity — `blossom_parent`, `blossom_base`, `in_blossom` bitsets for $O(\alpha(N))$ base queries.
+Blossom contraction uses union-find with parity , `blossom_parent`, `blossom_base`, `in_blossom` bitsets for $O(\alpha(N))$ base queries.
 
 ### 4.3 Exactness vs SparseBlossom
 
@@ -143,7 +143,7 @@ Blossom contraction uses union-find with parity — `blossom_parent`, `blossom_b
 
 ## 5. Geometric Sparsification: $k=\max(12,\lceil k_{mult}\sqrt{n_{defects}}\rceil)$
 
-Complete graph $K_N$ has $N(N-1)/2$ edges: $N=1000$ → 500k edges, $N=10k$ (large $d=21$ at 1% $p$) → 50M edges — memory and $O(N^3)$ impossible.
+Complete graph $K_N$ has $N(N-1)/2$ edges: $N=1000$ → 500k edges, $N=10k$ (large $d=21$ at 1% $p$) → 50M edges , memory and $O(N^3)$ impossible.
 
 Observation: MWPM on geometrically embedded defects (2D lattice + boundary) is dominated by short edges. Percolation threshold ensures long edges exponentially suppressed by LLR weight.
 
@@ -158,7 +158,7 @@ Why sqrt? Random Euclidean matching theory (Ajtai-Komlós-Tusnád) shows optimal
 
 Implementation: KD-tree over defect coordinates (including time for `SpaceTimeDecoder` extension), AVX-512 $k$-selection via introselect, yields $E_{sparse}=kN/2 = O(N^{1.5})$.
 
-Figure 2 demonstrates runtime crossover: dense cubic vs sparse $N^{1.5}\log N$ — at $N=1000$, ~100× speedup.
+Figure 2 demonstrates runtime crossover: dense cubic vs sparse $N^{1.5}\log N$ , at $N=1000$, ~100�, speedup.
 
 ![Runtime Scaling](graphs/02_blossom_runtime_scaling.png)
 *Figure 2: Single-shot latency vs $N_{defects}$ for complete $O(N^3)$ vs $k$-NN sparsified matching. $k=\max(12,\lceil1.5\sqrt{N}\rceil)$ yields $O(N^{1.5}\log N)$ empirical scaling while preserving exactness.*
@@ -174,13 +174,13 @@ For $k_{mult}=1.5$, $P>99.9\%$ for all $N\le1000$, $k_{mult}=2.0$ achieves $P>99
 ![k-NN Optimality](graphs/02_blossom_knn_optimality.png)
 *Figure 3: Probability that sparse $k$-NN matching weight equals exact complete-graph optimum vs $N_{defects}$. With $k=\max(12,\lceil k_{mult}\sqrt{N}\rceil)$, $k_{mult}=1.5$ already exceeds 99.9% fidelity target (red dotted).*
 
-When sparsification fails (detected via odd component with no tight outgoing edges), solver falls back to incremental expansion to full $K_N$ — guaranteeing no logical failure due to sparsification.
+When sparsification fails (detected via odd component with no tight outgoing edges), solver falls back to incremental expansion to full $K_N$ , guaranteeing no logical failure due to sparsification.
 
 ## 6. Theorem 2: Path-Flipping Proof of Syndrome Faithfulness
 
 The following is the core correctness theorem for all matching-based backends (`BlossomDecoder`, `SparseBlossomDecoder`, `FusionMWPMDecoder`, `SpaceTimeDecoder` spacetime version).
 
-### Theorem 2 (Blossom MWPM Path-Flipping Syndrome Faithfulness — blossom.rs)
+### Theorem 2 (Blossom MWPM Path-Flipping Syndrome Faithfulness , blossom.rs)
 
 Let $D\neq\emptyset$ be defect set, $M=\{(u_i,v_i)\}_{i=1}^{|D|/2}$ minimum-weight perfect matching returned by exact Edmonds LP optimum. For each $(u,v)\in M$, let $P_{uv}$ be a minimum-weight error chain (shortest path in Tanner graph weighted by $w=-\ln(p_q/(1-p_q))$) connecting $u$ and $v$ (or $u$ to boundary if virtual). Define correction
 
@@ -215,17 +215,17 @@ $$
 
 because each $e_u$ appears once (Lemma 2) and XOR of all unit vectors at $D$ is precisely $s$ (one at each defect). Boundary paths contribute single $e_u$ still included. Thus $Hc = s$.
 
-Syndrome faithfulness independent of which minimum paths chosen (degeneracy) as any two paths $P_{uv}, P'_{uv}$ with same endpoints satisfy $\partial(P_{uv}\oplus P'_{uv})=0$, i.e., difference is cycle $Ker(H)$. Flipping between matchings $M,M'$: $c\oplus c'$ is XOR of cycles from path differences plus matching-exchange cycles around alternating cycles in $K_N$ (symmetric difference of two perfect matchings is collection of even cycles). Hence $c\oplus c'\in Ker(H)$. Finally $c\oplus e$ always $\in Ker(H)$ because $H(c\oplus e)=Hc\oplus He = s\oplus s=0$. Logical failure iff this cycle is homologically non-trivial: $c\oplus e\in Ker(H)\setminus Im(H^T)$ — not a stabilizer. ∎
+Syndrome faithfulness independent of which minimum paths chosen (degeneracy) as any two paths $P_{uv}, P'_{uv}$ with same endpoints satisfy $\partial(P_{uv}\oplus P'_{uv})=0$, i.e., difference is cycle $Ker(H)$. Flipping between matchings $M,M'$: $c\oplus c'$ is XOR of cycles from path differences plus matching-exchange cycles around alternating cycles in $K_N$ (symmetric difference of two perfect matchings is collection of even cycles). Hence $c\oplus c'\in Ker(H)$. Finally $c\oplus e$ always $\in Ker(H)$ because $H(c\oplus e)=Hc\oplus He = s\oplus s=0$. Logical failure iff this cycle is homologically non-trivial: $c\oplus e\in Ker(H)\setminus Im(H^T)$ , not a stabilizer. ∎
 
 Implications for qector-decoder:
 
 1. Validity guarantee: `blossom.rs` never produces $Hc\neq s$, verified at runtime in debug builds via `debug_assert!(Hdotc == syndrome)`, unlike BP-OSD where post-processing required OSD-W solve to restore faithfulness (Theorem 4 in whitepaper).
 
-2. Threshold link: Since primal LP minimizes sum LLR, $c$ is maximum-likelihood error chain *restricted* to matching code graphlike subspace — achieving channel capacity threshold of underlying code ensemble.
+2. Threshold link: Since primal LP minimizes sum LLR, $c$ is maximum-likelihood error chain *restricted* to matching code graphlike subspace , achieving channel capacity threshold of underlying code ensemble.
 
 3. FusionMWPM: `fusion_mwpm.rs` with `SolverSerial` splits $D$ into subproblems $D_i$ when $N>40$. Merging re-evaluates crossing edges via same path-flipping XOR, preserving faithfulness via Lemma 1 linearity.
 
-4. SpaceTimeDecoder: Identical proof in 3D with $w_{time}= -\ln(p_{meas}/(1-p_{meas}))$, detector $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ — space-time paths still satisfy Lemma 1 with temporal degree cancellation.
+4. SpaceTimeDecoder: Identical proof in 3D with $w_{time}= -\ln(p_{meas}/(1-p_{meas}))$, detector $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ , space-time paths still satisfy Lemma 1 with temporal degree cancellation.
 
 ## 7. Performance Implications and Threshold Optimality
 
@@ -238,13 +238,13 @@ Practical deployment strategy in `AutoDecoder` $O(1)$ dispatch:
 - $N > 1024$ batch: `CUDABatchDecoder` bit-identical batch (>4.8e7 shots/s for $N\ge 65536$)
 - Threshold-critical or low-$p$ logical fidelity audits: escalate to `BlossomDecoder` exact
 
-`qector-doctor` validates AVX-512 (`Vector Unit Inspection`), GPU & license tier, wheel sync ensuring `blossom.so` hash matches source tree — preventing stale SIMD dispatch.
+`qector-doctor` validates AVX-512 (`Vector Unit Inspection`), GPU & license tier, wheel sync ensuring `blossom.so` hash matches source tree , preventing stale SIMD dispatch.
 
 The $k$-NN rule (4) allows `BlossomDecoder` to remain exact up to $d=19$ with $N\sim 1500$ within 100 ms, bridging gap to `SparseBlossomDecoder` O(E log V).
 
 ## 8. Conclusion
 
-The exact Blossom decoder is the mathematical anchor of qector-decoder-v3. By solving Edmonds' primal LP $\min\sum w_i c_i$ and dual $\max\sum y_u+\sum y_B$ to zero duality gap, it certifies optimal matching; by $k=\max(12,\lceil k_{mult}\sqrt{n_{defects}}\rceil)$ geometric sparsification it remains tractable; by path-flipping Theorem 2 it provably yields $Hc\equiv s$ and cleanly separates $Ker(H)$ vs $Im(H^T)$ logical failure. Every faster heuristic — Union-Find, Cascade, Neural/GNN predecoders, CUDA batch — is measured against this exact reference.
+The exact Blossom decoder is the mathematical anchor of qector-decoder-v3. By solving Edmonds' primal LP $\min\sum w_i c_i$ and dual $\max\sum y_u+\sum y_B$ to zero duality gap, it certifies optimal matching; by $k=\max(12,\lceil k_{mult}\sqrt{n_{defects}}\rceil)$ geometric sparsification it remains tractable; by path-flipping Theorem 2 it provably yields $Hc\equiv s$ and cleanly separates $Ker(H)$ vs $Im(H^T)$ logical failure. Every faster heuristic , Union-Find, Cascade, Neural/GNN predecoders, CUDA batch , is measured against this exact reference.
 
 Future: extension to correlated $X/Z$ via `TwoStageDecoder` (13)-(16) followed by Blossom, and hypergraph MWPM via `BpOsdDecoder`.
 
@@ -265,6 +265,6 @@ Future: extension to correlated $X/Z$ via `TwoStageDecoder` (13)-(16) followed b
 
 [7] N. Delfosse and N. H. Nickerson, "Almost-linear time decoding of quantum surface codes via Union-Find," *Quantum*, vol. 5, p. 595, 2021.
 
-[8] Qector Project — BlossomDecoder whitepaper, qector-decoder-v3 v1.0.0, iD01t Productions, Longueuil, QC, Aug 2026.
+[8] Qector Project , BlossomDecoder whitepaper, qector-decoder-v3 v1.0.0, iD01t Productions, Longueuil, QC, Aug 2026.
 
 *Engine: qector-decoder-v3 v1.0.0 | blossom.rs | PyO3 + maturin + Rayon + AVX-512 | qector.store*

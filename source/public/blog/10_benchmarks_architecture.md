@@ -1,8 +1,8 @@
-# Post 10: Empirical Benchmarks, Comparative Matrix of 15 Backends, and Industrial Architecture — qector-decoder-v3 v1.0.0
+﻿# Post 10: Empirical Benchmarks, Comparative Matrix of 15 Backends, and Industrial Architecture , qector-decoder-v3 v1.0.0
 
-Author: Guillaume Lessard / qector.store — iD01t Productions, Longueuil, QC, Canada — August 2026  
-Series: qector-decoder-v3 Deep Dive — Posts 1-10  
-Codebase: `qector-decoder-v3` — Industrial-grade QEC engine in Rust + PyO3 + Rayon + AVX-512 SIMD
+Author: Guillaume Lessard / qector.store , iD01t Productions, Longueuil, QC, Canada , August 2026  
+Series: qector-decoder-v3 Deep Dive , Posts 1-10  
+Codebase: `qector-decoder-v3` , Industrial-grade QEC engine in Rust + PyO3 + Rayon + AVX-512 SIMD
 
 
 ## Abstract
@@ -18,9 +18,9 @@ Keywords: Quantum Error Correction, Surface Code Threshold, MWPM, Union-Find, BP
 2. [Industrial Architecture: Rust + PyO3 + Rayon + SIMD](#2-industrial-architecture-rust--pyo3--rayon--simd)
 3. [The 15-Backend Comparative Matrix](#3-the-15-backend-comparative-matrix)
 4. [Empirical Benchmarks: Threshold, Latency, Throughput](#4-empirical-benchmarks-threshold-latency-throughput)
-   - 4.1 Logical Thresholds $P_L$ vs $p$ — Fig.7
-   - 4.2 Single-Shot Latency vs $d$ — Fig.8
-   - 4.3 Throughput Scaling vs $N$ — Fig.9
+  , 4.1 Logical Thresholds $P_L$ vs $p$ , Fig.7
+  , 4.2 Single-Shot Latency vs $d$ , Fig.8
+  , 4.3 Throughput Scaling vs $N$ , Fig.9
 5. [Mathematical Rigour: Syndrome Faithfulness and Invariants](#5-mathematical-rigour-syndrome-faithfulness-and-invariants)
 6. [Diagnostics and Deployment: qector-doctor](#6-diagnostics-and-deployment-qector-doctor)
 7. [Conclusion and Roadmap](#7-conclusion-and-roadmap)
@@ -49,14 +49,14 @@ Unlike research prototypes in Python/NumPy, `qector-decoder-v3` is a Rust-first 
 
 Core loop architecture:
 - Zero-copy syndrome ingestion: `&[u8]` bit-packed slices ($\lceil n/8 \rceil$ bytes) → AVX-512 `VPSHUFB` syndrome transform where $m\le 64$ maps to `u64` key for LookupTable.
-- Rayon global thread pool: Lock-free work-stealing deque. Batch decoding maps `N` shots across `P$ cores via `par_iter().map(|s| decoder.decode(s))`. No `Mutex` in the hot path; UF-01's `FastUnionFindDecoder` is zero-allocation — pre-allocated `Vec<ParentSize>` reused across windows.
+- Rayon global thread pool: Lock-free work-stealing deque. Batch decoding maps `N` shots across `P$ cores via `par_iter().map(|s| decoder.decode(s))`. No `Mutex` in the hot path; UF-01's `FastUnionFindDecoder` is zero-allocation , pre-allocated `Vec<ParentSize>` reused across windows.
 - SIMD specialization: Runtime dispatch via `is_x86_feature_detected!("avx512bw")`. BP check-to-variable updates vectorize the $\phi$-function:
   $$
   \phi(x) = -\ln\left(\tanh\frac{x}{2}\right) = \ln\coth\frac{x}{2}, \quad \phi(\phi(x))=x
   $$
   AVX-512 `_mm512_log_ps` approximations yield ~3.8x speedup for $E>10^4$.
 
-Build reproducibility is enforced by `qector-doctor doctor.py` — see Section 6.
+Build reproducibility is enforced by `qector-doctor doctor.py` , see Section 6.
 
 ## 3. The 15-Backend Comparative Matrix
 
@@ -127,7 +127,7 @@ $$
 
 > Note: Absolute numbers depend on CPU (16-core AVX-512 workstation) and GPU (flagship consumer). We report them as comparative baselines, not universal ground truth.
 
-### 4.1 Logical Thresholds $P_L$ vs $p$ — Fig.7 (MWPM $1.03\%$ vs UF $0.72\%$)
+### 4.1 Logical Thresholds $P_L$ vs $p$ , Fig.7 (MWPM $1.03\%$ vs UF $0.72\%$)
 
 We simulated rotated surface codes $d\in\{3,5,7,9\}$ under depolarizing circuit noise with $10^6$ shots per point, using FusionMWPM for $N_{\text{defects}}>40$ to keep $O(N^3)$ tractable.
 
@@ -135,15 +135,15 @@ We simulated rotated surface codes $d\in\{3,5,7,9\}$ under depolarizing circuit 
 
 Fig.7: Logical error rate $P_L$ vs physical error rate $p$ for rotated surface codes. Blossom MWPM threshold $p_{th}\approx1.03\%$, Fast UF-01 $p_{th}\approx0.72\%$.
 
-Crossing-point finite-size scaling yields MWPM at 1.03% — matching Dennis-Kitaev-Landahl-Preskill optimum for this noise model — and UF-01 at 0.72%, consistent with Delfosse-Nickerson almost-linear bound loss due to non-optimal cluster splitting. Below threshold, $P_L \sim A (p/p_{th})^{(d+1)/2}$. The 0.31% gap is the price of $O(n\alpha(n))$ vs $O(N^3)$; CascadeDecoder recovers ~90% of MWPM threshold by escalating only hard syndromes.
+Crossing-point finite-size scaling yields MWPM at 1.03% , matching Dennis-Kitaev-Landahl-Preskill optimum for this noise model , and UF-01 at 0.72%, consistent with Delfosse-Nickerson almost-linear bound loss due to non-optimal cluster splitting. Below threshold, $P_L \sim A (p/p_{th})^{(d+1)/2}$. The 0.31% gap is the price of $O(n\alpha(n))$ vs $O(N^3)$; CascadeDecoder recovers ~90% of MWPM threshold by escalating only hard syndromes.
 
-### 4.2 Single-Shot Decoding Latency vs $d$ — Fig.8 (LUT 45ns, UF sub-µs)
+### 4.2 Single-Shot Decoding Latency vs $d$ , Fig.8 (LUT 45ns, UF sub-µs)
 
 ![Latency vs d](graphs/10_bench_latency.png)
 
 Fig.8: Single-shot latency ($\mu$s) vs code distance $d\in[3,19]$. FastUnionFind maintains sub-microsecond up to $d=11$; LookupTable achieves 45 ns for $d=3$.
 
-- LookupTableDecoder $O(1)$: For $m\le64$, syndrome encodes to `u64` key; correction bit-packed $\lceil n/8\rceil$ bytes, nohash `FxHashMap` lookup. Measured 45 ns on `d=3` (26 checks) — within $1\ \mu s$ budget for superconducting feedback.
+- LookupTableDecoder $O(1)$: For $m\le64$, syndrome encodes to `u64` key; correction bit-packed $\lceil n/8\rceil$ bytes, nohash `FxHashMap` lookup. Measured 45 ns on `d=3` (26 checks) , within $1\ \mu s$ budget for superconducting feedback.
 - FastUnionFindDecoder $O(n\alpha(n))$: Union with path compression and union-by-size; tree peeling leaf-to-root. Zero allocation hot loop: 0.15 µs $d=3$ → 1.05 µs $d=19$. Sub-µs up to $d=11$ covers $2\times10^{-6}$ logical target at $p=10^{-3}$.
 - CascadeDecoder ~1.4x UF overhead due to budget check $|r_{\text{UF}}|\le W_{\text{budget}}$.
 - Blossom MWPM grows $\sim d^{3.2}$ due to defect density; 88 µs at $d=19$ vs 0.35 µs at $d=3$.
@@ -151,15 +151,15 @@ Fig.8: Single-shot latency ($\mu$s) vs code distance $d\in[3,19]$. FastUnionFind
 
 Real-time implication: $100$ kHz measurement cycle requires $<10$ µs decode; only UF family and Lookup meet at $d\le19$.
 
-### 4.3 Throughput Scaling vs $N$ — Fig.9 (Rayon $1.25\times10^7$, CUDA $4.8\times10^7$ shots/s)
+### 4.3 Throughput Scaling vs $N$ , Fig.9 (Rayon $1.25\times10^7$, CUDA $4.8\times10^7$ shots/s)
 
 ![Throughput vs N](graphs/10_bench_throughput.png)
 
 Fig.9: Decoding throughput (shots/sec) vs syndrome batch size $N$ for CPU Single-Thread, Rayon 16-core AVX-512, OpenCL, CUDA.
 
-- Single-thread UF-01: Plateaus at ~0.85M shots/s — memory-bound tree traversal.
+- Single-thread UF-01: Plateaus at ~0.85M shots/s , memory-bound tree traversal.
 - Rayon 16-core AVX-512: Achieves $1.25\times10^7$ shots/s through lock-free work-stealing; AVX-512 gives 2.1x over scalar due to parallel find-root on 16 defects at once.
-- GPU Batch: Maps one work-item → one shot. VRAM partitioned to isolated state buffers $(S_{22}, S_8)$. Uphill: kernel launch overhead dominates $N<256$. Beyond $N\ge65536$, CUDA exceeds $4.8\times10^7$ shots/s, OpenCL ~$2.9\times10^7$ — critical for offline $10^9$ shot Monte-Carlo threshold extrapolation.
+- GPU Batch: Maps one work-item → one shot. VRAM partitioned to isolated state buffers $(S_{22}, S_8)$. Uphill: kernel launch overhead dominates $N<256$. Beyond $N\ge65536$, CUDA exceeds $4.8\times10^7$ shots/s, OpenCL ~$2.9\times10^7$ , critical for offline $10^9$ shot Monte-Carlo threshold extrapolation.
 
 Theorem 6 (GPU Bit-Identical Invariance Proof). *For any graphlike code, GPU kernel `uf_decode_batch` produces output corrections bit-identical to CPU FastUnionFindDecoder.*
 
@@ -185,7 +185,7 @@ These invariants are asserted at runtime in debug builds: `debug_assert!(parity_
 
 Industrial deployment demands self-diagnosis. `doctor.py` implements three tiers:
 
-1. Wheel & Working-Tree Synchronization: Computes BLAKE3 hash of `src/*.rs` vs installed `qector_decoder_v3.abi3.so`. Mismatched hashes emit `STALE_WHEEL_ERROR` — prevents profiling optimized Rust while editing Python wrapper.
+1. Wheel & Working-Tree Synchronization: Computes BLAKE3 hash of `src/*.rs` vs installed `qector_decoder_v3.abi3.so`. Mismatched hashes emit `STALE_WHEEL_ERROR` , prevents profiling optimized Rust while editing Python wrapper.
 2. GPU & License Tier Auditing: Distinguishes `CUDA_UNAVAILABLE` (no `nvidia-smi`) from `LICENSE_TIER_GATING` (Community tier calling `CUDABatchDecoder`). Enterprise unlock checks `QECTOR_LICENSE_KEY` signature via `ed25519`.
 3. Vector Unit Inspection: Runs `cpuinfo` to audit `AVX2` and `AVX-512BW/VBMI` support; warns if compiled with `target-feature=+avx512` but CPU lacks `VPOPCNTDQ`, falling back to `_mm256` path.
 
@@ -205,7 +205,7 @@ Throughput probe d=9: UF-01 0.52µs (1.9M dec/s core) | Rayon16 11.5M | CUDA bat
 
 Key industrial lessons:
 - Dispatch matters more than micro-optimization: `AutoDecoder` O(1) dispatch saves order of magnitude by routing $d\le5$ low-$p$ to LUT, $N>1024$ to GPU, $d\le19$ to UF-01, and only hardest $5\%$ to Blossom/BP-OSD.
-- Cascade achieves ~85k dec/s with near-MWPM fidelity — a practical sweet spot for superconducting $1\ \mu s$ cycle budgets.
+- Cascade achieves ~85k dec/s with near-MWPM fidelity , a practical sweet spot for superconducting $1\ \mu s$ cycle budgets.
 - Streaming exponential decay $\lambda^k$ with window $W=15$ enables indefinite operation without logical drift.
 
 Future v1.1 will add `Lattice Surgery Decoder` (time-dynamic `H(t)$` and `Tracker` observable) and `Sparse OSD` with $r\approx k$ approximate Gaussian elimination via Wiedemann.
@@ -225,7 +225,7 @@ Future v1.1 will add `Lattice Surgery Decoder` (time-dynamic `H(t)$` and `Tracke
 [8] O. Higgott and C. Gidney, "Sparse Blossom: Correcting a million errors per core second with minimum-weight matching," *arXiv:2303.15933*, 2023.  
 [9] S. Bravyi et al., "High-threshold and low-overhead fault-tolerant quantum memory," *Nature*, vol. 627, pp. 778-782, 2024.  
 [10] J. Old et al., "Fusion Blossom: Fast MWPM decoders for QEC," *arXiv:2310.04770*, 2023.  
-[11] Guilaume Lessard, "qector-decoder-v3: Industrial PyO3 QEC Framework — Posts 1-9," qector.store whitepaper series, Aug 2026.
+[11] Guilaume Lessard, "qector-decoder-v3: Industrial PyO3 QEC Framework , Posts 1-9," qector.store whitepaper series, Aug 2026.
 
 
-*© 2026 iD01t Productions — Guillaume Lessard — qector.store — All benchmarks measured on 16-core AVX-512 workstation + flagship CUDA GPU; comparative baselines, not absolute ground truths.*
+*© 2026 iD01t Productions , Guillaume Lessard , qector.store , All benchmarks measured on 16-core AVX-512 workstation + flagship CUDA GPU; comparative baselines, not absolute ground truths.*

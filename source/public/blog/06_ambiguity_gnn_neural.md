@@ -1,8 +1,8 @@
-# Ambiguity Clustering, GNN MPNN and Neural Predecoder — AI-Augmented QEC in qector-decoder-v3
+﻿# Ambiguity Clustering, GNN MPNN and Neural Predecoder , AI-Augmented QEC in qector-decoder-v3
 
-Author: Guillaume Lessard, iD01t Productions — [qector.store](https://qector.store)  
+Author: Guillaume Lessard, iD01t Productions , [qector.store](https://qector.store)  
 Version: qector-decoder-v3 v1.0.0 (Aug 2026, Longueuil, QC)  
-Series: Post 6 / 12 - Deep Dive into Industrial-Grade QEC Decoding
+Series: Post 6 / 12, Deep Dive into Industrial-Grade QEC Decoding
 
 
 ### Abstract
@@ -29,7 +29,7 @@ Keywords: Quantum LDPC, BP-OSD, Ambiguity Clustering, Graph Neural Network, MPNN
 <a id="1-introduction"></a>
 ### 1. Introduction: Why BP Needs AI
 
-Quantum low-density parity-check (qLDPC) codes promise constant encoding rate with linear distance, but their Tanner graph is loopy and degenerate: standard belief propagation oscillates. In `qector-decoder-v3` we ship 15 backends — from exact Blossom MWPM $O(N^3)$ and SparseBlossom $O(E \log V)$ to zero-allocation FastUnionFindDecoder (UF-01) $O(n\alpha(n))$ and BpOsdDecoder $O(I_{bp}E + r^3 + W^{osd\_order})$.
+Quantum low-density parity-check (qLDPC) codes promise constant encoding rate with linear distance, but their Tanner graph is loopy and degenerate: standard belief propagation oscillates. In `qector-decoder-v3` we ship 15 backends , from exact Blossom MWPM $O(N^3)$ and SparseBlossom $O(E \log V)$ to zero-allocation FastUnionFindDecoder (UF-01) $O(n\alpha(n))$ and BpOsdDecoder $O(I_{bp}E + r^3 + W^{osd\_order})$.
 
 The Achilles heel of BP-OSD is global OSD: Gaussian elimination on rank-$r$ basis $B \subset \{1,\dots,n\}$ dominates latency when $r>2000$. Observation from Panteleev-Kalachev high-rate codes: after $I_{bp}=20-40$ iterations, 80-95% of qubits are *confident*. Only a sparse subgraph remains ambiguous.
 
@@ -113,7 +113,7 @@ At $p=0.005$ on [[144,12,12]] BB code, mean $k_i = 2.3$, 92% of clusters $k_i \l
 
 ![Ambiguity Scaling](graphs/06_ai_ambiguity_scaling.png)
 
-*Figure 1: Left – cluster size distribution decays exponentially; Right – localized enumeration beats global Gaussian elimination by ~100× at $p\le1\%$.*
+*Figure 1: Left – cluster size distribution decays exponentially; Right – localized enumeration beats global Gaussian elimination by ~100�, at $p\le1\%$.*
 
 Implementation notes in `qector-decoder-v3`:
 
@@ -225,7 +225,7 @@ $$
 
 with $\text{LeakyReLU}(x)=x$ if $x>0$ else $0.01x$, avoiding dying ReLU. Hidden dims $h_1=256$, $h_2=128$ for surface codes d≤13, $h_1=512$ for BB codes.
 
-Complexity $O(h_1 n + h_1 h_2)$ — no graph propagation. AVX-512 fused multiply-add yields ~80 ns inference at d=7. Output $\hat{p}$ seeds BP LLR prior: $\gamma_q^{(0)} = \log((1-\hat{p}_q)/\hat{p}_q)$.
+Complexity $O(h_1 n + h_1 h_2)$ , no graph propagation. AVX-512 fused multiply-add yields ~80 ns inference at d=7. Output $\hat{p}$ seeds BP LLR prior: $\gamma_q^{(0)} = \log((1-\hat{p}_q)/\hat{p}_q)$.
 
 In CascadeDecoder:
 
@@ -262,7 +262,7 @@ Empirical protocol: rotated surface d=3,5,7,9, BB code [144,12,12], 10M shots pe
 Key numbers:
 
 - AmbiguityCluster mean $k_i$: 1.8 (p=0.1%), 2.7 (0.5%), 4.1 (1.0%). 99th percentile $k_i\le9$ at 1%.
-- GNN improvement: $P_L$ @ p=0.6% d=7: BP-OSD $2.1\times10^{-3}$ → GNN+Cluster $7.4\times10^{-4}$ (2.8×).
+- GNN improvement: $P_L$ @ p=0.6% d=7: BP-OSD $2.1\times10^{-3}$ → GNN+Cluster $7.4\times10^{-4}$ (2.8�,).
 - Neural cascade hit rate: 91% at p=0.001 d=5, 63% at p=0.005.
 - End-to-end: AutoDecoder picks Neural→UF for surface codes, GNN→Ambiguity for qLDPC, SpaceTime for $T>1$.
 
@@ -278,11 +278,11 @@ Furthermore, learned $w_{uv}$ is interpretable: softplus readout concentrates ~0
 <a id="10-conclusion"></a>
 ### 10. Conclusion
 
-We have dissected the AI-augmented layer of `qector-decoder-v3`: reliability partition $|\gamma_q|<\tau$, residual projection $s_{\text{res}}=s\oplus H e_{\text{reliable}}$, Theorem 5 guaranteeing $Hc=s$, MPNN dynamic weights $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and fast LeakyReLU MLP predecoder enabling 85k dec/s Cascade. Graphs show exponential cluster size decay, 100× complexity reduction vs global OSD, and 30% threshold recovery on BB codes.
+We have dissected the AI-augmented layer of `qector-decoder-v3`: reliability partition $|\gamma_q|<\tau$, residual projection $s_{\text{res}}=s\oplus H e_{\text{reliable}}$, Theorem 5 guaranteeing $Hc=s$, MPNN dynamic weights $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and fast LeakyReLU MLP predecoder enabling 85k dec/s Cascade. Graphs show exponential cluster size decay, 100�, complexity reduction vs global OSD, and 30% threshold recovery on BB codes.
 
 Industrial QEC needs both theorems and throughput. With Rust + PyO3 + Rayon + AVX-512 + bit-identical CUDA, `qector-decoder-v3 v1.0.0` delivers both.
 
-Next in series: Post 7 — Space-Time Decoding, Streaming Windows, and Decaying Memory.
+Next in series: Post 7 , Space-Time Decoding, Streaming Windows, and Decaying Memory.
 
 
 <a id="11-references"></a>

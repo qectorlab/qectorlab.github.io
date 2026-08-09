@@ -1,14 +1,14 @@
-# 3D Fault-Tolerant Space-Time Decoding: Noisy Syndrome Extraction and the Detector Lattice
+﻿# 3D Fault-Tolerant Space-Time Decoding: Noisy Syndrome Extraction and the Detector Lattice
 
-Author: Guillaume Lessard, qector.store — iD01t Productions, Longueuil, QC, Canada  
-Series: qector-decoder-v3 Deep Dive — Post 7 / 15  
+Author: Guillaume Lessard, qector.store , iD01t Productions, Longueuil, QC, Canada  
+Series: qector-decoder-v3 Deep Dive , Post 7 / 15  
 Version: v1.0.0 (August 2026)  
-License: Industrial-grade QEC decoding engine - Rust + PyO3 Python C-extensions
+License: Industrial-grade QEC decoding engine, Rust + PyO3 Python C-extensions
 
 
 ## Abstract
 
-Quantum error correction cannot assume ideal measurements. In any physical superconducting or photonic architecture, syndrome extraction itself is noisy: ancilla faults, measurement flips, and timing jitter conspire to corrupt the very signal we use to correct. This post dissects the crown jewel of fault-tolerant decoding in qector-decoder-v3 — the `SpaceTimeDecoder` (`space_time_decoder.rs`) and its real-time sibling `StreamingDecoder` (`sliding_window.rs`). 
+Quantum error correction cannot assume ideal measurements. In any physical superconducting or photonic architecture, syndrome extraction itself is noisy: ancilla faults, measurement flips, and timing jitter conspire to corrupt the very signal we use to correct. This post dissects the crown jewel of fault-tolerant decoding in qector-decoder-v3 , the `SpaceTimeDecoder` (`space_time_decoder.rs`) and its real-time sibling `StreamingDecoder` (`sliding_window.rs`). 
 
 We show how XOR differencing $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ transforms a temporal sequence of unreliable syndromes into a 3D detector lattice where space and time edges compete with principled weights $w_{\text{space}}=-\ln(p_{\text{data}}/(1-p_{\text{data}}))$, $w_{\text{time}}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$. The decoder recovers the $O(TV^3)$ graph matching problem across $T$ rounds, preserves syndrome faithfulness $Hc\equiv s\pmod2$ in the lifted space, and sustains a phenomenological threshold $\approx 2.9\%$ where naive 2D repetition fails below $0.5\%$. We then analyze the online extension $S^{(t)}_c=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ with exponential forgetting that enables constant-time $O(W\cdot N)$ streaming with $>1.25\times10^7$ shots/s on Rayon 16-core AVX-512 and $>4.5\times10^7$ on CUDA. Implementation details from lock-free work-stealing to bit-identical GPU invariance are exposed.
 
@@ -32,7 +32,7 @@ Keywords: Fault-tolerant QEC, Space-time decoding, Detector lattice, Noisy syndr
 
 Textbook QEC assumes a genie gives us perfect syndrome $s = H e \pmod 2$. Real hardware does not.
 
-In a surface code memory experiment, we execute $T$ rounds of stabilizer measurement. Each round $t$ produces a raw syndrome $s_{c,t}$ that is itself flipped with probability $p_{\text{meas}}\sim 1-5\%$ — comparable to $p_{\text{data}}$. If you feed $s_{c,t}$ directly into a 2D MWPM or Union-Find decoder, a single measurement error looks like a data error chain ending at the boundary. You correct nothing, and you *create* a logical.
+In a surface code memory experiment, we execute $T$ rounds of stabilizer measurement. Each round $t$ produces a raw syndrome $s_{c,t}$ that is itself flipped with probability $p_{\text{meas}}\sim 1-5\%$ , comparable to $p_{\text{data}}$. If you feed $s_{c,t}$ directly into a 2D MWPM or Union-Find decoder, a single measurement error looks like a data error chain ending at the boundary. You correct nothing, and you *create* a logical.
 
 Formally, let $e_{t}$ be data errors before round $t$, and $\mu_{t}$ be measurement errors. The observed syndrome is:
 
@@ -45,7 +45,7 @@ The industry solution, first conceptualized by Dennis, Kitaev, Landahl, Preskill
 - SpaceTimeDecoder: full $T$-round offline 3D matching, $O(T V^3)$ exact blossom on the detector graph.
 - StreamingDecoder: online sliding window $W$ with decay $\lambda^k$, $O(W\cdot N)$ constant amortized.
 
-While qector-decoder-v3 ships 15 backends — from `BlossomDecoder` $O(N_{\text{defects}}^3)$ exact, `SparseBlossomDecoder` $O(E\log V)$ event-driven, `FastUnionFindDecoder` $O(n\alpha(n))$ zero-allocation UF-01, `BpOsdDecoder` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$ and its relay variant, `LookupTableDecoder` $O(1)$ 45ns at $d=3$, to GPU `CUDABatchDecoder/OpenCLBatchDecoder` with $>4.8\times10^7$ shots/s — the Space-Time engine is the only one that guarantees fault tolerance under circuit-level noise.
+While qector-decoder-v3 ships 15 backends , from `BlossomDecoder` $O(N_{\text{defects}}^3)$ exact, `SparseBlossomDecoder` $O(E\log V)$ event-driven, `FastUnionFindDecoder` $O(n\alpha(n))$ zero-allocation UF-01, `BpOsdDecoder` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$ and its relay variant, `LookupTableDecoder` $O(1)$ 45ns at $d=3$, to GPU `CUDABatchDecoder/OpenCLBatchDecoder` with $>4.8\times10^7$ shots/s , the Space-Time engine is the only one that guarantees fault tolerance under circuit-level noise.
 
 The central correctness invariant of the entire engine remains:
 
@@ -84,7 +84,7 @@ H & I & 0 & 0 & \dots\\
 
 where $I$ columns correspond to measurement errors. Its rank reveals that detector errors are local.
 
-In `space_time_decoder.rs`, the decoder takes `Vec< SyndromeBatch >` over $T$ and computes $d_{c,t}$ on-the-fly via AVX-512 XOR of bit-packed $u64$ blocks — 8 syndromes per instruction. No allocation in hot loop.
+In `space_time_decoder.rs`, the decoder takes `Vec< SyndromeBatch >` over $T$ and computes $d_{c,t}$ on-the-fly via AVX-512 XOR of bit-packed $u64$ blocks , 8 syndromes per instruction. No allocation in hot loop.
 
 ## 3. The Detector Lattice: Anisotropic Weighted Graph in (2+1)D
 
@@ -176,7 +176,7 @@ Why exponential? Two reasons:
 1. Physical: Measurement errors decorrelate as Markov of degree 1 under circuit noise. Optimal Bayes filter for such hidden Markov model is exponential smoothing.
 2. Systems: $W$ constant ensures $O(1)$ per round amortized. No blow-up of state. AVX-512 FMA computes recurrence:
 
-$$ S_c^{(t)} = s_{c,t} + \lambda S_c^{(t-1)} - \lambda^W s_{c,t-W} $$
+$$ S_c^{(t)} = s_{c,t} + \lambda S_c^{(t-1)}, \lambda^W s_{c,t-W} $$
 
 requiring one FMA per $8$ checks.
 
@@ -186,19 +186,19 @@ In benchmarks, streaming with $W=10$, $\lambda=0.8$ loses only ~12% in logical f
 
 ## 6. Theorems: Faithfulness, Fault-Tolerance, and Decay Bounds
 
-### Theorem 1 — Space-Time Syndrome Faithfulness (Lifted)
+### Theorem 1 , Space-Time Syndrome Faithfulness (Lifted)
 
 *Decoding on detector graph $G_{ST}$ with detectors $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ and returning correction $c_{ST}$ with projection $c=\Pi(c_{ST})$ satisfies $H c \oplus \mu_{\text{final}} = s_T$ (last round ideal) and $H_{ST} c_{ST}=d$.*
 
 *Proof.* By construction $H_{ST}$ incorporates both data and measurement columns. Any $c_{ST}$ whose boundary in $G_{ST}$ is $D$ satisfies $H_{ST}c_{ST}=d$ ($\bmod2$) exactly as MWPM's pairing guarantees even parity per cluster (Dennis). Projecting measurement columns away leaves spatial component whose syndrome differs from raw $s_T$ by exactly last measurement error, removable by final idealization in memory experiment. ∎
 
-### Theorem 2 — Threshold Preservation under Phenomenological Noise
+### Theorem 2 , Threshold Preservation under Phenomenological Noise
 
 *If base code family has threshold $p_{\text{th}}^{2D}$ under ideal syndrome, then SpaceTimeDecoder has phenomenological threshold $p_{\text{th}}^{ST}>0$ with $p_{\text{th}}^{ST}\approx0.7\cdot p_{\text{th}}^{2D}$ up to constant factor depending on $w_{\text{time}}/w_{\text{space}}$.*
 
 *Sketch.* Map space-time error model to (2+1)D random bond Ising. Anisotropic weights preserve self-duality line; percolation argument of Dennis et al. extends. Numerically for rotated surface with MWPM: $1.03\%\to2.9\%$ joint when $p_{\text{data}}=p_{\text{meas}}$ due to extra measurement column entropy (Figure 2). For UF, $0.72\%\to\approx2.1\%$ observed in qector regression suite.
 
-### Theorem 3 — Streaming Decay Error Bound
+### Theorem 3 , Streaming Decay Error Bound
 
 *Let $\lambda\in[0,1)$. The truncation error from forgetting beyond $W$ satisfies $\|S_c^{(t)}-S_c^{(t,\infty)}\|_1 \le \frac{\lambda^W}{1-\lambda}\|s\|_{\infty}$. For i.i.d. $p_{\text{meas}}$, excess logical error due to truncation is $O(\lambda^W)$.*
 
@@ -224,7 +224,7 @@ What does this mean for a real device in Longueuil or elsewhere?
 
 ## 8. Conclusion
 
-3D space-time decoding is where quantum error correction stops being a code and becomes a *detector*. The innocent XOR $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ builds a (2+1)D universe where data and measurement faults are equal citizens, distinguished only by $w_{\text{space}}=-\ln(p_{\text{data}}/(1-p_{\text{data}}))$ vs $w_{\text{time}}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$. The qector-decoder-v3 implementation turns this mathematics into Rust that survives — Rayon work-stealing, AVX-512 SIMD, zero-allocation UF-01, and CUDA batch path producing $>10^7$ decodes/s.
+3D space-time decoding is where quantum error correction stops being a code and becomes a *detector*. The innocent XOR $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ builds a (2+1)D universe where data and measurement faults are equal citizens, distinguished only by $w_{\text{space}}=-\ln(p_{\text{data}}/(1-p_{\text{data}}))$ vs $w_{\text{time}}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$. The qector-decoder-v3 implementation turns this mathematics into Rust that survives , Rayon work-stealing, AVX-512 SIMD, zero-allocation UF-01, and CUDA batch path producing $>10^7$ decodes/s.
 
 The StreamingDecoder's $S^{(t)}_c=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ shows the final ingredient: forgetting is a feature. With exponential decay, we achieve constant-time fault tolerance, exactly what a logical quantum computer needs while lattice surgery waits.
 
@@ -253,7 +253,7 @@ If your decoder cannot handle $p_{\text{meas}}>0$, you don't have a fault-tolera
 
 [10] Google Quantum AI, "Suppressing quantum errors by scaling a surface code logical qubit," *Nature*, 2023.
 
-Artifacts: `space_time_decoder.rs` O(T V^3), `sliding_window.rs` O(W·N), `qector-doctor doctor.py` - Wheel Sync, GPU & License Tier, AVX2/AVX-512 auditing.  
+Artifacts: `space_time_decoder.rs` O(T V^3), `sliding_window.rs` O(W·N), `qector-doctor doctor.py`, Wheel Sync, GPU & License Tier, AVX2/AVX-512 auditing.  
 Engine: qector-decoder-v3 v1.0.0, 15 backends, Rust+PyO3+maturin+Rayon, throughput: 1.25e7 Rayon, 4.8e7 CUDA for N≥65536, LUT 45ns d=3.
 
-*Generated for qector.store — Industrial-grade decoding from Longueuil, QC with ❤️ for fault tolerance.*
+*Generated for qector.store , Industrial-grade decoding from Longueuil, QC with ❤️ for fault tolerance.*
