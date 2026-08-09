@@ -1,8 +1,8 @@
 # Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
 
-Author: Guillaume Lessard , qector.store / iD01t Productions (Longueuil, QC, Canada)  
-Series: qector-decoder-v3 Deep Dive , Post 3 of 10  
-Version: v1.0.0 , August 2026  
+Author: Guillaume Lessard, qector.store / iD01t Productions (Longueuil, QC, Canada)  
+Series: qector-decoder-v3 Deep Dive, Post 3 of 10  
+Version: v1.0.0, August 2026  
 Engine: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing, AVX-512 SIMD
 
 
@@ -188,7 +188,7 @@ Sparse Blossom reframes MWPM from dense cubic matching to kinetic geometry: regi
 
 In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap, zero-alloc reuse, and PyO3 Python bindings make it production-grade. Combined with `FastUnionFindDecoder`, `BpOsdDecoder`, `GNNPredecoder`, and GPU batch engines >4.8e7 shots/s, it forms a tiered decoding fabric bridging theoretical thresholds and large-scale hardware analysis.
 
-Next in series: Post 4 , FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
+Next in series: Post 4, FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 
 
 ### 10. References
@@ -200,5 +200,5 @@ Next in series: Post 4 , FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 [5] A. G. Fowler et al., "Surface codes: Towards practical large-scale quantum computation," *Phys. Rev. A*, 86, 032324, 2012.
 [6] N. Delfosse & N. H. Nickerson, "Almost-linear time decoding of quantum surface codes via Union-Find," *Quantum*, 5, 595, 2021.
 [7] S. B. Bravyi & J. Haah, "Quantum self-correction in the 3D cubic code," *Phys. Rev. Lett.*, 111, 200501, 2013.
-[8] qector-decoder-v3 v1.0.0 Whitepaper, iD01t Productions, Longueuil, QC, Aug 2026 , 15 backends, thresholds, doctor.py, AVX-512.
-[9] M. Thorup, "On RAM Priority Queues," *SIAM J. Comput.*, 30(1), 86-109, 2000 , radix heap foundation.
+[8] qector-decoder-v3 v1.0.0 Whitepaper, iD01t Productions, Longueuil, QC, Aug 2026, 15 backends, thresholds, doctor.py, AVX-512.
+[9] M. Thorup, "On RAM Priority Queues," *SIAM J. Comput.*, 30(1), 86-109, 2000, radix heap foundation.

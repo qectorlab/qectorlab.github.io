@@ -1,8 +1,8 @@
 ﻿# The Orchestration Layer: AutoDecoder Meta-Routing, Cascade Hybrid, Two-Stage CSS, and Lookup Table Decoding in qector-decoder-v3
 
-Author: Guillaume Lessard , qector.store (iD01t Productions, Longueuil, QC)  
-Version: qector-decoder-v3 v1.0.0 , August 2026  
-Series: Post 8 of 10 , Decoding Orchestration & Hybrid Architecture
+Author: Guillaume Lessard, qector.store (iD01t Productions, Longueuil, QC)  
+Version: qector-decoder-v3 v1.0.0, August 2026  
+Series: Post 8 of 10, Decoding Orchestration & Hybrid Architecture
 
 
 ## Abstract
@@ -79,7 +79,7 @@ else:
         -> FastUnionFindDecoder UF-01 O(n α(n)) / SparseBlossom O(E log V)
 ```
 
-This is Figure 6 of the whitepaper. Note $d\le 3$ case subsumes all CSS $d=3$ codes (Steane, rotated surface $d=3$ with $m=8$). The routing cost is a handful of integer comparisons plus one hash of topology tag , $O(1)$.
+This is Figure 6 of the whitepaper. Note $d\le 3$ case subsumes all CSS $d=3$ codes (Steane, rotated surface $d=3$ with $m=8$). The routing cost is a handful of integer comparisons plus one hash of topology tag, $O(1)$.
 
 Formally, let $\mathcal{D} = \{D_i\}$ be decoder family with latency $T_i(d,p,N)$ and logical error $P_{L,i}(p)$. The optimal envelope is:
 
@@ -232,7 +232,7 @@ Combining pieces:
 | qLDPC [[400,16,12]] | BPOSD Relay | $\sim0.8$ ms | $\sim1.2$k | BP-OSD |
 | Batch $N=10^5$ | Fusion batch | $\sim12$ ns amort. | $4.8\times10^7$ CUDA | Exact |
 
-Overall system envelope tracks lower convex hull of all backends, achieving both throughput ($1.25\times10^7$ Rayon, $4.8\times10^7$ CUDA bit-identical) and threshold (MWPM-level $1.03\%$ vs UF $0.72\%$ on rotated surface $d=3,5,7,9$). Crucially GPU kernels are bit-identical to CPU UF-01: theorem via deterministic rank-based union-find and leaf-to-root peeling partitioning state buffers $(S_{Z},S_{8})$ per work-item , no atomic competition, guaranteeing same correction (Theorem 6 in whitepaper, GPU Bit-Identical Invariance Proof).
+Overall system envelope tracks lower convex hull of all backends, achieving both throughput ($1.25\times10^7$ Rayon, $4.8\times10^7$ CUDA bit-identical) and threshold (MWPM-level $1.03\%$ vs UF $0.72\%$ on rotated surface $d=3,5,7,9$). Crucially GPU kernels are bit-identical to CPU UF-01: theorem via deterministic rank-based union-find and leaf-to-root peeling partitioning state buffers $(S_{Z},S_{8})$ per work-item, no atomic competition, guaranteeing same correction (Theorem 6 in whitepaper, GPU Bit-Identical Invariance Proof).
 
 Software robustness: `qector-doctor doctor.py` checks wheel sync (prevents stale hash), license tier gating (Enterprise enables CUDA/Fusion), AVX2/AVX-512 detection (dispatch to SIMD kernels). This industrial lens explains why AutoDecoder matters: in production you cannot recompile for each code.
 
@@ -245,20 +245,20 @@ Orchestration is not overhead,it is the algorithm. AutoDecoder turns a zoo of de
 
 The net effect is a decoding engine whose throughput envelope exceeds $10^7$ shots/s and whose latency envelope bottoms at $45$ ns while never sacrificing the logical threshold $\sim1.03\%$ (MWPM) vs $0.72\%$ (UF). For fault-tolerant quantum computing where both real-time feedback and massive offline sampling must coexist, this meta-routing architecture is the necessary bridge from theory to deployment.
 
-*qector-decoder-v3 v1.0.0 is available at qector.store , Rust core, PyO3 bindings, maturin, Rayon, AVX-512 SIMD, CUDA/OpenCL bit-identical.*
+*qector-decoder-v3 v1.0.0 is available at qector.store, Rust core, PyO3 bindings, maturin, Rayon, AVX-512 SIMD, CUDA/OpenCL bit-identical.*
 
 
 ## References
 
-[1] Dennis et al., Topological quantum memory, J. Math. Phys. 2002 , toric code threshold.
+[1] Dennis et al., Topological quantum memory, J. Math. Phys. 2002, toric code threshold.
 [2] Fowler et al., Surface codes: Towards practical large-scale quantum computation, PRA 2012.
 [3] Kitaev, Fault-tolerant quantum computation by anyons, Annals Phys. 2003.
 [4] Gottesman, Stabilizer codes and quantum error correction, quant-ph/9705052.
 [5] Fowler, Minimum weight perfect matching O(1), arXiv:1203.5140.
 [6] Delfosse & Nickerson, Almost-linear time decoding of surface codes via Union-Find, Quantum 2021.
 [7] Panteleev & Kalachev, Asymptotically good qLDPC codes, IEEE Trans. IT 2022.
-[8] Higgott & Breuckmann, Improved single-shot decoding of higher-dimensional hypergraph-product codes, PRX Quantum 2023 , BP-OSD improvements.
-[9] Wu et al., Fusion Blossom: Fast MWPM decoders for QEC, arXiv:2305.08307 , fusion methodology.
-[10] qector-decoder-v3 Whitepaper v1.0.0, Lessard G., iD01t Productions, Longueuil, QC, Aug 2026 , full comparative matrix Table 1, threshold curves Fig 7, latency Fig 8, throughput Fig 9. Core theorems: Syndrome Faithfulness $Hc\equiv s$, $c\oplus e\in Ker(H)$, logical error $\in Ker(H)\setminus Im(H^T)$, BP-OSD OSD-W post-processing $W=\max(2\cdot\text{osd\_order},6)$, Fusion >40 defects, Cascade $85$k dec/s, LUT $45$ ns, AutoDecoder $O(1)$ dispatch.
-[11] Lessard G., qector.store , Industrial QEC decoding platform, 2026.
+[8] Higgott & Breuckmann, Improved single-shot decoding of higher-dimensional hypergraph-product codes, PRX Quantum 2023, BP-OSD improvements.
+[9] Wu et al., Fusion Blossom: Fast MWPM decoders for QEC, arXiv:2305.08307, fusion methodology.
+[10] qector-decoder-v3 Whitepaper v1.0.0, Lessard G., iD01t Productions, Longueuil, QC, Aug 2026, full comparative matrix Table 1, threshold curves Fig 7, latency Fig 8, throughput Fig 9. Core theorems: Syndrome Faithfulness $Hc\equiv s$, $c\oplus e\in Ker(H)$, logical error $\in Ker(H)\setminus Im(H^T)$, BP-OSD OSD-W post-processing $W=\max(2\cdot\text{osd\_order},6)$, Fusion >40 defects, Cascade $85$k dec/s, LUT $45$ ns, AutoDecoder $O(1)$ dispatch.
+[11] Lessard G., qector.store, Industrial QEC decoding platform, 2026.
 

@@ -1,6 +1,6 @@
-# Post 9: GPU-Accelerated Batch Decoding , CUDA/OpenCL Bit-Identical 48M shots/s
+# Post 9: GPU-Accelerated Batch Decoding, CUDA/OpenCL Bit-Identical 48M shots/s
 
-Author: Guillaume Lessard / qector.store , iD01t Productions, Longueuil, QC, Canada  
+Author: Guillaume Lessard / qector.store, iD01t Productions, Longueuil, QC, Canada  
 Version: qector-decoder-v3 v1.0.0 Whitepaper Series, August 2026  
 Series: Industrial-Grade QEC Decoding Engines in Rust + PyO3
 
@@ -16,7 +16,7 @@ Keywords: Quantum Error Correction, Union-Find Decoder, GPU Acceleration, CUDA, 
 
 1. [Introduction: Why QEC Needs Batch, Not Just Speed](#1-introduction-why-qec-needs-batch-not-just-speed)
 2. [From Microsecond to Nanosecond: The Throughput Hierarchy](#2-from-microsecond-to-nanosecond-the-throughput-hierarchy)
-3. [Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`](#3-kernel-architecture-one-work-item-per-syndrome-uf_decode_batch)
+3. [Kernel Architecture: One Work-Item Per Syndrome, `uf_decode_batch`](#3-kernel-architecture-one-work-item-per-syndrome-uf_decode_batch)
 4. [VRAM Model: Isolated $S_{32}/S_{8}$ State Buffers](#4-vram-model-isolated-s32s8-state-buffers)
 5. [Theorem 6: GPU Bit-Identical Invariance Proof](#5-theorem-6-gpu-bit-identical-invariance-proof)
 6. [Performance Analysis: 48M shots/s and Real-Time Margins](#6-performance-analysis-48m-shotss-and-real-time-margins)
@@ -27,7 +27,7 @@ Keywords: Quantum Error Correction, Union-Find Decoder, GPU Acceleration, CUDA, 
 
 ## 1. Introduction: Why QEC Needs Batch, Not Just Speed
 
-The QEC decoding literature has historically obsessed over single-shot latency: can we decode a $d=7$ surface code within the qubit coherence window of $1~\mu s$? `qector-decoder-v3` answers affirmatively , `FastUnionFindDecoder` (UF-01) maintains sub-microsecond latency up to $d=11$ via zero-allocation $O(n\alpha(n))$ union-find, and `LookupTableDecoder` hits $45\text{ ns}$ for $d=3$.
+The QEC decoding literature has historically obsessed over single-shot latency: can we decode a $d=7$ surface code within the qubit coherence window of $1~\mu s$? `qector-decoder-v3` answers affirmatively, `FastUnionFindDecoder` (UF-01) maintains sub-microsecond latency up to $d=11$ via zero-allocation $O(n\alpha(n))$ union-find, and `LookupTableDecoder` hits $45\text{ ns}$ for $d=3$.
 
 But industrial-scale fault tolerance introduces a second axis: throughput. Consider:
 
@@ -40,7 +40,7 @@ Single-thread CPU at $8\times10^5$ shots/s needs ~250 s for 200M shots. Rayon lo
 
 > Core Principle: For Union-Find on graphlike codes, syndromes are causally independent. There is no inter-syndrome dependency. Therefore optimal throughput is achieved by maximal spatial parallelism: one autonomous GPU work-item per syndrome, zero inter-thread communication.
 
-This post details how `cuda_batch.rs` and `opencl_batch.rs` realize this while preserving bit-for-bit equivalence , not statistical, not approximate, but bit-identical.
+This post details how `cuda_batch.rs` and `opencl_batch.rs` realize this while preserving bit-for-bit equivalence, not statistical, not approximate, but bit-identical.
 
 ## 2. From Microsecond to Nanosecond: The Throughput Hierarchy
 
@@ -86,14 +86,14 @@ $$
 \Gamma_{CUDA}=4.8\times10^7\;\text{shots/s},\quad \Gamma_{OpenCL}=3.2\times10^7\;\text{shots/s}
 $$
 
-Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ faster than single-thread wall time, and entirely within PCIe bandwidth for $S_8$ syndrome input ($V\le121$ bits, i.e. $\le16$ bytes, at $d=11$).
+Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$, 60$\times$ faster than single-thread wall time, and entirely within PCIe bandwidth for $S_8$ syndrome input ($V\le121$ bits, i.e. $\le16$ bytes, at $d=11$).
 
 ![Throughput scaling CPU vs GPU](graphs/09_gpu_throughput_scaling.png)
 
 *Figure 1: Throughput scaling vs batch size $N$ for rotated surface $d=5$. CPU Rayon saturates at $1.25\times10^7$ due to core count; GPU continues to $4.8\times10^7$ (CUDA) with launch amortization beyond $N=1$k.*
 
 <a id="3-kernel-architecture-one-work-item-per-syndrome-uf_decode_batch"></a>
-## 3. Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`
+## 3. Kernel Architecture: One Work-Item Per Syndrome, `uf_decode_batch`
 
 ### 3.1 Design Axioms
 
@@ -105,7 +105,7 @@ Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ fast
 Pseudo-kernel (simplified Rust/CUDA C):
 
 ```rust
-// cuda_batch.rs , uf_decode_batch
+// cuda_batch.rs, uf_decode_batch
 #[kernel]
 fn uf_decode_batch(
   syndromes: &[u8],          // [N_batch * num_checks]
@@ -125,7 +125,7 @@ fn uf_decode_batch(
 }
 ```
 
-Mapping: `global_work_size = N_batch`. On A100, 108 SMs $\times$ 64 warps = 6912 concurrent syndromes in flight. Occupancy limited by registers (32 regs/thread) and shared memory (0 bytes , intentional: all state in global VRAM for simplicity and determinism).
+Mapping: `global_work_size = N_batch`. On A100, 108 SMs $\times$ 64 warps = 6912 concurrent syndromes in flight. Occupancy limited by registers (32 regs/thread) and shared memory (0 bytes, intentional: all state in global VRAM for simplicity and determinism).
 
 ### 3.2 Host Dispatch
 
@@ -164,7 +164,7 @@ Example $d=7$ rotated: $V\approx49$, $n\approx49$, $E\approx96$:
 - active S8:  49 B
 - border S8:  49 B
 - correction: 7 B
-Total: ~550 B/shot. For $N=10^6$, ~550 MB , fits in L2 of RTX 4090 (72 MB) with reuse tiling, or directly in VRAM (24 GB supports $N\approx43$M at $d=7$).
+Total: ~550 B/shot. For $N=10^6$, ~550 MB, fits in L2 of RTX 4090 (72 MB) with reuse tiling, or directly in VRAM (24 GB supports $N\approx43$M at $d=7$).
 
 ![VRAM model and isolated buffers](graphs/09_gpu_vram_layout.png)
 
@@ -172,7 +172,7 @@ Total: ~550 B/shot. For $N=10^6$, ~550 MB , fits in L2 of RTX 4090 (72 MB) with 
 
 ### 4.2 Why Isolation Matters for Determinism
 
-Alternative designs (shared hash table, atomic cluster merging) achieve speed at cost of non-determinism: order of atomic wins changes union tree shape. While logically still valid ($Hc=s$), correction differs , catastrophic for Monte Carlo debugging where exact reproducibility is required.
+Alternative designs (shared hash table, atomic cluster merging) achieve speed at cost of non-determinism: order of atomic wins changes union tree shape. While logically still valid ($Hc=s$), correction differs, catastrophic for Monte Carlo debugging where exact reproducibility is required.
 
 Isolation guarantees:
 - Memory address determines owning work-item: $addr\in[base+b\cdot stride, base+(b+1)\cdot stride)$
@@ -265,7 +265,7 @@ $$
 t_{amort}(d)=t_{0}+k\cdot d^2,\quad t_0=20.8\text{ ns CUDA},\ k\approx2\text{ ns}
 $$
 
-Even at $d=21$ ($V=441$), $t_{amort}\approx902\text{ ns}$ , still below $1\ \mu s$ budget per measurement round, enabling real-time streaming decode with sliding window $W$ (future post 10). CPU single-thread at $d=21$ exceeds $2\ \mu s$, failing margin.
+Even at $d=21$ ($V=441$), $t_{amort}\approx902\text{ ns}$, still below $1\ \mu s$ budget per measurement round, enabling real-time streaming decode with sliding window $W$ (future post 10). CPU single-thread at $d=21$ exceeds $2\ \mu s$, failing margin.
 
 ### 6.3 Bottlenecks and Roofline
 
@@ -311,7 +311,7 @@ For `qector-decoder-v3`, this unlocks industrial workflows: $10^{12}$-shot Monte
 
 Theorem 6 thus closes the loop on faithfulness: from syndrome faithfulness $Hc=s$, to logical equivalence $c\oplus e\in\ker(H)$, to platform equivalence $c_{GPU}=c_{CPU}$. The decoder is no longer bottleneck.
 
-Next: Post 10 , Streaming Decoder with Exponential Decay $\lambda^k$ and Constant-Time Eviction.
+Next: Post 10, Streaming Decoder with Exponential Decay $\lambda^k$ and Constant-Time Eviction.
 
 
 ## 9. References
@@ -328,10 +328,10 @@ Next: Post 10 , Streaming Decoder with Exponential Decay $\lambda^k$ and Constan
 
 [6] P. Panteleev and G. Kalachev, "Asymptotically good quantum LDPC codes," *IEEE Trans. Inf. Theory*, vol. 68, no. 11, pp. 7334-7349, 2022.
 
-[7] Whitepaper qector-decoder-v3 v1.0.0, Guillaume Lessard, iD01t Productions, Longueuil, QC, Aug 2026 , §3.15 GPU-Accelerated Batch Decoder, Theorem 6.
+[7] Whitepaper qector-decoder-v3 v1.0.0, Guillaume Lessard, iD01t Productions, Longueuil, QC, Aug 2026, §3.15 GPU-Accelerated Batch Decoder, Theorem 6.
 
-[8] NVIDIA, "CUDA C Programming Guide v12.0 , Memory Coalescing and Occupancy," 2023.
+[8] NVIDIA, "CUDA C Programming Guide v12.0, Memory Coalescing and Occupancy," 2023.
 
-[9] Khronos Group, "OpenCL 3.0 Specification , Work-Item Isolation and Memory Consistency," 2022.
+[9] Khronos Group, "OpenCL 3.0 Specification, Work-Item Isolation and Memory Consistency," 2022.
 
 *© 2026 qector.store / iD01t Productions. All benchmarks on 16-core workstation + A100/RTX4090, representative evaluation per whitepaper §5. Absolute throughput hardware dependent.*
