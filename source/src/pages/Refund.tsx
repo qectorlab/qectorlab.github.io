@@ -119,7 +119,7 @@ export default function Refund() {
               iD01t Productions, Québec, Canada. Payments are processed by Stripe; card details never reach QECTOR systems.
             </p>
             <p className="text-secondary text-sm leading-relaxed mb-3">
-              Registered address: 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7.
+              Registered address: PO Box 1024, Stn Main, Longueuil, Québec, Canada, J4K 5E5.
             </p>
             <p className="text-secondary text-sm leading-relaxed">
               Refund and billing questions:{' '}

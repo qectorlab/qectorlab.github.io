@@ -29,7 +29,7 @@ const includedItems = [
   'Integration support call (1 hour)',
 ];
 
-export default function Pricing() {
+export default function PricingFR() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
     const script = document.createElement('script');

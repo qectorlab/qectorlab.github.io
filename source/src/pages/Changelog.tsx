@@ -169,9 +169,9 @@ export default function Changelog() {
               version="Pre-v0.5.x - 2024-2025"
               items={[
                 '2024: iD01t Productions established. Initial QEC research begins.',
-                '2025 Q1: SATI CODEX LCL-832 framework. IBM Quantum hardware runs on ibm_fez.',
+                '2025 Q1: Advanced topological framework. IBM Quantum hardware runs on ibm_fez.',
                 '2025 Q2: QECTOR Decoder v3 core engine in Rust / PyO3.',
-                '2025 Q3: SATI v18 Titan-Class BB QLDPC code environment.',
+                '2025 Q3: Titan-Class BB QLDPC code environment validation.',
                 '2025 Q4: v0.5.x PyPI release train begins.',
               ]}
             />

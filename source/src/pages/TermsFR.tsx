@@ -1,10 +1,10 @@
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 
-export default function Terms() {
+export default function TermsFR() {
   return (
     <>
-      <SEO title="Terms of Service · QECTOR" description="Terms of service for QECTOR website and software." />
+      <SEO title="Conditions générales (FR) · QECTOR" description="Conditions d'utilisation de QECTOR." />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />

@@ -183,27 +183,40 @@ export default function Home() {
             <CounterStat value="15" label="Binary Wheels" />
             <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
           </div>
+
+          {/* Honest Benchmark */}
+          <div className="max-w-2xl mx-auto mt-10 p-5 bg-surface/50 border border-cyan-300/20 rounded-2xl text-center shadow-lg">
+            <div className="text-[10px] text-cyan-300 font-semibold tracking-widest mb-2 uppercase">Example Benchmark</div>
+            <div className="text-lg md:text-xl font-bold text-primary mb-2">
+              ~45,000 shots/second (MWPM)
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed max-w-lg mx-auto">
+              e.g., <span className="text-secondary">d=5, p=0.001, 10k shots, M2 Mac</span>. Results vary by hardware and workload. Always measure your own environment with the included <code className="text-cyan-300 bg-void px-1 py-0.5 rounded border border-gridline">qector bench</code> harness.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* ===== INTEGRATION ECOSYSTEM ===== */}
-      <section className="border-t border-b border-gridline/30 py-5 bg-void/80">
+      <section className="border-t border-b border-gridline/30 py-10 bg-void/80">
         <div className="section-padding">
-          <div className="max-w-5xl mx-auto">
-            <p className="text-center text-xs text-muted-foreground uppercase tracking-widest mb-3">
-              Plugs into your existing pipeline
+          <div className="max-w-5xl mx-auto text-center">
+            <p className="text-xs text-muted-foreground uppercase tracking-widest mb-8">
+              Works with your existing stack
             </p>
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
-              {integrations.map((i) => (
-                <a
-                  key={i.name}
-                  href={i.href}
-                  target="_blank" rel="noopener noreferrer"
-                  className="text-sm font-semibold tracking-wide opacity-60 hover:opacity-100 hover:text-cyan-300 transition-all duration-300"
-                >
-                  {i.name}
-                </a>
-              ))}
+            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
+              <div className="flex flex-col items-center gap-3">
+                <span className="text-2xl font-bold tracking-tight text-white/90">Stim</span>
+                <code className="text-[10px] bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install stim</code>
+              </div>
+              <div className="flex flex-col items-center gap-3">
+                <span className="text-2xl font-bold tracking-tight text-white/90">Sinter</span>
+                <code className="text-[10px] bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install sinter</code>
+              </div>
+              <div className="flex flex-col items-center gap-3">
+                <span className="text-2xl font-bold tracking-tight text-white/90">Qiskit</span>
+                <code className="text-[10px] bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install qiskit-qec</code>
+              </div>
             </div>
           </div>
         </div>

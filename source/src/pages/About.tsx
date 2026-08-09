@@ -51,7 +51,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               name: 'iD01t Productions',
               url: 'https://qector.store',
               founder: { '@type': 'Person', name: 'Guillaume Lessard' },
-              description: 'Independent multidisciplinary studio: QEC software, electronic music, cyberpunk fiction, game development.',
+              description: 'QEC software division of iD01t Productions, developing high-performance QEC decoder libraries and GUIs.',
             },
           ],
         }}
@@ -86,10 +86,10 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 0)} className="card-surface">
             <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Creator</h3>
             <p className="text-primary text-lg mb-3">
-              <strong>Guillaume Lessard</strong>, independent multidisciplinary creator and researcher based in Montreal / Longueuil, Québec, Canada.
+              <strong>Guillaume Lessard</strong>, software engineer and researcher based in Montreal / Longueuil, Québec, Canada.
             </p>
             <p className="text-secondary leading-relaxed mb-4">
-              Operating under <strong>iD01t Productions</strong> (founded 2023), Guillaume works simultaneously across quantum error correction software engineering, electronic music production, game development, and publishing (167+ eBooks and 103 audiobooks).
+              Operating as the QEC software division of <strong>iD01t Productions</strong> (founded 2023), Guillaume focuses on quantum error correction software engineering, building high-throughput decoders and advanced validation tooling.
             </p>
             <div className="flex flex-wrap gap-2 mb-4">
               <span className="text-secondary text-sm">Publishing aliases:</span>
@@ -123,8 +123,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>CSS stabilizer codes: surface codes, LDPC, qLDPC</li>
                   <li>MWPM (Blossom), Belief-Matching, BP-OSD decoding</li>
-                  <li>SATI CODEX: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface, with IBM Quantum operational verification on ibm_fez</li>
-                  <li>SATI v18: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC targeting IBM hardware</li>
+                  <li>Advanced Custom Topologies: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface, with IBM Quantum operational verification on ibm_fez</li>
+                  <li>Titan-Class Environments: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC targeting IBM hardware</li>
                   <li>Reproducible provenance and SHA-256 sealed artifacts on GitHub</li>
                   <li>Monte Carlo FSS threshold analysis, Z₁₂ monodromy algebra, Jones polynomial verification</li>
                 </ul>
@@ -153,12 +153,12 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </ul>
               </div>
               <div ref={(el) => addRef(el, 4)} className="card-surface">
-                <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Scope (qectorlab)</h3>
-                <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench are the high-performance decoder library + professional GUI. Broader QECTOR vision (LCL-833, full SATI CODEX theoretical work) is research context; see GitHub for details.</p>
+                <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Scope</h3>
+                <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: Professional GUI, 56 MCP tools, validation and benchmarking tools (fully free)</li>
-                  <li><strong className="text-primary">Research</strong>: SATI CODEX / LCL-833 theoretical work, "Mastering QEC" book (see decoder repo README for deep integration and published papers)</li>
+                  <li><strong className="text-primary">Documentation & Education</strong>: Comprehensive benchmark artifacts and "Mastering QEC" book context (see decoder repo README for published papers)</li>
                 </ul>
               </div>
             </div>
@@ -169,9 +169,9 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               <div className="space-y-4">
                 {[
                   { year: '2024', event: 'iD01t Productions established. Initial QEC research begins: CSS codes, surface code simulation with Stim, MWPM validation against PyMatching.' },
-                  { year: '2025 Q1', event: 'SATI CODEX LCL-832 framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
+                  { year: '2025 Q1', event: 'Advanced topological framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
                   { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated.' },
-                  { year: '2025 Q3', event: 'SATI v18 Titan-Class [[72,12,6]] BB QLDPC code environment. OpenCL and CUDA GPU backends added to the batch decoding pipeline.' },
+                  { year: '2025 Q3', event: 'Titan-Class [[72,12,6]] BB QLDPC code environment validation. OpenCL and CUDA GPU backends added to the batch decoding pipeline.' },
                   { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI.` },
                   { year: '2026 Q2', event: 'QECTOR Workbench initial release. CustomTkinter GUI, comprehensive MCP server, 16 decoders, and 10 code families, shipped fully self-contained for Windows x64 and Linux x64, requiring no system Python, pip, or internet connection.' },
                   { year: '2026 Q3', event: 'QECTOR Decoder v3 v1.0.0: first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation, official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).' },

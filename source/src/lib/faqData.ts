@@ -39,10 +39,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     q: 'Do I need a license for non-commercial research?',
     a: 'No. Non-commercial, academic, and personal use is free under the PolyForm Noncommercial License 1.0.0. Only commercial deployment requires a paid tier. The licensing notice on import is informational: it does not restrict non-commercial use, and QECTOR_SILENT=1 suppresses it.'
   },
-  {
-    q: 'What about academic discounts?',
-    a: 'Accredited academic institutions receive 40% off any annual tier, worldwide. We verify by institutional email domain rather than a specific top-level domain: .edu, .ac.uk, .edu.au, .ca, .fr, .de, .ac.jp and equivalents all qualify. Email admin@qector.store from your institutional address and we will issue a discount code.'
-  },
+
   {
     q: 'What currency are prices in, and is tax included?',
     a: 'All prices are in US dollars (USD). Listed prices are exclusive of tax. Stripe calculates and adds any applicable sales tax, GST/HST, or VAT at checkout based on your billing location: Canadian, UK, and EU buyers should expect tax on top of the listed price. If your organization is tax-exempt or has a valid VAT/GST registration number, enter it at checkout, or email admin@qector.store with your Stripe invoice number for a corrected invoice.'

@@ -71,7 +71,7 @@ export default function Founder() {
           email: 'admin@qector.store',
           address: {
             '@type': 'PostalAddress',
-            streetAddress: '2004 De Lorimier',
+            streetAddress: 'PO Box 1024, Stn Main',
             addressLocality: 'Longueuil',
             addressRegion: 'QC',
             postalCode: 'J4K 3H7',
@@ -191,12 +191,10 @@ export default function Founder() {
                 pick the problem, learn what the problem requires, ship the result, publish the evidence.
               </p>
               <p>
-                For most of the last twenty years that meant applications, tools, and books: {' '}
-                <strong className="text-primary">167+ eBooks</strong> and <strong className="text-primary">103 audiobooks</strong>{' '}
-                published, desktop utilities and games released independently, and six albums plus twenty-three singles produced
-                as DJ iD01T during 2024 and 2025. I founded{' '}
+                For most of the last twenty years that meant building high-performance applications and tools. 
+                I founded{' '}
                 <a href="https://id01t.store/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">iD01t Productions</a>{' '}
-                in 2023 to put all of it under one roof. It remains a focused one-person operation.
+                in 2023. QECTOR serves as its dedicated QEC software division, delivering robust decoder pipelines for research and production environments.
               </p>
               <p>
                 Quantum error correction is where that approach currently points. QECTOR Decoder v3 is a Rust core behind a
@@ -216,10 +214,10 @@ export default function Founder() {
             <h2 className="text-2xl font-bold mb-5">What I've shipped</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { value: '167+', label: 'eBooks published' },
-                { value: '103', label: 'Audiobooks' },
-                { value: '20+', label: 'Years writing software' },
-                { value: '2023', label: 'iD01t Productions founded' },
+                { value: '15+', label: 'Decoder Configurations' },
+                { value: '10+', label: 'Supported Topologies' },
+                { value: '20+', label: 'Years Writing Software' },
+                { value: '2023', label: 'iD01t Productions Founded' },
               ].map((s) => (
                 <div key={s.label} className="card-surface text-center">
                   <div className="text-cyan-300 font-bold text-2xl mb-1">{s.value}</div>
@@ -238,12 +236,12 @@ export default function Founder() {
                 </ul>
               </div>
               <div className="p-5 bg-surface border border-gridline rounded-xl">
-                <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Research &amp; publishing</h3>
+                <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Research &amp; Engineering</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>SATI CODEX and the LCL-832/833 corpora</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Developer tools and games on itch.io</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>DJ iD01T: 6 albums, 23 singles (2024 to 2025)</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Advanced custom topologies and QEC corpora</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>High-performance batch simulation pipelines</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Complete workflow reproducibility</span></li>
                 </ul>
               </div>
             </div>

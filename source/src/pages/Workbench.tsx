@@ -54,7 +54,7 @@ export default function Workbench() {
   };
 
   // Decoder coverage against the qector_decoder_v3 backend. The v0.5.3
-  // app ships 16 decoders, all listed below from the release manifest.
+  // app ships 15+ decoders, all listed below from the release manifest.
   const decodersList = [
     { kind: 'hybrid_cascade', type: 'Graphlike', desc: 'Union-Find pre-filter + Blossom/BP-OSD escalation.' },
     { kind: 'fast_union_find', type: 'Graphlike', desc: 'Ultra-fast approximate Union-Find variant.' },
@@ -135,8 +135,8 @@ export default function Workbench() {
   return (
     <>
       <SEO
-        title={`QECTOR Workbench ${WORKBENCH_VERSION} · 56 MCP Tools · 16 Decoders · 10 Code Families`}
-        description={`QECTOR Workbench ${WORKBENCH_VERSION}: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Fully self-contained: no system Python, pip, or internet required.`}
+        title={`QECTOR Workbench ${WORKBENCH_VERSION} · 56 MCP Tools · 15+ Decoders · 10 Code Families`}
+        description={`QECTOR Workbench ${WORKBENCH_VERSION}: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 15+ decoders, 10 code families. Fully self-contained: no system Python, pip, or internet required.`}
       />
 
       {/* Top Notice */}
@@ -164,7 +164,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            16 decoders, 10 quantum code families, visual circuit builder, and a comprehensive MCP server.
+            15+ decoders, 10 quantum code families, visual circuit builder, and a comprehensive MCP server.
             Ships as a portable Windows executable and native Linux packages: each one{' '}
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
@@ -194,7 +194,7 @@ export default function Workbench() {
             {[
               { value: WORKBENCH_VERSION, label: 'Workbench Release' },
               { value: '56', label: 'MCP Server Tools' },
-              { value: '16', label: 'Decoder Algorithms' },
+              { value: '15+', label: 'Decoder Algorithms' },
               { value: '10', label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
@@ -296,7 +296,7 @@ export default function Workbench() {
               <div>
                 <h2 className="text-2xl font-bold">Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  All 16 decoder kinds exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
+                  All 15+ decoder kinds exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -305,7 +305,7 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Workbench {WORKBENCH_VERSION} ships <strong className="text-secondary">16 decoders</strong>; all 16 are listed
+              Workbench {WORKBENCH_VERSION} ships <strong className="text-secondary">15+ decoders</strong>; all 15+ are listed
               below and exposed through the Workbench MCP server in this build.
             </p>
 

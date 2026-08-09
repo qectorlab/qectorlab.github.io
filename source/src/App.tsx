@@ -14,11 +14,13 @@ const Workbench = lazy(() => import('./pages/Workbench'));
 const McpServer = lazy(() => import('./pages/McpServer'));
 
 const Pricing = lazy(() => import('./pages/Pricing'));
+const PricingFR = lazy(() => import('./pages/PricingFR'));
 const Commercial = lazy(() => import('./pages/Commercial'));
 const Contact = lazy(() => import('./pages/Contact'));
 const License = lazy(() => import('./pages/License'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
+const TermsFR = lazy(() => import('./pages/TermsFR'));
 const Refund = lazy(() => import('./pages/Refund'));
 const Founder = lazy(() => import('./pages/Founder'));
 const Evidence = lazy(() => import('./pages/Evidence'));
@@ -43,11 +45,13 @@ export default function App() {
             <Route path="/mcp-server" element={<McpServer />} />
 
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/fr/pricing" element={<PricingFR />} />
             <Route path="/commercial" element={<Commercial />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/license" element={<License />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/fr/terms" element={<TermsFR />} />
             <Route path="/refund" element={<Refund />} />
             <Route path="/guillaume-lessard" element={<Founder />} />
             <Route path="/evidence" element={<Evidence />} />
