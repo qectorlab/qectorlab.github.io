@@ -19,8 +19,9 @@ export default function Docs() {
     });
     });
     return () => { ctx.revert(); };
+  }, []);
 
-  const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const docLinks = [
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },

@@ -45,8 +45,9 @@ export default function Evidence() {
     });
     });
     return () => { ctx.revert(); };
+  }, []);
 
-  const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const filteredReports = REPORTS_DATA.filter(
     (report) => selectedStatus === 'All' || report.status === selectedStatus

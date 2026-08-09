@@ -22,9 +22,9 @@ export default function About() {
     });
     });
     return () => { ctx.revert(); };
+  }, []);
 
-
-  const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   return (
     <>
