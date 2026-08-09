@@ -15,7 +15,7 @@ Keywords: Quantum Error Correction, Surface Code Threshold, MWPM, Union-Find, BP
 ## Table of Contents
 
 1. [Introduction: From Theorems to Throughput](#1-introduction-from-theorems-to-throughput)
-2. [Industrial Architecture: Rust + PyO3 + Rayon + SIMD](#2-industrial-architecture-rust--pyo3--rayon--simd)
+2. [Industrial Architecture: Rust + PyO3 + Rayon + SIMD](#2-industrial-architecture-rust-pyo3-rayon-simd)
 3. [The 15-Backend Comparative Matrix](#3-the-15-backend-comparative-matrix)
 4. [Empirical Benchmarks: Threshold, Latency, Throughput](#4-empirical-benchmarks-threshold-latency-throughput)
   , 4.1 Logical Thresholds $P_L$ vs $p$ , Fig.7
@@ -43,7 +43,7 @@ i.e., a non-trivial logical operator.
 
 `qector-decoder-v3` is engineered around this invariant. Every backend, from exact $O(N_{\text{defects}}^3)$ Blossom to $O(1)$ LookupTable, is required to produce *syndrome-faithful* corrections. This post synthesizes nine preceding theoretical deep-dives into hard numbers and a deployable system.
 
-<a id="2-industrial-architecture-rust--pyo3--rayon--simd"></a>
+<a id="2-industrial-architecture-rust-pyo3-rayon-simd"></a>
 ## 2. Industrial Architecture: Rust + PyO3 + Rayon + SIMD
 
 Unlike research prototypes in Python/NumPy, `qector-decoder-v3` is a Rust-first crate compiled to `cdylib` with `PyO3 0.21` bindings via `maturin`, achieving C-level Python call overhead (<70 ns dispatch through `AutoDecoder`).

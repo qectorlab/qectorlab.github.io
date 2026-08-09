@@ -1026,8 +1026,8 @@ Keywords: Quantum LDPC, BP-OSD, Belief Propagation, Ordered Statistics Decoding,
 2. [Why MWPM and Naive BP Fail on qLDPC](#2-why-mwpm-and-naive-bp-fail-on-qldpc)
 3. [Log-Domain Belief Propagation on Quantum Tanner Graphs](#3-log-domain-belief-propagation-on-quantum-tanner-graphs)
 4. [From Soft Failures to Hard Guarantees: OSD-W Post-Processing](#4-from-soft-failures-to-hard-guarantees-osd-w-post-processing)
-5. [Theorem 4: BP-OSD Syndrome Faithfulness , Proof and Corollaries](#5-theorem-4-bp-osd-syndrome-faithfulness--proof-and-corollaries)
-6. [Industrial Implementation: Exact vs Relay in Rust + AVX-512](#6-industrial-implementation-exact-vs-relay-in-rust--avx-512)
+5. [Theorem 4: BP-OSD Syndrome Faithfulness , Proof and Corollaries](#5-theorem-4-bp-osd-syndrome-faithfulness-proof-and-corollaries)
+6. [Industrial Implementation: Exact vs Relay in Rust + AVX-512](#6-industrial-implementation-exact-vs-relay-in-rust-avx-512)
 7. [Empirical Performance: Threshold Recovery and Latency](#7-empirical-performance-threshold-recovery-and-latency)
 8. [Conclusion](#8-conclusion)
 9. [References](#9-references)
@@ -2073,7 +2073,7 @@ Keywords: Quantum Error Correction, Union-Find Decoder, GPU Acceleration, CUDA, 
 
 1. [Introduction: Why QEC Needs Batch, Not Just Speed](#1-introduction-why-qec-needs-batch-not-just-speed)
 2. [From Microsecond to Nanosecond: The Throughput Hierarchy](#2-from-microsecond-to-nanosecond-the-throughput-hierarchy)
-3. [Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`](#3-kernel-architecture-one-work-item-per-syndrome--uf_decode_batch)
+3. [Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`](#3-kernel-architecture-one-work-item-per-syndrome-uf_decode_batch)
 4. [VRAM Model: Isolated $S_{32}/S_{8}$ State Buffers](#4-vram-model-isolated-s32s8-state-buffers)
 5. [Theorem 6: GPU Bit-Identical Invariance Proof](#5-theorem-6-gpu-bit-identical-invariance-proof)
 6. [Performance Analysis: 48M shots/s and Real-Time Margins](#6-performance-analysis-48m-shotss-and-real-time-margins)
@@ -2407,7 +2407,7 @@ Keywords: Quantum Error Correction, Surface Code Threshold, MWPM, Union-Find, BP
 ## Table of Contents
 
 1. [Introduction: From Theorems to Throughput](#1-introduction-from-theorems-to-throughput)
-2. [Industrial Architecture: Rust + PyO3 + Rayon + SIMD](#2-industrial-architecture-rust--pyo3--rayon--simd)
+2. [Industrial Architecture: Rust + PyO3 + Rayon + SIMD](#2-industrial-architecture-rust-pyo3-rayon-simd)
 3. [The 15-Backend Comparative Matrix](#3-the-15-backend-comparative-matrix)
 4. [Empirical Benchmarks: Threshold, Latency, Throughput](#4-empirical-benchmarks-threshold-latency-throughput)
   , 4.1 Logical Thresholds $P_L$ vs $p$ , Fig.7

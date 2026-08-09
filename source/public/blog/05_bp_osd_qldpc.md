@@ -18,8 +18,8 @@ Keywords: Quantum LDPC, BP-OSD, Belief Propagation, Ordered Statistics Decoding,
 2. [Why MWPM and Naive BP Fail on qLDPC](#2-why-mwpm-and-naive-bp-fail-on-qldpc)
 3. [Log-Domain Belief Propagation on Quantum Tanner Graphs](#3-log-domain-belief-propagation-on-quantum-tanner-graphs)
 4. [From Soft Failures to Hard Guarantees: OSD-W Post-Processing](#4-from-soft-failures-to-hard-guarantees-osd-w-post-processing)
-5. [Theorem 4: BP-OSD Syndrome Faithfulness , Proof and Corollaries](#5-theorem-4-bp-osd-syndrome-faithfulness--proof-and-corollaries)
-6. [Industrial Implementation: Exact vs Relay in Rust + AVX-512](#6-industrial-implementation-exact-vs-relay-in-rust--avx-512)
+5. [Theorem 4: BP-OSD Syndrome Faithfulness , Proof and Corollaries](#5-theorem-4-bp-osd-syndrome-faithfulness-proof-and-corollaries)
+6. [Industrial Implementation: Exact vs Relay in Rust + AVX-512](#6-industrial-implementation-exact-vs-relay-in-rust-avx-512)
 7. [Empirical Performance: Threshold Recovery and Latency](#7-empirical-performance-threshold-recovery-and-latency)
 8. [Conclusion](#8-conclusion)
 9. [References](#9-references)
@@ -135,7 +135,7 @@ For $n=882$, $r\sim 600$, $I_{BP}=20$, $E=n\cdot\bar{d}_v\approx 3500$, BP ~0.08
 Figure: Code-capacity $P_L$ vs $p$ on [[882,24]] lifted-product qLDPC. BP alone floors at $10^{-2}$. OSD-0 removes floor, higher $W$ pushes threshold toward ~7.5% and approaches ML.
 
 
-<a id="5-theorem-4-bp-osd-syndrome-faithfulness--proof-and-corollaries"></a>
+<a id="5-theorem-4-bp-osd-syndrome-faithfulness-proof-and-corollaries"></a>
 ### 5. Theorem 4: BP-OSD Syndrome Faithfulness , Proof and Corollaries
 
 Theorem 4 (BP-OSD Syndrome Faithfulness Proof). *Solving the residual linear system $H_B e_B \equiv s_{\text{eff}} \pmod 2$ over the rank-$r$ basis $B$ guarantees $Hc \equiv s \pmod 2$.*
@@ -163,7 +163,7 @@ Implications:
 Left , runtime scaling per shot vs code length $n$: $O(r^3)$ dominates beyond $n\approx400$, but total stays <10ms for $n=4000$ in Exact mode; Relay+Rayon keeps $O(I_{BP}E)$ sub-ms. Right , posterior reliability histogram: green high-$|\gamma|$ become basis $B$, red low-$|\gamma|$ tail ($W$ columns) are brute-forced in OSD-W, turning BP uncertainty into exact search.
 
 
-<a id="6-industrial-implementation-exact-vs-relay-in-rust--avx-512"></a>
+<a id="6-industrial-implementation-exact-vs-relay-in-rust-avx-512"></a>
 ### 6. Industrial Implementation: Exact vs Relay in Rust + AVX-512
 
 In qector-decoder-v3, `bposd_decoder.rs` compiles to two backends:

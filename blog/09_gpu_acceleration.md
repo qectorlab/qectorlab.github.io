@@ -16,7 +16,7 @@ Keywords: Quantum Error Correction, Union-Find Decoder, GPU Acceleration, CUDA, 
 
 1. [Introduction: Why QEC Needs Batch, Not Just Speed](#1-introduction-why-qec-needs-batch-not-just-speed)
 2. [From Microsecond to Nanosecond: The Throughput Hierarchy](#2-from-microsecond-to-nanosecond-the-throughput-hierarchy)
-3. [Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`](#3-kernel-architecture-one-work-item-per-syndrome--uf_decode_batch)
+3. [Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`](#3-kernel-architecture-one-work-item-per-syndrome-uf_decode_batch)
 4. [VRAM Model: Isolated $S_{32}/S_{8}$ State Buffers](#4-vram-model-isolated-s32s8-state-buffers)
 5. [Theorem 6: GPU Bit-Identical Invariance Proof](#5-theorem-6-gpu-bit-identical-invariance-proof)
 6. [Performance Analysis: 48M shots/s and Real-Time Margins](#6-performance-analysis-48m-shotss-and-real-time-margins)
@@ -92,7 +92,7 @@ Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ fast
 
 *Figure 1: Throughput scaling vs batch size $N$ for rotated surface $d=5$. CPU Rayon saturates at $1.25\times10^7$ due to core count; GPU continues to $4.8\times10^7$ (CUDA) with launch amortization beyond $N=1$k.*
 
-<a id="3-kernel-architecture-one-work-item-per-syndrome--uf_decode_batch"></a>
+<a id="3-kernel-architecture-one-work-item-per-syndrome-uf_decode_batch"></a>
 ## 3. Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`
 
 ### 3.1 Design Axioms
