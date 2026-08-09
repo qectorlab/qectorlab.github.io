@@ -8,6 +8,7 @@ const navLinks = [
   { label: 'Workbench', href: '/workbench' },
   { label: 'MCP Server', href: '/mcp-server' },
   { label: 'Evidence', href: '/evidence' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact', href: '/contact' },
 ];

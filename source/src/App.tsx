@@ -12,6 +12,8 @@ const About = lazy(() => import('./pages/About'));
 const Decoder = lazy(() => import('./pages/Decoder'));
 const Workbench = lazy(() => import('./pages/Workbench'));
 const McpServer = lazy(() => import('./pages/McpServer'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
 
 const Pricing = lazy(() => import('./pages/Pricing'));
 const PricingFR = lazy(() => import('./pages/PricingFR'));
@@ -43,6 +45,8 @@ export default function App() {
             <Route path="/decoder" element={<Decoder />} />
             <Route path="/workbench" element={<Workbench />} />
             <Route path="/mcp-server" element={<McpServer />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
 
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/fr/pricing" element={<PricingFR />} />

@@ -17,6 +17,7 @@
 // should mirror the <SEO> props of the corresponding page component.
 
 import { FAQ_ITEMS } from './faqData';
+import { blogPosts } from './blogData';
 
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
@@ -742,6 +743,25 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         )
     ),
   },
+  {
+    path: '/blog',
+    title: 'Blog · QECTOR',
+    description: 'Deep dives into quantum error correction, surface codes, MWPM, and the architecture of QECTOR.',
+    heading: 'QECTOR Blog',
+    body: page(
+      h1('QECTOR Blog') +
+        blogPosts.map(p => `<a href="/blog/${p.id}">${p.title}</a>`).join('<br/>')
+    ),
+  },
+  ...blogPosts.map((post) => ({
+    path: `/blog/${post.id}`,
+    title: `${post.title} · QECTOR Blog`,
+    description: post.description,
+    heading: post.title,
+    body: page(
+      h1(post.title) + p(post.description)
+    ),
+  })),
 ];
 
 export const PRERENDER_ROUTE_MAP: Record<string, PrerenderRoute> = Object.fromEntries(
