@@ -58,9 +58,10 @@ export default function Home() {
           },
         }
       );
-    });});
+    });
+
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      ctx.revert();
       if (script.parentNode === document.body) document.body.removeChild(script);
     };
   }, []);
