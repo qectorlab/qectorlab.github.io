@@ -138,26 +138,32 @@ export default function NeuralReveal({
     <div ref={containerRef} className={`inline-block ${className}`}>
       <Tag className="font-mono" aria-label={text}>
         <span aria-hidden="true">
-          {displayChars.map((char, i) =>
-            char === ' ' ? (
-              // Keep spaces as real text nodes: an inline-block box containing
-              // only a space renders zero-width and is dropped on copy-paste.
-              ' '
-            ) : (
-              <span
-                key={i}
-                className={`inline-block transition-opacity duration-100 ${
-                  resolved[i] ? 'opacity-100' : 'opacity-70'
-                }`}
-                style={{
-                  color: resolved[i] ? undefined : '#67e8f9',
-                  textShadow: resolved[i] ? undefined : '0 0 8px rgba(103, 232, 249, 0.5)',
-                }}
-              >
-                {char}
+          {text.split(' ').map((word, wordIndex, wordsArr) => {
+            // Find the global character index for the start of this word
+            const startIndex = wordsArr.slice(0, wordIndex).join(' ').length + (wordIndex > 0 ? 1 : 0);
+            return (
+              <span key={wordIndex} className="inline-block whitespace-nowrap">
+                {word.split('').map((char, charIndex) => {
+                  const i = startIndex + charIndex;
+                  return (
+                    <span
+                      key={i}
+                      className={`inline-block transition-opacity duration-100 ${
+                        resolved[i] ? 'opacity-100' : 'opacity-70'
+                      }`}
+                      style={{
+                        color: resolved[i] ? undefined : '#67e8f9',
+                        textShadow: resolved[i] ? undefined : '0 0 8px rgba(103, 232, 249, 0.5)',
+                      }}
+                    >
+                      {displayChars[i]}
+                    </span>
+                  );
+                })}
+                {wordIndex < wordsArr.length - 1 && <span className="inline-block">&nbsp;</span>}
               </span>
-            )
-          )}
+            );
+          })}
         </span>
       </Tag>
     </div>

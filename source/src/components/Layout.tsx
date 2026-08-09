@@ -20,12 +20,9 @@ export default function Layout({ children }: LayoutProps) {
     // land on the new page instead of staying on the old nav position.
     document.getElementById('main-content')?.focus();
     
-    // Clean up old ScrollTriggers from previous routes to prevent memory leaks
-    // and calculation errors on the new page layout.
-    ScrollTrigger.getAll().forEach(t => t.kill());
-
     // Global reveal animation for top-tier aesthetics, robust against Suspense lazy loading
     let observer: MutationObserver | null = null;
+    let ctx = gsap.context(() => {});
     
     const animateNodes = () => {
       let added = false;
@@ -33,17 +30,19 @@ export default function Layout({ children }: LayoutProps) {
       elements.forEach((el) => {
         added = true;
         el.classList.add('gsap-revealed');
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: 'power2.out',
-            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-          }
-        );
+        ctx.add(() => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: 'power2.out',
+              scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+            }
+          );
+        });
       });
       if (added) {
         // Force GSAP to recalculate positions now that new elements are in the DOM
@@ -62,7 +61,7 @@ export default function Layout({ children }: LayoutProps) {
 
     return () => {
       if (observer) observer.disconnect();
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      ctx.revert(); // Only revert animations created by Layout
     };
   }, [location.pathname]);
 
