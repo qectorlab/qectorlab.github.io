@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
+import rehypeSlug from 'rehype-slug';
 import { blogPosts } from '../lib/blogData';
 import { ArrowLeft, Calendar, Loader2 } from 'lucide-react';
 import Navigation from '../components/Navigation';
@@ -107,7 +108,7 @@ export default function BlogPost() {
               <article className="prose prose-invert prose-emerald max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-code:text-emerald-300 prose-code:bg-emerald-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-pre:bg-slate-950/80 prose-pre:border prose-pre:border-slate-800 prose-img:rounded-xl prose-img:border prose-img:border-slate-800">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm, remarkMath]} 
-                  rehypePlugins={[rehypeKatex, rehypeRaw]}
+                  rehypePlugins={[rehypeKatex, rehypeRaw, rehypeSlug]}
                   components={{
                     img: ({node, ...props}) => {
                       // Fix local image paths from markdown so they point to the correct public path
