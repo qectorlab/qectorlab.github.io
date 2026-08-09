@@ -33,6 +33,7 @@ export default function AnimatedPage({ children, className = '' }: { children: R
     return () => {
       ctx.revert();
     };
+  }, []);
 
 
   return (

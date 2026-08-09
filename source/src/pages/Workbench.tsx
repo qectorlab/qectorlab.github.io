@@ -46,6 +46,7 @@ export default function Workbench() {
     return () => {
       ctx.revert();
     };
+  }, []);
 
 
   const addRef = (el: HTMLDivElement | null, index: number) => {
