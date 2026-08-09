@@ -43,8 +43,9 @@ export default function Evidence() {
         scrollTrigger: { trigger: section, start: 'top 85%', once: true },
       });
     });
+    });
     return () => { ctx.revert(); };
-  }, []);
+
   const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const filteredReports = REPORTS_DATA.filter(

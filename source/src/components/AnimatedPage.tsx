@@ -33,7 +33,7 @@ export default function AnimatedPage({ children, className = '' }: { children: R
     return () => {
       ctx.revert();
     };
-  }, []);
+
 
   return (
     <div ref={containerRef} className={`animated-page-wrapper ${className}`}>

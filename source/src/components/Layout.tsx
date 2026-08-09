@@ -16,42 +16,39 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Move focus to main content on route change so screen reader users
+    // land on the new page instead of staying on the old nav position.
     document.getElementById('main-content')?.focus();
     
-    // We must NOT use ScrollTrigger.getAll().forEach(t => t.kill()) here because
-    // it will instantly kill all scroll triggers created by child components (like Home.tsx)
-    // since the parent Layout's useEffect runs *after* the children's useEffects.
-    // Instead, we use gsap.context to properly scope and clean up only Layout's animations.
-    let ctx = gsap.context(() => {});
+    // Clean up old ScrollTriggers from previous routes to prevent memory leaks
+    // and calculation errors on the new page layout.
+    ScrollTrigger.getAll().forEach(t => t.kill());
+
+    // Global reveal animation for top-tier aesthetics, robust against Suspense lazy loading
     let observer: MutationObserver | null = null;
     
     const animateNodes = () => {
       let added = false;
       const elements = document.querySelectorAll('.card-surface:not(.gsap-revealed), .prose:not(.gsap-revealed)');
-      
-      if (elements.length === 0) return;
-
-      ctx.add(() => {
-        elements.forEach((el) => {
-          added = true;
-          el.classList.add('gsap-revealed');
-          gsap.fromTo(
-            el,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: 'power2.out',
-              scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-            }
-          );
-        });
-        
-        if (added) {
-          ScrollTrigger.refresh();
-        }
+      elements.forEach((el) => {
+        added = true;
+        el.classList.add('gsap-revealed');
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          }
+        );
       });
+      if (added) {
+        // Force GSAP to recalculate positions now that new elements are in the DOM
+        ScrollTrigger.refresh();
+      }
     };
 
     observer = new MutationObserver((mutations) => {
@@ -65,7 +62,7 @@ export default function Layout({ children }: LayoutProps) {
 
     return () => {
       if (observer) observer.disconnect();
-      ctx.revert(); // Automatically kills all GSAP tweens/triggers created inside this context
+      ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [location.pathname]);
 

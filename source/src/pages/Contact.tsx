@@ -21,8 +21,9 @@ export default function Contact() {
         scrollTrigger: { trigger: section, start: 'top 85%', once: true },
       });
     });
+    });
     return () => { ctx.revert(); };
-  }, []);
+
   const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

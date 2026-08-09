@@ -17,8 +17,9 @@ export default function Docs() {
         scrollTrigger: { trigger: section, start: 'top 85%', once: true },
       });
     });
+    });
     return () => { ctx.revert(); };
-  }, []);
+
   const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const docLinks = [
