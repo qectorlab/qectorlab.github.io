@@ -32,6 +32,7 @@ const includedItems = [
 export default function Pricing() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
+    let ctx = gsap.context(() => {
     const script = document.createElement('script');
     script.src = 'https://js.stripe.com/v3/buy-button.js';
     script.async = true;
@@ -45,7 +46,7 @@ export default function Pricing() {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      ctx.revert();
       if (script.parentNode === document.body) document.body.removeChild(script);
     };
   }, []);

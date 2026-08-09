@@ -12,6 +12,7 @@ export default function About() {
   const { version: pypiVersion } = usePyPIVersion();
 
   useEffect(() => {
+    let ctx = gsap.context(() => {
     const sections = sectionsRef.current.filter(Boolean);
     sections.forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
@@ -19,7 +20,7 @@ export default function About() {
         scrollTrigger: { trigger: section, start: 'top 85%', once: true },
       });
     });
-    return () => { ScrollTrigger.getAll().forEach((st) => st.kill()); };
+    return () => { ctx.revert(); };
   }, []);
 
   const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };

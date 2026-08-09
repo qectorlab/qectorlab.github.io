@@ -8,6 +8,7 @@ export default function AnimatedPage({ children, className = '' }: { children: R
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ctx = gsap.context(() => {
     if (!containerRef.current) return;
     
     // Select all major sections or cards to animate
@@ -27,8 +28,10 @@ export default function AnimatedPage({ children, className = '' }: { children: R
       );
     });
 
+    });
+
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      ctx.revert();
     };
   }, []);
 

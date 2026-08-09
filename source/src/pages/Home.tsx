@@ -40,27 +40,31 @@ export default function Home() {
     script.async = true;
     document.body.appendChild(script);
 
+    let ctx = gsap.context(() => {});
     const sections = sectionsRef.current.filter(Boolean);
-    sections.forEach((section) => {
-      gsap.fromTo(
-        section,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 85%',
-            once: true,
-          },
-        }
-      );
+    
+    ctx.add(() => {
+      sections.forEach((section) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 85%',
+              once: true,
+            },
+          }
+        );
+      });
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      ctx.revert();
       if (script.parentNode === document.body) document.body.removeChild(script);
     };
   }, []);

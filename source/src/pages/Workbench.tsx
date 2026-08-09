@@ -27,6 +27,7 @@ export default function Workbench() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
+    let ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(
         section,
@@ -40,8 +41,10 @@ export default function Workbench() {
         }
       );
     });
+    });
+
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      ctx.revert();
     };
   }, []);
 
