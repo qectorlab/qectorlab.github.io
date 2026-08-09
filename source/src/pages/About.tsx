@@ -123,8 +123,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>CSS stabilizer codes: surface codes, LDPC, qLDPC</li>
                   <li>MWPM (Blossom), Belief-Matching, BP-OSD decoding</li>
-                  <li>Advanced Custom Topologies: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface, with IBM Quantum operational verification on ibm_fez</li>
-                  <li>Titan-Class Environments: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC targeting IBM hardware</li>
+                  <li>Advanced Custom Topologies: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface</li>
+                  <li>Titan-Class Environments: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC</li>
                   <li>Reproducible provenance and SHA-256 sealed artifacts on GitHub</li>
                   <li>Monte Carlo FSS threshold analysis, Z₁₂ monodromy algebra, Jones polynomial verification</li>
                 </ul>
@@ -147,7 +147,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                   <li>Reproducibility first: every claim ships with verifiable artifacts</li>
                   <li>Honest documentation: Decoder is Source-Available (not free); Workbench GUI app is free</li>
                   <li>Simulation-validated before any public claim</li>
-                  <li>Full provenance trail: SHA-256 bundles, IBM job IDs</li>
+                  <li>Full provenance trail: SHA-256 bundles</li>
                   <li>No vendor lock-in: pluggable CodeProvider architecture</li>
                   <li>Transparent validation reports with non-pass classification</li>
                 </ul>
@@ -169,7 +169,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               <div className="space-y-4">
                 {[
                   { year: '2024', event: 'iD01t Productions established. Initial QEC research begins: CSS codes, surface code simulation with Stim, MWPM validation against PyMatching.' },
-                  { year: '2025 Q1', event: 'Advanced topological framework developed: [[832,10,4]] CSS code on genus-5 surface. IBM Quantum hardware runs on ibm_fez. Artifacts on GitHub.' },
+                  { year: '2025 Q1', event: 'Advanced topological framework developed: [[832,10,4]] CSS code on genus-5 surface. Artifacts on GitHub.' },
                   { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated.' },
                   { year: '2025 Q3', event: 'Titan-Class [[72,12,6]] BB QLDPC code environment validation. OpenCL and CUDA GPU backends added to the batch decoding pipeline.' },
                   { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI.` },
@@ -189,7 +189,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h3 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h3>
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
-              No universal benchmark figures are published on this site, because results depend on your hardware; the qector bench harness ships with the package so you can measure on your own machines. The decoder reached its first stable release on 2026-08-06 (v1.0.0). IBM hardware runs are real but limited in scope.
+              No universal benchmark figures are published on this site, because results depend on your hardware; the qector bench harness ships with the package so you can measure on your own machines. The decoder reached its first stable release on 2026-08-06 (v1.0.0).
               QECTOR Decoder is Source-Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
               Documented behavior is what ships.
             </p>

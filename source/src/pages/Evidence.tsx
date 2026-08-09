@@ -26,8 +26,8 @@ const REPORTS_DATA = [
     status: 'Verified',
   },
   {
-    title: 'IBM Hardware Execution Log',
-    desc: 'Real IBM Quantum hardware results: GHZ entanglement (F=0.874 at 7q), repetition-code suppression (Λ~2.5-3.5), job IDs and timestamp proofs.',
+    title: 'Offline Execution Log',
+    desc: 'Offline simulated results: GHZ entanglement (F=0.874 at 7q), repetition-code suppression (Λ~2.5-3.5), and timestamp proofs.',
     status: 'Hardware',
   },
 ];
@@ -65,14 +65,14 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Verified v1.0.0 Manual · SHA-256 Sealed Manifests · IBM Hardware Job IDs
+            Verified v1.0.0 Manual · SHA-256 Sealed Manifests
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Every public claim is backed by a verifiable artifact: validation reports, SHA-256 sealed manifests,
-            and IBM hardware job IDs, all archived on GitHub.
+            archived on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>

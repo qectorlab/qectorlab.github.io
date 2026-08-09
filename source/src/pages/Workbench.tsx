@@ -80,10 +80,10 @@ export default function Workbench() {
     { name: 'rotated_surface', params: 'distance (int)', decoders: '16 / 16', desc: 'Standard rotated surface code.' },
     { name: 'unrotated_surface', params: 'distance (int)', decoders: '15 / 16', desc: 'Square lattice surface code (lookup_table refused >20 checks).' },
     { name: 'toric', params: 'distance (int)', decoders: '15 / 16', desc: 'Toric code with periodic boundaries.' },
-    { name: 'heavy_hex', params: 'distance (int)', decoders: '16 / 16', desc: 'IBM heavy-hex lattice.' },
+    { name: 'heavy_hex', params: 'distance (int)', decoders: '16 / 16', desc: 'Heavy-hex lattice.' },
     { name: 'hypergraph_product', params: 'distance (int)', decoders: '16 / 16', desc: 'CSS code from repetition seed.' },
     { name: 'bicycle', params: 'circulant size (int)', decoders: '16 / 16', desc: 'qLDPC bicycle code.' },
-    { name: 'bivariate_bicycle', params: 'preset index (int)', decoders: '13 / 16', desc: 'IBM bivariate bicycle presets (qLDPC).' },
+    { name: 'bivariate_bicycle', params: 'preset index (int)', decoders: '13 / 16', desc: 'Bivariate bicycle presets (qLDPC).' },
     { name: 'color_code', params: 'triangular size (int)', decoders: '5 / 16', desc: 'Triangular & 2D 4.8.8 colour codes.' },
   ];
 

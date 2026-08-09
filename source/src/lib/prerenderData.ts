@@ -156,7 +156,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           `PyPI package: <a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3 ${DECODER_VERSION}</a>`,
           `Artifacts and reproduction harness: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
-          'Validation reports, SHA-256 sealed manifests, and IBM hardware job IDs, archived with the decoder source on GitHub.',
+          'Validation reports and SHA-256 sealed manifests, archived with the decoder source on GitHub.',
         ])
     ),
     jsonLdExtra: [
@@ -215,13 +215,13 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Evidence & Reports') +
         p(
-          'Every public claim is backed by a verifiable artifact: validation reports, SHA-256 sealed manifests, and IBM hardware job IDs, all archived with the decoder source on GitHub.'
+          'Every public claim is backed by a verifiable artifact: validation reports and SHA-256 sealed manifests, all archived with the decoder source on GitHub.'
         ) +
         h2('Evidence artifacts') +
         ul([
           'Official v1.0.0 user manual and extended reference (2026-08-06, DOI 10.5281/zenodo.21363016), distributed with qector-decoder-v3==1.0.0.',
           'Syndromic validation: decode runs verify H·c = s on every shot through the self-debugging harness.',
-          'SHA-256 sealed artifact manifests and IBM hardware job IDs archived on GitHub.',
+          'SHA-256 sealed artifact manifests archived on GitHub.',
         ]) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"\n\ngit clone ${GITHUB_URL}`
@@ -230,7 +230,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [
       techArticleNode(
         'QECTOR Evidence & Validation Reports',
-        'Official v1.0.0 user manual (DOI 10.5281/zenodo.21363016), SHA-256 sealed validation artifacts, and IBM hardware job IDs.'
+        'Official v1.0.0 user manual (DOI 10.5281/zenodo.21363016) and SHA-256 sealed validation artifacts.'
       ),
     ],
   },
@@ -265,10 +265,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'rotated_surface: Standard rotated surface code.',
           'unrotated_surface: Square lattice surface code.',
           'toric: Toric code with periodic boundaries.',
-          'heavy_hex: IBM heavy-hex lattice.',
+          'heavy_hex: heavy-hex lattice.',
           'hypergraph_product: CSS code from repetition seed.',
           'bicycle: qLDPC bicycle code.',
-          'bivariate_bicycle: IBM bivariate bicycle presets (qLDPC).',
+          'bivariate_bicycle: bivariate bicycle presets (qLDPC).',
           'color_code: triangular colour code.',
         ]) +
         h2('Performance measurement') +
@@ -354,7 +354,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           'Custom scope: seats, sites, subsidiaries, and redistribution rights.',
           'Priority support with response SLAs and integration guidance.',
-          'IBM Quantum hardware evaluation pathway under commercial pilot.',
           'Academic institutions: 40% discount on annual tiers.',
         ]) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> or see <a href="/pricing" style="color:#67e8f9;">pricing</a>.')
@@ -470,7 +469,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         ul([
           'No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. v1.0.0 (2026-08-06) is the first stable release of the decoder.',
-          'IBM Quantum hardware runs are real but limited in scope; job IDs are published with the evidence.',
           'SATI CODEX / LCL-833 theoretical work is research context: the shipping product is the decoder and its workbench.',
         ]) +
         p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
