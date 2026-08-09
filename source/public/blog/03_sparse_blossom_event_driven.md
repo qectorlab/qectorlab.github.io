@@ -1,19 +1,17 @@
 # Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
 
-**Author:** Guillaume Lessard — qector.store / iD01t Productions (Longueuil, QC, Canada)  
-**Series:** qector-decoder-v3 Deep Dive — Post 3 of N  
-**Version:** v1.0.0 — August 2026  
-**Engine:** Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing, AVX-512 SIMD
+Author: Guillaume Lessard — qector.store / iD01t Productions (Longueuil, QC, Canada)  
+Series: qector-decoder-v3 Deep Dive — Post 3 of N  
+Version: v1.0.0 — August 2026  
+Engine: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing, AVX-512 SIMD
 
----
 
 ### Abstract
 
-Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the **SparseBlossomDecoder** backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50× reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
+Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50× reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
 
-**Keywords:** Sparse Blossom, MWPM, Quantum Error Correction, Surface Code, Edmonds' Algorithm, Dual Variables, Event-Driven Decoding, Radix Heap, O(E log V), Region Growth, qector-decoder-v3
+Keywords: Sparse Blossom, MWPM, Quantum Error Correction, Surface Code, Edmonds' Algorithm, Dual Variables, Event-Driven Decoding, Radix Heap, O(E log V), Region Growth, qector-decoder-v3
 
----
 
 ### Table of Contents
 
@@ -28,13 +26,12 @@ Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphli
 9. [Conclusion](#9-conclusion)
 10. [References](#10-references)
 
----
 
 ### 1. Introduction: From Dense Blossom to Sparse Events
 
 Edmonds' 1965 Blossom algorithm solved MWPM in polynomial time, but its canonical implementations maintain a dense $N \times N$ distance matrix. For quantum LDPC and surface codes, the underlying decoding graph is geometric: defects live in 2D or 3D space, and physical error rates $p \sim 0.5-1\%$ imply that only short edges ever participate in an optimal matching. Tracking all $\binom{N}{2}$ edges is wasteful.
 
-Sparse Blossom, formalized recently by Higgott, Gidney et al. and re-engineered in qector-decoder-v3's `sparse_blossom.rs`, flips the perspective: **grow regions from defects at unit speed, detect when regions collide, and explore only edges that become tight**. The decoder never builds the complete graph. Instead it maintains a priority queue of future collision events, shrinking and freezing blossoms via a three-state automaton.
+Sparse Blossom, formalized recently by Higgott, Gidney et al. and re-engineered in qector-decoder-v3's `sparse_blossom.rs`, flips the perspective: grow regions from defects at unit speed, detect when regions collide, and explore only edges that become tight. The decoder never builds the complete graph. Instead it maintains a priority queue of future collision events, shrinking and freezing blossoms via a three-state automaton.
 
 In the qector-decoder-v3 matrix, this backend fills a critical niche: exact MWPM accuracy (threshold ~1.03% vs. BlossomDecoder's identical optimum) with near Union-Find speed for low-$p$ regimes. It is the escalation target of CascadeDecoder and the workhorse for rotated surface and toric topologies.
 
@@ -44,20 +41,20 @@ In the qector-decoder-v3 matrix, this backend fills a critical niche: exact MWPM
 
 Let $G=(V_G, E_G, w)$ be the model graph (detector graph) with log-likelihood weights $w_e = -\ln(p_e/(1-p_e))$. Given syndrome $s$, the defect set $D = \{v: s_v=1\}$ has even cardinality. We seek MWPM on the complete graph $K_D$ where $w_{uv}= \text{dist}_G(u,v)$ is the shortest path distance in $G$.
 
-**Primal (Matching) LP relaxation:**
+Primal (Matching) LP relaxation:
 $$\min \sum_{e\in K_D} w_e x_e \quad \text{s.t. } \sum_{e\in \delta(v)} x_e =1\ \forall v\in D,\quad \sum_{e\in \delta(S)} x_e \ge 1\ \forall S\subset D\text{ odd},\ x_e\ge0$$
 
-**Dual LP (Edmonds):**
+Dual LP (Edmonds):
 $$\max \sum_{v\in D} y_v + \sum_{B\in \mathcal{B}} z_B \quad \text{s.t. } y_u+y_v + \sum_{B: u,v\in B} z_B \le w_{uv}\ \forall uv,\quad z_B \ge 0$$
 
-where $\mathcal{B}$ is the set of odd-cardinality blossoms (nested regions). The dual variables define **regions**: each node $v$ has radius $y_v$, each blossom $B$ has additive radius $z_B$ shared by its nodes. Define the **region radius** of a top-level node set $R$:
+where $\mathcal{B}$ is the set of odd-cardinality blossoms (nested regions). The dual variables define regions: each node $v$ has radius $y_v$, each blossom $B$ has additive radius $z_B$ shared by its nodes. Define the region radius of a top-level node set $R$:
 
 $$y_R = \sum_{v\in R} y_v + \sum_{B\supseteq R} z_B$$
 
-An edge $uv$ is **tight** iff its dual inequality is tight:
+An edge $uv$ is tight iff its dual inequality is tight:
 $$y_u + y_v + \sum_{B\ni u,v} z_B = w_{uv}$$
 
-**Key Theorem (Complementary Slackness):** If $x$ matches only tight edges and all $z_B>0$ correspond to blossoms tight with $|\delta(B)\cap M|=1$, then $x$ is optimal.
+Key Theorem (Complementary Slackness): If $x$ matches only tight edges and all $z_B>0$ correspond to blossoms tight with $|\delta(B)\cap M|=1$, then $x$ is optimal.
 
 Sparse Blossom maintains these radii implicitly via sweepline time $t$.
 
@@ -67,13 +64,13 @@ Unlike dense implementations that update all duals in alternating tree phases, s
 
 $$ \frac{dy_R}{dt} = \begin{cases} +1 & R \in \text{Growing} \quad (\text{outer node / unmatched}) \\ 0 & R \in \text{Frozen} \quad (\text{matched, or even blossom shell}) \\ -1 & R \in \text{Shrinking} \quad (\text{inner blossom}) \end{cases} \tag{1} $$
 
-**State machine:**
+State machine:
 
-- **Growing:** All unmatched regions start growing from $y_R=0$. When a tight edge connects two Growing regions, they become matched and both transition to Frozen. When a Growing region collides with a Frozen region, it triggers an alternating tree growth; the Frozen becomes matched temporarily and the colliding edge becomes a tree edge.
+- Growing: All unmatched regions start growing from $y_R=0$. When a tight edge connects two Growing regions, they become matched and both transition to Frozen. When a Growing region collides with a Frozen region, it triggers an alternating tree growth; the Frozen becomes matched temporarily and the colliding edge becomes a tree edge.
   
-- **Frozen:** Matched regions remain $dy/dt=0$. Their radius is held constant, preserving tightness of the matched edge incident to them. If a blossom is formed, outer shell remains Frozen after formation?
+- Frozen: Matched regions remain $dy/dt=0$. Their radius is held constant, preserving tightness of the matched edge incident to them. If a blossom is formed, outer shell remains Frozen after formation?
 
-- **Shrinking:** When a blossom is formed from an odd cycle of tight edges, its constituent regions are partitioned into outer and inner. Outer blossom continues Growing, inner regions Shrink at $-1$, keeping the blossom's total internal dual sum $z_B$ increasing while internal tight edges stay tight. This corresponds to Edmonds' dual update where $z_B$ grows.
+- Shrinking: When a blossom is formed from an odd cycle of tight edges, its constituent regions are partitioned into outer and inner. Outer blossom continues Growing, inner regions Shrink at $-1$, keeping the blossom's total internal dual sum $z_B$ increasing while internal tight edges stay tight. This corresponds to Edmonds' dual update where $z_B$ grows.
 
 Formally, for a blossom $B$ formed at time $t_B$ containing regions $\{R_i\}$, we maintain invariant:
 
@@ -81,7 +78,7 @@ $$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\tex
 
 ensuring that for any internal tight edge $uv$ inside $B$, $y_u(t)+y_v(t)=w_{uv}$ is preserved because outer +1 and inner -1 cancel.
 
-**Theorem 1 (Region Growth Invariant).** Let $\mathcal{R}(t)$ be set of active regions at time $t$ obeying (1). If all tight edges are tracked and no dual constraint is violated for $t'<t$, then the dual solution $y(t)$ remains feasible for all $t$.
+Theorem 1 (Region Growth Invariant). Let $\mathcal{R}(t)$ be set of active regions at time $t$ obeying (1). If all tight edges are tracked and no dual constraint is violated for $t'<t$, then the dual solution $y(t)$ remains feasible for all $t$.
 
 *Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt - dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
 
@@ -107,11 +104,11 @@ $$ t^*_{uv} = t + \frac{w_{uv}-(y_u+y_v)}{dy_u/dt + dy_v/dt},\quad \text{if deno
 
 If denominator $\le0$, regions separating or parallel: no future collision.
 
-**Event-Driven Philosophy:** Equation (2) turns matching into a kinetic data structure. Initially, $y_u=y_v=0$, so $t^*=w_{uv}/2$. We compute $t^*$ only for **adjacent** edges in $G$ expanded via Dijkstra frontier; not all $\binom{N}{2}$. As regions grow, their Dijkstra search frontiers meet, generating new candidate $t^*$ events into the priority queue.
+Event-Driven Philosophy: Equation (2) turns matching into a kinetic data structure. Initially, $y_u=y_v=0$, so $t^*=w_{uv}/2$. We compute $t^*$ only for adjacent edges in $G$ expanded via Dijkstra frontier; not all $\binom{N}{2}$. As regions grow, their Dijkstra search frontiers meet, generating new candidate $t^*$ events into the priority queue.
 
 When $t^*$ is popped, edge $uv$ becomes tight. The decoder attempts to augment, grow alternating trees, or form blossoms on the subgraph $G_{tight}=(D,E_{tight})$.
 
-**Theorem 2 (Tight-Edge Sparsity Optimality).** Let $E_{tight}(t)=\{uv: y_u(t)+y_v(t)=w_{uv}\}$. Any MWPM at time $t$ can be chosen inside $E_{tight}(t)$. Exploring only edges with $t^* \le t$ is sufficient.
+Theorem 2 (Tight-Edge Sparsity Optimality). Let $E_{tight}(t)=\{uv: y_u(t)+y_v(t)=w_{uv}\}$. Any MWPM at time $t$ can be chosen inside $E_{tight}(t)$. Exploring only edges with $t^* \le t$ is sufficient.
 
 *Proof.* By complementary slackness, optimal primal uses only tight edges. Any edge not yet tight has $y_u+y_v<w_{uv}$ and cannot be in any optimal matching for current dual feasible solution. When edge becomes tight exactly at its $t^*$, it enters candidate set. Thus scanning collision events in order enumerates $E_{tight}$ in inclusion order. ∎
 
@@ -123,9 +120,9 @@ Practical sparsity is dramatic: at $d=15$, $p=1\%$, $|E_{tight}|/|E_{complete}| 
 
 Naive event queue: binary heap, $O(\log Q)$ per pop/insert, $Q=O(E)$. Total $O(E\log V)$. But edge weights in QEC are integerized log-likelihoods (scaled to e.g., $u64$ via $\lfloor K\cdot w\rfloor$). qector-decoder-v3 quantizes to 32-bit fixed-point $w^{q}_{uv} \in [0, C]$, $C\le 2^{20}$ typically.
 
-This enables a **radix heap** (Thorup/Ahuja): buckets by most significant set bit of key difference to last popped min. For integer keys, operations are $O(1)$ amortized with $O(\log C)$ worst-case, yielding overall $O(E + V\log C)$.
+This enables a radix heap (Thorup/Ahuja): buckets by most significant set bit of key difference to last popped min. For integer keys, operations are $O(1)$ amortized with $O(\log C)$ worst-case, yielding overall $O(E + V\log C)$.
 
-**Theorem 3 (Sparse Blossom Complexity).** For decoding graph $G$ with $V$ defects, $E_{adj}$ underlying adjacency edges expanded, sparse blossom runs in:
+Theorem 3 (Sparse Blossom Complexity). For decoding graph $G$ with $V$ defects, $E_{adj}$ underlying adjacency edges expanded, sparse blossom runs in:
 
 $$T_{sparse}=O(E_{adj}\log V_G + E_{tight}\log V_D)$$
 
@@ -156,7 +153,7 @@ $$ \frac{d}{dt}(y_{outer}+y_{inner}) = 0 $$
 
 so internal tight edges remain tight.
 
-**Theorem 4 (Sparse Blossom Correctness).** The event-driven algorithm with states $\{Growing,Frozen,Shrinking\}$ and collision rule (2) returns a minimum-weight perfect matching on $K_D$.
+Theorem 4 (Sparse Blossom Correctness). The event-driven algorithm with states $\{Growing,Frozen,Shrinking\}$ and collision rule (2) returns a minimum-weight perfect matching on $K_D$.
 
 *Proof.* Show sequence of events coincides with some execution order of Edmonds' dense algorithm restricted to tight edges. The region states encode alternating tree labels: Growing = outer labelled, Frozen = matched/unlabelled, Shrinking = inner. Dual updates of dense algorithm are exactly unit growth of outer vs inner. Since sparse processes tight edges in increasing $t^*$ order, it discovers same augmenting paths and blossoms. By Theorem 2, no optimal edge is missed. Termination yields perfect matching with tight dual feasible, hence optimal by LP duality. ∎
 
@@ -164,11 +161,11 @@ so internal tight edges remain tight.
 
 `SparseBlossomDecoder` in qector-decoder-v3 v1.0.0 is written in Rust (`sparse_blossom.rs`), ~3.2k LOC:
 
-- **Data Layout:** Struct-of-Arrays for cache friendliness; `Region { y: u32, state: i8, parent, blossom_parent, ... }` aligned to 64 bytes for AVX-512.
-- **Event Queue:** Custom `RadixHeap<u32>` with 64 buckets, inline unrolled loops, AVX2-optimized min-bucket scan. Fallback to binary heap if weights non-integerized (detected via doctor.py).
-- **Dijkstra Forest:** Multi-source growth uses `BinaryHeap` for model graph $G$, but limited to expanding regions—not all-pairs. Uses adjacency bitmask prefetch.
-- **Threading:** Not intra-shot parallel (matching is sequential), but inter-shot via Rayon work-stealing in `CUDABatch`? Actually sparse batch uses Rayon 16-core, each core decodes independent syndrome, achieving ~1.2e6 shots/s at $d=7$ $p=1\%$.
-- **Faithfulness Guarantee:** Post-match, syndrome faithfulness $Hc ≡ s \ (\text{mod }2)$ checked, correction validity $c⊕e∈Ker(H)$ asserted in debug builds, logical error detection $c⊕e∈Ker(H)\setminus Im(H^T)$ tracked for Monte Carlo.
+- Data Layout: Struct-of-Arrays for cache friendliness; `Region { y: u32, state: i8, parent, blossom_parent, ... }` aligned to 64 bytes for AVX-512.
+- Event Queue: Custom `RadixHeap<u32>` with 64 buckets, inline unrolled loops, AVX2-optimized min-bucket scan. Fallback to binary heap if weights non-integerized (detected via doctor.py).
+- Dijkstra Forest: Multi-source growth uses `BinaryHeap` for model graph $G$, but limited to expanding regions—not all-pairs. Uses adjacency bitmask prefetch.
+- Threading: Not intra-shot parallel (matching is sequential), but inter-shot via Rayon work-stealing in `CUDABatch`? Actually sparse batch uses Rayon 16-core, each core decodes independent syndrome, achieving ~1.2e6 shots/s at $d=7$ $p=1\%$.
+- Faithfulness Guarantee: Post-match, syndrome faithfulness $Hc ≡ s \ (\text{mod }2)$ checked, correction validity $c⊕e∈Ker(H)$ asserted in debug builds, logical error detection $c⊕e∈Ker(H)\setminus Im(H^T)$ tracked for Monte Carlo.
 
 Integration with `qector-doctor doctor.py`: verifies wheel hash sync, GPU/license tier for enterprise batch, and AVX-512 availability for radix heap vectorization.
 
@@ -190,7 +187,6 @@ In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap
 
 Next in series: Post 4 — FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 
----
 
 ### 10. References
 

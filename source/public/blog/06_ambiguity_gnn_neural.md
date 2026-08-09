@@ -1,18 +1,16 @@
 # Ambiguity Clustering, GNN MPNN and Neural Predecoder — AI-Augmented QEC in qector-decoder-v3
 
-**Author:** Guillaume Lessard, iD01t Productions — [qector.store](https://qector.store)  
-**Version:** qector-decoder-v3 v1.0.0 (Aug 2026, Longueuil, QC)  
-**Series:** Post 6 / 12 - Deep Dive into Industrial-Grade QEC Decoding
+Author: Guillaume Lessard, iD01t Productions — [qector.store](https://qector.store)  
+Version: qector-decoder-v3 v1.0.0 (Aug 2026, Longueuil, QC)  
+Series: Post 6 / 12 - Deep Dive into Industrial-Grade QEC Decoding
 
----
 
 ### Abstract
 
-Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycles and degeneracy create non-convergent marginals that OSD must rescue globally at $O(r^3)$ cost. In this post we dissect the AI-augmented remedy implemented in `qector-decoder-v3`: **AmbiguityClusterDecoder**, **GNNPredecoder** (3-layer MPNN) and **NeuralPredecoder** (3-layer MLP). We formalize the reliability partition $|\gamma_q| < \tau$, the residual syndrome projection $s_{\text{res}} = s \oplus H e_{\text{reliable}}$, prove Theorem 5 on global syndrome faithfulness, derive the MPNN edge-weight readout $w_{uv} = \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and show how a Leaky-ReLU MLP pre-filter enables the CascadeDecoder to achieve ~85k dec/s with preserved BP-OSD accuracy. On bivariate bicycle [[144,12,12]] codes we recover ~30% threshold, from 0.72% to 0.94%, while dropping mean cluster enumeration from $2^n$ to $\sum_i 2^{k_i}$ with $k_i \le 6$ at $p=1\%$. The engine is Rust + PyO3 C-extensions, Rayon lock-free work-stealing, AVX-512 SIMD, and bit-identical CUDA batching at $>4.7\times10^7$ shots/s.
+Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycles and degeneracy create non-convergent marginals that OSD must rescue globally at $O(r^3)$ cost. In this post we dissect the AI-augmented remedy implemented in `qector-decoder-v3`: AmbiguityClusterDecoder, GNNPredecoder (3-layer MPNN) and NeuralPredecoder (3-layer MLP). We formalize the reliability partition $|\gamma_q| < \tau$, the residual syndrome projection $s_{\text{res}} = s \oplus H e_{\text{reliable}}$, prove Theorem 5 on global syndrome faithfulness, derive the MPNN edge-weight readout $w_{uv} = \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and show how a Leaky-ReLU MLP pre-filter enables the CascadeDecoder to achieve ~85k dec/s with preserved BP-OSD accuracy. On bivariate bicycle [[144,12,12]] codes we recover ~30% threshold, from 0.72% to 0.94%, while dropping mean cluster enumeration from $2^n$ to $\sum_i 2^{k_i}$ with $k_i \le 6$ at $p=1\%$. The engine is Rust + PyO3 C-extensions, Rayon lock-free work-stealing, AVX-512 SIMD, and bit-identical CUDA batching at $>4.7\times10^7$ shots/s.
 
-**Keywords:** Quantum LDPC, BP-OSD, Ambiguity Clustering, Graph Neural Network, MPNN, Neural Predecoder, Syndrome Faithfulness, qLDPC Decoder, qector-decoder-v3
+Keywords: Quantum LDPC, BP-OSD, Ambiguity Clustering, Graph Neural Network, MPNN, Neural Predecoder, Syndrome Faithfulness, qLDPC Decoder, qector-decoder-v3
 
----
 
 ### Table of Contents
 1. [Introduction: Why BP Needs AI](#1-introduction)
@@ -27,7 +25,6 @@ Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycl
 10. [Conclusion](#10-conclusion)
 11. [References](#11-references)
 
----
 
 <a id="1-introduction"></a>
 ### 1. Introduction: Why BP Needs AI
@@ -49,7 +46,7 @@ A logical error iff $c \oplus e \in \ker(H)\setminus \text{Im}(H^T)$. Every back
 <a id="2-background"></a>
 ### 2. Background: LLRs, BP Update, and the Reliability Gap
 
-**Definition 6 (Log-Domain BP Update).** Let $m_{q\to c}$ be LLR message qubit $q$ to check $c$ and $m_{c\to q}$ reverse:
+Definition 6 (Log-Domain BP Update). Let $m_{q\to c}$ be LLR message qubit $q$ to check $c$ and $m_{c\to q}$ reverse:
 
 $$
 m_{c\to q} = \left(\prod_{q' \in N(c)\setminus q} \text{sgn}(m_{q'\to c})\right) \times \phi\left(\sum_{q' \in N(c)\setminus q} \phi(|m_{q'\to c}|)\right), \tag{11}
@@ -67,7 +64,7 @@ In conventional BP-OSD, we sort by $|\gamma_q|$, extract rank-$r$ independent ba
 
 This works but pays full $O(r^3)$ even when hardness is spatially localized.
 
-**Reliability Gap:** Empirical distribution of $|\gamma_q|$ after BP is bimodal. Define threshold $\tau=0.6-1.0$:
+Reliability Gap: Empirical distribution of $|\gamma_q|$ after BP is bimodal. Define threshold $\tau=0.6-1.0$:
 
 $$
 \begin{aligned}
@@ -87,7 +84,7 @@ If $s_{\text{res}}=0$, we are done. Otherwise, complexity concentrates on $Q_{\t
 <a id="3-ambiguity-clustering"></a>
 ### 3. Ambiguity Clustering: Localizing Hardness
 
-**Algorithm (ambig_cluster.rs):**
+Algorithm (ambig_cluster.rs):
 
 ```rust
 // Pseudocode of AmbiguityClusterDecoder
@@ -127,9 +124,9 @@ Implementation notes in `qector-decoder-v3`:
 <a id="4-theorem-5"></a>
 ### 4. Theorem 5: Global Syndrome Faithfulness
 
-**Theorem 5 (Ambiguity Cluster Syndrome Faithfulness).** *Solving ambiguous clusters on residual syndrome $s_{\text{res}} = s \oplus H e_{\text{reliable}} \pmod{2}$ produces a globally syndrome-faithful correction $c = e_{\text{reliable}} \oplus e_{\text{ambig}}$.*
+Theorem 5 (Ambiguity Cluster Syndrome Faithfulness). *Solving ambiguous clusters on residual syndrome $s_{\text{res}} = s \oplus H e_{\text{reliable}} \pmod{2}$ produces a globally syndrome-faithful correction $c = e_{\text{reliable}} \oplus e_{\text{ambig}}$.*
 
-**Proof.** Let $H \in \mathbb{F}_2^{m \times n}$. Partition columns $Q = Q_{\text{rel}} \cup Q_{\text{amb}}$, disjoint. Let $e_{\text{rel}} \in \mathbb{F}_2^{|Q_{\text{rel}}|}$ be frozen hard decisions from reliable LLRs.
+Proof. Let $H \in \mathbb{F}_2^{m \times n}$. Partition columns $Q = Q_{\text{rel}} \cup Q_{\text{amb}}$, disjoint. Let $e_{\text{rel}} \in \mathbb{F}_2^{|Q_{\text{rel}}|}$ be frozen hard decisions from reliable LLRs.
 
 Define $s_{\text{res}} = s \oplus H_{\text{rel}} e_{\text{rel}} \pmod{2}$.
 
@@ -161,7 +158,7 @@ $$
 
 Hence global syndrome faithfulness holds independent of clustering cut $\tau$. ∎
 
-**Corollary (Validity Preservation).** If each cluster solver is logically optimal within its component (exact enumeration), $c \oplus e \in \ker(H)$ remains, and logical error rate is bounded by cross-cluster degeneracy only, which is suppressed as $O(p^{d/2})$ for expanding graphs.
+Corollary (Validity Preservation). If each cluster solver is logically optimal within its component (exact enumeration), $c \oplus e \in \ker(H)$ remains, and logical error rate is bounded by cross-cluster degeneracy only, which is suppressed as $O(p^{d/2})$ for expanding graphs.
 
 Practically, choosing $\tau$ trades reliability vs cluster size. `qector-doctor` recommends $\tau=0.8$ for BB codes, $\tau=0.5$ for surface codes where BP already good.
 
@@ -170,7 +167,7 @@ Practically, choosing $\tau$ trades reliability vs cluster size. `qector-doctor`
 
 Static LLR weights $w = -\ln(p_{\text{data}}/(1-p_{\text{data}}))$ ignore circuit-level correlations and measurement-induced soft information. GNNPredecoder learns $w_{uv}$.
 
-**Model (gnn_predecoder.rs):** 3-layer Message Passing Neural Network on syndrome adjacency.
+Model (gnn_predecoder.rs): 3-layer Message Passing Neural Network on syndrome adjacency.
 
 Let $G=(V,E)$ be Tanner graph or syndrome graph (defects as nodes). Node features $h_v^{(0)} = [\text{deg}(v), \gamma_v, s_v, \text{local\_flag}]$, edge features $e_{uv} = [\text{distance}, \text{stabilizer\_overlap}]$.
 
@@ -193,13 +190,13 @@ where $\text{softplus}(x)=\ln(1+e^x) >0$ guarantees positive LLR weights for MWP
 
 Why softplus not ReLU? ReLU kills gradients for $x<0$ and creates zero-weight edges → disconnected matching graph. Softplus is $C^\infty$, keeps $w_{uv}\in(0,\infty)$, and derivative $\sigma(x)$ prevents dead neurons.
 
-**Training:** Supervised on 2M shots of [[144,12,12]] at $p\in[0.001,0.01]$, label = whether error chain contains edge $uv$ in minimum-weight solution. Loss = focal cross-entropy + $L_2$ on $w_{uv}$ to avoid collapse. PyO3 exports model as TorchScript, quantized to f16 for AVX-512 vector matmul.
+Training: Supervised on 2M shots of [[144,12,12]] at $p\in[0.001,0.01]$, label = whether error chain contains edge $uv$ in minimum-weight solution. Loss = focal cross-entropy + $L_2$ on $w_{uv}$ to avoid collapse. PyO3 exports model as TorchScript, quantized to f16 for AVX-512 vector matmul.
 
 ![GNN Performance](graphs/06_ai_gnn_performance.png)
 
 *Figure 2: Left – learned bimodal weights separate reliable vs ambiguous edges; Right – GNN restores 30% of threshold lost to BP non-convergence on high-rate qLDPC.*
 
-**Integration:**
+Integration:
 
 ```python
 import qector_decoder_v3 as qec
@@ -245,11 +242,11 @@ Systems win: PyO3 Python call overhead eliminated via maturin pre-compiled wheel
 
 `qector-decoder-v3` stack:
 
-- **Core:** Rust lib with 15 backends: BlossomDecoder $O(N^3)$, SparseBlossom $O(E\log V)$, FastUnionFind UF-01 zero-allocation $O(n\alpha(n))$, BpOsdDecoder Exact & Relay $O(I_{bp}E+r^3)$, AmbiguityCluster $O(I_{bp}E+\sum2^{k_i})$, SpaceTimeDecoder $O(TV^3)$ with $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, AutoDecoder $O(1)$ dispatch, Cascade (~85k dec/s), TwoStage ($c_X\leftarrow\text{Decode}_X(s_X), s'_Z=s_Z\oplus(H_{Z,X}c_X), c_Z\leftarrow\text{Decode}_Z(s'_Z), c=c_X\oplus c_Z$), Streaming sliding window $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ (17) with decay $\lambda^k$, LookupTable $O(1)$ 45ns d=3, GNN, Neural, FusionMWPM (fusion_blossom SolverSerial >40 defects), CUDABatch/OpenCLBatch bit-identical >4.5e7 shots/s.
+- Core: Rust lib with 15 backends: BlossomDecoder $O(N^3)$, SparseBlossom $O(E\log V)$, FastUnionFind UF-01 zero-allocation $O(n\alpha(n))$, BpOsdDecoder Exact & Relay $O(I_{bp}E+r^3)$, AmbiguityCluster $O(I_{bp}E+\sum2^{k_i})$, SpaceTimeDecoder $O(TV^3)$ with $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, AutoDecoder $O(1)$ dispatch, Cascade (~85k dec/s), TwoStage ($c_X\leftarrow\text{Decode}_X(s_X), s'_Z=s_Z\oplus(H_{Z,X}c_X), c_Z\leftarrow\text{Decode}_Z(s'_Z), c=c_X\oplus c_Z$), Streaming sliding window $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ (17) with decay $\lambda^k$, LookupTable $O(1)$ 45ns d=3, GNN, Neural, FusionMWPM (fusion_blossom SolverSerial >40 defects), CUDABatch/OpenCLBatch bit-identical >4.5e7 shots/s.
 
-- **Parallelism:** Rayon work-stealing thread pools, no mutex on hot path. Syndrome batch $N\ge65536$ saturates 16-core to $1.25\times10^7$ dec/s, CUDA to $4.8\times10^7$.
+- Parallelism: Rayon work-stealing thread pools, no mutex on hot path. Syndrome batch $N\ge65536$ saturates 16-core to $1.25\times10^7$ dec/s, CUDA to $4.8\times10^7$.
 
-- **Theorem 6 (GPU Bit-Identical Invariance):** Partitioned VRAM buffers $(S_2..S_8)$, deterministic rank-based Union-Find, leaf-to-root peeling without atomic competition → `uf_decode_batch` ≡ CPU `FastUnionFind`. Verified by `doctor.py`.
+- Theorem 6 (GPU Bit-Identical Invariance): Partitioned VRAM buffers $(S_2..S_8)$, deterministic rank-based Union-Find, leaf-to-root peeling without atomic competition → `uf_decode_batch` ≡ CPU `FastUnionFind`. Verified by `doctor.py`.
 
 Latency vs distance curve shows Neural predecoder sub-µs up to d=19, enabling real-time control loop <1 µs for d=11 surface code with UF-01.
 
@@ -287,7 +284,6 @@ Industrial QEC needs both theorems and throughput. With Rust + PyO3 + Rayon + AV
 
 Next in series: Post 7 — Space-Time Decoding, Streaming Windows, and Decaying Memory.
 
----
 
 <a id="11-references"></a>
 ### References

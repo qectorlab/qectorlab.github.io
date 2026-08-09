@@ -1,18 +1,16 @@
 # Post 9: GPU-Accelerated Batch Decoding — CUDA/OpenCL Bit-Identical 48M shots/s
 
-**Author:** Guillaume Lessard / qector.store — iD01t Productions, Longueuil, QC, Canada  
-**Version:** qector-decoder-v3 v1.0.0 Whitepaper Series, August 2026  
-**Series:** Industrial-Grade QEC Decoding Engines in Rust + PyO3
+Author: Guillaume Lessard / qector.store — iD01t Productions, Longueuil, QC, Canada  
+Version: qector-decoder-v3 v1.0.0 Whitepaper Series, August 2026  
+Series: Industrial-Grade QEC Decoding Engines in Rust + PyO3
 
----
 
 ## Abstract
 
 Quantum error correction (QEC) has crossed the threshold from mathematical possibility to engineering necessity. For fault-tolerant computation with 10k+ logical qubits, decoding is no longer a latency-bound single-shot problem but a throughput-bound batch problem: training decoders, estimating logical error rates via Monte Carlo, and distilling magic states requires $10^8$–$10^{12}$ syndrome shots. We present `CUDABatchDecoder` and `OpenCLBatchDecoder`, the GPU-accelerated batch backends of `qector-decoder-v3`. By mapping one GPU work-item to one syndrome (`uf_decode_batch`) and partitioning VRAM into fully isolated $S_{32}/S_{8}$ state buffers, we achieve >48M shots/s on CUDA (A100/RTX 4090) and >32M shots/s on OpenCL, while maintaining bit-identical, deterministic equivalence to the CPU `FastUnionFindDecoder` (Theorem 6). This post dissects the kernel architecture, the deterministic rank invariance proof, VRAM hierarchy, and the performance crossover that leaves 16-core Rayon AVX-512 (12.5M shots/s) and single-thread UF-01 (0.8M shots/s) behind at $N\ge 65,536$.
 
-**Keywords:** Quantum Error Correction, Union-Find Decoder, GPU Acceleration, CUDA, OpenCL, Batch Decoding, Deterministic Rank, Bit-Identical Equivalence, Surface Code, Throughput
+Keywords: Quantum Error Correction, Union-Find Decoder, GPU Acceleration, CUDA, OpenCL, Batch Decoding, Deterministic Rank, Bit-Identical Equivalence, Surface Code, Throughput
 
----
 
 ## Table of Contents
 
@@ -26,13 +24,12 @@ Quantum error correction (QEC) has crossed the threshold from mathematical possi
 8. [Conclusion](#8-conclusion)
 9. [References](#9-references)
 
----
 
 ## 1. Introduction: Why QEC Needs Batch, Not Just Speed
 
 The QEC decoding literature has historically obsessed over single-shot latency: can we decode a $d=7$ surface code within the qubit coherence window of $1~\mu s$? `qector-decoder-v3` answers affirmatively — `FastUnionFindDecoder` (UF-01) maintains sub-microsecond latency up to $d=11$ via zero-allocation $O(n\alpha(n))$ union-find, and `LookupTableDecoder` hits $45\text{ ns}$ for $d=3$.
 
-But industrial-scale fault tolerance introduces a second axis: **throughput**. Consider:
+But industrial-scale fault tolerance introduces a second axis: throughput. Consider:
 
 - Logical threshold estimation: $10^6$ shots $\times$ 15 physical error rates $\times$ 4 distances $\approx$ 60M decodes
 - Neural predecoder training: $10^8$ labeled syndromes for MPNN weight convergence
@@ -41,9 +38,9 @@ But industrial-scale fault tolerance introduces a second axis: **throughput**. C
 
 Single-thread CPU at $8\times10^5$ shots/s needs 69 hours for 200M shots. Rayon lock-free work-stealing with AVX-512 at $1.25\times10^7$ shots/s reduces this to 16 seconds, but saturates at core count. The GPU kernels break this ceiling by treating decoding as embarrassingly parallel data-parallel compute:
 
-> **Core Principle:** For Union-Find on graphlike codes, syndromes are causally independent. There is no inter-syndrome dependency. Therefore optimal throughput is achieved by maximal spatial parallelism: one autonomous GPU work-item per syndrome, zero inter-thread communication.
+> Core Principle: For Union-Find on graphlike codes, syndromes are causally independent. There is no inter-syndrome dependency. Therefore optimal throughput is achieved by maximal spatial parallelism: one autonomous GPU work-item per syndrome, zero inter-thread communication.
 
-This post details how `cuda_batch.rs` and `opencl_batch.rs` realize this while preserving bit-for-bit equivalence — not statistical, not approximate, but **bit-identical**.
+This post details how `cuda_batch.rs` and `opencl_batch.rs` realize this while preserving bit-for-bit equivalence — not statistical, not approximate, but bit-identical.
 
 ## 2. From Microsecond to Nanosecond: The Throughput Hierarchy
 
@@ -99,10 +96,10 @@ Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ — 60$\times$ fa
 
 ### 3.1 Design Axioms
 
-1. **No Inter-Shot Atomics:** Each work-item owns contiguous VRAM slice. Zero atomics, zero barriers across shots. Eliminates non-determinism source #1.
-2. **Bit-Identical Integer Logic:** Union-Find uses only integer parent/rank/parity arrays. No floating point, no `exp()`, no $\tanh$. GPU float rounding cannot diverge.
-3. **Coalesced $S_8$/$S_{32}$ Access:** Check syndrome bits packed as `uint8_t`. Parent/rank as `int32_t` for coalesced 128-byte transactions. One warp (32 threads) loads 32 syndromes' parent[0] in single transaction.
-4. **Deterministic Ordering:** All edge traversals sorted by global ID, all unions ordered by root ID. Guarantees equivalence under rank ties.
+1. No Inter-Shot Atomics: Each work-item owns contiguous VRAM slice. Zero atomics, zero barriers across shots. Eliminates non-determinism source #1.
+2. Bit-Identical Integer Logic: Union-Find uses only integer parent/rank/parity arrays. No floating point, no `exp()`, no $\tanh$. GPU float rounding cannot diverge.
+3. Coalesced $S_8$/$S_{32}$ Access: Check syndrome bits packed as `uint8_t`. Parent/rank as `int32_t` for coalesced 128-byte transactions. One warp (32 threads) loads 32 syndromes' parent[0] in single transaction.
+4. Deterministic Ordering: All edge traversals sorted by global ID, all unions ordered by root ID. Guarantees equivalence under rank ties.
 
 Pseudo-kernel (simplified Rust/CUDA C):
 
@@ -203,7 +200,7 @@ Let `uf_decode_batch(b,s)` denote b-th work-item GPU logic.
 
 ### 5.2 Theorem 6 (GPU Bit-Identical Invariance)
 
-**Statement:** *For any graphlike code and any syndrome $s$, the GPU kernel `uf_decode_batch` produces output correction bit-identical to CPU `FastUnionFindDecoder`:*
+Statement: *For any graphlike code and any syndrome $s$, the GPU kernel `uf_decode_batch` produces output correction bit-identical to CPU `FastUnionFindDecoder`:*
 
 $$
 \forall s\in\mathbb{F}_2^{|V|},\quad c_{GPU}(s)=c_{CPU}(s)
@@ -231,12 +228,12 @@ Thus $c_{GPU}=c_{CPU}$ bitwise. $\square$
 
 ### 5.4 Implications
 
-1. **No Threshold Degradation:** Since corrections identical, logical threshold $p_{th}\approx0.72\%$ for UF holds unchanged on GPU. Any threshold difference would imply non-identical bug.
-2. **Syndrome Faithfulness Preservation:** If CPU guarantees $Hc=s$ (whitepaper Theorem 2), GPU automatically does:
+1. No Threshold Degradation: Since corrections identical, logical threshold $p_{th}\approx0.72\%$ for UF holds unchanged on GPU. Any threshold difference would imply non-identical bug.
+2. Syndrome Faithfulness Preservation: If CPU guarantees $Hc=s$ (whitepaper Theorem 2), GPU automatically does:
    $$
    H c_{GPU}=H c_{CPU}=s\ (\text{mod }2)
    $$
-3. **Debuggability:** `cargo test --features cuda compare_cpu_gpu` runs $10^6$ random syndromes and checks $||c_{GPU}\oplus c_{CPU}||_0=0$.
+3. Debuggability: `cargo test --features cuda compare_cpu_gpu` runs $10^6$ random syndromes and checks $||c_{GPU}\oplus c_{CPU}||_0=0$.
 
 ![Bit-identical verification and latency](graphs/09_gpu_bit_identical_verification.png)
 
@@ -280,9 +277,9 @@ PCIe: For $N=10^6$, $d=5$, syndrome input $10^6\times25\text{ B}=25$ MB, correct
 
 `python doctor.py` validates:
 
-- **Wheel sync:** hashes of `opencl_batch.rs`, `cuda_batch.rs` vs installed wheel
-- **GPU & License Tier:** CUDA toolkit $\ge12.0$, driver $\ge530.30$, Enterprise tier for $N>1M$/shot
-- **Vector Unit:** AVX2/AVX-512 presence for CPU fallback dispatch in `AutoDecoder`
+- Wheel sync: hashes of `opencl_batch.rs`, `cuda_batch.rs` vs installed wheel
+- GPU & License Tier: CUDA toolkit $\ge12.0$, driver $\ge530.30$, Enterprise tier for $N>1M$/shot
+- Vector Unit: AVX2/AVX-512 presence for CPU fallback dispatch in `AutoDecoder`
 
 ### 7.2 Dispatch Logic
 
@@ -312,9 +309,8 @@ For `qector-decoder-v3`, this unlocks industrial workflows: $10^{12}$-shot Monte
 
 Theorem 6 thus closes the loop on faithfulness: from syndrome faithfulness $Hc=s$, to logical equivalence $c\oplus e\in\ker(H)$, to platform equivalence $c_{GPU}=c_{CPU}$. The decoder is no longer bottleneck.
 
-Next: **Post 10 — Streaming Decoder with Exponential Decay $\lambda^k$ and Constant-Time Eviction**.
+Next: Post 10 — Streaming Decoder with Exponential Decay $\lambda^k$ and Constant-Time Eviction.
 
----
 
 ## 9. References
 
@@ -336,5 +332,4 @@ Next: **Post 10 — Streaming Decoder with Exponential Decay $\lambda^k$ and Con
 
 [9] Khronos Group, "OpenCL 3.0 Specification — Work-Item Isolation and Memory Consistency," 2022.
 
----
 *© 2026 qector.store / iD01t Productions. All benchmarks on 16-core workstation + A100/RTX4090, representative evaluation per whitepaper §5. Absolute throughput hardware dependent.*

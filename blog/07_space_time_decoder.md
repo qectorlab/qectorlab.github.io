@@ -1,21 +1,19 @@
 # 3D Fault-Tolerant Space-Time Decoding: Noisy Syndrome Extraction and the Detector Lattice
 
-**Author:** Guillaume Lessard, qector.store — iD01t Productions, Longueuil, QC, Canada  
-**Series:** qector-decoder-v3 Deep Dive — Post 7 / 15  
-**Version:** v1.0.0 (August 2026)  
-**License:** Industrial-grade QEC decoding engine - Rust + PyO3 Python C-extensions
+Author: Guillaume Lessard, qector.store — iD01t Productions, Longueuil, QC, Canada  
+Series: qector-decoder-v3 Deep Dive — Post 7 / 15  
+Version: v1.0.0 (August 2026)  
+License: Industrial-grade QEC decoding engine - Rust + PyO3 Python C-extensions
 
----
 
 ## Abstract
 
-Quantum error correction cannot assume ideal measurements. In any physical superconducting or photonic architecture, syndrome extraction itself is noisy: ancilla faults, measurement flips, and timing jitter conspire to corrupt the very signal we use to correct. This post dissects the crown jewel of fault-tolerant decoding in **qector-decoder-v3** — the `SpaceTimeDecoder` (`space_time_decoder.rs`) and its real-time sibling `StreamingDecoder` (`sliding_window.rs`). 
+Quantum error correction cannot assume ideal measurements. In any physical superconducting or photonic architecture, syndrome extraction itself is noisy: ancilla faults, measurement flips, and timing jitter conspire to corrupt the very signal we use to correct. This post dissects the crown jewel of fault-tolerant decoding in qector-decoder-v3 — the `SpaceTimeDecoder` (`space_time_decoder.rs`) and its real-time sibling `StreamingDecoder` (`sliding_window.rs`). 
 
 We show how XOR differencing $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ transforms a temporal sequence of unreliable syndromes into a 3D detector lattice where space and time edges compete with principled weights $w_{\text{space}}=-\ln(p_{\text{data}}/(1-p_{\text{data}}))$, $w_{\text{time}}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$. The decoder recovers the $O(TV^3)$ graph matching problem across $T$ rounds, preserves syndrome faithfulness $Hc\equiv s\pmod2$ in the lifted space, and sustains a phenomenological threshold $\approx 2.9\%$ where naive 2D repetition fails below $0.5\%$. We then analyze the online extension $S^{(t)}_c=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ with exponential forgetting that enables constant-time $O(W\cdot N)$ streaming with $>1.25\times10^7$ shots/s on Rayon 16-core AVX-512 and $>4.5\times10^7$ on CUDA. Implementation details from lock-free work-stealing to bit-identical GPU invariance are exposed.
 
-**Keywords:** Fault-tolerant QEC, Space-time decoding, Detector lattice, Noisy syndrome extraction, Surface code, Phenomenological noise, MWPM, Streaming decoder, qector-decoder-v3
+Keywords: Fault-tolerant QEC, Space-time decoding, Detector lattice, Noisy syndrome extraction, Surface code, Phenomenological noise, MWPM, Streaming decoder, qector-decoder-v3
 
----
 
 ## Table of Contents
 
@@ -29,7 +27,6 @@ We show how XOR differencing $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ transforms a temp
 8. [Conclusion](#8-conclusion)
 9. [References](#9-references)
 
----
 
 ## 1. Introduction: Why Single-Round Decoding Dies
 
@@ -45,14 +42,14 @@ Repeated application of 2D decoder yields logical error rate $P_L$ that does *no
 
 The industry solution, first conceptualized by Dennis, Kitaev, Landahl, Preskill (2002) and Fowler et al. (2012), is to lift decoding to 3D. In qector-decoder-v3, this is canonically implemented as:
 
-- **SpaceTimeDecoder**: full $T$-round offline 3D matching, $O(T V^3)$ exact blossom on the detector graph.
-- **StreamingDecoder**: online sliding window $W$ with decay $\lambda^k$, $O(W\cdot N)$ constant amortized.
+- SpaceTimeDecoder: full $T$-round offline 3D matching, $O(T V^3)$ exact blossom on the detector graph.
+- StreamingDecoder: online sliding window $W$ with decay $\lambda^k$, $O(W\cdot N)$ constant amortized.
 
 While qector-decoder-v3 ships 15 backends — from `BlossomDecoder` $O(N_{\text{defects}}^3)$ exact, `SparseBlossomDecoder` $O(E\log V)$ event-driven, `FastUnionFindDecoder` $O(n\alpha(n))$ zero-allocation UF-01, `BpOsdDecoder` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$ and its relay variant, `LookupTableDecoder` $O(1)$ 45ns at $d=3$, to GPU `CUDABatchDecoder/OpenCLBatchDecoder` with $>4.8\times10^7$ shots/s — the Space-Time engine is the only one that guarantees fault tolerance under circuit-level noise.
 
 The central correctness invariant of the entire engine remains:
 
-> **Core Theorem (Syndrome Faithfulness):** $H c \equiv s \pmod 2$, correction validity: $c\oplus e \in \text{Ker}(H)$, logical error iff $c\oplus e \in \text{Ker}(H)\setminus \text{Im}(H^T)$
+> Core Theorem (Syndrome Faithfulness): $H c \equiv s \pmod 2$, correction validity: $c\oplus e \in \text{Ker}(H)$, logical error iff $c\oplus e \in \text{Ker}(H)\setminus \text{Im}(H^T)$
 
 We lift this to 3D.
 
@@ -70,9 +67,9 @@ $$ D_{c,t} = M_{c,t} \oplus M_{c,t-1} $$
 
 Why is this brilliant? Consider error types:
 
-- **Data qubit error** persisting from $t$: $H e_t$ flips $s_{c,t}$ for *all* $t'\ge t$ until another error flips it back. Under differencing, this produces *two* detector events bounding the error's time interval: one at onset $t$, one at cancellation $t'$.
-- **Measurement error** at $t$: flips only $s_{c,t}$, producing a *pair* of detectors at same spatial location $c$ but adjacent times: $d_{c,t}=1$ and $d_{c,t+1}=1$. It's a timelike edge.
-- **No error**: $d_{c,t}=0$.
+- Data qubit error persisting from $t$: $H e_t$ flips $s_{c,t}$ for *all* $t'\ge t$ until another error flips it back. Under differencing, this produces *two* detector events bounding the error's time interval: one at onset $t$, one at cancellation $t'$.
+- Measurement error at $t$: flips only $s_{c,t}$, producing a *pair* of detectors at same spatial location $c$ but adjacent times: $d_{c,t}=1$ and $d_{c,t+1}=1$. It's a timelike edge.
+- No error: $d_{c,t}=0$.
 
 Thus $d$ is sparse even when $s$ is dense with accumulation. This sparsity is essential for blossom.
 
@@ -99,13 +96,13 @@ $$ V_{ST}= \{(c,t): c\in\mathcal{C}, t\in[0,T-1]\} \cup \{\text{boundary}\} $$
 
 Two types of edges:
 
-- **Space-like edges:** $e=((c,t),(c',t))$ if data qubits connect $c,c'$ in base Tanner graph. Weight:
+- Space-like edges: $e=((c,t),(c',t))$ if data qubits connect $c,c'$ in base Tanner graph. Weight:
 
 $$ w_{\text{space}} = -\ln\left(\frac{p_{\text{data}}}{1-p_{\text{data}}}\right) = \text{LLR}(p_{\text{data}}) $$
 
 This is the log-likelihood ratio of a data error versus none.
 
-- **Time-like edges:** $e=((c,t),(c,t+1))$ with:
+- Time-like edges: $e=((c,t),(c,t+1))$ with:
 
 $$ w_{\text{time}} = -\ln\left(\frac{p_{\text{meas}}}{1-p_{\text{meas}}}\right) = \text{LLR}(p_{\text{meas}}) $$
 
@@ -117,7 +114,7 @@ The anisotropy is crucial. When $p_{\text{meas}}\gg p_{\text{data}}$, $w_{\text{
 
 Matching on this graph finds minimum-weight set of paths whose boundary is the detector set $D=\{v: d_{c,t}=1\}$. Because $G_{ST}$ is still graphlike (degree $\le6$ for surface), MWPM or UF applies.
 
-**Decoding cost:** For $T=d$, $|V_{ST}|=O(d^3)$, $|E_{ST}|=O(d^3)$. Blossom over dense detector pairs costs $O((TV)^3)$ worst, but SparseBlossom optimization pushes to $O(E\log V)$ event-driven. In practice qector-doctor verifies AVX-512 paths accelerate distance-matrix to $>8\times$.
+Decoding cost: For $T=d$, $|V_{ST}|=O(d^3)$, $|E_{ST}|=O(d^3)$. Blossom over dense detector pairs costs $O((TV)^3)$ worst, but SparseBlossom optimization pushes to $O(E\log V)$ event-driven. In practice qector-doctor verifies AVX-512 paths accelerate distance-matrix to $>8\times$.
 
 ![Threshold under phenomenological noise](graphs/07_spacetime_threshold.png)
 
@@ -152,11 +149,11 @@ impl SpaceTimeDecoder {
 
 Complexity: `Table 1` in whitepaper lists $O(T\cdot V^3)$ for exact blossom variant; with Union-Find backend (`FastUnionFindDecoder` zero-allocation $O(n\alpha(n))$) reused per slab, amortized near $O(T(V+E)\alpha(V))$.
 
-**Three engineering wins in v3:**
+Three engineering wins in v3:
 
-1. **Bit-packed detectors:** $T\cdot m \le 64$ for $d\le7$, $T=7$ fits in one $u64$. XOR differencing is one AVX-512 `VPXORQ`.
-2. **Rayon lock-free work-stealing:** When decoding batch $N\ge1024$, `AutoDecoder` dispatches to `CUDABatch/CPUBatch` (see Figure 6 whitepaper). For space-time, batch is over independent memory experiments, each with $T$ rounds, achieving $1.25\times10^7$ shots/s CPU.
-3. **GPU bit-identical:** Theorem 6 in whitepaper: `uf_decode_batch` produces bit-identical corrections to CPU UF. Space-time inherits because detector graph is graphlike.
+1. Bit-packed detectors: $T\cdot m \le 64$ for $d\le7$, $T=7$ fits in one $u64$. XOR differencing is one AVX-512 `VPXORQ`.
+2. Rayon lock-free work-stealing: When decoding batch $N\ge1024$, `AutoDecoder` dispatches to `CUDABatch/CPUBatch` (see Figure 6 whitepaper). For space-time, batch is over independent memory experiments, each with $T$ rounds, achieving $1.25\times10^7$ shots/s CPU.
+3. GPU bit-identical: Theorem 6 in whitepaper: `uf_decode_batch` produces bit-identical corrections to CPU UF. Space-time inherits because detector graph is graphlike.
 
 The decoder also supports hook to `FusionMWPMDecoder` for large defect count $N_{\text{defects}}>40$ using `fusion_blossom SolverSerial`, decomposing temporal slabs then merging fusion boundaries.
 
@@ -176,8 +173,8 @@ with $\lambda\in(0,1]$. For $\lambda=1$, it's simple sum; for $\lambda<1$, older
 
 Why exponential? Two reasons:
 
-1. **Physical:** Measurement errors decorrelate as Markov of degree 1 under circuit noise. Optimal Bayes filter for such hidden Markov model is exponential smoothing.
-2. **Systems:** $W$ constant ensures $O(1)$ per round amortized. No blow-up of state. AVX-512 FMA computes recurrence:
+1. Physical: Measurement errors decorrelate as Markov of degree 1 under circuit noise. Optimal Bayes filter for such hidden Markov model is exponential smoothing.
+2. Systems: $W$ constant ensures $O(1)$ per round amortized. No blow-up of state. AVX-512 FMA computes recurrence:
 
 $$ S_c^{(t)} = s_{c,t} + \lambda S_c^{(t-1)} - \lambda^W s_{c,t-W} $$
 
@@ -215,15 +212,15 @@ Together these theorems guarantee that qector-decoder-v3's space-time stack is n
 
 What does this mean for a real device in Longueuil or elsewhere?
 
-1. **No measurement is trustworthy, but differences are.** XOR differencing is the cheapest filter with maximal payoff: one AVX line converts $p_{\text{meas}}=3\%$ noise from fatal to handled.
+1. No measurement is trustworthy, but differences are. XOR differencing is the cheapest filter with maximal payoff: one AVX line converts $p_{\text{meas}}=3\%$ noise from fatal to handled.
 
-2. **Weights matter more than algorithm choice.** Many teams tune decoders; in phenomenology, tuning $w_{\text{time}}$ from equal weight to LLR optimal improves $P_L$ by $10\times$ at $d=7$. qector-doctor (`doctor.py`) audits that Wheel Sync indeed exposes $p_{\text{data}},p_{\text{meas}}$ to Rust, not stale.
+2. Weights matter more than algorithm choice. Many teams tune decoders; in phenomenology, tuning $w_{\text{time}}$ from equal weight to LLR optimal improves $P_L$ by $10\times$ at $d=7$. qector-doctor (`doctor.py`) audits that Wheel Sync indeed exposes $p_{\text{data}},p_{\text{meas}}$ to Rust, not stale.
 
-3. **Offline vs online split.** Use `SpaceTimeDecoder` with `BlossomDecoder` for high-accuracy offline logical error rate characterizations and threshold plots. Use `StreamingDecoder` + `FastUnionFindDecoder` + `GNNPredecoder` for real-time feed-forward. `AutoDecoder` $O(1)$ dispatch routes $N\le3$? → LUT 45ns, else >1024 → CUDA, else fast path → UF (Figure 6 decision tree). This is industrial: same API, different guarantees.
+3. Offline vs online split. Use `SpaceTimeDecoder` with `BlossomDecoder` for high-accuracy offline logical error rate characterizations and threshold plots. Use `StreamingDecoder` + `FastUnionFindDecoder` + `GNNPredecoder` for real-time feed-forward. `AutoDecoder` $O(1)$ dispatch routes $N\le3$? → LUT 45ns, else >1024 → CUDA, else fast path → UF (Figure 6 decision tree). This is industrial: same API, different guarantees.
 
-4. **Bit-identical GPU is non-negotiable for certification.** Theorem 6 in whitepaper guarantees GPU kernel `uf_decode_batch` bit-identical. For medical or defense certifications you can rerun identical matching on CPU for audit, while production runs at $4.8\times10^7$ shots/s.
+4. Bit-identical GPU is non-negotiable for certification. Theorem 6 in whitepaper guarantees GPU kernel `uf_decode_batch` bit-identical. For medical or defense certifications you can rerun identical matching on CPU for audit, while production runs at $4.8\times10^7$ shots/s.
 
-5. **Path to circuit-level noise.** Phenomenological is prelude to full circuit-level where hook errors create hyperedges. qector's roadmap replaces MWPM with `BpOsdDecoder Exact & Relay` $(O(I_{bp}E+r^3+W^{\text{osd\_order}}))$ and `AmbiguityClusterDecoder` $(O(I_{bp}E+\sum2^{k_i}))$ on detector hypergraph, while still using same $d_{c,t}$.
+5. Path to circuit-level noise. Phenomenological is prelude to full circuit-level where hook errors create hyperedges. qector's roadmap replaces MWPM with `BpOsdDecoder Exact & Relay` $(O(I_{bp}E+r^3+W^{\text{osd\_order}}))$ and `AmbiguityClusterDecoder` $(O(I_{bp}E+\sum2^{k_i}))$ on detector hypergraph, while still using same $d_{c,t}$.
 
 ## 8. Conclusion
 
@@ -233,7 +230,6 @@ The StreamingDecoder's $S^{(t)}_c=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ shows the
 
 If your decoder cannot handle $p_{\text{meas}}>0$, you don't have a fault-tolerant decoder. With SpaceTimeDecoder, you do.
 
----
 
 ## 9. References
 
@@ -257,8 +253,7 @@ If your decoder cannot handle $p_{\text{meas}}>0$, you don't have a fault-tolera
 
 [10] Google Quantum AI, "Suppressing quantum errors by scaling a surface code logical qubit," *Nature*, 2023.
 
----
-**Artifacts:** `space_time_decoder.rs` O(T V^3), `sliding_window.rs` O(W·N), `qector-doctor doctor.py` - Wheel Sync, GPU & License Tier, AVX2/AVX-512 auditing.  
-**Engine:** qector-decoder-v3 v1.0.0, 15 backends, Rust+PyO3+maturin+Rayon, throughput: 1.25e7 Rayon, 4.8e7 CUDA for N≥65536, LUT 45ns d=3.
+Artifacts: `space_time_decoder.rs` O(T V^3), `sliding_window.rs` O(W·N), `qector-doctor doctor.py` - Wheel Sync, GPU & License Tier, AVX2/AVX-512 auditing.  
+Engine: qector-decoder-v3 v1.0.0, 15 backends, Rust+PyO3+maturin+Rayon, throughput: 1.25e7 Rayon, 4.8e7 CUDA for N≥65536, LUT 45ns d=3.
 
 *Generated for qector.store — Industrial-grade decoding from Longueuil, QC with ❤️ for fault tolerance.*
