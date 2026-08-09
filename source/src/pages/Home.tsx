@@ -35,30 +35,30 @@ export default function Home() {
   const { version: pypiVersion } = usePyPIVersion();
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
     const script = document.createElement('script');
     script.src = 'https://js.stripe.com/v3/buy-button.js';
     script.async = true;
     document.body.appendChild(script);
 
-    const sections = sectionsRef.current.filter(Boolean);
-    sections.forEach((section) => {
-      gsap.fromTo(
-        section,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 85%',
-            once: true,
-          },
-        }
-      );
-    });
+    let ctx = gsap.context(() => {
+      const sections = sectionsRef.current.filter(Boolean);
+      sections.forEach((section) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 85%',
+              once: true,
+            },
+          }
+        );
+      });
     });
 
     return () => {

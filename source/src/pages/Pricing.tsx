@@ -32,20 +32,20 @@ const includedItems = [
 export default function Pricing() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
-    let ctx = gsap.context(() => {
     const script = document.createElement('script');
     script.src = 'https://js.stripe.com/v3/buy-button.js';
     script.async = true;
     document.body.appendChild(script);
 
-    sectionsRef.current.filter(Boolean).forEach((section) => {
-      gsap.fromTo(section, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
+    let ctx = gsap.context(() => {
+      sectionsRef.current.filter(Boolean).forEach((section) => {
+        gsap.fromTo(section, { opacity: 0, y: 30 }, {
+          opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: section, start: 'top 85%', once: true },
+        });
       });
     });
 
-    });
     return () => {
       ctx.revert();
       if (script.parentNode === document.body) document.body.removeChild(script);
