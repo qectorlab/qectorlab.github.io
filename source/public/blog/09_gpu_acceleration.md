@@ -1,4 +1,4 @@
-﻿# Post 9: GPU-Accelerated Batch Decoding , CUDA/OpenCL Bit-Identical 48M shots/s
+# Post 9: GPU-Accelerated Batch Decoding , CUDA/OpenCL Bit-Identical 48M shots/s
 
 Author: Guillaume Lessard / qector.store , iD01t Productions, Longueuil, QC, Canada  
 Version: qector-decoder-v3 v1.0.0 Whitepaper Series, August 2026  
@@ -36,7 +36,7 @@ But industrial-scale fault tolerance introduces a second axis: throughput. Consi
 - Magic state factory simulation: $10^{12}$ T-gates require continuous syndrome streaming
 - Real-time control with $d=7$, 1k logical qubits, 1 MHz measurement cycle: $10^9$ syndromes/s aggregate
 
-Single-thread CPU at $8\times10^5$ shots/s needs 69 hours for 200M shots. Rayon lock-free work-stealing with AVX-512 at $1.25\times10^7$ shots/s reduces this to 16 seconds, but saturates at core count. The GPU kernels break this ceiling by treating decoding as embarrassingly parallel data-parallel compute:
+Single-thread CPU at $8\times10^5$ shots/s needs ~250 s for 200M shots. Rayon lock-free work-stealing with AVX-512 at $1.25\times10^7$ shots/s reduces this to 16 seconds, but saturates at core count. The GPU kernels break this ceiling by treating decoding as embarrassingly parallel data-parallel compute:
 
 > Core Principle: For Union-Find on graphlike codes, syndromes are causally independent. There is no inter-syndrome dependency. Therefore optimal throughput is achieved by maximal spatial parallelism: one autonomous GPU work-item per syndrome, zero inter-thread communication.
 
@@ -86,12 +86,13 @@ $$
 \Gamma_{CUDA}=4.8\times10^7\;\text{shots/s},\quad \Gamma_{OpenCL}=3.2\times10^7\;\text{shots/s}
 $$
 
-Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ faster than single-thread wall time, and entirely within PCIe bandwidth for $S_8$ syndrome input ($V\le121$ bytes at $d=11$).
+Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ faster than single-thread wall time, and entirely within PCIe bandwidth for $S_8$ syndrome input ($V\le121$ bits, i.e. $\le16$ bytes, at $d=11$).
 
 ![Throughput scaling CPU vs GPU](graphs/09_gpu_throughput_scaling.png)
 
 *Figure 1: Throughput scaling vs batch size $N$ for rotated surface $d=5$. CPU Rayon saturates at $1.25\times10^7$ due to core count; GPU continues to $4.8\times10^7$ (CUDA) with launch amortization beyond $N=1$k.*
 
+<a id="3-kernel-architecture-one-work-item-per-syndrome--uf_decode_batch"></a>
 ## 3. Kernel Architecture: One Work-Item Per Syndrome , `uf_decode_batch`
 
 ### 3.1 Design Axioms
@@ -139,6 +140,7 @@ corrections = decoder.decode_batch(syndromes) # bit-identical to CPU
 
 Internally: pin host buffer, async H2D copy via CUDA stream, kernel launch, async D2H, sync. OpenCL path uses `clEnqueueNDRangeKernel` with identical buffer layout for portability (AMD, Intel iGPU, Apple Silicon via clover).
 
+<a id="4-vram-model-isolated-s32s8-state-buffers"></a>
 ## 4. VRAM Model: Isolated $S_{32}/S_{8}$ State Buffers
 
 ### 4.1 Space Complexity
@@ -150,7 +152,7 @@ $$
 $$
 
 $$
-\text{Mem}_{total}=N_{batch}\cdot\text{Mem}_{per\_shot}+O(N_{batch}\cdot E) = O(N_{batch}(11N+5E))\text{ bytes}
+\text{Mem}_{total}=N_{batch}\cdot\text{Mem}_{per\_shot}+O(N_{batch}\cdot E) = O(N_{batch}(11V+5E))\text{ bytes}
 $$
 
 With $S_{32}$ for union-find forest (requires $2^{31}$ addressable) and $S_8$ for parity (GF(2)). No `float32` anywhere.
@@ -161,12 +163,12 @@ Example $d=7$ rotated: $V\approx49$, $n\approx49$, $E\approx96$:
 - parity S8:  49 B
 - active S8:  49 B
 - border S8:  49 B
-- correction: 10 B
+- correction: 7 B
 Total: ~550 B/shot. For $N=10^6$, ~550 MB , fits in L2 of RTX 4090 (72 MB) with reuse tiling, or directly in VRAM (24 GB supports $N\approx43$M at $d=7$).
 
 ![VRAM model and isolated buffers](graphs/09_gpu_vram_layout.png)
 
-*Figure 2: (a) VRAM scaling $O(N_{batch}(11N+5E))$ log-log; (b) per-syndrome $S_{32}/S_{8}$ break-down ensures zero cross-talk.*
+*Figure 2: (a) VRAM scaling $O(N_{batch}(11V+5E))$ log-log; (b) per-syndrome $S_{32}/S_{8}$ break-down ensures zero cross-talk.*
 
 ### 4.2 Why Isolation Matters for Determinism
 

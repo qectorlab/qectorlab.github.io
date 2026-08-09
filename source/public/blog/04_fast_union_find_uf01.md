@@ -1,7 +1,7 @@
-﻿# Zero-Allocation Fast Union-Find UF-01: Sub-Microsecond Decoding for Fault-Tolerant Surface Codes
+# Zero-Allocation Fast Union-Find UF-01: Sub-Microsecond Decoding for Fault-Tolerant Surface Codes
 
 Author: Guillaume Lessard / qector.store  
-Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 4  
+Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 4 of 10  
 Date: August 2026 | iD01t Productions, Longueuil, QC  
 Artifact: `fast_uf.rs` , `FastUnionFindDecoder` , 15-backend suite, Rayon + AVX-512 + PyO3
 
@@ -40,13 +40,13 @@ $$ c\oplus e\in\ker(H),\quad\text{logical error iff }c\oplus e\in\ker(H)\setminu
 
 Equation (1) is Syndrome Faithfulness; (2) is Correction Validity , the core theorems that ground `qector-decoder-v3`.
 
-`BlossomDecoder` solves (1) exactly via Edmonds' blossom algorithm with LLR weights $w=-\ln(p/(1-p))$, achieving $p_{\text{th}}\approx1.03\%$ for rotated surface codes. Yet exactness costs $O(N_{\text{defects}}^3)$ time, $O(V^2)$ space. At $d=11$, $N_{\text{defects}}\sim30$ at $p=0.005$, Blossom latency $\sim16$ µs, `SparseBlossomDecoder` event-driven $O(E\log V)$ $\sim2.6$ µs. Superconducting qubits with $T_1\sim100$ µs demand $\le1$ µs feedback [5].
+`BlossomDecoder` solves (1) exactly via Edmonds' blossom algorithm with LLR weights $w=-\ln(p/(1-p))$, achieving $p_{\text{th}}\approx1.03\%$ for rotated surface codes. Yet exactness costs $O(N_{\text{defects}}^3)$ time, $O(V^2)$ space. At $d=11$, $N_{\text{defects}}\sim2$ at $p=0.005$, Blossom latency $\sim16$ µs, `SparseBlossomDecoder` event-driven $O(E\log V)$ $\sim2.6$ µs. Superconducting qubits with $T_1\sim100$ µs demand $\le1$ µs feedback [5].
 
 Delfosse-Nickerson [6] changed scaling to almost-linear via Union-Find. But generic implementations allocate HashMap buckets, Vec per cluster, and priority queues per growth step , death by allocator in the hot path. In Python, this is $>50$ allocs/shot.
 
 UF-01 in `fast_uf.rs` is our answer: zero-alloc, cache-oblivious, parity-faithful UF with pre-allocated buffers, $O(n\alpha(n))$ time, validated by `qector-doctor doctor.py` wheel-sync, GPU & license tier, and AVX-512 inspection.
 
-In the 15-backend `qector-decoder-v3` suite , Blossom exact, SparseBlossom, FastUnionFind UF-01, BpOsd Exact/Relay ($O(I_{bp}E+r^3+W^{\text{osd\_order}})$), AmbiguityCluster ($O(I_{bp}E+\sum2^{k_i})$), SpaceTimeDecoder ($O(TV^3)$), AutoDecoder $O(1)$ dispatch, Cascade ~85k dec/s, TwoStage, Streaming with decay $\lambda^k$, LookupTable $O(1)$ 45ns $d=3$, GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, NeuralPredecoder Leaky-ReLU, FusionMWPM $>40$ defects, CUDABatch/OpenCLBatch $>4.5e7$ shots/s , UF-01 is the latency floor.
+In the 15-backend `qector-decoder-v3` suite , Blossom exact, SparseBlossom, FastUnionFind UF-01, BpOsd Exact/Relay ($O(I_{bp}E+r^3+W^{\text{osd\_order}})$), AmbiguityCluster ($O(I_{bp}E+\sum2^{k_i})$), SpaceTimeDecoder ($O(TV^3)$), AutoDecoder $O(1)$ dispatch, Cascade ~85k dec/s, TwoStage, Streaming with decay $\lambda^k$, LookupTable $O(1)$ 45ns $d=3$, GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, NeuralPredecoder Leaky-ReLU, FusionMWPM $>40$ defects, CUDABatch/OpenCLBatch $>4.8e7$ shots/s , UF-01 is the latency floor.
 
 ![Threshold Curves](graphs/04_uf_threshold_curves.png)
 *Fig 1: Logical threshold $P_L$ vs $p$ for rotated surface $d=3,5,7,9$. Blossom 1.03% vs UF-01 0.72% under phenomenological noise. Exact matching pays 30% threshold for cubic cost; UF trades accuracy for sub-µs latency.*
@@ -113,6 +113,7 @@ Result in `cargo instruments`: 0 allocs, 0 syscalls, <60 ns tail of allocator in
 ![Latency vs Distance](graphs/04_uf_latency_vs_distance.png)
 *Fig 2: Single-shot latency vs distance $d\in[3,19]$ (log scale). UF-01 stays <1 µs to $d=11$ (0.98 µs), LUT 45ns at $d=3$, Cascade 1.05 µs, SparseBlossom 2.6 µs, Blossom MWPM 18 µs, BP-OSD 170 µs at $d=11$. Blue band = sub-µs real-time regime.*
 
+<a id="4-parity-algebra-the-invariant-pic-and-merge-law-picc1cup-c2pic1oplus-pic2"></a>
 ## 4. Parity Algebra: The Invariant $\pi(C)$ and Merge Law $\pi(C_1\cup C_2)=\pi(C_1)\oplus\pi(C_2)$
 
 Definition 1 (Cluster Parity). $\pi(C)=\bigoplus_{v\in C}s_v=\sum_{v\in C}s_v\pmod2$.
@@ -145,6 +146,7 @@ Theorem (Decidability). Cluster $C$ is satisfiable iff $\pi(C)=0$ or $is\_bounda
 
 Boundary as sink: virtual node with infinite $\pi$ sink; physical edge to boundary treated as $w_{time}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$ analog for circuit-level, but in graphlike UF we treat as geometric boundary attachment.
 
+<a id="5-peeling-from-forest-to-physical-correction-cepichild"></a>
 ## 5. Peeling: From Forest to Physical Correction $c_e=\pi(\text{child})$
 
 After growth, per cluster we have subgraph $G_C^{\text{grown}}$. Build spanning tree $T_C$ via iterative DFS using reusable `stack`, emitting postorder list.
@@ -177,6 +179,7 @@ Theorem 1 (Syndrome Faithfulness). Peeling returns $c$ with $Hc\equiv s\pmod2$ p
 
 No Gaussian elimination; just parity propagation.
 
+<a id="6-correctness-and-complexity-theorem-3-onalphan-proof"></a>
 ## 6. Correctness and Complexity: Theorem 3 $O(n\alpha(n))$ Proof
 
 Theorem 2 (Correction Validity). For error $e$, $c\oplus e\in\ker(H)$; logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H^T)$ , same as generic QEC core theorem.
@@ -231,15 +234,15 @@ Rayon `par_iter()` work-stealing, no locks:
 
 - Single-thread UF-01: $8.5\times10^5$ shots/s @ $d=7$
 - Rayon 16-core: $1.25\times10^7$ shots/s
-- CUDA batch $uf\_decode\_batch$ (Fig 9 whitepaper): $>4.8\times10^7$ shots/s $N\ge65536$, OpenCL $>2.1\times10^7$ shots/s. VRAM partitioned $S_{2^5},S_8$, one work-item per shot, bit-identical to CPU per Theorem 6 (isolated buffers, deterministic edge traversal, no atomic competition).
+- CUDA batch $uf\_decode\_batch$ (Fig 9 whitepaper): $>4.8\times10^7$ shots/s $N\ge65536$, OpenCL $>3.2\times10^7$ shots/s. VRAM partitioned $S_{32},S_8$, one work-item per shot, bit-identical to CPU per Theorem 6 (isolated buffers, deterministic edge traversal, no atomic competition).
 - `CascadeDecoder` pre-filter condition $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$ passes ~85% at $p=0.003$, escalates rest → effective $85$k dec/s avg with Blossom accuracy.
 
 ## 9. Systems Integration: SIMD, Rayon, Cascade, Streaming, and GPU Bit-Identity
 
 `qector-decoder-v3` is industrial-grade:
 
-* AutoDecoder $O(1)$ dispatch: `(d\cdot p,N,\text{topology})$ → LUT if $d\le3$, `CUDABatch/CPUBatch` if $N>1024$, else `FastUnionFind`. 5 ns dispatch via jump table.
-* TwoStageDecoder for CSS $X/Z$ correlated: $c_X\leftarrow\text{Decode}_X(s_X)$, $s'_Z=s_Z\oplus H_Zc_X$, $c_Z\leftarrow\text{Decode}_Z(s'_Z)$, $c=c_X\oplus c_Z$ , breaks degeneracy.
+* AutoDecoder $O(1)$ dispatch: `(d,p,N,\text{topology})$ → LUT if $d\le3$, `CUDABatch/CPUBatch` if $N>1024$, else `FastUnionFind`. 5 ns dispatch via jump table.
+* TwoStageDecoder for CSS $X/Z$ correlated: $c_X\leftarrow\text{Decode}_X(s_X)$, $s'_Z=s_Z\oplus H_{Z,X}c_X$, $c_Z\leftarrow\text{Decode}_Z(s'_Z)$, $c=c_X\oplus c_Z$ , breaks degeneracy.
 * StreamingDecoder sliding window: $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda_e^k s_{c,t-k}$ decays historical syndromes, constant-time eviction.
 * SIMD: `doctor.py` `Vector Unit Inspection` ensures `_mm512` enabled; fallback to AVX2 256-bit.
 * GPU bit-identity proof: `qector-doctor` asserts wheel build flags match runtime CPUID; ensures CUDA UF produces identical $c$ as CPU UF-01 for graphlike codes , critical for validation.
@@ -284,7 +287,7 @@ In fault-tolerant roadmaps, memory coherence is finite. Threshold is necessary; 
 
 [7] P. Panteleev, G. Kalachev, "Asymptotically good quantum LDPC codes," *IEEE Trans. Inf. Th.* 68, 7334, 2022.
 
-Whitepaper mapping: `blossom.rs` $O(N^2_{\text{defects}})$, `sparse_blossom.rs` $O(E\log V)$ dynamic, `fast_uf.rs` $O(n\alpha(n))$ sub-µs, `bp_osd.rs` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$, `ambig_cluster.rs` $O(I_{bp}E+\sum2^{k_i})$, `space_time_decoder.rs` XOR diff $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, `auto_decoder.rs`, `cascade_decoder.rs` $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$, `two_stage_decoder.rs`, `streaming_decoder.rs` $S^{(t)}_c=\sum\lambda^k s_{c,t-k}$, `lookup_table.rs` $O(1)$ $n\le64$, `gnn_predecoder.rs` $w_{uv}=\text{softplus}(\text{MLP})$, `neural_predecoder.rs` Leaky-ReLU, `fusion_mwpm.rs` SolverSerial $>40$ defects, `cuda_batch.rs`/`opencl_batch.rs` bit-identical.
+Whitepaper mapping: `blossom.rs` $O(N^2_{\text{defects}})$, `sparse_blossom.rs` $O(E\log V)$ dynamic, `fast_uf.rs` $O(n\alpha(n))$ sub-µs, `bp_osd.rs` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$, `ambig_cluster.rs` $O(I_{bp}E+\sum2^{k_i})$, `space_time_decoder.rs` XOR diff $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, `auto_decoder.rs`, `cascade_decoder.rs` $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$, `two_stage_decoder.rs`, `streaming_decoder.rs` $S^{(t)}_c=\sum\lambda^k s_{c,t-k}$, `lookup_table.rs` $O(1)$ $m\le64$, `gnn_predecoder.rs` $w_{uv}=\text{softplus}(\text{MLP})$, `neural_predecoder.rs` Leaky-ReLU, `fusion_mwpm.rs` SolverSerial $>40$ defects, `cuda_batch.rs`/`opencl_batch.rs` bit-identical.
 
 
 *Next: Post 5 , BP-OSD Exact & Relay: When Loopy Hyperedges Need $GF(2)$ Rank.*  

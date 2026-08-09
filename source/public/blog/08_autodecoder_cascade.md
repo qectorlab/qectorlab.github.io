@@ -2,14 +2,14 @@
 
 Author: Guillaume Lessard , qector.store (iD01t Productions, Longueuil, QC)  
 Version: qector-decoder-v3 v1.0.0 , August 2026  
-Series: Post 8 / 12 , Decoding Orchestration & Hybrid Architecture
+Series: Post 8 of 10 , Decoding Orchestration & Hybrid Architecture
 
 
 ## Abstract
 
 Industrial quantum error correction must handle heterogeneous workloads: rotated surface codes at $d=3$ to $d=25$, single-shot ultra-fast decoding, massive Monte-Carlo batches of $10^8$ shots, and high-rate qLDPC codes with no geometric locality. No single decoder can be optimal across this entire Pareto frontier. In this paper we dissect the orchestration layer of qector-decoder-v3: the system that turns fifteen backends into one coherent engine.
 
-We present AutoDecoder, an $O(1)$ meta-routing dispatch that implements the decision tree $\text{is\_qLDPC?}\to\text{BPOSD}$, $N>1024\to\text{CPU/CUDA Batch}$, $d\le 3\to\text{LookupTable}$, else $\text{FastUnionFind}$. We prove it preserves syndrome faithfulness $Hc\equiv s\pmod{2}$ and correction class equivalence. We analyze CascadeDecoder, a hybrid two-stage prefilter achieving $\sim85$k dec/s by accepting Union-Find corrections when $Hc_{UF}\equiv s \land |c_{UF}|\le W_{\text{budget}}$ and escalating otherwise to exact MWPM or BP-OSD without logical degradation. We formalize TwoStageDecoder for CSS-correlated $X/Z$ noise, breaking $X/Z$ degeneracy via feedforward $s'_Z = s_Z \oplus H_Z c_X$. Finally we describe LookupTableDecoder $O(1)$ $45$ ns instant decoding for $d=3$ via $u64$-keyed syndrome hashing and FusionMWPMDecoder which fuses $>40$ defect subgraphs with SolverSerial for fault-tolerant thresholds at $p_{th}\approx1.03\%$.
+We present AutoDecoder, an $O(1)$ meta-routing dispatch that implements the decision tree $\text{is\_qLDPC?}\to\text{BPOSD}$, $N>1024\to\text{CPU/CUDA Batch}$, $d\le 3\to\text{LookupTable}$, else $\text{FastUnionFind}$. We prove it preserves syndrome faithfulness $Hc\equiv s\pmod{2}$ and correction class equivalence. We analyze CascadeDecoder, a hybrid two-stage prefilter achieving $\sim85$k dec/s by accepting Union-Find corrections when $Hc_{UF}\equiv s \land |c_{UF}|\le W_{\text{budget}}$ and escalating otherwise to exact MWPM or BP-OSD without logical degradation. We formalize TwoStageDecoder for CSS-correlated $X/Z$ noise, breaking $X/Z$ degeneracy via feedforward $s'_Z = s_Z \oplus H_{Z,X} c_X \pmod 2$. Finally we describe LookupTableDecoder $O(1)$ $45$ ns instant decoding for $d=3$ via $u64$-keyed syndrome hashing and FusionMWPMDecoder which fuses $>40$ defect subgraphs with SolverSerial for fault-tolerant thresholds at $p_{th}\approx1.03\%$.
 
 Collectively, this orchestration layer yields a decoding engine that tracks the optimal latency envelope from $45$ ns to sub-$\mu$s up to $d=11$, scales to $1.25\times10^7$ shots/s Rayon and $4.8\times10^7$ shots/s CUDA bit-identical, and maintains exact MWPM logical fidelity.
 
@@ -139,7 +139,7 @@ Let $p_{\text{acc}}(p)=\mathbb{P}[|c_{\text{UF}}|\le W_{\text{budget}}\land \tex
 
 $$T_{\text{cascade}}(p)=p_{\text{acc}}T_{\text{UF}} + (1-p_{\text{acc}})T_{\text{MWPM}}$$
 
-At $p=0.05$, $p_{\text{acc}}\approx0.92$ for rotated surface $d=7$, giving:
+At $p=0.05\%$, $p_{\text{acc}}\approx0.92$ for rotated surface $d=7$, giving:
 
 $$T_{\text{cascade}}\approx0.92\cdot0.35\mu s+0.08\cdot12\mu s\approx1.3\mu s \implies \sim 7.7\times10^5\text{ dec/s per core}$$
 
@@ -175,17 +175,17 @@ Implemented in `two_stage_decoder.rs`, TwoStageDecoder executes:
 $$
 \begin{aligned}
 c_X &\leftarrow \text{Decode}_X(s_X) \tag{2}\\
-s'_Z &= s_Z \oplus (H_Z c_X) \pmod{2} \tag{3}\\
+s'_Z &= s_Z \oplus (H_{Z,X} c_X) \pmod{2} \tag{3}\\
 c_Z &\leftarrow \text{Decode}_Z(s'_Z) \tag{4}\\
 c &= c_X \oplus c_Z \tag{5}
 \end{aligned}
 $$
 
-Interpretation: $X$ correction $c_X$ creates induced $Z$ syndrome via $H_Z$ because $Y$ errors flip both. Updating $s_Z$ removes this cross-talk. This is Equations 13-16 of the whitepaper.
+Interpretation: $X$ correction $c_X$ creates induced $Z$ syndrome via $H_{Z,X}$ because $Y$ errors flip both. Updating $s_Z$ removes this cross-talk. This is Equations 13-16 of the whitepaper.
 
 Theorem 4 (Two-Stage Syndrome Faithfulness). If $\text{Decode}_X$ and $\text{Decode}_Z$ each return syndrome-faithful corrections on their respective (updated) syndromes, then $c=c_X\oplus c_Z$ satisfies joint faithfulness $Hc \equiv s$.
 
-*Proof.* By construction $H_X c_X = s_X$ (stage1). Stage2 solves $H_Z c_Z = s'_Z = s_Z \oplus H_Z c_X$. Then $H_Z(c_X\oplus c_Z)=H_Zc_X\oplus s_Z\oplus H_Zc_X=s_Z$. Concatenating $c$, $H = \text{diag}(H_X, H_Z)$ yields $Hc = (s_X, s_Z)^T$. ∎
+*Proof.* By construction $H_X c_X = s_X$ (stage1). Stage2 solves $H_Z c_Z = s'_Z = s_Z \oplus H_{Z,X} c_X$. Then $H_Z(c_X\oplus c_Z)=H_Zc_X\oplus s_Z\oplus H_{Z,X}c_X=s_Z$. Concatenating $c$, $H = \text{diag}(H_X, H_Z)$ yields $Hc = (s_X, s_Z)^T$. ∎
 
 Theorem 5 (Degeneracy Breaking). Two-stage achieves higher threshold than independent decoding under depolarizing noise by distinguishing $Y$ errors as correlated pairs, reducing logical error rate by factor $\approx 1-p_Y/p$.
 
@@ -203,7 +203,7 @@ For $m\le64$ checks, syndrome $\in\{0,1\}^m$ packs into $u64$ key. Precomputatio
 Map: $\text{HashMap<u64, [u8; n/8]>}$ with nohash (identity hasher) → direct array lookup after perfect hashing for $d=3$.
 
 - Query: $key = \bigoplus_{i:s_i=1} 1<<i$, $c = \text{Table}[key]$ → $45$ ns measured on i9-14900K AVX-512, $0.045\mu s$ in Fig 8.
-- Space: $O(N_{\text{table}}\cdot n/8)$ bytes; for rotated surface $d=3$, $N_{\text{table}}=2^8=256$ entries, $32$ bytes each.
+- Space: $O(N_{\text{table}}\cdot n/8)$ bytes; for rotated surface $d=3$, $N_{\text{table}}=2^8=256$ entries, $2$ bytes each.
 - Exact: covers all weight-$1$ errors, thus attains optimal $d=3$ distance and MWPM threshold for that distance.
 
 This is used for magic-state distillation factories where millions of $d=3$ patches decoded in parallel. The whitepaper Table 1 lists LookupTableDecoder as $O(1)$ time, $O(N_{\text{table}}\cdot n/8)$ space, instant $O(1)$ lookup for low-weight errors, applicable to small $d\le5$ surface codes.

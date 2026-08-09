@@ -1,4 +1,4 @@
-﻿# Mathematical Foundations of Fault-Tolerant Quantum Computing: Stabilizer Codes, Syndrome Faithfulness, and the Logical Error Criterion
+# Mathematical Foundations of Fault-Tolerant Quantum Computing: Stabilizer Codes, Syndrome Faithfulness, and the Logical Error Criterion
 
 Author: Guillaume Lessard / qector.store  
 Affiliation: iD01t Productions, Longueuil, QC, Canada  
@@ -26,6 +26,7 @@ Keywords: Stabilizer codes, parity-check matrix, syndrome faithfulness, Ker/Im q
 9. [References](#9-references)
 
 
+<a id="1-introduction"></a>
 ### 1. Introduction: Why Linear Algebra Saves Quantum Computing
 
 Quantum information is fragile. A single $X$ or $Z$ flip on a physical qubit, with probability $p\sim10^{-3}$, can destroy a computation if uncorrected. The central miracle of quantum error correction (QEC) is that we can discretize a continuum of errors into binary strings $e \in \mathbb{F}_2^n$ and protect information by embedding it in a subspace defined by commuting measurements.
@@ -94,6 +95,7 @@ The Tanner graph is what decoders traverse: $q \in N(c)$ iff $H_{c,q}=1$. BP-OSD
 For fault-tolerance with noisy measurements, we consider $T$ rounds. Temporal detectors $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ define a 3D parity-check $H_{ST}$ with spatial edges weight $w_{space}= -\ln(p_{data}/(1-p_{data}))$ and temporal edges $w_{time}= -\ln(p_{meas}/(1-p_{meas}))$. The SpaceTimeDecoder decodes this 3D lattice in $O(TV^3)$.
 
 
+<a id="4-theorem-1-syndrome-faithfulness"></a>
 ### 4. Theorem 1: Syndrome Faithfulness $Hc \equiv s$ as Central Invariant
 
 We now formalize the invariant enforced across all 15 backends.
@@ -135,13 +137,14 @@ Why is it the cornerstone of `qector-decoder-v3`?
 
 - BlossomDecoder (exact MWPM $O(N_{defects}^3)$): solves minimum weight perfect matching on complete graph of defect nodes with weight $w_{uv}= \text{dist}(u,v)$ via $-\ln(p)$. By construction, the set of paths returned has boundary $s$. FusionMWPMDecoder uses `fusion_blossom::SolverSerial` decomposing graph when $N_{defects}>40$, preserving boundary invariant during fusion.
 - SparseBlossomDecoder $O(E\log V)$: event-driven region growth , regions expand until collision; still maintains that each grown cluster has even parity except for boundary to virtual node, exactly encoding $Hc=s$.
-- FastUnionFindDecoder (UF-01, zero-allocation $O(n\alpha(n))$): grows odd clusters, merges via rank-based union-find, then peels spanning forest leaf-to-root. The peeling rule flips edges to satisfy all internal syndromes, guaranteeing $Hc=s$ with no dynamic allocation in hot path , hence sub-$\mu$s latency to $d=11$ and 45 ns for LookupTable $d=3$ (on reference M2 hardware).
+- FastUnionFindDecoder (UF-01, zero-allocation $O(n\alpha(n))$): grows odd clusters, merges via rank-based union-find, then peels spanning forest leaf-to-root. The peeling rule flips edges to satisfy all internal syndromes, guaranteeing $Hc=s$ with no dynamic allocation in hot path , hence sub-$\mu$s latency to $d=11$ and 45 ns for LookupTable $d=3$ (on reference 16-core workstation).
 - BpOsdDecoder Exact & Relay: after BP iterations, sorts columns by reliability $|\gamma_q|$, extracts rank-$r$ basis $B\subset\{1,\dots,n\}$ via GF(2) Gaussian elimination ($r=\text{rank}(H)$), hard-decides free bits, and exhaustively tests $W$ least reliable basis columns to solve $H_B c_B = s_{eff}$. By rank-$r$ independence, solution exists iff $s_{eff}\in \mathrm{Im}(H)$ , which holds because previous correction $c_{fixed}$ was removed consistently (Theorem 4 proof).
 - AmbiguityClusterDecoder: clusters qubits into reliable $|\gamma_q|\ge\tau$ frozen and ambiguous $|\gamma_q|<\tau$, partitions ambiguous subgraph into disconnected $C_k$, each solved by exact enumeration or OSD-0 fallback on residual syndrome $s_{res}=s\oplus H c_{reliable}$. Sum of component solutions preserves global $Hc=s$ (Theorem 5).
 
 Failure to maintain faithfulness would manifest as a residual syndrome after correction , an error that would be detected immediately in the next round, turning a correctable error into a time-correlated failure. `qector-doctor` enforces AVX2/AVX-512 and wheel sync to prevent such silent bugs.
 
 
+<a id="6-the-logical-error-criterion"></a>
 ### 6. The Logical Error Criterion: $\mathrm{Ker}(H) \setminus \mathrm{Im}(H^T)$ and the Homological Quotient
 
 Returning to $\mathrm{Ker}(H)$ is necessary but not sufficient. Inside $\mathrm{Ker}(H)$ lies a smaller subspace $\mathrm{Im}(H^T)$ , the image of transpose, i.e., the span of stabilizer generators viewed as binary vectors. In Pauli language, $\mathrm{Im}(H^T) = \mathcal{S}$.
@@ -182,25 +185,26 @@ This is the central homology $H_1$ of the chain complex $C_2 \xrightarrow{H^T} C
 
 For depolarizing noise, $X$ and $Z$ errors are correlated. `TwoStageDecoder` in `qector-decoder-v3` executes:
 
-$$ c_X \leftarrow \text{Decode}_X(s_X),\quad s_Z' = s_Z \oplus H_Z c_X,\quad c_Z \leftarrow \text{Decode}_Z(s_Z'),\quad c = c_X \oplus c_Z $$
+$$ c_X \leftarrow \text{Decode}_X(s_X),\quad s_Z' = s_Z \oplus (H_{Z,X} c_X) \pmod 2,\quad c_Z \leftarrow \text{Decode}_Z(s_Z'),\quad c = c_X \oplus c_Z $$
 
 breaking degeneracy carefully while preserving overall faithfulness for CSS.
 
 
+<a id="7-implications-for-industrial-decoders"></a>
 ### 7. Implications for Industrial Decoders: Life in the Syndrome-Faithful Manifold
 
 All 15 backends of `qector-decoder-v3` operate under Theorem 1 & 2.
 
 Latency vs. Accuracy Tradeoff:
-- LookupTableDecoder: precomputes $m\le64$ syndrome $\to$ correction map into $u64$ key $O(1)$ nohash map, bit-packed $\lceil n/8\rceil$ bytes. Achieves 45 ns $d=3$ (on reference M2 hardware) , useful for fast feedback in photonic systems. Faithfulness by brute-force table generation ensuring $Hc=s$.
+- LookupTableDecoder: precomputes $m\le64$ syndrome $\to$ correction map into $u64$ key $O(1)$ nohash map, bit-packed $\lceil n/8\rceil$ bytes. Achieves 45 ns $d=3$ (on reference 16-core workstation) , useful for fast feedback in photonic systems. Faithfulness by brute-force table generation ensuring $Hc=s$.
 - FastUnionFindDecoder: UF-01 variant zero allocation, lock-free. Sub-$\mu$s to $d=11$. Throughput with Rayon 16-core AVX-512: $1.25\times10^7$ shots/s, scaling $O(n\alpha(n))$ near-optimal. Slight threshold degradation $\sim0.72\%$ vs MWPM $1.03\%$ but 10x lower latency.
 - BlossomDecoder: Exact Edmonds blossom $O(N_{defects}^3)$. Optimal for graphlike codes up to $N\sim100$ defects. Provides reference for threshold.
 - SparseBlossom, FusionBlossom: Event-driven $O(E\log V)$, sub-graph decomposition and fusion boundary merging , handles $>40$ defects with serial solver.
 - BpOsdDecoder Exact/Relay: For qLDPC, high-rate codes where matching fails. BP LLR message $m_{c\to q}= \prod_{q'\in N(c)\setminus q} \text{sgn}(m_{q'\to c})\times \phi(\sum \phi(|m_{q'\to c}|))$ with $\phi(x)=-\ln\tanh(x/2)=\ln\coth(x/2)$. Exact has $O(r^3+W^{osd\_order})$, Relay does layered serial $O(I_{relay}E+r^3)$ rapid convergence on loopy graphs.
 - GNNPredecoder / NeuralPredecoder: 3-layer MPNN $w_{uv}= \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$ and 3-layer Leaky-ReLU MLP for LLR edge reweighting prior to matching. Still final stage is faithful MWPM/UF ensuring invariant.
 - StreamingDecoder: sliding window $W$ with exponential decay $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda_c^k s_{c,t-k}$ naturally flushes historical errors $O(W\cdot N)$ constant-time $O(1)$ window.
-- AutoDecoder: meta-routing $O(1)$ dispatch based on $(d,p,N,topology)$ , if $N>1024$ $\to$ CPU/CUDA batch, $d\le3$ $\to$ Lookup, else UF. Enables $4.8\times10^7$ CUDA batch throughput for $N\ge65536$ bit-identical to CPU UF (Theorem 6: VRAM partitioned into isolated state buffers $S_{2i},S_{8i}$, deterministic rank-based UF without atomic competition).
-- CascadeDecoder: $ \sim85k$ dec/s pre-filter (on reference M2 hardware): accepts $c_{UF}$ if $(Hc_{UF}\equiv s)\land(|r_{UF}|\le W_{budget})$, else escalates to exact Blossom/BP-OSD.
+- AutoDecoder: meta-routing $O(1)$ dispatch based on $(d,p,N,topology)$ , if $N>1024$ $\to$ CPU/CUDA batch, $d\le3$ $\to$ Lookup, else UF. Enables $4.8\times10^7$ CUDA batch throughput for $N\ge65536$ bit-identical to CPU UF (Theorem 6: VRAM partitioned into isolated state buffers $S_{32},S_8$, deterministic rank-based UF without atomic competition).
+- CascadeDecoder: $ \sim85k$ dec/s pre-filter (on reference 16-core workstation): accepts $c_{UF}$ if $(Hc_{UF}\equiv s)\land(|r_{UF}|\le W_{budget})$, else escalates to exact Blossom/BP-OSD.
 
 Thus syndrome faithfulness is not theoretical nicety , it is the branching condition for cascade, the loop invariant for UF peeling, the solvability condition for OSD $H_B c_B = s_{eff}$, and the isolation condition for CUDA bit-identicalness.
 
@@ -215,7 +219,7 @@ We traced the core invariant of fault-tolerant quantum computing from Pauli comm
 2. Syndrome Faithfulness $Hc\equiv s$ forces $c\oplus e\in\mathrm{Ker}(H)$ , the system back into code space.
 3. Logical Criterion $\mathrm{Ker}(H)\setminus\mathrm{Im}(H^T)$ distinguishes trivial correction (stabilizer) from fatal logical failure.
 
-This triad underpins threshold theorems, decoder design, and the engineering of `qector-decoder-v3`: 15 backends, Rust + PyO3 + Rayon + AVX-512 + CUDA/OpenCL, proving that mathematical rigor and industrial throughput ($>4.5\times10^7$ shots/s) can coexist.
+This triad underpins threshold theorems, decoder design, and the engineering of `qector-decoder-v3`: 15 backends, Rust + PyO3 + Rayon + AVX-512 + CUDA/OpenCL, proving that mathematical rigor and industrial throughput ($>4.8\times10^7$ shots/s) can coexist.
 
 In Post 2, we will extend this static picture to graphlike decoding: MWPM vs Union-Find, peeling forests, and why $O(n\alpha(n))$ can rival $O(N^3)$ at practical noise.
 

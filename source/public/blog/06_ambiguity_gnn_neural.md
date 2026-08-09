@@ -2,12 +2,12 @@
 
 Author: Guillaume Lessard, iD01t Productions , [qector.store](https://qector.store)  
 Version: qector-decoder-v3 v1.0.0 (Aug 2026, Longueuil, QC)  
-Series: Post 6 / 12, Deep Dive into Industrial-Grade QEC Decoding
+Series: Post 6 of 10, Deep Dive into Industrial-Grade QEC Decoding
 
 
 ### Abstract
 
-Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycles and degeneracy create non-convergent marginals that OSD must rescue globally at $O(r^3)$ cost. In this post we dissect the AI-augmented remedy implemented in `qector-decoder-v3`: AmbiguityClusterDecoder, GNNPredecoder (3-layer MPNN) and NeuralPredecoder (3-layer MLP). We formalize the reliability partition $|\gamma_q| < \tau$, the residual syndrome projection $s_{\text{res}} = s \oplus H e_{\text{reliable}}$, prove Theorem 5 on global syndrome faithfulness, derive the MPNN edge-weight readout $w_{uv} = \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and show how a Leaky-ReLU MLP pre-filter enables the CascadeDecoder to achieve ~85k dec/s with preserved BP-OSD accuracy. On bivariate bicycle [[144,12,12]] codes we recover ~30% threshold, from 0.72% to 0.94%, while dropping mean cluster enumeration from $2^n$ to $\sum_i 2^{k_i}$ with $k_i \le 6$ at $p=1\%$. The engine is Rust + PyO3 C-extensions, Rayon lock-free work-stealing, AVX-512 SIMD, and bit-identical CUDA batching at $>4.7\times10^7$ shots/s.
+Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycles and degeneracy create non-convergent marginals that OSD must rescue globally at $O(r^3)$ cost. In this post we dissect the AI-augmented remedy implemented in `qector-decoder-v3`: AmbiguityClusterDecoder, GNNPredecoder (3-layer MPNN) and NeuralPredecoder (3-layer MLP). We formalize the reliability partition $|\gamma_q| < \tau$, the residual syndrome projection $s_{\text{res}} = s \oplus H e_{\text{reliable}}$, prove Theorem 5 on global syndrome faithfulness, derive the MPNN edge-weight readout $w_{uv} = \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and show how a Leaky-ReLU MLP pre-filter enables the CascadeDecoder to achieve ~85k dec/s with preserved BP-OSD accuracy. On bivariate bicycle [[144,12,12]] codes we recover ~30% threshold, from 0.72% to 0.94%, while dropping mean cluster enumeration from $2^n$ to $\sum_i 2^{k_i}$ with $k_i \le 6$ at $p=1\%$. The engine is Rust + PyO3 C-extensions, Rayon lock-free work-stealing, AVX-512 SIMD, and bit-identical CUDA batching at $>4.8\times10^7$ shots/s.
 
 Keywords: Quantum LDPC, BP-OSD, Ambiguity Clustering, Graph Neural Network, MPNN, Neural Predecoder, Syndrome Faithfulness, qLDPC Decoder, qector-decoder-v3
 
@@ -109,11 +109,11 @@ $$
 O\left(I_{bp}E + \sum_{i=1}^{N_c} 2^{k_i}\right) \quad \text{vs} \quad O(I_{bp}E + r^3 + W^{osd\_order})
 $$
 
-At $p=0.005$ on [[144,12,12]] BB code, mean $k_i = 2.3$, 92% of clusters $k_i \le 4$. At $p=1\%$, mean $k_i \approx 4.1$, still $\sum 2^{k_i} \ll r^3$. This explains the second panel in Fig. 1: orders of magnitude drop vs global OSD.
+At $p=0.005$ on [[144,12,12]] BB code, mean $k_i = 2.7$, 92% of clusters $k_i \le 4$. At $p=1\%$, mean $k_i \approx 4.1$, still $\sum 2^{k_i} \ll r^3$. This explains the second panel in Fig. 1: orders of magnitude drop vs global OSD.
 
 ![Ambiguity Scaling](graphs/06_ai_ambiguity_scaling.png)
 
-*Figure 1: Left , cluster size distribution decays exponentially; Right , localized enumeration beats global Gaussian elimination by ~100�, at $p\le1\%$.*
+*Figure 1: Left , cluster size distribution decays exponentially; Right , localized enumeration beats global Gaussian elimination by ~100× at $p\le1\%$.*
 
 Implementation notes in `qector-decoder-v3`:
 
@@ -242,11 +242,11 @@ Systems win: PyO3 Python call overhead eliminated via maturin pre-compiled wheel
 
 `qector-decoder-v3` stack:
 
-- Core: Rust lib with 15 backends: BlossomDecoder $O(N^3)$, SparseBlossom $O(E\log V)$, FastUnionFind UF-01 zero-allocation $O(n\alpha(n))$, BpOsdDecoder Exact & Relay $O(I_{bp}E+r^3)$, AmbiguityCluster $O(I_{bp}E+\sum2^{k_i})$, SpaceTimeDecoder $O(TV^3)$ with $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, AutoDecoder $O(1)$ dispatch, Cascade (~85k dec/s), TwoStage ($c_X\leftarrow\text{Decode}_X(s_X), s'_Z=s_Z\oplus(H_{Z,X}c_X), c_Z\leftarrow\text{Decode}_Z(s'_Z), c=c_X\oplus c_Z$), Streaming sliding window $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ (17) with decay $\lambda^k$, LookupTable $O(1)$ 45ns d=3, GNN, Neural, FusionMWPM (fusion_blossom SolverSerial >40 defects), CUDABatch/OpenCLBatch bit-identical >4.5e7 shots/s.
+- Core: Rust lib with 15 backends: BlossomDecoder $O(N^3)$, SparseBlossom $O(E\log V)$, FastUnionFind UF-01 zero-allocation $O(n\alpha(n))$, BpOsdDecoder Exact & Relay $O(I_{bp}E+r^3)$, AmbiguityCluster $O(I_{bp}E+\sum2^{k_i})$, SpaceTimeDecoder $O(TV^3)$ with $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, AutoDecoder $O(1)$ dispatch, Cascade (~85k dec/s), TwoStage ($c_X\leftarrow\text{Decode}_X(s_X), s'_Z=s_Z\oplus(H_{Z,X}c_X), c_Z\leftarrow\text{Decode}_Z(s'_Z), c=c_X\oplus c_Z$), Streaming sliding window $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ (17) with decay $\lambda^k$, LookupTable $O(1)$ 45ns d=3, GNN, Neural, FusionMWPM (fusion_blossom SolverSerial >40 defects), CUDABatch/OpenCLBatch bit-identical >4.8e7 shots/s.
 
 - Parallelism: Rayon work-stealing thread pools, no mutex on hot path. Syndrome batch $N\ge65536$ saturates 16-core to $1.25\times10^7$ dec/s, CUDA to $4.8\times10^7$.
 
-- Theorem 6 (GPU Bit-Identical Invariance): Partitioned VRAM buffers $(S_2..S_8)$, deterministic rank-based Union-Find, leaf-to-root peeling without atomic competition → `uf_decode_batch` ≡ CPU `FastUnionFind`. Verified by `doctor.py`.
+- Theorem 6 (GPU Bit-Identical Invariance): Partitioned VRAM buffers $(S_{32},S_8)$, deterministic rank-based Union-Find, leaf-to-root peeling without atomic competition → `uf_decode_batch` ≡ CPU `FastUnionFind`. Verified by `doctor.py`.
 
 Latency vs distance curve shows Neural predecoder sub-µs up to d=19, enabling real-time control loop <1 µs for d=11 surface code with UF-01.
 
@@ -262,7 +262,7 @@ Empirical protocol: rotated surface d=3,5,7,9, BB code [144,12,12], 10M shots pe
 Key numbers:
 
 - AmbiguityCluster mean $k_i$: 1.8 (p=0.1%), 2.7 (0.5%), 4.1 (1.0%). 99th percentile $k_i\le9$ at 1%.
-- GNN improvement: $P_L$ @ p=0.6% d=7: BP-OSD $2.1\times10^{-3}$ → GNN+Cluster $7.4\times10^{-4}$ (2.8�,).
+- GNN improvement: $P_L$ @ p=0.6% d=7: BP-OSD $2.1\times10^{-3}$ → GNN+Cluster $7.4\times10^{-4}$ (2.8×).
 - Neural cascade hit rate: 91% at p=0.001 d=5, 63% at p=0.005.
 - End-to-end: AutoDecoder picks Neural→UF for surface codes, GNN→Ambiguity for qLDPC, SpaceTime for $T>1$.
 
@@ -278,7 +278,7 @@ Furthermore, learned $w_{uv}$ is interpretable: softplus readout concentrates ~0
 <a id="10-conclusion"></a>
 ### 10. Conclusion
 
-We have dissected the AI-augmented layer of `qector-decoder-v3`: reliability partition $|\gamma_q|<\tau$, residual projection $s_{\text{res}}=s\oplus H e_{\text{reliable}}$, Theorem 5 guaranteeing $Hc=s$, MPNN dynamic weights $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and fast LeakyReLU MLP predecoder enabling 85k dec/s Cascade. Graphs show exponential cluster size decay, 100�, complexity reduction vs global OSD, and 30% threshold recovery on BB codes.
+We have dissected the AI-augmented layer of `qector-decoder-v3`: reliability partition $|\gamma_q|<\tau$, residual projection $s_{\text{res}}=s\oplus H e_{\text{reliable}}$, Theorem 5 guaranteeing $Hc=s$, MPNN dynamic weights $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and fast LeakyReLU MLP predecoder enabling 85k dec/s Cascade. Graphs show exponential cluster size decay, 100× complexity reduction vs global OSD, and 30% threshold recovery on BB codes.
 
 Industrial QEC needs both theorems and throughput. With Rust + PyO3 + Rayon + AVX-512 + bit-identical CUDA, `qector-decoder-v3 v1.0.0` delivers both.
 

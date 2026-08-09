@@ -135,7 +135,7 @@ Why is it the cornerstone of `qector-decoder-v3`?
 
 - BlossomDecoder (exact MWPM $O(N_{defects}^3)$): solves minimum weight perfect matching on complete graph of defect nodes with weight $w_{uv}= \text{dist}(u,v)$ via $-\ln(p)$. By construction, the set of paths returned has boundary $s$. FusionMWPMDecoder uses `fusion_blossom::SolverSerial` decomposing graph when $N_{defects}>40$, preserving boundary invariant during fusion.
 - SparseBlossomDecoder $O(E\log V)$: event-driven region growth , regions expand until collision; still maintains that each grown cluster has even parity except for boundary to virtual node, exactly encoding $Hc=s$.
-- FastUnionFindDecoder (UF-01, zero-allocation $O(n\alpha(n))$): grows odd clusters, merges via rank-based union-find, then peels spanning forest leaf-to-root. The peeling rule flips edges to satisfy all internal syndromes, guaranteeing $Hc=s$ with no dynamic allocation in hot path , hence sub-$\mu$s latency to $d=11$ and 45 ns for LookupTable $d=3$ (on reference M2 hardware).
+- FastUnionFindDecoder (UF-01, zero-allocation $O(n\alpha(n))$): grows odd clusters, merges via rank-based union-find, then peels spanning forest leaf-to-root. The peeling rule flips edges to satisfy all internal syndromes, guaranteeing $Hc=s$ with no dynamic allocation in hot path , hence sub-$\mu$s latency to $d=11$ and 45 ns for LookupTable $d=3$ (on reference 16-core workstation).
 - BpOsdDecoder Exact & Relay: after BP iterations, sorts columns by reliability $|\gamma_q|$, extracts rank-$r$ basis $B\subset\{1,\dots,n\}$ via GF(2) Gaussian elimination ($r=\text{rank}(H)$), hard-decides free bits, and exhaustively tests $W$ least reliable basis columns to solve $H_B c_B = s_{eff}$. By rank-$r$ independence, solution exists iff $s_{eff}\in \mathrm{Im}(H)$ , which holds because previous correction $c_{fixed}$ was removed consistently (Theorem 4 proof).
 - AmbiguityClusterDecoder: clusters qubits into reliable $|\gamma_q|\ge\tau$ frozen and ambiguous $|\gamma_q|<\tau$, partitions ambiguous subgraph into disconnected $C_k$, each solved by exact enumeration or OSD-0 fallback on residual syndrome $s_{res}=s\oplus H c_{reliable}$. Sum of component solutions preserves global $Hc=s$ (Theorem 5).
 
@@ -182,7 +182,7 @@ This is the central homology $H_1$ of the chain complex $C_2 \xrightarrow{H^T} C
 
 For depolarizing noise, $X$ and $Z$ errors are correlated. `TwoStageDecoder` in `qector-decoder-v3` executes:
 
-$$ c_X \leftarrow \text{Decode}_X(s_X),\quad s_Z' = s_Z \oplus H_Z c_X,\quad c_Z \leftarrow \text{Decode}_Z(s_Z'),\quad c = c_X \oplus c_Z $$
+$$ c_X \leftarrow \text{Decode}_X(s_X),\quad s_Z' = s_Z \oplus (H_{Z,X} c_X) \pmod 2,\quad c_Z \leftarrow \text{Decode}_Z(s_Z'),\quad c = c_X \oplus c_Z $$
 
 breaking degeneracy carefully while preserving overall faithfulness for CSS.
 
@@ -192,15 +192,15 @@ breaking degeneracy carefully while preserving overall faithfulness for CSS.
 All 15 backends of `qector-decoder-v3` operate under Theorem 1 & 2.
 
 Latency vs. Accuracy Tradeoff:
-- LookupTableDecoder: precomputes $m\le64$ syndrome $\to$ correction map into $u64$ key $O(1)$ nohash map, bit-packed $\lceil n/8\rceil$ bytes. Achieves 45 ns $d=3$ (on reference M2 hardware) , useful for fast feedback in photonic systems. Faithfulness by brute-force table generation ensuring $Hc=s$.
+- LookupTableDecoder: precomputes $m\le64$ syndrome $\to$ correction map into $u64$ key $O(1)$ nohash map, bit-packed $\lceil n/8\rceil$ bytes. Achieves 45 ns $d=3$ (on reference 16-core workstation) , useful for fast feedback in photonic systems. Faithfulness by brute-force table generation ensuring $Hc=s$.
 - FastUnionFindDecoder: UF-01 variant zero allocation, lock-free. Sub-$\mu$s to $d=11$. Throughput with Rayon 16-core AVX-512: $1.25\times10^7$ shots/s, scaling $O(n\alpha(n))$ near-optimal. Slight threshold degradation $\sim0.72\%$ vs MWPM $1.03\%$ but 10x lower latency.
 - BlossomDecoder: Exact Edmonds blossom $O(N_{defects}^3)$. Optimal for graphlike codes up to $N\sim100$ defects. Provides reference for threshold.
 - SparseBlossom, FusionBlossom: Event-driven $O(E\log V)$, sub-graph decomposition and fusion boundary merging , handles $>40$ defects with serial solver.
 - BpOsdDecoder Exact/Relay: For qLDPC, high-rate codes where matching fails. BP LLR message $m_{c\to q}= \prod_{q'\in N(c)\setminus q} \text{sgn}(m_{q'\to c})\times \phi(\sum \phi(|m_{q'\to c}|))$ with $\phi(x)=-\ln\tanh(x/2)=\ln\coth(x/2)$. Exact has $O(r^3+W^{osd\_order})$, Relay does layered serial $O(I_{relay}E+r^3)$ rapid convergence on loopy graphs.
 - GNNPredecoder / NeuralPredecoder: 3-layer MPNN $w_{uv}= \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$ and 3-layer Leaky-ReLU MLP for LLR edge reweighting prior to matching. Still final stage is faithful MWPM/UF ensuring invariant.
 - StreamingDecoder: sliding window $W$ with exponential decay $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda_c^k s_{c,t-k}$ naturally flushes historical errors $O(W\cdot N)$ constant-time $O(1)$ window.
-- AutoDecoder: meta-routing $O(1)$ dispatch based on $(d,p,N,topology)$ , if $N>1024$ $\to$ CPU/CUDA batch, $d\le3$ $\to$ Lookup, else UF. Enables $4.8\times10^7$ CUDA batch throughput for $N\ge65536$ bit-identical to CPU UF (Theorem 6: VRAM partitioned into isolated state buffers $S_{2i},S_{8i}$, deterministic rank-based UF without atomic competition).
-- CascadeDecoder: $ \sim85k$ dec/s pre-filter (on reference M2 hardware): accepts $c_{UF}$ if $(Hc_{UF}\equiv s)\land(|r_{UF}|\le W_{budget})$, else escalates to exact Blossom/BP-OSD.
+- AutoDecoder: meta-routing $O(1)$ dispatch based on $(d,p,N,topology)$ , if $N>1024$ $\to$ CPU/CUDA batch, $d\le3$ $\to$ Lookup, else UF. Enables $4.8\times10^7$ CUDA batch throughput for $N\ge65536$ bit-identical to CPU UF (Theorem 6: VRAM partitioned into isolated state buffers $S_{32},S_8$, deterministic rank-based UF without atomic competition).
+- CascadeDecoder: $ \sim85k$ dec/s pre-filter (on reference 16-core workstation): accepts $c_{UF}$ if $(Hc_{UF}\equiv s)\land(|r_{UF}|\le W_{budget})$, else escalates to exact Blossom/BP-OSD.
 
 Thus syndrome faithfulness is not theoretical nicety , it is the branching condition for cascade, the loop invariant for UF peeling, the solvability condition for OSD $H_B c_B = s_{eff}$, and the isolation condition for CUDA bit-identicalness.
 
@@ -215,7 +215,7 @@ We traced the core invariant of fault-tolerant quantum computing from Pauli comm
 2. Syndrome Faithfulness $Hc\equiv s$ forces $c\oplus e\in\mathrm{Ker}(H)$ , the system back into code space.
 3. Logical Criterion $\mathrm{Ker}(H)\setminus\mathrm{Im}(H^T)$ distinguishes trivial correction (stabilizer) from fatal logical failure.
 
-This triad underpins threshold theorems, decoder design, and the engineering of `qector-decoder-v3`: 15 backends, Rust + PyO3 + Rayon + AVX-512 + CUDA/OpenCL, proving that mathematical rigor and industrial throughput ($>4.5\times10^7$ shots/s) can coexist.
+This triad underpins threshold theorems, decoder design, and the engineering of `qector-decoder-v3`: 15 backends, Rust + PyO3 + Rayon + AVX-512 + CUDA/OpenCL, proving that mathematical rigor and industrial throughput ($>4.8\times10^7$ shots/s) can coexist.
 
 In Post 2, we will extend this static picture to graphlike decoding: MWPM vs Union-Find, peeling forests, and why $O(n\alpha(n))$ can rival $O(N^3)$ at practical noise.
 
@@ -274,7 +274,7 @@ Keywords: Quantum Error Correction, Surface Code, MWPM, Edmonds Blossom Algorith
 
 Topological quantum memory [1,2] reduces quantum error correction to a classical statistical mechanics problem on a graph: defects , violations of stabilizer checks , must be paired at minimum cost. For graphlike CSS codes (planar and rotated surface, toric, unrotated), the decoding problem is precisely minimum-weight perfect matching on a graph whose vertices are defects plus boundary virtual nodes.
 
-While approximate Union-Find achieves $O(n\alpha(n))$ and sub-microsecond latency up to $d=11$ (on reference M2 hardware), it sacrifices ~30% of threshold ($0.72\%$ vs $1.03\%$ on rotated surface $d=3,5,7,9$). In fault-tolerant regimes near threshold, this factor translates to orders of magnitude in logical error rate $P_L$. The `BlossomDecoder` exists as the reference truth: exact MWPM with provable LP optimality, against which all heuristic backends (`SparseBlossomDecoder`, `FastUnionFindDecoder`, `CascadeDecoder`, `GNNPredecoder`) are validated.
+While approximate Union-Find achieves $O(n\alpha(n))$ and sub-microsecond latency up to $d=11$ (on reference 16-core workstation), it sacrifices ~30% of threshold ($0.72\%$ vs $1.03\%$ on rotated surface $d=3,5,7,9$). In fault-tolerant regimes near threshold, this factor translates to orders of magnitude in logical error rate $P_L$. The `BlossomDecoder` exists as the reference truth: exact MWPM with provable LP optimality, against which all heuristic backends (`SparseBlossomDecoder`, `FastUnionFindDecoder`, `CascadeDecoder`, `GNNPredecoder`) are validated.
 
 `BlossomDecoder` is not a pedagogical implementation of NetworkX. It is a production engine: PyO3 C-extension via maturin, lock-free Rayon thread pools for $1.25\times10^7$ shots/s throughput on 16-core AVX-512, fused batch kernels, and bit-identical agreement with `CUDABatchDecoder`.
 
@@ -356,7 +356,7 @@ Duality theorem: At any feasible pair $(x,y)$, $\sum w_e x_e \ge \sum y_v + \sum
 
 ### 4.1 Complexity Budget
 
-Classical Edmonds with straightforward dual updates: $O(N^2M)=O(N^4)$ for dense $K_N$. With Slack-structured heaps and incremental tight-edge maintenance, `BlossomDecoder` attains $O(N^3)$ as listed in qector-decoder-v3 decoder matrix (Table 1). For surface code $d=11$, $N_{avg}\approx 40$ at $p=0.1\%$, worst-case $N\sim 200$ at $p=1\%$ → 8 million operations, ~50 µs AVX-512.
+Classical Edmonds with straightforward dual updates: $O(N^2M)=O(N^4)$ for dense $K_N$. With Slack-structured heaps and incremental tight-edge maintenance, `BlossomDecoder` attains $O(N^3)$ as listed in qector-decoder-v3 decoder matrix (Table 1). For surface code $d=11$, $N_{avg}\approx 2$ at $p=1\%$, worst-case $N\sim 25$ → ~16k operations, ~3 µs AVX-512.
 
 ### 4.2 Core Loop (Primal-Dual)
 
@@ -389,7 +389,7 @@ Blossom contraction uses union-find with parity , `blossom_parent`, `blossom_bas
 
 ## 5. Geometric Sparsification: $k=\max(12,\lceil k_{mult}\sqrt{n_{defects}}\rceil)$
 
-Complete graph $K_N$ has $N(N-1)/2$ edges: $N=1000$ → 500k edges, $N=10k$ (large $d=21$ at 1% $p$) → 50M edges , memory and $O(N^3)$ impossible.
+Complete graph $K_N$ has $N(N-1)/2$ edges: $N=1000$ → 500k edges, $N=10k$ (pathological high-noise burst, far above operating points) → 50M edges , memory and $O(N^3)$ impossible.
 
 Observation: MWPM on geometrically embedded defects (2D lattice + boundary) is dominated by short edges. Percolation threshold ensures long edges exponentially suppressed by LLR weight.
 
@@ -400,11 +400,11 @@ k(N) = \max\big(12,\ \lceil k_{mult}\sqrt{N_{defects}}\ \rceil\big), \quad k_{mu
 \tag{4}
 $$
 
-Why sqrt? Random Euclidean matching theory (Ajtai-Komlós-Tusnád) shows optimal matching length scale $\sim 1/\sqrt{\rho}$, $\rho$ defect density → degree needed to guarantee containing optimal edges grows as $\sqrt{N}$. 12 is floor ensuring connectivity for low-density regimes ($p\sim0.1\%$, $N\sim20$).
+Why sqrt? Random Euclidean matching theory (Ajtai-Komlós-Tusnády) shows optimal matching length scale $\sim 1/\sqrt{\rho}$, $\rho$ defect density → degree needed to guarantee containing optimal edges grows as $\sqrt{N}$. 12 is floor ensuring connectivity for low-density regimes (small $N\le 12$).
 
 Implementation: KD-tree over defect coordinates (including time for `SpaceTimeDecoder` extension), AVX-512 $k$-selection via introselect, yields $E_{sparse}=kN/2 = O(N^{1.5})$.
 
-Figure 2 demonstrates runtime crossover: dense cubic vs sparse $N^{1.5}\log N$ , at $N=1000$, ~100�, speedup.
+Figure 2 demonstrates runtime crossover: dense cubic vs sparse $N^{1.5}\log N$ , at $N=1000$, ~100× speedup.
 
 ![Runtime Scaling](graphs/02_blossom_runtime_scaling.png)
 *Figure 2: Single-shot latency vs $N_{defects}$ for complete $O(N^3)$ vs $k$-NN sparsified matching. $k=\max(12,\lceil1.5\sqrt{N}\rceil)$ yields $O(N^{1.5}\log N)$ empirical scaling while preserving exactness.*
@@ -479,14 +479,14 @@ Implications for qector-decoder:
 
 Practical deployment strategy in `AutoDecoder` $O(1)$ dispatch:
 
-- $N\le12$: `LookupTableDecoder` O(1) 45 ns d=3 (on reference M2 hardware)
+- $N\le12$: `LookupTableDecoder` O(1) 45 ns d=3 (on reference 16-core workstation)
 - $12 < N \le 1024$: `FastUnionFindDecoder` or `CascadeDecoder` prefilter (~85k dec/s on reference hardware)
 - $N > 1024$ batch: `CUDABatchDecoder` bit-identical batch (>4.8e7 shots/s for $N\ge 65536$)
 - Threshold-critical or low-$p$ logical fidelity audits: escalate to `BlossomDecoder` exact
 
 `qector-doctor` validates AVX-512 (`Vector Unit Inspection`), GPU & license tier, wheel sync ensuring `blossom.so` hash matches source tree , preventing stale SIMD dispatch.
 
-The $k$-NN rule (4) allows `BlossomDecoder` to remain exact up to $d=19$ with $N\sim 1500$ within 100 ms, bridging gap to `SparseBlossomDecoder` O(E log V).
+The $k$-NN rule (4) allows `BlossomDecoder` to remain exact up to $d=19$ with $N\sim 350$ within 100 ms, bridging gap to `SparseBlossomDecoder` O(E log V).
 
 ## 8. Conclusion
 
@@ -517,14 +517,14 @@ Future: extension to correlated $X/Z$ via `TwoStageDecoder` (13)-(16) followed b
 # Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
 
 Author: Guillaume Lessard , qector.store / iD01t Productions (Longueuil, QC, Canada)  
-Series: qector-decoder-v3 Deep Dive , Post 3 of N  
+Series: qector-decoder-v3 Deep Dive , Post 3 of 10  
 Version: v1.0.0 , August 2026  
 Engine: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing, AVX-512 SIMD
 
 
 ### Abstract
 
-Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50�, reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
+Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50× reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
 
 Keywords: Sparse Blossom, MWPM, Quantum Error Correction, Surface Code, Edmonds' Algorithm, Dual Variables, Event-Driven Decoding, Radix Heap, O(E log V), Region Growth, qector-decoder-v3
 
@@ -590,13 +590,13 @@ State machine:
 
 Formally, for a blossom $B$ formed at time $t_B$ containing regions $\{R_i\}$, we maintain invariant:
 
-$$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\text{Inner}(B)}(-1), 0\right)dt' $$
+$$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\text{Inner}(B)}(-1)\right)dt' $$
 
 ensuring that for any internal tight edge $uv$ inside $B$, $y_u(t)+y_v(t)=w_{uv}$ is preserved because outer +1 and inner -1 cancel.
 
 Theorem 1 (Region Growth Invariant). Let $\mathcal{R}(t)$ be set of active regions at time $t$ obeying (1). If all tight edges are tracked and no dual constraint is violated for $t'<t$, then the dual solution $y(t)$ remains feasible for all $t$.
 
-*Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt, dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
+*Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt - dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
 
 This local dynamics eliminates $O(N^2)$ dual updates; only regions in conflict change.
 
@@ -648,7 +648,7 @@ $$T_{radix}=O(E_{adj}+E_{tight}+ V_D \log C) \approx O(E\log V) \text{ practical
 
 *Proof Sketch.* Each underlying graph edge is relaxed at most once during multi-source Dijkstra growth of regions (similar to Dial's algorithm). Each defect is inserted into tight graph when its region frontier meets another's, generating $O(\text{deg})$ events. Queue contains at most $O(E)$ events. Each tight edge causes at most O(1) blossom/tree operations (union-find for blossom nesting uses $\alpha(V)$). Hence dominant cost is queue ops. Binary heap gives log factor; radix heap leverages integer monotone queue (pop sequence is non-decreasing $t^*$) giving amortized $O(1)$. ∎
 
-Figure 2 right shows measured pop latency: radix heap maintains ~50-200 ns up to 4096 pending events, vs. binary heap's 250-2500 ns superlinear growth, directly translating to 2.8�, single-shot latency improvement in qector benchmarks at $d=11$ (on reference M2 hardware).
+Figure 2 right shows measured pop latency: radix heap maintains ~50-200 ns up to 4096 pending events, vs. binary heap's 250-2500 ns superlinear growth, directly translating to 2.8× single-shot latency improvement in qector benchmarks at $d=11$ (on reference 16-core workstation).
 
 ![Event Queue](./graphs/03_sparse_event_queue_radix.png)
 
@@ -689,7 +689,7 @@ Relative to 15 backends table: SparseBlossom offers exact MWPM accuracy (like Bl
 
 ### 8. Implications for Fault Tolerance
 
-Real-time decoding requires per-round latency <1μs for superconducting qubits ($T_{cycle}≈1μs$). At $d=11$, dense Blossom is ~15-30μs, SparseBlossom ~1-3μs, FastUnionFind UF-01 0.3-0.8μs in qector benchmarks (on reference M2 hardware).
+Real-time decoding requires per-round latency <1μs for superconducting qubits ($T_{cycle}≈1μs$). At $d=11$, dense Blossom is ~15-30μs, SparseBlossom ~1-3μs, FastUnionFind UF-01 0.3-0.8μs in qector benchmarks (on reference 16-core workstation).
 
 SparseBlossom thus closes the accuracy-latency gap: it retains MWPM threshold 1.03% (vs UF 0.72%) while meeting latency constraints up to ~d=15 when combined with Cascade pre-filter (~85k dec/s on reference hardware, accepts UF if $|c_{UF}|≤W_{budget}$).
 
@@ -699,7 +699,7 @@ For upcoming qLDPC codes (high-rate, ambiguous), sparse matching extends via `Am
 
 Sparse Blossom reframes MWPM from dense cubic matching to kinetic geometry: regions grow with $dy/dt=+1$, freeze, or shrink, colliding at predictable $t^*$ times. By queuing only those events with a radix heap, we achieve $O(E\log V)$ exact decoding, exploring <3% of edges at practical distances.
 
-In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap, zero-alloc reuse, and PyO3 Python bindings make it production-grade. Combined with `FastUnionFindDecoder`, `BpOsdDecoder`, `GNNPredecoder`, and GPU batch engines >4.5e7 shots/s, it forms a tiered decoding fabric bridging theoretical thresholds and large-scale hardware analysis.
+In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap, zero-alloc reuse, and PyO3 Python bindings make it production-grade. Combined with `FastUnionFindDecoder`, `BpOsdDecoder`, `GNNPredecoder`, and GPU batch engines >4.8e7 shots/s, it forms a tiered decoding fabric bridging theoretical thresholds and large-scale hardware analysis.
 
 Next in series: Post 4 , FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 
@@ -718,7 +718,7 @@ Next in series: Post 4 , FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 # Zero-Allocation Fast Union-Find UF-01: Sub-Microsecond Decoding for Fault-Tolerant Surface Codes
 
 Author: Guillaume Lessard / qector.store  
-Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 4  
+Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 4 of 10  
 Date: August 2026 | iD01t Productions, Longueuil, QC  
 Artifact: `fast_uf.rs` , `FastUnionFindDecoder` , 15-backend suite, Rayon + AVX-512 + PyO3
 
@@ -757,13 +757,13 @@ $$ c\oplus e\in\ker(H),\quad\text{logical error iff }c\oplus e\in\ker(H)\setminu
 
 Equation (1) is Syndrome Faithfulness; (2) is Correction Validity , the core theorems that ground `qector-decoder-v3`.
 
-`BlossomDecoder` solves (1) exactly via Edmonds' blossom algorithm with LLR weights $w=-\ln(p/(1-p))$, achieving $p_{\text{th}}\approx1.03\%$ for rotated surface codes. Yet exactness costs $O(N_{\text{defects}}^3)$ time, $O(V^2)$ space. At $d=11$, $N_{\text{defects}}\sim30$ at $p=0.005$, Blossom latency $\sim16$ µs, `SparseBlossomDecoder` event-driven $O(E\log V)$ $\sim2.6$ µs. Superconducting qubits with $T_1\sim100$ µs demand $\le1$ µs feedback [5].
+`BlossomDecoder` solves (1) exactly via Edmonds' blossom algorithm with LLR weights $w=-\ln(p/(1-p))$, achieving $p_{\text{th}}\approx1.03\%$ for rotated surface codes. Yet exactness costs $O(N_{\text{defects}}^3)$ time, $O(V^2)$ space. At $d=11$, $N_{\text{defects}}\sim2$ at $p=0.005$, Blossom latency $\sim16$ µs, `SparseBlossomDecoder` event-driven $O(E\log V)$ $\sim2.6$ µs. Superconducting qubits with $T_1\sim100$ µs demand $\le1$ µs feedback [5].
 
 Delfosse-Nickerson [6] changed scaling to almost-linear via Union-Find. But generic implementations allocate HashMap buckets, Vec per cluster, and priority queues per growth step , death by allocator in the hot path. In Python, this is $>50$ allocs/shot.
 
 UF-01 in `fast_uf.rs` is our answer: zero-alloc, cache-oblivious, parity-faithful UF with pre-allocated buffers, $O(n\alpha(n))$ time, validated by `qector-doctor doctor.py` wheel-sync, GPU & license tier, and AVX-512 inspection.
 
-In the 15-backend `qector-decoder-v3` suite , Blossom exact, SparseBlossom, FastUnionFind UF-01, BpOsd Exact/Relay ($O(I_{bp}E+r^3+W^{\text{osd\_order}})$), AmbiguityCluster ($O(I_{bp}E+\sum2^{k_i})$), SpaceTimeDecoder ($O(TV^3)$), AutoDecoder $O(1)$ dispatch, Cascade ~85k dec/s, TwoStage, Streaming with decay $\lambda^k$, LookupTable $O(1)$ 45ns $d=3$, GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, NeuralPredecoder Leaky-ReLU, FusionMWPM $>40$ defects, CUDABatch/OpenCLBatch $>4.5e7$ shots/s , UF-01 is the latency floor.
+In the 15-backend `qector-decoder-v3` suite , Blossom exact, SparseBlossom, FastUnionFind UF-01, BpOsd Exact/Relay ($O(I_{bp}E+r^3+W^{\text{osd\_order}})$), AmbiguityCluster ($O(I_{bp}E+\sum2^{k_i})$), SpaceTimeDecoder ($O(TV^3)$), AutoDecoder $O(1)$ dispatch, Cascade ~85k dec/s, TwoStage, Streaming with decay $\lambda^k$, LookupTable $O(1)$ 45ns $d=3$, GNNPredecoder $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, NeuralPredecoder Leaky-ReLU, FusionMWPM $>40$ defects, CUDABatch/OpenCLBatch $>4.8e7$ shots/s , UF-01 is the latency floor.
 
 ![Threshold Curves](graphs/04_uf_threshold_curves.png)
 *Fig 1: Logical threshold $P_L$ vs $p$ for rotated surface $d=3,5,7,9$. Blossom 1.03% vs UF-01 0.72% under phenomenological noise. Exact matching pays 30% threshold for cubic cost; UF trades accuracy for sub-µs latency.*
@@ -948,15 +948,15 @@ Rayon `par_iter()` work-stealing, no locks:
 
 - Single-thread UF-01: $8.5\times10^5$ shots/s @ $d=7$
 - Rayon 16-core: $1.25\times10^7$ shots/s
-- CUDA batch $uf\_decode\_batch$ (Fig 9 whitepaper): $>4.8\times10^7$ shots/s $N\ge65536$, OpenCL $>2.1\times10^7$ shots/s. VRAM partitioned $S_{2^5},S_8$, one work-item per shot, bit-identical to CPU per Theorem 6 (isolated buffers, deterministic edge traversal, no atomic competition).
+- CUDA batch $uf\_decode\_batch$ (Fig 9 whitepaper): $>4.8\times10^7$ shots/s $N\ge65536$, OpenCL $>3.2\times10^7$ shots/s. VRAM partitioned $S_{32},S_8$, one work-item per shot, bit-identical to CPU per Theorem 6 (isolated buffers, deterministic edge traversal, no atomic competition).
 - `CascadeDecoder` pre-filter condition $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$ passes ~85% at $p=0.003$, escalates rest → effective $85$k dec/s avg with Blossom accuracy.
 
 ## 9. Systems Integration: SIMD, Rayon, Cascade, Streaming, and GPU Bit-Identity
 
 `qector-decoder-v3` is industrial-grade:
 
-* AutoDecoder $O(1)$ dispatch: `(d\cdot p,N,\text{topology})$ → LUT if $d\le3$, `CUDABatch/CPUBatch` if $N>1024$, else `FastUnionFind`. 5 ns dispatch via jump table.
-* TwoStageDecoder for CSS $X/Z$ correlated: $c_X\leftarrow\text{Decode}_X(s_X)$, $s'_Z=s_Z\oplus H_Zc_X$, $c_Z\leftarrow\text{Decode}_Z(s'_Z)$, $c=c_X\oplus c_Z$ , breaks degeneracy.
+* AutoDecoder $O(1)$ dispatch: `(d,p,N,\text{topology})$ → LUT if $d\le3$, `CUDABatch/CPUBatch` if $N>1024$, else `FastUnionFind`. 5 ns dispatch via jump table.
+* TwoStageDecoder for CSS $X/Z$ correlated: $c_X\leftarrow\text{Decode}_X(s_X)$, $s'_Z=s_Z\oplus H_{Z,X}c_X$, $c_Z\leftarrow\text{Decode}_Z(s'_Z)$, $c=c_X\oplus c_Z$ , breaks degeneracy.
 * StreamingDecoder sliding window: $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda_e^k s_{c,t-k}$ decays historical syndromes, constant-time eviction.
 * SIMD: `doctor.py` `Vector Unit Inspection` ensures `_mm512` enabled; fallback to AVX2 256-bit.
 * GPU bit-identity proof: `qector-doctor` asserts wheel build flags match runtime CPUID; ensures CUDA UF produces identical $c$ as CPU UF-01 for graphlike codes , critical for validation.
@@ -1001,7 +1001,7 @@ In fault-tolerant roadmaps, memory coherence is finite. Threshold is necessary; 
 
 [7] P. Panteleev, G. Kalachev, "Asymptotically good quantum LDPC codes," *IEEE Trans. Inf. Th.* 68, 7334, 2022.
 
-Whitepaper mapping: `blossom.rs` $O(N^2_{\text{defects}})$, `sparse_blossom.rs` $O(E\log V)$ dynamic, `fast_uf.rs` $O(n\alpha(n))$ sub-µs, `bp_osd.rs` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$, `ambig_cluster.rs` $O(I_{bp}E+\sum2^{k_i})$, `space_time_decoder.rs` XOR diff $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, `auto_decoder.rs`, `cascade_decoder.rs` $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$, `two_stage_decoder.rs`, `streaming_decoder.rs` $S^{(t)}_c=\sum\lambda^k s_{c,t-k}$, `lookup_table.rs` $O(1)$ $n\le64$, `gnn_predecoder.rs` $w_{uv}=\text{softplus}(\text{MLP})$, `neural_predecoder.rs` Leaky-ReLU, `fusion_mwpm.rs` SolverSerial $>40$ defects, `cuda_batch.rs`/`opencl_batch.rs` bit-identical.
+Whitepaper mapping: `blossom.rs` $O(N^2_{\text{defects}})$, `sparse_blossom.rs` $O(E\log V)$ dynamic, `fast_uf.rs` $O(n\alpha(n))$ sub-µs, `bp_osd.rs` $O(I_{bp}E+r^3+W^{\text{osd\_order}})$, `ambig_cluster.rs` $O(I_{bp}E+\sum2^{k_i})$, `space_time_decoder.rs` XOR diff $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, `auto_decoder.rs`, `cascade_decoder.rs` $(Hc_{\text{UF}}\equiv s)\land(|c_{\text{UF}}|\le W_{\text{budget}})$, `two_stage_decoder.rs`, `streaming_decoder.rs` $S^{(t)}_c=\sum\lambda^k s_{c,t-k}$, `lookup_table.rs` $O(1)$ $m\le64$, `gnn_predecoder.rs` $w_{uv}=\text{softplus}(\text{MLP})$, `neural_predecoder.rs` Leaky-ReLU, `fusion_mwpm.rs` SolverSerial $>40$ defects, `cuda_batch.rs`/`opencl_batch.rs` bit-identical.
 
 
 *Next: Post 5 , BP-OSD Exact & Relay: When Loopy Hyperedges Need $GF(2)$ Rank.*  
@@ -1010,7 +1010,7 @@ Whitepaper mapping: `blossom.rs` $O(N^2_{\text{defects}})$, `sparse_blossom.rs` 
 # Belief Propagation + Ordered Statistics Decoding for Quantum LDPC Codes: From Hypergraph Traps to Syndrome Faithfulness
 
 Author: Guillaume Lessard , qector.store, iD01t Productions, Longueuil, QC, Canada  
-Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 5 of 8  
+Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 5 of 10  
 Date: August 2026  
 Engine: Industrial-grade QEC stack: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing pools, AVX-512 SIMD
 
@@ -1159,7 +1159,7 @@ Implications:
 
 - Decoupling of convergence and correctness. Even if BP posteriors $\gamma_q$ are garbage (all $|\gamma_q|\approx 0$), the solver forces $Hc=s$. Reliability only affects logical failure rate, not detection of syndrome.
 
-- Logical error criterion preserved. As per whitepaper core theorem, correction validity requires $c\oplus e\in\ker(H)$. Since $H(c\oplus e)=Hc\oplus He = s\oplus s=0$, condition holds. Logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H_Z^T)$ (for CSS) , i.e., nontrivial homology. OSD's LLR-energy minimization approximates minimum-weight coset leader.
+- Logical error criterion preserved. As per whitepaper core theorem, correction validity requires $c\oplus e\in\ker(H)$. Since $H(c\oplus e)=Hc\oplus He = s\oplus s=0$, condition holds. Logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H^T)$ (for CSS) , i.e., nontrivial homology. OSD's LLR-energy minimization approximates minimum-weight coset leader.
 
 - Degeneracy aware. Quantum codes have high degeneracy: many $e$ share $s$. BP's soft information picks among degenerate representations by $|\gamma_q|$, unlike MWPM which picks arbitrary minimum-weight path. This explains why BP+OSD-0 already beats MWPM on color codes and generic hypergraph codes.
 
@@ -1174,7 +1174,7 @@ Left , runtime scaling per shot vs code length $n$: $O(r^3)$ dominates beyond $n
 
 In qector-decoder-v3, `bposd_decoder.rs` compiles to two backends:
 
-BpOsdDecoder (Exact): Parallel Jacobi BP , all $m_{c\to q}$ computed from previous iteration snapshot. Advantages: embarrassingly parallel, Rayon splits checks $C$ into chunks, AVX-512 loads 8 LLRs per `__m512`. Bit-packed Tanner graph adjacency as CSR with aligned allocations (no allocator in hot loop, UF-01 heritage). Gaussian elimination uses PLUQ decomposition over GF(2) with 64-bit words; `r=600` → $600^3/64\approx5.6$M ops, ~0.2ms in AVX2.
+BpOsdDecoder (Exact): Parallel Jacobi BP , all $m_{c\to q}$ computed from previous iteration snapshot. Advantages: embarrassingly parallel, Rayon splits checks $C$ into chunks, AVX-512 loads 8 LLRs per `__m512`. Bit-packed Tanner graph adjacency as CSR with aligned allocations (no allocator in hot loop, UF-01 heritage). Gaussian elimination uses PLUQ decomposition over GF(2) with 64-bit words; `r=600` → $600^3/64\approx3.4$M ops, ~0.2ms in AVX2.
 
 BpOsdDecoder (Relay): Serial layered BP , process checks in descending max $|\gamma|$ in block; each check update sees updated variable beliefs intra-iteration. Like classical LDPC `layered BP`. Converges in ~12 vs ~30 iterations for [[625,16]] at $p=0.07$, critical for real-time StreamingDecoder with sliding window $W$ and decay $\lambda^k$. Cost: lock-free work-stealing less effective, so throughput lower but latency better.
 
@@ -1191,7 +1191,7 @@ Key findings for Post 5 workloads:
 
 - On [[288,12]] bicycle bivariate code, BP alone logical $P_L\approx 8\times10^{-2}$ @ $p=0.06$; BP+OSD-0 → $2\times10^{-3}$; OSD-6 → $4\times10^{-4}$; OSD-10 → $9\times10^{-5}$ , two orders magnitude from ordering alone.
 
-- Throughput: Rayon 16-core AVX-512 achieves $1.25\times10^7$ shots/s for UF batch, CUDA Batch >$4.5\times10^7$ shots/s bit-identical (Theorem 6). BP-OSD not yet GPU-ported in v1.0.0; CPU batch via `OpenCLBatchDecoder` reuse of UF kernel for graphlike subproblems pending `CUDABatchDecoder` wrapper. Single-shot latency for $n=882$ OSD-2 ~0.35ms Exact, ~0.18ms Relay.
+- Throughput: Rayon 16-core AVX-512 achieves $1.25\times10^7$ shots/s for UF batch, CUDA Batch >$4.8\times10^7$ shots/s bit-identical (Theorem 6). BP-OSD not yet GPU-ported in v1.0.0; CPU batch via `OpenCLBatchDecoder` reuse of UF kernel for graphlike subproblems pending `CUDABatchDecoder` wrapper. Single-shot latency for $n=882$ OSD-2 ~0.35ms Exact, ~0.18ms Relay.
 
 - Memory: $O(m\cdot n)$ sparse vs dense. CSR with $E\sim n\cdot4$ ~3500 edges → <50KB per instance, thread-local via Rayon.
 
@@ -1219,7 +1219,7 @@ For now, remember: sort by $|\gamma_q|$, keep a rank-$r$ basis, solve $H_B e_B =
 
 [5] Dennis E., Kitaev A., Landahl A., Preskill J., "Topological quantum memory," J. Math. Phys. 43, 4452 (2002) , Syndrome faithfulness framework $Hc=s$, $c\oplus e\in\ker H$.
 
-[6] Fowler A., "Minimum weight perfect matching of fault-tolerant topological quantum error correction in O(1) parallel time," arXiv:1205.5140 , Graphlike codes.
+[6] Fowler A., "Minimum weight perfect matching of fault-tolerant topological quantum error correction in O(1) parallel time," arXiv:1203.5140 , Graphlike codes.
 
 [7] Delfosse N., Nickerson N., "Almost-linear time decoding of quantum surface codes via Union-Find," Quantum 5, 595 (2021) , UF-01 zero-allocation baseline used in qector.
 
@@ -1232,12 +1232,12 @@ For now, remember: sort by $|\gamma_q|$, keep a rank-$r$ basis, solve $H_B e_B =
 
 Author: Guillaume Lessard, iD01t Productions , [qector.store](https://qector.store)  
 Version: qector-decoder-v3 v1.0.0 (Aug 2026, Longueuil, QC)  
-Series: Post 6 / 12, Deep Dive into Industrial-Grade QEC Decoding
+Series: Post 6 of 10, Deep Dive into Industrial-Grade QEC Decoding
 
 
 ### Abstract
 
-Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycles and degeneracy create non-convergent marginals that OSD must rescue globally at $O(r^3)$ cost. In this post we dissect the AI-augmented remedy implemented in `qector-decoder-v3`: AmbiguityClusterDecoder, GNNPredecoder (3-layer MPNN) and NeuralPredecoder (3-layer MLP). We formalize the reliability partition $|\gamma_q| < \tau$, the residual syndrome projection $s_{\text{res}} = s \oplus H e_{\text{reliable}}$, prove Theorem 5 on global syndrome faithfulness, derive the MPNN edge-weight readout $w_{uv} = \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and show how a Leaky-ReLU MLP pre-filter enables the CascadeDecoder to achieve ~85k dec/s with preserved BP-OSD accuracy. On bivariate bicycle [[144,12,12]] codes we recover ~30% threshold, from 0.72% to 0.94%, while dropping mean cluster enumeration from $2^n$ to $\sum_i 2^{k_i}$ with $k_i \le 6$ at $p=1\%$. The engine is Rust + PyO3 C-extensions, Rayon lock-free work-stealing, AVX-512 SIMD, and bit-identical CUDA batching at $>4.7\times10^7$ shots/s.
+Belief Propagation (BP) fails catastrophically on quantum LDPC codes: short cycles and degeneracy create non-convergent marginals that OSD must rescue globally at $O(r^3)$ cost. In this post we dissect the AI-augmented remedy implemented in `qector-decoder-v3`: AmbiguityClusterDecoder, GNNPredecoder (3-layer MPNN) and NeuralPredecoder (3-layer MLP). We formalize the reliability partition $|\gamma_q| < \tau$, the residual syndrome projection $s_{\text{res}} = s \oplus H e_{\text{reliable}}$, prove Theorem 5 on global syndrome faithfulness, derive the MPNN edge-weight readout $w_{uv} = \text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and show how a Leaky-ReLU MLP pre-filter enables the CascadeDecoder to achieve ~85k dec/s with preserved BP-OSD accuracy. On bivariate bicycle [[144,12,12]] codes we recover ~30% threshold, from 0.72% to 0.94%, while dropping mean cluster enumeration from $2^n$ to $\sum_i 2^{k_i}$ with $k_i \le 6$ at $p=1\%$. The engine is Rust + PyO3 C-extensions, Rayon lock-free work-stealing, AVX-512 SIMD, and bit-identical CUDA batching at $>4.8\times10^7$ shots/s.
 
 Keywords: Quantum LDPC, BP-OSD, Ambiguity Clustering, Graph Neural Network, MPNN, Neural Predecoder, Syndrome Faithfulness, qLDPC Decoder, qector-decoder-v3
 
@@ -1339,11 +1339,11 @@ $$
 O\left(I_{bp}E + \sum_{i=1}^{N_c} 2^{k_i}\right) \quad \text{vs} \quad O(I_{bp}E + r^3 + W^{osd\_order})
 $$
 
-At $p=0.005$ on [[144,12,12]] BB code, mean $k_i = 2.3$, 92% of clusters $k_i \le 4$. At $p=1\%$, mean $k_i \approx 4.1$, still $\sum 2^{k_i} \ll r^3$. This explains the second panel in Fig. 1: orders of magnitude drop vs global OSD.
+At $p=0.005$ on [[144,12,12]] BB code, mean $k_i = 2.7$, 92% of clusters $k_i \le 4$. At $p=1\%$, mean $k_i \approx 4.1$, still $\sum 2^{k_i} \ll r^3$. This explains the second panel in Fig. 1: orders of magnitude drop vs global OSD.
 
 ![Ambiguity Scaling](graphs/06_ai_ambiguity_scaling.png)
 
-*Figure 1: Left , cluster size distribution decays exponentially; Right , localized enumeration beats global Gaussian elimination by ~100�, at $p\le1\%$.*
+*Figure 1: Left , cluster size distribution decays exponentially; Right , localized enumeration beats global Gaussian elimination by ~100× at $p\le1\%$.*
 
 Implementation notes in `qector-decoder-v3`:
 
@@ -1472,11 +1472,11 @@ Systems win: PyO3 Python call overhead eliminated via maturin pre-compiled wheel
 
 `qector-decoder-v3` stack:
 
-- Core: Rust lib with 15 backends: BlossomDecoder $O(N^3)$, SparseBlossom $O(E\log V)$, FastUnionFind UF-01 zero-allocation $O(n\alpha(n))$, BpOsdDecoder Exact & Relay $O(I_{bp}E+r^3)$, AmbiguityCluster $O(I_{bp}E+\sum2^{k_i})$, SpaceTimeDecoder $O(TV^3)$ with $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, AutoDecoder $O(1)$ dispatch, Cascade (~85k dec/s), TwoStage ($c_X\leftarrow\text{Decode}_X(s_X), s'_Z=s_Z\oplus(H_{Z,X}c_X), c_Z\leftarrow\text{Decode}_Z(s'_Z), c=c_X\oplus c_Z$), Streaming sliding window $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ (17) with decay $\lambda^k$, LookupTable $O(1)$ 45ns d=3, GNN, Neural, FusionMWPM (fusion_blossom SolverSerial >40 defects), CUDABatch/OpenCLBatch bit-identical >4.5e7 shots/s.
+- Core: Rust lib with 15 backends: BlossomDecoder $O(N^3)$, SparseBlossom $O(E\log V)$, FastUnionFind UF-01 zero-allocation $O(n\alpha(n))$, BpOsdDecoder Exact & Relay $O(I_{bp}E+r^3)$, AmbiguityCluster $O(I_{bp}E+\sum2^{k_i})$, SpaceTimeDecoder $O(TV^3)$ with $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$, AutoDecoder $O(1)$ dispatch, Cascade (~85k dec/s), TwoStage ($c_X\leftarrow\text{Decode}_X(s_X), s'_Z=s_Z\oplus(H_{Z,X}c_X), c_Z\leftarrow\text{Decode}_Z(s'_Z), c=c_X\oplus c_Z$), Streaming sliding window $S_c^{(t)}=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ (17) with decay $\lambda^k$, LookupTable $O(1)$ 45ns d=3, GNN, Neural, FusionMWPM (fusion_blossom SolverSerial >40 defects), CUDABatch/OpenCLBatch bit-identical >4.8e7 shots/s.
 
 - Parallelism: Rayon work-stealing thread pools, no mutex on hot path. Syndrome batch $N\ge65536$ saturates 16-core to $1.25\times10^7$ dec/s, CUDA to $4.8\times10^7$.
 
-- Theorem 6 (GPU Bit-Identical Invariance): Partitioned VRAM buffers $(S_2..S_8)$, deterministic rank-based Union-Find, leaf-to-root peeling without atomic competition → `uf_decode_batch` ≡ CPU `FastUnionFind`. Verified by `doctor.py`.
+- Theorem 6 (GPU Bit-Identical Invariance): Partitioned VRAM buffers $(S_{32},S_8)$, deterministic rank-based Union-Find, leaf-to-root peeling without atomic competition → `uf_decode_batch` ≡ CPU `FastUnionFind`. Verified by `doctor.py`.
 
 Latency vs distance curve shows Neural predecoder sub-µs up to d=19, enabling real-time control loop <1 µs for d=11 surface code with UF-01.
 
@@ -1492,7 +1492,7 @@ Empirical protocol: rotated surface d=3,5,7,9, BB code [144,12,12], 10M shots pe
 Key numbers:
 
 - AmbiguityCluster mean $k_i$: 1.8 (p=0.1%), 2.7 (0.5%), 4.1 (1.0%). 99th percentile $k_i\le9$ at 1%.
-- GNN improvement: $P_L$ @ p=0.6% d=7: BP-OSD $2.1\times10^{-3}$ → GNN+Cluster $7.4\times10^{-4}$ (2.8�,).
+- GNN improvement: $P_L$ @ p=0.6% d=7: BP-OSD $2.1\times10^{-3}$ → GNN+Cluster $7.4\times10^{-4}$ (2.8×).
 - Neural cascade hit rate: 91% at p=0.001 d=5, 63% at p=0.005.
 - End-to-end: AutoDecoder picks Neural→UF for surface codes, GNN→Ambiguity for qLDPC, SpaceTime for $T>1$.
 
@@ -1508,7 +1508,7 @@ Furthermore, learned $w_{uv}$ is interpretable: softplus readout concentrates ~0
 <a id="10-conclusion"></a>
 ### 10. Conclusion
 
-We have dissected the AI-augmented layer of `qector-decoder-v3`: reliability partition $|\gamma_q|<\tau$, residual projection $s_{\text{res}}=s\oplus H e_{\text{reliable}}$, Theorem 5 guaranteeing $Hc=s$, MPNN dynamic weights $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and fast LeakyReLU MLP predecoder enabling 85k dec/s Cascade. Graphs show exponential cluster size decay, 100�, complexity reduction vs global OSD, and 30% threshold recovery on BB codes.
+We have dissected the AI-augmented layer of `qector-decoder-v3`: reliability partition $|\gamma_q|<\tau$, residual projection $s_{\text{res}}=s\oplus H e_{\text{reliable}}$, Theorem 5 guaranteeing $Hc=s$, MPNN dynamic weights $w_{uv}=\text{softplus}(\text{MLP}(h_u,h_v,e_{uv}))$, and fast LeakyReLU MLP predecoder enabling 85k dec/s Cascade. Graphs show exponential cluster size decay, 100× complexity reduction vs global OSD, and 30% threshold recovery on BB codes.
 
 Industrial QEC needs both theorems and throughput. With Rust + PyO3 + Rayon + AVX-512 + bit-identical CUDA, `qector-decoder-v3 v1.0.0` delivers both.
 
@@ -1535,7 +1535,7 @@ Next in series: Post 7 , Space-Time Decoding, Streaming Windows, and Decaying Me
 # 3D Fault-Tolerant Space-Time Decoding: Noisy Syndrome Extraction and the Detector Lattice
 
 Author: Guillaume Lessard, qector.store , iD01t Productions, Longueuil, QC, Canada  
-Series: qector-decoder-v3 Deep Dive , Post 7 / 15  
+Series: qector-decoder-v3 Deep Dive , Post 7 of 10  
 Version: v1.0.0 (August 2026)  
 License: Industrial-grade QEC decoding engine, Rust + PyO3 Python C-extensions
 
@@ -1544,7 +1544,7 @@ License: Industrial-grade QEC decoding engine, Rust + PyO3 Python C-extensions
 
 Quantum error correction cannot assume ideal measurements. In any physical superconducting or photonic architecture, syndrome extraction itself is noisy: ancilla faults, measurement flips, and timing jitter conspire to corrupt the very signal we use to correct. This post dissects the crown jewel of fault-tolerant decoding in qector-decoder-v3 , the `SpaceTimeDecoder` (`space_time_decoder.rs`) and its real-time sibling `StreamingDecoder` (`sliding_window.rs`). 
 
-We show how XOR differencing $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ transforms a temporal sequence of unreliable syndromes into a 3D detector lattice where space and time edges compete with principled weights $w_{\text{space}}=-\ln(p_{\text{data}}/(1-p_{\text{data}}))$, $w_{\text{time}}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$. The decoder recovers the $O(TV^3)$ graph matching problem across $T$ rounds, preserves syndrome faithfulness $Hc\equiv s\pmod2$ in the lifted space, and sustains a phenomenological threshold $\approx 2.9\%$ where naive 2D repetition fails below $0.5\%$. We then analyze the online extension $S^{(t)}_c=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ with exponential forgetting that enables constant-time $O(W\cdot N)$ streaming with $>1.25\times10^7$ shots/s on Rayon 16-core AVX-512 and $>4.5\times10^7$ on CUDA. Implementation details from lock-free work-stealing to bit-identical GPU invariance are exposed.
+We show how XOR differencing $d_{c,t}=s_{c,t}\oplus s_{c,t-1}$ transforms a temporal sequence of unreliable syndromes into a 3D detector lattice where space and time edges compete with principled weights $w_{\text{space}}=-\ln(p_{\text{data}}/(1-p_{\text{data}}))$, $w_{\text{time}}=-\ln(p_{\text{meas}}/(1-p_{\text{meas}}))$. The decoder recovers the $O(TV^3)$ graph matching problem across $T$ rounds, preserves syndrome faithfulness $Hc\equiv s\pmod2$ in the lifted space, and sustains a phenomenological threshold $\approx 2.9\%$ where naive 2D repetition fails below $0.5\%$. We then analyze the online extension $S^{(t)}_c=\sum_{k=0}^{W-1}\lambda^k s_{c,t-k}$ with exponential forgetting that enables constant-time $O(W\cdot N)$ streaming with $>1.25\times10^7$ shots/s on Rayon 16-core AVX-512 and $>4.8\times10^7$ on CUDA. Implementation details from lock-free work-stealing to bit-identical GPU invariance are exposed.
 
 Keywords: Fault-tolerant QEC, Space-time decoding, Detector lattice, Noisy syndrome extraction, Surface code, Phenomenological noise, MWPM, Streaming decoder, qector-decoder-v3
 
@@ -1570,7 +1570,7 @@ In a surface code memory experiment, we execute $T$ rounds of stabilizer measure
 
 Formally, let $e_{t}$ be data errors before round $t$, and $\mu_{t}$ be measurement errors. The observed syndrome is:
 
-$$ s_{c,t} = (H e_t)_c \oplus \mu_{c,t} \oplus \mu_{c,t\text{ residual}} $$
+$$ s_{c,t} = (H e_t)_c \oplus \mu_{c,t}  $$
 
 Repeated application of 2D decoder yields logical error rate $P_L$ that does *not* decrease with distance $d$ once $p_{\text{meas}}>0$. The effective threshold collapses to $p_{\text{th}}^{2D}\approx 0.5\%$ in phenomenology vs $1.03\%$ ideal for Blossom.
 
@@ -1685,7 +1685,7 @@ Complexity: `Table 1` in whitepaper lists $O(T\cdot V^3)$ for exact blossom vari
 
 Three engineering wins in v3:
 
-1. Bit-packed detectors: $T\cdot m \le 64$ for $d\le7$, $T=7$ fits in one $u64$. XOR differencing is one AVX-512 `VPXORQ`.
+1. Bit-packed detectors: $T\cdot m \le 64$ for $d=3$, $T=7$ fits in one $u64$. XOR differencing is one AVX-512 `VPXORQ`.
 2. Rayon lock-free work-stealing: When decoding batch $N\ge1024$, `AutoDecoder` dispatches to `CUDABatch/CPUBatch` (see Figure 6 whitepaper). For space-time, batch is over independent memory experiments, each with $T$ rounds, achieving $1.25\times10^7$ shots/s CPU.
 3. GPU bit-identical: Theorem 6 in whitepaper: `uf_decode_batch` produces bit-identical corrections to CPU UF. Space-time inherits because detector graph is graphlike.
 
@@ -1710,7 +1710,7 @@ Why exponential? Two reasons:
 1. Physical: Measurement errors decorrelate as Markov of degree 1 under circuit noise. Optimal Bayes filter for such hidden Markov model is exponential smoothing.
 2. Systems: $W$ constant ensures $O(1)$ per round amortized. No blow-up of state. AVX-512 FMA computes recurrence:
 
-$$ S_c^{(t)} = s_{c,t} + \lambda S_c^{(t-1)}, \lambda^W s_{c,t-W} $$
+$$ S_c^{(t)} = s_{c,t} + \lambda S_c^{(t-1)} - \lambda^W s_{c,t-W} $$
 
 requiring one FMA per $8$ checks.
 
@@ -1750,7 +1750,7 @@ What does this mean for a real device in Longueuil or elsewhere?
 
 2. Weights matter more than algorithm choice. Many teams tune decoders; in phenomenology, tuning $w_{\text{time}}$ from equal weight to LLR optimal improves $P_L$ by $10\times$ at $d=7$. qector-doctor (`doctor.py`) audits that Wheel Sync indeed exposes $p_{\text{data}},p_{\text{meas}}$ to Rust, not stale.
 
-3. Offline vs online split. Use `SpaceTimeDecoder` with `BlossomDecoder` for high-accuracy offline logical error rate characterizations and threshold plots. Use `StreamingDecoder` + `FastUnionFindDecoder` + `GNNPredecoder` for real-time feed-forward. `AutoDecoder` $O(1)$ dispatch routes $N\le3$? → LUT 45ns, else >1024 → CUDA, else fast path → UF (Figure 6 decision tree). This is industrial: same API, different guarantees.
+3. Offline vs online split. Use `SpaceTimeDecoder` with `BlossomDecoder` for high-accuracy offline logical error rate characterizations and threshold plots. Use `StreamingDecoder` + `FastUnionFindDecoder` + `GNNPredecoder` for real-time feed-forward. `AutoDecoder` $O(1)$ dispatch routes $d\le3$ → LUT 45ns, else >1024 → CUDA, else fast path → UF (Figure 6 decision tree). This is industrial: same API, different guarantees.
 
 4. Bit-identical GPU is non-negotiable for certification. Theorem 6 in whitepaper guarantees GPU kernel `uf_decode_batch` bit-identical. For medical or defense certifications you can rerun identical matching on CPU for audit, while production runs at $4.8\times10^7$ shots/s.
 
@@ -1775,7 +1775,7 @@ If your decoder cannot handle $p_{\text{meas}}>0$, you don't have a fault-tolera
 
 [4] D. Gottesman, "Stabilizer codes and quantum error correction," *arXiv: quant-ph/9705052*, 1997.
 
-[5] A. G. Fowler, "Minimum weight perfect matching of fault-tolerant topological quantum error correction in O(1) time," *arXiv:1202.3619*, 2012.
+[5] A. G. Fowler, "Minimum weight perfect matching of fault-tolerant topological quantum error correction in O(1) time," *arXiv:1203.5140*, 2012.
 
 [6] N. Delfosse and N. H. Nickerson, "Almost-linear time decoding of quantum surface codes via Union-Find," *Quantum*, vol. 5, p. 595, 2021.
 
@@ -1795,14 +1795,14 @@ Engine: qector-decoder-v3 v1.0.0, 15 backends, Rust+PyO3+maturin+Rayon, throughp
 
 Author: Guillaume Lessard , qector.store (iD01t Productions, Longueuil, QC)  
 Version: qector-decoder-v3 v1.0.0 , August 2026  
-Series: Post 8 / 12 , Decoding Orchestration & Hybrid Architecture
+Series: Post 8 of 10 , Decoding Orchestration & Hybrid Architecture
 
 
 ## Abstract
 
 Industrial quantum error correction must handle heterogeneous workloads: rotated surface codes at $d=3$ to $d=25$, single-shot ultra-fast decoding, massive Monte-Carlo batches of $10^8$ shots, and high-rate qLDPC codes with no geometric locality. No single decoder can be optimal across this entire Pareto frontier. In this paper we dissect the orchestration layer of qector-decoder-v3: the system that turns fifteen backends into one coherent engine.
 
-We present AutoDecoder, an $O(1)$ meta-routing dispatch that implements the decision tree $\text{is\_qLDPC?}\to\text{BPOSD}$, $N>1024\to\text{CPU/CUDA Batch}$, $d\le 3\to\text{LookupTable}$, else $\text{FastUnionFind}$. We prove it preserves syndrome faithfulness $Hc\equiv s\pmod{2}$ and correction class equivalence. We analyze CascadeDecoder, a hybrid two-stage prefilter achieving $\sim85$k dec/s by accepting Union-Find corrections when $Hc_{UF}\equiv s \land |c_{UF}|\le W_{\text{budget}}$ and escalating otherwise to exact MWPM or BP-OSD without logical degradation. We formalize TwoStageDecoder for CSS-correlated $X/Z$ noise, breaking $X/Z$ degeneracy via feedforward $s'_Z = s_Z \oplus H_Z c_X$. Finally we describe LookupTableDecoder $O(1)$ $45$ ns instant decoding for $d=3$ via $u64$-keyed syndrome hashing and FusionMWPMDecoder which fuses $>40$ defect subgraphs with SolverSerial for fault-tolerant thresholds at $p_{th}\approx1.03\%$.
+We present AutoDecoder, an $O(1)$ meta-routing dispatch that implements the decision tree $\text{is\_qLDPC?}\to\text{BPOSD}$, $N>1024\to\text{CPU/CUDA Batch}$, $d\le 3\to\text{LookupTable}$, else $\text{FastUnionFind}$. We prove it preserves syndrome faithfulness $Hc\equiv s\pmod{2}$ and correction class equivalence. We analyze CascadeDecoder, a hybrid two-stage prefilter achieving $\sim85$k dec/s by accepting Union-Find corrections when $Hc_{UF}\equiv s \land |c_{UF}|\le W_{\text{budget}}$ and escalating otherwise to exact MWPM or BP-OSD without logical degradation. We formalize TwoStageDecoder for CSS-correlated $X/Z$ noise, breaking $X/Z$ degeneracy via feedforward $s'_Z = s_Z \oplus H_{Z,X} c_X \pmod 2$. Finally we describe LookupTableDecoder $O(1)$ $45$ ns instant decoding for $d=3$ via $u64$-keyed syndrome hashing and FusionMWPMDecoder which fuses $>40$ defect subgraphs with SolverSerial for fault-tolerant thresholds at $p_{th}\approx1.03\%$.
 
 Collectively, this orchestration layer yields a decoding engine that tracks the optimal latency envelope from $45$ ns to sub-$\mu$s up to $d=11$, scales to $1.25\times10^7$ shots/s Rayon and $4.8\times10^7$ shots/s CUDA bit-identical, and maintains exact MWPM logical fidelity.
 
@@ -1932,7 +1932,7 @@ Let $p_{\text{acc}}(p)=\mathbb{P}[|c_{\text{UF}}|\le W_{\text{budget}}\land \tex
 
 $$T_{\text{cascade}}(p)=p_{\text{acc}}T_{\text{UF}} + (1-p_{\text{acc}})T_{\text{MWPM}}$$
 
-At $p=0.05$, $p_{\text{acc}}\approx0.92$ for rotated surface $d=7$, giving:
+At $p=0.05\%$, $p_{\text{acc}}\approx0.92$ for rotated surface $d=7$, giving:
 
 $$T_{\text{cascade}}\approx0.92\cdot0.35\mu s+0.08\cdot12\mu s\approx1.3\mu s \implies \sim 7.7\times10^5\text{ dec/s per core}$$
 
@@ -1968,17 +1968,17 @@ Implemented in `two_stage_decoder.rs`, TwoStageDecoder executes:
 $$
 \begin{aligned}
 c_X &\leftarrow \text{Decode}_X(s_X) \tag{2}\\
-s'_Z &= s_Z \oplus (H_Z c_X) \pmod{2} \tag{3}\\
+s'_Z &= s_Z \oplus (H_{Z,X} c_X) \pmod{2} \tag{3}\\
 c_Z &\leftarrow \text{Decode}_Z(s'_Z) \tag{4}\\
 c &= c_X \oplus c_Z \tag{5}
 \end{aligned}
 $$
 
-Interpretation: $X$ correction $c_X$ creates induced $Z$ syndrome via $H_Z$ because $Y$ errors flip both. Updating $s_Z$ removes this cross-talk. This is Equations 13-16 of the whitepaper.
+Interpretation: $X$ correction $c_X$ creates induced $Z$ syndrome via $H_{Z,X}$ because $Y$ errors flip both. Updating $s_Z$ removes this cross-talk. This is Equations 13-16 of the whitepaper.
 
 Theorem 4 (Two-Stage Syndrome Faithfulness). If $\text{Decode}_X$ and $\text{Decode}_Z$ each return syndrome-faithful corrections on their respective (updated) syndromes, then $c=c_X\oplus c_Z$ satisfies joint faithfulness $Hc \equiv s$.
 
-*Proof.* By construction $H_X c_X = s_X$ (stage1). Stage2 solves $H_Z c_Z = s'_Z = s_Z \oplus H_Z c_X$. Then $H_Z(c_X\oplus c_Z)=H_Zc_X\oplus s_Z\oplus H_Zc_X=s_Z$. Concatenating $c$, $H = \text{diag}(H_X, H_Z)$ yields $Hc = (s_X, s_Z)^T$. ∎
+*Proof.* By construction $H_X c_X = s_X$ (stage1). Stage2 solves $H_Z c_Z = s'_Z = s_Z \oplus H_{Z,X} c_X$. Then $H_Z(c_X\oplus c_Z)=H_Zc_X\oplus s_Z\oplus H_{Z,X}c_X=s_Z$. Concatenating $c$, $H = \text{diag}(H_X, H_Z)$ yields $Hc = (s_X, s_Z)^T$. ∎
 
 Theorem 5 (Degeneracy Breaking). Two-stage achieves higher threshold than independent decoding under depolarizing noise by distinguishing $Y$ errors as correlated pairs, reducing logical error rate by factor $\approx 1-p_Y/p$.
 
@@ -2093,7 +2093,7 @@ But industrial-scale fault tolerance introduces a second axis: throughput. Consi
 - Magic state factory simulation: $10^{12}$ T-gates require continuous syndrome streaming
 - Real-time control with $d=7$, 1k logical qubits, 1 MHz measurement cycle: $10^9$ syndromes/s aggregate
 
-Single-thread CPU at $8\times10^5$ shots/s needs 69 hours for 200M shots. Rayon lock-free work-stealing with AVX-512 at $1.25\times10^7$ shots/s reduces this to 16 seconds, but saturates at core count. The GPU kernels break this ceiling by treating decoding as embarrassingly parallel data-parallel compute:
+Single-thread CPU at $8\times10^5$ shots/s needs ~250 s for 200M shots. Rayon lock-free work-stealing with AVX-512 at $1.25\times10^7$ shots/s reduces this to 16 seconds, but saturates at core count. The GPU kernels break this ceiling by treating decoding as embarrassingly parallel data-parallel compute:
 
 > Core Principle: For Union-Find on graphlike codes, syndromes are causally independent. There is no inter-syndrome dependency. Therefore optimal throughput is achieved by maximal spatial parallelism: one autonomous GPU work-item per syndrome, zero inter-thread communication.
 
@@ -2143,7 +2143,7 @@ $$
 \Gamma_{CUDA}=4.8\times10^7\;\text{shots/s},\quad \Gamma_{OpenCL}=3.2\times10^7\;\text{shots/s}
 $$
 
-Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ faster than single-thread wall time, and entirely within PCIe bandwidth for $S_8$ syndrome input ($V\le121$ bytes at $d=11$).
+Amortized per shot: $t_{amort}=1/\Gamma_{CUDA}=20.8\text{ ns}$ , 60$\times$ faster than single-thread wall time, and entirely within PCIe bandwidth for $S_8$ syndrome input ($V\le121$ bits, i.e. $\le16$ bytes, at $d=11$).
 
 ![Throughput scaling CPU vs GPU](graphs/09_gpu_throughput_scaling.png)
 
@@ -2207,7 +2207,7 @@ $$
 $$
 
 $$
-\text{Mem}_{total}=N_{batch}\cdot\text{Mem}_{per\_shot}+O(N_{batch}\cdot E) = O(N_{batch}(11N+5E))\text{ bytes}
+\text{Mem}_{total}=N_{batch}\cdot\text{Mem}_{per\_shot}+O(N_{batch}\cdot E) = O(N_{batch}(11V+5E))\text{ bytes}
 $$
 
 With $S_{32}$ for union-find forest (requires $2^{31}$ addressable) and $S_8$ for parity (GF(2)). No `float32` anywhere.
@@ -2218,12 +2218,12 @@ Example $d=7$ rotated: $V\approx49$, $n\approx49$, $E\approx96$:
 - parity S8:  49 B
 - active S8:  49 B
 - border S8:  49 B
-- correction: 10 B
+- correction: 7 B
 Total: ~550 B/shot. For $N=10^6$, ~550 MB , fits in L2 of RTX 4090 (72 MB) with reuse tiling, or directly in VRAM (24 GB supports $N\approx43$M at $d=7$).
 
 ![VRAM model and isolated buffers](graphs/09_gpu_vram_layout.png)
 
-*Figure 2: (a) VRAM scaling $O(N_{batch}(11N+5E))$ log-log; (b) per-syndrome $S_{32}/S_{8}$ break-down ensures zero cross-talk.*
+*Figure 2: (a) VRAM scaling $O(N_{batch}(11V+5E))$ log-log; (b) per-syndrome $S_{32}/S_{8}$ break-down ensures zero cross-talk.*
 
 ### 4.2 Why Isolation Matters for Determinism
 
@@ -2441,7 +2441,7 @@ Unlike research prototypes in Python/NumPy, `qector-decoder-v3` is a Rust-first 
 
 Core loop architecture:
 - Zero-copy syndrome ingestion: `&[u8]` bit-packed slices ($\lceil n/8 \rceil$ bytes) → AVX-512 `VPSHUFB` syndrome transform where $m\le 64$ maps to `u64` key for LookupTable.
-- Rayon global thread pool: Lock-free work-stealing deque. Batch decoding maps `N` shots across `P$ cores via `par_iter().map(|s| decoder.decode(s))`. No `Mutex` in the hot path; UF-01's `FastUnionFindDecoder` is zero-allocation , pre-allocated `Vec<ParentSize>` reused across windows.
+- Rayon global thread pool: Lock-free work-stealing deque. Batch decoding maps `N` shots across $P$ cores via `par_iter().map(|s| decoder.decode(s))`. No `Mutex` in the hot path; UF-01's `FastUnionFindDecoder` is zero-allocation , pre-allocated `Vec<ParentSize>` reused across windows.
 - SIMD specialization: Runtime dispatch via `is_x86_feature_detected!("avx512bw")`. BP check-to-variable updates vectorize the $\phi$-function:
   $$
   \phi(x) = -\ln\left(\tanh\frac{x}{2}\right) = \ln\coth\frac{x}{2}, \quad \phi(\phi(x))=x
@@ -2472,7 +2472,7 @@ Table 1: Exhaustive Comparative Matrix Across All 15 qector-decoder-v3 Decoding 
 | LookupTableDecoder | $O(1)$ | $O(N_{\text{table}}\frac{n}{8})$ | Instant $O(1)$ nohash map lookup for low-weight errors; 45ns $d=3$ | Small $d\le5$ Surface Codes |
 | GNNPredecoder | $O(L\cdot E\cdot h)$ | $O(V\cdot h)$ | Dynamic LLR edge-weight estimation via MPNN readout | Weighted Matching/qLDPC |
 | NeuralPredecoder | $O(h_1n + h_1h_2)$ | $O(h_1+h_2)$ | Fast prior error probability estimation via MLP | General Codes |
-| OpenCL/CUDABatch | $O(n\alpha(n)/N_{\text{cores}})$ | $O(N_{\text{batch}}(11N+5E))$ | Bit-identical GPU acceleration ($>4.5\times10^7$ shots/s) | Massive Batch Workloads |
+| OpenCL/CUDABatch | $O(n\alpha(n)/N_{\text{cores}})$ | $O(N_{\text{batch}}(11V+5E))$ | Bit-identical GPU acceleration ($>4.8\times10^7$ shots/s) | Massive Batch Workloads |
 | FusionMWPMDecoder | $O(N_{\text{defects}}^3 / k + \text{merge})$ | $O(V+E)$ | `fusion_blossom SolverSerial` for $N_{\text{defects}}>40$ decomposition | Large-scale Surface |
 
 Architectural patterns:
@@ -2509,7 +2509,7 @@ else escalates to Blossom/BP-OSD at ~85k dec/s. TwoStage for CSS:
 $$
 \begin{aligned}
 c_X &\leftarrow \text{Decode}_X(s_X) \\
-s_Z' &= s_Z \oplus (H_Z c_X) \pmod{2}\\
+s_Z' &= s_Z \oplus (H_{Z,X} c_X) \pmod{2}\\
 c_Z &\leftarrow \text{Decode}_Z(s_Z')\\
 c &= c_X \oplus c_Z
 \end{aligned} \tag{13-16}
@@ -2539,7 +2539,7 @@ Fig.8: Single-shot latency ($\mu$s) vs code distance $d\in[3,19]$. FastUnionFind
 - FastUnionFindDecoder $O(n\alpha(n))$: Union with path compression and union-by-size; tree peeling leaf-to-root. Zero allocation hot loop: 0.15 µs $d=3$ → 1.05 µs $d=19$. Sub-µs up to $d=11$ covers $2\times10^{-6}$ logical target at $p=10^{-3}$.
 - CascadeDecoder ~1.4x UF overhead due to budget check $|r_{\text{UF}}|\le W_{\text{budget}}$.
 - Blossom MWPM grows $\sim d^{3.2}$ due to defect density; 88 µs at $d=19$ vs 0.35 µs at $d=3$.
-- BP-OSD dominated by GH(2) Gaussian elimination $r^3$; feasible for qLDPC off-critical path.
+- BP-OSD dominated by GF(2) Gaussian elimination $r^3$; feasible for qLDPC off-critical path.
 
 Real-time implication: $100$ kHz measurement cycle requires $<10$ µs decode; only UF family and Lookup meet at $d\le19$.
 
@@ -2551,7 +2551,7 @@ Fig.9: Decoding throughput (shots/sec) vs syndrome batch size $N$ for CPU Single
 
 - Single-thread UF-01: Plateaus at ~0.85M shots/s , memory-bound tree traversal.
 - Rayon 16-core AVX-512: Achieves $1.25\times10^7$ shots/s through lock-free work-stealing; AVX-512 gives 2.1x over scalar due to parallel find-root on 16 defects at once.
-- GPU Batch: Maps one work-item → one shot. VRAM partitioned to isolated state buffers $(S_{22}, S_8)$. Uphill: kernel launch overhead dominates $N<256$. Beyond $N\ge65536$, CUDA exceeds $4.8\times10^7$ shots/s, OpenCL ~$2.9\times10^7$ , critical for offline $10^9$ shot Monte-Carlo threshold extrapolation.
+- GPU Batch: Maps one work-item → one shot. VRAM partitioned to isolated state buffers $(S_{32}, S_8)$. Uphill: kernel launch overhead dominates $N<256$. Beyond $N\ge65536$, CUDA exceeds $4.8\times10^7$ shots/s, OpenCL ~$3.2\times10^7$ , critical for offline $10^9$ shot Monte-Carlo threshold extrapolation.
 
 Theorem 6 (GPU Bit-Identical Invariance Proof). *For any graphlike code, GPU kernel `uf_decode_batch` produces output corrections bit-identical to CPU FastUnionFindDecoder.*
 
@@ -2617,7 +2617,7 @@ Future v1.1 will add `Lattice Surgery Decoder` (time-dynamic `H(t)$` and `Tracke
 [8] O. Higgott and C. Gidney, "Sparse Blossom: Correcting a million errors per core second with minimum-weight matching," *arXiv:2303.15933*, 2023.  
 [9] S. Bravyi et al., "High-threshold and low-overhead fault-tolerant quantum memory," *Nature*, vol. 627, pp. 778-782, 2024.  
 [10] J. Old et al., "Fusion Blossom: Fast MWPM decoders for QEC," *arXiv:2310.04770*, 2023.  
-[11] Guilaume Lessard, "qector-decoder-v3: Industrial PyO3 QEC Framework , Posts 1-9," qector.store whitepaper series, Aug 2026.
+[11] Guillaume Lessard, "qector-decoder-v3: Industrial PyO3 QEC Framework , Posts 1-10," qector.store whitepaper series, Aug 2026.
 
 
 *© 2026 iD01t Productions , Guillaume Lessard , qector.store , All benchmarks measured on 16-core AVX-512 workstation + flagship CUDA GPU; comparative baselines, not absolute ground truths.*

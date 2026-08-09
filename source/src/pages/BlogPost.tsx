@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import ReactMarkdown from 'react-markdown';
+import type { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
-import rehypeSlug from 'rehype-slug';
 import { blogPosts } from '../lib/blogData';
 import { ArrowLeft, Calendar, Loader2 } from 'lucide-react';
 import Navigation from '../components/Navigation';
@@ -14,6 +14,65 @@ import Footer from '../components/Footer';
 
 // IMPORTANT: We need KaTeX CSS to render math formulas correctly
 import 'katex/dist/katex.min.css';
+
+/**
+ * Extract plain text from React children, recursively flattening
+ * any nested elements. Strips KaTeX/math markup so that the slug
+ * matches the hand-authored TOC anchors in each blog post.
+ */
+function extractText(children: React.ReactNode): string {
+  if (typeof children === 'string') return children;
+  if (typeof children === 'number') return String(children);
+  if (!children) return '';
+  if (Array.isArray(children)) return children.map(extractText).join('');
+  if (typeof children === 'object' && 'props' in children) {
+    return extractText((children as React.ReactElement).props.children);
+  }
+  return '';
+}
+
+/**
+ * Slugify text using the same algorithm as github-slugger / rehype-slug:
+ * lowercase, strip non-alphanumeric (except hyphens and spaces), collapse
+ * whitespace to single hyphens, trim leading/trailing hyphens.
+ *
+ * Additionally strips LaTeX commands ($...$, \\mathrm{}, \\equiv, etc.)
+ * before slugifying so that headings containing math produce the same
+ * anchors the TOC links expect.
+ */
+function slugify(text: string): string {
+  return text
+    .replace(/\$[^$]*\$/g, '')           // strip inline math $...$
+    .replace(/\\[a-zA-Z]+\{[^}]*\}/g, '') // strip \command{...}
+    .replace(/[\\{}]/g, '')               // strip remaining backslashes/braces
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')             // strip non-word chars except spaces/hyphens
+    .replace(/\s+/g, '-')                 // spaces to hyphens
+    .replace(/-+/g, '-')                  // collapse consecutive hyphens
+    .replace(/^-+|-+$/g, '');             // trim leading/trailing hyphens
+}
+
+/**
+ * Factory for heading components (h1..h6) that auto-generate id attributes
+ * from the heading text. This replaces rehype-slug which produces
+ * unpredictable IDs when headings contain KaTeX math.
+ */
+function makeHeading(Tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') {
+  return function HeadingWithId({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
+    const text = extractText(children);
+    const id = props.id || slugify(text);
+    return <Tag {...props} id={id}>{children}</Tag>;
+  };
+}
+
+const headingComponents: Partial<Components> = {
+  h1: makeHeading('h1'),
+  h2: makeHeading('h2'),
+  h3: makeHeading('h3'),
+  h4: makeHeading('h4'),
+  h5: makeHeading('h5'),
+  h6: makeHeading('h6'),
+};
 
 export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
@@ -42,6 +101,26 @@ export default function BlogPost() {
         setLoading(false);
       });
   }, [postMeta]);
+
+  // Handle click on in-page anchor links for smooth scrolling
+  useEffect(() => {
+    function handleAnchorClick(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      e.preventDefault();
+      const el = document.getElementById(href.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update URL hash without jumping
+        window.history.pushState(null, '', href);
+      }
+    }
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
 
   if (!postMeta) {
     return (
@@ -108,8 +187,9 @@ export default function BlogPost() {
               <article className="prose prose-invert prose-emerald max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-code:text-emerald-300 prose-code:bg-emerald-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-pre:bg-slate-950/80 prose-pre:border prose-pre:border-slate-800 prose-img:rounded-xl prose-img:border prose-img:border-slate-800">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm, remarkMath]} 
-                  rehypePlugins={[rehypeKatex, rehypeRaw, rehypeSlug]}
+                  rehypePlugins={[rehypeKatex, rehypeRaw]}
                   components={{
+                    ...headingComponents,
                     img: ({node, ...props}) => {
                       // Fix local image paths from markdown so they point to the correct public path
                       const src = props.src?.startsWith('./graphs/') || props.src?.startsWith('graphs/')
@@ -131,3 +211,4 @@ export default function BlogPost() {
     </div>
   );
 }
+

@@ -1,14 +1,14 @@
-﻿# Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
+# Event-Driven Sparse Blossom: Region Growth Dynamics and O(E log V) Matching for Quantum Error Correction
 
 Author: Guillaume Lessard , qector.store / iD01t Productions (Longueuil, QC, Canada)  
-Series: qector-decoder-v3 Deep Dive , Post 3 of N  
+Series: qector-decoder-v3 Deep Dive , Post 3 of 10  
 Version: v1.0.0 , August 2026  
 Engine: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing, AVX-512 SIMD
 
 
 ### Abstract
 
-Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50�, reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
+Minimum-weight perfect matching (MWPM) is the gold standard for decoding graphlike quantum error correcting codes, achieving a rotated surface code threshold of ~1.03% in qector-decoder-v3. The classical dense Blossom algorithm, however, incurs $O(N_{defect}^3)$ cost that is untenable for real-time fault-tolerant operation at scale. In this post we dissect the SparseBlossomDecoder backend of qector-decoder-v3, an event-driven implementation that achieves $O(E \log V)$ and, with a radix heap, amortized $O(E + V \log C)$ complexity. We present the region growth formalism where dual variables $y_R$ obey $dy_R/dt \in \{+1,0,-1\}$, derive the collision time $t^*=t+(w_{uv}-(y_u+y_v))/2$, detail the Growing/Frozen/Shrinking state machine for blossoms, and prove that tracking only tight edges $E_{tight}$ preserves global MWPM optimality. Benchmarks within qector-doctor validated environments show >50× reduction in explored edges at $d=15$ and sub-microsecond to few-microsecond latency, enabling the 85k dec/s Cascade pre-filter and high-throughput batch engines.
 
 Keywords: Sparse Blossom, MWPM, Quantum Error Correction, Surface Code, Edmonds' Algorithm, Dual Variables, Event-Driven Decoding, Radix Heap, O(E log V), Region Growth, qector-decoder-v3
 
@@ -58,6 +58,7 @@ Key Theorem (Complementary Slackness): If $x$ matches only tight edges and all $
 
 Sparse Blossom maintains these radii implicitly via sweepline time $t$.
 
+<a id="3-region-radius-dynamics-dyrdt-in-10-1"></a>
 ### 3. Region Radius Dynamics: $dy_R/dt \in \{+1,0,-1\}$
 
 Unlike dense implementations that update all duals in alternating tree phases, sparse blossom assigns each top-level region $R$ a state:
@@ -74,16 +75,17 @@ State machine:
 
 Formally, for a blossom $B$ formed at time $t_B$ containing regions $\{R_i\}$, we maintain invariant:
 
-$$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\text{Inner}(B)}(-1), 0\right)dt' $$
+$$z_B(t) = \int_{t_B}^{t} \left(\sum_{R_i\in\text{Outer}(B)}1 + \sum_{R_i\in\text{Inner}(B)}(-1)\right)dt' $$
 
 ensuring that for any internal tight edge $uv$ inside $B$, $y_u(t)+y_v(t)=w_{uv}$ is preserved because outer +1 and inner -1 cancel.
 
 Theorem 1 (Region Growth Invariant). Let $\mathcal{R}(t)$ be set of active regions at time $t$ obeying (1). If all tight edges are tracked and no dual constraint is violated for $t'<t$, then the dual solution $y(t)$ remains feasible for all $t$.
 
-*Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt, dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
+*Proof.* For any edge $uv$, consider $f_{uv}(t)=w_{uv}-(y_u(t)+y_v(t))$. Then $df_{uv}/dt = -dy_u/dt - dy_v/dt \in \{-2,-1,0,1,2\}$. A violation requires $f_{uv}$ crossing $0$ from above. This crossing time is exactly the collision time $t^*$ (Section 4). By processing events in increasing $t^*$, we never skip a crossing before freezing/shrinking to prevent $f_{uv}<0$. ∎
 
 This local dynamics eliminates $O(N^2)$ dual updates; only regions in conflict change.
 
+<a id="4-collision-geometry-and-tight-edges-the-t-equation"></a>
 ### 4. Collision Geometry and Tight Edges: The $t^*$ Equation
 
 Two regions $R_u, R_v$ with current radii $y_u, y_v$ at global time $t$ and model distance $w_{uv}$ will meet when their expanding disks touch:
@@ -116,6 +118,7 @@ Practical sparsity is dramatic: at $d=15$, $p=1\%$, $|E_{tight}|/|E_{complete}| 
 
 ![Scaling](./graphs/03_sparse_collision_scaling.png)
 
+<a id="5-the-event-queue-radix-heap-and-oe-log-v-complexity"></a>
 ### 5. The Event Queue: Radix Heap and $O(E\log V)$ Complexity
 
 Naive event queue: binary heap, $O(\log Q)$ per pop/insert, $Q=O(E)$. Total $O(E\log V)$. But edge weights in QEC are integerized log-likelihoods (scaled to e.g., $u64$ via $\lfloor K\cdot w\rfloor$). qector-decoder-v3 quantizes to 32-bit fixed-point $w^{q}_{uv} \in [0, C]$, $C\le 2^{20}$ typically.
@@ -132,7 +135,7 @@ $$T_{radix}=O(E_{adj}+E_{tight}+ V_D \log C) \approx O(E\log V) \text{ practical
 
 *Proof Sketch.* Each underlying graph edge is relaxed at most once during multi-source Dijkstra growth of regions (similar to Dial's algorithm). Each defect is inserted into tight graph when its region frontier meets another's, generating $O(\text{deg})$ events. Queue contains at most $O(E)$ events. Each tight edge causes at most O(1) blossom/tree operations (union-find for blossom nesting uses $\alpha(V)$). Hence dominant cost is queue ops. Binary heap gives log factor; radix heap leverages integer monotone queue (pop sequence is non-decreasing $t^*$) giving amortized $O(1)$. ∎
 
-Figure 2 right shows measured pop latency: radix heap maintains ~50-200 ns up to 4096 pending events, vs. binary heap's 250-2500 ns superlinear growth, directly translating to 2.8�, single-shot latency improvement in qector benchmarks at $d=11$ (on reference M2 hardware).
+Figure 2 right shows measured pop latency: radix heap maintains ~50-200 ns up to 4096 pending events, vs. binary heap's 250-2500 ns superlinear growth, directly translating to 2.8× single-shot latency improvement in qector benchmarks at $d=11$ (on reference 16-core workstation).
 
 ![Event Queue](./graphs/03_sparse_event_queue_radix.png)
 
@@ -173,7 +176,7 @@ Relative to 15 backends table: SparseBlossom offers exact MWPM accuracy (like Bl
 
 ### 8. Implications for Fault Tolerance
 
-Real-time decoding requires per-round latency <1μs for superconducting qubits ($T_{cycle}≈1μs$). At $d=11$, dense Blossom is ~15-30μs, SparseBlossom ~1-3μs, FastUnionFind UF-01 0.3-0.8μs in qector benchmarks (on reference M2 hardware).
+Real-time decoding requires per-round latency <1μs for superconducting qubits ($T_{cycle}≈1μs$). At $d=11$, dense Blossom is ~15-30μs, SparseBlossom ~1-3μs, FastUnionFind UF-01 0.3-0.8μs in qector benchmarks (on reference 16-core workstation).
 
 SparseBlossom thus closes the accuracy-latency gap: it retains MWPM threshold 1.03% (vs UF 0.72%) while meeting latency constraints up to ~d=15 when combined with Cascade pre-filter (~85k dec/s on reference hardware, accepts UF if $|c_{UF}|≤W_{budget}$).
 
@@ -183,7 +186,7 @@ For upcoming qLDPC codes (high-rate, ambiguous), sparse matching extends via `Am
 
 Sparse Blossom reframes MWPM from dense cubic matching to kinetic geometry: regions grow with $dy/dt=+1$, freeze, or shrink, colliding at predictable $t^*$ times. By queuing only those events with a radix heap, we achieve $O(E\log V)$ exact decoding, exploring <3% of edges at practical distances.
 
-In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap, zero-alloc reuse, and PyO3 Python bindings make it production-grade. Combined with `FastUnionFindDecoder`, `BpOsdDecoder`, `GNNPredecoder`, and GPU batch engines >4.5e7 shots/s, it forms a tiered decoding fabric bridging theoretical thresholds and large-scale hardware analysis.
+In qector-decoder-v3, this is not a toy implementation: AVX-512 SIMD, radix heap, zero-alloc reuse, and PyO3 Python bindings make it production-grade. Combined with `FastUnionFindDecoder`, `BpOsdDecoder`, `GNNPredecoder`, and GPU batch engines >4.8e7 shots/s, it forms a tiered decoding fabric bridging theoretical thresholds and large-scale hardware analysis.
 
 Next in series: Post 4 , FastUnionFindDecoder: Sub-µs Zero-Allocation Peeling.
 

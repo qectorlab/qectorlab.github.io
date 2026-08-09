@@ -1,8 +1,8 @@
-﻿
+
 # Belief Propagation + Ordered Statistics Decoding for Quantum LDPC Codes: From Hypergraph Traps to Syndrome Faithfulness
 
 Author: Guillaume Lessard , qector.store, iD01t Productions, Longueuil, QC, Canada  
-Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 5 of 8  
+Series: qector-decoder-v3 v1.0.0 Deep Dive , Post 5 of 10  
 Date: August 2026  
 Engine: Industrial-grade QEC stack: Rust + PyO3 Python C-extensions, maturin, Rayon lock-free work-stealing pools, AVX-512 SIMD
 
@@ -135,6 +135,7 @@ For $n=882$, $r\sim 600$, $I_{BP}=20$, $E=n\cdot\bar{d}_v\approx 3500$, BP ~0.08
 Figure: Code-capacity $P_L$ vs $p$ on [[882,24]] lifted-product qLDPC. BP alone floors at $10^{-2}$. OSD-0 removes floor, higher $W$ pushes threshold toward ~7.5% and approaches ML.
 
 
+<a id="5-theorem-4-bp-osd-syndrome-faithfulness--proof-and-corollaries"></a>
 ### 5. Theorem 4: BP-OSD Syndrome Faithfulness , Proof and Corollaries
 
 Theorem 4 (BP-OSD Syndrome Faithfulness Proof). *Solving the residual linear system $H_B e_B \equiv s_{\text{eff}} \pmod 2$ over the rank-$r$ basis $B$ guarantees $Hc \equiv s \pmod 2$.*
@@ -151,7 +152,7 @@ Implications:
 
 - Decoupling of convergence and correctness. Even if BP posteriors $\gamma_q$ are garbage (all $|\gamma_q|\approx 0$), the solver forces $Hc=s$. Reliability only affects logical failure rate, not detection of syndrome.
 
-- Logical error criterion preserved. As per whitepaper core theorem, correction validity requires $c\oplus e\in\ker(H)$. Since $H(c\oplus e)=Hc\oplus He = s\oplus s=0$, condition holds. Logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H_Z^T)$ (for CSS) , i.e., nontrivial homology. OSD's LLR-energy minimization approximates minimum-weight coset leader.
+- Logical error criterion preserved. As per whitepaper core theorem, correction validity requires $c\oplus e\in\ker(H)$. Since $H(c\oplus e)=Hc\oplus He = s\oplus s=0$, condition holds. Logical error iff $c\oplus e\in\ker(H)\setminus\text{Im}(H^T)$ (for CSS) , i.e., nontrivial homology. OSD's LLR-energy minimization approximates minimum-weight coset leader.
 
 - Degeneracy aware. Quantum codes have high degeneracy: many $e$ share $s$. BP's soft information picks among degenerate representations by $|\gamma_q|$, unlike MWPM which picks arbitrary minimum-weight path. This explains why BP+OSD-0 already beats MWPM on color codes and generic hypergraph codes.
 
@@ -162,11 +163,12 @@ Implications:
 Left , runtime scaling per shot vs code length $n$: $O(r^3)$ dominates beyond $n\approx400$, but total stays <10ms for $n=4000$ in Exact mode; Relay+Rayon keeps $O(I_{BP}E)$ sub-ms. Right , posterior reliability histogram: green high-$|\gamma|$ become basis $B$, red low-$|\gamma|$ tail ($W$ columns) are brute-forced in OSD-W, turning BP uncertainty into exact search.
 
 
+<a id="6-industrial-implementation-exact-vs-relay-in-rust--avx-512"></a>
 ### 6. Industrial Implementation: Exact vs Relay in Rust + AVX-512
 
 In qector-decoder-v3, `bposd_decoder.rs` compiles to two backends:
 
-BpOsdDecoder (Exact): Parallel Jacobi BP , all $m_{c\to q}$ computed from previous iteration snapshot. Advantages: embarrassingly parallel, Rayon splits checks $C$ into chunks, AVX-512 loads 8 LLRs per `__m512`. Bit-packed Tanner graph adjacency as CSR with aligned allocations (no allocator in hot loop, UF-01 heritage). Gaussian elimination uses PLUQ decomposition over GF(2) with 64-bit words; `r=600` → $600^3/64\approx5.6$M ops, ~0.2ms in AVX2.
+BpOsdDecoder (Exact): Parallel Jacobi BP , all $m_{c\to q}$ computed from previous iteration snapshot. Advantages: embarrassingly parallel, Rayon splits checks $C$ into chunks, AVX-512 loads 8 LLRs per `__m512`. Bit-packed Tanner graph adjacency as CSR with aligned allocations (no allocator in hot loop, UF-01 heritage). Gaussian elimination uses PLUQ decomposition over GF(2) with 64-bit words; `r=600` → $600^3/64\approx3.4$M ops, ~0.2ms in AVX2.
 
 BpOsdDecoder (Relay): Serial layered BP , process checks in descending max $|\gamma|$ in block; each check update sees updated variable beliefs intra-iteration. Like classical LDPC `layered BP`. Converges in ~12 vs ~30 iterations for [[625,16]] at $p=0.07$, critical for real-time StreamingDecoder with sliding window $W$ and decay $\lambda^k$. Cost: lock-free work-stealing less effective, so throughput lower but latency better.
 
@@ -183,7 +185,7 @@ Key findings for Post 5 workloads:
 
 - On [[288,12]] bicycle bivariate code, BP alone logical $P_L\approx 8\times10^{-2}$ @ $p=0.06$; BP+OSD-0 → $2\times10^{-3}$; OSD-6 → $4\times10^{-4}$; OSD-10 → $9\times10^{-5}$ , two orders magnitude from ordering alone.
 
-- Throughput: Rayon 16-core AVX-512 achieves $1.25\times10^7$ shots/s for UF batch, CUDA Batch >$4.5\times10^7$ shots/s bit-identical (Theorem 6). BP-OSD not yet GPU-ported in v1.0.0; CPU batch via `OpenCLBatchDecoder` reuse of UF kernel for graphlike subproblems pending `CUDABatchDecoder` wrapper. Single-shot latency for $n=882$ OSD-2 ~0.35ms Exact, ~0.18ms Relay.
+- Throughput: Rayon 16-core AVX-512 achieves $1.25\times10^7$ shots/s for UF batch, CUDA Batch >$4.8\times10^7$ shots/s bit-identical (Theorem 6). BP-OSD not yet GPU-ported in v1.0.0; CPU batch via `OpenCLBatchDecoder` reuse of UF kernel for graphlike subproblems pending `CUDABatchDecoder` wrapper. Single-shot latency for $n=882$ OSD-2 ~0.35ms Exact, ~0.18ms Relay.
 
 - Memory: $O(m\cdot n)$ sparse vs dense. CSR with $E\sim n\cdot4$ ~3500 edges → <50KB per instance, thread-local via Rayon.
 
@@ -211,7 +213,7 @@ For now, remember: sort by $|\gamma_q|$, keep a rank-$r$ basis, solve $H_B e_B =
 
 [5] Dennis E., Kitaev A., Landahl A., Preskill J., "Topological quantum memory," J. Math. Phys. 43, 4452 (2002) , Syndrome faithfulness framework $Hc=s$, $c\oplus e\in\ker H$.
 
-[6] Fowler A., "Minimum weight perfect matching of fault-tolerant topological quantum error correction in O(1) parallel time," arXiv:1205.5140 , Graphlike codes.
+[6] Fowler A., "Minimum weight perfect matching of fault-tolerant topological quantum error correction in O(1) parallel time," arXiv:1203.5140 , Graphlike codes.
 
 [7] Delfosse N., Nickerson N., "Almost-linear time decoding of quantum surface codes via Union-Find," Quantum 5, 595 (2021) , UF-01 zero-allocation baseline used in qector.
 

@@ -28,7 +28,7 @@ Keywords: Quantum Error Correction, Surface Code, MWPM, Edmonds Blossom Algorith
 
 Topological quantum memory [1,2] reduces quantum error correction to a classical statistical mechanics problem on a graph: defects , violations of stabilizer checks , must be paired at minimum cost. For graphlike CSS codes (planar and rotated surface, toric, unrotated), the decoding problem is precisely minimum-weight perfect matching on a graph whose vertices are defects plus boundary virtual nodes.
 
-While approximate Union-Find achieves $O(n\alpha(n))$ and sub-microsecond latency up to $d=11$ (on reference M2 hardware), it sacrifices ~30% of threshold ($0.72\%$ vs $1.03\%$ on rotated surface $d=3,5,7,9$). In fault-tolerant regimes near threshold, this factor translates to orders of magnitude in logical error rate $P_L$. The `BlossomDecoder` exists as the reference truth: exact MWPM with provable LP optimality, against which all heuristic backends (`SparseBlossomDecoder`, `FastUnionFindDecoder`, `CascadeDecoder`, `GNNPredecoder`) are validated.
+While approximate Union-Find achieves $O(n\alpha(n))$ and sub-microsecond latency up to $d=11$ (on reference 16-core workstation), it sacrifices ~30% of threshold ($0.72\%$ vs $1.03\%$ on rotated surface $d=3,5,7,9$). In fault-tolerant regimes near threshold, this factor translates to orders of magnitude in logical error rate $P_L$. The `BlossomDecoder` exists as the reference truth: exact MWPM with provable LP optimality, against which all heuristic backends (`SparseBlossomDecoder`, `FastUnionFindDecoder`, `CascadeDecoder`, `GNNPredecoder`) are validated.
 
 `BlossomDecoder` is not a pedagogical implementation of NetworkX. It is a production engine: PyO3 C-extension via maturin, lock-free Rayon thread pools for $1.25\times10^7$ shots/s throughput on 16-core AVX-512, fused batch kernels, and bit-identical agreement with `CUDABatchDecoder`.
 
@@ -110,7 +110,7 @@ Duality theorem: At any feasible pair $(x,y)$, $\sum w_e x_e \ge \sum y_v + \sum
 
 ### 4.1 Complexity Budget
 
-Classical Edmonds with straightforward dual updates: $O(N^2M)=O(N^4)$ for dense $K_N$. With Slack-structured heaps and incremental tight-edge maintenance, `BlossomDecoder` attains $O(N^3)$ as listed in qector-decoder-v3 decoder matrix (Table 1). For surface code $d=11$, $N_{avg}\approx 40$ at $p=0.1\%$, worst-case $N\sim 200$ at $p=1\%$ → 8 million operations, ~50 µs AVX-512.
+Classical Edmonds with straightforward dual updates: $O(N^2M)=O(N^4)$ for dense $K_N$. With Slack-structured heaps and incremental tight-edge maintenance, `BlossomDecoder` attains $O(N^3)$ as listed in qector-decoder-v3 decoder matrix (Table 1). For surface code $d=11$, $N_{avg}\approx 2$ at $p=1\%$, worst-case $N\sim 25$ → ~16k operations, ~3 µs AVX-512.
 
 ### 4.2 Core Loop (Primal-Dual)
 
@@ -143,7 +143,7 @@ Blossom contraction uses union-find with parity , `blossom_parent`, `blossom_bas
 
 ## 5. Geometric Sparsification: $k=\max(12,\lceil k_{mult}\sqrt{n_{defects}}\rceil)$
 
-Complete graph $K_N$ has $N(N-1)/2$ edges: $N=1000$ → 500k edges, $N=10k$ (large $d=21$ at 1% $p$) → 50M edges , memory and $O(N^3)$ impossible.
+Complete graph $K_N$ has $N(N-1)/2$ edges: $N=1000$ → 500k edges, $N=10k$ (pathological high-noise burst, far above operating points) → 50M edges , memory and $O(N^3)$ impossible.
 
 Observation: MWPM on geometrically embedded defects (2D lattice + boundary) is dominated by short edges. Percolation threshold ensures long edges exponentially suppressed by LLR weight.
 
@@ -154,11 +154,11 @@ k(N) = \max\big(12,\ \lceil k_{mult}\sqrt{N_{defects}}\ \rceil\big), \quad k_{mu
 \tag{4}
 $$
 
-Why sqrt? Random Euclidean matching theory (Ajtai-Komlós-Tusnád) shows optimal matching length scale $\sim 1/\sqrt{\rho}$, $\rho$ defect density → degree needed to guarantee containing optimal edges grows as $\sqrt{N}$. 12 is floor ensuring connectivity for low-density regimes ($p\sim0.1\%$, $N\sim20$).
+Why sqrt? Random Euclidean matching theory (Ajtai-Komlós-Tusnády) shows optimal matching length scale $\sim 1/\sqrt{\rho}$, $\rho$ defect density → degree needed to guarantee containing optimal edges grows as $\sqrt{N}$. 12 is floor ensuring connectivity for low-density regimes (small $N\le 12$).
 
 Implementation: KD-tree over defect coordinates (including time for `SpaceTimeDecoder` extension), AVX-512 $k$-selection via introselect, yields $E_{sparse}=kN/2 = O(N^{1.5})$.
 
-Figure 2 demonstrates runtime crossover: dense cubic vs sparse $N^{1.5}\log N$ , at $N=1000$, ~100�, speedup.
+Figure 2 demonstrates runtime crossover: dense cubic vs sparse $N^{1.5}\log N$ , at $N=1000$, ~100× speedup.
 
 ![Runtime Scaling](graphs/02_blossom_runtime_scaling.png)
 *Figure 2: Single-shot latency vs $N_{defects}$ for complete $O(N^3)$ vs $k$-NN sparsified matching. $k=\max(12,\lceil1.5\sqrt{N}\rceil)$ yields $O(N^{1.5}\log N)$ empirical scaling while preserving exactness.*
@@ -233,14 +233,14 @@ Implications for qector-decoder:
 
 Practical deployment strategy in `AutoDecoder` $O(1)$ dispatch:
 
-- $N\le12$: `LookupTableDecoder` O(1) 45 ns d=3 (on reference M2 hardware)
+- $N\le12$: `LookupTableDecoder` O(1) 45 ns d=3 (on reference 16-core workstation)
 - $12 < N \le 1024$: `FastUnionFindDecoder` or `CascadeDecoder` prefilter (~85k dec/s on reference hardware)
 - $N > 1024$ batch: `CUDABatchDecoder` bit-identical batch (>4.8e7 shots/s for $N\ge 65536$)
 - Threshold-critical or low-$p$ logical fidelity audits: escalate to `BlossomDecoder` exact
 
 `qector-doctor` validates AVX-512 (`Vector Unit Inspection`), GPU & license tier, wheel sync ensuring `blossom.so` hash matches source tree , preventing stale SIMD dispatch.
 
-The $k$-NN rule (4) allows `BlossomDecoder` to remain exact up to $d=19$ with $N\sim 1500$ within 100 ms, bridging gap to `SparseBlossomDecoder` O(E log V).
+The $k$-NN rule (4) allows `BlossomDecoder` to remain exact up to $d=19$ with $N\sim 350$ within 100 ms, bridging gap to `SparseBlossomDecoder` O(E log V).
 
 ## 8. Conclusion
 
