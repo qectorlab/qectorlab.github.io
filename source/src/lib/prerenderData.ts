@@ -635,7 +635,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'The package is byte-identical for licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>); no functionality is gated or disabled.',
           'No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.',
         ]) +
-        p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a>: also bundled with the package distribution.') +
+        p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a>: also bundled with the package distribution.') +
         p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
         p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),

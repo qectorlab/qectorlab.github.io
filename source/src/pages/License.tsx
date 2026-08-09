@@ -92,7 +92,7 @@ export default function License() {
             <h2 className="text-xl font-bold mb-4">Full License Text</h2>
             <p className="text-secondary text-sm leading-relaxed">
               The complete, authoritative PolyForm Noncommercial License 1.0.0 text is published at{' '}
-              <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">
+              <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">
                 polyformproject.org/licenses/noncommercial/1.0.0
               </a>{' '}
               and is bundled verbatim with every package distribution (<code className="text-cyan-300 font-mono text-xs">LICENSE</code> in the wheel and sdist).
