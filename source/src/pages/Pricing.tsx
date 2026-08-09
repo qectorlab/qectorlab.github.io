@@ -50,6 +50,7 @@ export default function Pricing() {
       ctx.revert();
       if (script.parentNode === document.body) document.body.removeChild(script);
     };
+  }, []);
 
 
   const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
