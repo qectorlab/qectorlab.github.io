@@ -334,6 +334,13 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     ],
   },
   {
+    path: '/fr/pricing',
+    title: 'Tarification · QECTOR',
+    description: 'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD.',
+    heading: 'Tarification et Licences',
+    body: page(h1('Tarification et Licences') + p('QECTOR Decoder v3 is source-available...')),
+  },
+  {
     path: '/commercial',
     title: 'Enterprise Licensing · QECTOR',
     description:
@@ -665,6 +672,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
+  },
+  {
+    path: '/fr/terms',
+    title: 'Conditions générales (FR) · QECTOR',
+    description: "Conditions d'utilisation de QECTOR.",
+    noindex: true,
+    heading: 'Conditions générales',
+    body: page(h1('Conditions générales') + p('Use of the QECTOR website...')),
   },
   {
     path: '/refund',
