@@ -16,7 +16,7 @@
   ],
   "shortcuts": [
     { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
-    { "name": "Benchmarks", "url": "/benchmarks", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
+    { "name": "Evidence", "url": "/evidence", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
     { "name": "Docs", "url": "/docs", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] }
   ]
 }

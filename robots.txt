@@ -1,8 +1,27 @@
+# qector.store : all crawlers may read the whole site.
+#
+# Note on the named-agent groups below: robots.txt gives a matching agent its
+# OWN group, and the wildcard group is then ignored entirely for that agent.
+# The previous version listed only a handful of "Allow:" paths per AI agent,
+# which reads as an allowlist and left /, /pricing, and /commercial looking
+# off-limits to them. Every group now starts with an explicit "Allow: /" so no
+# agent can infer a restriction that was never intended.
+
 User-agent: *
 Allow: /
 Crawl-delay: 0
 
+# Search engines: explicit for clarity.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI / agent crawlers. Full access, with the documentation entry points
+# called out so they are obvious rather than exclusive.
 User-agent: ChatGPT-User
+Allow: /
 Allow: /docs
 Allow: /manual
 Allow: /llms.txt
@@ -10,13 +29,18 @@ Allow: /llms-full.txt
 Allow: /ai.txt
 
 User-agent: GPTBot
+Allow: /
 Allow: /docs
 Allow: /manual
 Allow: /llms.txt
 Allow: /llms-full.txt
 Allow: /ai.txt
 
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: CCBot
+Allow: /
 Allow: /docs
 Allow: /manual
 Allow: /llms.txt
@@ -24,11 +48,21 @@ Allow: /llms-full.txt
 Allow: /ai.txt
 
 User-agent: Claude-Web
+Allow: /
 Allow: /docs
 Allow: /manual
 Allow: /llms.txt
 Allow: /llms-full.txt
 Allow: /ai.txt
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
 
 Sitemap: https://qector.store/sitemap.xml
 Host: https://qector.store
