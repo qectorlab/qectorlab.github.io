@@ -11,6 +11,7 @@ import Home from './pages/Home';
 const About = lazy(() => import('./pages/About'));
 const Decoder = lazy(() => import('./pages/Decoder'));
 const Workbench = lazy(() => import('./pages/Workbench'));
+const MasterAiSuite = lazy(() => import('./pages/MasterAiSuite'));
 const McpServer = lazy(() => import('./pages/McpServer'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/decoder" element={<Decoder />} />
             <Route path="/workbench" element={<Workbench />} />
+            <Route path="/master-ai-suite" element={<MasterAiSuite />} />
             <Route path="/mcp-server" element={<McpServer />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />

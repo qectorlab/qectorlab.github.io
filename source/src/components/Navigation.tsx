@@ -5,6 +5,7 @@ const navLinks = [
   { label: 'Platform', href: '/' },
   { label: 'Decoder', href: '/decoder' },
   { label: 'Workbench', href: '/workbench' },
+  { label: 'AI Suite', href: '/master-ai-suite' },
   { label: 'MCP Server', href: '/mcp-server' },
   { label: 'Evidence', href: '/evidence' },
   { label: 'Blog', href: '/blog' },
@@ -86,7 +87,7 @@ export default function Navigation() {
               to="/"
               className="flex items-center gap-2.5 text-cyan-300 hover:text-cyan-100 transition-colors"
             >
-              <img src="/assets/logo.svg" alt="QECTOR official logo" width="72" height="40" className="h-8 w-auto object-contain" />
+              <img src="/images/logo.png" alt="QECTOR official logo" width="48" height="48" className="h-9 w-9 rounded-lg object-cover" />
             </Link>
 
             {/* Desktop Links */}

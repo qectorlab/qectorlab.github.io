@@ -11,6 +11,7 @@ interface LinkItem {
 const platformLinks: LinkItem[] = [
   { label: 'QECTOR Decoder v3', href: '/decoder', badge: 'Library' },
   { label: 'Workbench GUI', href: '/workbench', badge: 'Desktop App' },
+  { label: 'Master AI Suite v2', href: '/master-ai-suite', badge: 'AI Toolkit' },
   { label: 'QECTOR MCP Server', href: '/mcp-server', badge: 'MCP' },
   { label: 'Installer & App Bundles', href: '/installer' },
   { label: 'Pricing & Licensing', href: '/pricing' },
@@ -79,7 +80,7 @@ export default function Footer() {
             {/* Column 1 & 2: Brand Header */}
             <div className="lg:col-span-2 space-y-6">
               <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors">
-                <img src="/assets/logo.svg" alt="QECTOR official logo" width="96" height="54" className="h-10 w-auto object-contain" />
+                <img src="/images/logo.png" alt="QECTOR official logo" width="48" height="48" className="h-10 w-10 rounded-lg object-cover" />
               </Link>
 
               <p className="text-secondary/80 text-sm leading-relaxed max-w-sm">

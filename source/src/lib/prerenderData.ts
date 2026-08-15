@@ -21,7 +21,7 @@ import { blogPosts } from './blogData';
 
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
-export const OG_IMAGE = 'https://qector.store/assets/og-image.png';
+export const OG_IMAGE = 'https://qector.store/images/logo.png';
 export const DECODER_VERSION = '1.0.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const GITHUB_URL = 'https://github.com/GuillaumeLessard/qector-decoder';
@@ -47,7 +47,7 @@ const organizationNode = {
   '@type': 'Organization',
   name: SITE_NAME,
   url: SITE_URL + '/',
-  logo: `${SITE_URL}/assets/logo.svg`,
+  logo: `${SITE_URL}/images/logo.png`,
   sameAs: [GITHUB_URL, PYPI_URL],
 };
 
@@ -740,8 +740,50 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
       h1('Purchase complete') +
         p(
           'Thank you. Your QECTOR Decoder v3 licence token is issued automatically by email within minutes of payment. Set it as the QECTOR_LICENSE environment variable; verification is offline. If the email does not arrive, contact admin@qector.store with your Stripe receipt.'
+      )
+    ),
+  },
+  {
+    path: '/master-ai-suite',
+    title: 'QECTOR Master AI Suite v2 · Multi-Agent QEC Research Toolkit',
+    description:
+      'Downloadable multi-agent AI toolkit for quantum error correction research, MCP workflows, documentation, and deployment planning.',
+    heading: 'QECTOR Master AI Suite v2',
+    body: page(
+      h1('QECTOR Master AI Suite v2') +
+        p(
+          'A downloadable multi-agent AI toolkit for quantum error-correction research, technical software work, and deployment planning. The suite includes five specialized agent roles, MCP and IDE configuration, grounded Stim/Python starting points, and professional documentation.'
+        ) +
+        h2('What is included') +
+        ul([
+          'QEC researcher, hardware engineer, systems administrator, educator, and developer agent roles.',
+          'MCP and editor configuration files for a compatible cloud AI workflow.',
+          'A threshold-sweep script and repetition-code Stim input for grounded testing.',
+          'User, developer onboarding, security, cheat-sheet, and executive pitch documentation.',
+        ]) +
+        p(
+          `The public listing sets a minimum price of $99.99 CAD. <a href="https://id01t.itch.io/qector-master-ai-suite-v2" style="color:#67e8f9;">View the canonical itch.io product page</a>.`
+        ) +
+        p(
+          'This toolkit is not a hosted AI service, a quantum decoder, or a substitute for validating generated code and scientific claims against the declared matrix, noise model, observables, and environment.'
         )
     ),
+    jsonLdExtra: [
+      {
+        '@type': 'Product',
+        name: 'QECTOR Master AI Suite v2',
+        description: 'Downloadable multi-agent AI toolkit for quantum error correction research, MCP workflows, documentation, and deployment planning.',
+        brand: { '@type': 'Brand', name: 'QECTOR' },
+        url: 'https://id01t.itch.io/qector-master-ai-suite-v2',
+        offers: {
+          '@type': 'Offer',
+          price: '99.99',
+          priceCurrency: 'CAD',
+          availability: 'https://schema.org/InStock',
+          url: 'https://id01t.itch.io/qector-master-ai-suite-v2/purchase',
+        },
+      },
+    ],
   },
   {
     path: '/blog',

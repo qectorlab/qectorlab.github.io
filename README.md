@@ -34,7 +34,7 @@ Logical results must be scored in observable/coset space, not by raw correction-
 
 ## Branding
 
-The official QECTOR SVG is `source/public/assets/logo.svg`. The raster `source/public/assets/og-image.png` is the social preview image used by Open Graph and Twitter metadata. No personal connection or audience export is included in the public site.
+The supplied QECTOR logo is `images/logo.png` and is copied to `source/public/images/logo.png` for the build. It is used by the header, footer, favicon, manifest, structured data, and Open Graph/Twitter metadata. No personal connection or audience export is included in the public site.
 
 ## License
 

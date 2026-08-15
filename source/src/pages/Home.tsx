@@ -89,7 +89,7 @@ export default function Home() {
               '@type': 'Organization',
               name: 'QECTOR',
               url: 'https://qector.store/',
-              logo: 'https://qector.store/assets/logo.svg',
+              logo: 'https://qector.store/images/logo.png',
               sameAs: [
                 'https://github.com/GuillaumeLessard/qector-decoder',
                 'https://pypi.org/project/qector-decoder-v3/',

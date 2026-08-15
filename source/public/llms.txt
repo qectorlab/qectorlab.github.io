@@ -18,6 +18,7 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 - Website: https://qector.store/
 - Blog: https://qector.store/blog
+- Master AI Suite v2: https://qector.store/master-ai-suite
 - Install guide: https://qector.store/installer
 - Documentation hub: https://qector.store/docs
 - User manual: https://qector.store/manual

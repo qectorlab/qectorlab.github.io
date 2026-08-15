@@ -117,6 +117,13 @@ Rewrite each current post around a clear reader promise, a worked mathematical o
 - Ensure social metadata uses the official QECTOR logo and no removed asset is referenced.
 - Rebuild and replace the deployed static output so stale generated files cannot survive.
 
+### Step 7: Product Page and Brand Asset
+
+- Add a dedicated `/master-ai-suite` page grounded in the public itch.io listing for QECTOR Master AI Suite v2.
+- Keep the product clearly separate from QECTOR Decoder v3 and avoid decoder, threshold, or hardware-performance claims.
+- Replace the old SVG/raster branding with the supplied `images/logo.png` in header, footer, favicon, manifest, structured data, and social metadata.
+- Rebuild, validate, synchronize the deployment tree, and publish the focused update.
+
 ### Final Verification Record
 
 - `npm run lint`: passed with zero errors.
@@ -124,10 +131,10 @@ Rewrite each current post around a clear reader promise, a worked mathematical o
 - `npm audit --omit=dev`: passed with 0 vulnerabilities after the React Router security update.
 - Content integrity: 20 source posts and 20 deployed posts; all metadata filenames resolve in both copies.
 - Benchmark cleanup: hardware-specific charts, screenshots, sample outputs, stale graph artifacts, and invalid helper artifacts removed. Methodology and correctness contracts remain.
-- Branding: official `logo.svg` is used for favicon, navigation, footer, structured data, and manifest; official raster `og-image.png` is used for Open Graph/Twitter sharing.
+- Branding: supplied `images/logo.png` is used for favicon, navigation, footer, structured data, manifest, and Open Graph/Twitter sharing.
 - Privacy: no audience export, names, profile URLs, or individual connection details are present in public content.
 - GitHub Pages: build status `built` for commit `1a2bb6b2c7ed21f6b04dada7a3e71be9046bfd16`, source `main:/`, custom domain `qector.store`.
-- Live cache-busted checks: `https://qector.store/`, `/blog`, and `/assets/og-image.png` return the upgraded content/logo.
+- Live cache-busted checks: `https://qector.store/`, `/blog`, and `/images/logo.png` return the upgraded content/logo.
 - Published commits: `1a2bb6b feat(site): rebuild content and remove benchmark artifacts`; `fa8405e docs: record final site verification`.
 
 ## Status Log

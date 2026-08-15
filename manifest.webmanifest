@@ -9,14 +9,14 @@
   "categories": ["developer", "utilities", "science"],
   "icons": [
     {
-      "src": "/assets/logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/images/logo.png",
+      "sizes": "315x315",
+      "type": "image/png"
     }
   ],
   "shortcuts": [
-    { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
-    { "name": "Evidence", "url": "/evidence", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] },
-    { "name": "Docs", "url": "/docs", "icons": [{ "src": "/assets/logo.svg", "sizes": "any" }] }
+    { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/images/logo.png", "sizes": "315x315" }] },
+    { "name": "Evidence", "url": "/evidence", "icons": [{ "src": "/images/logo.png", "sizes": "315x315" }] },
+    { "name": "Docs", "url": "/docs", "icons": [{ "src": "/images/logo.png", "sizes": "315x315" }] }
   ]
 }

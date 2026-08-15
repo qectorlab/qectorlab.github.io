@@ -36,6 +36,7 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 
 ## Public reading path
 
+- Master AI Suite v2: https://qector.store/master-ai-suite
 - Blog index: https://qector.store/blog
 - Foundations: `/blog/01QecFoundations`, `/blog/11SteaneWorkedDecode`, `/blog/12RotatedSurfaceD3`
 - Decoder algorithms: `/blog/02BlossomMwpmExact`, `/blog/03SparseBlossomEventDriven`, `/blog/04FastUnionFind`, `/blog/05BpOsdQldpc`, `/blog/06AmbiguityGnnNeural`
