@@ -2,7 +2,7 @@
 
 **Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v0.5.3, see qector.store) under the qectorlab brand.**
 
-**Current stable release: QECTOR Decoder v3 v1.0.0 (2026-08-06) — first stable release. 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation. Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).**
+**Current stable release: QECTOR Decoder v3 v1.0.0 — first stable release. API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, and the official reference manual (DOI 10.5281/zenodo.21941046).**
 
 **Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
 
@@ -15,10 +15,10 @@ pip install qector-decoder-v3
 ```
 
 ## Key Claims + Evidence (all on GitHub)
-- Stable release v1.0.0 (2026-08-06, commit 75cd45c): 25+ decoder configurations; API stability tiers (stable/beta/experimental); Relay-BP (bp_method="relay"), CS-OSD(lambda, w), LLR damping; ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder
+- Stable release v1.0.0: fifteen documented backend families; API stability tiers; Relay-BP, CS-OSD, LLR damping, ColourCodeDecoder, TwoStageDecoder, and AmbiguityClusterDecoder
 - No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads
 - The package ships the benchmark harness (`qector bench` prints one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic) so results can be reproduced on your own machines
-- Validation reports, SHA-256 sealed artifact manifests, and IBM hardware execution logs are published on GitHub and at https://qector.store/evidence
+- Validation reports, SHA-256 sealed artifact manifests, and claim-boundary documentation are published on GitHub and at https://qector.store/evidence
 - BP-OSD for qLDPC; Hypergraph-safe Union-Find
 - Full Stim + Sinter + PyMatching compatible; `sinter.collect()` needs no custom_decoders=
 
@@ -107,7 +107,7 @@ When adding new interactive UI, match these patterns: real semantics over ARIA w
 
 ## Content & claims policy
 
-No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads; the `qector bench` harness and `qector-doctor` diagnostic ship with the package so results can be reproduced on your own machines. v1.0.0 facts (first stable, 25+ decoder configurations, release date 2026-08-06, commit 75cd45c, 15 wheels, DOI 10.5281/zenodo.21363016, PolyForm Noncommercial 1.0.0) are from the official v1.0.0 user manual (DOI 10.5281/zenodo.21363016). Validation reports and SHA-256 sealed manifests are published on GitHub and linked from `Evidence.tsx`. Do not reintroduce published performance figures without a citable, hardware-specific artifact: the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx`.
+No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads; the `qector bench` harness and `qector-doctor` diagnostic ship with the package so results can be reproduced on your own machines. The official v1.0.0 reference manual (DOI 10.5281/zenodo.21941046) defines the decoder contracts, evidence anchors, limitations, and claim boundaries. Validation reports and SHA-256 sealed manifests are published on GitHub and linked from `Evidence.tsx`. Do not reintroduce published performance figures without a citable, hardware-specific artifact: the site's credibility depends on every public number being traceable to a citable artifact linked from `Evidence.tsx`.
 
 ## Deployment
 

@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
     
     // Global reveal animation for top-tier aesthetics, robust against Suspense lazy loading
     let observer: MutationObserver | null = null;
-    let ctx = gsap.context(() => {});
+    const ctx = gsap.context(() => {});
     
     const animateNodes = () => {
       let added = false;

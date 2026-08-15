@@ -158,6 +158,8 @@ export default defineConfig(({ command }) => ({
           if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/') || id.includes('node_modules/scheduler')) return 'vendor-react';
           if (id.includes('node_modules/three') || id.includes('node_modules/@react-three')) return 'vendor-three';
           if (id.includes('node_modules/gsap')) return 'vendor-gsap';
+          if (['react-markdown', 'remark-', 'rehype-', 'katex', 'mdast-', 'hast-', 'micromark', 'unist-', 'vfile', 'character-', 'decode-named', 'stringify-entities', 'property-information', 'space-separated-tokens', 'comma-separated-tokens', 'bail', 'trough', 'unified', 'parse-entities', 'trim-lines', 'longest-streak', 'ccount', 'devlop'].some((packageName) => id.includes(`node_modules/${packageName}`))) return 'vendor-markdown';
+          if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/lucide-react')) return 'vendor-ui';
           if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-')) return 'vendor-charts';
           if (id.includes('node_modules')) return 'vendor';
         },

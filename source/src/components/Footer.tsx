@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
-import NeuralReveal from './NeuralReveal';
 
 interface LinkItem {
   label: string;
@@ -80,8 +79,7 @@ export default function Footer() {
             {/* Column 1 & 2: Brand Header */}
             <div className="lg:col-span-2 space-y-6">
               <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors">
-                <img src="/assets/icon.jpg" alt="QECTOR" width="32" height="32" className="shrink-0 rounded shadow-[0_0_10px_rgba(103,232,249,0.2)] border border-cyan-300/20" />
-                <NeuralReveal text="QECTOR" className="font-extrabold text-2xl tracking-tighter" />
+                <img src="/assets/logo.svg" alt="QECTOR official logo" width="96" height="54" className="h-10 w-auto object-contain" />
               </Link>
 
               <p className="text-secondary/80 text-sm leading-relaxed max-w-sm">

@@ -78,29 +78,37 @@ export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
   const postMeta = blogPosts.find((p) => p.id === id);
   const [content, setContent] = useState<string>('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [loadedFilename, setLoadedFilename] = useState<string | null>(null);
+  const [errorFilename, setErrorFilename] = useState<string | null>(null);
 
   useEffect(() => {
     if (!postMeta) return;
 
-    setLoading(true);
+    const controller = new AbortController();
+    const filename = postMeta.filename;
     // Fetch the markdown file from the public directory
-    fetch(`/blog/${postMeta.filename}`)
+    fetch(`/blog/${filename}`, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load post');
         return res.text();
       })
       .then((text) => {
         setContent(text);
-        setLoading(false);
+        setLoadedFilename(filename);
+        setErrorFilename(null);
       })
       .catch((err) => {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
         console.error(err);
-        setError(true);
-        setLoading(false);
+        setLoadedFilename(filename);
+        setErrorFilename(filename);
       });
+
+    return () => controller.abort();
   }, [postMeta]);
+
+  const loading = Boolean(postMeta && loadedFilename !== postMeta.filename);
+  const error = Boolean(postMeta && errorFilename === postMeta.filename);
 
   // Handle click on in-page anchor links for smooth scrolling
   useEffect(() => {
@@ -159,10 +167,13 @@ export default function BlogPost() {
           </Link>
 
           <header className="mb-16 border-b border-slate-800/60 pb-10">
-            <div className="flex items-center text-emerald-400 mb-6 space-x-4">
+            <div className="flex flex-wrap items-center text-emerald-400 mb-6 gap-4">
               <span className="flex items-center text-sm font-semibold tracking-widest uppercase">
                 <Calendar size={16} className="mr-2" />
                 {postMeta.date}
+              </span>
+              <span className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold tracking-wider text-slate-400">
+                {postMeta.category}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 leading-tight text-white">
@@ -190,7 +201,7 @@ export default function BlogPost() {
                   rehypePlugins={[rehypeKatex, rehypeRaw]}
                   components={{
                     ...headingComponents,
-                    img: ({node, ...props}) => {
+                    img: (props) => {
                       // Fix local image paths from markdown so they point to the correct public path
                       const src = props.src?.startsWith('./graphs/') || props.src?.startsWith('graphs/')
                         ? `/blog/graphs/${props.src.replace('./graphs/', '').replace('graphs/', '')}`
@@ -211,4 +222,3 @@ export default function BlogPost() {
     </div>
   );
 }
-

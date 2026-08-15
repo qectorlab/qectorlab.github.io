@@ -27,7 +27,7 @@ export default function Workbench() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(
         section,
@@ -85,37 +85,6 @@ export default function Workbench() {
     { name: 'bicycle', params: 'circulant size (int)', decoders: '16 / 16', desc: 'qLDPC bicycle code.' },
     { name: 'bivariate_bicycle', params: 'preset index (int)', decoders: '13 / 16', desc: 'Bivariate bicycle presets (qLDPC).' },
     { name: 'color_code', params: 'triangular size (int)', decoders: '5 / 16', desc: 'Triangular & 2D 4.8.8 colour codes.' },
-  ];
-
-  // Screenshots live in /public/assets and are served from /assets/*.png.
-  // Captions describe only what is actually visible in each capture: the
-  // figures shown are one operator's run on their own hardware, not a
-  // published benchmark figure.
-  const screenshots = [
-    {
-      src: '/assets/w1.png',
-      alt: 'QECTOR Workbench Code Explorer tab showing a rotated_surface distance-5 code with its Tanner graph, properties panel and decoder recommendation.',
-      title: 'Code Explorer',
-      caption: 'Build and inspect codes. Here, a rotated_surface d=5 code (25 qubits, 12 checks, rate 0.52) with its Tanner graph and parity-check matrix, plus an analysis panel recommending union_find on CUDA at batch size 1024.',
-    },
-    {
-      src: '/assets/ww2.png',
-      alt: 'QECTOR Workbench Decoder Lab tab running the fast_union_find decoder with resilient fallback enabled, showing syndrome validity and logical failure status.',
-      title: 'Decoder Lab',
-      caption: 'Test decoders interactively on the current code. Each run reports Hamming weight, syndrome validity, and logical failure alongside the raw error, syndrome, and correction vectors, with a toggleable resilient fallback.',
-    },
-    {
-      src: '/assets/w4.png',
-      alt: 'QECTOR Workbench Benchmark Suite tab showing throughput and latency percentiles for union_find on a repetition distance-11 code, with latency and session comparison charts.',
-      title: 'Benchmark Suite',
-      caption: 'Measure throughput and latency across codes, with JSON export. This run: union_find on repetition d=11, 20,000 trials, 100% syndrome match, p50 latency 2.4 µs. Session comparison charts stack repeated runs side by side.',
-    },
-    {
-      src: '/assets/w5.png',
-      alt: 'QECTOR Workbench Batch and Streaming tab showing a 10,000-sample batch decode on the CPU backend with a histogram of correction Hamming weights.',
-      title: 'Batch & Streaming',
-      caption: 'Batch-decode many samples and run sliding-window streaming sessions. Backend availability (cpu, cpu_parallel, cuda, opencl) is probed and reported up front, and unavailable backends surface their error verbatim rather than failing silently.',
-    },
   ];
 
   // The workspaces ship in v0.5.3 as described by the Windows release notes:
@@ -204,7 +173,7 @@ export default function Workbench() {
             ))}
           </div>
 
-          {/* Screenshots */}
+          {/* Workspaces */}
           <div ref={(el) => addRef(el, 0.5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
@@ -217,26 +186,17 @@ export default function Workbench() {
               ))}
               .
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {screenshots.map((shot) => (
-                <figure key={shot.src} className="bg-void border border-gridline rounded-xl overflow-hidden flex flex-col">
-                  <img
-                    src={shot.src}
-                    alt={shot.alt}
-                    loading="lazy"
-                    className="w-full h-auto block border-b border-gridline"
-                  />
-                  <figcaption className="p-4">
-                    <span className="text-cyan-300 font-semibold text-sm block mb-1">{shot.title}</span>
-                    <span className="text-secondary text-xs leading-relaxed">{shot.caption}</span>
-                  </figcaption>
-                </figure>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {modules.slice(0, 6).map((module) => (
+                <div key={module} className="bg-void border border-gridline rounded-xl p-5">
+                  <span className="text-cyan-300 font-semibold text-sm block mb-2">{module}</span>
+                  <p className="text-secondary text-xs leading-relaxed">
+                    Explore this workspace with the release documentation and inspect results on your own machine. No
+                    hardware-specific run data is published here.
+                  </p>
+                </div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground mt-3">
-              Figures shown in these captures are single runs on one operator's machine, included to show the interface: not
-              published benchmark results. No universal figures are published; run the included harness to measure your own hardware.
-            </p>
           </div>
 
           {/* Downloads */}

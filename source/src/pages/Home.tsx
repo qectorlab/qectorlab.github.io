@@ -21,15 +21,6 @@ function CounterStat({ value, label }: { value: string; label: string }) {
   );
 }
 
-const integrations = [
-  { name: 'Stim', href: 'https://github.com/quantumlib/Stim', color: 'text-cyan-300' },
-  { name: 'PyMatching', href: 'https://github.com/oscarkey/PyMatching', color: 'text-cyan-300' },
-  { name: 'Qiskit', href: 'https://www.ibm.com/quantum/qiskit', color: 'text-cyan-300' },
-  { name: 'Sinter', href: 'https://github.com/quantumlib/Stim', color: 'text-cyan-300' },
-  { name: 'CUDA', href: '#', color: 'text-green-400' },
-  { name: 'OpenCL', href: '#', color: 'text-green-400' },
-];
-
 export default function Home() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const { version: pypiVersion } = usePyPIVersion();
@@ -40,7 +31,7 @@ export default function Home() {
     script.async = true;
     document.body.appendChild(script);
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const sections = sectionsRef.current.filter(Boolean);
       sections.forEach((section) => {
         gsap.fromTo(
@@ -75,7 +66,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 15+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description="QECTOR Decoder v3 - Rust-core Python library for quantum error correction with fifteen specialized backend families, a syndrome-faithful contract, and reproducible validation guidance."
       />
       <JsonLd
         data={{
@@ -178,20 +169,20 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="15+" label="Decoder Configs" />
-            <CounterStat value="3" label="OS Platforms" />
-            <CounterStat value="15" label="Binary Wheels" />
-            <CounterStat value="GPU" label="CUDA + OpenCL Batch" />
+            <CounterStat value="15" label="Backend Families" />
+            <CounterStat value="GF(2)" label="Faithfulness Contract" />
+            <CounterStat value="CPU + GPU" label="Optional Execution Paths" />
+            <CounterStat value="Open" label="Evidence Policy" />
           </div>
 
-          {/* Honest Benchmark */}
+          {/* Evidence policy */}
           <div className="max-w-2xl mx-auto mt-10 p-5 bg-surface/50 border border-cyan-300/20 rounded-2xl text-center shadow-lg">
-            <div className="text-[10px] text-cyan-300 font-semibold tracking-widest mb-2 uppercase">Example Benchmark</div>
+            <div className="text-[10px] text-cyan-300 font-semibold tracking-widest mb-2 uppercase">Evidence policy</div>
             <div className="text-lg md:text-xl font-bold text-primary mb-2">
-              ~45,000 shots/second (MWPM)
+              No hardware-specific results published
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-lg mx-auto">
-              e.g., <span className="text-secondary">d=5, p=0.001, 10k shots, M2 Mac</span>. Results vary by hardware and workload. Always measure your own environment with the included <code className="text-cyan-300 bg-void px-1 py-0.5 rounded border border-gridline">qector bench</code> harness.
+              QECTOR publishes contracts, methodology, and artifacts rather than portable speed numbers. Read the <Link to="/evidence" className="text-cyan-300 hover:underline">evidence policy</Link> before generating a local measurement.
             </p>
           </div>
         </div>
@@ -327,8 +318,8 @@ export default function Home() {
                 {
                   title: 'qLDPC Support',
                   tag: 'BP-OSD (qLDPC)',
-                  desc: 'Matching decoders break on qLDPC codes. BP-OSD handles what Blossom cannot. Recommended for non-CSS codes and bivariate bicycle codes.',
-                  proof: 'Non-CSS + bivariate bicycle codes',
+                  desc: 'Matching decoders are restricted to graphlike structures. BP-OSD handles reachable arbitrary GF(2) check matrices, including LDPC and qLDPC workloads.',
+                  proof: 'Hyperedge-safe GF(2) path',
                 },
                 {
                   title: 'Speed When You Need It',

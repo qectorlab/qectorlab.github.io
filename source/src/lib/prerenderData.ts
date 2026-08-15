@@ -47,7 +47,7 @@ const organizationNode = {
   '@type': 'Organization',
   name: SITE_NAME,
   url: SITE_URL + '/',
-  logo: `${SITE_URL}/assets/icon.jpg`,
+  logo: `${SITE_URL}/assets/logo.svg`,
   sameAs: [GITHUB_URL, PYPI_URL],
 };
 
@@ -55,7 +55,7 @@ const softwareNode = {
   '@type': 'SoftwareApplication',
   name: 'QECTOR Decoder v3',
   description:
-    'Production-grade poly-algorithmic quantum error correction decoder for Python. v1.0.0 first stable release: API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware.',
+    'Rust-core Python quantum error correction decoder with fifteen specialized backend families, a syndrome-faithful contract, API stability tiers, and reproducible validation guidance.',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Linux, macOS, Windows',
   programmingLanguage: 'Python',
@@ -131,12 +131,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 – Production-grade Python library for quantum error correction decoding. v1.0.0 first stable release: 15+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, qector CLI. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder with fifteen specialized backend families, a syndrome-faithful contract, and reproducible validation guidance.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library of 15+ production and research quantum error correction decoder configurations, from MWPM Blossom, Belief-Matching, BP-OSD, Union-Find, and GPU batch, all behind one consistent API. v1.0.0 is the first stable release, with API stability tiers, a qector CLI and qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library of fifteen specialized quantum error correction backend families, from Blossom and Union-Find to BP-OSD, space-time, routing, and optional batch paths. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -147,11 +147,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Sinter entry points (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered: sinter.collect() works with no custom_decoders=.',
           'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in cluster_bposd). Relay-BP schedules, CS-OSD(lambda, w) and LLR damping in BP-OSD.',
           'qector decode / qector bench / qector serve CLI and qector-doctor (15-check environment diagnostic).',
-          'A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.',
+          'Hardware-specific benchmark data is not published here. The package and manual document how to perform a scoped local measurement with the required environment and artifact metadata.',
         ]) +
         h2('The decoders') +
         p(
-          'UnionFind, FastUnionFind, Blossom MWPM, SparseBlossom, BeliefMatching, BP-OSD (qLDPC), batch decoders (CPU / CUDA / OpenCL), AutoDecoder (7-tier fallback), plus colour-code, two-stage and ambiguity-cluster decoders.'
+          'UnionFind, FastUnionFind, Blossom MWPM, SparseBlossom, BP-OSD for qLDPC, batch decoders, AutoDecoder, space-time, streaming, two-stage, ambiguity-cluster, lookup-table, and learned research surfaces.'
         ) +
         h2('Evidence') +
         ul([
@@ -220,7 +220,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Evidence artifacts') +
         ul([
-          'Official v1.0.0 user manual and extended reference (2026-08-06, DOI 10.5281/zenodo.21363016), distributed with qector-decoder-v3==1.0.0.',
+          'Official v1.0.0 reference manual (August 2026, DOI 10.5281/zenodo.21941046), deposited with the decoder project.',
           'Syndromic validation: decode runs verify H·c = s on every shot through the self-debugging harness.',
           'SHA-256 sealed artifact manifests archived on GitHub.',
         ]) +
@@ -231,7 +231,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [
       techArticleNode(
         'QECTOR Evidence & Validation Reports',
-        'Official v1.0.0 user manual (DOI 10.5281/zenodo.21363016) and SHA-256 sealed validation artifacts.'
+        'Official v1.0.0 reference manual (DOI 10.5281/zenodo.21941046) and SHA-256 sealed validation artifacts.'
       ),
     ],
   },
@@ -496,7 +496,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'SparseBlossomDecoder hot path is now zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed.',
           'Licence hardening: v2 tokens carry tier + expiry; malformed tokens return False; unreadable key files report invalid.',
           '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
-          'Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016).',
+          'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.21941046).',
         ]) +
         h2('v0.7.1: 2026-08-04') +
         ul([
@@ -746,7 +746,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/blog',
     title: 'Blog · QECTOR',
-    description: 'Deep dives into quantum error correction, surface codes, MWPM, and the architecture of QECTOR.',
+    description: 'QECTOR field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration.',
     heading: 'QECTOR Blog',
     body: page(
       h1('QECTOR Blog') +

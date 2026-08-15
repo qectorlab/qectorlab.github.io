@@ -6,13 +6,14 @@ import AlgorithmCard from '../components/AlgorithmCard';
 import EvidenceBlock from '../components/EvidenceBlock';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FileText, Github } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const REPORTS_DATA = [
   {
     title: 'Official User Manual v1.0.0',
-    desc: 'QECTOR Decoder v3 User Manual and Extended Reference, v1.0.0 (2026-08-06, DOI 10.5281/zenodo.21363016): distributed with qector-decoder-v3==1.0.0 and at /docs/reference.md.',
+    desc: 'QECTOR Decoder v3 Reference Manual v1.0.0 (August 2026, DOI 10.5281/zenodo.21941046): the normative source for decoder contracts and claim boundaries.',
     status: 'Verified',
   },
   {
@@ -26,9 +27,9 @@ const REPORTS_DATA = [
     status: 'Verified',
   },
   {
-    title: 'Offline Execution Log',
-    desc: 'Offline simulated results: GHZ entanglement (F=0.874 at 7q), repetition-code suppression (Λ~2.5-3.5), and timestamp proofs.',
-    status: 'Hardware',
+    title: 'Scoped Methodology and Limitations',
+    desc: 'The manual excludes hardware-bound performance figures and documents the metadata, confidence intervals, and artifact requirements for future measurements.',
+    status: 'Methodology',
   },
 ];
 
@@ -36,7 +37,7 @@ export default function Evidence() {
   const [selectedStatus, setSelectedStatus] = useState('All');
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
         opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
@@ -92,17 +93,17 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-cyan-300/10 border border-cyan-300/20 rounded-2xl hover:bg-cyan-300/20 transition-all"
             >
-              <span className="text-2xl">📋</span>
+              <Github className="w-6 h-6 text-cyan-300" aria-hidden="true" />
               <div className="text-left">
                 <div className="text-cyan-300 font-semibold">GitHub Artifacts &amp; Validation</div>
                 <div className="text-muted-foreground text-sm">github.com/GuillaumeLessard/qector-decoder</div>
               </div>
             </a>
-            <a
-              href="/docs/reference.md"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gold-400/10 border border-gold-400/20 rounded-2xl hover:bg-gold-400/20 transition-all"
-            >
-              <span className="text-2xl">📘</span>
+              <a
+                href="/docs/reference.md"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gold-400/10 border border-gold-400/20 rounded-2xl hover:bg-gold-400/20 transition-all"
+              >
+                <FileText className="w-6 h-6 text-gold-400" aria-hidden="true" />
               <div className="text-left">
                 <div className="text-gold-400 font-semibold">Official User Manual v1.0.0</div>
                 <div className="text-muted-foreground text-sm">qector.store/docs/reference.md</div>
@@ -112,7 +113,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
           {/* Status Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg mx-auto">
-            {['All', 'Verified', 'Hardware'].map((status) => (
+            {['All', 'Verified', 'Methodology'].map((status) => (
               <button
                 key={status}
                 onClick={() => setSelectedStatus(status)}

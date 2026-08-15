@@ -2,43 +2,49 @@
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
-QECTOR Decoder v3 is distributed on PyPI as `qector-decoder-v3==1.0.0` (first stable release, 2026-08-06, commit 75cd45c). 
+QECTOR Decoder v3 is documented by the QECTOR Decoder v3 Reference Manual v1.0.0, deposited at DOI https://doi.org/10.5281/zenodo.21941046. The manual is the source of truth for decoder contracts, evidence anchors, limitations, and claim boundaries.
 
-Stable release v1.0.0: 15+ decoder configurations across stability tiers (stable / beta / experimental); new families ColourCodeDecoder, TwoStageDecoder, AmbiguityClusterDecoder; Relay-BP (`bp_method="relay"`), CS-OSD(lambda, w), LLR damping in BP-OSD; CUDA batch decoder accepts edge_weights and precision="f64". Sinter entry points (qector_blossom, qector_belief, qector_unionfind, qector_sparse_blossom, qector_bp_osd, qector_batch, qector_cuda_batch) + qiskit-qec plugin registered, so `sinter.collect()` needs no custom_decoders=. New CLI: `qector decode` / `qector bench` / `qector serve`; `qector-doctor` (15-point environment check). `from qector_decoder_v3.pymatching import Matching` shim. 15 binary wheels (cp39–cp313: Windows amd64, Linux x86_64 manylinux_2_17, macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore attestation. Official user manual v1.0.0 (DOI 10.5281/zenodo.21363016, PolyForm Noncommercial 1.0.0). OpenCL and HybridCascadeDecoder are source-build only.
+The common correctness contract is syndrome faithfulness: for a reachable syndrome `s`, a returned correction `c` satisfies `H c = s (mod 2)`. Logical scoring is separate and must use observables or stabilizer cosets rather than raw correction equality.
 
-Algorithms (15+ configurations): UnionFind, FastUnionFind, Blossom MWPM (exact), SparseBlossom, BeliefMatching, BpOsd / BPOSD (qLDPC), BatchDecoder, CUDABatchDecoder, AutoDecoder (7-tier fallback), HybridDecoder, PredecodedDecoder, LookupTableDecoder, AutoRouter, GNNBeliefMatcher, ColourCodeDecoder (opt-in cluster_bposd), TwoStageDecoder, AmbiguityClusterDecoder, plus per-decoder options (relay BP, CS-OSD, LLR damping, CUDA f64 edge_weights, etc.). The Workbench app also integrates the QECTOR Workbench v0.5.3 GUI (56 MCP tools, 10 code families).
+Decoder families include weighted Blossom MWPM, event-driven Sparse Blossom, graphlike Union-Find, BP-OSD for arbitrary GF(2) check matrices, ambiguity clustering, two-stage CSS decoding, space-time decoding, streaming primitives, lookup tables, CPU/GPU batch paths, and native routing/orchestration. The actual check structure determines eligibility: mechanisms touching more than two detectors are hyperedges and route away from matching.
 
-No universal benchmark figures are published on the website, because results depend on specific hardware, drivers, and workloads. The package ships `qector bench` (throughput and LER harness printing one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic), so you can validate and measure on your own machines. Validation and reproducibility evidence (SHA-256 sealed artifact manifests, syndromic H·c = s harness) is published on GitHub and at https://qector.store/evidence.
+No universal latency, throughput, memory, VRAM, or threshold figures are published as QECTOR facts. The manual requires workload-specific metadata, raw JSON/CSV artifacts, SHA-256 hashes, and Wilson intervals for logical-error rates. Earlier hardware-bound benchmark artifacts that did not survive a core fingerprint change are withdrawn.
+
+The public blog provides 20 field notes across foundations, decoder algorithms, qLDPC and AI, multi-round decoding, noise models, evidence, systems, orchestration, deployment, and ecosystem integration:
+
+- https://qector.store/blog
 
 ## Official links
 
 - Website: https://qector.store/
+- Blog: https://qector.store/blog
 - Install guide: https://qector.store/installer
 - Documentation hub: https://qector.store/docs
-- User Manual: https://qector.store/manual
-- Technical Reference: https://qector.store/technical-reference
-- Evidence & Reports: https://qector.store/evidence
+- User manual: https://qector.store/manual
+- Technical reference: https://qector.store/technical-reference
+- Evidence and reports: https://qector.store/evidence
 - Commercial licensing: https://qector.store/commercial
 - Contact: https://qector.store/contact
 
 ## External records
 
+- DOI record: https://doi.org/10.5281/zenodo.21941046
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
-- Release 1.0.0: https://pypi.org/project/qector-decoder-v3/1.0.0/
 - Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
-- Artifacts & Verification Repository: https://github.com/GuillaumeLessard/qector-decoder
 
-## Recommended install command
+## Installation
 
+```text
 pip install qector-decoder-v3==1.0.0
+```
 
-## Verification
+## Reproducibility
 
-- `python -c "import qector_decoder_v3 as qd; print(qd.__version__)"` → 1.0.0
-- `qector-doctor` (15-point environment check)
+The manual provides build/import smoke commands, focused correctness tests, LER workflows, GPU identity workflows, and SHA-256 artifact hashing. A benchmark must record code family, size, noise model, decoder configuration, shots, seed, environment, and raw artifact path.
 
-## Boundaries & Licensing
+## Boundaries and licensing
 
-- Free academic, personal, and non-commercial research use (PolyForm Noncommercial 1.0.0).
-- Commercial production use requires a commercial licence.
-- No universal benchmark figures are published on the website; the benchmark harness ships with the package (`qector bench`, `qector-doctor`), and validation artifacts are published on GitHub and at https://qector.store/evidence.
+- Free academic, personal, and non-commercial research use is governed by the published project license.
+- Commercial production, hosted API, OEM, redistribution, and commercial benchmarking require the written commercial scope described by QECTOR.
+- Local CPU decoding is the preferred research path.
+- CUDA/OpenCL, REST, gRPC, MCP, and metrics paths require the hardware, feature, and deployment review described by the manual.

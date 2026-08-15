@@ -40,11 +40,13 @@ export function SEO({
     setMeta('meta[property="og:url"]', canonical);
     setMeta('meta[property="og:type"]', 'website');
     setMeta('meta[property="og:image"]', ogImage);
+    setMeta('meta[property="og:image:alt"]', 'QECTOR official logo');
     setMeta('meta[property="og:site_name"]', 'QECTOR');
     setMeta('meta[name="twitter:card"]', 'summary_large_image');
     setMeta('meta[name="twitter:title"]', title);
     setMeta('meta[name="twitter:description"]', description);
     setMeta('meta[name="twitter:image"]', ogImage);
+    setMeta('meta[name="twitter:image:alt"]', 'QECTOR official logo');
     setMeta('meta[name="twitter:site"]', '@DJiD01T');
     setMeta('meta[name="theme-color"]', '#24e7ff');
 

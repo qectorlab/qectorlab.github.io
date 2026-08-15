@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import { blogPosts } from '../lib/blogData';
@@ -7,11 +7,17 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 export default function Blog() {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const categories = ['All', ...Array.from(new Set(blogPosts.map((post) => post.category)))];
+  const visiblePosts = selectedCategory === 'All'
+    ? blogPosts
+    : blogPosts.filter((post) => post.category === selectedCategory);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-emerald-500/30">
-      <SEO 
-        title="Blog · QECTOR"
-        description="Deep dives into quantum error correction, surface codes, MWPM, and the architecture of QECTOR."
+        <SEO
+          title="Blog · QECTOR"
+          description="QECTOR field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration."
       />
 
       <Navigation />
@@ -27,12 +33,34 @@ export default function Blog() {
               <span className="text-emerald-400">Fault Tolerance</span>
             </h1>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Deep dives into the architecture, mathematics, and empirical performance of the QECTOR quantum error correction framework.
+              Field notes from parity checks to production interfaces: mathematics, decoder design, evidence, and systems practice for quantum error correction.
             </p>
           </div>
 
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-3" aria-label="Filter articles by topic">
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                aria-pressed={selectedCategory === category}
+                onClick={() => setSelectedCategory(category)}
+                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                  selectedCategory === category
+                    ? 'border-emerald-400 bg-emerald-400/10 text-emerald-300'
+                    : 'border-slate-800 bg-slate-900/50 text-slate-400 hover:border-emerald-500/40 hover:text-slate-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          <p className="mb-6 text-center text-sm text-slate-500">
+            Showing {visiblePosts.length} of {blogPosts.length} field notes. Claims are scoped to the <a className="text-emerald-400 hover:text-emerald-300" href="https://doi.org/10.5281/zenodo.21941046">v1.0.0 reference manual</a>.
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
+            {visiblePosts.map((post, index) => (
               <Link 
                 key={post.id} 
                 to={`/blog/${post.id}`}
@@ -42,10 +70,15 @@ export default function Blog() {
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                 
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center space-x-2 text-emerald-400 mb-6">
-                    <BookOpen size={18} />
-                    <span className="text-sm font-semibold tracking-wider uppercase">Article</span>
-                  </div>
+                    <div className="flex items-center justify-between gap-3 mb-6">
+                      <div className="flex items-center space-x-2 text-emerald-400">
+                      <BookOpen size={18} />
+                      <span className="text-sm font-semibold tracking-wider uppercase">Article</span>
+                      </div>
+                      <span className="rounded-full border border-slate-700 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">
+                        {post.category}
+                      </span>
+                    </div>
                   
                   <h2 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-300 transition-colors duration-300">
                     {post.title}

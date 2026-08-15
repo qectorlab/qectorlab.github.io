@@ -16,7 +16,7 @@ export default function Decoder() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const { version: pypiVersion } = usePyPIVersion();
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
         opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',

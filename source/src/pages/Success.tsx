@@ -1,7 +1,6 @@
 import { Link, useSearchParams } from 'react-router';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
-import CodeBlock from '../components/CodeBlock';
 
 /**
  * Stripe success_url landing page.

@@ -3,31 +3,11 @@ import { Link } from 'react-router';
 import { SEO, JsonLd } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
-import EvidenceBlock from '../components/EvidenceBlock';
 import { FAQ_ITEMS } from '../lib/faqData';
-import { CALENDLY_URL } from '../lib/config';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const evaluationSteps = [
-  { step: '1', title: 'Contact', desc: 'Reach out with your use case and team size.' },
-  { step: '2', title: 'License', desc: 'Sign a written evaluation license agreement.' },
-  { step: '3', title: 'Evaluate', desc: 'Full access for 60 days with priority support.' },
-  { step: '4', title: 'Decide', desc: 'Convert to annual license or walk away with your data.' },
-];
-
-const includedItems = [
-  'Full QECTOR Decoder v3 package (all decoders)',
-  'CPU + CUDA batch decoding paths',
-  'Commercial use rights (internal evaluation)',
-  'Written license agreement',
-  'Benchmark artifact package with reproducible scripts',
-  'Priority email support (2 business day response)',
-  'Pilot success criteria guidance',
-  'Integration support call (1 hour)',
-];
 
 export default function Pricing() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
@@ -37,9 +17,9 @@ export default function Pricing() {
     script.async = true;
     document.body.appendChild(script);
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       // Stagger animate all sections
-      sectionsRef.current.filter(Boolean).forEach((section, i) => {
+       sectionsRef.current.filter(Boolean).forEach((section) => {
         gsap.fromTo(section, { opacity: 0, y: 40 }, {
           opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
           scrollTrigger: { trigger: section, start: 'top 85%', once: true },

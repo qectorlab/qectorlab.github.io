@@ -224,8 +224,8 @@ prediction = decoder.decode(syndrome)`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              Benchmarks are fully reproducible and machine-conditional: no universal figures are published on the site.
-              You can run benchmarks locally to verify error rate thresholds and performance on your own hardware.
+              Hardware-specific benchmark data is not published on this site. The package and manual document how to
+              perform a scoped local measurement when your project requires one.
             </p>
 
             <div>
@@ -472,14 +472,14 @@ prediction = decoder.decode(syndrome)`}
     <>
       <SEO
         title="User Manual · QECTOR"
-        description="Complete user manual for QECTOR Decoder v3. Installation, configuration, decoder selection, benchmarking, and troubleshooting."
+        description="Complete user manual for QECTOR Decoder v3. Installation, configuration, decoder selection, validation, and troubleshooting."
       />
       <JsonLd
         data={{
           '@context': 'https://schema.org',
           '@type': 'HowTo',
           'name': 'How to Install and Run QECTOR Decoder v3',
-          'description': 'Step-by-step instructions to install the QECTOR QEC decoder package, run syndromic validation tests, and execute benchmarks.',
+           'description': 'Step-by-step instructions to install QECTOR, run syndromic validation tests, select a decoder, and review evidence boundaries.',
           'step': [
             {
               '@type': 'HowToStep',
@@ -493,8 +493,8 @@ prediction = decoder.decode(syndrome)`}
             },
             {
               '@type': 'HowToStep',
-              'name': 'Run benchmarks',
-              'text': 'Run the command python -m qector.benchmark -vs-pymatching -distance 5 -shots 100000 to benchmark LER metrics against PyMatching.'
+               'name': 'Review evidence boundaries',
+               'text': 'Read the v1.0.0 reference manual and record code, noise model, decoder configuration, seed, environment, and artifact metadata before making a local measurement.'
             }
           ]
         }}
@@ -505,7 +505,7 @@ prediction = decoder.decode(syndrome)`}
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
-            10 Decoders · GPU Batch · Stim · Sinter · Qiskit
+             15 Backend Families · GPU Batch · Stim · Sinter · Qiskit
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="User Manual" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">

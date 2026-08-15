@@ -1,25 +1,41 @@
-# QECTOR · qectorlab.github.io
+# QECTOR Website
 
-**Live site: [https://qector.store](https://qector.store)**
+Live site: [qector.store](https://qector.store)
 
-## 🚀 Support QECTOR Development
+This repository contains the static GitHub Pages deployment and the Vite/React source for QECTOR Decoder v3. The QECTOR Decoder v3 Reference Manual v1.0.0 is the normative source for decoder contracts and claim boundaries:
 
-[![Sponsor qectorlab](https://img.shields.io/badge/Sponsor-qectorlab-ea4aaa?style=for-the-badge&logo=github)](https://github.com/sponsors/qectorlab)
+- DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)
+- Decoder repository: [github.com/GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
+- Python package: [qector-decoder-v3 on PyPI](https://pypi.org/project/qector-decoder-v3/)
 
-[![Open Collective](https://img.shields.io/badge/Open%20Collective-qectorlab-3385FF?style=for-the-badge&logo=opencollective)](https://opencollective.com/qectorlab)
+## Repository Layout
 
+- `source/`: React, TypeScript, content, public assets, and build configuration.
+- Root static files: the latest production build served by GitHub Pages.
+- `todo2.md`: private-workflow checklist and editorial status; it contains no audience records.
 
-QECTOR Decoder v3: production-grade quantum error correction decoder library (Rust + Python). **v1.0.0 (2026-08-06) is the first stable release**: 25+ decoder configurations, API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, 15 wheels with Sigstore attestation, official user manual v1.0.0 (DOI 10.5281/zenodo.21363016). No universal benchmark figures are published on the site, because results depend on your hardware: the qector bench harness ships with the package so you can measure on your own machines. Validation reports and SHA-256 sealed manifests are on GitHub. BP-OSD for qLDPC. Free professional Workbench GUI v0.5.3 (see qector.store).
+## Local Development
 
-**Important licensing**: QECTOR Decoder v3 is **Source-Available (not free)** for commercial use. The Workbench GUI app is free for everyone. See /pricing and /commercial on the site.
+```text
+cd source
+npm ci
+npm run lint
+npm run build
+npm run dev
+```
 
-## Branding & Scope
+The build emits prerendered route shells for crawlers and direct GitHub Pages requests. The root static output is synchronized from `source/dist/` before deployment.
 
-- qectorlab brand for the website and Workbench distribution; decoder source-of-truth is the GuillaumeLessard/qector-decoder repo
-- Decoder core maintained at https://github.com/GuillaumeLessard/qector-decoder
-- Creator: Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions
-- Related: SATI CODEX (LCL-833 / LCL-832), "Mastering QEC" book
+## Content and Evidence Policy
 
+The site publishes no hardware-specific benchmark data, charts, screenshots, latency, throughput, VRAM, or threshold results. It publishes decoder contracts, methodology, limitations, and links to reproducible workflows so measurements can be generated on the target workload and machine.
 
+Logical results must be scored in observable/coset space, not by raw correction-vector equality. Graphlike eligibility is structural; hyperedges route to BP-OSD. The public blog contains 20 scoped field notes across QEC foundations, decoder algorithms, qLDPC, noise models, evidence, systems, deployment, and ecosystem integration.
 
-Created by Guillaume Lessard. All rights and research under iD01t Productions.
+## Branding
+
+The official QECTOR SVG is `source/public/assets/logo.svg`. The raster `source/public/assets/og-image.png` is the social preview image used by Open Graph and Twitter metadata. No personal connection or audience export is included in the public site.
+
+## License
+
+Website content and code are copyright Guillaume Lessard / iD01t Productions. QECTOR Decoder licensing is described at [qector.store/license](https://qector.store/license) and [qector.store/commercial](https://qector.store/commercial).
