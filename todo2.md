@@ -1,6 +1,6 @@
 # QECTOR Blog Upgrade Worklist
 
-Status: final quality and cleanup pass in progress
+Status: complete; published to GitHub and verified live
 Updated: 2026-08-15
 
 ## Sources Read
@@ -117,6 +117,19 @@ Rewrite each current post around a clear reader promise, a worked mathematical o
 - Ensure social metadata uses the official QECTOR logo and no removed asset is referenced.
 - Rebuild and replace the deployed static output so stale generated files cannot survive.
 
+### Final Verification Record
+
+- `npm run lint`: passed with zero errors.
+- `npm run build`: passed locally; emitted 22 prerendered route shells plus the 404 fallback.
+- `npm audit --omit=dev`: passed with 0 vulnerabilities after the React Router security update.
+- Content integrity: 20 source posts and 20 deployed posts; all metadata filenames resolve in both copies.
+- Benchmark cleanup: hardware-specific charts, screenshots, sample outputs, stale graph artifacts, and invalid helper artifacts removed. Methodology and correctness contracts remain.
+- Branding: official `logo.svg` is used for favicon, navigation, footer, structured data, and manifest; official raster `og-image.png` is used for Open Graph/Twitter sharing.
+- Privacy: no audience export, names, profile URLs, or individual connection details are present in public content.
+- GitHub Pages: build status `built` for commit `1a2bb6b2c7ed21f6b04dada7a3e71be9046bfd16`, source `main:/`, custom domain `qector.store`.
+- Live cache-busted checks: `https://qector.store/`, `/blog`, and `/assets/og-image.png` return the upgraded content/logo.
+- Published commit: `1a2bb6b feat(site): rebuild content and remove benchmark artifacts`.
+
 ## Status Log
 
 - [x] Read the full manual, DOI metadata, private audience notes, and repository audit.
@@ -126,4 +139,4 @@ Rewrite each current post around a clear reader promise, a worked mathematical o
 - [x] Create ten new posts and synchronize both blog copies.
 - [x] Update metadata, prerender/SEO, sitemap, and deployed output (initial pass).
 - [x] Remove non-portable benchmark artifacts and old invalid helper files.
-- [ ] Run final validation and record results.
+- [x] Run final validation and record results.
