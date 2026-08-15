@@ -157,7 +157,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
-                  <li><strong className="text-primary">Free QECTOR Workbench</strong>: Professional GUI, 56 MCP tools, validation and benchmarking tools (fully free)</li>
+                  <li><strong className="text-primary">Free QECTOR Workbench</strong>: Professional GUI, 82 MCP tools, validation and benchmarking tools (fully free)</li>
                   <li><strong className="text-primary">Documentation & Education</strong>: Comprehensive benchmark artifacts and "Mastering QEC" book context (see decoder repo README for published papers)</li>
                 </ul>
               </div>
@@ -173,7 +173,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                   { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated.' },
                   { year: '2025 Q3', event: 'Titan-Class [[72,12,6]] BB QLDPC code environment validation. OpenCL and CUDA GPU backends added to the batch decoding pipeline.' },
                   { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI.` },
-                  { year: '2026 Q2', event: 'QECTOR Workbench initial release. CustomTkinter GUI, comprehensive MCP server, 16 decoders, and 10 code families, shipped fully self-contained for Windows x64 and Linux x64, requiring no system Python, pip, or internet connection.' },
+                  { year: '2026 Q2', event: 'QECTOR Workbench initial release. CustomTkinter GUI, comprehensive MCP server, 15 decoder backends, and 10 code families, shipped fully self-contained for Windows x64, requiring no system Python, pip, or internet connection.' },
                   { year: '2026 Q3', event: 'QECTOR Decoder v3 v1.0.0: first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, and the official reference manual (DOI 10.5281/zenodo.21941046).' },
                 ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">

@@ -6,111 +6,98 @@ import CodeBlock from '../components/CodeBlock';
 /**
  * MCP Server page.
  *
- * Documents the JSON-RPC 2.0 MCP server shipped in the native extension
- * (src/mcp_server.rs, server name "qector-mcp", protocol 2024-11-05). Every
- * tool listed here is read from the actual `tools/list` payload: if a tool is
- * added or renamed in the Rust source, this page must be updated with it.
+ * Documents the app-free library MCP server shipped in
+ * mcp/mcp_server_library.py for qector-decoder-v3==1.0.0. The server exposes
+ * exactly eight local stdio JSON-RPC 2.0 tools. Every tool name, signature,
+ * and description below is read verbatim from TOOL_NAMES + _tool_schema() in
+ * mcp/mcp_server_library.py: if a tool is added or renamed in the source,
+ * this page must be updated with it.
  */
 
 const TOOLS = [
   {
+    name: 'list_code_families',
+    desc: 'List the code families available in qector-decoder-v3 1.0.0 with their live availability and graphlike eligibility.',
+    required: [],
+    optional: [],
+    returns: 'families map (generator, code_factory, available, description, single_decode), reference_manual DOI, qector_version "1.0.0"',
+  },
+  {
+    name: 'list_decoders',
+    desc: 'List the five stable decoder classes exposed by the wheel: union_find, fast_union_find, blossom, sparse_blossom, native_auto.',
+    required: [],
+    optional: [],
+    returns: 'decoders map (class, status: "stable"), reference_manual DOI',
+  },
+  {
+    name: 'get_license_info',
+    desc: 'Read the live offline QECTOR license tier and feature gates from the installed wheel.',
+    required: [],
+    optional: [],
+    returns: 'license info object, qector_version, reference_manual DOI',
+  },
+  {
     name: 'decode_syndrome',
-    desc: 'Decode a quantum error correction syndrome using any of 16 supported decoder types: union_find, fast_union_find, blossom, sparse_blossom, bp_osd, auto, hybrid, lookup_table, predecoded, auto_router, hybrid_cascade, gnn_belief_matching, belief_matching, two_stage, ambiguity_cluster, colour_code.',
-    required: ['check_to_qubits', 'syndrome'],
-    optional: ['n_qubits', 'decoder_type', 'error_rate'],
-    returns: 'correction (binary array matching n_qubits)',
+    desc: 'Decode a binary syndrome against an explicit or family-derived parity-check matrix. Fails unless H c = s (mod 2) (Theorem 1).',
+    required: ['syndrome'],
+    optional: ['family', 'size', 'decoder_name', 'n_qubits'],
+    returns: 'family, size, decoder, backend_used, qector_version, n_checks, n_qubits, syndrome, correction, hamming_weight, syndrome_valid, latency_us',
   },
   {
-    name: 'batch_decode',
-    desc: 'Decode many syndromes in one call over the chosen batch backend (cpu / cuda / opencl).',
-    required: ['family', 'distance'],
-    optional: ['decoder_name', 'error_rate', 'backend', 'seed', 'n_shots'],
-    returns: 'batch correction results and per-shot status',
+    name: 'decode_single',
+    desc: 'Run one seeded code-capacity decode with Theorems 1 and 2 checks. Logical outcomes are coset-scored, not raw correction-equality.',
+    required: [],
+    optional: ['family', 'distance', 'decoder_name', 'error_rate', 'seed'],
+    returns: 'family, distance, decoder, backend_used, qector_version, error_rate, seed, n_qubits, n_checks, error, syndrome, correction, error_weight, correction_weight, syndrome_valid, logical_failure, logical_scoring, latency_us',
   },
   {
-    name: 'decode_hyperedge',
-    desc: 'Decode a syndrome against a raw hyperedge check matrix using Blossom / SparseBlossom / BP-OSD / Auto.',
-    required: ['check_matrix', 'syndrome'],
-    optional: ['decoder_type', 'error_rate'],
-    returns: 'correction (binary array)',
+    name: 'threshold_sweep',
+    desc: 'Run a code-capacity LER sweep with Wilson 95% intervals and a hashed raw JSON artifact. Not comparable with circuit_level results.',
+    required: [],
+    optional: ['family', 'distances', 'error_rates', 'trials', 'seed', 'decoder_name', 'artifact_path'],
+    returns: 'family, decoder, qector_version, results (per-point LER + Wilson interval), artifact (path, sha256, metadata), caveat',
   },
   {
-    name: 'decode_syndrome_blossom',
-    desc: 'Exact Blossom MWPM decode of a graph-like syndrome.',
-    required: ['check_to_qubits', 'syndrome'],
-    optional: ['n_qubits'],
-    returns: 'correction (binary array)',
+    name: 'build_code_from_matrix',
+    desc: 'Validate and build a binary (n_checks, n_qubits) parity-check matrix for arbitrary CSS/graph codes.',
+    required: ['H_matrix'],
+    optional: ['family', 'distance'],
+    returns: 'family, distance, matrix_shape, rank, n_checks, n_qubits, logical_observables, graphlike, code_built, qector_version, reference_manual',
   },
   {
-    name: 'batch_decode_blossom',
-    desc: 'Batch exact Blossom MWPM decoding with per-shot results.',
-    required: ['family', 'distance'],
-    optional: ['error_rate', 'seed', 'n_shots'],
-    returns: 'batch correction results',
-  },
-  {
-    name: 'decode_syndrome_cascade',
-    desc: 'Cascade decode: Union-Find first, escalate to Blossom/BP-OSD only when needed.',
-    required: ['check_to_qubits', 'syndrome'],
-    optional: ['n_qubits', 'error_rate', 'use_bposd'],
-    returns: 'correction and escalation path report',
-  },
-  {
-    name: 'benchmark_decoder',
-    desc: 'Run a performance latency benchmark for the selected decoder topology and return execution metrics.',
-    required: ['check_to_qubits'],
-    optional: ['n_qubits', 'n_samples', 'seed'],
-    returns: 'latency percentiles, throughput, version, timestamp',
-  },
-  {
-    name: 'run_ler_benchmark',
-    desc: 'Run a logical-error-rate (LER) benchmark on a code family. Cross-noise-model rows are rejected by ler.assert_comparable.',
-    required: ['family', 'distance', 'error_rate'],
-    optional: ['decoder_name', 'n_shots', 'seed'],
-    returns: 'logical error rate estimate with confidence data',
-  },
-  {
-    name: 'get_decoder_info',
-    desc: 'Report system version (v1.0.0), available decoder types, and compiled capabilities.',
+    name: 'compat_report',
+    desc: 'Report live package compatibility and Provisional-surface boundaries (library stdio MCP vs upstream network/batch-GPU/OpenCL surfaces).',
     required: [],
     optional: [],
-    returns: 'version ("1.0.0"), decoder_types, capabilities',
+    returns: 'runtime_ok, qector_decoder_v3 (installed, version, expected), numpy, mcp_sdk, pymatching_compat, reference_manual, provisional_surfaces',
   },
-  {
-    name: 'get_backend_health',
-    desc: 'Probe cpu / cuda / opencl backends and report availability plus probed device details.',
-    required: [],
-    optional: ['backend'],
-    returns: 'health status per backend',
-  },
-  {
-    name: 'clear_decoder_cache',
-    desc: 'Clear the internal decoder instance cache (frees native memory).',
-    required: [],
-    optional: [],
-    returns: 'cleared count',
-  },
-  {
-    name: 'get_server_env',
-    desc: 'Report the MCP server runtime environment (OS, Python version, package version).',
-    required: [],
-    optional: [],
-    returns: 'runtime environment summary',
-  },
-  {
-    name: 'recommend_decoder',
-    desc: 'Recommend a decoder for a code family based on the compatibility matrix and priority (balanced / speed / accuracy).',
-    required: ['family'],
-    optional: ['distance', 'priority'],
-    returns: 'recommended decoder and rationale',
-  },
+];
+
+const FAMILIES = [
+  { name: 'repetition', desc: 'Open 1D chain parity-check code' },
+  { name: 'ring', desc: 'Periodic ring code' },
+  { name: 'surface_legacy', desc: 'Legacy toric weight-4 generator; NOT graphlike' },
+  { name: 'rotated_surface', desc: 'Graphlike rotated surface code' },
+  { name: 'unrotated_surface', desc: 'Graphlike square-lattice surface code' },
+  { name: 'toric', desc: 'Graphlike toric code with periodic boundaries' },
+  { name: 'heavy_hex', desc: 'Graphlike heavy-hex code' },
+  { name: 'color_code', desc: 'Color code family exposed by the wheel' },
+  { name: 'hypergraph_product', desc: 'CSS code from two parity-check matrices (requires build_code_from_matrix)' },
+];
+
+const DECODERS = [
+  { name: 'union_find', type: 'Graphlike', desc: 'Standard cluster-growth Union-Find decoder.' },
+  { name: 'fast_union_find', type: 'Graphlike', desc: 'Faster approximate Union-Find variant.' },
+  { name: 'blossom', type: 'Universal', desc: 'Weight-optimal exact MWPM matching.' },
+  { name: 'sparse_blossom', type: 'Graphlike', desc: 'Region-growing blossom variant for sparse error graphs.' },
+  { name: 'native_auto', type: 'Auto', desc: 'Self-selecting heuristic selector (blossom for graphlike, BP-OSD for hypergraph-product).' },
 ];
 
 const CLIENT_CONFIG = `{
   "mcpServers": {
     "qector": {
       "command": "python",
-      "args": ["-m", "qector_decoder_v3.mcp"]
+      "args": ["\${CLAUDE_PLUGIN_ROOT}/mcp/mcp_server_library.py"]
     }
   }
 }`;
@@ -120,12 +107,13 @@ const CALL_EXAMPLE = `{
   "id": 1,
   "method": "tools/call",
   "params": {
-    "name": "decode_syndrome",
+    "name": "decode_single",
     "arguments": {
-      "check_to_qubits": [[0, 1], [1, 2], [2, 3], [3, 4]],
-      "n_qubits": 5,
-      "syndrome": [0, 1, 0, 0],
-      "decoder_type": "SparseBlossom"
+      "family": "rotated_surface",
+      "distance": 5,
+      "decoder_name": "blossom",
+      "error_rate": 0.05,
+      "seed": 42
     }
   }
 }`;
@@ -136,7 +124,7 @@ const RESPONSE_EXAMPLE = `{
   "result": {
     "content": [{
       "type": "text",
-      "text": "{\\n  \\"correction\\": [1, 1, 0, 0, 0]\\n}"
+      "text": "{\\n  \\"family\\": \\"rotated_surface\\",\\n  \\"distance\\": 5,\\n  \\"decoder\\": \\"blossom\\",\\n  \\"syndrome_valid\\": true,\\n  \\"logical_scoring\\": \\"logical-observable matrix (Theorem 2)\\",\\n  \\"logical_failure\\": false\\n}"
     }]
   }
 }`;
@@ -145,41 +133,41 @@ export default function McpServer() {
   return (
     <>
       <SEO
-        title="MCP Server · QECTOR Decoder v3"
-        description="Model Context Protocol server for quantum error correction decoding. 13 verified JSON-RPC 2.0 tools across 15+ decoder configurations. No universal benchmark figures published; qector bench ships for measuring on your own hardware."
+        title="Library MCP Server · QECTOR Decoder v3 v1.0.0"
+        description="App-free Model Context Protocol server for quantum error correction decoding. 8 verified local stdio JSON-RPC 2.0 tools across 9 code families and 5 stable decoders. Ships as a local library; no Workbench or GUI required."
       />
       <JsonLd
         data={{
           '@context': 'https://schema.org',
           '@type': 'SoftwareApplication',
-          name: 'QECTOR MCP Server',
+          name: 'QECTOR Library MCP Server',
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Windows, macOS, Linux',
           description:
-            'Model Context Protocol server exposing production quantum error correction decoders over JSON-RPC 2.0.',
+            'Local stdio Model Context Protocol server exposing 8 verified QEC decoding tools. Syndromes never leave the machine.',
         }}
       />
 
-      {/* HERO */}
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
-            JSON-RPC 2.0 · Protocol 2024-11-05 · Ships in the native extension
+            Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 1.0.0
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-            <NeuralReveal text="Model Context Protocol Server" className="text-4xl md:text-6xl font-extrabold" />
+            <NeuralReveal text="Library MCP Server" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Give any MCP-capable assistant direct access to production quantum error
-            correction. Thirteen verified tools covering Union-Find, exact Blossom MWPM,
-            BP-OSD, cascade decoding and benchmarking, with decoding running in native Rust, not in
-            the model.
+            The app-free, library-only MCP server: eight verified tools covering Union-Find, exact
+            Blossom MWPM, SparseBlossom, and the auto router, with syndrome validation against
+            <code className="text-cyan-300"> H c = s (mod 2) </code> and coset-scored logical outcomes.
+            Requires only <code className="text-cyan-300">qector-decoder-v3==1.0.0</code> and
+            <code className="text-cyan-300">mcp==1.26.0</code>; no Workbench or GUI needed.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/installer" className="btn-cyan">Install</Link>
             <Link to="/docs" className="btn-outline">Documentation</Link>
-            <Link to="/pricing" className="btn-outline">Licensing</Link>
+            <Link to="/workbench" className="btn-outline">Workbench vs library</Link>
           </div>
         </div>
       </section>
@@ -187,7 +175,6 @@ export default function McpServer() {
       <section className="section-padding pb-24">
         <div className="max-w-4xl mx-auto space-y-10">
 
-          {/* WHY */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               {
@@ -195,12 +182,12 @@ export default function McpServer() {
                 d: 'The assistant calls a decoder; it does not invent a correction. Results are reproducible and syndrome-faithful.',
               },
               {
-                t: 'Native speed',
-                d: 'Rust core with Rayon parallelism and the GIL released on batch paths. Batch decoding scales across every core.',
+                t: 'Runs locally',
+                d: 'Local stdio JSON-RPC. No syndromes leave the machine, no network call, no telemetry. The protocol is local stdio only.',
               },
               {
-                t: 'Runs locally',
-                d: 'stdio JSON-RPC. No syndromes leave the machine, no network call, no telemetry.',
+                t: 'App-free',
+                d: 'Ships in the published qector-decoder-v3==1.0.0 wheel. No QECTOR Workbench, no GUI, no desktop application required.',
               },
             ].map((c) => (
               <div key={c.t} className="card-surface">
@@ -210,26 +197,27 @@ export default function McpServer() {
             ))}
           </div>
 
-          {/* CONFIG */}
           <div className="card-surface">
             <h2 className="text-2xl font-bold mb-3">Connect a client</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
-              The server speaks JSON-RPC 2.0 over stdio and identifies itself as{' '}
-              <code className="text-cyan-300">qector-mcp</code>. Add it to any MCP client
-              configuration:
+              The server speaks JSON-RPC 2.0 over local stdio and identifies itself as
+              <code className="text-cyan-300"> qector-decoder-v3-mcp </code>. Add it to Clauder Code,
+              Claude Desktop, or any MCP client:
             </p>
             <CodeBlock language="json" code={CLIENT_CONFIG} />
             <p className="text-muted-foreground text-xs mt-3">
-              Requires the package installed in the target Python environment:{' '}
-              <code className="text-cyan-300">pip install qector-decoder-v3</code>
+              In Claude Code, root <code className="text-cyan-300">.mcp.json</code> already references
+              this server via <code className="text-cyan-300">${'${CLAUDE_PLUGIN_ROOT}'}</code>. Validate with
+              <code className="text-cyan-300"> claude plugin validate "&lt;PLUGIN_ROOT&gt;" --strict </code>.
             </p>
           </div>
 
-          {/* TOOLS */}
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Tools</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">8 Tools</h2>
             <p className="text-secondary text-sm mb-6">
-              13 tools, returned verbatim by <code className="text-cyan-300">tools/list</code>.
+              Returned verbatim by <code className="text-cyan-300">tools/list</code>. The schema is
+              enforced as fail-closed JSON; malformed or resource-exceeding input returns an MCP
+              <code className="text-cyan-300"> isError </code> result without leaking tracebacks.
             </p>
             <div className="space-y-4">
               {TOOLS.map((t) => (
@@ -265,41 +253,77 @@ export default function McpServer() {
             </div>
           </div>
 
-          {/* CALL */}
+          <div className="card-surface">
+            <h2 className="text-2xl font-bold mb-3">Code families &amp; decoders</h2>
+            <p className="text-secondary text-sm leading-relaxed mb-4">
+              Nine code families (graphlike eligible where marked; non-graphlike inputs route to
+              BP-OSD or require <code className="text-cyan-300"> build_code_from_matrix </code>)
+              and five stable decoders. No universal benchmark figures are published on the site —
+              run the shipped harness to measure your own hardware.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {FAMILIES.map((f) => (
+                <div key={f.name} className="p-4 bg-void border border-gridline rounded-xl">
+                  <span className="text-cyan-300 font-mono font-bold">{f.name}</span>
+                  <div className="text-xs text-muted-foreground mt-1 font-mono">→ {f.desc}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
+                    <th className="py-2 px-3">Decoder</th>
+                    <th className="py-2 px-3">Compatibility</th>
+                    <th className="py-2 px-3">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gridline/50">
+                  {DECODERS.map((d) => (
+                    <tr key={d.name} className="hover:bg-surface/30 transition-colors">
+                      <td className="py-2 px-3 font-mono font-semibold text-primary">{d.name}</td>
+                      <td className="py-2 px-3 text-muted-foreground text-xs">{d.type}</td>
+                      <td className="py-2 px-3 text-secondary text-xs">{d.desc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <div className="card-surface">
             <h2 className="text-2xl font-bold mb-3">Example call</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
-              The cascade decoder runs Union-Find first and escalates only what it cannot
-              cheaply resolve, reporting how often each path was taken.
+              <code className="text-cyan-300"> decode_single </code> runs one seeded code-capacity decode
+              with Theorems 1 and 2 enforcement, then returns syndrome_valid and logical_scoring fields.
             </p>
             <CodeBlock language="json" code={CALL_EXAMPLE} />
             <p className="text-secondary text-sm mt-5 mb-3">Response:</p>
             <CodeBlock language="json" code={RESPONSE_EXAMPLE} />
             <p className="text-muted-foreground text-xs mt-3">
-              Tool results are returned as MCP text content containing the JSON payload,
-              per the 2024-11-05 content convention.
+              Tool results are returned as MCP text content containing the JSON payload, per the
+              2024-11-05 content convention. The <code className="text-cyan-300"> H c = s (mod 2) </code>
+              check is enforced before any logical scoring; a failed check raises an MCP error instead of returning a result.
             </p>
           </div>
 
-          {/* NOTES */}
           <div className="card-surface">
-            <h2 className="text-2xl font-bold mb-4">Operational & Hyperedge Guidance</h2>
+            <h2 className="text-2xl font-bold mb-4">Operational guidance</h2>
             <ul className="space-y-3 text-secondary text-sm leading-relaxed">
               <li>
-                <strong className="text-primary">Graph-like vs Hyperedge incidence.</strong>{' '}
-                MCP <code className="text-cyan-300">decode_syndrome</code> validates that every qubit touches at most two checks (participation &le; 2). For graph-like codes (repetition, ring, Stim decomposed DEMs), all decoder types operate with 100% syndrome faithfulness.
+                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review — they are not part of this public library contract.
               </li>
               <li>
-                <strong className="text-primary">Surface Code / Hyperedge Workaround.</strong>{' '}
-                For raw hyperedge check matrices (such as <code className="text-cyan-300">generate_surface_code_checks</code> where qubit participation &gt; 2), use the direct Python API (<code className="text-cyan-300">BlossomDecoder</code>, <code className="text-cyan-300">SparseBlossomDecoder</code>, <code className="text-cyan-300">BpOsdDecoder</code>, or <code className="text-cyan-300">AutoDecoder</code>) or decompose Stim circuit errors into a graph-like DEM via <code className="text-cyan-300">decompose_errors=True</code>.
+                <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation ≤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.
               </li>
               <li>
-                <strong className="text-primary">Measure on Your Own Hardware.</strong>{' '}
-                No universal benchmark figures are published on the site, because results depend on your hardware, drivers, and workloads. Validate and measure with the shipped harness: <code className="text-cyan-300">qector bench</code> prints one machine-conditional rate line, and <code className="text-cyan-300">qector-doctor</code> reports why a decoder is available or unavailable on your machine.
+                <strong className="text-primary">LER is coset-scored.</strong> Logical outcomes use the logical coset, never raw correction-vector equality. Wilson 95% intervals and a <code className="text-cyan-300"> code_capacity </code> tag are included; do not compare with <code className="text-cyan-300"> circuit_level </code> results.
               </li>
               <li>
-                <strong className="text-primary">Licensing.</strong> Academic, research and personal use is free. Commercial use requires a license; see{' '}
-                <Link to="/pricing" className="text-cyan-300">Pricing</Link>.
+                <strong className="text-primary">Artifacts stay local.</strong> <code className="text-cyan-300"> threshold_sweep </code> writes a hashed raw JSON artifact with required metadata. Generated artifacts belong outside the plugin and must not be uploaded to external services.
+              </li>
+              <li>
+                <strong className="text-primary">Licensing.</strong> See <Link to="/pricing" className="text-cyan-300">Pricing</Link> for license-key installation and tier information returned by <code className="text-cyan-300"> get_license_info </code>.
               </li>
             </ul>
           </div>
