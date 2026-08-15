@@ -128,7 +128,7 @@ Rewrite each current post around a clear reader promise, a worked mathematical o
 - Privacy: no audience export, names, profile URLs, or individual connection details are present in public content.
 - GitHub Pages: build status `built` for commit `1a2bb6b2c7ed21f6b04dada7a3e71be9046bfd16`, source `main:/`, custom domain `qector.store`.
 - Live cache-busted checks: `https://qector.store/`, `/blog`, and `/assets/og-image.png` return the upgraded content/logo.
-- Published commit: `1a2bb6b feat(site): rebuild content and remove benchmark artifacts`.
+- Published commits: `1a2bb6b feat(site): rebuild content and remove benchmark artifacts`; `fa8405e docs: record final site verification`.
 
 ## Status Log
 
