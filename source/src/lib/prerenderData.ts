@@ -106,14 +106,16 @@ const table = (head: string[], rows: string[][]) =>
     )
     .join('')}</tbody></table>`;
 
-const NAV_LINKS: [string, string][] = [
-  ['/', 'Home'],
+const NAV_LINKS = [
+  ['/', 'Platform'],
   ['/decoder', 'Decoder'],
+  ['/claude-plugin', 'Claude Plugin'],
+  ['/workbench', 'Workbench'],
+  ['/master-ai-suite', 'AI Suite'],
+  ['/mcp-server', 'MCP Server'],
   ['/evidence', 'Evidence'],
+  ['/blog', 'Blog'],
   ['/pricing', 'Pricing'],
-  ['/installer', 'Install'],
-  ['/docs', 'Docs'],
-  ['/changelog', 'Changelog'],
   ['/contact', 'Contact'],
 ];
 
