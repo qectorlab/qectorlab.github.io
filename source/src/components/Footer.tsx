@@ -10,6 +10,7 @@ interface LinkItem {
 
 const platformLinks: LinkItem[] = [
   { label: 'QECTOR Decoder v3', href: '/decoder', badge: 'Library' },
+  { label: 'Claude Code Plugin', href: '/claude-plugin', badge: 'Claude' },
   { label: 'Workbench GUI', href: '/workbench', badge: 'Desktop App' },
   { label: 'Master AI Suite v2', href: '/master-ai-suite', badge: 'AI Toolkit' },
   { label: 'QECTOR MCP Server', href: '/mcp-server', badge: 'MCP' },

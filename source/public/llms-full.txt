@@ -47,6 +47,8 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 ## Official pages
 
 - https://qector.store/decoder
+- https://qector.store/claude-plugin
+- https://qector.store/mcp-server
 - https://qector.store/evidence
 - https://qector.store/manual
 - https://qector.store/technical-reference

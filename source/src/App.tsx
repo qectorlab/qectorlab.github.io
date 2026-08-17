@@ -13,6 +13,7 @@ const Decoder = lazy(() => import('./pages/Decoder'));
 const Workbench = lazy(() => import('./pages/Workbench'));
 const MasterAiSuite = lazy(() => import('./pages/MasterAiSuite'));
 const McpServer = lazy(() => import('./pages/McpServer'));
+const ClaudePlugin = lazy(() => import('./pages/ClaudePlugin'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/workbench" element={<Workbench />} />
             <Route path="/master-ai-suite" element={<MasterAiSuite />} />
             <Route path="/mcp-server" element={<McpServer />} />
+            <Route path="/claude-plugin" element={<ClaudePlugin />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />
 

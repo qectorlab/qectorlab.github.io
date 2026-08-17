@@ -719,15 +719,74 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/mcp-server',
     title: 'MCP Server · QECTOR Decoder v3',
     description:
-      'Model Context Protocol server for quantum error correction decoding. JSON-RPC 2.0 tools exposing 13 verified tools across 15+ decoder configurations to any MCP client.',
+      'Model Context Protocol server for quantum error correction decoding. Local stdio JSON-RPC 2.0 tools exposing 8 verified library tools to any MCP client.',
     heading: 'QECTOR MCP Server',
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools across 15+ decoder configurations (decode_syndrome, batch_decode, decode_hyperedge, decode_syndrome_blossom, batch_decode_blossom, decode_syndrome_cascade, benchmark_decoder, run_ler_benchmark, get_decoder_info, get_backend_health, clear_decoder_cache, get_server_env, recommend_decoder) for any MCP-compatible AI client. Ships in every v1.0.0 wheel.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs standalone on qector-decoder-v3==1.0.0.'
         ) +
-        pre(`pip install qector-decoder-v3==${DECODER_VERSION}\npython -c "import qector_decoder_v3; qector_decoder_v3.run_mcp_server()"`)
+        pre(`pip install qector-decoder-v3==${DECODER_VERSION}\npython mcp/mcp_server_library.py`)
     ),
+  },
+  {
+    path: '/claude-plugin',
+    title: 'QECTOR Claude Plugin · Quantum Error Correction for Claude Code',
+    description:
+      'Official QECTOR plugin for Claude Code and Claude Desktop. 7 strict-math skills, 5 specialized agents, 8 local MCP tools, and zero-egress quantum decoding.',
+    heading: 'QECTOR Claude Plugin',
+    body: page(
+      h1('QECTOR Claude Plugin') +
+        p(
+          'Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop. Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Zero-egress local stdio architecture ensures that circuits, parity matrices, and syndromes never leave your machine.'
+        ) +
+        h2('7 Strict-Math Domain Skills') +
+        ul([
+          '<strong>qector-core</strong>: Verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding to prevent hallucination.',
+          '<strong>qector-math-foundations</strong>: Theorems 1–16 executable ground truth over GF(2), fail-closed syndrome checking (H c = s mod 2), Wilson 95% CIs.',
+          '<strong>qector-developer</strong>: Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing.',
+          '<strong>qector-researcher</strong>: Literature review, threshold discovery, Monte Carlo noise simulation, reproducible JSON export.',
+          '<strong>qector-hardware-engineer</strong>: Physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets.',
+          '<strong>qector-educator</strong>: Tutorial generation, conceptual explainers, interactive decoding walkthroughs.',
+          '<strong>qector-sysadmin</strong>: Environment health diagnostics, resource bounds enforcement (MAX_CHECKS, MAX_QUBITS), runtime hygiene.',
+        ]) +
+        h2('5 Specialized Agents') +
+        ul([
+          '<strong>qec-developer.md</strong>: Code integration, API design, performance tuning.',
+          '<strong>qec-researcher.md</strong>: Academic research, paper reproduction, threshold sweeps.',
+          '<strong>qec-validator.md</strong>: Formal mathematical verification and proof checking.',
+          '<strong>qec-sysadmin.md</strong>: Operations, monitoring, incident response.',
+          '<strong>qec-hardware-engineer.md</strong>: Physical qubit characterization, cryogenic systems.',
+        ]) +
+        h2('8 Verified MCP Server Tools') +
+        p(
+          'list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report.'
+        ) +
+        h2('Install with Claude Code') +
+        pre(
+          `claude plugin marketplace add GuillaumeLessard/qector-claude-plugin\nclaude plugin install qector@qector-tools`
+        ) +
+        h2('Local Plugin Directory Mode') +
+        pre(
+          `git clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\ncd qector-claude-plugin\npip install -r requirements.txt\nclaude --plugin-dir .`
+        )
+    ),
+    jsonLdExtra: [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'QECTOR Claude Plugin',
+        description:
+          'Official QECTOR plugin for Claude Code and Claude Desktop. 7 strict-math skills, 5 specialized agents, 8 local MCP tools, and zero-egress quantum decoding.',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Linux, macOS, Windows',
+        softwareVersion: '1.0.0',
+        author: {
+          '@type': 'Person',
+          name: 'Guillaume Lessard',
+          url: 'https://orcid.org/0009-0000-3465-3753',
+        },
+      },
+    ],
   },
   {
     path: '/success',

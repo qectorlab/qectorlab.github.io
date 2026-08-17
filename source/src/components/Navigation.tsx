@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router';
 const navLinks = [
   { label: 'Platform', href: '/' },
   { label: 'Decoder', href: '/decoder' },
+  { label: 'Claude Plugin', href: '/claude-plugin' },
   { label: 'Workbench', href: '/workbench' },
   { label: 'AI Suite', href: '/master-ai-suite' },
   { label: 'MCP Server', href: '/mcp-server' },

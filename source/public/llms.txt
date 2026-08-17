@@ -17,6 +17,8 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 ## Official links
 
 - Website: https://qector.store/
+- Claude Code Plugin: https://qector.store/claude-plugin
+- MCP Server: https://qector.store/mcp-server
 - Blog: https://qector.store/blog
 - Master AI Suite v2: https://qector.store/master-ai-suite
 - Install guide: https://qector.store/installer

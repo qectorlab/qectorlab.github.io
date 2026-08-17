@@ -197,6 +197,26 @@ export default function McpServer() {
             ))}
           </div>
 
+          <div className="card-surface border border-cyan-800/60 bg-gradient-to-r from-cyan-950/40 via-surface to-cyan-950/20 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+              <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-400 text-slate-950 mb-2">
+                CLAUDE PLUGIN
+              </span>
+              <h3 className="text-lg font-bold text-slate-100 mb-1">
+                Looking for the full Claude Code Plugin?
+              </h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Includes 7 strict-math skills, 5 specialized agents, and 3 reproducible workflows alongside this local MCP server.
+              </p>
+            </div>
+            <Link
+              to="/claude-plugin"
+              className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-xs font-mono transition-all whitespace-nowrap shadow-lg shadow-cyan-400/20"
+            >
+              Explore Claude Plugin →
+            </Link>
+          </div>
+
           <div className="card-surface">
             <h2 className="text-2xl font-bold mb-3">Connect a client</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
