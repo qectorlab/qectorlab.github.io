@@ -157,8 +157,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
-                  <li><strong className="text-primary">Free QECTOR Workbench</strong>: Professional GUI, 82 MCP tools, validation and benchmarking tools (fully free)</li>
-                  <li><strong className="text-primary">Documentation & Education</strong>: Comprehensive benchmark artifacts and "Mastering QEC" book context (see decoder repo README for published papers)</li>
+                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: Windows v1.0.0 and Linux v0.5.3 desktop releases with platform-specific MCP surfaces.</li>
+                   <li><strong className="text-primary">Documentation & Education</strong>: Public methodology, validation guidance, and "Mastering QEC" book context (see the decoder repository for primary evidence).</li>
                 </ul>
               </div>
             </div>
@@ -189,8 +189,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h3 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h3>
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
-              No universal benchmark figures are published on this site, because results depend on your hardware; the qector bench harness ships with the package so you can measure on your own machines. The decoder reached its first stable release on 2026-08-06 (v1.0.0).
-              QECTOR Decoder is Source-Available (not free). The Workbench GUI is free. Latest from PyPI RSS. We publish validation reports, non-pass counts, and known limitations openly.
+               No hardware-specific measurement figures are published on this site, because results depend on your hardware. The decoder reached its first stable release on 2026-08-06 (v1.0.0).
+               QECTOR Decoder is source-available under the published license. Workbench release terms are platform-specific. We publish validation guidance and known limitations openly.
               Documented behavior is what ships.
             </p>
           </div>

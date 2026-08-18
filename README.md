@@ -12,7 +12,6 @@ This repository contains the static GitHub Pages deployment and the Vite/React s
 
 - `source/`: React, TypeScript, content, public assets, and build configuration.
 - Root static files: the latest production build served by GitHub Pages.
-- `todo2.md`: private-workflow checklist and editorial status; it contains no audience records.
 
 ## Local Development
 

@@ -9,8 +9,8 @@ interface TerminalLine {
 export default function TerminalEmulator() {
   const [input, setInput] = useState('');
   const [lines, setLines] = useState<TerminalLine[]>([
-    { text: 'QECTOR CLI Terminal Emulator (latest from PyPI)', type: 'info' },
-    { text: 'Type "help" for a list of available commands.', type: 'info' },
+     { text: 'QECTOR CLI Terminal Demo (simulation only)', type: 'info' },
+     { text: 'No command is executed and no external service is contacted.', type: 'info' },
   ]);
   const [isExecuting, setIsExecuting] = useState(false);
   const terminalEndRef = useRef<HTMLDivElement>(null);
@@ -38,56 +38,43 @@ export default function TerminalEmulator() {
         ...prev,
         { text: 'Available commands:', type: 'info' },
         { text: '  help                        - Show this menu', type: 'output' },
-        { text: '  pip install qector-decoder-v3- Install QECTOR packages', type: 'output' },
-        { text: '  qector-doctor               - Run the 15-check environment diagnostic', type: 'output' },
-        { text: '  qector bench -d 5           - Run a v1.0.0 throughput benchmark', type: 'output' },
+         { text: '  pip install qector-decoder-v3 - Show the install command', type: 'output' },
+         { text: '  qector-doctor               - Show the diagnostic command', type: 'output' },
+         { text: '  qector bench -d 5           - Show a local measurement command', type: 'output' },
         { text: '  clear                       - Clear the terminal screen', type: 'output' },
       ]);
     } else if (trimmed === 'clear') {
       setLines([]);
     } else if (trimmed === 'pip install qector-decoder-v3') {
       await sleep(300);
-      setLines((prev) => [...prev, { text: 'Downloading latest qector-decoder-v3 (fetched via PyPI RSS)...', type: 'output' }]);
-      await sleep(800);
-      setLines((prev) => [...prev, { text: 'Installing collected packages: qector-decoder-v3', type: 'output' }]);
-      await sleep(400);
-      setLines((prev) => [...prev, { text: 'Verifying Sigstore wheel signatures and SLSA provenance...', type: 'output' }]);
-      await sleep(600);
-      setLines((prev) => [
-        ...prev,
-        { text: '✓ Signature verified: Cosign cert subject CN matches guillaume@qector.store', type: 'success' },
-        { text: 'Successfully installed latest qector-decoder-v3 (from PyPI RSS)', type: 'success' },
-      ]);
+       setLines((prev) => [...prev, { text: 'Simulation only: no package was downloaded.', type: 'output' }]);
+       await sleep(800);
+       setLines((prev) => [...prev, { text: 'Simulation only: no package was installed.', type: 'output' }]);
+       await sleep(400);
+       setLines((prev) => [...prev, { text: 'For a real install, follow the current PyPI and release verification instructions.', type: 'output' }]);
+       await sleep(600);
+       setLines((prev) => [
+         ...prev,
+         { text: '✓ Demo complete: no network request or filesystem change was made.', type: 'success' },
+       ]);
     } else if (trimmed === 'qector-doctor') {
       await sleep(300);
-      setLines((prev) => [...prev, { text: 'qector-doctor v1.0.0: 15-check environment diagnostic', type: 'output' }]);
-      await sleep(500);
-      setLines((prev) => [
-        ...prev,
-        { text: '[ 1/15] Python version (3.9-3.13) ............ PASS', type: 'success' },
-        { text: '[ 2/15] qector_decoder_v3 import, v1.0.0 ..... PASS', type: 'success' },
-        { text: '[ 3/15] NumPy bounds (>=1.24,<2.3) .......... PASS', type: 'success' },
-        { text: '[ 4/15] Licence resolution state ............. PASS', type: 'success' },
-        { text: '[ 5/15] CPU core decoders .................... PASS', type: 'success' },
-        { text: '[ 6/15] AVX2 batch path ..................... PASS', type: 'success' },
-        { text: '[ 7/15] CUDA device probe ................... WARN (no NVIDIA GPU found)', type: 'info' },
-        { text: '[ 8/15] Stim import + DEM conversion ......... PASS', type: 'success' },
-        { text: '[ 9/15] Sinter entry points ................. PASS', type: 'success' },
-        { text: '[10/15] MCP server cold-start round-trip ..... PASS', type: 'success' },
-        { text: '✓ 10 PASS, 1 WARN: decode ready (see qector-doctor --json for the full report)', type: 'success' },
-      ]);
+       setLines((prev) => [...prev, { text: 'Simulation only: qector-doctor was not run.', type: 'output' }]);
+       await sleep(500);
+       setLines((prev) => [
+         ...prev,
+         { text: 'Run qector-doctor in your installed environment to obtain real PASS / WARN / FAIL results.', type: 'info' },
+       ]);
     } else if (trimmed === 'qector bench -d 5' || trimmed === 'qector bench --distance 5') {
       await sleep(400);
       setLines((prev) => [
         ...prev,
-        { text: 'Generating rotated surface code (d=5, rounds=5, noise=0.001, 10,000 shots)...', type: 'output' },
+         { text: 'Simulation only: no circuit or measurement was generated.', type: 'output' },
       ]);
       await sleep(1000);
       setLines((prev) => [
         ...prev,
-        { text: 'blossom           | throughput printed for this machine only', type: 'success' },
-        { text: '---------------------------------------------------------', type: 'info' },
-        { text: '✓ Machine-conditional rate printed; no universal figure claimed. Results depend on your CPU, GPU, drivers, and workload. Run qector bench on your own hardware.', type: 'success' },
+         { text: 'Run qector bench on your own declared workload to generate real local evidence.', type: 'info' },
       ]);
     } else {
       await sleep(150);

@@ -63,7 +63,7 @@ export default function Blog() {
             {visiblePosts.map((post, index) => (
               <Link 
                 key={post.id} 
-                to={`/blog/${post.id}`}
+                 to={`/blog/${post.id}/`}
                 className="group relative flex flex-col bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 hover:bg-slate-800/50 hover:border-emerald-500/30 transition-all duration-500 animate-in fade-in slide-in-from-bottom-8"
                 style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
               >

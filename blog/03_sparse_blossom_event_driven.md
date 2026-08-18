@@ -16,10 +16,6 @@ For a syndrome `s`, matching operates on the complete graph of defects. Even whe
 
 Sparse Blossom does not guess that long edges are impossible. It discovers candidate edges in the order in which they can become tight under a feasible dual solution. This is a correctness-oriented form of laziness: an edge is not ignored forever; it is deferred until its collision event is relevant.
 
-![Sparse Blossom region states](graphs/03_sparse_radius_dynamics.png)
-
-*Growing, Frozen, and Shrinking are structural states from the manual. The figure carries no hardware measurement.*
-
 ## 2. The three region states
 
 Each top-level region has a dual radius and one of three states:
@@ -91,10 +87,6 @@ When a tight edge is popped, the solver examines the alternating-tree roots:
 5. An edge internal to an inner region is not an augmenting event.
 
 Shrinking is not merely a graph operation. It is a dual update. The outer and inner rates are chosen so that the sum controlling an internal edge remains constant. That is why edges already known to be tight remain usable while the search continues.
-
-![Sparse Blossom event queue](graphs/03_sparse_event_queue_radix.png)
-
-*The radix-heap diagram is a structural explanation of monotone event keys, not a latency claim.*
 
 ## 6. Why a radix heap fits the event stream
 

@@ -39,7 +39,7 @@ export interface PrerenderRoute {
   jsonLdExtra?: Record<string, unknown>[];
 }
 
-const abs = (path: string) => `${SITE_URL}${path === '/' ? '/' : path}`;
+const abs = (path: string) => `${SITE_URL}${path === '/' ? '/' : `${path}/`}`;
 
 /* ---------- shared schema.org nodes ---------- */
 
@@ -241,27 +241,26 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench v0.5.3: free desktop GUI and MCP server for QECTOR Decoder v3. Windows portable exe and Linux .deb, 56 MCP tools, 16 decoders, 10 code families. Self-contained: no system Python, pip, or internet required.',
-    heading: 'QECTOR Workbench v0.5.3',
+      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.0 with 82 tools and a 1.0.0 backend, plus Linux v0.5.3 with 56 tools and a 0.7.0 backend.',
+    heading: 'QECTOR Workbench',
     body: page(
-      h1('QECTOR Workbench v0.5.3') +
+      h1('QECTOR Workbench') +
         p(
-          'Free desktop application (CustomTkinter GUI) and Model Context Protocol server for QECTOR Decoder v3: 56 MCP tools, 16 decoders, 10 code families including qLDPC and colour codes, and a visual circuit builder. Ships as a portable Windows x64 executable and native Linux x64 Debian packages, each fully self-contained: it bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 0.7.0 wheel, so no system Python, pip, internet connection, or update check is required. No macOS build is currently published.'
+          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The published Windows release is v1.0.0 with an 82-tool server and qector-decoder-v3 1.0.0 backend; the published Linux release is v0.5.3 with a 56-tool server and 0.7.0 backend. No macOS build is currently published.'
         ) +
         h2('Downloads') +
         ul([
-          'Windows x64: portable <code>QectorWorkbench-Portable.exe</code>, no installer and no admin rights: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
+          'Windows x64: v1.0.0 portable <code>QectorWorkbench-Portable.exe</code>: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
           'Linux x64: Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
-          'Headless MCP server on either platform: <code>--mcp</code> (56-tool stdio JSON-RPC 2.0, no display needed).',
-          'Linux baseline glibc 2.31: Ubuntu 20.04+, Debian 11+, Mint 20+, antiX 21+ / MX 21+, Fedora 32+, openSUSE Leap 15.3+.',
+          'Headless MCP server on either platform: <code>--mcp</code>; tool counts and bundled APIs are release-specific.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
         h2('Workspaces') +
         p(
-          'Nine workspaces ship in v0.5.3: Code Explorer (build and inspect codes, Tanner graph and parity-check matrix views, decoder recommendation), Decoder Lab (interactive decode runs with syndrome-validity and logical-failure reporting), Benchmark (throughput and latency percentiles with JSON export and session comparison), Batch &amp; Streaming (batch decoding and sliding-window streaming, with cpu / cpu_parallel / cuda / opencl backend probing), Hardware, Diagnostics, Documentation Studio, Lab &amp; Personal Info (deposit profile and licence-key install), and a live Console.'
+          'The Windows v1.0.0 release documents nine workspaces: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation Studio, Lab &amp; Personal Info, and Console. Use each release&apos;s manuals for platform-specific details.'
         ) +
         h2('10 Quantum Code Families') +
-        p('Workbench v0.5.3 covers 10 code families including qLDPC and colour codes:') +
+        p('The published Workbench releases cover 10 code families including qLDPC and colour codes:') +
         ul([
           'repetition: 1D chain parity-check code.',
           'ring: Periodic 1D chain.',
@@ -274,14 +273,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'bivariate_bicycle: bivariate bicycle presets (qLDPC).',
           'color_code: triangular colour code.',
         ]) +
-        h2('Performance measurement') +
+        h2('Local measurement') +
         p(
-          'No benchmark figures are published on this site; results depend on specific hardware, drivers, and workloads. The Workbench ships a benchmark harness so you can measure on your own hardware.'
+          'No hardware-specific measurement data is published on this site. If you run optional local tools, record the workload, environment, and raw artifact with the result.'
         ) +
         h2('Documentation &amp; reference') +
         ul([
-          `User Manual &amp; Licensing: <a href="${SITE_URL}/manual" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/manual</a>`,
-          `Architecture &amp; Technical Reference: <a href="${SITE_URL}/technical-reference" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/technical-reference</a>`,
+          `User Manual &amp; Licensing: <a href="${SITE_URL}/manual/" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/manual/</a>`,
+          `Architecture &amp; Technical Reference: <a href="${SITE_URL}/technical-reference/" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/technical-reference/</a>`,
         ])
     ),
   },
@@ -404,7 +403,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Selected work') +
         ul([
           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 15+ decoder configurations, first stable release v1.0.0.`,
-          `<a href="/workbench" style="color:#67e8f9;">QECTOR Workbench v0.5.3</a>: free desktop GUI and 56-tool MCP server for Windows and Linux.`,
+           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: separate Windows v1.0.0 and Linux v0.5.3 releases with release-specific MCP surfaces.`,
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
         ]) +
@@ -556,21 +555,21 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/manual',
     title: 'User Manual · QECTOR',
     description:
-      'Complete user manual for QECTOR Decoder v3. Installation, configuration, decoder selection, benchmarking, and troubleshooting.',
+      'Complete user manual for QECTOR Decoder v3. Installation, decoder selection, local measurements, and troubleshooting.',
     heading: 'User Manual',
     body: page(
       h1('User Manual') +
         p(
-          'Complete manual for QECTOR Decoder v3: installation, license-token configuration (QECTOR_LICENSE, offline Ed25519 verification), decoder selection by code family, Stim/Sinter integration, batch and GPU decoding, and troubleshooting.'
+          'Complete manual for QECTOR Decoder v3: installation, license-token configuration, decoder selection by code family, optional ecosystem integration, local measurements, and troubleshooting.'
         ) +
         table(
           ['Decoder', 'Target code', 'Speed', 'Accuracy', 'Tier'],
           [
-            ['Blossom (MWPM)', 'CSS, Surface', 'Fast (UF pre-match)', 'Exact optimal', 'Production'],
-            ['Belief-Matching', 'CSS, Surface', 'Moderate', 'High', 'Production'],
-            ['BP-OSD', 'qLDPC, LDPC', 'Moderate', 'Optimal for qLDPC', 'Production'],
+            ['Blossom (MWPM)', 'Graphlike CSS / surface', 'Workload-dependent', 'Minimum-weight matching objective', 'Stable'],
+            ['Belief-Matching', 'Correlated-noise research', 'Workload-dependent', 'Evaluate locally', 'Research'],
+            ['BP-OSD', 'qLDPC, LDPC', 'Workload-dependent', 'Evaluate locally', 'Research'],
             ['Union-Find', 'Large surface', 'Near-linear O(N)', 'Approximate', 'Production'],
-            ['GPU Batch', 'Any (batch)', 'High throughput', 'Identical to CPU', 'Production'],
+            ['GPU Batch', 'Supported batch workloads', 'Runtime-dependent', 'Validate locally', 'Workload-sensitive'],
             ['Hybrid / Cascade', 'Degenerate, mixed', 'Iterative', 'High', 'Research'],
             ['GNN Belief Matcher', 'Surface, research', 'Slow (offline)', 'Neural-enhanced', 'Research'],
           ]
@@ -607,15 +606,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     heading: 'Installation',
     body: page(
       h1('Installation') +
-        p('QECTOR Decoder v3 ships as a Rust-compiled Python wheel for Python 3.9–3.13 on Linux x86_64 (manylinux_2_17), macOS 11.0+ (arm64), and Windows amd64: 15 binary wheels, no sdist.') +
+        p('QECTOR Decoder v3 is distributed through PyPI for Python 3.9+ on the platforms listed by the current release metadata. Check the exact wheel and dependency set before deployment.') +
         pre(
-          `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"  # Benchmark harness\npip install "qector-decoder-v3[all]"    # Full environment\n\n# Verify\nqector-doctor            # 15-check environment diagnostic\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
+          `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"  # Local measurement tools\npip install "qector-decoder-v3[all]"    # Optional full environment\n\n# Verify\nqector-doctor\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
         ) +
         ul([
-          'Linux: manylinux_2_17 x86_64 wheels (Ubuntu 20.04+, Debian 11+, RHEL 8+).',
-          'macOS: arm64 wheels, macOS 11.0+.',
-          'Windows: amd64 wheels, Python 3.9–3.13.',
-          'CUDA batch path ships in every wheel; OpenCL kernels require a source build (opencl_is_available() is False on wheels by design).',
+          'Linux, macOS, and Windows support is determined by the current PyPI wheel set.',
+          'Optional Stim, measurement, and GPU dependencies are selected through documented extras.',
+          'Run the installed diagnostic and inspect its backend-specific PASS / WARN / FAIL results before relying on optional paths.',
         ])
     ),
   },
@@ -853,7 +851,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     heading: 'QECTOR Blog',
     body: page(
       h1('QECTOR Blog') +
-        blogPosts.map(p => `<a href="/blog/${p.id}">${p.title}</a>`).join('<br/>')
+         blogPosts.map(p => `<a href="/blog/${p.id}/">${p.title}</a>`).join('<br/>')
     ),
   },
   ...blogPosts.map((post) => ({

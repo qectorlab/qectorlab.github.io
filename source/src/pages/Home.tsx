@@ -137,8 +137,8 @@ export default function Home() {
             15+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
             <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
-            A reproducible offline benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
-            All claims backed by reproducible artifacts.
+             Local measurement tools are documented for declared workloads; this site publishes no universal performance figures.
+             Claim boundaries and verification paths are published with the product documentation.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-10">
@@ -303,7 +303,7 @@ export default function Home() {
               <SectionHeader
                 eyebrow="Why QECTOR"
                 heading={<h2 className="text-3xl md:text-4xl font-bold">More Than Just MWPM</h2>}
-                description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, GPU batch and large-scale simulation workloads each demand different decoders. QECTOR gives you all of them in one Python library with a consistent API, and every claim is backed by reproducible GitHub artifacts."
+                 description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, optional batch paths, and simulation workloads each demand different decoders. QECTOR documents the supported contracts and the evidence needed to evaluate a selected workload."
               />
             </div>
 
@@ -322,10 +322,10 @@ export default function Home() {
                   proof: 'Hyperedge-safe GF(2) path',
                 },
                 {
-                  title: 'Speed When You Need It',
-                  tag: 'Union-Find + GPU Batch',
-                  desc: 'Near-linear Union-Find for large-distance offline simulation. Native CUDA/OpenCL GPU batch for throughput-bound workloads.',
-                  proof: 'Native CPU + GPU batch paths',
+                   title: 'Workload-Scoped Execution',
+                   tag: 'Union-Find + Optional GPU',
+                   desc: 'Union-Find and optional GPU batch paths are available for supported workloads. Availability and performance must be verified on the target environment.',
+                   proof: 'Environment-dependent paths',
                 },
                 {
                   title: 'One Library, Pluggable',
@@ -436,12 +436,11 @@ export default function Home() {
             <div className="card-surface border-cyan-300/20 bg-void/50 p-8 rounded-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/5 to-transparent pointer-events-none" />
               <h3 className="text-lg font-bold text-cyan-300 flex items-center gap-2 mb-4">
-                Corporate Compliance
+                 License Clarity
               </h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
-                Our PyPI package includes <code className="text-cyan-300 bg-cyan-300/5 px-1.5 py-0.5 rounded border border-cyan-300/10 font-mono text-xs">Other/Proprietary License</code> metadata that triggers
-                enterprise compliance scanners (Snyk, Black Duck, FOSSA). A commercial receipt clears your entire
-                engineering stack instantly, with no license keys or friction.
+                 The package is source-available under PolyForm Noncommercial 1.0.0 for community use. Commercial use,
+                 hosted services, and redistribution require the written scope described on the license and pricing pages.
               </p>
               <Link to="/commercial" className="text-cyan-300 text-sm font-medium hover:underline">
                 Learn about licensing →

@@ -32,7 +32,7 @@ const companyLinks: LinkItem[] = [
   { label: 'iD01t Productions', href: 'https://id01t.store/', external: true },
   { label: 'Commercial Licensing', href: '/commercial' },
   { label: 'Contact Engineering', href: '/contact' },
-  { label: 'EULA & License', href: '/license' },
+  { label: 'EULA & License', href: '/license/' },
   { label: 'Terms of Service', href: '/terms' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Refund Policy', href: '/refund' },
@@ -149,7 +149,7 @@ export default function Footer() {
               <Link to="/privacy" className="hover:text-cyan-300 transition-colors">Privacy</Link>
               <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms</Link>
               <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund</Link>
-              <Link to="/license" className="hover:text-cyan-300 transition-colors">License</Link>
+               <Link to="/license/" className="hover:text-cyan-300 transition-colors">License</Link>
               <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security</a>
             </div>
           </div>

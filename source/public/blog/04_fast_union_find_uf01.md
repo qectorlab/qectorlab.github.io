@@ -36,10 +36,6 @@ $$
 
 An even cluster can be satisfied internally. An odd cluster needs either another odd cluster or a boundary. The virtual boundary is a parity sink: a one-ended path may terminate there without leaving an unsatisfied detector.
 
-![UF complexity and allocation structure](graphs/04_uf_complexity_alloc.png)
-
-*The figure is conceptual, as specified by the manual. It is not a measured comparison.*
-
 ## 3. Growth and fusion
 
 The unweighted procedure can be read as five stages:

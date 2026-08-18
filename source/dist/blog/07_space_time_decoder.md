@@ -34,10 +34,6 @@ $$
 
 For graphlike lifted models, paths in the detector lattice have the same boundary property as paths in the two-dimensional graph. The `SpaceTimeDecoder` can therefore solve one matching problem over all rounds instead of making independent decisions that confuse measurement faults with data faults.
 
-![Space and time edge weights](graphs/07_spacetime_weights.png)
-
-*The edge-weight illustration is structural and shows the meaning of the prior, not a measured threshold.*
-
 ## 3. Anisotropic weights
 
 Data and measurement mechanisms need not have the same probability. Assign

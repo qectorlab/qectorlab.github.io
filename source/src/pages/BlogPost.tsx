@@ -202,11 +202,7 @@ export default function BlogPost() {
                   components={{
                     ...headingComponents,
                     img: (props) => {
-                      // Fix local image paths from markdown so they point to the correct public path
-                      const src = props.src?.startsWith('./graphs/') || props.src?.startsWith('graphs/')
-                        ? `/blog/graphs/${props.src.replace('./graphs/', '').replace('graphs/', '')}`
-                        : props.src;
-                      return <img {...props} src={src} className="rounded-xl border border-slate-800 shadow-xl" loading="lazy" />;
+                      return <img {...props} className="rounded-xl border border-slate-800 shadow-xl" loading="lazy" />;
                     },
                   }}
                 >

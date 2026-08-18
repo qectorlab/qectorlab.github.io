@@ -16,7 +16,7 @@ export function SEO({
   noindex = false,
 }: SEOProps) {
   const location = useLocation();
-  const canonical = `https://qector.store${location.pathname === '/' ? '' : location.pathname}`;
+  const canonical = `https://qector.store${location.pathname === '/' ? '/' : `${location.pathname.replace(/\/$/, '')}/`}`;
 
   useEffect(() => {
     document.title = title;

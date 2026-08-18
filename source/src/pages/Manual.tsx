@@ -3,7 +3,7 @@ import { SEO, JsonLd } from '../lib/seo';
 import CodeBlock from '../components/CodeBlock';
 import TerminalEmulator from '../components/TerminalEmulator';
 import NeuralReveal from '../components/NeuralReveal';
-import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle, BookOpen } from 'lucide-react';
 
 interface ManualSection {
   id: string;
@@ -19,7 +19,7 @@ export default function Manual() {
     { id: 'installation', title: '2. Installation', icon: <Cpu className="w-4 h-4" /> },
     { id: 'quickstart', title: '3. Quick Start', icon: <SparklesIcon className="w-4 h-4" /> },
     { id: 'decoders', title: '4. Choosing a Decoder', icon: <ShieldCheck className="w-4 h-4" /> },
-    { id: 'benchmarking', title: '5. Running Benchmarks', icon: <ChartIcon className="w-4 h-4" /> },
+    { id: 'measurement', title: '5. Local Measurements', icon: <ChartIcon className="w-4 h-4" /> },
     { id: 'configuration', title: '6. Configuration', icon: <SettingsIcon className="w-4 h-4" /> },
     { id: 'troubleshooting', title: '7. Troubleshooting', icon: <HelpCircle className="w-4 h-4" /> },
     { id: 'package-reference', title: '8. Package Reference (v1.0.0)', icon: <BookOpen className="w-4 h-4" /> },
@@ -48,20 +48,20 @@ export default function Manual() {
                   <p className="text-muted-foreground text-xs leading-relaxed">API stability tiers, Relay-BP, CS-OSD(lambda, w), colour-code cluster_bposd, qector CLI + qector-doctor, Sinter/qiskit entry points, pymatching shim.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Measure on Your Hardware</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">No universal benchmark figures are published; qector bench and qector-doctor ship with the package so you can validate and measure on your own machines.</p>
+                    <h4 className="text-cyan-300 font-semibold text-sm mb-1">Validate on Your Hardware</h4>
+                    <p className="text-muted-foreground text-xs leading-relaxed">Hardware, GPU, and measurement results are device-local. Use the package diagnostic and declared measurement workflow instead of treating site text as performance evidence.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Multi-Algorithm Diversity</h4>
                   <p className="text-muted-foreground text-xs leading-relaxed">15+ decoder configurations from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">Rust compiled speed</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">Extremely fast C-bindings, zero-copy NumPy inputs, multi-threaded CPU parallel paths.</p>
+                    <h4 className="text-cyan-300 font-semibold text-sm mb-1">Compiled Rust Core</h4>
+                    <p className="text-muted-foreground text-xs leading-relaxed">A compiled Rust core with a Python API. Exact memory, latency, and throughput behavior depends on the selected workload and environment.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
-                  <h4 className="text-cyan-300 font-semibold text-sm mb-1">GPU Batch Acceleration</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">Native CUDA and OpenCL implementations for high-throughput cloud decoding pipelines.</p>
+                    <h4 className="text-cyan-300 font-semibold text-sm mb-1">Optional GPU Paths</h4>
+                    <p className="text-muted-foreground text-xs leading-relaxed">GPU paths are optional and environment-dependent. Read the installed release diagnostics before relying on them.</p>
                 </div>
               </div>
             </div>
@@ -93,24 +93,24 @@ export default function Manual() {
                 </div>
                 <div className="p-3 border-b border-gridline flex justify-between">
                   <span className="text-muted-foreground">Operating System</span>
-                  <span className="text-primary">Linux (manylinux2014), macOS (Apple Silicon / Intel), Windows 10/11</span>
+                   <span className="text-primary">Linux, macOS, Windows (see current PyPI wheel metadata)</span>
                 </div>
                 <div className="p-3 flex justify-between">
                   <span className="text-muted-foreground">GPU Requirements (Optional)</span>
-                  <span className="text-primary">NVIDIA GPU with CUDA 11.8+ OR OpenCL 2.0+ platform drivers</span>
+                   <span className="text-primary">Optional and environment-dependent; check the installed release diagnostics</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Install Optional GPU Backends</h3>
-              <p className="text-secondary text-xs mb-3">Install appropriate packages to compile/enable GPU paths:</p>
-              <CodeBlock
-                code={`# For CUDA support
-pip install qector-decoder-v3[cuda]
+               <h3 className="text-primary font-semibold text-sm mb-2">Install Optional Dependencies</h3>
+               <p className="text-secondary text-xs mb-3">Install only the extras required by your workflow:</p>
+               <CodeBlock
+                 code={`# Stim / Sinter / PyMatching ecosystem
+ pip install "qector-decoder-v3[stim]"
 
-# For OpenCL support
-pip install qector-decoder-v3[opencl]`}
+ # Full optional environment
+ pip install "qector-decoder-v3[all]"`}
                 filename="terminal"
                 language="bash"
               />
@@ -122,51 +122,32 @@ pip install qector-decoder-v3[opencl]`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              Below is an example showing how to create a rotated surface code in Stim, generate a syndrome, and decode using the default Blossom (MWPM) decoder.
+               Below is a minimal package-only example: create a rotated surface code, generate a syndrome, and verify a Blossom correction against the parity-check matrix.
             </p>
 
             <CodeBlock
               filename="surface_code_decode.py"
               language="python"
-              code={`import qector
-import numpy as np
-from stim import Circuit
+               code={`import numpy as np
+import qector_decoder_v3 as qector
 
-# 1. Generate a Stim surface code memory experiment
-circuit = Circuit.generated(
-    "surface_code:rotated_memory_x",
-    distance=5,
-    rounds=5,
-    after_clifford_depolarization=0.001
-)
+# Build a small code and inject one bit error.
+code = qector.codes.rotated_surface_code(3)
+error = np.zeros(code.n_qubits, dtype=np.uint8)
+error[4] = 1
+syndrome = code.syndrome(error)
 
-# 2. Extract the Detector Error Model (DEM) and sample a syndrome
-dem = circuit.detector_error_model()
-sampler = circuit.compile_detector_sampler()
-syndromes, logical_observables = sampler.sample(shots=1, separate_observables=True)
+# Decode with the graphlike Blossom backend.
+correction = qector.BlossomDecoder(
+    code.check_to_qubits,
+    n_qubits=code.n_qubits,
+).decode(syndrome)
 
-# 3. Create the decoder and predict errors
-decoder = qector.BlossomDecoder(dem)
-prediction = decoder.decode(syndromes[0])
-
-# Compare predicted logical flip to actual logical observables
-is_correct = np.array_equal(prediction, logical_observables[0])
-print(f"Decoded accurately: {is_correct}")`}
+# The syndrome contract is H c = s (mod 2).
+matrix = np.asarray(code.parity_check_matrix(), dtype=np.uint8)
+assert np.array_equal((matrix @ correction.astype(int)) % 2, syndrome)
+print("Syndrome-faithful correction")`}
             />
-
-            <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Using Belief-Matching</h3>
-              <p className="text-secondary text-xs mb-2">
-                Swap the class to `BeliefMatchingDecoder` to use BP pre-processing + reweighted exact MWPM:
-              </p>
-              <CodeBlock
-                filename="belief_matching.py"
-                language="python"
-                code={`# Instantiate the Belief-Matching decoder instead
-decoder = qector.BeliefMatchingDecoder(dem, bp_iters=30)
-prediction = decoder.decode(syndrome)`}
-              />
-            </div>
           </div>
         );
 
@@ -190,11 +171,11 @@ prediction = decoder.decode(syndrome)`}
                 </thead>
                 <tbody className="divide-y divide-gridline">
                   {[
-                    { name: 'Blossom (MWPM)', target: 'CSS, Surface', speed: 'Fast (UF pre-match)', accuracy: 'Exact Optimal', tier: 'Production' },
-                    { name: 'Belief-Matching', target: 'CSS, Surface', speed: 'Moderate', accuracy: 'High', tier: 'Production' },
-                    { name: 'BP-OSD', target: 'qLDPC, LDPC', speed: 'Moderate', accuracy: 'Optimal for qLDPC', tier: 'Production' },
+                     { name: 'Blossom (MWPM)', target: 'Graphlike CSS / surface', speed: 'Workload-dependent', accuracy: 'Minimum-weight matching objective', tier: 'Stable' },
+                     { name: 'Belief-Matching', target: 'Correlated-noise research', speed: 'Workload-dependent', accuracy: 'Evaluate locally', tier: 'Research' },
+                     { name: 'BP-OSD', target: 'qLDPC, LDPC', speed: 'Workload-dependent', accuracy: 'Evaluate locally', tier: 'Research' },
                     { name: 'Union-Find', target: 'Large Surface', speed: 'Near-linear O(N)', accuracy: 'Approximate', tier: 'Production' },
-                    { name: 'GPU Batch', target: 'Any (Batch)', speed: 'High Throughput', accuracy: 'Parallel', tier: 'Production' },
+                     { name: 'GPU Batch', target: 'Supported batch workloads', speed: 'Runtime-dependent', accuracy: 'Validate locally', tier: 'Workload-sensitive' },
                     { name: 'Hybrid / Cascade', target: 'Degenerate, mixed', speed: 'Iterative', accuracy: 'High', tier: 'Research' },
                     { name: 'Colour Code', target: 'Triangular colour code', speed: 'Moderate', accuracy: 'Native', tier: 'Research' },
                   ].map((row) => (
@@ -220,12 +201,12 @@ prediction = decoder.decode(syndrome)`}
           </div>
         );
 
-      case 'benchmarking':
+      case 'measurement':
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              Hardware-specific benchmark data is not published on this site. The package and manual document how to
-              perform a scoped local measurement when your project requires one.
+               Hardware-specific measurements are not published on this site. If your project requires a local measurement,
+               record the code, noise model, decoder configuration, seed, shots, environment, and raw artifact.
             </p>
 
             <div>
@@ -241,9 +222,9 @@ prediction = decoder.decode(syndrome)`}
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-sm mb-2">Throughput via qector bench</h3>
+               <h3 className="text-primary font-semibold text-sm mb-2">Local measurement via qector bench</h3>
               <p className="text-secondary text-xs mb-2">
-                Generates a rotated surface-code circuit in-memory (Stim) and decodes the requested shots, printing a machine-conditional rate line:
+                 Use the command documented by the installed package release. The result is machine- and workload-specific, not a site claim:
               </p>
               <CodeBlock
                 code="qector bench --distance 5 --rounds 5 --shots 10000 --decoder blossom --noise 0.001"
@@ -255,7 +236,7 @@ prediction = decoder.decode(syndrome)`}
             <div>
               <h3 className="text-primary font-semibold text-sm mb-2">Interactive Sandbox CLI</h3>
               <p className="text-secondary text-xs mb-3">
-                Try running QECTOR commands directly in this interactive sandbox shell to see realistic tool executions:
+                 This UI is a command-output demonstration only; it does not execute commands or generate benchmark data:
               </p>
               <TerminalEmulator />
             </div>
@@ -331,7 +312,7 @@ prediction = decoder.decode(syndrome)`}
                   <span>Issue: ImportError when importing `qector`</span>
                 </div>
                 <p className="text-secondary text-xs leading-relaxed">
-                  <strong>Fix:</strong> Ensure your Python architecture matches 64-bit and is python 3.9-3.13. If using macOS, verify you are not using the default system Python. Run `pip install -force-reinstall qector-decoder-v3` to rebuild binary wheels.
+                   <strong>Fix:</strong> Ensure your Python architecture matches the wheel and reinstall with `python -m pip install --force-reinstall qector-decoder-v3`.
                 </p>
               </div>
 
@@ -379,7 +360,7 @@ prediction = decoder.decode(syndrome)`}
             <div>
               <h3 className="text-primary font-semibold text-base mb-3">1. Installation &amp; Platforms</h3>
               <CodeBlock
-                code={`pip install qector-decoder-v3==1.0.0\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"   # benchmarks\npip install "qector-decoder-v3[all]"     # full research stack`}
+                 code={`pip install qector-decoder-v3==1.0.0\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"   # local measurement tools\npip install "qector-decoder-v3[all]"     # optional full environment`}
                 language="bash"
                 filename="terminal"
               />
@@ -426,21 +407,21 @@ prediction = decoder.decode(syndrome)`}
             <div>
               <h3 className="text-primary font-semibold text-base mb-3">4. Code Generators</h3>
               <CodeBlock
-                code={`from qector_decoder_v3 import (\n    generate_repetition_code_checks,  # (checks, n_qubits) - Graph-like\n    generate_ring_code_checks,        # (checks, n_qubits) - Graph-like\n    generate_surface_code_checks,     # hyperedge-style surface (participation > 2)\n    generate_toy_code_checks,\n)`}
+                 code={`from qector_decoder_v3 import (\n    generate_repetition_code_checks,  # (checks, n_qubits)\n    generate_ring_code_checks,        # (checks, n_qubits)\n    generate_surface_code_checks,     # surface-code checks\n)`}
                 language="python"
                 filename="python"
               />
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-base mb-3">5. Package MCP Server &amp; Hyperedge Workaround</h3>
-              <CodeBlock
-                code={`from qector_decoder_v3 import run_mcp_server\nrun_mcp_server()   # JSON-RPC 2.0 stdio server (decode_syndrome, benchmark_decoder, get_decoder_info)`}
-                language="python"
-                filename="mcp_server.py"
-              />
-              <p className="text-muted-foreground text-xs mt-2 mb-3">
-                If the package MCP rejects hyperedge surface matrices (UF gate <code className="text-red-400">-32602</code>), use the Python API hyperedge pattern:
+               <h3 className="text-primary font-semibold text-base mb-3">5. MCP and General-Matrix Workflows</h3>
+               <CodeBlock
+                 code={`# The standalone library MCP server is documented separately.\n# Start it from the plugin package with:\npython mcp/mcp_server_library.py\n\n# Initialize and call tools/list before using a tool.`}
+                 language="python"
+                 filename="mcp_server.py"
+               />
+               <p className="text-muted-foreground text-xs mt-2 mb-3">
+                 For general matrices, use the decoder family documented for that workload and verify every returned correction against H c = s (mod 2):
               </p>
               <CodeBlock
                 code={`import numpy as np\nfrom qector_decoder_v3 import BlossomDecoder, SparseBlossomDecoder, BpOsdDecoder\n\ndef decode_hyperedge(checks, n_qubits, syndrome, kind="Blossom", **opts):\n    syn = np.asarray(syndrome, dtype=np.uint8).ravel()\n    if kind in ("Blossom", "blossom"):\n        return BlossomDecoder(checks, n_qubits).decode(syn)\n    if kind in ("SparseBlossom", "sparse_blossom"):\n        return SparseBlossomDecoder(checks, n_qubits).decode(syn)\n    if kind.lower() in ("bposd", "bp_osd"):\n        H = np.zeros((len(checks), n_qubits), dtype=np.uint8)\n        for i, c in enumerate(checks):\n            for q in c: H[i, q] ^= 1\n        return BpOsdDecoder(H, error_rate=opts.get("error_rate", 0.05)).decode(syn)\n    raise ValueError(f"unsupported kind: {kind}")`}
@@ -450,12 +431,12 @@ prediction = decoder.decode(syndrome)`}
             </div>
 
             <div>
-              <h3 className="text-primary font-semibold text-base mb-3">6. Hybrid / HybridCascade Wheel Status &amp; Manual Cascade Pattern</h3>
-              <p className="text-muted-foreground text-xs leading-relaxed mb-3">
-                <strong className="text-cyan-300">Wheel Status:</strong> Public PyPI wheels (v1.0.0) ship a compiled Rust extension where <code className="text-cyan-300">HybridCascadeDecoder</code> is gated behind an unexported feature flag (raising <code className="text-red-400">RuntimeError</code> on instantiation). Use <code className="text-cyan-300">HybridDecoder</code> (UF + Blossom routing) or the manual cascade pattern below:
+               <h3 className="text-primary font-semibold text-base mb-3">6. Verified Fallback Pattern</h3>
+               <p className="text-muted-foreground text-xs leading-relaxed mb-3">
+                 A fallback is safe only when each candidate is checked against the same parity-check matrix. The following pattern uses the stable Union-Find and Blossom classes and fails closed if a candidate is not syndrome-faithful:
               </p>
               <CodeBlock
-                code={`import numpy as np\nfrom qector_decoder_v3 import (\n    UnionFindDecoder,\n    FastUnionFindDecoder,\n    BlossomDecoder,\n    BpOsdDecoder,\n    generate_parity_check_matrix,\n)\n\ndef cascade_decode(check_to_qubits, n_qubits, syndrome, error_rate=0.05, use_bposd=False):\n    """Tier 1: Fast UF / Union-Find. Tier 2: Blossom / BP-OSD escalation."""\n    syndrome = np.asarray(syndrome, dtype=np.uint8).ravel()\n    H = generate_parity_check_matrix(check_to_qubits, n_qubits)\n\n    # Tier 1: Fast UF\n    for UF in (FastUnionFindDecoder, UnionFindDecoder):\n        try:\n            uf = UF(check_to_qubits, n_qubits)\n            corr = np.asarray(uf.decode(syndrome), dtype=np.uint8).ravel()\n            if corr.size == n_qubits and np.array_equal((H @ corr) % 2, syndrome):\n                return corr, uf.__class__.__name__\n        except Exception:\n            pass\n\n    # Tier 2: Exact Blossom / BP-OSD escalation\n    if use_bposd:\n        return np.asarray(BpOsdDecoder(H, error_rate=error_rate, osd_order=0).decode(syndrome), dtype=np.uint8).ravel(), "bp_osd"\n    return np.asarray(BlossomDecoder(check_to_qubits, n_qubits).decode(syndrome), dtype=np.uint8).ravel(), "blossom"`}
+                 code={`import numpy as np\nfrom qector_decoder_v3 import FastUnionFindDecoder, UnionFindDecoder, BlossomDecoder\n\ndef faithful_decode(check_to_qubits, n_qubits, syndrome):\n    syndrome = np.asarray(syndrome, dtype=np.uint8).ravel()\n    matrix = np.zeros((len(check_to_qubits), n_qubits), dtype=np.uint8)\n    for check, qubits in enumerate(check_to_qubits):\n        matrix[check, qubits] = 1\n\n    for decoder_type in (FastUnionFindDecoder, UnionFindDecoder, BlossomDecoder):\n        try:\n            correction = np.asarray(\n                decoder_type(check_to_qubits, n_qubits=n_qubits).decode(syndrome),\n                dtype=np.uint8,\n            )\n            if np.array_equal((matrix @ correction.astype(int)) % 2, syndrome):\n                return correction, decoder_type.__name__\n        except Exception:\n            continue\n    raise RuntimeError("No syndrome-faithful decoder result")`}
                 language="python"
                 filename="cascade_decode.py"
               />
@@ -479,7 +460,7 @@ prediction = decoder.decode(syndrome)`}
           '@context': 'https://schema.org',
           '@type': 'HowTo',
           'name': 'How to Install and Run QECTOR Decoder v3',
-           'description': 'Step-by-step instructions to install QECTOR, run syndromic validation tests, select a decoder, and review evidence boundaries.',
+               'description': 'Step-by-step instructions to install QECTOR, verify a syndrome-faithful decode, select a decoder, and review evidence boundaries.',
           'step': [
             {
               '@type': 'HowToStep',
@@ -489,7 +470,7 @@ prediction = decoder.decode(syndrome)`}
             {
               '@type': 'HowToStep',
               'name': 'Verify the installation',
-              'text': 'Verify detection by running the command python -m qector.validate -quick to execute validation suites.'
+               'text': 'Verify the installation with python -c "import qector_decoder_v3 as qd; print(qd.__version__)" and a small syndrome-faithfulness check.'
             },
             {
               '@type': 'HowToStep',
@@ -509,8 +490,8 @@ prediction = decoder.decode(syndrome)`}
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="User Manual" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Complete guide to QECTOR Decoder v3 – installation, all decoder families,
-            GPU batch workflows, benchmarking, diagnostics, and ecosystem integration.
+             Complete guide to QECTOR Decoder v3: installation, decoder selection,
+             local measurements, diagnostics, and ecosystem integration.
           </p>
         </div>
       </section>

@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState<'sent' | 'draft' | false>(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -44,10 +44,21 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         setError('Failed to send. Please email us directly at admin@qector.store');
         return;
       }
+      setSubmitted('sent');
     } else {
-      window.location.href = `mailto:admin@qector.store?subject=QECTOR inquiry from ${data.get('name') || 'anonymous'}&body=${encodeURIComponent((data.get('message') as string) || '')}`;
+      const subject = `QECTOR inquiry from ${data.get('name') || 'anonymous'}`;
+      const body = [
+        `Name: ${data.get('name') || ''}`,
+        `Email: ${data.get('email') || ''}`,
+        `Organization: ${data.get('organization') || ''}`,
+        `Referral: ${data.get('referral') || ''}`,
+        `Timeline: ${data.get('timeline') || ''}`,
+        '',
+        String(data.get('message') || ''),
+      ].join('\n');
+      window.location.href = `mailto:admin@qector.store?${new URLSearchParams({ subject, body })}`;
+      setSubmitted('draft');
     }
-    setSubmitted(true);
   };
 
   return (
@@ -135,8 +146,14 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                     <div className="w-16 h-16 rounded-full bg-green-400/10 border border-green-400/20 flex items-center justify-center mx-auto mb-4">
                       <span className="text-green-400 text-2xl" aria-hidden="true">✓</span>
                     </div>
-                    <h3 className="text-primary font-bold text-xl mb-2">Message Sent</h3>
-                    <p className="text-secondary">We will get back to you within one business day.</p>
+                    <h3 className="text-primary font-bold text-xl mb-2">
+                      {submitted === 'sent' ? 'Message Sent' : 'Email Draft Opened'}
+                    </h3>
+                    <p className="text-secondary">
+                      {submitted === 'sent'
+                        ? 'We will get back to you within one business day.'
+                        : 'Your email client should contain the completed inquiry. If it did not open, email admin@qector.store directly.'}
+                    </p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} method="POST" className="space-y-5">

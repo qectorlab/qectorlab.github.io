@@ -26,10 +26,6 @@ $$
 
 The `j`-th syndrome bit records whether the error anticommutes with check `j`. The matrix is therefore not merely metadata for a decoder. It is the map that defines what the measurement means.
 
-![Parity-check matrix and Tanner graph](graphs/01_foundations_parity_check_tanner.png)
-
-*The Tanner-graph illustration is structural. It is not a performance or threshold result.*
-
 The Tanner graph has a qubit node for every column and a check node for every row. An edge means `H[j, i] = 1`. Different algorithms use this same incidence structure differently: message passing follows Tanner edges, Union-Find grows clusters, and graphlike matching interprets low-degree qubits as detector edges.
 
 ## 2. Stabilizers, kernels, and cosets

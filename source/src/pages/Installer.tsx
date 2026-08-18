@@ -36,8 +36,8 @@ export default function Installer() {
             <ul className="space-y-2 text-secondary text-sm list-disc pl-5">
               <li>Python 3.9, 3.10, 3.11, 3.12, or 3.13</li>
               <li>64-bit operating system (Linux, macOS ARM64/x86, Windows)</li>
-              <li>Stim (automatically installed): <code className="text-cyan-300 font-mono text-xs">pip install stim</code></li>
-              <li>For GPU batch decoding: CUDA 11.8+ or OpenCL 2.0+ capable GPU</li>
+               <li>Stim/Sinter/PyMatching are optional extras; install <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3[stim]</code> when needed.</li>
+               <li>GPU paths are optional and environment-dependent; follow the package release documentation for supported drivers and extras.</li>
             </ul>
           </div>
 
@@ -51,7 +51,7 @@ export default function Installer() {
               This installs the latest stable release with pre-compiled binary wheels.
             </p>
             <p className="text-secondary text-xs mt-2">
-              Optional extras: <code className="text-cyan-300 font-mono text-xs">[stim]</code> (Stim/Sinter/PyMatching), <code className="text-cyan-300 font-mono text-xs">[bench]</code> (benchmark harness), <code className="text-cyan-300 font-mono text-xs">[all]</code> (full environment).
+               Optional extras: <code className="text-cyan-300 font-mono text-xs">[stim]</code> (Stim/Sinter/PyMatching), <code className="text-cyan-300 font-mono text-xs">[bench]</code> (local measurement tools), <code className="text-cyan-300 font-mono text-xs">[all]</code> (full environment).
             </p>
           </div>
 
@@ -74,30 +74,30 @@ export default function Installer() {
             <div className="space-y-4">
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">Linux</h3>
-                <p className="text-secondary text-sm">manylinux_2_17 x86_64 wheels provided. Tested on Ubuntu 20.04+, Debian 11+, RHEL 8+.</p>
+                 <p className="text-secondary text-sm">Use the current PyPI wheel and the release documentation for supported Linux platforms and runtime dependencies.</p>
               </div>
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">macOS</h3>
-                <p className="text-secondary text-sm">ARM64 wheels for Apple Silicon (M1+). macOS 11.0+ required.</p>
+                 <p className="text-secondary text-sm">Use the current PyPI wheel and the release documentation for supported macOS architectures and minimum version.</p>
               </div>
               <div>
                 <h3 className="text-primary font-semibold text-sm mb-2">Windows</h3>
-                <p className="text-secondary text-sm">Windows 10/11 amd64 wheels for Python 3.9–3.13. GPU batch decoding requires an NVIDIA GPU (WDDM driver mode).</p>
+                 <p className="text-secondary text-sm">Use the current PyPI wheel for supported Windows Python and architecture combinations. GPU availability remains driver- and device-dependent.</p>
               </div>
             </div>
           </div>
 
           {/* GPU Setup */}
-          <div className="card-surface">
-            <h2 className="text-xl font-bold mb-4">GPU Batch Decoding Setup</h2>
-            <p className="text-secondary text-sm mb-3">The CUDA batch path ships <em>in</em> every v1.0.0 wheel (NVIDIA driver in WDDM mode on Windows). Install the <code className="text-cyan-300 font-mono text-xs">[cuda]</code> or <code className="text-cyan-300 font-mono text-xs">[cupy]</code> extras for GPU-resident work, or <code className="text-cyan-300 font-mono text-xs">[all]</code> for everything. OpenCL kernels are not compiled into any wheel and require a source build.</p>
-            <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
-              <div className="text-cyan-300"># Full environment with GPU extras</div>
-              <div>pip install "qector-decoder-v3[all]"</div>
-              <div className="mt-2 text-cyan-300"># Verify GPU detection</div>
-              <div>python -c "from qector_decoder_v3 import CUDABatchDecoder; print('CUDA available:', CUDABatchDecoder.is_available())"</div>
-              <div className="text-green-400"># Note: opencl_is_available() is False on wheels by design (no OpenCL kernels)</div>
-            </div>
+           <div className="card-surface">
+             <h2 className="text-xl font-bold mb-4">Optional GPU Workflows</h2>
+             <p className="text-secondary text-sm mb-3">GPU availability depends on the installed wheel, optional dependencies, operating system, driver, and device. Use the extras and support matrix documented by the package release rather than assuming a GPU backend is available.</p>
+             <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
+               <div className="text-cyan-300"># Optional full environment</div>
+               <div>pip install "qector-decoder-v3[all]"</div>
+               <div className="mt-2 text-cyan-300"># Verify the installed package API and environment</div>
+               <div>qector-doctor</div>
+               <div className="text-green-400"># Read the diagnostic&apos;s backend-specific PASS / WARN / FAIL output</div>
+             </div>
           </div>
 
           {/* Troubleshooting */}

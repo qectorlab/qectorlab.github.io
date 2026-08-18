@@ -155,8 +155,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 ['Validation', 'GitHub: github.com/GuillaumeLessard/qector-decoder'],
               ].map(([k, v]) => (
                 <div key={k} className="flex gap-3">
-                  <span className="text-muted-foreground text-sm min-w-[140px]">{k}</span>
-                  <span className="text-secondary text-sm">{v}</span>
+                   <span className="text-muted-foreground text-sm min-w-[140px] shrink-0">{k}</span>
+                   <span className="text-secondary text-sm min-w-0 break-all">{v}</span>
                 </div>
               ))}
             </div>

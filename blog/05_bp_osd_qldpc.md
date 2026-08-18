@@ -46,10 +46,6 @@ $$
 
 The decoder hard-decodes from the signs of `gamma`. If that hard decision already satisfies `H e = s`, it can return immediately. Otherwise it passes the residual to OSD.
 
-![BP box-plus kernel](graphs/05_bposd_phi_convergence.png)
-
-*The box-plus plot is a mathematical illustration of the update kernel, not an accuracy or timing result.*
-
 QECTOR also documents min-sum as an opt-in approximation and a relay/layered schedule in which checks are processed sequentially. These are schedule choices; they do not remove the need for the faithful post-process.
 
 ## 3. Ordered statistics decoding
@@ -69,10 +65,6 @@ OSD uses BP for ranking rather than treating BP's hard decision as infallible.
    of the least-reliable columns and retain the lowest-weight faithful candidate.
 
 OSD-0 performs one residual solve. Higher order adds a search over selected reliability perturbations. The search changes which representative is preferred; it does not change the syndrome equation that every candidate must satisfy.
-
-![OSD basis selection](graphs/05_bposd_complexity_basis.png)
-
-*The basis-selection schematic is structural. It does not report a measured complexity or threshold.*
 
 ## 4. The residual-solve theorem
 

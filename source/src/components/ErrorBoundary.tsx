@@ -35,7 +35,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
             </div>
             <h1 className="text-xl font-bold text-primary mb-2">Something went wrong</h1>
             <p className="text-secondary text-sm mb-6">
-              This page hit an unexpected error. This has been logged locally - reloading usually resolves it.
+               This page hit an unexpected error. No page data was sent; check the browser console for the local error and reload.
             </p>
             <button onClick={this.handleReload} className="btn-cyan">
               Reload homepage
