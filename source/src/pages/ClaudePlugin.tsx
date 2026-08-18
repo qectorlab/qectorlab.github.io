@@ -132,8 +132,6 @@ const TOOLS = [
 
 export default function ClaudePlugin() {
   const [copiedMarketplace, setCopiedMarketplace] = useState(false);
-  const [copiedLocal, setCopiedLocal] = useState(false);
-
   const copyText = (text: string, setCopied: (v: boolean) => void) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -141,7 +139,6 @@ export default function ClaudePlugin() {
   };
 
   const marketplaceSnippet = `claude plugin marketplace add GuillaumeLessard/qector-claude-plugin\nclaude plugin install qector@qector-tools`;
-  const localSnippet = `git clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\ncd qector-claude-plugin\npip install -r requirements.txt\nclaude --plugin-dir .`;
 
   return (
     <>
