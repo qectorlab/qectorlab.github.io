@@ -24,7 +24,7 @@ export default function Docs() {
 const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const docLinks = [
-    { title: 'Claude Code Plugin', desc: '7 strict-math skills, 5 agents, and local stdio MCP server for Claude', href: '/claude-plugin' },
+    { title: 'Claude Code Plugin', desc: '28 skills, 5 agents, and a 37-tool local stdio MCP server for Claude', href: '/claude-plugin' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
     { title: 'Package Reference (v1.0.0)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },

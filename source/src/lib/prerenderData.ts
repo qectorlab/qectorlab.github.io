@@ -241,23 +241,23 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.0 with 82 tools and a 1.0.0 backend, plus Linux v0.5.3 with 56 tools and a 0.7.0 backend.',
+      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.1 with 85 tools and a 1.0.0 backend, plus Linux v1.0.1 with 85 tools and a 1.0.0 backend.',
     heading: 'QECTOR Workbench',
     body: page(
       h1('QECTOR Workbench') +
         p(
-          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The published Windows release is v1.0.0 with an 82-tool server and qector-decoder-v3 1.0.0 backend; the published Linux release is v0.5.3 with a 56-tool server and 0.7.0 backend. No macOS build is currently published.'
+          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The published Windows release is v1.0.1 with an 85-tool server and qector-decoder-v3 1.0.0 backend; the published Linux release is v1.0.1 with an 85-tool server and a 1.0.0 backend. Both builds ship 17 decoder kinds and 10 code families. No macOS build is currently published.'
         ) +
         h2('Downloads') +
         ul([
-          'Windows x64: v1.0.0 portable <code>QectorWorkbench-Portable.exe</code>: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
-          'Linux x64: Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
-          'Headless MCP server on either platform: <code>--mcp</code>; tool counts and bundled APIs are release-specific.',
+          'Windows x64: v1.0.1 portable <code>QectorWorkbench-Portable.exe</code>: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.1" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
+          'Linux x64: v1.0.1 AppImage plus Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.1" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
+          'Headless MCP server on either platform: <code>--mcp</code>; MCP protocol 2024-11-05 over stdio JSON-RPC 2.0.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
         h2('Workspaces') +
         p(
-          'The Windows v1.0.0 release documents nine workspaces: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation Studio, Lab &amp; Personal Info, and Console. Use each release&apos;s manuals for platform-specific details.'
+          'The Windows v1.0.1 release documents eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
         ) +
         h2('10 Quantum Code Families') +
         p('The published Workbench releases cover 10 code families including qLDPC and colour codes:') +
@@ -403,7 +403,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Selected work') +
         ul([
           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 15+ decoder configurations, first stable release v1.0.0.`,
-           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: separate Windows v1.0.0 and Linux v0.5.3 releases with release-specific MCP surfaces.`,
+           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: separate Windows v1.0.1 and Linux v1.0.1 releases, each with an 85-tool MCP server.`,
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
         ]) +
@@ -724,32 +724,26 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs standalone on qector-decoder-v3==1.0.0.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs on qector-decoder-v3==1.0.0 and mcp==1.26.0, and ships in the qector-claude-plugin repository.'
         ) +
-        pre(`pip install qector-decoder-v3==${DECODER_VERSION}\npython mcp/mcp_server_library.py`)
+        pre(`pip install qector-decoder-v3==${DECODER_VERSION} mcp==1.26.0\ngit clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\npython qector-claude-plugin/mcp/mcp_server_library.py`)
     ),
   },
   {
     path: '/claude-plugin',
     title: 'QECTOR Claude Plugin · Quantum Error Correction for Claude Code',
     description:
-      'Official QECTOR plugin for Claude Code and Claude Desktop. 7 strict-math skills, 5 specialized agents, 8 local MCP tools, and zero-egress quantum decoding.',
+      'Official QECTOR plugin for Claude Code and Claude Desktop v1.0.2. 28 domain skills, 5 specialized agents, 37 local MCP tools (8 library + 29 benchmark), and zero-egress quantum decoding.',
     heading: 'QECTOR Claude Plugin',
     body: page(
       h1('QECTOR Claude Plugin') +
         p(
-          'Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop. Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Zero-egress local stdio architecture ensures that circuits, parity matrices, and syndromes never leave your machine.'
+          'Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version 1.0.2. Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Zero-egress local stdio architecture ensures that circuits, parity matrices, and syndromes never leave your machine.'
         ) +
-        h2('7 Strict-Math Domain Skills') +
-        ul([
-          '<strong>qector-core</strong>: Verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding to prevent hallucination.',
-          '<strong>qector-math-foundations</strong>: Theorems 1–16 executable ground truth over GF(2), fail-closed syndrome checking (H c = s mod 2), Wilson 95% CIs.',
-          '<strong>qector-developer</strong>: Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing.',
-          '<strong>qector-researcher</strong>: Literature review, threshold discovery, Monte Carlo noise simulation, reproducible JSON export.',
-          '<strong>qector-hardware-engineer</strong>: Physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets.',
-          '<strong>qector-educator</strong>: Tutorial generation, conceptual explainers, interactive decoding walkthroughs.',
-          '<strong>qector-sysadmin</strong>: Environment health diagnostics, resource bounds enforcement (MAX_CHECKS, MAX_QUBITS), runtime hygiene.',
-        ]) +
+        h2('28 Domain Skills') +
+        p(
+          'The plugin ships 28 skills. The seven flagship skills are qector-core (verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding), qector-math-foundations (Theorems 1–16 executable ground truth over GF(2), fail-closed syndrome checking H c = s (mod 2), Wilson 95% CIs), qector-developer (Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing), qector-researcher (literature review, threshold discovery, Monte Carlo noise simulation, reproducible export), qector-hardware-engineer (physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets), qector-educator (tutorial generation, conceptual explainers, interactive decoding walkthroughs), and qector-sysadmin (environment health diagnostics, resource bounds enforcement, runtime hygiene).'
+        ) +
         h2('5 Specialized Agents') +
         ul([
           '<strong>qec-developer.md</strong>: Code integration, API design, performance tuning.',
@@ -758,9 +752,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           '<strong>qec-sysadmin.md</strong>: Operations, monitoring, incident response.',
           '<strong>qec-hardware-engineer.md</strong>: Physical qubit characterization, cryogenic systems.',
         ]) +
-        h2('8 Verified MCP Server Tools') +
+        h2('37 MCP Tools (8 library + 29 benchmark)') +
         p(
-          'list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report.'
+          'qector-library: list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report. qector-bench adds 29 tools covering DEM pipelines, Sinter/Stim, Wilson confidence, theorem lookup, compatibility checks, and workbench probing.'
         ) +
         h2('Install with Claude Code') +
         pre(
@@ -776,10 +770,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Claude Plugin',
         description:
-          'Official QECTOR plugin for Claude Code and Claude Desktop. 7 strict-math skills, 5 specialized agents, 8 local MCP tools, and zero-egress quantum decoding.',
+          'Official QECTOR plugin for Claude Code and Claude Desktop. 28 domain skills, 5 specialized agents, 37 local MCP tools (8 library + 29 benchmark), and zero-egress quantum decoding.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
-        softwareVersion: '1.0.0',
+        softwareVersion: '1.0.2',
         author: {
           '@type': 'Person',
           name: 'Guillaume Lessard',

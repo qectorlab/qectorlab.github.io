@@ -67,6 +67,37 @@ const SKILLS = [
   },
 ];
 
+const ALL_SKILLS = [
+  'qector-architecture',
+  'qector-batch-decoding',
+  'qector-bp-osd',
+  'qector-codes-builder',
+  'qector-core',
+  'qector-decoders-deep-dive',
+  'qector-dem-pipeline',
+  'qector-deployment',
+  'qector-developer',
+  'qector-educator',
+  'qector-glossary',
+  'qector-hardware-engineer',
+  'qector-ler-methodology',
+  'qector-licensing',
+  'qector-math-foundations',
+  'qector-orchestration',
+  'qector-pymatching-compat',
+  'qector-release-engineering',
+  'qector-reproducibility',
+  'qector-researcher',
+  'qector-roadmap',
+  'qector-services',
+  'qector-sinter',
+  'qector-space-time',
+  'qector-sysadmin',
+  'qector-testing-strategy',
+  'qector-two-stage-css',
+  'qector-workbench',
+];
+
 const AGENTS = [
   {
     file: 'qec-developer.md',
@@ -130,6 +161,38 @@ const TOOLS = [
   },
 ];
 
+const BENCH_TOOLS = [
+  'artifacts_sha256',
+  'artifact_metadata_check',
+  'code_distance_check',
+  'code_export_matrices',
+  'code_family_info',
+  'code_logicals_inspect',
+  'compat_report',
+  'configure_claude_desktop',
+  'decode_faithfulness_check',
+  'dem_collapse_parallel',
+  'dem_inspect',
+  'env_block',
+  'glossary_lookup',
+  'hardware_probe',
+  'hot_path_microbench',
+  'license_active_check',
+  'logical_coset_score',
+  'pymatching_compat_check',
+  'qiskit_plugin_check',
+  'reproduction_command_lookup',
+  'sinter_decoder_list',
+  'sinter_task_template',
+  'stim_circuit_probe',
+  'system_setup',
+  'theorem_lookup',
+  'wilson_ci',
+  'wilson_table',
+  'workbench_probe',
+  'workload_hash',
+];
+
 export default function ClaudePlugin() {
   const [copiedMarketplace, setCopiedMarketplace] = useState(false);
   const copyText = (text: string, setCopied: (v: boolean) => void) => {
@@ -144,7 +207,7 @@ export default function ClaudePlugin() {
     <>
       <SEO
         title="QECTOR Claude Plugin · Quantum Error Correction for Claude Code"
-        description="Official QECTOR plugin for Claude Code and Claude Desktop. 7 strict-math skills, 5 specialized agents, 8 local MCP tools, and zero-egress quantum decoding."
+        description="Official QECTOR plugin for Claude Code and Claude Desktop v1.0.2. 28 domain skills, 5 specialized agents, 37 local MCP tools (8 library + 29 benchmark), and zero-egress quantum decoding."
       />
       <JsonLd
         data={{
@@ -152,10 +215,10 @@ export default function ClaudePlugin() {
           '@type': 'SoftwareApplication',
           name: 'QECTOR Claude Plugin',
           description:
-            'Official QECTOR plugin for Claude Code and Claude Desktop. 7 strict-math skills, 5 specialized agents, 8 local MCP tools, and zero-egress quantum decoding.',
+            'Official QECTOR plugin for Claude Code and Claude Desktop. 28 domain skills, 5 specialized agents, 37 local MCP tools (8 library + 29 benchmark), and zero-egress quantum decoding.',
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Linux, macOS, Windows',
-          softwareVersion: '1.0.0',
+          softwareVersion: '1.0.2',
           author: {
             '@type': 'Person',
             name: 'Guillaume Lessard',
@@ -177,7 +240,7 @@ export default function ClaudePlugin() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono font-medium mb-6 backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>ANTHROPIC CLAUDE CODE & DESKTOP PLUGIN · v1.0.0</span>
+            <span>ANTHROPIC CLAUDE CODE & DESKTOP PLUGIN · v1.0.2</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto leading-[1.1]">
@@ -186,9 +249,9 @@ export default function ClaudePlugin() {
 
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
             Empower Claude with local, production-grade Quantum Error Correction engineering.
-            Features <span className="text-cyan-300 font-semibold">7 strict-math skills</span>,{' '}
+            Features <span className="text-cyan-300 font-semibold">28 domain skills</span>,{' '}
             <span className="text-cyan-300 font-semibold">5 specialized agents</span>,{' '}
-            <span className="text-cyan-300 font-semibold">8 local MCP tools</span>, and full zero-egress data isolation.
+            <span className="text-cyan-300 font-semibold">37 MCP tools</span> (8 library + 29 benchmark), and full zero-egress data isolation.
           </p>
 
           {/* Quick Install Box */}
@@ -273,7 +336,7 @@ export default function ClaudePlugin() {
             </div>
             <h2 className="text-lg font-bold text-slate-100 mb-2">Multi-Agent System</h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              7 domain skills and 5 tailored agent personas designed for research, hardware design, verification, and engineering.
+              28 domain skills and 5 tailored agent personas designed for research, hardware design, verification, and engineering.
             </p>
           </div>
         </div>
@@ -287,10 +350,10 @@ export default function ClaudePlugin() {
             <span>DOMAIN SKILLS ECOSYSTEM</span>
           </div>
           <h2 className="text-3xl font-extrabold text-slate-100 tracking-tight">
-            7 Grounded QEC Skills
+            28 Grounded QEC Skills
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-            Each skill encodes verified domain rules and strict-math obligations to prevent AI hallucination and ground every interaction in reproducible physics.
+            Each skill encodes verified domain rules and strict-math obligations to prevent AI hallucination and ground every interaction in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in the plugin.
           </p>
         </div>
 
@@ -320,6 +383,17 @@ export default function ClaudePlugin() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10">
+          <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">All 28 skills shipped in the plugin</h3>
+          <div className="flex flex-wrap gap-2">
+            {ALL_SKILLS.map((s) => (
+              <span key={s} className="font-mono text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-cyan-300">
+                {s}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -365,10 +439,12 @@ export default function ClaudePlugin() {
             <span>MCP SERVER TOOL SURFACE</span>
           </div>
           <h2 className="text-3xl font-extrabold text-slate-100 tracking-tight">
-            8 Local Verification Tools
+            37 Local MCP Tools
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-            Local JSON-RPC 2.0 stdio tools running directly against the PyO3 Rust decoder core.
+            Two local JSON-RPC 2.0 stdio servers running directly against the PyO3 Rust decoder core:
+            <code className="text-cyan-300 font-mono"> qector-library </code> (8 tools, table below) and
+            <code className="text-cyan-300 font-mono"> qector-bench </code> (29 tools, chip list below).
           </p>
         </div>
 
@@ -392,6 +468,17 @@ export default function ClaudePlugin() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-bench server · 29 tools</h3>
+          <div className="flex flex-wrap gap-2">
+            {BENCH_TOOLS.map((t) => (
+              <span key={t} className="font-mono text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
+                {t}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -457,7 +544,7 @@ export default function ClaudePlugin() {
             Verify all 16 Reference Manual theorems and 29 executable proof obligations locally on your machine:
           </p>
           <CodeBlock
-            code={`# Run the complete public reference manual mathematical gate\npython bin/run_manual_math_validation.py\n\n# Or run full pytest integration suite\npython -m pytest tests/test_reference_manual_math.py -v`}
+            code={`# Run the complete public reference manual mathematical gate\npython scripts/run_manual_math_validation.py\n\n# Or run full pytest integration suite\npython -m pytest tests/test_reference_manual_math.py -v`}
             language="bash"
           />
         </div>

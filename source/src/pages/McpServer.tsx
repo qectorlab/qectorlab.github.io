@@ -161,8 +161,9 @@ export default function McpServer() {
             The app-free, library-only MCP server: eight verified tools covering Union-Find, exact
             Blossom MWPM, SparseBlossom, and the auto router, with syndrome validation against
             <code className="text-cyan-300"> H c = s (mod 2) </code> and coset-scored logical outcomes.
-            Requires only <code className="text-cyan-300">qector-decoder-v3==1.0.0</code> and
-            <code className="text-cyan-300">mcp==1.26.0</code>; no Workbench or GUI needed.
+            Runs on <code className="text-cyan-300">qector-decoder-v3==1.0.0</code> with
+            <code className="text-cyan-300">mcp==1.26.0</code>; no Workbench or GUI needed. Ships in the
+            <code className="text-cyan-300">qector-claude-plugin</code> repository.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/installer" className="btn-cyan">Install</Link>
@@ -187,7 +188,7 @@ export default function McpServer() {
               },
               {
                 t: 'App-free',
-                d: 'Ships in the published qector-decoder-v3==1.0.0 wheel. No QECTOR Workbench, no GUI, no desktop application required.',
+                d: 'Runs on the published qector-decoder-v3==1.0.0 wheel and ships in the qector-claude-plugin repository. No QECTOR Workbench, no GUI, no desktop application required.',
               },
             ].map((c) => (
               <div key={c.t} className="card-surface">
@@ -206,7 +207,7 @@ export default function McpServer() {
                 Looking for the full Claude Code Plugin?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Includes 7 strict-math skills, 5 specialized agents, and 3 reproducible workflows alongside this local MCP server.
+                Includes 28 domain skills, 5 specialized agents, 13 slash commands, and 37 MCP tools (8 library + 29 benchmark) alongside this local MCP server.
               </p>
             </div>
             <Link
@@ -221,7 +222,7 @@ export default function McpServer() {
             <h2 className="text-2xl font-bold mb-3">Connect a client</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
               The server speaks JSON-RPC 2.0 over local stdio and identifies itself as
-              <code className="text-cyan-300"> qector-decoder-v3-mcp </code>. Add it to Clauder Code,
+              <code className="text-cyan-300"> qector-decoder-v3-mcp </code>. Add it to Claude Code,
               Claude Desktop, or any MCP client:
             </p>
             <CodeBlock language="json" code={CLIENT_CONFIG} />

@@ -10,14 +10,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const WINDOWS_WORKBENCH_VERSION = 'v1.0.0';
+const WINDOWS_WORKBENCH_VERSION = 'v1.0.1';
 const WINDOWS_BACKEND_VERSION = '1.0.0';
-const WINDOWS_MCP_TOOLS = '82';
-const WINDOWS_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.0';
-const LINUX_WORKBENCH_VERSION = 'v0.5.3';
-const LINUX_BACKEND_VERSION = '0.7.0';
-const LINUX_MCP_TOOLS = '56';
-const LINUX_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/latest';
+const WINDOWS_MCP_TOOLS = '85';
+const WINDOWS_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.1';
+const LINUX_WORKBENCH_VERSION = 'v1.0.1';
+const LINUX_BACKEND_VERSION = '1.0.0';
+const LINUX_MCP_TOOLS = '85';
+const LINUX_RELEASES = 'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.1';
 
 export default function Workbench() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
@@ -50,23 +50,25 @@ export default function Workbench() {
   };
 
   // Decoder coverage against the qector_decoder_v3 backend.
-  // The v1.0.0 app ships 15 decoder backends (Zenodo 10.5281/zenodo.21941046).
+  // The v1.0.1 apps ship 17 decoder kinds (Zenodo 10.5281/zenodo.21941046).
   const decodersList = [
-    { kind: 'union_find', type: 'Graphlike', desc: 'Zero-allocation Union-Find (UF 01).' },
-    { kind: 'fast_union_find', type: 'Graphlike', desc: 'Ultra-fast approximate Union-Find variant.' },
-    { kind: 'blossom', type: 'Universal', desc: 'Exact minimum-weight perfect matching (Edmonds\' Blossom).' },
-    { kind: 'sparse_blossom', type: 'Graphlike', desc: 'Event-driven Sparse Blossom with radix-heap region growth.' },
-    { kind: 'hybrid', type: 'Graphlike', desc: 'Multi-strategy adaptive solver.' },
-    { kind: 'predecoded', type: 'Graphlike', desc: 'Fast pre-decoding pass prior to matching.' },
-    { kind: 'auto', type: 'Graphlike', desc: 'Self-selecting 7-tier heuristic selector.' },
-    { kind: 'bp_osd', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered statistics decoding.' },
-    { kind: 'gnn_belief_matching', type: 'Graphlike', desc: 'GNN-guided edge-weighted matching with fallback.' },
-    { kind: 'belief_matching', type: 'Universal', desc: 'BP posteriors reweight Blossom matching.' },
-    { kind: 'auto_router', type: 'Universal', desc: 'Native routing layer: 7-tier fallback chain.' },
-    { kind: 'colour_code', type: 'Triangular colour code', desc: 'Colour-code decoder for triangular colour lattices.' },
-    { kind: 'two_stage', type: 'Graphlike', desc: 'Two-stage CSS decoding for correlated X/Z noise.' },
-    { kind: 'ambiguity_cluster', type: 'Graphlike', desc: 'Ambiguity clustering with learned pre-decoders.' },
-    { kind: 'lookup_table', type: 'Small (<20 checks)', desc: 'Exhaustive syndrome lookup table.' },
+    { kind: 'union_find', type: 'Graphlike', desc: 'Fast approximate Union-Find decoding; higher LER than exact MWPM.' },
+    { kind: 'fast_union_find', type: 'Graphlike', desc: 'Optimized Union-Find hot path; approximate.' },
+    { kind: 'blossom', type: 'Universal', desc: 'Weight-optimal exact minimum-weight perfect matching (Edmonds\' Blossom).' },
+    { kind: 'sparse_blossom', type: 'Graphlike', desc: 'Event-driven Sparse Blossom with radix-heap region growth (experimental).' },
+    { kind: 'bp_osd', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered-statistics decoding for LDPC / qLDPC codes.' },
+    { kind: 'auto', type: 'Graphlike', desc: 'Self-selecting AutoDecoder: picks the best available decoder for the code.' },
+    { kind: 'hybrid', type: 'Graphlike', desc: 'Combines a fast heuristic pass with exact matching.' },
+    { kind: 'lookup_table', type: 'Small (<20 checks)', desc: 'Precomputed syndrome-to-correction table with O(1) lookup.' },
+    { kind: 'predecoded', type: 'Graphlike', desc: 'Fast pre-decoding pass that resolves easy/low-weight syndromes.' },
+    { kind: 'auto_router', type: 'Universal', desc: 'Policy decoder: inspects the code and dispatches the best concrete decoder.' },
+    { kind: 'hybrid_cascade', type: 'Graphlike', desc: 'Union-Find pre-filter escalating to Blossom/BP-OSD.' },
+    { kind: 'gnn_belief_matching', type: 'Graphlike', desc: 'GNN-predicted per-qubit weights guide edge-weighted matching with fallback.' },
+    { kind: 'belief_matching', type: 'Universal', desc: 'Sum-product BP posteriors reweight an exact Blossom matching.' },
+    { kind: 'two_stage', type: 'Graphlike', desc: 'Decoupled X/Z sector decoders for CSS / colour codes.' },
+    { kind: 'ambiguity_cluster', type: 'Graphlike', desc: 'Cluster-growth decoder for high noise or non-graphlike codes.' },
+    { kind: 'colour_code', type: 'Universal / qLDPC', desc: 'BP-OSD hypergraph decoder over undecomposed detector error models.' },
+    { kind: 'space_time', type: 'Universal', desc: 'Space-time decoder for multi-round decoding (experimental).' },
   ];
 
   const codeFamilies = [
@@ -82,8 +84,8 @@ export default function Workbench() {
     { name: 'color_code', params: 'triangular size (int)', desc: 'Triangular & 2D 4.8.8 colour codes.' },
   ];
 
-  // The workspaces ship in v1.0.0 as described by the Windows release notes:
-  // eight GUI tabs plus a live Console.
+  // The workspaces ship in v1.0.1 as described by the shipped user manuals:
+  // eight GUI tabs plus a live Console on Windows, nine tabs plus Console on Linux.
   const modules = [
     'Code Explorer',
     'Decoder Lab',
@@ -91,7 +93,7 @@ export default function Workbench() {
     'Batch & Streaming',
     'Hardware',
     'Diagnostics',
-    'Documentation Studio',
+    'Documentation',
     'Lab & Personal Info',
     'Console',
   ];
@@ -99,7 +101,7 @@ export default function Workbench() {
   return (
     <>
       <SEO
-        title="QECTOR Workbench · Windows v1.0.0 and Linux v0.5.3"
+        title="QECTOR Workbench · Windows v1.0.1 and Linux v1.0.1"
         description={`QECTOR Workbench desktop GUI and MCP releases: Windows ${WINDOWS_WORKBENCH_VERSION} with ${WINDOWS_MCP_TOOLS} tools and a ${WINDOWS_BACKEND_VERSION} backend, plus Linux ${LINUX_WORKBENCH_VERSION} with ${LINUX_MCP_TOOLS} tools and a ${LINUX_BACKEND_VERSION} backend.`}
       />
 
@@ -127,7 +129,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            The Windows release includes 15 decoder backends, 10 quantum code families, a visual circuit builder, and an 82-tool MCP server. The Linux release is a separate {LINUX_WORKBENCH_VERSION} build with a {LINUX_BACKEND_VERSION} backend and {LINUX_MCP_TOOLS} tools.
+            The Windows release includes 17 decoder backends, 10 quantum code families, a visual circuit builder, and an 85-tool MCP server. The Linux release is a separate {LINUX_WORKBENCH_VERSION} build with a {LINUX_BACKEND_VERSION} backend and {LINUX_MCP_TOOLS} tools.
             Ships as a portable Windows executable: each one
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
@@ -157,7 +159,7 @@ export default function Workbench() {
             {[
               { value: WINDOWS_WORKBENCH_VERSION, label: 'Windows release' },
               { value: `${WINDOWS_MCP_TOOLS} / ${LINUX_MCP_TOOLS}`, label: 'MCP tools (Win / Linux)' },
-              { value: '15 / 16', label: 'Backends (Win / Linux)' },
+              { value: '17 / 17', label: 'Backends (Win / Linux)' },
               { value: '10', label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
@@ -215,8 +217,13 @@ export default function Workbench() {
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
                 <h3 className="text-cyan-300 font-semibold text-base">Linux x64</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Published {LINUX_WORKBENCH_VERSION} Debian/package release with a bundled qector-decoder-v3 {LINUX_BACKEND_VERSION} backend and {LINUX_MCP_TOOLS}-tool MCP server.
+                  Published {LINUX_WORKBENCH_VERSION} AppImage and Debian package with a bundled qector-decoder-v3 {LINUX_BACKEND_VERSION} backend and {LINUX_MCP_TOOLS}-tool MCP server.
                 </p>
+                <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
+                  <li>Download <code className="text-cyan-300">QectorWorkbench-1.0.1-x86_64.AppImage</code>, chmod +x, and run.</li>
+                  <li>Headless MCP server: <code className="text-cyan-300">./QectorWorkbench-1.0.1-x86_64.AppImage --mcp</code></li>
+                  <li>Runtime data: <code className="text-cyan-300">~/.local/share/QectorWorkbench</code></li>
+                </ul>
                 <a href={LINUX_RELEASES} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
                   Linux release
                 </a>
@@ -235,7 +242,7 @@ export default function Workbench() {
               <div>
                 <h2 className="text-2xl font-bold">Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  All 15 decoder backends exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
+                  All 17 decoder backends exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -244,8 +251,8 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-                   The Windows {WINDOWS_WORKBENCH_VERSION} release declares <strong className="text-secondary">15 decoder backends</strong>;
-                   the Linux {LINUX_WORKBENCH_VERSION} release declares 16 against its older bundled backend. Consult each release's
+                   The Windows {WINDOWS_WORKBENCH_VERSION} release declares <strong className="text-secondary">17 decoder backends</strong>;
+                   the Linux {LINUX_WORKBENCH_VERSION} release also declares 17 against its bundled backend. Consult each release's
                    included manuals for platform-specific coverage.
             </p>
 
