@@ -44,23 +44,57 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 - Models and evidence: `/blog/13DemPipeline`, `/blog/14WeightedDecoding`, `/blog/15LogicalErrorRates`, `/blog/17ReproducibleBenchmarks`
 - Systems and delivery: `/blog/09GpuAcceleration`, `/blog/10BenchmarksArchitecture`, `/blog/18RustPyo3Architecture`, `/blog/19ReleaseLicensing`, `/blog/20EcosystemIntegration`
 
+## QECTOR Workbench (desktop GUI + MCP server)
+
+- Windows v1.0.1: 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families, MCP protocol 2024-11-05. Portable exe + SHA-256 checksums.
+- Linux v1.0.1: 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
+- Windows workspaces: Code Explorer, Decoder Lab, Benchmark, Batch & Streaming, Hardware, Diagnostics, Documentation, Lab & Personal Info, plus Console. Linux adds History.
+- Data directory: `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides). Headless: `--mcp` (stdio JSON-RPC 2.0).
+- Releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases and https://github.com/qectorlab/qector-decoder-workbench-linux/releases
+
+## QECTOR Claude Plugin (v1.0.2)
+
+- 28 domain skills (qector-core, qector-math-foundations, qector-developer, qector-researcher, qector-hardware-engineer, qector-educator, qector-sysadmin flagship; 21 more covering architecture, rust-pyo3, licensing, MCP workflows, and validation).
+- 5 specialized agents: qec-developer.md, qec-researcher.md, qec-validator.md, qec-sysadmin.md, qec-hardware-engineer.md. 13 slash commands.
+- 37 local MCP tools: 8 library (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) + 29 benchmark (DEM pipelines, Sinter/Stim, Wilson confidence, theorem lookup, compatibility, workbench probing).
+- Validation gate: `python scripts/run_manual_math_validation.py`. Repository: https://github.com/GuillaumeLessard/qector-claude-plugin
+
 ## Official pages
 
 - https://qector.store/decoder
+- https://qector.store/workbench
 - https://qector.store/claude-plugin
 - https://qector.store/mcp-server
 - https://qector.store/evidence
 - https://qector.store/manual
 - https://qector.store/technical-reference
 - https://qector.store/installer
-- https://qector.store/license
+- https://qector.store/pricing
 - https://qector.store/commercial
+- https://qector.store/license
+- https://qector.store/about
+- https://qector.store/guillaume-lessard
+- https://qector.store/changelog
+- https://qector.store/contact
+
+## Machine-readable
+
+- https://qector.store/llms.txt
+- https://qector.store/ai.txt
+- https://qector.store/feed.xml
+- https://qector.store/sitemap.xml
+- https://qector.store/.well-known/skills/index.json
+- https://qector.store/.well-known/mcp/server-card.json
 
 ## External records
 
 - DOI: https://doi.org/10.5281/zenodo.21941046
 - PyPI: https://pypi.org/project/qector-decoder-v3/
 - GitHub: https://github.com/GuillaumeLessard/qector-decoder
+- Workbench Windows: https://github.com/qectorlab/qector-decoder-workbench-windows/releases
+- Workbench Linux: https://github.com/qectorlab/qector-decoder-workbench-linux/releases
+- Claude plugin: https://github.com/GuillaumeLessard/qector-claude-plugin
+- ORCID: https://orcid.org/0009-0000-3465-3753
 
 ## Install
 

@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import { blogPosts } from '../lib/blogData';
 import { BookOpen, Calendar, ArrowRight } from 'lucide-react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -19,8 +17,6 @@ export default function Blog() {
           title="Blog · QECTOR"
           description="QECTOR field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration."
       />
-
-      <Navigation />
 
       <main className="pt-32 pb-24 relative overflow-hidden">
         {/* Background Gradients */}
@@ -101,8 +97,6 @@ export default function Blog() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

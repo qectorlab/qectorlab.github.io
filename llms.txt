@@ -14,26 +14,61 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 - https://qector.store/blog
 
+## QECTOR Workbench (desktop GUI + MCP server)
+
+- Windows v1.0.1: 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families. Portable exe + SHA-256 checksums.
+- Linux v1.0.1: 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
+- MCP protocol 2024-11-05 over stdio JSON-RPC 2.0 (`--mcp` headless mode); data directory `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides).
+- No macOS build is currently published.
+
+## QECTOR Claude Plugin (v1.0.2)
+
+- Claude Code / Claude Desktop plugin: 28 domain skills, 5 specialized agents (qec-developer, qec-researcher, qec-validator, qec-sysadmin, qec-hardware-engineer), 13 slash commands.
+- 37 local MCP tools: 8 library (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) + 29 benchmark.
+- Zero-egress stdio architecture: circuits, parity matrices, and syndromes never leave the machine.
+- Install: `claude plugin marketplace add GuillaumeLessard/qector-claude-plugin` then `claude plugin install qector@qector-tools`.
+
 ## Official links
 
 - Website: https://qector.store/
 - Claude Code Plugin: https://qector.store/claude-plugin
+- Workbench: https://qector.store/workbench
 - MCP Server: https://qector.store/mcp-server
 - Blog: https://qector.store/blog
 - Master AI Suite v2: https://qector.store/master-ai-suite
+- Pricing & licensing: https://qector.store/pricing
+- Enterprise / OEM licensing: https://qector.store/commercial
 - Install guide: https://qector.store/installer
 - Documentation hub: https://qector.store/docs
 - User manual: https://qector.store/manual
 - Technical reference: https://qector.store/technical-reference
 - Evidence and reports: https://qector.store/evidence
-- Commercial licensing: https://qector.store/commercial
+- About: https://qector.store/about
+- Founder page: https://qector.store/guillaume-lessard
+- Changelog: https://qector.store/changelog
+- License: https://qector.store/license
+- Refund policy: https://qector.store/refund
 - Contact: https://qector.store/contact
+
+## Machine-readable
+
+- Full-context document: https://qector.store/llms-full.txt
+- AI agents index: https://qector.store/ai.txt
+- Atom feed (blog): https://qector.store/feed.xml
+- Sitemap: https://qector.store/sitemap.xml
+- Agent skills: https://qector.store/.well-known/skills/index.json
+- MCP server card: https://qector.store/.well-known/mcp/server-card.json
+- Security contact: https://qector.store/.well-known/security.txt
 
 ## External records
 
 - DOI record: https://doi.org/10.5281/zenodo.21941046
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
 - Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
+- Workbench Windows releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases
+- Workbench Linux releases: https://github.com/qectorlab/qector-decoder-workbench-linux/releases
+- Claude plugin repository: https://github.com/GuillaumeLessard/qector-claude-plugin
+- Author ORCID: https://orcid.org/0009-0000-3465-3753
 
 ## Installation
 

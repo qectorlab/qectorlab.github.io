@@ -2,7 +2,7 @@ export const APP_CONFIG = {
   version: '1.0.0',
   pypiPackage: 'qector-decoder-v3',
   contactEndpoint: import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined,
-  ogImage: 'https://qector.store/images/logo.png',
+  ogImage: 'https://qector.store/images/og-banner.png',
 }
 
 // Calendly booking link. The query string carries the embed theme colours so

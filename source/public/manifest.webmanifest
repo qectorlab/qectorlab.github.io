@@ -10,13 +10,14 @@
   "icons": [
     {
       "src": "/images/logo.png",
-      "sizes": "315x315",
-      "type": "image/png"
+      "sizes": "315x250",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "shortcuts": [
-    { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/images/logo.png", "sizes": "315x315" }] },
-    { "name": "Evidence", "url": "/evidence", "icons": [{ "src": "/images/logo.png", "sizes": "315x315" }] },
-    { "name": "Docs", "url": "/docs", "icons": [{ "src": "/images/logo.png", "sizes": "315x315" }] }
+    { "name": "Decoder", "url": "/decoder", "icons": [{ "src": "/images/logo.png", "sizes": "315x250" }] },
+    { "name": "Evidence", "url": "/evidence", "icons": [{ "src": "/images/logo.png", "sizes": "315x250" }] },
+    { "name": "Docs", "url": "/docs", "icons": [{ "src": "/images/logo.png", "sizes": "315x250" }] }
   ]
 }

@@ -9,8 +9,6 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { blogPosts } from '../lib/blogData';
 import { ArrowLeft, Calendar, Loader2 } from 'lucide-react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
 
 // IMPORTANT: We need KaTeX CSS to render math formulas correctly
 import 'katex/dist/katex.min.css';
@@ -150,8 +148,6 @@ export default function BlogPost() {
         description={postMeta.description} 
       />
 
-      <Navigation />
-
       <main className="pt-32 pb-24 relative overflow-hidden">
         {/* Subtle Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
@@ -213,8 +209,6 @@ export default function BlogPost() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

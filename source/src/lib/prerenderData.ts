@@ -21,7 +21,7 @@ import { blogPosts } from './blogData';
 
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
-export const OG_IMAGE = 'https://qector.store/images/logo.png';
+export const OG_IMAGE = 'https://qector.store/images/og-banner.png';
 export const DECODER_VERSION = '1.0.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const GITHUB_URL = 'https://github.com/GuillaumeLessard/qector-decoder';
@@ -48,7 +48,29 @@ const organizationNode = {
   name: SITE_NAME,
   url: SITE_URL + '/',
   logo: `${SITE_URL}/images/logo.png`,
-  sameAs: [GITHUB_URL, PYPI_URL],
+  email: 'admin@qector.store',
+  foundingDate: '2023',
+  founder: {
+    '@type': 'Person',
+    name: 'Guillaume Lessard',
+    url: `${SITE_URL}/guillaume-lessard/`,
+    identifier: '0009-0000-3465-3753',
+  },
+  location: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Longueuil',
+    addressRegion: 'QC',
+    addressCountry: 'CA',
+  },
+  sameAs: [
+    GITHUB_URL,
+    PYPI_URL,
+    'https://github.com/qectorlab',
+    'https://orcid.org/0000-0000-0000-0000',
+    'https://id01t.store/',
+    'https://id01t.itch.io/',
+    'https://www.linkedin.com/in/qector/',
+  ],
 };
 
 const softwareNode = {
@@ -164,7 +186,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     ),
     jsonLdExtra: [
       { '@type': 'WebSite', name: SITE_NAME, url: SITE_URL + '/' },
-      organizationNode,
       softwareNode,
     ],
   },
@@ -283,6 +304,21 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           `Architecture &amp; Technical Reference: <a href="${SITE_URL}/technical-reference/" style="color:#67e8f9;">${SITE_URL.replace('https://', '')}/technical-reference/</a>`,
         ])
     ),
+    jsonLdExtra: [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'QECTOR Workbench',
+        description:
+          'Free desktop application and Model Context Protocol server for quantum error correction. Windows v1.0.1 and Linux v1.0.1, each with an 85-tool MCP server, 17 decoder kinds, and 10 quantum code families.',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Windows, Linux',
+        softwareVersion: '1.0.1',
+        url: SITE_URL + '/workbench/',
+        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.1',
+        author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+      },
+    ],
   },
   {
     path: '/pricing',
@@ -728,6 +764,19 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         pre(`pip install qector-decoder-v3==${DECODER_VERSION} mcp==1.26.0\ngit clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\npython qector-claude-plugin/mcp/mcp_server_library.py`)
     ),
+    jsonLdExtra: [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'QECTOR MCP Server',
+        description:
+          'Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools for quantum error correction decoding. Runs on qector-decoder-v3==1.0.0 with mcp==1.26.0.',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Linux, macOS, Windows',
+        softwareVersion: '1.0.0',
+        url: SITE_URL + '/mcp-server/',
+        author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
+      },
+    ],
   },
   {
     path: '/claude-plugin',
@@ -847,6 +896,23 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
       h1('QECTOR Blog') +
          blogPosts.map(p => `<a href="/blog/${p.id}/">${p.title}</a>`).join('<br/>')
     ),
+    jsonLdExtra: [
+      {
+        '@type': 'Blog',
+        name: 'QECTOR Blog',
+        url: SITE_URL + '/blog/',
+        description:
+          'QECTOR field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration.',
+        blogPost: blogPosts.map((p) => ({
+          '@type': 'BlogPosting',
+          headline: p.title,
+          description: p.description,
+          datePublished: '2026-08',
+          url: abs(`/blog/${p.id}`),
+          author: { '@type': 'Person', name: 'Guillaume Lessard', url: `${SITE_URL}/guillaume-lessard/` },
+        })),
+      },
+    ],
   },
   ...blogPosts.map((post) => ({
     path: `/blog/${post.id}`,
@@ -856,6 +922,20 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1(post.title) + p(post.description)
     ),
+    jsonLdExtra: [
+      {
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.description,
+        datePublished: '2026-08',
+        dateModified: '2026-08',
+        author: { '@type': 'Person', name: 'Guillaume Lessard', url: `${SITE_URL}/guillaume-lessard/` },
+        publisher: organizationNode,
+        url: abs(`/blog/${post.id}`),
+        mainEntityOfPage: abs(`/blog/${post.id}`),
+        isPartOf: { '@type': 'Blog', name: 'QECTOR Blog', url: SITE_URL + '/blog/' },
+      },
+    ],
   })),
 ];
 
@@ -887,6 +967,11 @@ export function buildJsonLdGraph(route: PrerenderRoute): Record<string, unknown>
         { '@type': 'ListItem', position: 2, name: route.heading, item: abs(route.path) },
       ],
     });
+  }
+
+  // Organization on every page so entities stay linked across the site.
+  if (!route.jsonLdExtra?.some((n) => n['@type'] === 'Organization')) {
+    graph.push(organizationNode);
   }
 
   if (route.jsonLdExtra) graph.push(...route.jsonLdExtra);

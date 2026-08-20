@@ -35,6 +35,24 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   html = setTag(html, /(<meta name="twitter:title" content=")[^"]*(")/, route.title)
   html = setTag(html, /(<meta name="twitter:description" content=")[^"]*(")/, route.description)
 
+  // hreflang alternates: French pages link their English twin and vice versa.
+  const alternates: Record<string, [string, string][]> = {
+    '/fr/pricing': [
+      ['en', 'https://qector.store/pricing/'],
+      ['fr', 'https://qector.store/fr/pricing/'],
+    ],
+    '/pricing': [
+      ['en', 'https://qector.store/pricing/'],
+      ['fr', 'https://qector.store/fr/pricing/'],
+    ],
+  }
+  for (const [lang, href] of alternates[route.path] ?? []) {
+    html = html.replace(
+      '</head>',
+      `    <link rel="alternate" hreflang="${lang}" href="${href}" />\n  </head>`
+    )
+  }
+
   // JSON-LD (escape </ inside the JSON so a stray "</script>" can never break out)
   const jsonLd = JSON.stringify(buildJsonLdGraph(route)).replace(/<\//g, '<\\/')
   html = html.replace(

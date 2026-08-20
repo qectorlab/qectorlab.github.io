@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>QECTOR Blog</title>
+  <subtitle>Field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration.</subtitle>
+  <id>https://qector.store/feed.xml</id>
+  <link href="https://qector.store/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://qector.store/blog/" rel="alternate" type="text/html" />
+  <updated>2026-08-19T00:00:00Z</updated>
+  <author>
+    <name>Guillaume Lessard</name>
+    <uri>https://qector.store/guillaume-lessard/</uri>
+    <email>admin@qector.store</email>
+  </author>
+  <generator uri="https://qector.store/">QECTOR site</generator>
+  <icon>https://qector.store/images/logo.png</icon>
+
+  <entry>
+    <title>Stim, Sinter, PyMatching, and Qiskit Integration</title>
+    <id>https://qector.store/blog/20EcosystemIntegration/</id>
+    <link href="https://qector.store/blog/20EcosystemIntegration/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Connect QECTOR to common quantum software workflows while preserving detector, observable, and noise contracts.</summary>
+  </entry>
+
+  <entry>
+    <title>Shipping a QEC Decoder Responsibly</title>
+    <id>https://qector.store/blog/19ReleaseLicensing/</id>
+    <link href="https://qector.store/blog/19ReleaseLicensing/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">API stability, wheels, offline licensing, release gates, and the difference between local and network deployment.</summary>
+  </entry>
+
+  <entry>
+    <title>Rust, PyO3, and QEC Memory Discipline</title>
+    <id>https://qector.store/blog/18RustPyo3Architecture/</id>
+    <link href="https://qector.store/blog/18RustPyo3Architecture/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">FFI buffers, selective repacking, GIL release, Rayon worker state, and memory metrics at the Python boundary.</summary>
+  </entry>
+
+  <entry>
+    <title>Reproducible QEC Benchmarks</title>
+    <id>https://qector.store/blog/17ReproducibleBenchmarks/</id>
+    <link href="https://qector.store/blog/17ReproducibleBenchmarks/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Separate correctness from performance and make every benchmark claim traceable to an artifact and hash.</summary>
+  </entry>
+
+  <entry>
+    <title>Choosing a Decoder From the Matrix</title>
+    <id>https://qector.store/blog/16DecoderSelection/</id>
+    <link href="https://qector.store/blog/16DecoderSelection/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">A practical decision guide for graphlike, qLDPC, space-time, streaming, CSS, and batch workloads.</summary>
+  </entry>
+
+  <entry>
+    <title>Logical Error Rates Without the Wrong Metric</title>
+    <id>https://qector.store/blog/15LogicalErrorRates/</id>
+    <link href="https://qector.store/blog/15LogicalErrorRates/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Score observables, compute Wilson intervals, keep noise models comparable, and report reproducible LERs.</summary>
+  </entry>
+
+  <entry>
+    <title>Weighted Decoding and Likelihood Priors</title>
+    <id>https://qector.store/blog/14WeightedDecoding/</id>
+    <link href="https://qector.store/blog/14WeightedDecoding/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Why log((1-p)/p) belongs in the graph and how matching, Union-Find, and space-time paths use weights.</summary>
+  </entry>
+
+  <entry>
+    <title>Detector Error Models from Faults to Graphs</title>
+    <id>https://qector.store/blog/13DemPipeline/</id>
+    <link href="https://qector.store/blog/13DemPipeline/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Parse DEMs, classify hyperedges, collapse parallel mechanisms, set weights, and preserve observables.</summary>
+  </entry>
+
+  <entry>
+    <title>Rotated Surface Code d=3</title>
+    <id>https://qector.store/blog/12RotatedSurfaceD3/</id>
+    <link href="https://qector.store/blog/12RotatedSurfaceD3/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Nine data qubits, boundaries, graphlike eligibility, logical strings, and a complete structural audit.</summary>
+  </entry>
+
+  <entry>
+    <title>A Hand-Worked Steane Decode</title>
+    <id>https://qector.store/blog/11SteaneWorkedDecode/</id>
+    <link href="https://qector.store/blog/11SteaneWorkedDecode/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Compute a Steane syndrome by hand and see why stabilizer cosets matter more than raw correction equality.</summary>
+  </entry>
+
+  <entry>
+    <title>Evidence-First QEC Architecture and Benchmarks</title>
+    <id>https://qector.store/blog/10BenchmarksArchitecture/</id>
+    <link href="https://qector.store/blog/10BenchmarksArchitecture/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">The v1.0.0 backend map, logical scoring, Wilson intervals, metadata, release gates, and claim boundaries.</summary>
+  </entry>
+
+  <entry>
+    <title>GPU Batch Decoding and Tested Bit Identity</title>
+    <id>https://qector.store/blog/09GpuAcceleration/</id>
+    <link href="https://qector.store/blog/09GpuAcceleration/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Per-shot GPU state isolation, deterministic Union-Find, scoped CPU/GPU identity, and deployment gates.</summary>
+  </entry>
+
+  <entry>
+    <title>Routing, Cascades, and Two-Stage CSS Decoding</title>
+    <id>https://qector.store/blog/08AutoDecoderCascade/</id>
+    <link href="https://qector.store/blog/08AutoDecoderCascade/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Structural backend eligibility, fallback verification, hybrid acceptance, and CSS sector feedforward.</summary>
+  </entry>
+
+  <entry>
+    <title>Space-Time Decoding with Noisy Measurements</title>
+    <id>https://qector.store/blog/07SpaceTimeDecoder/</id>
+    <link href="https://qector.store/blog/07SpaceTimeDecoder/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Detector differencing, temporal and spatial weights, measurement glitches, and streaming scope.</summary>
+  </entry>
+
+  <entry>
+    <title>Ambiguity Clustering and Learned Predecoders</title>
+    <id>https://qector.store/blog/06AmbiguityGnnNeural/</id>
+    <link href="https://qector.store/blog/06AmbiguityGnnNeural/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Freeze confident qubits, solve ambiguous components, and add learned priors without moving the correctness proof.</summary>
+  </entry>
+
+  <entry>
+    <title>BP-OSD for qLDPC Hypergraphs</title>
+    <id>https://qector.store/blog/05BpOsdQldpc/</id>
+    <link href="https://qector.store/blog/05BpOsdQldpc/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Log-domain belief propagation, ordered statistics, residual GF(2) solving, and faithful non-graphlike decoding.</summary>
+  </entry>
+
+  <entry>
+    <title>UF-01: Parity, Peeling, and Graphlike Decoding</title>
+    <id>https://qector.store/blog/04FastUnionFind/</id>
+    <link href="https://qector.store/blog/04FastUnionFind/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Cluster parity, spanning-forest peeling, weighted growth, zero-allocation structure, and domain boundaries.</summary>
+  </entry>
+
+  <entry>
+    <title>Sparse Blossom and Event-Driven Growth</title>
+    <id>https://qector.store/blog/03SparseBlossomEventDriven/</id>
+    <link href="https://qector.store/blog/03SparseBlossomEventDriven/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">Region states, collision times, tight edges, radix heaps, and the tested scope of Sparse Blossom.</summary>
+  </entry>
+
+  <entry>
+    <title>Exact Blossom Decoding for Graphlike QEC</title>
+    <id>https://qector.store/blog/02BlossomMwpmExact/</id>
+    <link href="https://qector.store/blog/02BlossomMwpmExact/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">How weighted MWPM, Edmonds' primal-dual view, path boundaries, and sparse candidate escalation fit together.</summary>
+  </entry>
+
+  <entry>
+    <title>Syndrome Faithfulness: The Decoder Contract</title>
+    <id>https://qector.store/blog/01QecFoundations/</id>
+    <link href="https://qector.store/blog/01QecFoundations/" rel="alternate" type="text/html" />
+    <updated>2026-08-01T00:00:00Z</updated>
+    <summary type="text">The GF(2) invariant Hc=s, logical cosets, degeneracy, and graphlike eligibility explained from first principles.</summary>
+  </entry>
+</feed>
