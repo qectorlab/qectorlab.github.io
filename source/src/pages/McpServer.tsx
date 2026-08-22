@@ -207,7 +207,7 @@ export default function McpServer() {
                 Looking for the full Claude Code Plugin?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Includes 28 domain skills, 5 specialized agents, 13 slash commands, and 37 MCP tools (8 library + 29 benchmark) alongside this local MCP server.
+                Includes 28 domain skills, 5 specialized agents, 13 slash commands, and 37 MCP tools (8 library + 29 benchmark) alongside this local MCP server. For the largest surface, Workbench v1.0.2 ships an 85-tool MCP server on Windows, Linux, and macOS.
               </p>
             </div>
             <Link

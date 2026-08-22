@@ -16,10 +16,10 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 ## QECTOR Workbench (desktop GUI + MCP server)
 
-- Windows v1.0.1: 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families. Portable exe + SHA-256 checksums.
-- Linux v1.0.1: 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
+- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families. Portable exe + SHA-256 checksums.
+- Linux v1.0.2 (x64): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
+- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. SHA-256 checksums published with each artifact.
 - MCP protocol 2024-11-05 over stdio JSON-RPC 2.0 (`--mcp` headless mode); data directory `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides).
-- No macOS build is currently published.
 
 ## QECTOR Claude Plugin (v1.0.2)
 
@@ -32,6 +32,7 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 - Website: https://qector.store/
 - Claude Code Plugin: https://qector.store/claude-plugin
+- OpenAI / Codex adapter: https://qector.store/openai
 - Workbench: https://qector.store/workbench
 - MCP Server: https://qector.store/mcp-server
 - Blog: https://qector.store/blog
@@ -62,11 +63,13 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 ## External records
 
-- DOI record: https://doi.org/10.5281/zenodo.21941046
+- DOI record (normative manual): https://doi.org/10.5281/zenodo.21941046
+- Zenodo evidence registry: https://qector.store/evidence
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
 - Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
 - Workbench Windows releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases
 - Workbench Linux releases: https://github.com/qectorlab/qector-decoder-workbench-linux/releases
+- Workbench macOS releases: https://github.com/qectorlab/qector-decoder-workbench-macos/releases
 - Claude plugin repository: https://github.com/GuillaumeLessard/qector-claude-plugin
 - Author ORCID: https://orcid.org/0009-0000-3465-3753
 

@@ -5,6 +5,7 @@ const navLinks = [
   { label: 'Platform', href: '/' },
   { label: 'Decoder', href: '/decoder' },
   { label: 'Claude Plugin', href: '/claude-plugin' },
+  { label: 'OpenAI / Codex', href: '/openai' },
   { label: 'Workbench', href: '/workbench' },
   { label: 'AI Suite', href: '/master-ai-suite' },
   { label: 'MCP Server', href: '/mcp-server' },

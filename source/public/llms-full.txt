@@ -46,11 +46,12 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 
 ## QECTOR Workbench (desktop GUI + MCP server)
 
-- Windows v1.0.1: 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families, MCP protocol 2024-11-05. Portable exe + SHA-256 checksums.
-- Linux v1.0.1: 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
+- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families, MCP protocol 2024-11-05. Portable exe + SHA-256 checksums.
+- Linux v1.0.2 (x64): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
+- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. SHA-256 checksums published with each artifact.
 - Windows workspaces: Code Explorer, Decoder Lab, Benchmark, Batch & Streaming, Hardware, Diagnostics, Documentation, Lab & Personal Info, plus Console. Linux adds History.
 - Data directory: `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides). Headless: `--mcp` (stdio JSON-RPC 2.0).
-- Releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases and https://github.com/qectorlab/qector-decoder-workbench-linux/releases
+- Releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases , https://github.com/qectorlab/qector-decoder-workbench-linux/releases and https://github.com/qectorlab/qector-decoder-workbench-macos/releases
 
 ## QECTOR Claude Plugin (v1.0.2)
 

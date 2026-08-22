@@ -34,7 +34,7 @@ export default function TermsFR() {
               iD01t Productions, Québec, Canada.
             </p>
             <p className="text-secondary text-sm leading-relaxed mb-3">
-              Registered address: PO Box 1024, Stn Main, Longueuil, Québec, Canada, J4K 5E5.
+              Registered address: 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7.
               <br />
               Contact: <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>
             </p>

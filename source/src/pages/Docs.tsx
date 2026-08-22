@@ -24,12 +24,15 @@ export default function Docs() {
 const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const docLinks = [
+    { title: 'OpenAI / Codex', desc: 'Local stdio MCP adapter for Codex and any MCP-compatible client', href: '/openai' },
     { title: 'Claude Code Plugin', desc: '28 skills, 5 agents, and a 37-tool local stdio MCP server for Claude', href: '/claude-plugin' },
+    { title: 'Workbench (Win / Linux / macOS)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.2 on all platforms', href: '/workbench' },
+    { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 verified tools', href: '/mcp-server' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
     { title: 'Package Reference (v1.0.0)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
     { title: 'Installation Guide', desc: 'Platform-specific setup instructions', href: '/installer' },
-    { title: 'Evidence & Reports', desc: 'Validation artifacts and reproducibility data', href: '/evidence' },
+    { title: 'Evidence & Reports', desc: 'Six-record Zenodo registry, validation artifacts and reproducibility data', href: '/evidence' },
     { title: 'Changelog', desc: 'Version history and release notes', href: '/changelog' },
   ];
 

@@ -6,7 +6,8 @@ import AlgorithmCard from '../components/AlgorithmCard';
 import EvidenceBlock from '../components/EvidenceBlock';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FileText, Github } from 'lucide-react';
+import { FileText, Github, ExternalLink, Lock } from 'lucide-react';
+import { ZENODO_RECORDS } from '../lib/releases';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,8 +73,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Every public claim is backed by a verifiable artifact: validation reports, SHA-256 sealed manifests,
-            archived on GitHub.
+            Every public claim is backed by a verifiable artifact: the six-record Zenodo evidence corpus,
+            validation reports, and SHA-256 sealed manifests archived on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>
@@ -142,6 +143,65 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 proof={report.proof}
               />
             ))}
+          </div>
+
+          {/* Zenodo Evidence Registry */}
+          <div ref={(el) => addRef(el, 1.5)} className="space-y-4">
+            <div>
+              <h2 className="text-2xl font-bold">Zenodo Evidence Registry</h2>
+              <p className="text-secondary text-sm mt-1">
+                The complete six-record evidence corpus for QECTOR Decoder v3 v1.0.0. Each record is a DOI-stable,
+                versioned deposit with its scope and date listed below.
+              </p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
+                    <th className="py-3 px-3">DOI</th>
+                    <th className="py-3 px-3">Scope</th>
+                    <th className="py-3 px-3 hidden md:table-cell">Title</th>
+                    <th className="py-3 px-3">Date</th>
+                    <th className="py-3 px-3">Access</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gridline/50">
+                  {ZENODO_RECORDS.map((rec) => (
+                    <tr key={rec.id} className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3 px-3">
+                        <a
+                          href={rec.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono text-cyan-300 hover:underline inline-flex items-center gap-1"
+                        >
+                          10.5281/zenodo.{rec.id}
+                          <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                        </a>
+                      </td>
+                      <td className="py-3 px-3 text-secondary text-xs">{rec.kindLabel}</td>
+                      <td className="py-3 px-3 text-muted-foreground text-xs hidden md:table-cell">{rec.title}</td>
+                      <td className="py-3 px-3 text-muted-foreground text-xs font-mono whitespace-nowrap">{rec.date}</td>
+                      <td className="py-3 px-3 text-xs whitespace-nowrap">
+                        {rec.access === 'open' ? (
+                          <span className="text-green-400">open</span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-gold-400">
+                            <Lock className="w-3 h-3" aria-hidden="true" /> embargoed
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              Document deposits carry their own document-level publication licence; software licensing
+              (PolyForm Noncommercial / commercial) is separate and governed by the{' '}
+              <Link to="/license" className="text-cyan-300 hover:underline">licence page</Link>. The embargoed record is
+              restricted source custody and is not part of the public evidence set.
+            </p>
           </div>
 
           {/* Reproducibility */}

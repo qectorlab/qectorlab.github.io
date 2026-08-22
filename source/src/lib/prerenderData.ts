@@ -132,6 +132,7 @@ const NAV_LINKS = [
   ['/', 'Platform'],
   ['/decoder', 'Decoder'],
   ['/claude-plugin', 'Claude Plugin'],
+  ['/openai', 'OpenAI / Codex'],
   ['/workbench', 'Workbench'],
   ['/master-ai-suite', 'AI Suite'],
   ['/mcp-server', 'MCP Server'],
@@ -234,16 +235,30 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/evidence',
     title: 'Evidence & Reports · QECTOR',
     description:
-      'Validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. SHA-256 sealed on GitHub.',
+      'Complete six-record Zenodo evidence registry, validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. SHA-256 sealed on GitHub.',
     heading: 'Evidence & Reports',
     body: page(
       h1('Evidence & Reports') +
         p(
-          'Every public claim is backed by a verifiable artifact: validation reports and SHA-256 sealed manifests, all archived with the decoder source on GitHub.'
+          'Every public claim is backed by a verifiable artifact: the six-record Zenodo evidence corpus, validation reports, and SHA-256 sealed manifests, all archived with the decoder source on GitHub.'
+        ) +
+        h2('Zenodo evidence registry') +
+        table(
+          ['DOI', 'Scope', 'Date', 'Access'],
+          [
+            ['<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">10.5281/zenodo.21611214</a>', 'User manual', '2026-08-06', 'open'],
+            ['<a href="https://doi.org/10.5281/zenodo.21822738" style="color:#67e8f9;">10.5281/zenodo.21822738</a>', 'Restricted source custody', '2026-08-06', 'embargoed'],
+            ['<a href="https://doi.org/10.5281/zenodo.21823755" style="color:#67e8f9;">10.5281/zenodo.21823755</a>', 'Full scientific verification &amp; validation report', '2026-08-06', 'open'],
+            ['<a href="https://doi.org/10.5281/zenodo.21850315" style="color:#67e8f9;">10.5281/zenodo.21850315</a>', 'Technical monograph (multi-backend architecture)', '2026-08-08', 'open'],
+            ['<a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">10.5281/zenodo.21941046</a>', 'Normative reference manual v1.0.0', '2026-08-14', 'open'],
+            ['<a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">10.5281/zenodo.22046403</a>', 'Certification / verification proof bundle', '2026-08-21', 'open'],
+          ]
+        ) +
+        p(
+          'Document deposits carry their own document-level publication licence; software licensing (PolyForm Noncommercial / commercial) is separate and governed by the <a href="/license" style="color:#67e8f9;">licence page</a>. The embargoed record is restricted source custody and is not part of the public evidence set.'
         ) +
         h2('Evidence artifacts') +
         ul([
-          'Official v1.0.0 reference manual (August 2026, DOI 10.5281/zenodo.21941046), deposited with the decoder project.',
           'Syndromic validation: decode runs verify H·c = s on every shot through the self-debugging harness.',
           'SHA-256 sealed artifact manifests archived on GitHub.',
         ]) +
@@ -254,7 +269,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [
       techArticleNode(
         'QECTOR Evidence & Validation Reports',
-        'Official v1.0.0 reference manual (DOI 10.5281/zenodo.21941046) and SHA-256 sealed validation artifacts.'
+        'Complete six-record Zenodo evidence corpus, the official v1.0.0 reference manual (DOI 10.5281/zenodo.21941046), and SHA-256 sealed validation artifacts.'
       ),
     ],
   },
@@ -262,23 +277,24 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.1 with 85 tools and a 1.0.0 backend, plus Linux v1.0.1 with 85 tools and a 1.0.0 backend.',
+      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.2 (x64), Linux v1.0.2 (x64), and macOS v1.0.2 (arm64), each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
     heading: 'QECTOR Workbench',
     body: page(
       h1('QECTOR Workbench') +
         p(
-          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The published Windows release is v1.0.1 with an 85-tool server and qector-decoder-v3 1.0.0 backend; the published Linux release is v1.0.1 with an 85-tool server and a 1.0.0 backend. Both builds ship 17 decoder kinds and 10 code families. No macOS build is currently published.'
+          'QECTOR Workbench is a free desktop application and Model Context Protocol server. Published releases are Windows v1.0.2 (x64), Linux v1.0.2 (x64), and macOS v1.0.2 (arm64, Apple silicon). Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 17 decoder kinds, and 10 code families.'
         ) +
         h2('Downloads') +
         ul([
-          'Windows x64: v1.0.1 portable <code>QectorWorkbench-Portable.exe</code>: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.1" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
-          'Linux x64: v1.0.1 AppImage plus Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.1" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
-          'Headless MCP server on either platform: <code>--mcp</code>; MCP protocol 2024-11-05 over stdio JSON-RPC 2.0.',
+          'Windows x64: v1.0.2 portable <code>QectorWorkbench-Portable.exe</code>: <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.2" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-windows</a>',
+          'Linux x64: v1.0.2 AppImage plus Debian packages for Ubuntu/Debian/Mint and antiX/MX: <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.2" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-linux</a>',
+          'macOS arm64 (Apple silicon): v1.0.2 build: <a href="https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2" style="color:#67e8f9;">github.com/qectorlab/qector-decoder-workbench-macos</a>',
+          'Headless MCP server on every platform: <code>--mcp</code>; MCP protocol 2024-11-05 over stdio JSON-RPC 2.0.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
         h2('Workspaces') +
         p(
-          'The Windows v1.0.1 release documents eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
+          'The v1.0.2 releases document eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
         ) +
         h2('10 Quantum Code Families') +
         p('The published Workbench releases cover 10 code families including qLDPC and colour codes:') +
@@ -309,12 +325,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Workbench',
         description:
-          'Free desktop application and Model Context Protocol server for quantum error correction. Windows v1.0.1 and Linux v1.0.1, each with an 85-tool MCP server, 17 decoder kinds, and 10 quantum code families.',
+          'Free desktop application and Model Context Protocol server for quantum error correction. Windows v1.0.2 (x64), Linux v1.0.2 (x64), and macOS v1.0.2 (arm64), each with an 85-tool MCP server, 17 decoder kinds, and 10 quantum code families.',
         applicationCategory: 'DeveloperApplication',
-        operatingSystem: 'Windows, Linux',
-        softwareVersion: '1.0.1',
+        operatingSystem: 'Windows, Linux, macOS',
+        softwareVersion: '1.0.2',
         url: SITE_URL + '/workbench/',
-        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.1',
+        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.2',
         author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
       },
@@ -439,7 +455,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Selected work') +
         ul([
           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 15+ decoder configurations, first stable release v1.0.0.`,
-           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: separate Windows v1.0.1 and Linux v1.0.1 releases, each with an 85-tool MCP server.`,
+           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: Windows v1.0.2, Linux v1.0.2, and macOS v1.0.2 releases, each with an 85-tool MCP server.`,
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
         ]) +
@@ -578,6 +594,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Documentation Hub') +
         ul([
+          '<a href="/openai" style="color:#67e8f9;">OpenAI / Codex adapter</a>: local stdio MCP for Codex and any MCP-compatible client.',
+          '<a href="/claude-plugin" style="color:#67e8f9;">Claude Code Plugin</a>: 28 skills, 5 agents, 37-tool MCP server (v1.0.2).',
+          '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server, v1.0.2 on Windows, Linux, and macOS.',
+          '<a href="/mcp-server" style="color:#67e8f9;">MCP Server</a>: app-free local library server exposing 8 verified tools.',
           '<a href="/installer" style="color:#67e8f9;">Installation guide</a>: pip install on Linux, macOS, Windows.',
           '<a href="/manual" style="color:#67e8f9;">User manual</a>: configuration, decoder selection, benchmarking, troubleshooting.',
           '<a href="/technical-reference" style="color:#67e8f9;">Technical reference</a>: API parameters and module documentation.',
@@ -828,6 +848,52 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           name: 'Guillaume Lessard',
           url: 'https://orcid.org/0009-0000-3465-3753',
         },
+      },
+    ],
+  },
+  {
+    path: '/openai',
+    title: 'QECTOR for OpenAI & Codex · Quantum Error Correction via MCP',
+    description:
+      'Connect QECTOR Decoder v3 to OpenAI Codex and any MCP-compatible client: local stdio JSON-RPC decoding tools, first-boot verification, and zero-egress syndrome handling.',
+    heading: 'QECTOR for OpenAI & Codex',
+    body: page(
+      h1('QECTOR for OpenAI & Codex') +
+        p(
+          'First-class quantum error correction for OpenAI Codex and every MCP-compatible client. A local Model Context Protocol server over stdio JSON-RPC 2.0 (protocol 2024-11-05) connects your agent directly to the Rust-core decoder: circuits, parity matrices, and syndromes never leave your machine.'
+        ) +
+        h2('Capability matrix (per product, per version)') +
+        table(
+          ['Surface', 'Transport', 'MCP tools', 'Scope'],
+          [
+            ['OpenAI / Codex adapter', 'local stdio', String(8), '8 verified library tools over the qector_decoder_v3 1.0.0 wheel'],
+            ['<a href="/claude-plugin" style="color:#67e8f9;">Claude Plugin v1.0.2</a>', 'local stdio', '37', '8 library + 29 benchmark tools, 28 skills, 5 agents'],
+            ['<a href="/workbench" style="color:#67e8f9;">Workbench v1.0.2</a>', 'local stdio (--mcp)', '85', 'desktop GUI + full MCP surface, Windows / Linux / macOS'],
+          ]
+        ) +
+        h2('First-boot verification') +
+        pre(
+          'pip install qector-decoder-v3==1.0.0 mcp\nqector-doctor\ncodex mcp add qector -- python path/to/mcp_server_library.py'
+        ) +
+        p(
+          'Every decode is verified against the H·c = s contract by the self-debug layer. The server script ships with the <a href="https://github.com/GuillaumeLessard/qector-claude-plugin" style="color:#67e8f9;">qector-claude-plugin repository</a>.'
+        ) +
+        h2('Evidence model') +
+        p(
+          'Claims surfaced through this adapter are grounded in the six-record Zenodo evidence corpus (<a href="/evidence" style="color:#67e8f9;">qector.store/evidence</a>) and the normative reference manual (DOI 10.5281/zenodo.21941046). The adapter runs entirely on your machine over local stdio — no syndrome data is transmitted to QECTOR systems or any third party.'
+        )
+    ),
+    jsonLdExtra: [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'QECTOR OpenAI / Codex Adapter',
+        description:
+          'Local stdio Model Context Protocol adapter connecting OpenAI Codex and MCP-compatible clients to QECTOR Decoder v3 1.0.0: 8 verified library tools, first-boot verification, zero-egress syndrome handling.',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Linux, macOS, Windows',
+        softwareVersion: '1.0.0',
+        url: SITE_URL + '/openai/',
+        author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
       },
     ],
   },

@@ -157,7 +157,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
-                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: Windows v1.0.1 and Linux v1.0.1 desktop releases with 85-tool MCP servers.</li>
+                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: Windows v1.0.2, Linux v1.0.2, and macOS v1.0.2 desktop releases with 85-tool MCP servers.</li>
                    <li><strong className="text-primary">Documentation & Education</strong>: Public methodology, validation guidance, and "Mastering QEC" book context (see the decoder repository for primary evidence).</li>
                 </ul>
               </div>

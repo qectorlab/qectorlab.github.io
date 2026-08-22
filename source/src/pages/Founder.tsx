@@ -71,7 +71,7 @@ export default function Founder() {
           email: 'admin@qector.store',
           address: {
             '@type': 'PostalAddress',
-            streetAddress: 'PO Box 1024, Stn Main',
+            streetAddress: '2004 De Lorimier',
             addressLocality: 'Longueuil',
             addressRegion: 'QC',
             postalCode: 'J4K 3H7',
