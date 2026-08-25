@@ -18,6 +18,7 @@
 
 import { FAQ_ITEMS } from './faqData';
 import { blogPosts } from './blogData';
+import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES } from './releases';
 
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
@@ -442,7 +443,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Background') +
         p(
-          'My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to make things that worked in the real world. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T across 2024–2025. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
+          'My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to make things that worked in the real world. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
         ) +
         h2('Skills') +
         ul([
@@ -553,22 +554,13 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
           'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.21941046).',
         ]) +
-        h2('v0.7.1: 2026-08-04') +
-        ul([
-          'CLI qector decode crash fix (nonexistent import); MCP ping implemented; MCP no longer responds to notifications.',
-        ]) +
-        h2('v0.7.0: 2026-07-24') +
-        ul([
-          'Production release with benchmark suite, hyper saturation suite, and Stripe live integration.',
-          'MCP Server integration (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools.',
-          '200-status route shells for all application routes and the /success checkout flow.',
-        ]) +
-        h2('v0.6.8: 2026-07-22') +
-        ul([
-          'Packaging and platform maintenance release.',
-        ]) +
-        h2('Earlier') +
-        p('v0.5.x release train: GPU batch decoder, Belief-Matching configurable BP iterations, BP-OSD for qLDPC, sigstore-attested wheels, initial public PyPI release. Full history on the PyPI project page.')
+         h2('Verified PyPI release dates (UTC)') +
+         ul([
+           'No v0.7.1 release appears in the public PyPI history; it is intentionally omitted.',
+           'These are PyPI upload dates, not inferred development or local file dates.',
+           ...PYPI_RELEASES.slice(1).map(({ version, releaseDate, label }) => `v${version}: ${releaseDate} · ${label}`),
+         ]) +
+         p('The canonical PyPI history contains the complete artifact record and remains the source of truth for package release dates.')
     ),
   },
   {
@@ -817,7 +809,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR Claude Plugin') +
         p(
-          'Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version 1.0.6 (released 2026-08-23). Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Zero-egress local stdio architecture ensures that circuits, parity matrices, and syndromes never leave your machine.'
+          `Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version ${CLAUDE_PLUGIN_RELEASE.version} (published ${CLAUDE_PLUGIN_RELEASE.releaseDate}). Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Zero-egress local stdio architecture ensures that circuits, parity matrices, and syndromes never leave your machine.`
         ) +
         h2('28 Domain Skills') +
         p(

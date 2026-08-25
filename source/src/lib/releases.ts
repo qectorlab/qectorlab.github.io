@@ -22,7 +22,36 @@ export const PYPI_PACKAGE = 'qector-decoder-v3';
 export const PYPI_VERSION = '1.0.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const REFERENCE_MANUAL_DOI = '10.5281/zenodo.21941046';
-export const REGISTRY_UPDATED_AT = '2026-08-21';
+export const REGISTRY_UPDATED_AT = '2026-08-25';
+
+// Dates are PyPI upload dates (UTC), verified against the public JSON API on
+// 2026-08-25. Do not infer a release date from a local commit or file time.
+export const PYPI_RELEASES = [
+  { version: '1.0.0', releaseDate: '2026-08-06', label: 'First stable release' },
+  { version: '0.7.0', releaseDate: '2026-08-02', label: 'Published PyPI milestone' },
+  { version: '0.6.9', releaseDate: '2026-07-26', label: 'Published PyPI milestone' },
+  { version: '0.6.8', releaseDate: '2026-07-22', label: 'Published PyPI milestone' },
+  { version: '0.6.6', releaseDate: '2026-07-12', label: 'Published PyPI milestone' },
+  { version: '0.6.2', releaseDate: '2026-07-07', label: 'Published PyPI milestone' },
+  { version: '0.6.1', releaseDate: '2026-07-05', label: 'Published PyPI milestone' },
+  { version: '0.6.0', releaseDate: '2026-07-05', label: 'Published PyPI milestone' },
+  { version: '0.5.9', releaseDate: '2026-07-05', label: 'Published PyPI milestone' },
+  { version: '0.5.8', releaseDate: '2026-07-02', label: 'Published PyPI milestone' },
+  { version: '0.5.7', releaseDate: '2026-07-02', label: 'Published PyPI milestone' },
+  { version: '0.5.6', releaseDate: '2026-06-29', label: 'Published PyPI milestone' },
+  { version: '0.5.5', releaseDate: '2026-06-28', label: 'Published PyPI milestone' },
+  { version: '0.5.4', releaseDate: '2026-06-27', label: 'Published PyPI milestone' },
+  { version: '0.5.3', releaseDate: '2026-06-25', label: 'Published PyPI milestone' },
+  { version: '0.5.2', releaseDate: '2026-06-25', label: 'Published PyPI milestone' },
+  { version: '0.5.1', releaseDate: '2026-06-24', label: 'Published PyPI milestone' },
+  { version: '0.5.0', releaseDate: '2026-06-24', label: 'First recorded PyPI release' },
+];
+
+export const CLAUDE_PLUGIN_RELEASE = {
+  version: '1.0.6',
+  releaseDate: '2026-08-24',
+  releaseUrl: 'https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v1.0.6',
+};
 
 // Verified against the public GitHub v1.0.2 release tags on 2026-08-24.
 export const WORKBENCH_RELEASES: WorkbenchRelease[] = [

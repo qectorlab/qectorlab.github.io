@@ -107,7 +107,7 @@ export default function Workbench() {
         {WORKBENCH_RELEASES.map((r, i) => (
           <span key={r.id}>
             <a href={r.releaseUrl} className="underline hover:text-emerald-300 transition-colors" target="_blank" rel="noopener noreferrer">
-              {r.label} {r.version} · {r.mcpTools} MCP tools
+              {r.label} {r.version} · published {r.releaseDate} · {r.mcpTools} MCP tools
             </a>
             {i < WORKBENCH_RELEASES.length - 1 ? ' · ' : ''}
           </span>
@@ -206,7 +206,8 @@ export default function Workbench() {
                   Portable single executable. No installer, no admin rights, no internet connection.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                   <li>Download <code className="text-cyan-300">{WIN.artifact}</code>, extract it, then launch <code className="text-cyan-300">QectorWorkbench-Portable.exe</code>.</li>
+                    <li>Published {WIN.releaseDate} in the verified GitHub release.</li>
+                    <li>Download <code className="text-cyan-300">{WIN.artifact}</code>, extract it, then launch <code className="text-cyan-300">QectorWorkbench-Portable.exe</code>.</li>
                   <li>Headless MCP server: <code className="text-cyan-300">QectorWorkbench-Portable.exe --mcp</code></li>
                    <li>Runtime data: <code className="text-cyan-300">%LOCALAPPDATA%\QectorWorkbench</code></li>
                    <li>ZIP SHA-256: <code className="text-cyan-300 break-all">{WIN.artifactSha256}</code></li>
@@ -224,8 +225,9 @@ export default function Workbench() {
                 <p className="text-secondary text-xs leading-relaxed">
                   Published {LINUX.version} AppImage and Debian package with a bundled qector-decoder-v3 {LINUX.backendVersion} backend and {LINUX.mcpTools}-tool MCP server.
                 </p>
-                <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                   <li>Download <code className="text-cyan-300">{LINUX.artifact}</code>, extract it, then run the portable binary or Debian package.</li>
+                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
+                    <li>Published {LINUX.releaseDate} in the verified GitHub release.</li>
+                    <li>Download <code className="text-cyan-300">{LINUX.artifact}</code>, extract it, then run the portable binary or Debian package.</li>
                   <li>Headless MCP server: append <code className="text-cyan-300">--mcp</code></li>
                    <li>Runtime data: <code className="text-cyan-300">~/.local/share/QectorWorkbench</code></li>
                    <li>ZIP SHA-256: <code className="text-cyan-300 break-all">{LINUX.artifactSha256}</code></li>
@@ -243,8 +245,9 @@ export default function Workbench() {
                 <p className="text-secondary text-xs leading-relaxed">
                   Published {MACOS.version} build for Apple silicon (M-series) with a bundled qector-decoder-v3 {MACOS.backendVersion} backend and {MACOS.mcpTools}-tool MCP server.
                 </p>
-                <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                   <li>Download <code className="text-cyan-300">{MACOS.artifact}</code> from the live release.</li>
+                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
+                    <li>Published {MACOS.releaseDate} in the verified GitHub release.</li>
+                    <li>Download <code className="text-cyan-300">{MACOS.artifact}</code> from the live release.</li>
                   <li>First launch may require right-click → Open to bypass Gatekeeper.</li>
                    <li>DMG SHA-256: <code className="text-cyan-300 break-all">{MACOS.artifactSha256}</code></li>
                  </ul>

@@ -5,7 +5,7 @@
         "name": "QECTOR Store Discovery",
         "version": "1.0.0",
         "description": "Discovery card for QECTOR Decoder v3 public website resources.",
-        "updated_at": "2026-08-21"
+        "updated_at": "2026-08-25"
       },
       "transport": {
         "type": "none",

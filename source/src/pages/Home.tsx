@@ -16,7 +16,7 @@ function CounterStat({ value, label }: { value: string; label: string }) {
   return (
     <div className="text-center px-4 py-3">
       <div className="text-2xl font-bold text-cyan-300">{value}</div>
-      <div className="text-xs text-muted-foreground whitespace-nowrap">{label}</div>
+      <div className="text-xs text-muted-foreground leading-tight max-w-[11rem] mx-auto">{label}</div>
     </div>
   );
 }
@@ -137,14 +137,14 @@ export default function Home() {
         <div className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-24 pb-20">
           <Link
             to="/changelog"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-xs text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
+            className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-center text-xs leading-relaxed text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
             <span>v{pypiVersion} · Certified First Stable Release · Changelog →</span>
           </Link>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6"
+            className="max-w-4xl mx-auto break-words text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6"
             style={{ textShadow: '0 4px 32px rgba(0,0,0,0.9)' }}
           >
             Production-Grade{' '}
@@ -155,7 +155,7 @@ export default function Home() {
           </h1>
 
           <p
-            className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed break-words"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
              The v1.0.0 runtime ships 15 concrete decoder configurations, while Workbench v1.0.2 names 17 kinds in total:

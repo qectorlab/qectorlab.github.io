@@ -1,6 +1,6 @@
 # QECTOR - qectorlab.github.io
 
-**Useful static bridge for QECTOR Decoder v3 (high-performance library) and Qector Workbench (Free GUI v0.5.3, see qector.store) under the qectorlab brand.**
+**Useful static bridge for QECTOR Decoder v3 (high-performance library) and QECTOR Workbench (free GUI v1.0.2, see qector.store) under the qectorlab brand.**
 
 **Current stable release: QECTOR Decoder v3 v1.0.0 — first stable release. API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, and the official reference manual (DOI 10.5281/zenodo.21941046).**
 
@@ -11,7 +11,7 @@
 ## Quick Start
 ```bash
 pip install qector-decoder-v3
-# Free GUI v0.5.3: https://qector.store
+# Free Workbench v1.0.2: https://qector.store/workbench/
 ```
 
 ## Key Claims + Evidence (all on GitHub)

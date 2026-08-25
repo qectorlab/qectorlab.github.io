@@ -1,6 +1,7 @@
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import ChangelogEntry from '../components/ChangelogEntry';
+import { PYPI_RELEASES } from '../lib/releases';
 
 export default function Changelog() {
   return (
@@ -56,123 +57,15 @@ export default function Changelog() {
             />
           </div>
 
-          {/* v0.7.1 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
-            <ChangelogEntry
-              version="v0.7.1 · 2026-08-04"
-              items={[
-                'CLI qector decode crash fix (nonexistent import)',
-                'MCP ping implemented; MCP no longer responds to notifications',
-              ]}
-            />
-          </div>
-
-          {/* v0.7.0 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
-            <ChangelogEntry
-              version="v0.7.0 · 2026-07-24"
-              items={[
-                'Production release with benchmark suite, hyper saturation suite, and Stripe live integration',
-                'MCP Server integration (MCP stdio, JSON-RPC 2.0) exposing 13 verified tools',
-                'Added 200-status SPA route shells for all application routes and /success checkout flow',
-              ]}
-            />
-          </div>
-
-          {/* v0.6.8 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
-            <ChangelogEntry
-              version="v0.6.8 · 2026-07-22"
-              items={[
-                'Fixed _guard() handling for gated research decoders; public wheels expose HybridDecoder (UF + Blossom routing)',
-                'Website updated with validation data',
-              ]}
-            />
-          </div>
-
-          {/* v0.5.7 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
-            <ChangelogEntry
-              version="v0.5.7 · 2026"
-              items={[
-                'Sigstore attestation for PyPI wheels',
-                'Performance regression fixes in BP-OSD path',
-                'Documentation updates for GPU batch decoder',
-                'Validation report refresh with latest Stim compatibility',
-              ]}
-            />
-          </div>
-
-          {/* v0.5.6 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gold-400 border-4 border-void shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
-            <ChangelogEntry
-              version="v0.5.6 - 2026"
-              items={[
-                'Union-Find decoder: near-linear time path compression',
-                'CUDA batch decoder: improved memory layout for large batches',
-                'Added integration tests for Stim 1.15+ compatibility',
-                'Fixed edge case in adaptive-k MWPM for d=15',
-              ]}
-            />
-          </div>
-
-          {/* v0.5.5 */}
+          {/* Verified PyPI history */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
             <ChangelogEntry
-              version="v0.5.5 - 2026"
+              version="Verified PyPI release dates · UTC"
               items={[
-                'Belief-Matching: configurable BP iteration counts',
-                'BP-OSD: added ordered statistics decoding for qLDPC',
-                'OpenCL backend: byte-for-byte CPU parity verified',
-                'CLI: added batch decode command with progress bar',
-              ]}
-            />
-          </div>
-
-          {/* v0.5.4 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
-            <ChangelogEntry
-              version="v0.5.4 - 2025-2026"
-              items={[
-                'GPU batch decoder: native CUDA implementation',
-                'Benchmark suite: head-to-head PyMatching comparison scripts',
-                'Validation artifacts: GitHub publication workflow',
-              ]}
-            />
-          </div>
-
-          {/* v0.5.3 */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
-            <ChangelogEntry
-              version="v0.5.3 - 2025"
-              items={[
-                'Initial public PyPI release',
-                'MWPM Blossom: adaptive-k exact matching',
-                'Belief-Matching: BP + reweighted MWPM',
-                'Surface code support: distances 3-15 verified',
-              ]}
-            />
-          </div>
-
-          {/* Pre-v0.5.x */}
-          <div className="relative">
-            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
-            <ChangelogEntry
-              version="Pre-v0.5.x - 2024-2025"
-              items={[
-                '2024: iD01t Productions established. Initial QEC research begins.',
-                '2025 Q1: Advanced topological framework.',
-                '2025 Q2: QECTOR Decoder v3 core engine in Rust / PyO3.',
-                '2025 Q3: Titan-Class BB QLDPC code environment validation.',
-                '2025 Q4: v0.5.x PyPI release train begins.',
+                'No v0.7.1 release appears in the public PyPI history; it is intentionally omitted.',
+                'Dates below are PyPI upload dates, not inferred development or local file dates.',
+                ...PYPI_RELEASES.slice(1).map(({ version, releaseDate, label }) => `v${version} · ${releaseDate} · ${label}`),
               ]}
             />
           </div>

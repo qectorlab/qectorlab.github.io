@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { SEO, JsonLd } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
+import { CLAUDE_PLUGIN_RELEASE } from '../lib/releases';
 import {
   ShieldCheck,
   Terminal,
@@ -246,7 +247,7 @@ export default function ClaudePlugin() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono font-medium mb-6 backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-             <span>ANTHROPIC CLAUDE CODE & DESKTOP PLUGIN · v1.0.6</span>
+             <span>ANTHROPIC CLAUDE CODE &amp; DESKTOP PLUGIN · v{CLAUDE_PLUGIN_RELEASE.version} · published {CLAUDE_PLUGIN_RELEASE.releaseDate}</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto leading-[1.1]">

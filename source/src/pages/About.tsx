@@ -167,15 +167,15 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <div ref={(el) => addRef(el, 5)} className="card-surface">
               <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Project Timeline</h3>
               <div className="space-y-4">
-                {[
-                  { year: '2024', event: 'iD01t Productions established. Initial QEC research begins: CSS codes, surface code simulation with Stim, MWPM validation against PyMatching.' },
-                  { year: '2025 Q1', event: 'Advanced topological framework developed: [[832,10,4]] CSS code on genus-5 surface. Artifacts on GitHub.' },
-                  { year: '2025 Q2', event: 'QECTOR Decoder v3 core engine written in Rust / PyO3. Initial PyPI releases. Belief-Matching, BP-OSD, Union-Find decoders integrated.' },
-                  { year: '2025 Q3', event: 'Titan-Class [[72,12,6]] BB QLDPC code environment validation. OpenCL and CUDA GPU backends added to the batch decoding pipeline.' },
-                  { year: '2025 Q4–2026', event: `v${pypiVersion || '1.0.0'} Decoder (Source-Available) + free QECTOR Workbench GUI.` },
-                  { year: '2026 Q2', event: 'QECTOR Workbench initial release. CustomTkinter GUI, comprehensive MCP server, 17 named kinds (15 concrete decoder configurations plus AutoDecoder and Auto Router), and 10 code families, shipped fully self-contained for Windows x64, Linux x64, and macOS arm64, requiring no system Python, pip, or internet connection.' },
-                  { year: '2026 Q3', event: 'QECTOR Decoder v3 v1.0.0: first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, and the official reference manual (DOI 10.5281/zenodo.21941046).' },
-                ].map((item) => (
+                 {[
+                   { year: '2026-06-23', event: 'The public qectorlab.github.io repository was created.' },
+                   { year: '2026-06-24', event: 'The qector-decoder repository was created and v0.5.0 / v0.5.1 were first recorded on PyPI.' },
+                   { year: '2026-06-24–07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
+                   { year: '2026-08-02', event: 'QECTOR Decoder v3 v0.7.0 was published on PyPI.' },
+                   { year: '2026-08-06', event: `QECTOR Decoder v3 v${pypiVersion || '1.0.0'} reached its first stable release, with the official reference manual (DOI 10.5281/zenodo.21941046).` },
+                   { year: '2026-08-11–08-21', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.2 releases for Windows, Linux, and macOS on 2026-08-21.' },
+                   { year: '2026-08-15–08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
+                 ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
                   <span className="text-cyan-300 font-mono text-sm min-w-[80px] pt-0.5">{item.year}</span>
                   <p className="text-secondary text-sm leading-relaxed">{item.event}</p>
