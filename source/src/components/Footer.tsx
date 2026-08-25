@@ -141,7 +141,7 @@ export default function Footer() {
 
           <div className="mt-16 pt-8 border-t border-gridline flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="text-xs text-muted-foreground max-w-xl leading-relaxed">
-              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="text-cyan-300 hover:underline">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows &amp; Linux (no system Python required).
+              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="text-cyan-300 hover:underline">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows x64, Linux x64, and macOS arm64 (no system Python required).
             </div>
             
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-muted-foreground">
