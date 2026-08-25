@@ -109,15 +109,30 @@ export default function Home() {
       />
 
       {/* ===== HERO ===== */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="QECTOR hero">
         <video
-          src="/videos/hero-lattice.mp4"
-          autoPlay loop muted playsInline preload="auto" aria-hidden="true"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/images/og-banner.png"
+          aria-hidden="true"
+          tabIndex={-1}
+          disablePictureInPicture
+          // @ts-expect-error - vendor attribute for background video
+          controlsList="nodownload nofullscreen noremoteplayback"
           className="absolute inset-0 w-full h-full object-cover z-0"
-          style={{ filter: 'brightness(0.4) saturate(1.2)' }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-void/20 to-void z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent z-[1]" />
+          style={{ filter: 'brightness(0.42) saturate(1.15) contrast(1.05)' }}
+        >
+          <source src="/videos/hero-lattice.mp4" type="video/mp4" />
+          {/* Fallback for no-video agents: poster is shown */}
+        </video>
+        <noscript>
+          <img src="/images/og-banner.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.4)' }} />
+        </noscript>
+        <div className="absolute inset-0 bg-gradient-to-b from-void/55 via-void/25 to-void z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.04] to-transparent z-[1]" />
 
         <div className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-24 pb-20">
           <Link

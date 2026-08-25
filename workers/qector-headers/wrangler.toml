@@ -1,0 +1,8 @@
+name = "qector-headers"
+main = "src/index.js"
+compatibility_date = "2026-07-25"
+workers_dev = false
+
+routes = [
+  { pattern = "qector.store/*", zone_name = "qector.store" }
+]

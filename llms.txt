@@ -36,7 +36,6 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 - Workbench: https://qector.store/workbench
 - MCP Server: https://qector.store/mcp-server
 - Blog: https://qector.store/blog
-- Master AI Suite v2: https://qector.store/master-ai-suite
 - Pricing & licensing: https://qector.store/pricing
 - Enterprise / OEM licensing: https://qector.store/commercial
 - Install guide: https://qector.store/installer
