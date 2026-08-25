@@ -226,3 +226,45 @@ test("reconcile does not duplicate an event already in flight", async () => {
   assert.equal(messages.length, 0);
   assert.equal((await response.json()).results[0].error, "event is already being processed");
 });
+
+test("sends via Gmail when Gmail secrets are configured", async () => {
+  const { env, kv } = await fixture();
+  delete env.EMAIL;
+  env.GMAIL_CLIENT_ID = "test_client_id";
+  env.GMAIL_CLIENT_SECRET = "test_client_secret";
+  env.GMAIL_REFRESH_TOKEN = "test_refresh";
+  env.GMAIL_FROM_EMAIL = "QECTOR <admin@qector.store>";
+  const originalFetch = globalThis.fetch;
+  let tokenCalls = 0;
+  let sendCalls = 0;
+  globalThis.fetch = async (url, options) => {
+    if (String(url).includes("oauth2.googleapis.com")) {
+      tokenCalls += 1;
+      assert.equal(options.method, "POST");
+      return new Response(JSON.stringify({ access_token: "gmail_access_123", expires_in: 3600 }), { status: 200, headers: { "content-type": "application/json" } });
+    }
+    if (String(url).includes("gmail.googleapis.com")) {
+      sendCalls += 1;
+      const body = JSON.parse(options.body);
+      assert.ok(body.raw);
+      // raw is base64url of MIME; decode and check From header
+      const raw = Buffer.from(body.raw, "base64url").toString("utf8");
+      assert.ok(raw.includes("From: QECTOR <admin@qector.store>"));
+      return new Response(JSON.stringify({ id: `gmail_${sendCalls}` }), { status: 200, headers: { "content-type": "application/json" } });
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  };
+  try {
+    const response = await worker.fetch(await signedRequest(eventFor("cs_live_gmail"), env.STRIPE_WEBHOOK_SECRET), env);
+    assert.equal(response.status, 200);
+    assert.equal(tokenCalls, 1);
+    assert.equal(sendCalls, 2);
+    const record = JSON.parse(kv.values.get("lic:cs_live_gmail"));
+    assert.equal(record.license_email_provider, "gmail");
+    assert.equal(record.billing_email_provider, "gmail");
+    const health = await worker.fetch(new Request("https://qector.store/stripe/health"), env);
+    assert.equal((await health.json()).email_provider, "gmail");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});

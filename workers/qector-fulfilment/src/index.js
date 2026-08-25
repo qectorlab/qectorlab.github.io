@@ -20,6 +20,9 @@ const DEFAULT_FROM = "QECTOR <licenses@qector.store>";
 
 let cachedSigningKeyB64 = "";
 let cachedSigningKeyPromise = null;
+let cachedGmailAccessToken = "";
+let cachedGmailExpiry = 0;
+let cachedGmailPromise = null;
 
 export default {
   async fetch(request, env) {
@@ -471,9 +474,10 @@ async function sendWithRetry(message, deliveryKey, env) {
   for (const provider of providers) {
     for (let attempt = 1; attempt <= MAX_EMAIL_ATTEMPTS; attempt += 1) {
       try {
-        const result = provider === "cloudflare"
-          ? await sendViaCloudflareEmail(message, deliveryKey, env)
-          : await sendViaResend(message, deliveryKey, env);
+        let result;
+        if (provider === "gmail") result = await sendViaGmail(message, deliveryKey, env);
+        else if (provider === "cloudflare") result = await sendViaCloudflareEmail(message, deliveryKey, env);
+        else result = await sendViaResend(message, deliveryKey, env);
         return { ...result, provider, attempts: attempt };
       } catch (error) {
         lastError = error;
@@ -482,6 +486,98 @@ async function sendWithRetry(message, deliveryKey, env) {
     }
   }
   throw lastError || new Error("email provider failed");
+}
+
+async function sendViaGmail(message, deliveryKey, env) {
+  const accessToken = await getGmailAccessToken(env);
+  const raw = buildGmailRaw(message, deliveryKey, env);
+  const response = await fetchWithTimeout("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ raw }),
+  });
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`Gmail returned HTTP ${response.status} ${text.slice(0, 200)}`);
+  }
+  const body = await response.json();
+  return { message_id: body.id || null };
+}
+
+function buildGmailRaw(message, deliveryKey, env) {
+  const from = env.GMAIL_FROM_EMAIL || env.LICENSE_FROM_EMAIL || DEFAULT_FROM;
+  // Use the delivery key to make the MIME boundary deterministic for this message.
+  const boundary = `qector_${deliveryKey.replace(/[^a-zA-Z0-9]/g, "_")}`;
+  const headers = [
+    `From: ${from}`,
+    `To: ${message.to}`,
+    `Reply-To: ${SUPPORT_EMAIL}`,
+    `Subject: ${message.subject}`,
+    `MIME-Version: 1.0`,
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    `X-QECTOR-Delivery-Key: ${deliveryKey}`,
+  ].join("\r\n");
+  // MIME parts are base64-encoded so UTF-8 is safe even with Worker btoa.
+  const encodePart = (text) => {
+    const bytes = new TextEncoder().encode(text);
+    let binary = "";
+    for (const b of bytes) binary += String.fromCharCode(b);
+    return btoa(binary);
+  };
+  const body = [
+    `--${boundary}`,
+    `Content-Type: text/plain; charset="UTF-8"`,
+    `Content-Transfer-Encoding: base64`,
+    ``,
+    encodePart(message.text),
+    `--${boundary}`,
+    `Content-Type: text/html; charset="UTF-8"`,
+    `Content-Transfer-Encoding: base64`,
+    ``,
+    encodePart(message.html),
+    `--${boundary}--`,
+  ].join("\r\n");
+  const raw = `${headers}\r\n\r\n${body}`;
+  return b64url(new TextEncoder().encode(raw));
+}
+
+async function getGmailAccessToken(env) {
+  const now = Math.floor(Date.now() / 1000);
+  if (cachedGmailAccessToken && cachedGmailExpiry - 60 > now) return cachedGmailAccessToken;
+  if (cachedGmailPromise) return cachedGmailPromise;
+  if (!env.GMAIL_CLIENT_ID || !env.GMAIL_CLIENT_SECRET || !env.GMAIL_REFRESH_TOKEN) {
+    throw new Error("gmail provider not configured");
+  }
+  cachedGmailPromise = (async () => {
+    const params = new URLSearchParams({
+      client_id: env.GMAIL_CLIENT_ID,
+      client_secret: env.GMAIL_CLIENT_SECRET,
+      refresh_token: env.GMAIL_REFRESH_TOKEN,
+      grant_type: "refresh_token",
+    });
+    const response = await fetchWithTimeout("https://oauth2.googleapis.com/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    if (!response.ok) {
+      const text = await response.text().catch(() => "");
+      throw new Error(`Gmail token exchange failed HTTP ${response.status} ${text.slice(0, 200)}`);
+    }
+    const data = await response.json();
+    if (!data.access_token) throw new Error("Gmail token response missing access_token");
+    cachedGmailAccessToken = data.access_token;
+    cachedGmailExpiry = Math.floor(Date.now() / 1000) + Number(data.expires_in || 3600);
+    return cachedGmailAccessToken;
+  })();
+  try {
+    return await cachedGmailPromise;
+  } finally {
+    cachedGmailPromise = null;
+  }
 }
 
 async function sendViaCloudflareEmail(message, deliveryKey, env) {
@@ -525,6 +621,7 @@ function emailProvider(env) {
 
 function emailProviders(env) {
   const providers = [];
+  if (env.GMAIL_CLIENT_ID && env.GMAIL_CLIENT_SECRET && env.GMAIL_REFRESH_TOKEN) providers.push("gmail");
   if (env.EMAIL && typeof env.EMAIL.send === "function") providers.push("cloudflare");
   if (env.RESEND_API_KEY) providers.push("resend");
   return providers;

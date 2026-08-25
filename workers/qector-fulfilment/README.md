@@ -23,14 +23,13 @@ STRIPE_WEBHOOK_SECRET
 RECONCILE_TOKEN
 ```
 
-Configure one or both email providers:
+Configure one email provider (Gmail is preferred for `admin@qector.store`):
 
+- Gmail API (preferred, sends as `admin@qector.store`): create a Google Cloud OAuth 2.0 client (Desktop), enable the Gmail API, add `admin@qector.store` as a test user while the consent screen is in Testing, obtain a refresh token for `https://www.googleapis.com/auth/gmail.send`, then set Worker secrets `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN` and optionally `GMAIL_FROM_EMAIL` (defaults to `LICENSE_FROM_EMAIL`).
 - Cloudflare Email Service: onboard `qector.store`, then keep the `EMAIL` binding in `wrangler.toml`.
-- Resend: set the Worker secret `RESEND_API_KEY` if Cloudflare Email Service is unavailable.
+- Resend: set the Worker secret `RESEND_API_KEY` if neither Gmail nor Cloudflare is available.
 
-When both are configured, Cloudflare is tried first and Resend is used as the
-fallback. Before a domain is onboarded, Cloudflare may accept only verified
-account destinations, so Resend is required for arbitrary customer addresses.
+Provider order is Gmail → Cloudflare → Resend; the first configured provider is tried first and the next is used only if it fails. Before a domain is onboarded, Cloudflare may accept only verified account destinations, so Gmail or Resend is required for arbitrary customer addresses.
 
 `GET qector.store/stripe/health` is a non-cached operational check. It reports
 the configured provider names but never returns secret values. License tokens
