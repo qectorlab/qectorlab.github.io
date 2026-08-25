@@ -24,8 +24,7 @@ export default function Docs() {
 const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const docLinks = [
-    { title: 'OpenAI / Codex', desc: 'Local stdio MCP adapter for Codex and any MCP-compatible client', href: '/openai' },
-    { title: 'Claude Code Plugin', desc: '28 skills, 5 agents, and a 37-tool local stdio MCP server for Claude', href: '/claude-plugin' },
+    { title: 'Claude Code Plugin', desc: 'v1.0.6: 28 skills, 5 agents, four MCP servers, and explicit local tool profiles', href: '/claude-plugin' },
     { title: 'Workbench (Win / Linux / macOS)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.2 on all platforms', href: '/workbench' },
     { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 verified tools', href: '/mcp-server' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },

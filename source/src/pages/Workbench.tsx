@@ -45,7 +45,8 @@ export default function Workbench() {
   };
 
   // Decoder coverage against the qector_decoder_v3 backend.
-  // The v1.0.2 apps ship 17 decoder kinds (Zenodo 10.5281/zenodo.21941046).
+  // The v1.0.2 apps ship 17 named decoder kinds: 15 concrete configurations
+  // plus AutoDecoder and Auto Router orchestration entries.
   const decodersList = [
     { kind: 'union_find', type: 'Graphlike', desc: 'Fast approximate Union-Find decoding; higher LER than exact MWPM.' },
     { kind: 'fast_union_find', type: 'Graphlike', desc: 'Optimized Union-Find hot path; approximate.' },
@@ -132,21 +133,21 @@ export default function Workbench() {
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href={WIN.releaseUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan">
-              Windows download
+            <a href={WIN.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan">
+              Download Windows ZIP
             </a>
-            <a href={LINUX.releaseUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
-              Linux download
+            <a href={LINUX.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              Download Linux ZIP
             </a>
-            <a href={MACOS.releaseUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
-              macOS download
+            <a href={MACOS.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              Download macOS DMG
             </a>
             <Link to="/technical-reference" className="btn-outline">
               Technical Reference
             </Link>
           </div>
           <p className="text-muted-foreground text-xs mt-4">
-            Windows x64, Linux x64, and macOS arm64 (Apple silicon) releases are published at v1.0.2 with SHA-256 checksums in each release's notes.
+             Windows x64, Linux x64, and macOS arm64 (Apple silicon) releases are published at v1.0.2 with direct artifacts and SHA-256 checksums verified against each live release.
           </p>
         </div>
       </section>
@@ -157,7 +158,7 @@ export default function Workbench() {
           {/* Stats Grid */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: 'v1.0.2 ×3', label: 'Releases (Win / Linux / macOS)' },
+               { value: 'v1.0.2 ×3', label: 'Live releases (Win / Linux / macOS)' },
               { value: `${WIN.mcpTools}`, label: `MCP tools per ${WIN.label} release` },
               { value: '17', label: 'Backends per release' },
               { value: '10', label: 'Quantum Code Families' },
@@ -173,7 +174,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 0.5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
-              Nine workspaces are documented for the v1.0.2 releases:{' '}
+               Nine workspaces are documented for the live v1.0.2 releases:{' '}
               {modules.map((m, i) => (
                 <span key={m}>
                   <span className="text-primary font-medium">{m}</span>
@@ -205,13 +206,17 @@ export default function Workbench() {
                   Portable single executable. No installer, no admin rights, no internet connection.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Download <code className="text-cyan-300">QectorWorkbench-Portable.exe</code> and double-click.</li>
+                   <li>Download <code className="text-cyan-300">{WIN.artifact}</code>, extract it, then launch <code className="text-cyan-300">QectorWorkbench-Portable.exe</code>.</li>
                   <li>Headless MCP server: <code className="text-cyan-300">QectorWorkbench-Portable.exe --mcp</code></li>
-                  <li>Runtime data: <code className="text-cyan-300">%LOCALAPPDATA%\QectorWorkbench</code></li>
-                </ul>
-                <a href={WIN.releaseUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan text-sm inline-block">
-                  Windows release
-                </a>
+                   <li>Runtime data: <code className="text-cyan-300">%LOCALAPPDATA%\QectorWorkbench</code></li>
+                   <li>ZIP SHA-256: <code className="text-cyan-300 break-all">{WIN.artifactSha256}</code></li>
+                 </ul>
+                 <a href={WIN.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan text-sm inline-block">
+                   Download Windows ZIP
+                 </a>{' '}
+                 <a href={WIN.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline">
+                   Release notes
+                 </a>
               </div>
 
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
@@ -220,13 +225,17 @@ export default function Workbench() {
                   Published {LINUX.version} AppImage and Debian package with a bundled qector-decoder-v3 {LINUX.backendVersion} backend and {LINUX.mcpTools}-tool MCP server.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Download the <code className="text-cyan-300">x86_64.AppImage</code> from the release, chmod +x, and run.</li>
+                   <li>Download <code className="text-cyan-300">{LINUX.artifact}</code>, extract it, then run the portable binary or Debian package.</li>
                   <li>Headless MCP server: append <code className="text-cyan-300">--mcp</code></li>
-                  <li>Runtime data: <code className="text-cyan-300">~/.local/share/QectorWorkbench</code></li>
-                </ul>
-                <a href={LINUX.releaseUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
-                  Linux release
-                </a>
+                   <li>Runtime data: <code className="text-cyan-300">~/.local/share/QectorWorkbench</code></li>
+                   <li>ZIP SHA-256: <code className="text-cyan-300 break-all">{LINUX.artifactSha256}</code></li>
+                 </ul>
+                 <a href={LINUX.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
+                   Download Linux ZIP
+                 </a>{' '}
+                 <a href={LINUX.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline">
+                   Release notes
+                 </a>
               </div>
 
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
@@ -235,13 +244,16 @@ export default function Workbench() {
                   Published {MACOS.version} build for Apple silicon (M-series) with a bundled qector-decoder-v3 {MACOS.backendVersion} backend and {MACOS.mcpTools}-tool MCP server.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Download the macOS arm64 artifact from the release page.</li>
+                   <li>Download <code className="text-cyan-300">{MACOS.artifact}</code> from the live release.</li>
                   <li>First launch may require right-click → Open to bypass Gatekeeper.</li>
-                  <li>SHA-256 checksums are published with every artifact.</li>
-                </ul>
-                <a href={MACOS.releaseUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
-                  macOS release
-                </a>
+                   <li>DMG SHA-256: <code className="text-cyan-300 break-all">{MACOS.artifactSha256}</code></li>
+                 </ul>
+                 <a href={MACOS.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
+                   Download macOS DMG
+                 </a>{' '}
+                 <a href={MACOS.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline">
+                   Release notes
+                 </a>
               </div>
             </div>
 

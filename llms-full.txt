@@ -46,18 +46,19 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 
 ## QECTOR Workbench (desktop GUI + MCP server)
 
-- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families, MCP protocol 2024-11-05. Portable exe + SHA-256 checksums.
-- Linux v1.0.2 (x64): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
-- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. SHA-256 checksums published with each artifact.
+- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds (15 concrete configurations plus AutoDecoder and Auto Router), 10 code families, MCP protocol 2024-11-05. Artifact `QectorWorkbench-Windows-v1.0.2.zip`, SHA-256 `ebff4fb966125ba167eec8c732ab256a3e00ff8103d8f24d91d5c4cdd8c7ccc3`.
+- Linux v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds, 10 code families. Artifact `QectorWorkbench-Linux-v1.0.2.zip`, SHA-256 `0da9cdee7fb5b54bed81fd2ddbb8639e6642987b7ea0d1c00935db36e270a41e`.
+- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds, 10 code families. Artifact `QectorWorkbench-1.0.2-arm64.dmg`, SHA-256 `e22dd2b8558b30f3da3d9cd35f8a81f9ac53d9f1c72d4b65da6c150d5e3dd3c3`.
 - Windows workspaces: Code Explorer, Decoder Lab, Benchmark, Batch & Streaming, Hardware, Diagnostics, Documentation, Lab & Personal Info, plus Console. Linux adds History.
 - Data directory: `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides). Headless: `--mcp` (stdio JSON-RPC 2.0).
 - Releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases , https://github.com/qectorlab/qector-decoder-workbench-linux/releases and https://github.com/qectorlab/qector-decoder-workbench-macos/releases
 
-## QECTOR Claude Plugin (v1.0.2)
+## QECTOR Claude Plugin (v1.0.6)
 
 - 28 domain skills (qector-core, qector-math-foundations, qector-developer, qector-researcher, qector-hardware-engineer, qector-educator, qector-sysadmin flagship; 21 more covering architecture, rust-pyo3, licensing, MCP workflows, and validation).
-- 5 specialized agents: qec-developer.md, qec-researcher.md, qec-validator.md, qec-sysadmin.md, qec-hardware-engineer.md. 13 slash commands.
-- 37 local MCP tools: 8 library (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) + 29 benchmark (DEM pipelines, Sinter/Stim, Wilson confidence, theorem lookup, compatibility, workbench probing).
+- 5 specialized agents: qec-developer.md, qec-researcher.md, qec-validator.md, qec-sysadmin.md, qec-hardware-engineer.md. 11 slash commands.
+- Four local MCP servers: qector-library exposes 8 stable tools, qector-research exposes 29 provisional tools, qector-admin exposes 3 privileged tools, and qector-desktop-mcp provides the safe Desktop profile.
+- v1.0.6 moves launchers from bin/ to scripts/, adds a bundle ban guard for bin/ executables, and makes qec-setup fall back to native diagnostics in sandboxed or remote environments without claiming the full local script ran.
 - Validation gate: `python scripts/run_manual_math_validation.py`. Repository: https://github.com/GuillaumeLessard/qector-claude-plugin
 
 ## Official pages
@@ -90,6 +91,8 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 ## External records
 
 - DOI: https://doi.org/10.5281/zenodo.21941046
+- v1.0.0 user manual DOI: https://doi.org/10.5281/zenodo.21611214
+- Certification and proof bundle DOI: https://doi.org/10.5281/zenodo.22046403
 - PyPI: https://pypi.org/project/qector-decoder-v3/
 - GitHub: https://github.com/GuillaumeLessard/qector-decoder
 - Workbench Windows: https://github.com/qectorlab/qector-decoder-workbench-windows/releases

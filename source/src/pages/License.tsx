@@ -5,7 +5,7 @@ import NeuralReveal from '../components/NeuralReveal';
 export default function License() {
   return (
     <>
-      <SEO title="License · QECTOR" description="QECTOR Decoder v3 is licensed under PolyForm Noncommercial License 1.0.0. Commercial licenses available." />
+      <SEO title="License · QECTOR" description="QECTOR Decoder v3 license terms and certified v1.0.0 token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available." />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
@@ -77,7 +77,7 @@ export default function License() {
             <ul className="space-y-2 text-secondary text-sm">
               <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.</li>
               <li>• <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
-              <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
+              <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
               <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). No functionality is gated, degraded, or disabled.</li>
               <li>• No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.</li>
             </ul>
@@ -86,6 +86,18 @@ export default function License() {
               <Link to="/refund" className="text-cyan-300 hover:underline">Refund Policy</Link>. The $499 evaluation is the
               creditable way to evaluate before committing.
             </p>
+          </div>
+
+          <div className="card-surface border-cyan-300/25">
+            <h2 className="text-xl font-bold mb-4">Certified License Activation Procedure</h2>
+            <ol className="space-y-3 text-secondary text-sm leading-relaxed">
+              <li><strong className="text-primary">1. Verify the purchase.</strong> The fulfillment worker accepts only a Stripe-signed live checkout event and records the Stripe reference, customer email, tier, and token in the protected fulfillment ledger.</li>
+              <li><strong className="text-primary">2. Install the certified runtime.</strong> Use <code className="text-cyan-300 font-mono text-xs">python -m pip install --upgrade qector-decoder-v3==1.0.0</code> from the official PyPI project.</li>
+              <li><strong className="text-primary">3. Activate both v1.0.0 variables.</strong> Set <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to the same token from the license email. The first is used by the import notice; the second is used by the tier-aware runtime.</li>
+              <li><strong className="text-primary">4. Verify offline.</strong> Run <code className="text-cyan-300 font-mono text-xs">python -c "import qector_decoder_v3 as q; print(q._is_license_active())"</code>. It must print <code className="text-cyan-300">True</code>; no license server or phone-home is involved.</li>
+              <li><strong className="text-primary">5. Preserve the audit record.</strong> Keep the token and Stripe invoice or payment confirmation together. Never send the token in a URL, issue tracker, chat, or public repository.</li>
+            </ol>
+            <p className="text-secondary text-xs leading-relaxed mt-4">If either email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.</p>
           </div>
 
           <div className="card-surface">

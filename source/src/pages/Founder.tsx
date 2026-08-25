@@ -123,11 +123,12 @@ export default function Founder() {
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">
                 Guillaume Lessard
               </h1>
-              <p className="text-secondary text-lg leading-relaxed mb-5">
-                I build QECTOR. I am a professional software engineer with over two decades of experience. Today,
-                I write Rust decoders for quantum error correction, publish the evidence that backs every claim I make,
-                and ship everything independently from Longueuil, Québec.
-              </p>
+               <p className="text-secondary text-lg leading-relaxed mb-5">
+                 I am Guillaume Lessard, the founder of iD01t Productions and the creator of QECTOR. I design
+                 Rust/Python quantum error-correction systems, local MCP tooling, and release workflows where
+                 correctness claims are tied to declared workloads, reproducible artifacts, and public records.
+                 I build and support the platform independently from Longueuil, Québec.
+               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
                 <a href={ORCID} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
                   ORCID 0009-0000-3465-3753
@@ -179,9 +180,25 @@ export default function Founder() {
                 </a>
               ))}
             </div>
-          </div>
+           </div>
 
-          {/* BACKGROUND */}
+           <div className="card-surface border-cyan-300/25">
+             <h2 className="text-xl font-bold mb-3">Professional Profile</h2>
+             <p className="text-secondary text-sm leading-relaxed mb-4">
+               My work combines more than two decades of software engineering with focused quantum error-correction
+               research. QECTOR Decoder v3 is published as the stable <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3==1.0.0</code>
+               Rust/PyO3 package; its companion Claude Plugin is released at <code className="text-cyan-300 font-mono text-xs">v1.0.6</code>.
+               I publish the user manual, normative reference manual, and certification/proof material so identity,
+               software version, and evidence can be checked independently.
+             </p>
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+               <a href="https://doi.org/10.5281/zenodo.21611214" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">v1.0.0 user manual<br /><span className="font-mono">10.5281/zenodo.21611214</span></a>
+               <a href="https://doi.org/10.5281/zenodo.21941046" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Normative reference manual<br /><span className="font-mono">10.5281/zenodo.21941046</span></a>
+               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Certification and proof bundle<br /><span className="font-mono">10.5281/zenodo.22046403</span></a>
+             </div>
+           </div>
+
+           {/* BACKGROUND */}
           <div className="card-surface">
             <h2 className="text-2xl font-bold mb-4">Background</h2>
             <div className="space-y-4 text-secondary text-sm leading-relaxed">
@@ -196,13 +213,14 @@ export default function Founder() {
                 <a href="https://id01t.store/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">iD01t Productions</a>{' '}
                 in 2023. QECTOR serves as its dedicated QEC software division, delivering robust decoder pipelines for research and production environments.
               </p>
-              <p>
-                Quantum error correction is where that approach currently points. QECTOR Decoder v3 is a Rust core behind a
-                Python API implementing 15+ decoder configurations, with v1.0.0 as the first stable release (2026-08-06).
-                No universal benchmark figures are published on the site, because results depend on your hardware; the
-                qector bench harness ships in the package so you can measure on your own machines. Every claim is backed by a
-                verifiable artifact, because a claim without an artifact is just marketing.
-              </p>
+               <p>
+                 Quantum error correction is where that method currently points. QECTOR Decoder v3 is a Rust core
+                 behind a Python API implementing 15+ decoder configurations, with v1.0.0 as the first stable release
+                 (2026-08-06). The public contract separates mathematical correctness from machine-specific performance:
+                 every correction is checked against the declared syndrome relation, while local benchmark results carry
+                 their workload, environment, raw artifact, and hash. The qector Claude Plugin v1.0.6 extends the same
+                 evidence-first approach into local Claude Code and Claude Desktop workflows.
+               </p>
               <p className="text-primary italic border-l-2 border-cyan-300/40 pl-4">
                 We ship. Even tired. Even messy. Still shipping.
               </p>
@@ -214,10 +232,10 @@ export default function Founder() {
             <h2 className="text-2xl font-bold mb-5">What I've shipped</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { value: '15+', label: 'Decoder Configurations' },
-                { value: '10+', label: 'Supported Topologies' },
-                { value: '20+', label: 'Years Writing Software' },
-                { value: '2023', label: 'iD01t Productions Founded' },
+                 { value: '15+', label: 'Decoder Configurations' },
+                 { value: '10+', label: 'Supported Topologies' },
+                 { value: '20+', label: 'Years Writing Software' },
+                 { value: 'v1.0.6', label: 'Claude Plugin Release' },
               ].map((s) => (
                 <div key={s.label} className="card-surface text-center">
                   <div className="text-cyan-300 font-bold text-2xl mb-1">{s.value}</div>

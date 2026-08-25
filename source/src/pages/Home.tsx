@@ -66,7 +66,7 @@ export default function Home() {
     <>
       <SEO
         title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
-        description="QECTOR Decoder v3 - Rust-core Python library for quantum error correction with fifteen specialized backend families, a syndrome-faithful contract, and reproducible validation guidance."
+        description="QECTOR Decoder v3 - Rust-core Python library with 15 concrete decoder configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance."
       />
       <JsonLd
         data={{
@@ -75,7 +75,7 @@ export default function Home() {
             {
               '@type': 'SoftwareApplication',
               name: 'QECTOR Decoder v3',
-              description: 'Production-grade poly-algorithmic quantum error correction decoder for Python with exact MWPM and Belief-Matching capabilities.',
+              description: 'QECTOR Decoder v3 is the certified qector-decoder-v3 1.0.0 Rust/Python quantum error correction package with 15 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.',
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Linux, macOS, Windows',
               programmingLanguage: 'Python',
@@ -83,6 +83,9 @@ export default function Home() {
               downloadUrl: 'https://pypi.org/project/qector-decoder-v3/',
               softwareVersion: pypiVersion,
               author: { '@type': 'Person', name: 'Guillaume Lessard', url: 'https://github.com/GuillaumeLessard' },
+              maintainer: { '@type': 'Organization', name: 'iD01t Productions', url: 'https://id01t.store/' },
+              identifier: 'https://pypi.org/project/qector-decoder-v3/',
+              license: 'https://qector.store/license/',
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
             },
             {
@@ -90,9 +93,15 @@ export default function Home() {
               name: 'QECTOR',
               url: 'https://qector.store/',
               logo: 'https://qector.store/images/logo.png',
+              email: 'admin@qector.store',
+              founder: { '@type': 'Person', name: 'Guillaume Lessard', identifier: '0009-0000-3465-3753' },
+              address: { '@type': 'PostalAddress', addressLocality: 'Longueuil', addressRegion: 'QC', postalCode: 'J4K 3H7', addressCountry: 'CA' },
               sameAs: [
                 'https://github.com/GuillaumeLessard/qector-decoder',
                 'https://pypi.org/project/qector-decoder-v3/',
+                'https://github.com/GuillaumeLessard/qector-claude-plugin',
+                'https://orcid.org/0009-0000-3465-3753',
+                'https://id01t.store/',
               ],
             },
           ],
@@ -116,7 +125,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-xs text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} · First Stable Release · Changelog →</span>
+            <span>v{pypiVersion} · Certified First Stable Release · Changelog →</span>
           </Link>
 
           <h1
@@ -134,8 +143,9 @@ export default function Home() {
             className="text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-            15+ decoder configurations from exact MWPM, Belief-Matching and BP-OSD to GPU batch decoding.{' '}
-            <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
+             The v1.0.0 runtime ships 15 concrete decoder configurations, while Workbench v1.0.2 names 17 kinds in total:
+             those configurations plus AutoDecoder and Auto Router orchestration entries.{' '}
+             <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
              Local measurement tools are documented for declared workloads; this site publishes no universal performance figures.
              Claim boundaries and verification paths are published with the product documentation.
@@ -169,7 +179,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-            <CounterStat value="15" label="Backend Families" />
+             <CounterStat value="17" label="Workbench Kinds (15 + 2 routing)" />
             <CounterStat value="GF(2)" label="Faithfulness Contract" />
             <CounterStat value="CPU + GPU" label="Optional Execution Paths" />
             <CounterStat value="Open" label="Evidence Policy" />
@@ -188,7 +198,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== INTEGRATION ECOSYSTEM ===== */}
+       {/* ===== RELEASE ASSURANCE ===== */}
+       <section className="py-16 bg-surface/20 border-y border-gridline">
+         <div className="section-padding max-w-6xl mx-auto">
+           <div className="text-center mb-10">
+             <span className="inline-flex items-center gap-2 px-3 py-1 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-4">
+               Release Assurance
+             </span>
+             <h2 className="text-3xl md:text-4xl font-bold">A Clear Path From Code to Evidence</h2>
+             <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
+               The public release, validation contract, and commercial delivery path are explicit by design.
+             </p>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+             <div className="card-surface p-6 border-cyan-300/20">
+               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Certified Runtime</div>
+               <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 1.0.0</h3>
+               <p className="text-secondary text-sm leading-relaxed">The live PyPI release supports Python 3.9 through 3.13 with 15 binary wheels across Windows, Linux, and macOS.</p>
+             </div>
+             <div className="card-surface p-6 border-cyan-300/20">
+               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Evidence Contract</div>
+               <h3 className="text-lg font-bold text-primary mb-2">Correctness before speed</h3>
+               <p className="text-secondary text-sm leading-relaxed">Every correction is checked against H c = s (mod 2). Measurements stay workload-scoped, artifact-hashed, and separate from universal performance claims.</p>
+             </div>
+             <div className="card-surface p-6 border-gold-400/20">
+               <div className="text-gold-400 font-mono text-xs uppercase tracking-wider mb-3">Secure Delivery</div>
+               <h3 className="text-lg font-bold text-primary mb-2">Signed, traceable licensing</h3>
+               <p className="text-secondary text-sm leading-relaxed">Commercial fulfillment requires a live Stripe event, issues a v2 Ed25519 token, and records independent billing and license delivery states.</p>
+               <Link to="/license" className="inline-block text-gold-400 text-sm font-medium hover:underline mt-3">Read the certified procedure →</Link>
+             </div>
+           </div>
+           <div className="mt-8 card-surface p-6 border-cyan-300/20">
+             <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Certified Evidence Registry</div>
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+               <a href="https://doi.org/10.5281/zenodo.21941046" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-cyan-300 transition-colors">
+                 <span className="block text-primary font-semibold">Normative reference manual</span>
+                 <span className="font-mono text-xs">10.5281/zenodo.21941046</span>
+               </a>
+               <a href="https://doi.org/10.5281/zenodo.21611214" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-cyan-300 transition-colors">
+                 <span className="block text-primary font-semibold">v1.0.0 user manual</span>
+                 <span className="font-mono text-xs">10.5281/zenodo.21611214</span>
+               </a>
+               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-cyan-300 transition-colors">
+                 <span className="block text-primary font-semibold">Certification and proof bundle</span>
+                 <span className="font-mono text-xs">10.5281/zenodo.22046403</span>
+               </a>
+             </div>
+           </div>
+         </div>
+       </section>
+
+       {/* ===== INTEGRATION ECOSYSTEM ===== */}
       <section className="border-t border-b border-gridline/30 py-10 bg-void/80">
         <div className="section-padding">
           <div className="max-w-5xl mx-auto text-center">
@@ -254,22 +314,22 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Install',
-                desc: 'pip install qector-decoder-v3 into any Python 3.9+ environment alongside your existing Stim or PyMatching workflow.',
-                detail: 'pip install qector-decoder-v3',
+                 desc: 'Install the certified v1.0.0 wheel in a supported Python 3.9–3.13 environment alongside your existing Stim or PyMatching workflow.',
+                 detail: 'pip install qector-decoder-v3==1.0.0',
                 code: true,
               },
               {
                 step: '02',
                 title: 'Decode',
-                desc: 'Access 15+ Rust-accelerated decoder configurations through a unified Python API. Swap algorithms without changing your pipeline.',
+                 desc: 'Access 15 concrete Rust-accelerated decoder configurations through a unified Python API. Workbench also exposes AutoDecoder and Auto Router as two orchestration kinds, for 17 named kinds in total.',
                 detail: 'from qector_decoder_v3 import BlossomDecoder, BpOsdDecoder',
                 code: true,
               },
               {
                 step: '03',
                 title: 'Validate',
-                desc: 'Every claim is backed by SHA-256 sealed artifacts on GitHub. Run qector-doctor for a 15-check environment diagnostic on your own hardware.',
-                detail: 'reproducible artifacts · SHA-256 sealed',
+                 desc: 'Every claim is scoped to a declared workload and backed by SHA-256 sealed artifacts. Run qector-doctor before relying on optional paths and preserve the report with the result.',
+                 detail: 'evidence policy · SHA-256 sealed',
                 code: false,
               },
             ].map((step) => (
@@ -350,14 +410,14 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                  15+ Decoder Configs · Unified API
+                   17 Workbench Kinds · 15+ Concrete Configs
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Production-Grade Decoding Algorithms
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
-                  Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
-                  AutoDecoder, Hybrid, Predecoded, and two-stage, ambiguity-cluster and colour-code decoders, all accessible through a consistent Python API.
+                   Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
+                   Hybrid, Predecoded, two-stage, ambiguity-cluster, colour-code, space-time, and other concrete paths are exposed through a consistent Python API. Workbench adds the two orchestration kinds, AutoDecoder and Auto Router, to make 17 named kinds.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

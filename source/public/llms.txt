@@ -16,15 +16,16 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 ## QECTOR Workbench (desktop GUI + MCP server)
 
-- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 decoder kinds, 10 code families. Portable exe + SHA-256 checksums.
-- Linux v1.0.2 (x64): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. AppImage + Debian packages.
-- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, 1.0.0 backend, 17 decoder kinds, 10 code families. SHA-256 checksums published with each artifact.
+- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds (15 concrete + AutoDecoder + Auto Router), 10 code families. Artifact `QectorWorkbench-Windows-v1.0.2.zip`, SHA-256 `ebff4fb966125ba167eec8c732ab256a3e00ff8103d8f24d91d5c4cdd8c7ccc3`.
+- Linux v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds, 10 code families. Artifact `QectorWorkbench-Linux-v1.0.2.zip`, SHA-256 `0da9cdee7fb5b54bed81fd2ddbb8639e6642987b7ea0d1c00935db36e270a41e`.
+- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds, 10 code families. Artifact `QectorWorkbench-1.0.2-arm64.dmg`, SHA-256 `e22dd2b8558b30f3da3d9cd35f8a81f9ac53d9f1c72d4b65da6c150d5e3dd3c3`.
 - MCP protocol 2024-11-05 over stdio JSON-RPC 2.0 (`--mcp` headless mode); data directory `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides).
 
-## QECTOR Claude Plugin (v1.0.2)
+## QECTOR Claude Plugin (v1.0.6)
 
-- Claude Code / Claude Desktop plugin: 28 domain skills, 5 specialized agents (qec-developer, qec-researcher, qec-validator, qec-sysadmin, qec-hardware-engineer), 13 slash commands.
-- 37 local MCP tools: 8 library (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) + 29 benchmark.
+- Claude Code / Claude Desktop plugin v1.0.6: 28 domain skills, 5 specialized agents (qec-developer, qec-researcher, qec-validator, qec-sysadmin, qec-hardware-engineer), 11 slash commands.
+- Four local MCP servers: qector-library (8 stable tools), qector-research (29 provisional tools), qector-admin (3 privileged tools), and qector-desktop-mcp (safe Desktop profile).
+- v1.0.6 moves launchers from bin/ to scripts/ for marketplace compliance and makes qec-setup work in sandboxed or remote environments with an honest native-diagnostics fallback.
 - Zero-egress stdio architecture: circuits, parity matrices, and syndromes never leave the machine.
 - Install: `claude plugin marketplace add GuillaumeLessard/qector-claude-plugin` then `claude plugin install qector@qector-tools`.
 
@@ -32,7 +33,6 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 - Website: https://qector.store/
 - Claude Code Plugin: https://qector.store/claude-plugin
-- OpenAI / Codex adapter: https://qector.store/openai
 - Workbench: https://qector.store/workbench
 - MCP Server: https://qector.store/mcp-server
 - Blog: https://qector.store/blog
@@ -64,6 +64,8 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 ## External records
 
 - DOI record (normative manual): https://doi.org/10.5281/zenodo.21941046
+- DOI record (v1.0.0 user manual): https://doi.org/10.5281/zenodo.21611214
+- DOI record (certification and proof bundle): https://doi.org/10.5281/zenodo.22046403
 - Zenodo evidence registry: https://qector.store/evidence
 - PyPI package: https://pypi.org/project/qector-decoder-v3/
 - Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder

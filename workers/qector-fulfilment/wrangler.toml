@@ -1,0 +1,25 @@
+name = "qector-fulfilment"
+main = "src/index.js"
+compatibility_date = "2026-07-25"
+workers_dev = false
+
+routes = [
+  { pattern = "qector.store/stripe/webhook", zone_name = "qector.store" },
+  { pattern = "qector.store/stripe/reconcile", zone_name = "qector.store" }
+]
+
+[vars]
+LICENSE_FROM_EMAIL = "QECTOR <licenses@qector.store>"
+LICENSE_TOKEN_VERSION = "v2"
+STRIPE_LIVEMODE = "true"
+
+[[kv_namespaces]]
+binding = "LICENSES"
+id = "046bed4b69c04304b1fd273da0fb96da"
+
+# Cloudflare Email Service is preferred when the account has an onboarded
+# sending domain. RESEND_API_KEY remains a supported fallback for accounts
+# that use Resend instead.
+[[send_email]]
+name = "EMAIL"
+remote = true

@@ -169,7 +169,6 @@ const BENCH_TOOLS = [
   'code_family_info',
   'code_logicals_inspect',
   'compat_report',
-  'configure_claude_desktop',
   'decode_faithfulness_check',
   'dem_collapse_parallel',
   'dem_inspect',
@@ -185,12 +184,19 @@ const BENCH_TOOLS = [
   'sinter_decoder_list',
   'sinter_task_template',
   'stim_circuit_probe',
-  'system_setup',
   'theorem_lookup',
   'wilson_ci',
   'wilson_table',
-  'workbench_probe',
   'workload_hash',
+  'get_capability_matrix',
+  'get_evidence_policy',
+  'get_runtime_provenance',
+];
+
+const ADMIN_TOOLS = [
+  'system_setup',
+  'configure_claude_desktop',
+  'workbench_probe',
 ];
 
 export default function ClaudePlugin() {
@@ -207,7 +213,7 @@ export default function ClaudePlugin() {
     <>
       <SEO
         title="QECTOR Claude Plugin · Quantum Error Correction for Claude Code"
-        description="Official QECTOR plugin for Claude Code and Claude Desktop v1.0.2. 28 domain skills, 5 specialized agents, 37 local MCP tools (8 library + 29 benchmark), and zero-egress quantum decoding."
+        description="Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local zero-egress decoding."
       />
       <JsonLd
         data={{
@@ -215,10 +221,10 @@ export default function ClaudePlugin() {
           '@type': 'SoftwareApplication',
           name: 'QECTOR Claude Plugin',
           description:
-            'Official QECTOR plugin for Claude Code and Claude Desktop. 28 domain skills, 5 specialized agents, 37 local MCP tools (8 library + 29 benchmark), and zero-egress quantum decoding.',
+            'Official QECTOR plugin v1.0.6 for Claude Code and Claude Desktop. 28 skills, 5 agents, four MCP servers, 8 stable library tools, 29 opt-in research tools, and 3 opt-in admin tools.',
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Linux, macOS, Windows',
-          softwareVersion: '1.0.2',
+          softwareVersion: '1.0.6',
           author: {
             '@type': 'Person',
             name: 'Guillaume Lessard',
@@ -240,7 +246,7 @@ export default function ClaudePlugin() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono font-medium mb-6 backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>ANTHROPIC CLAUDE CODE & DESKTOP PLUGIN · v1.0.2</span>
+             <span>ANTHROPIC CLAUDE CODE & DESKTOP PLUGIN · v1.0.6</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto leading-[1.1]">
@@ -248,10 +254,11 @@ export default function ClaudePlugin() {
           </h1>
 
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
-            Empower Claude with local, production-grade Quantum Error Correction engineering.
-            Features <span className="text-cyan-300 font-semibold">28 domain skills</span>,{' '}
-            <span className="text-cyan-300 font-semibold">5 specialized agents</span>,{' '}
-            <span className="text-cyan-300 font-semibold">37 MCP tools</span> (8 library + 29 benchmark), and full zero-egress data isolation.
+             Empower Claude with local, production-grade Quantum Error Correction engineering.
+             Release v1.0.6 adds marketplace compliance hardening and environment-agnostic setup. It includes{' '}
+             <span className="text-cyan-300 font-semibold">28 domain skills</span>,{' '}
+             <span className="text-cyan-300 font-semibold">5 specialized agents</span>,{' '}
+             <span className="text-cyan-300 font-semibold">8 stable library tools</span>, 29 opt-in research tools, and 3 opt-in admin tools across four MCP servers. The default configuration remains local stdio with zero egress.
           </p>
 
           {/* Quick Install Box */}
@@ -342,7 +349,7 @@ export default function ClaudePlugin() {
         </div>
       </section>
 
-      {/* 7 Strict-Math Skills */}
+       {/* 7 Flagship Skills */}
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-800/40 text-cyan-300 text-xs font-mono font-medium mb-3">
@@ -353,7 +360,7 @@ export default function ClaudePlugin() {
             28 Grounded QEC Skills
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-            Each skill encodes verified domain rules and strict-math obligations to prevent AI hallucination and ground every interaction in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in the plugin.
+             Each skill encodes verified domain rules and strict-math obligations to prevent AI hallucination and ground every interaction in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in v1.0.6.
           </p>
         </div>
 
@@ -431,7 +438,7 @@ export default function ClaudePlugin() {
         </div>
       </section>
 
-      {/* 8 MCP Tools Table */}
+       {/* MCP Tool Surfaces */}
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-800/40 text-cyan-300 text-xs font-mono font-medium mb-3">
@@ -439,12 +446,14 @@ export default function ClaudePlugin() {
             <span>MCP SERVER TOOL SURFACE</span>
           </div>
           <h2 className="text-3xl font-extrabold text-slate-100 tracking-tight">
-            37 Local MCP Tools
+             Four Local MCP Servers
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-            Two local JSON-RPC 2.0 stdio servers running directly against the PyO3 Rust decoder core:
-            <code className="text-cyan-300 font-mono"> qector-library </code> (8 tools, table below) and
-            <code className="text-cyan-300 font-mono"> qector-bench </code> (29 tools, chip list below).
+             The v1.0.6 release separates local JSON-RPC 2.0 stdio capabilities by risk and purpose:
+             <code className="text-cyan-300 font-mono"> qector-library </code> (8 stable tools),
+             <code className="text-cyan-300 font-mono"> qector-research </code> (29 provisional tools),
+             <code className="text-cyan-300 font-mono"> qector-admin </code> (3 explicitly enabled tools), and
+             <code className="text-cyan-300 font-mono"> qector-desktop-mcp </code> (the safe Desktop profile).
           </p>
         </div>
 
@@ -472,16 +481,28 @@ export default function ClaudePlugin() {
         </div>
 
         <div className="mt-6">
-          <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-bench server · 29 tools</h3>
+           <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-research server · {BENCH_TOOLS.length} provisional tools</h3>
           <div className="flex flex-wrap gap-2">
             {BENCH_TOOLS.map((t) => (
               <span key={t} className="font-mono text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
                 {t}
               </span>
             ))}
-          </div>
-        </div>
-      </section>
+           </div>
+         </div>
+
+         <div className="mt-6">
+           <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-admin server · {ADMIN_TOOLS.length} privileged tools</h3>
+           <p className="text-xs text-slate-400 mb-3">Disabled by default. Requires <code className="text-cyan-300 font-mono">QECTOR_ADMIN_ENABLED=1</code> and <code className="text-cyan-300 font-mono">confirm=true</code> for every administrative call.</p>
+           <div className="flex flex-wrap gap-2">
+             {ADMIN_TOOLS.map((tool) => (
+               <span key={tool} className="font-mono text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-gold-300">
+                 {tool}
+               </span>
+             ))}
+           </div>
+         </div>
+       </section>
 
       {/* Installation & Configuration */}
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
@@ -490,7 +511,7 @@ export default function ClaudePlugin() {
             Installation & Setup
           </h2>
           <p className="text-slate-400 text-sm mt-2">
-            Configure QECTOR Claude Plugin for Claude Code or Claude Desktop in seconds.
+             Configure QECTOR Claude Plugin v1.0.6 for Claude Code or Claude Desktop in seconds.
           </p>
         </div>
 
@@ -564,13 +585,13 @@ export default function ClaudePlugin() {
             </div>
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://github.com/GuillaumeLessard/qector-claude-plugin/releases"
+                 href="https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v1.0.6"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-xs font-mono transition-all inline-flex items-center gap-2 shadow-lg shadow-cyan-400/20"
               >
                 <Download className="w-4 h-4" />
-                <span>Releases & Checksums</span>
+                 <span>v1.0.6 Release & Checksums</span>
               </a>
               <Link
                 to="/docs"

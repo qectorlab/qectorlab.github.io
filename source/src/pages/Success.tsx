@@ -65,15 +65,17 @@ export default function Success() {
               </li>
               <li>
                 <strong className="text-primary">2. Activate it.</strong> Set the token as
-                an environment variable:
+                both v1.0.0 license environment variables:
                 <div className="mt-2 p-4 bg-void rounded-xl">
                   <code className="text-cyan-300 text-sm break-all">
                     export QECTOR_LICENSE="&lt;your-token&gt;"
+                    <br />
+                    export QECTOR_LICENSE_KEY="&lt;your-token&gt;"
                   </code>
                 </div>
                 <span className="block mt-2">
                   Windows PowerShell:{' '}
-                  <code className="text-cyan-300">$env:QECTOR_LICENSE = "&lt;your-token&gt;"</code>
+                  <code className="text-cyan-300">$env:QECTOR_LICENSE = "&lt;your-token&gt;"; $env:QECTOR_LICENSE_KEY = "&lt;your-token&gt;"</code>
                 </span>
               </li>
               <li>

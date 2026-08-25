@@ -369,7 +369,7 @@ print("Syndrome-faithful correction")`}
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Platforms</span><span className="text-primary">Linux x86_64 (manylinux), Windows x64, macOS arm64</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">License</span><span className="text-primary">Source-available (Free academic / non-commercial)</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Startup Notice</span><span className="text-primary font-mono">Suppressed with QECTOR_SILENT=1</span></div>
-                <div className="p-2.5 flex justify-between"><span className="text-muted-foreground">Licence Env</span><span className="text-primary font-mono">QECTOR_LICENSE (Ed25519 token)</span></div>
+                <div className="p-2.5 flex justify-between"><span className="text-muted-foreground">Licence Env</span><span className="text-primary font-mono">QECTOR_LICENSE + QECTOR_LICENSE_KEY (Ed25519 token)</span></div>
               </div>
             </div>
 

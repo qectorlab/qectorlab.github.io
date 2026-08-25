@@ -168,7 +168,7 @@ export default function Pricing() {
           <div className="mt-8 text-center">
             <p className="text-sm text-secondary">
               Prefer to own it outright? <strong className="text-cyan-300">Solo / Indie Perpetual is $3,299 one-time.</strong>{' '}
-              <a href="https://buy.stripe.com/3cI14p77Xdcm0xk2NAeUU0e" className="text-cyan-400 hover:underline" target="_blank" rel="noopener noreferrer">Buy perpetual license</a>
+               <Link to="/contact" className="text-cyan-400 hover:underline">Contact sales to activate</Link>
             </p>
           </div>
         </div>
@@ -197,8 +197,9 @@ export default function Pricing() {
               Setting your license token simply disables the non-commercial usage notice.
             </p>
             <pre className="bg-void/50 border border-gridline rounded-xl p-4 text-xs font-mono text-cyan-300 overflow-x-auto mb-6">
-{`# Commercial use: activate with the Ed25519 token
-export QECTOR_LICENSE="<your-token>"
+ {`# Commercial use: activate with the Ed25519 token
+ export QECTOR_LICENSE="<your-token>"
+ export QECTOR_LICENSE_KEY="<your-token>"
 
 # Optional: suppress the licensing notice in CI logs
 export QECTOR_SILENT=1`}
