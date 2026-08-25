@@ -18,6 +18,24 @@ const TIER_DURATION_DAYS = Object.freeze({
 const SUPPORT_EMAIL = "admin@qector.store";
 const DEFAULT_FROM = "QECTOR <licenses@qector.store>";
 
+const API_SECURITY_HEADERS = {
+  "cache-control": "no-store",
+  "content-security-policy": "default-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+  "cross-origin-opener-policy": "same-origin",
+  "cross-origin-resource-policy": "same-origin",
+  "origin-agent-cluster": "?1",
+  "permissions-policy": "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), document-domain=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), xr-spatial-tracking=()",
+  "referrer-policy": "no-referrer",
+  "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+  "x-content-type-options": "nosniff",
+  "x-dns-prefetch-control": "off",
+  "x-download-options": "noopen",
+  "x-frame-options": "DENY",
+  "x-permitted-cross-domain-policies": "none",
+  "x-robots-tag": "noindex, nofollow, noarchive",
+  "x-xss-protection": "1; mode=block",
+};
+
 let cachedSigningKeyB64 = "";
 let cachedSigningKeyPromise = null;
 let cachedGmailAccessToken = "";
@@ -36,8 +54,8 @@ export default {
       return handleReconcile(request, env);
     }
 
-    if (url.pathname === "/stripe/health" && request.method === "GET") {
-      return handleHealth(env);
+    if (url.pathname === "/stripe/health" && (request.method === "GET" || request.method === "HEAD")) {
+      return handleHealth(env, request.method === "HEAD");
     }
 
     return json({ error: "not found" }, 404);
@@ -121,13 +139,13 @@ async function handleReconcile(request, env) {
   return json({ ok, results }, ok ? 200 : 502);
 }
 
-function handleHealth(env) {
+function handleHealth(env, head = false) {
   return json({
     ok: true,
     service: "qector-fulfilment",
     email_provider: emailProvider(env),
     live_mode: env.STRIPE_LIVEMODE !== "false",
-  });
+  }, 200, head);
 }
 
 async function handleWebhook(request, env) {
@@ -799,13 +817,10 @@ function timingSafeEqual(left, right) {
   return difference === 0;
 }
 
-function json(value, status = 200) {
-  return new Response(JSON.stringify(value), {
+function json(value, status = 200, head = false) {
+  return new Response(head ? null : JSON.stringify(value), {
     status,
-    headers: {
-      "cache-control": "no-store",
-      "content-type": "application/json; charset=utf-8",
-    },
+    headers: { ...API_SECURITY_HEADERS, "content-type": "application/json; charset=utf-8" },
   });
 }
 

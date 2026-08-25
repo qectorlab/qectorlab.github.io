@@ -1,0 +1,51 @@
+name: Production Security Audit
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  production:
+    name: Live security posture
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit live site
+        run: node scripts/security-audit.mjs
+
+  dependencies:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit site dependencies
+        working-directory: source
+        run: npm audit --omit=dev --audit-level=high
+      - name: Test fulfillment Worker
+        working-directory: workers/qector-fulfilment
+        run: npm test
+      - name: Test security-header Worker
+        working-directory: workers/qector-headers
+        run: npm test

@@ -13,8 +13,11 @@ const SECURITY_HEADERS = {
   "X-Frame-Options": "DENY",
   "X-Content-Type-Options": "nosniff",
   "X-XSS-Protection": "1; mode=block",
+  "X-DNS-Prefetch-Control": "off",
+  "X-Download-Options": "noopen",
+  "Origin-Agent-Cluster": "?1",
   "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(self), document-domain=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(self), usb=(), xr-spatial-tracking=()",
+  "Permissions-Policy": "accelerometer=(), ambient-light-sensor=(), autoplay=(self), camera=(), clipboard-read=(), clipboard-write=(self), document-domain=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(self), usb=(), xr-spatial-tracking=()",
   "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
   "Cross-Origin-Resource-Policy": "same-origin",
   "X-Permitted-Cross-Domain-Policies": "none",
@@ -22,6 +25,9 @@ const SECURITY_HEADERS = {
     "default-src 'self'",
     "base-uri 'self'",
     "object-src 'none'",
+    "upgrade-insecure-requests",
+    "manifest-src 'self'",
+    "worker-src 'self' blob:",
     "script-src 'self' 'sha256-mDfvlEEbZ+pOz33Aj7pRtcA8xcbmfe1wOO1NaObDVDs=' https://js.stripe.com https://assets.calendly.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com",
     "img-src 'self' data: https://files.stripe.com",
@@ -34,12 +40,14 @@ const SECURITY_HEADERS = {
   ].join("; "),
 };
 
-// Do not override these if origin already set them correctly (e.g. Cache-Control for assets).
 const OVERWRITE = new Set([
   "Strict-Transport-Security",
   "X-Frame-Options",
   "X-Content-Type-Options",
   "X-XSS-Protection",
+  "X-DNS-Prefetch-Control",
+  "X-Download-Options",
+  "Origin-Agent-Cluster",
   "Referrer-Policy",
   "Permissions-Policy",
   "Cross-Origin-Opener-Policy",
@@ -48,8 +56,16 @@ const OVERWRITE = new Set([
   "Content-Security-Policy",
 ]);
 
+const CORS_HEADERS = [
+  "access-control-allow-credentials",
+  "access-control-allow-headers",
+  "access-control-allow-methods",
+  "access-control-allow-origin",
+  "access-control-expose-headers",
+];
+
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request) {
     // Let /stripe/* be handled by qector-fulfilment — this Worker is a fallback for /*
     // If the request was already matched to the fulfilment Worker, this fetch won't be called.
     // For safety, passthrough any /stripe/* that reaches here (should not happen).
@@ -58,15 +74,26 @@ export default {
       return fetch(request);
     }
 
-    let response = await fetch(request);
-    // Clone response to mutate headers
-    response = new Response(response.body, response);
+    const response = await fetch(request);
+    const headers = new Headers(response.headers);
     for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
-      if (OVERWRITE.has(name) || !response.headers.has(name)) {
-        response.headers.set(name, value);
-      }
+      if (OVERWRITE.has(name) || !headers.has(name)) headers.set(name, value);
     }
-    // Ensure nosniff etc. are not stripped by GitHub Pages cache
-    return response;
+    for (const name of CORS_HEADERS) headers.delete(name);
+
+    if (url.pathname === "/success" || url.pathname.startsWith("/success/")) {
+      headers.set("Cache-Control", "no-store");
+      headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    } else if (url.pathname.startsWith("/assets/") || url.pathname.startsWith("/videos/")) {
+      headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    } else {
+      headers.set("Cache-Control", "public, max-age=0, must-revalidate");
+    }
+
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
   },
 };
