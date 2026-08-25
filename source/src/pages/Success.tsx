@@ -9,7 +9,7 @@ import NeuralReveal from '../components/NeuralReveal';
  *   success_url = https://www.qector.store/success?session_id={CHECKOUT_SESSION_ID}
  * Before this page existed the route 404'd, so every completed payment landed on
  * the NotFound page. The session id is surfaced as a support reference and as the
- * lookup key for the fulfilment worker's /license endpoint.
+ * support reference for the fulfilment worker's protected ledger.
  */
 export default function Success() {
   const [params] = useSearchParams();

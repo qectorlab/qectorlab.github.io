@@ -40,6 +40,7 @@ async function fixture() {
     ).toString("base64"),
     STRIPE_WEBHOOK_SECRET: "whsec_test_secret",
     STRIPE_LIVEMODE: "true",
+    RECONCILE_TOKEN: "reconcile-test-token",
     LICENSE_TOKEN_VERSION: "v2",
     LICENSE_FROM_EMAIL: "QECTOR <licenses@example.test>",
     EMAIL: {
@@ -176,4 +177,52 @@ test("rejects unsigned or stale webhook requests", async () => {
     body: JSON.stringify(eventFor("cs_unsigned")),
   }), env);
   assert.equal(unsigned.status, 400);
+});
+
+test("serves a non-cached operational health check", async () => {
+  const { env } = await fixture();
+  const response = await worker.fetch(new Request("https://qector.store/stripe/health"), env);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("cache-control"), "no-store");
+  assert.deepEqual(await response.json(), {
+    ok: true,
+    service: "qector-fulfilment",
+    email_provider: "cloudflare",
+    live_mode: true,
+  });
+});
+
+test("reconcile processes a live event without a Stripe signature", async () => {
+  const { env, messages } = await fixture();
+  const event = eventFor("cs_live_reconcile");
+  const response = await worker.fetch(new Request("https://qector.store/stripe/reconcile", {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${env.RECONCILE_TOKEN}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ events: [event] }),
+  }), env);
+  assert.equal(response.status, 200);
+  assert.equal(messages.length, 2);
+});
+
+test("reconcile does not duplicate an event already in flight", async () => {
+  const { env, kv, messages } = await fixture();
+  const event = eventFor("cs_live_busy");
+  await kv.put(`evt:${event.id}`, JSON.stringify({
+    status: "processing",
+    updated_at: new Date().toISOString(),
+  }));
+  const response = await worker.fetch(new Request("https://qector.store/stripe/reconcile", {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${env.RECONCILE_TOKEN}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ events: [event] }),
+  }), env);
+  assert.equal(response.status, 502);
+  assert.equal(messages.length, 0);
+  assert.equal((await response.json()).results[0].error, "event is already being processed");
 });

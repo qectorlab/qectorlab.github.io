@@ -127,7 +127,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            Each v1.0.2 release includes 17 decoder backends, 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
+            Each v1.0.2 release names 17 kinds: 15 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
             Ships as a portable executable: each one
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
@@ -160,7 +160,7 @@ export default function Workbench() {
             {[
                { value: 'v1.0.2 ×3', label: 'Live releases (Win / Linux / macOS)' },
               { value: `${WIN.mcpTools}`, label: `MCP tools per ${WIN.label} release` },
-              { value: '17', label: 'Backends per release' },
+              { value: '17', label: 'Named kinds (15 + 2 routing)' },
               { value: '10', label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
@@ -269,7 +269,7 @@ export default function Workbench() {
               <div>
                 <h2 className="text-2xl font-bold">Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  All 17 decoder backends exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
+                  All 17 named kinds (15 concrete configurations plus AutoDecoder and Auto Router) are exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -278,7 +278,7 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-                   Each v1.0.2 release (Windows, Linux, macOS) declares <strong className="text-secondary">17 decoder backends</strong> against
+                   Each v1.0.2 release (Windows, Linux, macOS) declares <strong className="text-secondary">17 named kinds: 15 concrete configurations plus 2 orchestration entries</strong> against
                    its bundled qector_decoder_v3 {WIN.backendVersion} backend. Consult each release's
                    included manuals for platform-specific coverage.
              </p>

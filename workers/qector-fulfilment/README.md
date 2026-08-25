@@ -1,6 +1,7 @@
 # QECTOR Fulfilment Worker
 
-This Worker owns the live `qector.store/stripe/webhook` endpoint.
+This Worker owns the live `qector.store/stripe/webhook` endpoint and the
+protected reconciliation endpoint at `qector.store/stripe/reconcile`.
 
 ## Delivery contract
 
@@ -19,6 +20,7 @@ Set these on the Worker without committing values:
 ```text
 QECTOR_LICENSE_PRIVATE_KEY_B64
 STRIPE_WEBHOOK_SECRET
+RECONCILE_TOKEN
 ```
 
 Configure one or both email providers:
@@ -29,6 +31,11 @@ Configure one or both email providers:
 When both are configured, Cloudflare is tried first and Resend is used as the
 fallback. Before a domain is onboarded, Cloudflare may accept only verified
 account destinations, so Resend is required for arbitrary customer addresses.
+
+`GET qector.store/stripe/health` is a non-cached operational check. It reports
+the configured provider names but never returns secret values. License tokens
+are not exposed through a public GET lookup; delivery recovery uses the
+protected reconciliation endpoint and support workflow.
 
 Deploy from this directory:
 

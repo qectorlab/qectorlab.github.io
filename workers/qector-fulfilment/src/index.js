@@ -33,17 +33,8 @@ export default {
       return handleReconcile(request, env);
     }
 
-    if (url.pathname === "/license" && request.method === "GET") {
-      return handleLicenseLookup(url, env);
-    }
-
-    if (url.pathname === "/health" && request.method === "GET") {
-      return json({
-        ok: true,
-        service: "qector-fulfilment",
-        email_provider: emailProvider(env),
-        live_mode: env.STRIPE_LIVEMODE !== "false",
-      });
+    if (url.pathname === "/stripe/health" && request.method === "GET") {
+      return handleHealth(env);
     }
 
     return json({ error: "not found" }, 404);
@@ -85,6 +76,13 @@ async function handleReconcile(request, env) {
       results.push({ ok: true, duplicate: true, event_id: event.id });
       continue;
     }
+    if (previous?.status === "processing") {
+      const age = Date.now() - Date.parse(previous.updated_at || "");
+      if (Number.isFinite(age) && age >= 0 && age < 5 * 60 * 1000) {
+        results.push({ ok: false, event_id: event.id, error: "event is already being processed" });
+        continue;
+      }
+    }
 
     await writeJson(env, eventKey, {
       status: "processing",
@@ -118,6 +116,15 @@ async function handleReconcile(request, env) {
 
   const ok = results.every((result) => result.ok);
   return json({ ok, results }, ok ? 200 : 502);
+}
+
+function handleHealth(env) {
+  return json({
+    ok: true,
+    service: "qector-fulfilment",
+    email_provider: emailProvider(env),
+    live_mode: env.STRIPE_LIVEMODE !== "false",
+  });
 }
 
 async function handleWebhook(request, env) {
@@ -523,17 +530,6 @@ function emailProviders(env) {
   return providers;
 }
 
-async function handleLicenseLookup(url, env) {
-  const sessionId = url.searchParams.get("session_id") || "";
-  const email = normalizeEmailOrEmpty(url.searchParams.get("email"));
-  if (!sessionId || !email) return json({ error: "session_id and email required" }, 400);
-
-  const record = await readJson(env, `lic:${sessionId}`);
-  if (!record || record.email !== email) return json({ error: "not found" }, 404);
-  if (await readJson(env, `revoked:${sessionId}`)) return json({ error: "license revoked" }, 410);
-  return json({ receipt_id: record.receipt_id, tier: record.tier, license_token: record.token });
-}
-
 async function verifyStripeSignature(payload, header, secret) {
   const values = parseSignatureHeader(header);
   const timestamp = Number(values.t);
@@ -620,14 +616,6 @@ function normalizeEmail(value) {
     throw new Error("customer email is missing or invalid");
   }
   return email;
-}
-
-function normalizeEmailOrEmpty(value) {
-  try {
-    return normalizeEmail(value);
-  } catch {
-    return "";
-  }
 }
 
 async function readJson(env, key) {
@@ -717,7 +705,10 @@ function timingSafeEqual(left, right) {
 function json(value, status = 200) {
   return new Response(JSON.stringify(value), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8" },
+    headers: {
+      "cache-control": "no-store",
+      "content-type": "application/json; charset=utf-8",
+    },
   });
 }
 

@@ -5,7 +5,8 @@ workers_dev = false
 
 routes = [
   { pattern = "qector.store/stripe/webhook", zone_name = "qector.store" },
-  { pattern = "qector.store/stripe/reconcile", zone_name = "qector.store" }
+  { pattern = "qector.store/stripe/reconcile", zone_name = "qector.store" },
+  { pattern = "qector.store/stripe/health", zone_name = "qector.store" }
 ]
 
 [vars]

@@ -172,7 +172,7 @@ export default function Home() {
             <div className="p-4 bg-void/70 border border-cyan-300/15 rounded-2xl backdrop-blur-sm text-left">
               <div className="text-xs text-cyan-300 font-semibold tracking-wider mb-2">Quick start</div>
               <pre className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed overflow-x-auto">
-                <span className="text-cyan-300">$</span> pip install qector-decoder-v3{'\n'}
+                <span className="text-cyan-300">$</span> pip install qector-decoder-v3=={pypiVersion}{'\n'}
                 <span className="text-cyan-300">$</span> python -c &quot;from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')&quot;
               </pre>
             </div>
