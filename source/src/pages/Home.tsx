@@ -110,11 +110,11 @@ export default function Home() {
 
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="QECTOR hero">
-        {/* hero video removed — macOS not ready, perf: no video on main page */}
+        <img src="/images/hero-bg.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.45) saturate(1.1)' }} />
         <noscript>
           <img src="/images/og-banner.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.4)' }} />
         </noscript>
-        <div className="absolute inset-0 bg-gradient-to-b from-void/55 via-void/25 to-void z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-void/25 to-void z-[1]" />
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.04] to-transparent z-[1]" />
 
         <div className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-24 pb-20">

@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 const REPORTS_DATA = [
   {
     title: 'Official User Manual v1.0.0',
-    desc: 'QECTOR Decoder v3 Reference Manual v1.0.0 (August 2026, DOI 10.5281/zenodo.21941046): the normative source for decoder contracts and claim boundaries.',
+    desc: 'QECTOR Decoder v3 Reference Manual v1.0.0 (August 2026, DOI 10.5281/zenodo.22244510): the normative source for decoder contracts and claim boundaries.',
     status: 'Verified',
   },
   {
@@ -252,4 +252,5 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     </>
   );
 }
+
 
