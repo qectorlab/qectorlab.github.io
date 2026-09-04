@@ -120,6 +120,47 @@ test("fulfills a sale with two independently tracked emails", async () => {
   assert.equal(messages.length, 2);
 });
 
+function decodeToken(token) {
+  const [prefix, claimsPart, signaturePart] = token.split(".");
+  assert.equal(prefix, "v2");
+  return {
+    claims: JSON.parse(Buffer.from(claimsPart, "base64url").toString("utf8")),
+    claimsPart,
+    signaturePart,
+  };
+}
+
+test("falls back to the paid amount when tier metadata is missing", async () => {
+  const { env, kv } = await fixture();
+  const event = eventFor("cs_live_amount_fallback");
+  delete event.data.object.metadata;
+  event.data.object.amount_total = 2800000;
+  const response = await worker.fetch(await signedRequest(event, env.STRIPE_WEBHOOK_SECRET), env);
+  assert.equal(response.status, 200);
+
+  const record = JSON.parse(kv.values.get("lic:cs_live_amount_fallback"));
+  assert.equal(record.tier, "enterprise");
+  const { claims } = decodeToken(record.token);
+  assert.equal(claims.tier, "enterprise");
+  const days = Math.round((claims.exp - Math.floor(Date.now() / 1000)) / 86400);
+  assert.ok(days >= 365 && days <= 367, `expected ~366d expiry, got ${days}d`);
+});
+
+test("signs the canonical tier for annual tiers", async () => {
+  const { env, kv } = await fixture();
+  const event = eventFor("cs_live_startup_canonical");
+  event.data.object.metadata = { license_tier: "startup" };
+  event.data.object.amount_total = 449900;
+  const response = await worker.fetch(await signedRequest(event, env.STRIPE_WEBHOOK_SECRET), env);
+  assert.equal(response.status, 200);
+
+  const record = JSON.parse(kv.values.get("lic:cs_live_startup_canonical"));
+  assert.equal(record.tier, "pro");
+  const { claims } = decodeToken(record.token);
+  assert.equal(claims.tier, "pro");
+  assert.ok(typeof claims.exp === "number");
+});
+
 test("does not acknowledge an unconfigured provider and retries only pending work", async () => {
   const { env, kv, messages } = await fixture();
   delete env.EMAIL;

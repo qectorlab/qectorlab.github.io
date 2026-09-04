@@ -3,8 +3,11 @@ const EVENT_TTL_SECONDS = 60 * 60 * 24 * 30;
 const MAX_EMAIL_ATTEMPTS = 3;
 const EMAIL_TIMEOUT_MS = 5000;
 
-// These names are also written into the signed v2 token. PyPI 1.0.0 verifies
-// the signature and expiry without requiring a network call.
+// Expiry per purchased tier. The SIGNED tier is always canonical
+// (evaluation/pro/enterprise) because that is all PyPI 1.0.0 gates:
+// community/pro/enterprise. Signing a raw name like "startup" would verify
+// the signature yet resolve to Community at runtime.
+// Amounts are USD cents, tax-exclusive (Stripe adds tax on top).
 const TIER_DURATION_DAYS = Object.freeze({
   evaluation: 60,
   commercial: 60,
@@ -13,6 +16,30 @@ const TIER_DURATION_DAYS = Object.freeze({
   startup: 366,
   professional: 366,
   enterprise: 366,
+});
+
+// Canonical runtime tier written into the signed v2 token.
+const TIER_CANONICAL = Object.freeze({
+  evaluation: "evaluation",
+  commercial: "evaluation",
+  solo_annual: "pro",
+  solo_perpetual: "pro",
+  startup: "pro",
+  professional: "pro",
+  pro: "pro",
+  enterprise: "enterprise",
+});
+
+// Fallback when the Checkout Session / invoice carries no tier metadata
+// (manual invoices and the shared $499 payment link). Keyed by amount paid.
+const AMOUNT_TIER_CENTS = Object.freeze({
+  49900: "evaluation",
+  89900: "pro",
+  129900: "pro",
+  329900: "pro",
+  449900: "pro",
+  1150000: "pro",
+  2800000: "enterprise",
 });
 
 const SUPPORT_EMAIL = "admin@qector.store";
@@ -251,8 +278,9 @@ async function processCheckoutSession(event, env) {
 
   const existing = await readJson(env, `lic:${session.id}`);
   const email = normalizeEmail(pickEmail(session) || existing?.email);
-  const tier = existing?.tier || tierFromMetadata(session.metadata);
-  const token = existing?.token || await signLicenseV2(session.id, email, tier, env);
+  const purchasedTier = tierFromSession(session);
+  const tier = existing?.tier || canonicalTier(purchasedTier);
+  const token = existing?.token || await signLicenseV2(session.id, email, purchasedTier, env);
   const record = makeRecord(existing, {
     receipt_id: session.id,
     email,
@@ -683,9 +711,12 @@ function parseSignatureHeader(header) {
 
 async function signLicenseV2(receiptId, email, tier, env, nowMs = Date.now()) {
   const cleanEmail = normalizeEmail(email);
-  const normalizedTier = normalizeTier(tier);
-  const claims = { email: cleanEmail, rid: receiptId, tier: normalizedTier };
-  const days = TIER_DURATION_DAYS[normalizedTier];
+  const rawTier = normalizeTier(tier);
+  // Sign the canonical tier so the 1.0.0 offline tier manager (which only
+  // knows community/pro/enterprise) resolves the paid entitlement. Expiry
+  // still follows the purchased tier's duration.
+  const claims = { email: cleanEmail, rid: receiptId, tier: canonicalTier(rawTier) };
+  const days = TIER_DURATION_DAYS[rawTier];
   if (days != null) claims.exp = Math.floor(nowMs / 1000) + days * 86400;
   const ordered = {};
   for (const key of Object.keys(claims).sort()) ordered[key] = claims[key];
@@ -718,6 +749,29 @@ function pickEmail(object) {
 
 function tierFromMetadata(metadata) {
   return normalizeTier(metadata?.license_tier || metadata?.qector_tier || "evaluation");
+}
+
+// Purchased tier for a Checkout Session: explicit metadata wins; otherwise
+// fall back to the amount paid (manual invoices and shared payment links
+// carry no metadata, which previously minted every buyer an evaluation key).
+function tierFromSession(session) {
+  const meta = session?.metadata?.license_tier || session?.metadata?.qector_tier;
+  if (meta) return normalizeTier(meta);
+  const amount = session?.amount_total;
+  if (typeof amount === "number" && Number.isFinite(amount)) {
+    const fallback = AMOUNT_TIER_CENTS[amount];
+    if (fallback) {
+      console.log(`[qector] no tier metadata; amount ${amount} maps to ${fallback}`);
+      return fallback;
+    }
+    console.warn(`[qector] no tier metadata and unknown amount ${amount}; defaulting to evaluation`);
+  }
+  return "evaluation";
+}
+
+function canonicalTier(value) {
+  const raw = normalizeTier(value);
+  return TIER_CANONICAL[raw] || "evaluation";
 }
 
 function normalizeTier(value) {
