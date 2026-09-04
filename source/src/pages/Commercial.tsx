@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router';
+﻿import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 
@@ -11,7 +11,7 @@ export default function Commercial() {
   return (
     <>
       <SEO
-        title="Enterprise Licensing · QECTOR"
+        title="Enterprise Licensing Â· QECTOR"
         description="Enterprise and OEM licenses for QECTOR Decoder v3. Custom agreements for redistribution, SaaS hosting, and hardware bundling."
       />
       <section className="py-24 md:py-32 section-padding text-center">
@@ -21,7 +21,7 @@ export default function Commercial() {
             Custom licensing for redistribution, SaaS hosting, hardware bundling, and strategic partnerships.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/pricing" className="btn-cyan">View All Pricing & Tiers →</Link>
+            <Link to="/pricing" className="btn-cyan">View All Pricing & Tiers â†’</Link>
             <Link to="/contact" className="btn-gold">Contact Enterprise Sales</Link>
           </div>
           <p className="text-muted-foreground text-sm mt-6">
@@ -33,3 +33,4 @@ export default function Commercial() {
     </>
   );
 }
+

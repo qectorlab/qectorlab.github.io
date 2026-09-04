@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router';
+﻿import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import PageLoader from './components/PageLoader';
@@ -76,3 +76,4 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+

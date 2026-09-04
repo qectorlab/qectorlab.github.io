@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+﻿import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
@@ -133,7 +133,7 @@ export default function McpServer() {
   return (
     <>
       <SEO
-        title="Library MCP Server · QECTOR Decoder v3 v1.0.0"
+        title="Library MCP Server Â· QECTOR Decoder v3 v1.0.0"
         description="App-free Model Context Protocol server for quantum error correction decoding. 8 verified local stdio JSON-RPC 2.0 tools across 9 code families and 5 stable decoders. Ships as a local library; no Workbench or GUI required."
       />
       <JsonLd
@@ -152,7 +152,7 @@ export default function McpServer() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
-            Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 1.0.0
+            Local stdio Â· JSON-RPC 2.0 Â· Protocol 2024-11-05 Â· qector-decoder-v3 1.0.0
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Library MCP Server" className="text-4xl md:text-6xl font-extrabold" />
@@ -207,14 +207,14 @@ export default function McpServer() {
                 Looking for the full Claude Code Plugin?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                 The Claude Plugin v1.0.6 includes 28 skills, 11 slash commands, 5 agents, and four local MCP servers: 8 stable library tools, 29 opt-in research tools, 3 opt-in admin tools, and a safe Desktop profile. Workbench v1.0.2 remains the largest desktop surface with 85 tools on Windows, Linux, and macOS.
+                 The Claude Plugin v1.0.6 includes 28 skills, 11 slash commands, 5 agents, and four local MCP servers: 8 stable library tools, 29 opt-in research tools, 3 opt-in admin tools, and a safe Desktop profile. Workbench v1.0.6 remains the largest desktop surface with 85 tools on Windows, Linux, and macOS.
               </p>
             </div>
             <Link
               to="/claude-plugin"
               className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-xs font-mono transition-all whitespace-nowrap shadow-lg shadow-cyan-400/20"
             >
-              Explore Claude Plugin →
+              Explore Claude Plugin â†’
             </Link>
           </div>
 
@@ -279,14 +279,14 @@ export default function McpServer() {
             <p className="text-secondary text-sm leading-relaxed mb-4">
               Nine code families (graphlike eligible where marked; non-graphlike inputs route to
               BP-OSD or require <code className="text-cyan-300"> build_code_from_matrix </code>)
-              and five stable decoders. No universal benchmark figures are published on the site —
+              and five stable decoders. No universal benchmark figures are published on the site â€”
               run the shipped harness to measure your own hardware.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {FAMILIES.map((f) => (
                 <div key={f.name} className="p-4 bg-void border border-gridline rounded-xl">
                   <span className="text-cyan-300 font-mono font-bold">{f.name}</span>
-                  <div className="text-xs text-muted-foreground mt-1 font-mono">→ {f.desc}</div>
+                  <div className="text-xs text-muted-foreground mt-1 font-mono">â†’ {f.desc}</div>
                 </div>
               ))}
             </div>
@@ -332,10 +332,10 @@ export default function McpServer() {
             <h2 className="text-2xl font-bold mb-4">Operational guidance</h2>
             <ul className="space-y-3 text-secondary text-sm leading-relaxed">
               <li>
-                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review — they are not part of this public library contract.
+                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review â€” they are not part of this public library contract.
               </li>
               <li>
-                <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation ≤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.
+                <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation â‰¤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.
               </li>
               <li>
                 <strong className="text-primary">LER is coset-scored.</strong> Logical outcomes use the logical coset, never raw correction-vector equality. Wilson 95% intervals and a <code className="text-cyan-300"> code_capacity </code> tag are included; do not compare with <code className="text-cyan-300"> circuit_level </code> results.
@@ -358,3 +358,4 @@ export default function McpServer() {
     </>
   );
 }
+

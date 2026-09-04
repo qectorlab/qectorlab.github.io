@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+﻿import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import { APP_CONFIG, CALENDLY_URL } from '../lib/config';
 import CalendlyWidget from '../components/CalendlyWidget';
@@ -64,8 +64,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
   return (
     <>
       <SEO
-        title="Contact · QECTOR"
-        description="Contact QECTOR · commercial inquiries, technical support schedules, and evaluation requests."
+        title="Contact Â· QECTOR"
+        description="Contact QECTOR Â· commercial inquiries, technical support schedules, and evaluation requests."
       />
       <JsonLd
         data={{
@@ -134,7 +134,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </div>
               </div>
               <div className="p-4 bg-green-400/5 border border-green-400/20 rounded-xl">
-                <p className="text-green-400 text-sm font-semibold">⚡ Lead-reply time: 1 business day for commercial inquiries.</p>
+                <p className="text-green-400 text-sm font-semibold">âš¡ Lead-reply time: 1 business day for commercial inquiries.</p>
               </div>
             </div>
 
@@ -144,7 +144,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 {submitted ? (
                   <div className="text-center py-12" role="status" aria-live="polite">
                     <div className="w-16 h-16 rounded-full bg-green-400/10 border border-green-400/20 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-green-400 text-2xl" aria-hidden="true">✓</span>
+                      <span className="text-green-400 text-2xl" aria-hidden="true">âœ“</span>
                     </div>
                     <h3 className="text-primary font-bold text-xl mb-2">
                       {submitted === 'sent' ? 'Message Sent' : 'Email Draft Opened'}
@@ -227,3 +227,4 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     </>
   );
 }
+

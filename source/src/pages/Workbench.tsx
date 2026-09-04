@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+﻿import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import AlgorithmCard from '../components/AlgorithmCard';
@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 import { WORKBENCH_RELEASES } from '../lib/releases';
 
-const [WIN, LINUX, MACOS] = WORKBENCH_RELEASES;
+const [WIN, LINUX] = WORKBENCH_RELEASES;
 
 export default function Workbench() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
@@ -45,7 +45,7 @@ export default function Workbench() {
   };
 
   // Decoder coverage against the qector_decoder_v3 backend.
-  // The v1.0.2 apps ship 17 named decoder kinds: 15 concrete configurations
+  // The v1.0.6 apps ship 19 named decoder kinds: 17 concrete configurations
   // plus AutoDecoder and Auto Router orchestration entries.
   const decodersList = [
     { kind: 'union_find', type: 'Graphlike', desc: 'Fast approximate Union-Find decoding; higher LER than exact MWPM.' },
@@ -65,6 +65,8 @@ export default function Workbench() {
     { kind: 'ambiguity_cluster', type: 'Graphlike', desc: 'Cluster-growth decoder for high noise or non-graphlike codes.' },
     { kind: 'colour_code', type: 'Universal / qLDPC', desc: 'BP-OSD hypergraph decoder over undecomposed detector error models.' },
     { kind: 'space_time', type: 'Universal', desc: 'Space-time decoder for multi-round decoding (experimental).' },
+    { kind: 'spacetime_mwpm', type: 'Multi-round', desc: 'Space-time MWPM for phenomenological & circuit-level decoding.' },
+    { kind: 'soft_llr', type: 'Soft-decision', desc: 'Log-likelihood-ratio-weighted decoding.' },
   ];
 
   const codeFamilies = [
@@ -80,7 +82,7 @@ export default function Workbench() {
     { name: 'color_code', params: 'triangular size (int)', desc: 'Triangular & 2D 4.8.8 colour codes.' },
   ];
 
-  // The workspaces ship in v1.0.2 as described by the shipped user manuals:
+  // The workspaces ship in v1.0.6 (Windows/Linux) as described by the shipped user manuals:
   // eight GUI tabs plus a live Console on Windows, nine tabs plus Console on Linux.
   const modules = [
     'Code Explorer',
@@ -97,8 +99,8 @@ export default function Workbench() {
   return (
     <>
       <SEO
-        title="QECTOR Workbench · Windows v1.0.2, Linux v1.0.2 and macOS v1.0.2"
-        description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools, and ${MACOS.label} ${MACOS.version} (${MACOS.arch}) with ${MACOS.mcpTools} tools.`}
+        title="QECTOR Workbench â€” Windows v1.0.6 and Linux v1.0.6 â€” macOS not ready yet"
+        description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools â€” macOS not ready yet.`}
       />
 
       {/* Top Notice */}
@@ -107,9 +109,9 @@ export default function Workbench() {
         {WORKBENCH_RELEASES.map((r, i) => (
           <span key={r.id}>
             <a href={r.releaseUrl} className="underline hover:text-emerald-300 transition-colors" target="_blank" rel="noopener noreferrer">
-              {r.label} {r.version} · published {r.releaseDate} · {r.mcpTools} MCP tools
+              {r.label} {r.version} Â· published {r.releaseDate} Â· {r.mcpTools} MCP tools
             </a>
-            {i < WORKBENCH_RELEASES.length - 1 ? ' · ' : ''}
+            {i < WORKBENCH_RELEASES.length - 1 ? ' Â· ' : ''}
           </span>
         ))}
       </div>
@@ -119,7 +121,7 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            Windows {WIN.version} · Linux {LINUX.version} · macOS {MACOS.version} · backend qector_decoder_v3 {WIN.backendVersion} · {WIN.mcpTools} MCP tools
+            Windows {WIN.version} Â· Linux {LINUX.version} Â· macOS {"not ready"} Â· backend qector_decoder_v3 {WIN.backendVersion} Â· {WIN.mcpTools} MCP tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Workbench" className="text-4xl md:text-6xl font-extrabold" />
@@ -127,7 +129,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            Each v1.0.2 release names 17 kinds: 15 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
+            Each v1.0.6 release (Windows/Linux) names 19 kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries; macOS â€” not ready yet names 17. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
             Ships as a portable executable: each one
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
@@ -139,15 +141,12 @@ export default function Workbench() {
             <a href={LINUX.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
               Download Linux ZIP
             </a>
-            <a href={MACOS.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
-              Download macOS DMG
-            </a>
             <Link to="/technical-reference" className="btn-outline">
               Technical Reference
             </Link>
           </div>
           <p className="text-muted-foreground text-xs mt-4">
-             Windows x64, Linux x64, and macOS arm64 (Apple silicon) releases are published at v1.0.2 with direct artifacts and SHA-256 checksums verified against each live release.
+             Windows v1.0.6 (x64) and Linux v1.0.6 (x64) plus macOS â€” not ready yet releases are published with direct artifacts and SHA-256 checksums verified against each live release.
           </p>
         </div>
       </section>
@@ -158,9 +157,9 @@ export default function Workbench() {
           {/* Stats Grid */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-               { value: 'v1.0.2 ×3', label: 'Live releases (Win / Linux / macOS)' },
+               { value: 'v1.0.6 Ã—3', label: 'Live releases (Win / Linux / macOS)' },
               { value: `${WIN.mcpTools}`, label: `MCP tools per ${WIN.label} release` },
-              { value: '17', label: 'Named kinds (15 + 2 routing)' },
+              { value: '19', label: 'Named kinds (17 + 2 routing)' },
               { value: '10', label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
@@ -174,11 +173,11 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 0.5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
-               Nine workspaces are documented for the live v1.0.2 releases:{' '}
+               Nine workspaces are documented for the live v1.0.6 (Windows/Linux) â€” macOS not ready yet releases:{' '}
               {modules.map((m, i) => (
                 <span key={m}>
                   <span className="text-primary font-medium">{m}</span>
-                  {i < modules.length - 1 ? ' · ' : ''}
+                  {i < modules.length - 1 ? ' Â· ' : ''}
                 </span>
               ))}
               .
@@ -201,7 +200,7 @@ export default function Workbench() {
             <h2 className="text-2xl font-bold">Downloads</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
-                <h3 className="text-cyan-300 font-semibold text-base">Windows x64 · {WIN.version}</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">Windows x64 Â· {WIN.version}</h3>
                 <p className="text-secondary text-xs leading-relaxed">
                   Portable single executable. No installer, no admin rights, no internet connection.
                 </p>
@@ -221,7 +220,7 @@ export default function Workbench() {
               </div>
 
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
-                <h3 className="text-cyan-300 font-semibold text-base">Linux x64 · {LINUX.version}</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">Linux x64 Â· {LINUX.version}</h3>
                 <p className="text-secondary text-xs leading-relaxed">
                   Published {LINUX.version} AppImage and Debian package with a bundled qector-decoder-v3 {LINUX.backendVersion} backend and {LINUX.mcpTools}-tool MCP server.
                 </p>
@@ -240,23 +239,17 @@ export default function Workbench() {
                  </a>
               </div>
 
-              <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
-                <h3 className="text-cyan-300 font-semibold text-base">macOS arm64 · {MACOS.version}</h3>
+                            <div className="p-5 bg-void border border-gridline rounded-xl space-y-3 opacity-60">
+                <h3 className="text-cyan-300 font-semibold text-base">macOS arm64 â€” not ready yet</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Published {MACOS.version} build for Apple silicon (M-series) with a bundled qector-decoder-v3 {MACOS.backendVersion} backend and {MACOS.mcpTools}-tool MCP server.
+                  Apple silicon build requires a build on Apple hardware and is not included until that build is produced and signed.
                 </p>
-                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                    <li>Published {MACOS.releaseDate} in the verified GitHub release.</li>
-                    <li>Download <code className="text-cyan-300">{MACOS.artifact}</code> from the live release.</li>
-                  <li>First launch may require right-click → Open to bypass Gatekeeper.</li>
-                   <li>DMG SHA-256: <code className="text-cyan-300 break-all">{MACOS.artifactSha256}</code></li>
-                 </ul>
-                 <a href={MACOS.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
-                   Download macOS DMG
-                 </a>{' '}
-                 <a href={MACOS.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline">
-                   Release notes
-                 </a>
+                <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
+                  <li>Requires Apple hardware build â€” coming soon</li>
+                  <li>No artifact yet â€” check back for v1.0.6 macOS release</li>
+                  <li>Windows and Linux v1.0.6 are live with 19 decoders</li>
+                </ul>
+                <span className="text-muted-foreground text-xs">Not available</span>
               </div>
             </div>
 
@@ -272,7 +265,7 @@ export default function Workbench() {
               <div>
                 <h2 className="text-2xl font-bold">Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  All 17 named kinds (15 concrete configurations plus AutoDecoder and Auto Router) are exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
+                  All 19 named kinds (17 concrete configurations plus AutoDecoder and Auto Router) are exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -281,7 +274,7 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-                   Each v1.0.2 release (Windows, Linux, macOS) declares <strong className="text-secondary">17 named kinds: 15 concrete configurations plus 2 orchestration entries</strong> against
+                   Each v1.0.6 release (Windows/Linux) â€” macOS not ready yet â€” declares <strong className="text-secondary">19 named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
                    its bundled qector_decoder_v3 {WIN.backendVersion} backend. Consult each release's
                    included manuals for platform-specific coverage.
              </p>
@@ -333,7 +326,7 @@ export default function Workbench() {
               {[
                 {
                   name: 'Desktop GUI',
-                  desc: 'CustomTkinter desktop UI for Windows. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3–d63 on supported families.',
+                  desc: 'CustomTkinter desktop UI for Windows. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3â€“d63 on supported families.',
                 },
                 {
                    name: 'MCP Tools',
@@ -345,7 +338,7 @@ export default function Workbench() {
                 },
                 {
                   name: 'Self / Auto-Debug Layer',
-                  desc: 'Verifies H·c == s on every decode with a full attempt trace, and falls back across decoders automatically when a decoder fails to produce a faithful correction.',
+                  desc: 'Verifies HÂ·c == s on every decode with a full attempt trace, and falls back across decoders automatically when a decoder fails to produce a faithful correction.',
                 },
                 {
                   name: 'Hardware Dashboard',
@@ -382,7 +375,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
               title="Documentation & Reference"
-               statement={`QECTOR Workbench documentation is published alongside each app release. The Windows, Linux, and macOS v1.0.2 builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
+               statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.6, Linux v1.0.6, and macOS â€” not ready yet builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a

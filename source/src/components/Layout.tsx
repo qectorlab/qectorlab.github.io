@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router';
+﻿import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -81,3 +81,4 @@ export default function Layout({ children }: LayoutProps) {
     </div>
   );
 }
+

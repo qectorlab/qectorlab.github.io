@@ -1,11 +1,11 @@
-import { Link } from 'react-router';
+﻿import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 
 export default function NotFound() {
   return (
     <>
-      <SEO title="Page Not Found · QECTOR" description="The requested page could not be found." noindex />
+      <SEO title="Page Not Found Â· QECTOR" description="The requested page could not be found." noindex />
 
       <section className="min-h-[70vh] flex items-center justify-center section-padding">
         <div className="text-center max-w-lg">
@@ -23,3 +23,4 @@ export default function NotFound() {
     </>
   );
 }
+

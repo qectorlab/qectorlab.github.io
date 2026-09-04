@@ -22,7 +22,7 @@ export const PYPI_PACKAGE = 'qector-decoder-v3';
 export const PYPI_VERSION = '1.0.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const REFERENCE_MANUAL_DOI = '10.5281/zenodo.21941046';
-export const REGISTRY_UPDATED_AT = '2026-08-25';
+export const REGISTRY_UPDATED_AT = '2026-09-04';
 
 // Dates are PyPI upload dates (UTC), verified against the public JSON API on
 // 2026-08-25. Do not infer a release date from a local commit or file time.
@@ -53,59 +53,43 @@ export const CLAUDE_PLUGIN_RELEASE = {
   releaseUrl: 'https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v1.0.6',
 };
 
-// Verified against the public GitHub v1.0.2 release tags on 2026-08-24.
+// Verified against the public GitHub v1.0.6 release tags on 2026-09-04. macOS not ready yet.
 export const WORKBENCH_RELEASES: WorkbenchRelease[] = [
   {
     id: 'windows',
     label: 'Windows',
     arch: 'x64',
-    version: 'v1.0.2',
-    releaseDate: '2026-08-21',
+    version: 'v1.0.6',
+    releaseDate: '2026-09-01',
     backendVersion: PYPI_VERSION,
     mcpTools: 85,
-    decoderKinds: 17,
+    decoderKinds: 19,
     codeFamilies: 10,
     releaseUrl:
-      'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.2',
-    artifact: 'QectorWorkbench-Windows-v1.0.2.zip',
+      'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.6',
+    artifact: 'QectorWorkbench-Portable.exe',
     artifactUrl:
-      'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.2/QectorWorkbench-Windows-v1.0.2.zip',
-    artifactSha256: 'ebff4fb966125ba167eec8c732ab256a3e00ff8103d8f24d91d5c4cdd8c7ccc3',
+      'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.6/QectorWorkbench-Portable.exe',
+    artifactSha256: '34178d24173fc4acac9bf40781347e944e5d9e43a2729a2ce371858742d8889f',
   },
   {
     id: 'linux',
     label: 'Linux',
     arch: 'x64',
-    version: 'v1.0.2',
-    releaseDate: '2026-08-21',
+    version: 'v1.0.6',
+    releaseDate: '2026-09-04',
     backendVersion: PYPI_VERSION,
     mcpTools: 85,
-    decoderKinds: 17,
+    decoderKinds: 19,
     codeFamilies: 10,
     releaseUrl:
-      'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.2',
-    artifact: 'QectorWorkbench-Linux-v1.0.2.zip',
+      'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.6',
+    artifact: 'QectorWorkbench-Portable',
     artifactUrl:
-      'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/download/v1.0.2/QectorWorkbench-Linux-v1.0.2.zip',
-    artifactSha256: '0da9cdee7fb5b54bed81fd2ddbb8639e6642987b7ea0d1c00935db36e270a41e',
+      'https://github.com/qectorlab/qector-decoder-workbench-linux/releases/download/v1.0.6/QectorWorkbench-Portable',
+    artifactSha256: 'ac6830060e36c1de458dc3ebef6e94f9720271fda9e4908a9ad16589e2649d59',
   },
-  {
-    id: 'macos',
-    label: 'macOS',
-    arch: 'arm64 (Apple silicon)',
-    version: 'v1.0.2',
-    releaseDate: '2026-08-21',
-    backendVersion: PYPI_VERSION,
-    mcpTools: 85,
-    decoderKinds: 17,
-    codeFamilies: 10,
-    releaseUrl:
-      'https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2',
-    artifact: 'QectorWorkbench-1.0.2-arm64.dmg',
-    artifactUrl:
-      'https://github.com/qectorlab/qector-decoder-workbench-macos/releases/download/v1.0.2/QectorWorkbench-1.0.2-arm64.dmg',
-    artifactSha256: 'e22dd2b8558b30f3da3d9cd35f8a81f9ac53d9f1c72d4b65da6c150d5e3dd3c3',
-  },
+
 ];
 
 export const WORKBENCH_VERSION_SUMMARY = WORKBENCH_RELEASES.map(

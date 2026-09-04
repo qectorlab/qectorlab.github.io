@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+﻿import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import CalendlyWidget from '../components/CalendlyWidget';
 import { CALENDLY_URL } from '../lib/config';
@@ -8,7 +8,7 @@ import { CALENDLY_URL } from '../lib/config';
 // This page exists for two reasons, and the second one is the important one:
 //
 //  1. Buyers of a one-person product want to know who is behind it.
-//  2. Entity disambiguation. "Guillaume Lessard" is a common Québécois name
+//  2. Entity disambiguation. "Guillaume Lessard" is a common QuÃ©bÃ©cois name
 //     shared by other working professionals, and search engines currently
 //     conflate them. The Person JSON-LD below: with a sameAs list of
 //     identifiers that only this person controls (ORCID, GitHub, PyPI, itch.io,
@@ -27,7 +27,7 @@ const skillGroups = [
   },
   {
     title: 'Python Engineering',
-    items: ['Python 3.9–3.13', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering', 'Sigstore attestation'],
+    items: ['Python 3.9â€“3.13', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering', 'Sigstore attestation'],
   },
   {
     title: 'Quantum Error Correction',
@@ -51,8 +51,8 @@ export default function Founder() {
   return (
     <>
       <SEO
-        title="Guillaume Lessard · Founder of QECTOR and iD01t Productions"
-        description="Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and creator of QECTOR Decoder v3. ORCID 0009-0000-3465-3753."
+        title="Guillaume Lessard Â· Founder of QECTOR and iD01t Productions"
+        description="Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, QuÃ©bec. Founder of iD01t Productions and creator of QECTOR Decoder v3. ORCID 0009-0000-3465-3753."
       />
       <JsonLd
         data={{
@@ -118,7 +118,7 @@ export default function Founder() {
             />
             <div className="text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                Founder · Developer · Author · Independent Researcher
+                Founder Â· Developer Â· Author Â· Independent Researcher
               </div>
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">
                 Guillaume Lessard
@@ -127,7 +127,7 @@ export default function Founder() {
                  I am Guillaume Lessard, the founder of iD01t Productions and the creator of QECTOR. I design
                  Rust/Python quantum error-correction systems, local MCP tooling, and release workflows where
                  correctness claims are tied to declared workloads, reproducible artifacts, and public records.
-                 I build and support the platform independently from Longueuil, Québec.
+                 I build and support the platform independently from Longueuil, QuÃ©bec.
                </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
                 <a href={ORCID} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
@@ -155,7 +155,7 @@ export default function Founder() {
           <div className="card-surface border-gold-400/25">
             <h2 className="text-xl font-bold mb-3">Making sure you have the right Guillaume Lessard</h2>
             <p className="text-secondary text-sm leading-relaxed mb-4">
-              It is a common Québécois name, and several accomplished professionals share it, including a compiler engineer who works
+              It is a common QuÃ©bÃ©cois name, and several accomplished professionals share it, including a compiler engineer who works
               on Swift and a real estate executive. None of them are me, and I claim none of their work. If you are
               evaluating QECTOR, verifying an invoice, or checking a citation, these are the primary identifiers I control:
             </p>
@@ -247,19 +247,19 @@ export default function Founder() {
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 15+ decoder configurations</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench</Link>: free desktop GUI and comprehensive MCP server</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 15+ decoder configurations</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench</Link>: free desktop GUI and comprehensive MCP server</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
                 </ul>
               </div>
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Research &amp; Engineering</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Advanced custom topologies and QEC corpora</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>High-performance batch simulation pipelines</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Complete workflow reproducibility</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span>Advanced custom topologies and QEC corpora</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span>High-performance batch simulation pipelines</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">âœ“</span><span>Complete workflow reproducibility</span></li>
                 </ul>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function Founder() {
                   <ul className="space-y-1.5">
                     {group.items.map((item) => (
                       <li key={item} className="text-secondary text-xs flex items-start gap-2">
-                        <span className="text-cyan-300 mt-0.5">▸</span>
+                        <span className="text-cyan-300 mt-0.5">â–¸</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -305,3 +305,4 @@ export default function Founder() {
     </>
   );
 }
+

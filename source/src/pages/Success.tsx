@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router';
+﻿import { Link, useSearchParams } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 
@@ -20,7 +20,7 @@ export default function Success() {
   return (
     <>
       <SEO
-        title="Purchase complete · QECTOR"
+        title="Purchase complete Â· QECTOR"
         description="Your QECTOR Decoder v3 licence is being issued. Activation instructions and your Stripe reference."
         noindex
       />
@@ -113,3 +113,4 @@ export default function Success() {
     </>
   );
 }
+

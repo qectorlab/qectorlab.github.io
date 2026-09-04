@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+﻿import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -29,7 +29,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
   return (
     <>
       <SEO
-        title="About · QECTOR"
+        title="About Â· QECTOR"
         description="About QECTOR: Guillaume Lessard, iD01t Productions, QEC research background, ORCID, GitHub artifacts, mission and engineering philosophy."
       />
       <JsonLd
@@ -63,7 +63,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse-dot" />
-            iD01t Productions · Longueuil, Québec · ORCID 0009-0000-3465-3753
+            iD01t Productions Â· Longueuil, QuÃ©bec Â· ORCID 0009-0000-3465-3753
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">About QECTOR</h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
@@ -86,7 +86,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 0)} className="card-surface">
             <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Creator</h3>
             <p className="text-primary text-lg mb-3">
-              <strong>Guillaume Lessard</strong>, software engineer and researcher based in Montreal / Longueuil, Québec, Canada.
+              <strong>Guillaume Lessard</strong>, software engineer and researcher based in Montreal / Longueuil, QuÃ©bec, Canada.
             </p>
             <p className="text-secondary leading-relaxed mb-4">
               Operating as the QEC software division of <strong>iD01t Productions</strong> (founded 2023), Guillaume focuses on quantum error correction software engineering, building high-throughput decoders and advanced validation tooling.
@@ -102,7 +102,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             </div>
             <div className="flex flex-wrap gap-2">
               <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-green-400/10 border border-green-400/20 rounded-lg text-sm text-green-400 font-mono hover:bg-green-400/20 transition-colors">
-                🆔 ORCID 0009-0000-3465-3753
+                ðŸ†” ORCID 0009-0000-3465-3753
               </a>
               {[
                 { label: 'GitHub Artifacts', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
@@ -126,7 +126,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                   <li>Advanced Custom Topologies: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface</li>
                   <li>Titan-Class Environments: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC</li>
                   <li>Reproducible provenance and SHA-256 sealed artifacts on GitHub</li>
-                  <li>Monte Carlo FSS threshold analysis, Z₁₂ monodromy algebra, Jones polynomial verification</li>
+                  <li>Monte Carlo FSS threshold analysis, Zâ‚â‚‚ monodromy algebra, Jones polynomial verification</li>
                 </ul>
               </div>
               <div ref={(el) => addRef(el, 2)} className="card-surface">
@@ -157,7 +157,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
-                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: live Windows, Linux, and macOS v1.0.2 releases with 85-tool MCP servers and 17 named decoder kinds (15 concrete configurations plus AutoDecoder and Auto Router).</li>
+                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: live Windows, Linux, and macOS â€” not ready yet releases with 85-tool MCP servers and 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router).</li>
                    <li><strong className="text-primary">Documentation & Education</strong>: Public methodology, validation guidance, and "Mastering QEC" book context (see the decoder repository for primary evidence).</li>
                 </ul>
               </div>
@@ -170,11 +170,11 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                  {[
                    { year: '2026-06-23', event: 'The public qectorlab.github.io repository was created.' },
                    { year: '2026-06-24', event: 'The qector-decoder repository was created and v0.5.0 / v0.5.1 were first recorded on PyPI.' },
-                   { year: '2026-06-24–07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
+                   { year: '2026-06-24â€“07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
                    { year: '2026-08-02', event: 'QECTOR Decoder v3 v0.7.0 was published on PyPI.' },
                    { year: '2026-08-06', event: `QECTOR Decoder v3 v${pypiVersion || '1.0.0'} reached its first stable release, with the official reference manual (DOI 10.5281/zenodo.21941046).` },
-                   { year: '2026-08-11–08-21', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.2 releases for Windows, Linux, and macOS on 2026-08-21.' },
-                   { year: '2026-08-15–08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
+                   { year: '2026-08-11â€“08-21', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.6 releases for Windows, Linux, and macOS on 2026-08-21.' },
+                   { year: '2026-08-15â€“08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
                  ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
                   <span className="text-cyan-300 font-mono text-sm min-w-[80px] pt-0.5">{item.year}</span>
@@ -199,3 +199,4 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     </>
   );
 }
+

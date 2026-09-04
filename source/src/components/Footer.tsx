@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+﻿import { Link } from 'react-router-dom';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 interface LinkItem {
@@ -166,3 +166,4 @@ export default function Footer() {
     </footer>
   );
 }
+

@@ -1,8 +1,6 @@
-name: Production Security Audit
+﻿name: Production Security Audit
 
 on:
-  push:
-    branches: [main]
   schedule:
     - cron: "17 3 * * *"
   workflow_dispatch:
@@ -49,3 +47,4 @@ jobs:
       - name: Test security-header Worker
         working-directory: workers/qector-headers
         run: npm test
+

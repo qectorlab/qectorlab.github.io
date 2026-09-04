@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+﻿import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import MetricCard from '../components/MetricCard';
@@ -32,8 +32,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
   return (
     <>
       <SEO
-        title="QECTOR Decoder v3 · Production-Grade QEC Decoding for Python"
-        description="QECTOR Decoder v3 – 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        title="QECTOR Decoder v3 Â· Production-Grade QEC Decoding for Python"
+        description="QECTOR Decoder v3 â€“ 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -57,7 +57,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse-dot" />
-            v{pypiVersion} (Source-Available) · Free Workbench GUI (CustomTkinter + MCP tools)
+            v{pypiVersion} (Source-Available) Â· Free Workbench GUI (CustomTkinter + MCP tools)
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Decoder v3" className="text-4xl md:text-6xl font-extrabold" />
@@ -83,7 +83,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'Decoder Configs', value: '15+', desc: 'From exact MWPM to GPU batch, across documented stability tiers' },
-              { label: 'Binary Wheels', value: '15', desc: 'Python 3.9–3.13 on Windows amd64, Linux x86_64, macOS arm64, Sigstore-attested' },
+              { label: 'Binary Wheels', value: '15', desc: 'Python 3.9â€“3.13 on Windows amd64, Linux x86_64, macOS arm64, Sigstore-attested' },
               { label: 'Stable API', value: 'v1.0.0', desc: 'First stable release with documented API stability tiers' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
@@ -146,7 +146,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Technical Specifications</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                ['Languages', 'Rust core (PyO3) / Python 3.9–3.13 API'],
+                ['Languages', 'Rust core (PyO3) / Python 3.9â€“3.13 API'],
                 ['Platforms', 'Linux, macOS ARM64/x86, Windows'],
                 ['GPU', 'CUDA 11.8+ / OpenCL 2.0+'],
                 ['QEC Library', 'Stim (quantum-circuit noise simulation)'],
@@ -166,12 +166,12 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="v1.0.0 (2026-08-06) is the first stable release. Decode runs are syndrome-validated (H·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
+              statement="v1.0.0 (2026-08-06) is the first stable release. Decode runs are syndrome-validated (HÂ·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
               href="https://github.com/GuillaumeLessard/qector-decoder"
-              linkLabel="GitHub Artifacts &amp; Harness →"
+              linkLabel="GitHub Artifacts &amp; Harness â†’"
             />
             <div className="flex flex-wrap gap-4 mt-3 px-1">
-              <Link to="/evidence" className="text-cyan-300 text-sm hover:underline">Evidence &amp; Reports →</Link>
+              <Link to="/evidence" className="text-cyan-300 text-sm hover:underline">Evidence &amp; Reports â†’</Link>
             </div>
           </div>
 
@@ -190,3 +190,4 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     </>
   );
 }
+

@@ -78,7 +78,7 @@ const softwareNode = {
   '@type': 'SoftwareApplication',
   name: 'QECTOR Decoder v3',
   description:
-    'Rust-core Python quantum error correction decoder with 15 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, API stability tiers, and reproducible validation guidance.',
+    'Rust-core Python quantum error correction decoder with 17 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, API stability tiers, and reproducible validation guidance.',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Linux, macOS, Windows',
   programmingLanguage: 'Python',
@@ -155,12 +155,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder with 15 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance.',
+      'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder with 17 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library with 15 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.2 lists 17 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library with 15 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.6 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -279,24 +279,24 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.2 (x64), Linux v1.0.2 (x64), and macOS v1.0.2 (arm64), each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
+      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.6 (x64), Linux v1.0.6 (x64), and macOS — not ready yet, each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
     heading: 'QECTOR Workbench',
     body: page(
       h1('QECTOR Workbench') +
         p(
-          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The live repositories publish Windows, Linux, and macOS v1.0.2 builds. Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 17 named decoder kinds (15 concrete configurations plus AutoDecoder and Auto Router), and 10 code families.'
+          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The live repositories publish Windows, Linux, and macOS — not ready yet builds. Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router), and 10 code families.'
         ) +
         h2('Downloads') +
         ul([
-          'Windows x64: <code>QectorWorkbench-Windows-v1.0.2.zip</code> (<code>ebff4fb966125ba167eec8c732ab256a3e00ff8103d8f24d91d5c4cdd8c7ccc3</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
-          'Linux x64: <code>QectorWorkbench-Linux-v1.0.2.zip</code> (<code>0da9cdee7fb5b54bed81fd2ddbb8639e6642987b7ea0d1c00935db36e270a41e</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
-          'macOS arm64 (Apple silicon): <code>QectorWorkbench-1.0.2-arm64.dmg</code> (<code>e22dd2b8558b30f3da3d9cd35f8a81f9ac53d9f1c72d4b65da6c150d5e3dd3c3</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
+          'Windows x64: <code>QectorWorkbench-Portable.exe</code> (<code>34178d24173fc4acac9bf40781347e944e5d9e43a2729a2ce371858742d8889f</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.6" style="color:#67e8f9;">live release notes</a>',
+          'Linux x64: <code>QectorWorkbench-Portable</code> (<code>ac6830060e36c1de458dc3ebef6e94f9720271fda9e4908a9ad16589e2649d59</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.6" style="color:#67e8f9;">live release notes</a>',
+          'macOS arm64 (Apple silicon): <code>QectorWorkbench-1.0.6-arm64.dmg — not ready yet</code> (<code>not-ready-yet</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
           'Headless MCP server on every platform: <code>--mcp</code>; MCP protocol 2024-11-05 over stdio JSON-RPC 2.0.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
         h2('Workspaces') +
         p(
-          'The v1.0.2 releases document eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
+          'The v1.0.6 releases document eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
         ) +
         h2('10 Quantum Code Families') +
         p('The published Workbench releases cover 10 code families including qLDPC and colour codes:') +
@@ -327,12 +327,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Workbench',
         description:
-          'Free desktop application and Model Context Protocol server for quantum error correction. Windows, Linux, and macOS v1.0.2 each provide an 85-tool MCP server, 17 named decoder kinds (15 concrete configurations plus 2 routing kinds), and 10 quantum code families.',
+          'Free desktop application and Model Context Protocol server for quantum error correction. Windows, Linux, and macOS — not ready yet each provide an 85-tool MCP server, 19 named decoder kinds (17 concrete configurations plus 2 routing kinds), and 10 quantum code families.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Windows, Linux, macOS',
-        softwareVersion: '1.0.2',
+        softwareVersion: '1.0.6',
         url: SITE_URL + '/workbench/',
-        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.2/QectorWorkbench-Windows-v1.0.2.zip',
+        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.6/QectorWorkbench-Portable.exe',
         author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
       },
@@ -456,8 +456,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ]) +
         h2('Selected work') +
         ul([
-           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 15 concrete decoder configurations, first stable release v1.0.0.`,
-           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows, Linux, and macOS v1.0.2 releases, each with an 85-tool MCP server and 17 named decoder kinds.`,
+           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 17 concrete decoder configurations, first stable release v1.0.0.`,
+           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows, Linux, and macOS — not ready yet releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
            '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>; <a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">normative manual DOI 10.5281/zenodo.21941046</a>; <a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">certification/proof DOI 10.5281/zenodo.22046403</a>.',
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
@@ -589,7 +589,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
       h1('Documentation Hub') +
         ul([
            '<a href="/claude-plugin" style="color:#67e8f9;">Claude Code Plugin</a>: v1.0.6 with 28 skills, 5 agents, four MCP servers, and explicit stable, research, and admin profiles.',
-           '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 17 named decoder kinds, v1.0.2 on Windows, Linux, and macOS.',
+           '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 19 named decoder kinds, v1.0.6 on Windows and Linux — macOS not ready yet.',
           '<a href="/mcp-server" style="color:#67e8f9;">MCP Server</a>: app-free local library server exposing 8 verified tools.',
           '<a href="/installer" style="color:#67e8f9;">Installation guide</a>: pip install on Linux, macOS, Windows.',
           '<a href="/manual" style="color:#67e8f9;">User manual</a>: configuration, decoder selection, benchmarking, troubleshooting.',
