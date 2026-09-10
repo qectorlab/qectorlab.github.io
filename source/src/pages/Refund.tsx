@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 
@@ -54,10 +54,10 @@ export default function Refund() {
               benchmarking, integration testing, and architecture assessment against your own workloads.
             </p>
             <ul className="text-secondary text-sm space-y-1.5">
-              <li>â€¢ It does not auto-renew and is not a subscription.</li>
-              <li>â€¢ It is 100% creditable toward any annual tier purchased within 90 days of your evaluation start.</li>
-              <li>â€¢ Example: $499 evaluation, then Solo/Indie within the window: you pay $800, not $1,299.</li>
-              <li>â€¢ To claim the credit, email your Stripe invoice number to admin@qector.store and we invoice the difference.</li>
+              <li>• It does not auto-renew and is not a subscription.</li>
+              <li>• It is 100% creditable toward any annual tier purchased within 90 days of your evaluation start.</li>
+              <li>• Example: $499 evaluation, then Solo/Indie within the window: you pay $800, not $1,299.</li>
+              <li>• To claim the credit, email your Stripe invoice number to admin@qector.store and we invoice the difference.</li>
             </ul>
           </div>
 

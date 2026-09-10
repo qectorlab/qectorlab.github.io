@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 
@@ -38,20 +38,20 @@ export default function License() {
             <div className="p-4 bg-void rounded-xl">
               <h3 className="text-cyan-300 font-semibold text-sm mb-2">Permitted (Non-Commercial)</h3>
               <ul className="space-y-1 text-secondary text-sm">
-                <li>â€¢ Personal research and learning</li>
-                <li>â€¢ Academic research and teaching</li>
-                <li>â€¢ Non-commercial open-source projects</li>
-                <li>â€¢ Publishing benchmark results (with attribution)</li>
+                <li>• Personal research and learning</li>
+                <li>• Academic research and teaching</li>
+                <li>• Non-commercial open-source projects</li>
+                <li>• Publishing benchmark results (with attribution)</li>
               </ul>
             </div>
             <div className="p-4 bg-void rounded-xl mt-4">
               <h3 className="text-gold-400 font-semibold text-sm mb-2">Requires Commercial License</h3>
               <ul className="space-y-1 text-secondary text-sm">
-                <li>â€¢ Commercial product integration</li>
-                <li>â€¢ Internal commercial R&D with value extraction</li>
-                <li>â€¢ Government and defense contracts</li>
-                <li>â€¢ Redistribution in commercial products</li>
-                <li>â€¢ SaaS / hosted API usage</li>
+                <li>• Commercial product integration</li>
+                <li>• Internal commercial R&D with value extraction</li>
+                <li>• Government and defense contracts</li>
+                <li>• Redistribution in commercial products</li>
+                <li>• SaaS / hosted API usage</li>
               </ul>
             </div>
           </div>
@@ -75,11 +75,11 @@ export default function License() {
           <div className="card-surface border-gold-400/25">
             <h2 className="text-xl font-bold mb-4">Commercial Addendum: What a Paid License Changes</h2>
             <ul className="space-y-2 text-secondary text-sm">
-              <li>â€¢ Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.</li>
-              <li>â€¢ <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
-              <li>â€¢ Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
-              <li>â€¢ <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). No functionality is gated, degraded, or disabled.</li>
-              <li>â€¢ No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.</li>
+              <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.</li>
+              <li>• <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
+              <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
+              <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). No functionality is gated, degraded, or disabled.</li>
+              <li>• No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.</li>
             </ul>
             <p className="text-secondary text-sm leading-relaxed mt-4">
               Tokens are delivered instantly and all sales are final: see the{' '}
