@@ -25,7 +25,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
   const docLinks = [
     { title: 'Claude Code Plugin', desc: 'v1.0.6: 28 skills, 5 agents, four MCP servers, and explicit local tool profiles', href: '/claude-plugin' },
-    { title: 'Workbench (Win / Linux / macOS)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.6 on Windows/Linux â€” macOS not ready yet', href: '/workbench' },
+    { title: 'Workbench (Win / Linux / macOS)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.7 on Windows/Linux — macOS not ready yet', href: '/workbench' },
     { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 verified tools', href: '/mcp-server' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
@@ -38,7 +38,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
   return (
     <>
       <SEO
-        title="Documentation Â· QECTOR"
+        title="Documentation · QECTOR"
         description="Documentation hub for QECTOR quantum error correction decoder. API reference, user manual, installation guides, and validation reports."
       />
 
@@ -46,7 +46,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
-            Python 3.9-3.13 Â· Linux Â· macOS Â· Windows
+            Python 3.9-3.13 · Linux · macOS · Windows
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Documentation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">

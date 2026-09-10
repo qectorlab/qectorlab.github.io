@@ -20,7 +20,7 @@ export default function Success() {
   return (
     <>
       <SEO
-        title="Purchase complete Â· QECTOR"
+        title="Purchase complete · QECTOR"
         description="Your QECTOR Decoder v3 licence is being issued. Activation instructions and your Stripe reference."
         noindex
       />

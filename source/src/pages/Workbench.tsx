@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
@@ -19,19 +19,19 @@ export default function Workbench() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-    sectionsRef.current.filter(Boolean).forEach((section) => {
-      gsap.fromTo(
-        section,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-        }
-      );
-    });
+      sectionsRef.current.filter(Boolean).forEach((section) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: section, start: 'top 85%', once: true },
+          }
+        );
+      });
     });
 
     return () => {
@@ -39,18 +39,17 @@ export default function Workbench() {
     };
   }, []);
 
-
   const addRef = (el: HTMLDivElement | null, index: number) => {
     if (el) sectionsRef.current[index] = el;
   };
 
   // Decoder coverage against the qector_decoder_v3 backend.
-  // The v1.0.6 apps ship 19 named decoder kinds: 17 concrete configurations
+  // The v1.0.7 apps ship 19 named decoder kinds: 17 concrete configurations
   // plus AutoDecoder and Auto Router orchestration entries.
   const decodersList = [
     { kind: 'union_find', type: 'Graphlike', desc: 'Fast approximate Union-Find decoding; higher LER than exact MWPM.' },
     { kind: 'fast_union_find', type: 'Graphlike', desc: 'Optimized Union-Find hot path; approximate.' },
-    { kind: 'blossom', type: 'Universal', desc: 'Weight-optimal exact minimum-weight perfect matching (Edmonds\' Blossom).' },
+    { kind: 'blossom', type: 'Universal', desc: "Weight-optimal exact minimum-weight perfect matching (Edmonds' Blossom)." },
     { kind: 'sparse_blossom', type: 'Graphlike', desc: 'Event-driven Sparse Blossom with radix-heap region growth (experimental).' },
     { kind: 'bp_osd', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered-statistics decoding for LDPC / qLDPC codes.' },
     { kind: 'auto', type: 'Graphlike', desc: 'Self-selecting AutoDecoder: picks the best available decoder for the code.' },
@@ -82,7 +81,7 @@ export default function Workbench() {
     { name: 'color_code', params: 'triangular size (int)', desc: 'Triangular & 2D 4.8.8 colour codes.' },
   ];
 
-  // The workspaces ship in v1.0.6 (Windows/Linux) as described by the shipped user manuals:
+  // The workspaces ship in v1.0.7 (Windows/Linux) as described by the shipped user manuals:
   // eight GUI tabs plus a live Console on Windows, nine tabs plus Console on Linux.
   const modules = [
     'Code Explorer',
@@ -99,8 +98,8 @@ export default function Workbench() {
   return (
     <>
       <SEO
-        title="QECTOR Workbench â€” Windows v1.0.6 and Linux v1.0.6 â€” macOS not ready yet"
-        description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools â€” macOS not ready yet.`}
+        title="QECTOR Workbench — Windows v1.0.7 and Linux v1.0.7 — macOS not ready yet"
+        description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools — macOS not ready yet.`}
       />
 
       {/* Top Notice */}
@@ -109,9 +108,9 @@ export default function Workbench() {
         {WORKBENCH_RELEASES.map((r, i) => (
           <span key={r.id}>
             <a href={r.releaseUrl} className="underline hover:text-emerald-300 transition-colors" target="_blank" rel="noopener noreferrer">
-              {r.label} {r.version} Â· published {r.releaseDate} Â· {r.mcpTools} MCP tools
+              {r.label} {r.version} · published {r.releaseDate} · {r.mcpTools} MCP tools
             </a>
-            {i < WORKBENCH_RELEASES.length - 1 ? ' Â· ' : ''}
+            {i < WORKBENCH_RELEASES.length - 1 ? ' · ' : ''}
           </span>
         ))}
       </div>
@@ -121,7 +120,7 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            Windows {WIN.version} Â· Linux {LINUX.version} Â· macOS {"not ready"} Â· backend qector_decoder_v3 {WIN.backendVersion} Â· {WIN.mcpTools} MCP tools
+            Windows {WIN.version} · Linux {LINUX.version} · macOS not ready · backend qector_decoder_v3 {WIN.backendVersion} · {WIN.mcpTools} MCP tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Workbench" className="text-4xl md:text-6xl font-extrabold" />
@@ -129,24 +128,27 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            Each v1.0.6 release (Windows/Linux) names 19 kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries; macOS â€” not ready yet names 17. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
-            Ships as a portable executable: each one
+            Each v1.0.7 release (Windows/Linux) names 19 kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries; macOS — not ready yet names 17. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
+            Ships as a portable executable: each one{' '}
             <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href={WIN.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan">
-              Download Windows ZIP
+              Download Windows Portable (.exe)
             </a>
             <a href={LINUX.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
-              Download Linux ZIP
+              Download Linux Portable
+            </a>
+            <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/download/v1.0.7/qector-workbench_1.0.7_amd64.deb" target="_blank" rel="noopener noreferrer" className="btn-outline">
+              Download Linux Debian (.deb)
             </a>
             <Link to="/technical-reference" className="btn-outline">
               Technical Reference
             </Link>
           </div>
           <p className="text-muted-foreground text-xs mt-4">
-             Windows v1.0.6 (x64) and Linux v1.0.6 (x64) plus macOS â€” not ready yet releases are published with direct artifacts and SHA-256 checksums verified against each live release.
+             Windows v1.0.7 (x64) and Linux v1.0.7 (x64) plus macOS — not ready yet releases are published with direct artifacts and SHA-256 checksums verified against each live release.
           </p>
         </div>
       </section>
@@ -157,7 +159,7 @@ export default function Workbench() {
           {/* Stats Grid */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-               { value: 'v1.0.6 Ã—3', label: 'Live releases (Win / Linux / macOS)' },
+              { value: 'v1.0.7 ×2', label: 'Live releases (Win / Linux)' },
               { value: `${WIN.mcpTools}`, label: `MCP tools per ${WIN.label} release` },
               { value: '19', label: 'Named kinds (17 + 2 routing)' },
               { value: '10', label: 'Quantum Code Families' },
@@ -173,11 +175,11 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 0.5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
-               Nine workspaces are documented for the live v1.0.6 (Windows/Linux) â€” macOS not ready yet releases:{' '}
+              Nine workspaces are documented for the live v1.0.7 (Windows/Linux) — macOS not ready yet releases:{' '}
               {modules.map((m, i) => (
                 <span key={m}>
                   <span className="text-primary font-medium">{m}</span>
-                  {i < modules.length - 1 ? ' Â· ' : ''}
+                  {i < modules.length - 1 ? ' · ' : ''}
                 </span>
               ))}
               .
@@ -200,61 +202,72 @@ export default function Workbench() {
             <h2 className="text-2xl font-bold">Downloads</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
-                <h3 className="text-cyan-300 font-semibold text-base">Windows x64 Â· {WIN.version}</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">Windows x64 · {WIN.version}</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Portable single executable. No installer, no admin rights, no internet connection.
+                  Portable single executable and release ZIP. No installer required, no admin rights, no internet connection.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                    <li>Published {WIN.releaseDate} in the verified GitHub release.</li>
-                    <li>Download <code className="text-cyan-300">{WIN.artifact}</code>, extract it, then launch <code className="text-cyan-300">QectorWorkbench-Portable.exe</code>.</li>
+                  <li>Published {WIN.releaseDate} in the verified GitHub release.</li>
+                  <li>Download <code className="text-cyan-300">{WIN.artifact}</code>, then launch directly.</li>
                   <li>Headless MCP server: <code className="text-cyan-300">QectorWorkbench-Portable.exe --mcp</code></li>
-                   <li>Runtime data: <code className="text-cyan-300">%LOCALAPPDATA%\QectorWorkbench</code></li>
-                   <li>ZIP SHA-256: <code className="text-cyan-300 break-all">{WIN.artifactSha256}</code></li>
-                 </ul>
-                 <a href={WIN.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan text-sm inline-block">
-                   Download Windows ZIP
-                 </a>{' '}
-                 <a href={WIN.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline">
-                   Release notes
-                 </a>
+                  <li>Runtime data: <code className="text-cyan-300">%LOCALAPPDATA%\QectorWorkbench</code></li>
+                  <li>Exe SHA-256: <code className="text-cyan-300 break-all">{WIN.artifactSha256}</code></li>
+                </ul>
+                <div className="flex flex-col gap-2 pt-2">
+                  <a href={WIN.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan text-sm text-center">
+                    Download Windows Portable (.exe)
+                  </a>
+                  <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.7/QectorWorkbench-v1.0.7-Windows-x64-Public.zip" target="_blank" rel="noopener noreferrer" className="btn-outline text-xs text-center">
+                    Download Full ZIP Archive
+                  </a>
+                  <a href={WIN.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline text-center">
+                    Release notes &amp; signatures
+                  </a>
+                </div>
               </div>
 
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
-                <h3 className="text-cyan-300 font-semibold text-base">Linux x64 Â· {LINUX.version}</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">Linux x64 · {LINUX.version}</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Published {LINUX.version} AppImage and Debian package with a bundled qector-decoder-v3 {LINUX.backendVersion} backend and {LINUX.mcpTools}-tool MCP server.
+                  Published {LINUX.version} portable ELF executable and Debian (.deb) package with bundled qector-decoder-v3 {LINUX.backendVersion} backend and {LINUX.mcpTools}-tool MCP server.
                 </p>
-                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                    <li>Published {LINUX.releaseDate} in the verified GitHub release.</li>
-                    <li>Download <code className="text-cyan-300">{LINUX.artifact}</code>, extract it, then run the portable binary or Debian package.</li>
+                <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
+                  <li>Published {LINUX.releaseDate} in the verified GitHub release.</li>
+                  <li>Download <code className="text-cyan-300">{LINUX.artifact}</code> or the Debian package.</li>
                   <li>Headless MCP server: append <code className="text-cyan-300">--mcp</code></li>
-                   <li>Runtime data: <code className="text-cyan-300">~/.local/share/QectorWorkbench</code></li>
-                   <li>ZIP SHA-256: <code className="text-cyan-300 break-all">{LINUX.artifactSha256}</code></li>
-                 </ul>
-                 <a href={LINUX.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm inline-block">
-                   Download Linux ZIP
-                 </a>{' '}
-                 <a href={LINUX.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline">
-                   Release notes
-                 </a>
+                  <li>Runtime data: <code className="text-cyan-300">~/.local/share/QectorWorkbench</code></li>
+                  <li>Portable SHA-256: <code className="text-cyan-300 break-all">{LINUX.artifactSha256}</code></li>
+                  <li>Debian SHA-256: <code className="text-cyan-300 break-all">5221dc9557319f2c55e6048ab30eb4a080d603abc9bab3d2b4cde01ef5b8aa45</code></li>
+                </ul>
+                <div className="flex flex-col gap-2 pt-2">
+                  <a href={LINUX.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan text-sm text-center">
+                    Download Linux Portable
+                  </a>
+                  <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/download/v1.0.7/qector-workbench_1.0.7_amd64.deb" target="_blank" rel="noopener noreferrer" className="btn-outline text-xs text-center">
+                    Download Debian Package (.deb)
+                  </a>
+                  <a href={LINUX.releaseUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-xs hover:underline text-center">
+                    Release notes &amp; signatures
+                  </a>
+                </div>
               </div>
 
-                            <div className="p-5 bg-void border border-gridline rounded-xl space-y-3 opacity-60">
-                <h3 className="text-cyan-300 font-semibold text-base">macOS arm64 â€” not ready yet</h3>
+              <div className="p-5 bg-void border border-gridline rounded-xl space-y-3 opacity-60">
+                <h3 className="text-cyan-300 font-semibold text-base">macOS arm64 — not ready yet</h3>
                 <p className="text-secondary text-xs leading-relaxed">
                   Apple silicon build requires a build on Apple hardware and is not included until that build is produced and signed.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Requires Apple hardware build â€” coming soon</li>
-                  <li>No artifact yet â€” check back for v1.0.6 macOS release</li>
-                  <li>Windows and Linux v1.0.6 are live with 19 decoders</li>
+                  <li>Requires Apple hardware build — coming soon</li>
+                  <li>No artifact yet — check back for macOS release</li>
+                  <li>Windows and Linux v1.0.7 are live with 19 decoders</li>
                 </ul>
-                <span className="text-muted-foreground text-xs">Not available</span>
+                <span className="text-muted-foreground text-xs">Not available yet</span>
               </div>
             </div>
 
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl text-xs text-secondary leading-relaxed">
-              <strong className="text-primary">Verify your download:</strong> SHA-256 checksums for every file are published in
+              <strong className="text-primary">Verify your download:</strong> SHA-256 checksums and GPG signature files (.asc) for every file are published in
               the release notes. Override the runtime data directory with <code className="text-cyan-300">QECTOR_DATA_DIR</code>.
             </div>
           </div>
@@ -269,15 +282,15 @@ export default function Workbench() {
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
-              Windows backend qector_decoder_v3 {WIN.backendVersion}
+                Windows &amp; Linux backend qector_decoder_v3 {WIN.backendVersion}
               </span>
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-                   Each v1.0.6 release (Windows/Linux) â€” macOS not ready yet â€” declares <strong className="text-secondary">19 named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
-                   its bundled qector_decoder_v3 {WIN.backendVersion} backend. Consult each release's
-                   included manuals for platform-specific coverage.
-             </p>
+              Each v1.0.7 release (Windows/Linux) — macOS not ready yet — declares <strong className="text-secondary">19 named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
+              its bundled qector_decoder_v3 {WIN.backendVersion} backend. Consult each release's
+              included manuals for platform-specific coverage.
+            </p>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm border-collapse">
@@ -305,7 +318,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 2)}>
             <h2 className="text-2xl font-bold mb-2">10 Supported Code Families</h2>
             <p className="text-secondary text-sm mb-6">
-               The published releases cover <strong className="text-primary">10 code families</strong>, including qLDPC
+              The published releases cover <strong className="text-primary">10 code families</strong>, including qLDPC
               and colour codes.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -326,11 +339,11 @@ export default function Workbench() {
               {[
                 {
                   name: 'Desktop GUI',
-                  desc: 'CustomTkinter desktop UI for Windows. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3â€“d63 on supported families.',
+                  desc: 'CustomTkinter desktop UI for Windows and Linux. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3–d63 on supported families.',
                 },
                 {
-                   name: 'MCP Tools',
-                   desc: 'Native Model Context Protocol server over stdio JSON-RPC 2.0, launched with --mcp and usable headlessly with no display. Connects AI agents directly to decoder execution and diagnostics.',
+                  name: 'MCP Tools',
+                  desc: 'Native Model Context Protocol server over stdio JSON-RPC 2.0, launched with --mcp and usable headlessly with no display. Connects AI agents directly to decoder execution and diagnostics.',
                 },
                 {
                   name: 'Fully Self-Contained',
@@ -338,7 +351,7 @@ export default function Workbench() {
                 },
                 {
                   name: 'Self / Auto-Debug Layer',
-                  desc: 'Verifies HÂ·c == s on every decode with a full attempt trace, and falls back across decoders automatically when a decoder fails to produce a faithful correction.',
+                  desc: 'Verifies H·c == s on every decode with a full attempt trace, and falls back across decoders automatically when a decoder fails to produce a faithful correction.',
                 },
                 {
                   name: 'Hardware Dashboard',
@@ -350,7 +363,7 @@ export default function Workbench() {
                 },
                 {
                   name: 'Documentation Export',
-                   desc: 'Export documentation and evidence in the formats supported by the selected release, with optional .zenodo.json and CITATION.cff deposit sidecars.',
+                  desc: 'Export documentation and evidence in the formats supported by the selected release, with optional .zenodo.json and CITATION.cff deposit sidecars.',
                 },
                 {
                   name: 'Bundled Manuals & EULA',
@@ -375,11 +388,11 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
               title="Documentation & Reference"
-               statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.6, Linux v1.0.6, and macOS â€” not ready yet builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
+              statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.7, Linux v1.0.7, and macOS — not ready yet builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a
-                 href={WIN.releaseUrl}
+                href={WIN.releaseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-void border border-gridline rounded-xl hover:border-cyan-300/40 transition-colors"

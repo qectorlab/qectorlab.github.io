@@ -10,7 +10,7 @@ export default function Refund() {
   return (
     <>
       <SEO
-        title="Refund Policy Â· QECTOR"
+        title="Refund Policy · QECTOR"
         description="QECTOR Decoder v3 refund policy. License tokens are delivered instantly and are non-refundable; the $499 60-day evaluation is the creditable way to evaluate before committing."
       />
 
@@ -18,7 +18,7 @@ export default function Refund() {
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            All prices in USD Â· Instant digital delivery Â· Last updated August 2026
+            All prices in USD · Instant digital delivery · Last updated August 2026
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Refund Policy" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -116,10 +116,10 @@ export default function Refund() {
             <h2 className="text-xl font-bold mb-4">Seller and contact</h2>
             <p className="text-secondary text-sm leading-relaxed mb-3">
               Licenses are sold by <strong className="text-primary">Guillaume Lessard</strong>, sole proprietor, trading as
-              iD01t Productions, QuÃ©bec, Canada. Payments are processed by Stripe; card details never reach QECTOR systems.
+              iD01t Productions, Québec, Canada. Payments are processed by Stripe; card details never reach QECTOR systems.
             </p>
             <p className="text-secondary text-sm leading-relaxed mb-3">
-              Registered address: 2004 De Lorimier, Longueuil, QuÃ©bec, Canada, J4K 3H7.
+              Registered address: 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7.
             </p>
             <p className="text-secondary text-sm leading-relaxed">
               Refund and billing questions:{' '}

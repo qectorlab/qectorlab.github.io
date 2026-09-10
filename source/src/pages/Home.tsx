@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="QECTOR Â· Production-Grade Quantum Error Correction Decoding for Python"
+        title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
         description="QECTOR Decoder v3 - Rust-core Python library with 17 concrete decoder configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance."
       />
       <JsonLd
@@ -123,7 +123,7 @@ export default function Home() {
             className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-center text-xs leading-relaxed text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} Â· Certified First Stable Release Â· Changelog â†’</span>
+            <span>v{pypiVersion} · Certified First Stable Release · Changelog →’</span>
           </Link>
 
           <h1
@@ -141,7 +141,7 @@ export default function Home() {
             className="text-base sm:text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed break-words"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-             The v1.0.0 runtime ships 17 concrete decoder configurations, while Workbench v1.0.6 names 19 kinds in total:
+             The v1.0.0 runtime ships 17 concrete decoder configurations, while Workbench v1.0.7 names 19 kinds in total:
              those configurations plus AutoDecoder and Auto Router orchestration entries.{' '}
              <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
@@ -151,7 +151,7 @@ export default function Home() {
 
           <div className="flex flex-wrap gap-4 justify-center mb-10">
             <Link to="/pricing" className="btn-gold text-base px-8 py-4 text-sm sm:text-base font-bold">
-              Start $499 Evaluation â†’
+              Start $499 Evaluation →’
             </Link>
             <Link to="/decoder" className="btn-cyan text-base px-8 py-4 text-sm sm:text-base">
               Explore the Decoder
@@ -223,7 +223,7 @@ export default function Home() {
                <div className="text-gold-400 font-mono text-xs uppercase tracking-wider mb-3">Secure Delivery</div>
                <h3 className="text-lg font-bold text-primary mb-2">Signed, traceable licensing</h3>
                <p className="text-secondary text-sm leading-relaxed">Commercial fulfillment requires a live Stripe event, issues a v2 Ed25519 token, and records independent billing and license delivery states.</p>
-               <Link to="/license" className="inline-block text-gold-400 text-sm font-medium hover:underline mt-3">Read the certified procedure â†’</Link>
+               <Link to="/license" className="inline-block text-gold-400 text-sm font-medium hover:underline mt-3">Read the certified procedure →’</Link>
              </div>
            </div>
            <div className="mt-8 card-surface p-6 border-cyan-300/20">
@@ -277,7 +277,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
             {[
               { icon: 'ðŸ“‹', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
-              { icon: 'ðŸ“–', label: 'Mastering QEC Â· Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
+              { icon: 'ðŸ“–', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
               { icon: 'ðŸ“¦', label: `PyPI Wheel v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
               { icon: 'ðŸ’»', label: 'Free Workbench App', href: '/workbench' },
               { icon: 'ðŸ†”', label: 'ORCID 0009-0000-3465-3753', href: 'https://orcid.org/0009-0000-3465-3753' },
@@ -350,7 +350,7 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Install',
-                 desc: 'Install the certified v1.0.0 wheel in a supported Python 3.9â€“3.13 environment alongside your existing Stim or PyMatching workflow.',
+                 desc: 'Install the certified v1.0.0 wheel in a supported Python 3.9–3.13 environment alongside your existing Stim or PyMatching workflow.',
                  detail: 'pip install qector-decoder-v3==1.0.0',
                 code: true,
               },
@@ -365,7 +365,7 @@ export default function Home() {
                 step: '03',
                 title: 'Validate',
                  desc: 'Every claim is scoped to a declared workload and backed by SHA-256 sealed artifacts. Run qector-doctor before relying on optional paths and preserve the report with the result.',
-                 detail: 'evidence policy Â· SHA-256 sealed',
+                 detail: 'evidence policy · SHA-256 sealed',
                 code: false,
               },
             ].map((step) => (
@@ -409,7 +409,7 @@ export default function Home() {
                   title: 'Blossom MWPM (Exact)',
                   tag: 'Blossom',
                   desc: 'Weight-optimal exact minimum-weight perfect matching for graph-like codes. The reference decoder for surface codes.',
-                  proof: 'Exact optimal matching Â· Stim-native',
+                  proof: 'Exact optimal matching · Stim-native',
                 },
                 {
                   title: 'qLDPC Support',
@@ -425,7 +425,7 @@ export default function Home() {
                 },
                 {
                   title: 'One Library, Pluggable',
-                  tag: 'Stim Â· PyMatching Â· Sinter Â· Qiskit',
+                  tag: 'Stim · PyMatching · Sinter · Qiskit',
                   desc: 'Drop QECTOR into any existing Stim or PyMatching workflow. Same API surface, swappable backend. No vendor lock-in.',
                   proof: 'Drop-in, same API surface',
                 },
@@ -446,7 +446,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                   17 Workbench Kinds Â· 15+ Concrete Configs
+                   17 Workbench Kinds · 15+ Concrete Configs
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   Production-Grade Decoding Algorithms
@@ -459,7 +459,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     { label: ' v1.0.0 First Stable', desc: 'API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor.' },
-                    { label: ' 15 Binary Wheels', desc: 'Python 3.9â€“3.13 across Windows amd64, Linux x86_64, and macOS arm64, Sigstore-attested on PyPI.' },
+                    { label: ' 15 Binary Wheels', desc: 'Python 3.9–3.13 across Windows amd64, Linux x86_64, and macOS arm64, Sigstore-attested on PyPI.' },
                     { label: ' GPU Batch Acceleration', desc: 'CUDA path ships in every wheel (edge_weights, precision="f64"); OpenCL via source build.' },
                     { label: ' Reproducible Harness', desc: 'qector bench ships with the package; measure on your own hardware, no universal figures claimed.' },
                   ].map((item) => (
@@ -504,7 +504,7 @@ export default function Home() {
                 title="Reproducible Benchmark Harness"
                 statement="No universal benchmark figures are published on this site, because results depend on your hardware, drivers, and workloads. The qector bench harness ships with the package so you can measure logical error rates and throughput on your own machines."
                 href="https://github.com/GuillaumeLessard/qector-decoder"
-                linkLabel="GitHub Artifacts â†’"
+                linkLabel="GitHub Artifacts →’"
                 className="max-w-3xl mx-auto mb-6"
               />
             </div>
@@ -514,7 +514,7 @@ export default function Home() {
                 <div><span className="text-cyan-300">$</span> pip install "qector-decoder-v3[bench]"</div>
                 <div><span className="text-cyan-300">$</span> qector-doctor</div>
                 <div><span className="text-cyan-300">$</span> qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001</div>
-                <div className="text-green-400 mt-2">âœ“ Logical error rates and throughput written as reproducible JSON</div>
+                <div className="text-green-400 mt-2">✓“ Logical error rates and throughput written as reproducible JSON</div>
               </div>
             </div>
 
@@ -539,7 +539,7 @@ export default function Home() {
                  hosted services, and redistribution require the written scope described on the license and pricing pages.
               </p>
               <Link to="/commercial" className="text-cyan-300 text-sm font-medium hover:underline">
-                Learn about licensing â†’
+                Learn about licensing →’
               </Link>
             </div>
 
@@ -554,7 +554,7 @@ export default function Home() {
                 100% credit toward any annual license.
               </p>
               <Link to="/pricing" className="btn-gold text-sm">
-                View Pricing &amp; Tiers â†’
+                View Pricing &amp; Tiers →’
               </Link>
             </div>
           </div>
@@ -567,11 +567,11 @@ export default function Home() {
           <div className="max-w-xl mx-auto text-center">
             <div ref={(el) => addRef(el, 11)} className="mb-6">
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                Self-Serve Â· Instant Clearance
+                Self-Serve · Instant Clearance
               </span>
               <h2 className="text-3xl font-bold mb-3">Commercial Evaluation License</h2>
               <p className="text-secondary text-sm max-w-md mx-auto">
-                One-time payment Â· 60-day pilot Â· Fully creditable toward annual license
+                One-time payment · 60-day pilot · Fully creditable toward annual license
               </p>
             </div>
 
@@ -579,7 +579,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 to-transparent pointer-events-none" />
               <div className="mb-6">
                 <h3 className="text-4xl font-extrabold text-primary">$499</h3>
-                <p className="text-muted-foreground text-xs mt-1">Unlimited internal seats Â· All decoders Â· Priority support</p>
+                <p className="text-muted-foreground text-xs mt-1">Unlimited internal seats · All decoders · Priority support</p>
               </div>
 
               <div className="flex justify-center mb-6">
@@ -604,7 +604,7 @@ export default function Home() {
                   '100% credit toward annual license',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-xs text-secondary">
-                    <span className="text-green-400">âœ“</span>
+                    <span className="text-green-400">✓“</span>
                     <span>{item}</span>
                   </div>
                 ))}
@@ -612,7 +612,7 @@ export default function Home() {
             </div>
 
             <p className="text-xs text-muted-foreground mt-4">
-              Need annual pricing, multi-seat, or OEM? <Link to="/commercial" className="text-cyan-300 hover:underline">View all tiers â†’</Link>
+              Need annual pricing, multi-seat, or OEM? <Link to="/commercial" className="text-cyan-300 hover:underline">View all tiers →’</Link>
             </p>
           </div>
         </div>

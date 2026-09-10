@@ -153,14 +153,14 @@ const page = (inner: string) => wrap(inner + nav());
 export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/',
-    title: 'QECTOR Â· Production-Grade Quantum Error Correction Decoding for Python',
+    title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
     description:
       'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder with 17 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance.',
     heading: 'Production-Grade QEC Decoding for Python',
     body: page(
       h1('Production-Grade QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library with 15 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.6 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library with 15 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -194,9 +194,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/decoder',
-    title: 'QECTOR Decoder v3 Â· Production-Grade QEC Decoding for Python',
+    title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 â€“ 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 – 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
@@ -221,11 +221,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         table(
           ['Key', 'Value'],
           [
-            ['Languages', 'Rust core (PyO3) / Python 3.9â€“3.13 API'],
+            ['Languages', 'Rust core (PyO3) / Python 3.9–3.13 API'],
             ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (15 binary wheels)'],
             ['GPU', 'CUDA ships in the wheel; OpenCL via source build'],
             ['QEC library', 'Stim / Sinter / PyMatching / qiskit-qec compatible'],
-            ['Packaging', 'PyPI binary wheels (cp39â€“cp313, 3 platforms), Trusted Publishing + Sigstore'],
+            ['Packaging', 'PyPI binary wheels (cp39–cp313, 3 platforms), Trusted Publishing + Sigstore'],
             ['License', 'PolyForm Noncommercial 1.0.0 (community) / Commercial'],
           ]
         ) +
@@ -235,7 +235,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/evidence',
-    title: 'Evidence & Reports Â· QECTOR',
+    title: 'Evidence & Reports · QECTOR',
     description:
       'Complete six-record Zenodo evidence registry, validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. SHA-256 sealed on GitHub.',
     heading: 'Evidence & Reports',
@@ -261,7 +261,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Evidence artifacts') +
         ul([
-          'Syndromic validation: decode runs verify HÂ·c = s on every shot through the self-debugging harness.',
+          'Syndromic validation: decode runs verify H·c = s on every shot through the self-debugging harness.',
           'SHA-256 sealed artifact manifests archived on GitHub.',
         ]) +
         pre(
@@ -277,26 +277,26 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/workbench',
-    title: 'Workbench Â· QECTOR',
+    title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.6 (x64), Linux v1.0.6 (x64), and macOS â€” not ready yet, each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
+      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.7 (x64), Linux v1.0.7 (x64), and macOS — not ready yet, each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
     heading: 'QECTOR Workbench',
     body: page(
       h1('QECTOR Workbench') +
         p(
-          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The live repositories publish Windows, Linux, and macOS â€” not ready yet builds. Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router), and 10 code families.'
+          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The live repositories publish Windows, Linux, and macOS — not ready yet builds. Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router), and 10 code families.'
         ) +
         h2('Downloads') +
         ul([
-          'Windows x64: <code>QectorWorkbench-Portable.exe</code> (<code>34178d24173fc4acac9bf40781347e944e5d9e43a2729a2ce371858742d8889f</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.6" style="color:#67e8f9;">live release notes</a>',
-          'Linux x64: <code>QectorWorkbench-Portable</code> (<code>ac6830060e36c1de458dc3ebef6e94f9720271fda9e4908a9ad16589e2649d59</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.6" style="color:#67e8f9;">live release notes</a>',
-          'macOS arm64 (Apple silicon): <code>QectorWorkbench-1.0.6-arm64.dmg â€” not ready yet</code> (<code>not-ready-yet</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
+          'Windows x64: <code>QectorWorkbench-Portable.exe</code> (<code>c53ca5f4fc49152f242a847d0ca11f147164dda426ae29ec170c451871b8ab13</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.7" style="color:#67e8f9;">live release notes</a>',
+          'Linux x64: <code>QectorWorkbench-Portable</code> (<code>aa3949d25082165dc3b89115486e1ea4e210cd5254659da32185fe6a8e71a1c8</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.7" style="color:#67e8f9;">live release notes</a>',
+          'macOS arm64 (Apple silicon): <code>QectorWorkbench-1.0.6-arm64.dmg — not ready yet</code> (<code>not-ready-yet</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
           'Headless MCP server on every platform: <code>--mcp</code>; MCP protocol 2024-11-05 over stdio JSON-RPC 2.0.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
         h2('Workspaces') +
         p(
-          'The v1.0.6 releases document eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
+          'The v1.0.7 releases document eight GUI tabs plus a live Console: Code Explorer, Decoder Lab, Benchmark, Batch &amp; Streaming, Hardware, Diagnostics, Documentation, Lab &amp; Personal Info, and Console. The Linux build adds a History tab. Use each release&apos;s manuals for platform-specific details.'
         ) +
         h2('10 Quantum Code Families') +
         p('The published Workbench releases cover 10 code families including qLDPC and colour codes:') +
@@ -327,12 +327,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Workbench',
         description:
-          'Free desktop application and Model Context Protocol server for quantum error correction. Windows, Linux, and macOS â€” not ready yet each provide an 85-tool MCP server, 19 named decoder kinds (17 concrete configurations plus 2 routing kinds), and 10 quantum code families.',
+          'Free desktop application and Model Context Protocol server for quantum error correction. Windows, Linux, and macOS — not ready yet each provide an 85-tool MCP server, 19 named decoder kinds (17 concrete configurations plus 2 routing kinds), and 10 quantum code families.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Windows, Linux, macOS',
-        softwareVersion: '1.0.6',
+        softwareVersion: '1.0.7',
         url: SITE_URL + '/workbench/',
-        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.6/QectorWorkbench-Portable.exe',
+        downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.7/QectorWorkbench-Portable.exe',
         author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
       },
@@ -340,7 +340,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/pricing',
-    title: 'Pricing Â· QECTOR',
+    title: 'Pricing · QECTOR',
     description:
       'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD.',
     heading: 'Pricing & Licensing',
@@ -391,14 +391,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/fr/pricing',
-    title: 'Tarification Â· QECTOR',
+    title: 'Tarification · QECTOR',
     description: 'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD.',
     heading: 'Tarification et Licences',
     body: page(h1('Tarification et Licences') + p('QECTOR Decoder v3 is source-available...')),
   },
   {
     path: '/commercial',
-    title: 'Enterprise Licensing Â· QECTOR',
+    title: 'Enterprise Licensing · QECTOR',
     description:
       'Enterprise and OEM licenses for QECTOR Decoder v3. Custom agreements for redistribution, SaaS hosting, and hardware bundling.',
     heading: 'Enterprise & OEM Licensing',
@@ -417,18 +417,18 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/guillaume-lessard',
-    title: 'Guillaume Lessard Â· Founder of QECTOR and iD01t Productions',
+    title: 'Guillaume Lessard · Founder of QECTOR and iD01t Productions',
     description:
-      'Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, QuÃ©bec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
+      'Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
     heading: 'Guillaume Lessard',
     body: page(
       h1('Guillaume Lessard') +
         p(
-          'Founder, software engineer, author and independent researcher, based in Longueuil, QuÃ©bec. I design Rust/Python quantum error-correction systems, local MCP tooling, and release workflows where correctness claims are tied to declared workloads, reproducible artifacts, and public records. I build and support QECTOR independently from Longueuil.'
+          'Founder, software engineer, author and independent researcher, based in Longueuil, Québec. I design Rust/Python quantum error-correction systems, local MCP tooling, and release workflows where correctness claims are tied to declared workloads, reproducible artifacts, and public records. I build and support QECTOR independently from Longueuil.'
         ) +
         h2('Making sure you have the right Guillaume Lessard') +
         p(
-          'It is a common QuÃ©bÃ©cois name shared by several accomplished people: including a compiler engineer working on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. The identifiers below are the ones I control.'
+          'It is a common Québécois name shared by several accomplished people: including a compiler engineer working on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. The identifiers below are the ones I control.'
         ) +
         table(
           ['Identifier', 'Value'],
@@ -436,7 +436,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['ORCID', `<a href="https://orcid.org/0009-0000-3465-3753" style="color:#67e8f9;">0009-0000-3465-3753</a>`],
             ['GitHub', `<a href="https://github.com/qectorlab" style="color:#67e8f9;">github.com/qectorlab</a>`],
             ['PyPI', `<a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3</a>`],
-            ['Studio', `<a href="https://id01t.store/" style="color:#67e8f9;">iD01t Productions</a>, Longueuil, QuÃ©bec (founded 2023)`],
+            ['Studio', `<a href="https://id01t.store/" style="color:#67e8f9;">iD01t Productions</a>, Longueuil, Québec (founded 2023)`],
             ['itch.io', `<a href="https://id01t.itch.io/" style="color:#67e8f9;">id01t.itch.io</a>`],
             ['Email', `<a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>`],
           ]
@@ -448,7 +448,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Skills') +
         ul([
           'Systems and performance: Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
-          'Python engineering: Python 3.9â€“3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, sigstore attestation.',
+          'Python engineering: Python 3.9–3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, sigstore attestation.',
           'Quantum error correction: MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
           'Applications and desktop: CustomTkinter GUI, self-contained runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
           'Web and product: React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
@@ -457,12 +457,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Selected work') +
         ul([
            `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 17 concrete decoder configurations, first stable release v1.0.0.`,
-           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows, Linux, and macOS â€” not ready yet releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
+           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows, Linux, and macOS — not ready yet releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
            '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>; <a href="https://doi.org/10.5281/zenodo.22244510" style="color:#67e8f9;">normative manual DOI 10.5281/zenodo.22244510</a>; <a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">certification/proof DOI 10.5281/zenodo.22046403</a>.',
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
           'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
         ]) +
-        p('Book a 30-minute call: <a href="https://calendly.com/qector-info/30min" style="color:#67e8f9;">calendly.com/qector-info/30min</a> Â· <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+        p('Book a 30-minute call: <a href="https://calendly.com/qector-info/30min" style="color:#67e8f9;">calendly.com/qector-info/30min</a> · <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
     jsonLdExtra: [
       {
@@ -515,7 +515,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/about',
-    title: 'About Â· QECTOR',
+    title: 'About · QECTOR',
     description:
       'About QECTOR: Guillaume Lessard, iD01t Productions, QEC research background, ORCID, GitHub artifacts, mission and engineering philosophy.',
     heading: 'About QECTOR',
@@ -534,7 +534,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
 
   {
     path: '/changelog',
-    title: 'Changelog Â· QECTOR',
+    title: 'Changelog · QECTOR',
     description:
       'Version history for QECTOR Decoder v3. Current release: v1.0.0 (2026-08-06), the first stable release. PyPI release train.',
     heading: 'Changelog',
@@ -551,23 +551,23 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'pymatching submodule shim: from qector_decoder_v3.pymatching import Matching.',
           'SparseBlossomDecoder hot path is now zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed.',
           'Licence hardening: v2 tokens carry tier + expiry; malformed tokens return False; unreadable key files report invalid.',
-          '15 binary wheels (cp39â€“cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
+          '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
           'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.22244510).',
         ]) +
          h2('Verified PyPI release dates (UTC)') +
          ul([
            'No v0.7.1 release appears in the public PyPI history; it is intentionally omitted.',
            'These are PyPI upload dates, not inferred development or local file dates.',
-           ...PYPI_RELEASES.slice(1).map(({ version, releaseDate, label }) => `v${version}: ${releaseDate} Â· ${label}`),
+           ...PYPI_RELEASES.slice(1).map(({ version, releaseDate, label }) => `v${version}: ${releaseDate} · ${label}`),
          ]) +
          p('The canonical PyPI history contains the complete artifact record and remains the source of truth for package release dates.')
     ),
   },
   {
     path: '/contact',
-    title: 'Contact Â· QECTOR',
+    title: 'Contact · QECTOR',
     description:
-      'Contact QECTOR Â· commercial inquiries, technical support schedules, and evaluation requests.',
+      'Contact QECTOR · commercial inquiries, technical support schedules, and evaluation requests.',
     heading: 'Contact',
     body: page(
       h1('Contact') +
@@ -581,7 +581,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/docs',
-    title: 'Documentation Â· QECTOR',
+    title: 'Documentation · QECTOR',
     description:
       'Documentation hub for QECTOR quantum error correction decoder. API reference, user manual, installation guides, and validation reports.',
     heading: 'Documentation',
@@ -589,7 +589,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
       h1('Documentation Hub') +
         ul([
            '<a href="/claude-plugin" style="color:#67e8f9;">Claude Code Plugin</a>: v1.0.6 with 28 skills, 5 agents, four MCP servers, and explicit stable, research, and admin profiles.',
-           '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 19 named decoder kinds, v1.0.6 on Windows and Linux â€” macOS not ready yet.',
+           '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 19 named decoder kinds, v1.0.7 on Windows and Linux — macOS not ready yet.',
           '<a href="/mcp-server" style="color:#67e8f9;">MCP Server</a>: app-free local library server exposing 8 verified tools.',
           '<a href="/installer" style="color:#67e8f9;">Installation guide</a>: pip install on Linux, macOS, Windows.',
           '<a href="/manual" style="color:#67e8f9;">User manual</a>: configuration, decoder selection, benchmarking, troubleshooting.',
@@ -602,7 +602,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/manual',
-    title: 'User Manual Â· QECTOR',
+    title: 'User Manual · QECTOR',
     description:
       'Complete user manual for QECTOR Decoder v3. Installation, decoder selection, local measurements, and troubleshooting.',
     heading: 'User Manual',
@@ -627,7 +627,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/technical-reference',
-    title: 'Technical Reference Â· QECTOR',
+    title: 'Technical Reference · QECTOR',
     description:
       'API reference, decoder parameters, and technical documentation for QECTOR quantum error correction decoder.',
     heading: 'Technical Reference',
@@ -649,9 +649,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/installer',
-    title: 'Installation Â· QECTOR',
+    title: 'Installation · QECTOR',
     description:
-      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9â€“3.13.',
+      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9–3.13.',
     heading: 'Installation',
     body: page(
       h1('Installation') +
@@ -668,7 +668,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/license',
-    title: 'License Â· QECTOR',
+    title: 'License · QECTOR',
     description:
       'QECTOR Decoder v3 license terms and certified v1.0.0 token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
     heading: 'License',
@@ -696,12 +696,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
          p('If either delivery email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.') +
          p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a>: also bundled with the package distribution.') +
         p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
-        p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> Â· <a href="/refund" style="color:#67e8f9;">refund policy</a> Â· Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+        p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
   {
     path: '/privacy',
-    title: 'Privacy Policy Â· QECTOR',
+    title: 'Privacy Policy · QECTOR',
     description: 'Privacy policy for QECTOR website and services.',
     noindex: true,
     heading: 'Privacy Policy',
@@ -715,7 +715,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/terms',
-    title: 'Terms of Service Â· QECTOR',
+    title: 'Terms of Service · QECTOR',
     description: 'Terms of service for QECTOR website and software.',
     noindex: true,
     heading: 'Terms of Service',
@@ -725,14 +725,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Use of the QECTOR website and software is governed by the PolyForm Noncommercial License 1.0.0 for community use, or by a written commercial license agreement for paid tiers. Benchmarks and validation artifacts may be republished with attribution. No warranty is provided; see the license for the full terms.'
         ) +
         p(
-          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, QuÃ©bec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: QuÃ©bec, Canada. Licence tokens are delivered instantly and all sales are final: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
+          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Licence tokens are delivered instantly and all sales are final: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
         ) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
   {
     path: '/fr/terms',
-    title: 'Conditions gÃ©nÃ©rales (FR) Â· QECTOR',
+    title: 'Conditions gÃ©nÃ©rales (FR) · QECTOR',
     description: "Conditions d'utilisation de QECTOR.",
     noindex: true,
     heading: 'Conditions gÃ©nÃ©rales',
@@ -740,7 +740,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/refund',
-    title: 'Refund Policy Â· QECTOR',
+    title: 'Refund Policy · QECTOR',
     description:
       'QECTOR Decoder v3 refund policy. Licence tokens are delivered instantly and are non-refundable; the $499 60-day evaluation is the creditable way to evaluate before committing.',
     heading: 'Refund Policy',
@@ -768,14 +768,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ]) +
         h2('Currency, tax, and seller') +
         p(
-          'All prices are quoted and charged in US dollars (USD), exclusive of tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout. Licences are sold by Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, QuÃ©bec, Canada, J4K 3H7. Payments are processed by Stripe and card details never reach QECTOR systems.'
+          'All prices are quoted and charged in US dollars (USD), exclusive of tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout. Licences are sold by Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Payments are processed by Stripe and card details never reach QECTOR systems.'
         ) +
-        p('Refund and billing questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> Â· See also <a href="/terms" style="color:#67e8f9;">terms</a> and <a href="/license" style="color:#67e8f9;">licence</a>.')
+        p('Refund and billing questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> · See also <a href="/terms" style="color:#67e8f9;">terms</a> and <a href="/license" style="color:#67e8f9;">licence</a>.')
     ),
   },
   {
     path: '/mcp-server',
-    title: 'MCP Server Â· QECTOR Decoder v3',
+    title: 'MCP Server · QECTOR Decoder v3',
     description:
       'Model Context Protocol server for quantum error correction decoding. Local stdio JSON-RPC 2.0 tools exposing 8 verified library tools to any MCP client.',
     heading: 'QECTOR MCP Server',
@@ -802,7 +802,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/claude-plugin',
-    title: 'QECTOR Claude Plugin Â· Quantum Error Correction for Claude Code',
+    title: 'QECTOR Claude Plugin · Quantum Error Correction for Claude Code',
     description:
       'Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local zero-egress decoding.',
     heading: 'QECTOR Claude Plugin',
@@ -813,7 +813,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('28 Domain Skills') +
         p(
-          'The plugin ships 28 skills. The seven flagship skills are qector-core (verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding), qector-math-foundations (Theorems 1â€“16 executable ground truth over GF(2), fail-closed syndrome checking H c = s (mod 2), Wilson 95% CIs), qector-developer (Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing), qector-researcher (literature review, threshold discovery, Monte Carlo noise simulation, reproducible export), qector-hardware-engineer (physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets), qector-educator (tutorial generation, conceptual explainers, interactive decoding walkthroughs), and qector-sysadmin (environment health diagnostics, resource bounds enforcement, runtime hygiene).'
+          'The plugin ships 28 skills. The seven flagship skills are qector-core (verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding), qector-math-foundations (Theorems 1–16 executable ground truth over GF(2), fail-closed syndrome checking H c = s (mod 2), Wilson 95% CIs), qector-developer (Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing), qector-researcher (literature review, threshold discovery, Monte Carlo noise simulation, reproducible export), qector-hardware-engineer (physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets), qector-educator (tutorial generation, conceptual explainers, interactive decoding walkthroughs), and qector-sysadmin (environment health diagnostics, resource bounds enforcement, runtime hygiene).'
         ) +
         h2('5 Specialized Agents') +
         ul([
@@ -848,7 +848,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Official QECTOR plugin v1.0.6 for Claude Code and Claude Desktop. 28 skills, 5 agents, four MCP servers, and local zero-egress decoding backed by qector-decoder-v3 1.0.0.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
-        softwareVersion: '1.0.6',
+        softwareVersion: '1.0.7',
         author: {
           '@type': 'Person',
           name: 'Guillaume Lessard',
@@ -859,7 +859,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/success',
-    title: 'Purchase complete Â· QECTOR',
+    title: 'Purchase complete · QECTOR',
     description:
       'Your QECTOR Decoder v3 licence is being issued. Activation instructions and your Stripe reference.',
     noindex: true,
@@ -873,7 +873,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/blog',
-    title: 'Blog Â· QECTOR',
+    title: 'Blog · QECTOR',
     description: 'QECTOR field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration.',
     heading: 'QECTOR Blog',
     body: page(
@@ -900,7 +900,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   ...blogPosts.map((post) => ({
     path: `/blog/${post.id}`,
-    title: `${post.title} Â· QECTOR Blog`,
+    title: `${post.title} · QECTOR Blog`,
     description: post.description,
     heading: post.title,
     body: page(

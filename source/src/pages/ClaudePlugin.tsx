@@ -33,7 +33,7 @@ const SKILLS = [
   {
     name: 'qector-math-foundations',
     role: 'Mathematical Axioms',
-    desc: 'Theorems 1â€“16 executable obligations over GF(2), syndrome equivalence H c = s (mod 2), Wilson 95% CIs, and coset scoring.',
+    desc: 'Theorems 1–16 executable obligations over GF(2), syndrome equivalence H c = s (mod 2), Wilson 95% CIs, and coset scoring.',
     keyFeatures: ['Theorem 1 fail-closed verification', 'Theorem 2 logical coset scoring', 'Wilson score intervals'],
   },
   {
@@ -213,7 +213,7 @@ export default function ClaudePlugin() {
   return (
     <>
       <SEO
-        title="QECTOR Claude Plugin Â· Quantum Error Correction for Claude Code"
+        title="QECTOR Claude Plugin · Quantum Error Correction for Claude Code"
         description="Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local zero-egress decoding."
       />
       <JsonLd
@@ -247,7 +247,7 @@ export default function ClaudePlugin() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono font-medium mb-6 backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-             <span>ANTHROPIC CLAUDE CODE &amp; DESKTOP PLUGIN Â· v{CLAUDE_PLUGIN_RELEASE.version} Â· published {CLAUDE_PLUGIN_RELEASE.releaseDate}</span>
+             <span>ANTHROPIC CLAUDE CODE &amp; DESKTOP PLUGIN · v{CLAUDE_PLUGIN_RELEASE.version} · published {CLAUDE_PLUGIN_RELEASE.releaseDate}</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto leading-[1.1]">
@@ -482,7 +482,7 @@ export default function ClaudePlugin() {
         </div>
 
         <div className="mt-6">
-           <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-research server Â· {BENCH_TOOLS.length} provisional tools</h3>
+           <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-research server · {BENCH_TOOLS.length} provisional tools</h3>
           <div className="flex flex-wrap gap-2">
             {BENCH_TOOLS.map((t) => (
               <span key={t} className="font-mono text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
@@ -493,7 +493,7 @@ export default function ClaudePlugin() {
          </div>
 
          <div className="mt-6">
-           <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-admin server Â· {ADMIN_TOOLS.length} privileged tools</h3>
+           <h3 className="text-sm font-bold text-slate-100 mb-3 uppercase tracking-wider">qector-admin server · {ADMIN_TOOLS.length} privileged tools</h3>
            <p className="text-xs text-slate-400 mb-3">Disabled by default. Requires <code className="text-cyan-300 font-mono">QECTOR_ADMIN_ENABLED=1</code> and <code className="text-cyan-300 font-mono">confirm=true</code> for every administrative call.</p>
            <div className="flex flex-wrap gap-2">
              {ADMIN_TOOLS.map((tool) => (

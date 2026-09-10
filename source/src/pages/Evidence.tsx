@@ -24,7 +24,7 @@ const REPORTS_DATA = [
   },
   {
     title: 'Syndromic Validation Harness',
-    desc: 'Decode runs verify HÂ·c = s on every shot through the self-debugging harness shipped in the package, with the harness published on GitHub.',
+    desc: 'Decode runs verify H·c = s on every shot through the self-debugging harness shipped in the package, with the harness published on GitHub.',
     status: 'Verified',
   },
   {
@@ -58,7 +58,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
   return (
     <>
       <SEO
-        title="Evidence & Reports Â· QECTOR"
+        title="Evidence & Reports · QECTOR"
         description="Validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. Available on GitHub."
       />
 
@@ -67,7 +67,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-400/10 border border-green-400/20 rounded-full text-xs font-semibold text-green-400 uppercase tracking-wider mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Verified v1.0.0 Manual Â· SHA-256 Sealed Manifests
+            Verified v1.0.0 Manual · SHA-256 Sealed Manifests
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
@@ -77,7 +77,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             validation reports, and SHA-256 sealed manifests archived on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository â†’</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →’</a>
             <Link to="/technical-reference" className="btn-outline">Technical Reference</Link>
           </div>
         </div>

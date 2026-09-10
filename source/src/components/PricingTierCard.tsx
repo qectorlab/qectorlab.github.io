@@ -76,13 +76,13 @@ export default function PricingTierCard({
         <ul className="space-y-2 flex-1 mb-6">
           {features.map((f) => (
             <li key={f} className={`flex items-start gap-2 text-sm text-secondary ${centered ? 'text-left' : ''}`}>
-              <span className={`${accentCheck} mt-0.5`} aria-hidden="true">âœ“</span>
+              <span className={`${accentCheck} mt-0.5`} aria-hidden="true">✓“</span>
               <span><span className="sr-only">Included: </span>{f}</span>
             </li>
           ))}
           {excluded?.map((f) => (
             <li key={f} className={`flex items-start gap-2 text-sm text-muted-foreground/70 ${centered ? 'text-left' : ''}`}>
-              <span className="text-muted-foreground/60 mt-0.5" aria-hidden="true">âœ•</span>
+              <span className="text-muted-foreground/60 mt-0.5" aria-hidden="true">✓•</span>
               <span><span className="sr-only">Not included: </span>{f}</span>
             </li>
           ))}

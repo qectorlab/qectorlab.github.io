@@ -30,6 +30,10 @@
     scroll-behavior: smooth;
   }
 
+  .js-enabled #prerendered {
+    display: none !important;
+  }
+
   body {
     @apply bg-void text-foreground font-sans antialiased overflow-x-hidden;
     -webkit-font-smoothing: antialiased;

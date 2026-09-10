@@ -106,7 +106,7 @@ function ghPagesSpaShell(): import('vite').Plugin {
   return {
     name: 'gh-pages-spa-shell',
     apply: 'build',
-    closeBundle() {
+    writeBundle() {
       const dist = path.resolve(__dirname, 'dist')
       const shell = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
@@ -190,7 +190,6 @@ export default defineConfig(({ command }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "react-router": path.resolve(__dirname, "./node_modules/react-router"),
     },
   },
 }));
