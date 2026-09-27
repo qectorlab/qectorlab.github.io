@@ -5,6 +5,45 @@ import TerminalEmulator from '../components/TerminalEmulator';
 import NeuralReveal from '../components/NeuralReveal';
 import { Info, HelpCircle, Cpu, ShieldCheck, CheckCircle2, AlertCircle, BookOpen } from 'lucide-react';
 
+const INLINE_CODE_CLASS = 'font-mono text-[11px] bg-cyan-300/10 text-cyan-200 px-1 py-0.5 rounded border border-cyan-300/20';
+
+function inlineCodeParts(text: string, keyBase: string): React.ReactNode[] {
+  return text
+    .replace(/\\"/g, '"')
+    .split(/(`[^`\n]+`)/g)
+    .map((part, i) => {
+      if (part.length > 2 && part.startsWith('`') && part.endsWith('`')) {
+        return (
+          <code key={`${keyBase}-${i}`} className={INLINE_CODE_CLASS}>
+            {part.slice(1, -1)}
+          </code>
+        );
+      }
+      return part;
+    });
+}
+
+/** Renders markdown-style `code` spans inside JSX text as <code> elements. */
+function InlineMD({ children }: { children: React.ReactNode }) {
+  const walk = (node: React.ReactNode, base: string): React.ReactNode => {
+    if (typeof node === 'string') {
+      return <React.Fragment key={base}>{inlineCodeParts(node, base)}</React.Fragment>;
+    }
+    if (Array.isArray(node)) {
+      return (
+        <>
+          {node.map((n, i) => (
+            <React.Fragment key={`${base}-${i}`}>{walk(n, `${base}-${i}`)}</React.Fragment>
+          ))}
+        </>
+      );
+    }
+    return node;
+  };
+  return <>{walk(children, 'imd')}</>;
+}
+
+
 interface ManualSection {
   id: string;
   title: string;
@@ -87,15 +126,15 @@ export default function Manual() {
             <div>
               <h3 className="text-primary font-semibold text-sm mb-2">System Requirements</h3>
               <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden text-sm">
-                <div className="p-3 border-b border-gridline flex justify-between">
+                <div className="p-3 border-b border-gridline flex justify-between gap-3">
                   <span className="text-muted-foreground">Python</span>
                   <span className="text-primary">3.9, 3.10, 3.11, 3.12, 3.13 (64-bit)</span>
                 </div>
-                <div className="p-3 border-b border-gridline flex justify-between">
+                <div className="p-3 border-b border-gridline flex justify-between gap-3">
                   <span className="text-muted-foreground">Operating System</span>
                    <span className="text-primary">Linux, macOS, Windows (see current PyPI wheel metadata)</span>
                 </div>
-                <div className="p-3 flex justify-between">
+                <div className="p-3 flex justify-between gap-3">
                   <span className="text-muted-foreground">GPU Requirements (Optional)</span>
                    <span className="text-primary">Optional and environment-dependent; check the installed release diagnostics</span>
                 </div>
@@ -255,11 +294,11 @@ print("Syndrome-faithful correction")`}
               <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden divide-y divide-gridline text-sm">
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">adaptive_k</span>
-                  <span className="text-secondary text-xs flex-1">`bool` (Default: `True`). Enable union-find matching pre-filtering to minimize match graph sizing.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`bool` (Default: `True`). Enable union-find matching pre-filtering to minimize match graph sizing.</InlineMD></span>
                 </div>
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">timeout</span>
-                  <span className="text-secondary text-xs flex-1">`float` (Default: `None`). Maximum time (in seconds) allowed to resolve a single syndrome.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`float` (Default: `None`). Maximum time (in seconds) allowed to resolve a single syndrome.</InlineMD></span>
                 </div>
               </div>
             </div>
@@ -269,15 +308,15 @@ print("Syndrome-faithful correction")`}
               <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden divide-y divide-gridline text-sm">
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">bp_iters</span>
-                  <span className="text-secondary text-xs flex-1">`int` (Default: `30`). Maximum number of belief propagation iterations. Higher iterations improve syndrome accuracy.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`int` (Default: `30`). Maximum number of belief propagation iterations. Higher iterations improve syndrome accuracy.</InlineMD></span>
                 </div>
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">max_paths</span>
-                  <span className="text-secondary text-xs flex-1">`int` (Default: `10`). Maximum number of alternative paths generated for matching reweighting calculations.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`int` (Default: `10`). Maximum number of alternative paths generated for matching reweighting calculations.</InlineMD></span>
                 </div>
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">bp_method</span>
-                  <span className="text-secondary text-xs flex-1">`str` (Default: `"product_sum"`). Choice of BP update method. Options: `"product_sum"`, `"minimum_sum"`.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`str` (Default: `"product_sum"`). Choice of BP update method. Options: `"product_sum"`, `"minimum_sum"`.</InlineMD></span>
                 </div>
               </div>
             </div>
@@ -287,11 +326,11 @@ print("Syndrome-faithful correction")`}
               <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden divide-y divide-gridline text-sm">
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">backend</span>
-                  <span className="text-secondary text-xs flex-1">`str` (Default: `"cuda"`). Choose GPU compilation framework. Options: `"cuda"`, `"opencl"`.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`str` (Default: `"cuda"`). Choose GPU compilation framework. Options: `"cuda"`, `"opencl"`.</InlineMD></span>
                 </div>
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">batch_size</span>
-                  <span className="text-secondary text-xs flex-1">`int` (Default: `1000`). Number of parallel syndromes transferred to and calculated in the GPU memory space.</span>
+                  <span className="text-secondary text-xs flex-1"><InlineMD>`int` (Default: `1000`). Number of parallel syndromes transferred to and calculated in the GPU memory space.</InlineMD></span>
                 </div>
               </div>
             </div>
@@ -309,10 +348,10 @@ print("Syndrome-faithful correction")`}
               <div className="p-4 bg-red-400/5 border border-red-400/20 rounded-xl">
                 <div className="flex items-center gap-2 text-red-400 font-semibold text-sm mb-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>Issue: ImportError when importing `qector`</span>
+                  <span><InlineMD>Issue: ImportError when importing `qector`</InlineMD></span>
                 </div>
                 <p className="text-secondary text-xs leading-relaxed">
-                   <strong>Fix:</strong> Ensure your Python architecture matches the wheel and reinstall with `python -m pip install --force-reinstall qector-decoder-v3`.
+                   <InlineMD><strong>Fix:</strong> Ensure your Python architecture matches the wheel and reinstall with `python -m pip install --force-reinstall qector-decoder-v3`.</InlineMD>
                 </p>
               </div>
 
@@ -322,7 +361,7 @@ print("Syndrome-faithful correction")`}
                   <span>Issue: GPU / CUDA is not detected</span>
                 </div>
                 <p className="text-secondary text-xs leading-relaxed">
-                  <strong>Fix:</strong> Verify drivers by typing `nvidia-smi` in terminal. Ensure CUDA Toolkit 11.8 or higher is installed and environment variable `CUDA_PATH` or `LD_LIBRARY_PATH` points to the CUDA install folder.
+                  <InlineMD><strong>Fix:</strong> Verify drivers by typing `nvidia-smi` in terminal. Ensure CUDA Toolkit 11.8 or higher is installed and environment variable `CUDA_PATH` or `LD_LIBRARY_PATH` points to the CUDA install folder.</InlineMD>
                 </p>
               </div>
 
@@ -332,7 +371,7 @@ print("Syndrome-faithful correction")`}
                   <span>Issue: Out Of Memory (OOM) on GPU batching</span>
                 </div>
                 <p className="text-secondary text-xs leading-relaxed">
-                  <strong>Fix:</strong> Lower the `batch_size` argument in your `GpuBatchDecoder` instantiation. For exceptionally large code distances (d &gt; 15), prefer the linear-scaling `UnionFindDecoder` which reduces memory demands.
+                  <InlineMD><strong>Fix:</strong> Lower the `batch_size` argument in your `GpuBatchDecoder` instantiation. For exceptionally large code distances (d &gt; 15), prefer the linear-scaling `UnionFindDecoder` which reduces memory demands.</InlineMD>
                 </p>
               </div>
             </div>
@@ -389,19 +428,21 @@ print("Syndrome-faithful correction")`}
               <p className="text-muted-foreground text-xs mb-3">
                 <strong className="text-cyan-300">Graph-like rule (UF family):</strong> Every qubit must participate in at most two checks (participation &le; 2). Matrices violating this raise a clear error (<code className="text-red-400">-32602</code>). <code className="text-cyan-300">BlossomDecoder</code>, <code className="text-cyan-300">SparseBlossomDecoder</code>, and <code className="text-cyan-300">BpOsdDecoder</code> accept general hyperedge codes.
               </p>
+              <div className="overflow-x-auto rounded-xl">
               <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden text-xs">
-                <div className="grid grid-cols-4 p-2.5 font-bold border-b border-gridline bg-surface/30">
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 font-bold border-b border-gridline bg-surface/30">
                   <span>Class</span><span>Best for</span><span>Status</span><span>Graph-like?</span>
                 </div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">UnionFindDecoder</span><span>Low-latency approximate</span><span>Stable</span><span>Yes (participation &le; 2)</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">FastUnionFindDecoder</span><span>Faster UF hot path</span><span>Stable</span><span>Yes</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BlossomDecoder</span><span>Exact MWPM</span><span>Stable</span><span>No (Hyperedge OK)</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">SparseBlossomDecoder</span><span>Near-optimal matching</span><span>Experimental</span><span>Prefer graph-like</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BeliefMatching</span><span>Correlated-noise accuracy</span><span>Research</span><span>Prefer graph-like</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BpOsdDecoder</span><span>LDPC / qLDPC</span><span>Experimental</span><span>No (Hyperedge OK)</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BatchDecoder</span><span>High-throughput CPU batch</span><span>Stable</span><span>Yes for UF batch</span></div>
-                <div className="grid grid-cols-4 p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">CUDABatchDecoder</span><span>GPU batch (NVIDIA)</span><span>Runtime-dependent</span><span>N/A</span></div>
-                <div className="grid grid-cols-4 p-2.5"><span className="font-mono text-cyan-300">AutoDecoder</span><span>7-tier self-debugging fallback</span><span>Stable</span><span>N/A</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">UnionFindDecoder</span><span>Low-latency approximate</span><span>Stable</span><span>Yes (participation &le; 2)</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">FastUnionFindDecoder</span><span>Faster UF hot path</span><span>Stable</span><span>Yes</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BlossomDecoder</span><span>Exact MWPM</span><span>Stable</span><span>No (Hyperedge OK)</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">SparseBlossomDecoder</span><span>Near-optimal matching</span><span>Experimental</span><span>Prefer graph-like</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BeliefMatching</span><span>Correlated-noise accuracy</span><span>Research</span><span>Prefer graph-like</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BpOsdDecoder</span><span>LDPC / qLDPC</span><span>Experimental</span><span>No (Hyperedge OK)</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">BatchDecoder</span><span>High-throughput CPU batch</span><span>Stable</span><span>Yes for UF batch</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5 border-b border-gridline"><span className="font-mono text-cyan-300">CUDABatchDecoder</span><span>GPU batch (NVIDIA)</span><span>Runtime-dependent</span><span>N/A</span></div>
+                <div className="grid grid-cols-4 min-w-[560px] p-2.5"><span className="font-mono text-cyan-300">AutoDecoder</span><span>7-tier self-debugging fallback</span><span>Stable</span><span>N/A</span></div>
+              </div>
               </div>
             </div>
 
@@ -486,7 +527,7 @@ print("Syndrome-faithful correction")`}
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill mb-6">
              15 backend families powering 17 decoder configurations · GPU Batch · Stim · Sinter · Qiskit
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="User Manual" className="text-4xl md:text-6xl font-extrabold" /></h1>

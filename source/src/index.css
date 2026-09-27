@@ -8,7 +8,8 @@
   :focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
-    border-radius: 4px;
+    /* No forced border-radius: the outline follows each element's own
+       radius so pills and rounded cards keep their shape when focused. */
   }
 
   :root {
@@ -66,6 +67,19 @@
     background: rgba(103, 232, 249, 0.3);
     color: #e2e8f0;
   }
+
+  /* Mobile: long display-math formulas scroll horizontally inside their
+     own box instead of pushing the page wider. */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    padding: 0.25rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .katex-display > .katex {
+    max-width: max-content;
+  }
 }
 
 @layer components {
@@ -106,6 +120,40 @@
     @apply px-6 sm:px-8 lg:px-16 xl:px-24;
   }
 
+  /* Eyebrow pills: canonical small uppercase label above section headings.
+     One source of truth so all section eyebrows share padding, radius,
+     type scale, and letter-spacing. Keep the margin (mb-*) at the call site. */
+  .eyebrow-pill {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider;
+  }
+
+  .eyebrow-pill-gold {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider;
+  }
+
+  .eyebrow-pill-emerald {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-xs font-semibold text-emerald-400 uppercase tracking-wider;
+  }
+
+  /* Inline text link inside body copy: single hover/focus treatment. */
+  .link-accent {
+    @apply text-cyan-300 hover:text-cyan-200 underline-offset-4 hover:underline transition-colors duration-200;
+  }
+
+  /* Section rhythm: full feature sections get generous desktop air,
+     band sections stay compact but gain a desktop step. */
+  .section-feature {
+    @apply py-20 md:py-28;
+  }
+
+  .section-band {
+    @apply py-16 md:py-20;
+  }
+
+  .section-thin {
+    @apply py-10 md:py-12;
+  }
+
   .text-gradient-cyan {
     @apply bg-gradient-to-r from-cyan-300 to-cyan-500 bg-clip-text text-transparent;
   }
@@ -143,11 +191,21 @@
   .animate-pulse-dot {
     animation: pulse-dot 2s ease-in-out infinite;
   }
+
+  .animate-gradient-xy {
+    background-size: 200% 200%;
+    animation: gradient-xy 6s ease-in-out infinite;
+  }
 }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
+}
+
+@keyframes gradient-xy {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* Scrollbar styling */

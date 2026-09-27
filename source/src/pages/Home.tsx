@@ -7,6 +7,7 @@ import SectionHeader from '../components/SectionHeader';
 import AlgorithmCard from '../components/AlgorithmCard';
 import EvidenceBlock from '../components/EvidenceBlock';
 import QECSimulator from '../components/QECSimulator';
+import CodeBlock from '../components/CodeBlock';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
@@ -139,13 +140,18 @@ export default function Home() {
           </h1>
 
           <p
-            className="text-base sm:text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-8 leading-relaxed break-words"
+            className="text-base sm:text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-5 leading-relaxed break-words"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
              The v1.0.0 runtime ships 17 concrete decoder configurations, while Workbench v1.0.7 names 19 kinds in total:
              those configurations plus AutoDecoder and Auto Router orchestration entries.{' '}
              <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
+          </p>
+          <p
+            className="text-sm text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
+          >
              Local measurement tools are documented for declared workloads; this site publishes no universal performance figures.
              Claim boundaries and verification paths are published with the product documentation.
           </p>
@@ -167,17 +173,15 @@ export default function Home() {
           </div>
 
           {/* Quickstart */}
-          <div className="max-w-2xl mx-auto mb-10">
-            <div className="p-4 bg-void/70 border border-cyan-300/15 rounded-2xl backdrop-blur-sm text-left">
-              <div className="text-xs text-cyan-300 font-semibold tracking-wider mb-2">Quick start</div>
-              <pre className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed overflow-x-auto">
-                <span className="text-cyan-300">$</span> pip install qector-decoder-v3=={pypiVersion}{'\n'}
-                <span className="text-cyan-300">$</span> python -c &quot;from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')&quot;
-              </pre>
-            </div>
+          <div className="max-w-2xl mx-auto mb-10 text-left">
+            <CodeBlock
+              language="bash"
+              filename="Quick start"
+              code={`pip install qector-decoder-v3==${pypiVersion}\npython -c "from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')"`}
+            />
           </div>
 
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 border-t border-white/5 pt-6 max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x md:divide-white/5 border-t border-white/5 pt-6 max-w-2xl mx-auto">
              <CounterStat value="19" label="Workbench Kinds (17 + 2 routing)" />
             <CounterStat value="GF(2)" label="Faithfulness Contract" />
             <CounterStat value="CPU + GPU" label="Optional Execution Paths" />
@@ -185,26 +189,26 @@ export default function Home() {
           </div>
 
           {/* Evidence policy */}
-          <div className="max-w-2xl mx-auto mt-10 p-5 bg-surface/50 border border-cyan-300/20 rounded-2xl text-center shadow-lg">
-            <div className="text-[10px] text-cyan-300 font-semibold tracking-widest mb-2 uppercase">Evidence policy</div>
-            <div className="text-lg md:text-xl font-bold text-primary mb-2">
+          <div className="max-w-2xl mx-auto mt-10 p-5 md:p-6 bg-surface/50 border border-cyan-300/20 rounded-2xl text-center shadow-lg backdrop-blur-sm">
+            <div className="text-[10px] text-cyan-300 font-semibold tracking-[0.2em] mb-2 uppercase">Evidence policy</div>
+            <div className="text-lg md:text-xl font-bold text-primary tracking-tight mb-2">
               No hardware-specific results published
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-lg mx-auto">
-              QECTOR publishes contracts, methodology, and artifacts rather than portable speed numbers. Read the <Link to="/evidence" className="text-cyan-300 hover:underline">evidence policy</Link> before generating a local measurement.
+              QECTOR publishes contracts, methodology, and artifacts rather than portable speed numbers. Read the <Link to="/evidence" className="link-accent">evidence policy</Link> before generating a local measurement.
             </p>
           </div>
         </div>
       </section>
 
        {/* ===== RELEASE ASSURANCE ===== */}
-       <section className="py-16 bg-surface/20 border-y border-gridline">
+       <section className="section-band bg-surface/20 border-y border-gridline">
          <div className="section-padding max-w-6xl mx-auto">
-           <div className="text-center mb-10">
-             <span className="inline-flex items-center gap-2 px-3 py-1 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-4">
+           <div className="text-center mb-12">
+             <span className="eyebrow-pill-gold mb-4">
                Release Assurance
              </span>
-             <h2 className="text-3xl md:text-4xl font-bold">A Clear Path From Code to Evidence</h2>
+             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">A Clear Path From Code to Evidence</h2>
              <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
                The public release, validation contract, and commercial delivery path are explicit by design.
              </p>
@@ -248,7 +252,7 @@ export default function Home() {
        </section>
 
        {/* ===== INTEGRATION ECOSYSTEM ===== */}
-      <section className="border-t border-b border-gridline/30 py-10 bg-void/80">
+      <section className="section-thin border-t border-b border-gridline/30 bg-void/80">
         <div className="section-padding">
           <div className="max-w-5xl mx-auto text-center">
             <p className="text-xs text-muted-foreground uppercase tracking-widest mb-8">
@@ -257,15 +261,15 @@ export default function Home() {
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
               <div className="flex flex-col items-center gap-3">
                 <span className="text-2xl font-bold tracking-tight text-white/90">Stim</span>
-                <code className="text-[10px] bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install stim</code>
+                <code className="text-xs bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install stim</code>
               </div>
               <div className="flex flex-col items-center gap-3">
                 <span className="text-2xl font-bold tracking-tight text-white/90">Sinter</span>
-                <code className="text-[10px] bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install sinter</code>
+                <code className="text-xs bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install sinter</code>
               </div>
               <div className="flex flex-col items-center gap-3">
                 <span className="text-2xl font-bold tracking-tight text-white/90">Qiskit</span>
-                <code className="text-[10px] bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install qiskit-qec</code>
+                <code className="text-xs bg-surface border border-gridline px-2 py-1 rounded text-muted-foreground font-mono">pip install qiskit-qec</code>
               </div>
             </div>
           </div>
@@ -273,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* ===== TRUST SIGNAL BAR ===== */}
-      <section ref={(el) => addRef(el, 0)} className="py-6 bg-void">
+      <section ref={(el) => addRef(el, 0)} className="py-8 bg-void">
         <div className="section-padding">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
             {[
@@ -296,13 +300,13 @@ export default function Home() {
       </section>
 
       {/* ===== PROOF SUITE ===== */}
-      <section className="py-16 bg-void border-y border-gridline">
+      <section className="section-band bg-void border-y border-gridline">
         <div className="section-padding max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-4">
+          <div className="text-center mb-12">
+            <span className="eyebrow-pill-emerald mb-4">
               Proof Suite
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold">Executable Verification for v1.0.0</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Executable Verification for v1.0.0</h2>
             <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
               Hashed-lock reproducible install, CERT_STRICT gate, and Lean/Coq kernel evidence - verifiable against Reference Manual v1.0.0.
             </p>
@@ -334,13 +338,13 @@ export default function Home() {
       </section>
 
       {/* ===== HOW IT WORKS ===== */}
-      <section className="py-20 md:py-28 bg-surface/30 border-t border-gridline">
+      <section className="section-feature bg-surface/30 border-t border-gridline">
         <div className="section-padding max-w-6xl mx-auto">
           <div ref={(el) => addRef(el, 1)} className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
+            <span className="eyebrow-pill mb-4">
               How It Works
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold">From Installation to Validation</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">From Installation to Validation</h2>
             <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
               QECTOR integrates directly into your existing QEC workflow with minimal friction.
             </p>
@@ -392,7 +396,7 @@ export default function Home() {
       </section>
 
       {/* ===== KEY DIFFERENTIATORS ===== */}
-      <section id="platform" className="py-20 md:py-28 relative overflow-hidden">
+      <section id="platform" className="section-feature relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(103, 232, 249, 0.06) 0%, transparent 70%)' }} />
         <div className="section-padding relative z-10">
           <div className="max-w-6xl mx-auto">
@@ -441,15 +445,15 @@ export default function Home() {
       </section>
 
       {/* ===== DECODER SHOWCASE ===== */}
-      <section id="decoder-section" className="py-20 md:py-28 bg-surface/50">
+      <section id="decoder-section" className="section-feature bg-surface/50">
         <div className="section-padding">
           <div className="max-w-6xl mx-auto">
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
+                <span className="eyebrow-pill mb-4">
                    19 Workbench Kinds · 17 Concrete Configs
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
                   Decoding Algorithms
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
@@ -493,7 +497,7 @@ export default function Home() {
       </section>
 
       {/* ===== MEASURE ON YOUR OWN HARDWARE ===== */}
-      <section className="py-20 md:py-28 relative">
+      <section className="section-feature relative">
         <div className="section-padding relative z-10">
           <div className="max-w-6xl mx-auto">
             <div ref={(el) => addRef(el, 9)}>
@@ -527,8 +531,11 @@ export default function Home() {
       </section>
 
       {/* ===== ENTERPRISE COMPLIANCE + LICENSING ===== */}
-      <section className="py-16 bg-surface/20 border-t border-gridline">
+      <section className="section-band bg-surface/20 border-t border-gridline">
         <div className="section-padding max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center mb-10">
+            Enterprise Compliance &amp; Licensing
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card-surface border-cyan-300/20 bg-void/50 p-8 rounded-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/5 to-transparent pointer-events-none" />
@@ -563,11 +570,11 @@ export default function Home() {
       </section>
 
       {/* ===== CTA / STRIPE ===== */}
-      <section id="pricing-section" className="py-20 md:py-28 bg-surface/50 border-t border-gridline">
+      <section id="pricing-section" className="section-feature bg-surface/50 border-t border-gridline">
         <div className="section-padding">
           <div className="max-w-xl mx-auto text-center">
             <div ref={(el) => addRef(el, 11)} className="mb-6">
-              <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
+              <span className="eyebrow-pill mb-4">
                 Self-Serve · Instant Clearance
               </span>
               <h2 className="text-3xl font-bold mb-3">Commercial Evaluation License</h2>
@@ -586,7 +593,7 @@ export default function Home() {
               <div className="flex justify-center mb-6">
                 <a
                   href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
-                  className="btn-cyan text-base font-bold py-3.5 px-8 rounded-xl shadow-lg shadow-cyan-300/20 inline-flex items-center gap-2 hover:scale-[1.02] transition-all"
+                  className="btn-cyan text-base font-bold py-3.5 px-8 rounded-xl shadow-lg shadow-cyan-300/20 inline-flex items-center gap-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

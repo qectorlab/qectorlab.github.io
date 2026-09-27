@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import AlgorithmCard from '../components/AlgorithmCard';
+import CodeBlock from '../components/CodeBlock';
 import EvidenceBlock from '../components/EvidenceBlock';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -133,7 +134,9 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           </div>
 
           {/* Reports Grid */}
-          <div ref={(el) => addRef(el, 1)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div ref={(el) => addRef(el, 1)} className="space-y-4">
+            <h2 className="text-2xl font-bold">Evidence Reports</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredReports.map((report) => (
               <AlgorithmCard
                 key={report.title}
@@ -145,10 +148,11 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 desc={report.desc}
               />
             ))}
+            </div>
           </div>
 
           {/* Zenodo Evidence Registry */}
-          <div ref={(el) => addRef(el, 1.5)} className="space-y-4">
+          <div ref={(el) => addRef(el, 2)} className="space-y-4">
             <div>
               <h2 className="text-2xl font-bold">Zenodo Evidence Registry</h2>
               <p className="text-secondary text-sm mt-1">
@@ -207,22 +211,23 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           </div>
 
           {/* Reproducibility */}
-          <div ref={(el) => addRef(el, 2)} className="card-surface">
+          <div ref={(el) => addRef(el, 3)} className="card-surface">
             <h3 className="text-cyan-300 font-semibold mb-3">Verify on Your Own Machine</h3>
             <p className="text-secondary text-sm leading-relaxed mb-4">
               No universal benchmark figures are published on this site, because results depend on your hardware.
               The package ships the qector-doctor environment diagnostic and the qector bench harness so you can
               validate and measure on your own machines. Run them yourself:
             </p>
-            <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground">
-              <div className="text-cyan-300 mb-2"># Quick validation</div>
-              <div>pip install qector-decoder-v3==1.0.0</div>
-              <div>python -c &quot;import qector_decoder_v3 as qd; print(qd.__version__)&quot;</div>
-              <div className="mt-2"># 15-check environment diagnostic (v1.0.0)</div>
-              <div>qector-doctor</div>
-              <div className="mt-2"># Throughput benchmark on a generated surface-code circuit</div>
-              <div>qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001</div>
-            </div>
+            <CodeBlock
+              language="bash"
+              code={`# Quick validation
+pip install qector-decoder-v3==1.0.0
+python -c "import qector_decoder_v3 as qd; print(qd.__version__)"
+# 15-check environment diagnostic (v1.0.0)
+qector-doctor
+# Throughput benchmark on a generated surface-code circuit
+qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001`}
+            />
           </div>
 
           {/* Citation BibTeX */}

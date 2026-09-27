@@ -11,7 +11,7 @@ export default function Changelog() {
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
             Latest: v1.0.0 Decoder (first stable release, live from PyPI RSS) · Workbench GUI (current)
           </div>

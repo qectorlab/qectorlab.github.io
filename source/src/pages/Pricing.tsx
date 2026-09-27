@@ -5,6 +5,7 @@ import { SEO, JsonLd } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import { FAQ_ITEMS } from '../lib/faqData';
+import CodeBlock from '../components/CodeBlock';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -71,8 +72,8 @@ export default function Pricing() {
             <span className="w-2 h-2 rounded-full bg-cyan-300 animate-pulse-dot" />
             Clear, Transparent Commercial Licensing
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
-            <NeuralReveal text="License QECTOR for Production" className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
+            <NeuralReveal text="License QECTOR for Production" className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
           </h1>
           <p className="text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
             QECTOR Decoder v3 is Source-Available for academic and non-commercial research. 
@@ -107,7 +108,7 @@ export default function Pricing() {
                 <div className="text-secondary text-sm mb-6">One-time flat fee</div>
                 <a
                   href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
-                  className="w-full text-center py-4 px-8 bg-cyan-400 hover:bg-cyan-300 text-void font-bold rounded-xl shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] transition-all hover:scale-105"
+                  className="btn-cyan w-full text-center py-4 px-8 font-bold shadow-[0_0_30px_rgba(34,211,238,0.3)]"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -204,14 +205,16 @@ export default function Pricing() {
               Everyone installs the same wheel from PyPI: there is no separate commercial build. 
               Setting your license token simply disables the non-commercial usage notice.
             </p>
-            <pre className="bg-void/50 border border-gridline rounded-xl p-4 text-xs font-mono text-cyan-300 overflow-x-auto mb-6">
- {`# Commercial use: activate with the Ed25519 token
- export QECTOR_LICENSE="<your-token>"
- export QECTOR_LICENSE_KEY="<your-token>"
+            <CodeBlock
+              language="bash"
+              className="mb-6"
+              code={`# Commercial use: activate with the Ed25519 token
+export QECTOR_LICENSE="<your-token>"
+export QECTOR_LICENSE_KEY="<your-token>"
 
 # Optional: suppress the licensing notice in CI logs
 export QECTOR_SILENT=1`}
-            </pre>
+            />
             <p className="text-xs text-muted-foreground leading-relaxed">
               Tokens are verified offline against a public key embedded in the package: no license server, no phone-home, works completely air-gapped.
             </p>
@@ -261,9 +264,9 @@ export QECTOR_SILENT=1`}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {FAQ_ITEMS.map((item, idx) => (
               <div key={idx} className="card-surface bg-surface/30 border-gridline/40 hover:bg-surface/60 transition-colors p-6 rounded-2xl">
-                <h4 className="text-base font-bold text-primary mb-3 text-cyan-300">
+                <h3 className="text-base font-bold text-primary mb-3 text-cyan-300">
                   {item.q}
-                </h4>
+                </h3>
                 <p className="text-secondary text-sm leading-relaxed">
                   {item.a}
                 </p>

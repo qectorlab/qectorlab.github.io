@@ -46,7 +46,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill mb-6">
             Python 3.9-3.13 · Linux · macOS · Windows
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Documentation" className="text-4xl md:text-6xl font-extrabold" /></h1>
@@ -77,16 +77,30 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
           {/* Doc Grid */}
           <div ref={(el) => addRef(el, 1)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {docLinks.map((doc) => (
-              <Link
-                key={doc.title}
-                to={doc.href}
-                className="card-surface group hover:border-cyan-300/30 transition-all"
-              >
-                <h3 className="text-cyan-300 font-semibold group-hover:text-cyan-200 transition-colors mb-1">{doc.title}</h3>
-                <p className="text-secondary text-sm">{doc.desc}</p>
-              </Link>
-            ))}
+            {docLinks.map((doc) =>
+              // Static files under /docs/ are served by the web server. A plain
+              // anchor lets the server serve them; a react-router Link would
+              // fall through to the NotFound page.
+              doc.href.startsWith('/docs/') ? (
+                <a
+                  key={doc.title}
+                  href={doc.href}
+                  className="card-surface group hover:border-cyan-300/30 transition-all"
+                >
+                  <h3 className="text-cyan-300 font-semibold group-hover:text-cyan-200 transition-colors mb-1">{doc.title}</h3>
+                  <p className="text-secondary text-sm">{doc.desc}</p>
+                </a>
+              ) : (
+                <Link
+                  key={doc.title}
+                  to={doc.href}
+                  className="card-surface group hover:border-cyan-300/30 transition-all"
+                >
+                  <h3 className="text-cyan-300 font-semibold group-hover:text-cyan-200 transition-colors mb-1">{doc.title}</h3>
+                  <p className="text-secondary text-sm">{doc.desc}</p>
+                </Link>
+              )
+            )}
           </div>
 
           {/* External Resources */}

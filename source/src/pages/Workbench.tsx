@@ -121,7 +121,7 @@ export default function Workbench() {
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill-gold mb-6">
             Windows {WIN.version} · Linux {LINUX.version} · backend qector_decoder_v3 {WIN.backendVersion} · {WIN.mcpTools} MCP tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
@@ -174,7 +174,7 @@ export default function Workbench() {
           </div>
 
           {/* Workspaces */}
-          <div ref={(el) => addRef(el, 0.5)}>
+          <div ref={(el) => addRef(el, 1)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
               Nine workspaces are documented for the live v1.0.7 (Windows/Linux) releases:{' '}
@@ -200,7 +200,7 @@ export default function Workbench() {
           </div>
 
           {/* Downloads */}
-          <div ref={(el) => addRef(el, 0.75)} className="card-surface space-y-5">
+          <div ref={(el) => addRef(el, 2)} className="card-surface space-y-5">
             <h2 className="text-2xl font-bold">Downloads</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
@@ -275,7 +275,7 @@ export default function Workbench() {
           </div>
 
           {/* Decoders Table */}
-          <div ref={(el) => addRef(el, 1)} className="card-surface space-y-6">
+          <div ref={(el) => addRef(el, 3)} className="card-surface space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-bold">Integrated Decoders</h2>
@@ -317,7 +317,7 @@ export default function Workbench() {
           </div>
 
           {/* Code Families */}
-          <div ref={(el) => addRef(el, 2)}>
+          <div ref={(el) => addRef(el, 4)}>
             <h2 className="text-2xl font-bold mb-2">10 Supported Code Families</h2>
             <p className="text-secondary text-sm mb-6">
               The published releases cover <strong className="text-primary">10 code families</strong>, including qLDPC
@@ -335,7 +335,7 @@ export default function Workbench() {
           </div>
 
           {/* Application Features */}
-          <div ref={(el) => addRef(el, 3)}>
+          <div ref={(el) => addRef(el, 5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Workbench Components</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
@@ -378,7 +378,7 @@ export default function Workbench() {
           </div>
 
           {/* Interactive Sandbox */}
-          <div ref={(el) => addRef(el, 4)} className="space-y-6">
+          <div ref={(el) => addRef(el, 6)} className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold">Decoder Sandbox</h2>
             <p className="text-secondary text-sm">
               Below is an interactive sandbox replicating the basic topological planar code matching module inside QECTOR Workbench. Click to inject errors and inspect Blossom correction paths in real time.
@@ -387,7 +387,7 @@ export default function Workbench() {
           </div>
 
           {/* Documentation & Reference */}
-          <div ref={(el) => addRef(el, 5)}>
+          <div ref={(el) => addRef(el, 7)}>
             <EvidenceBlock
               title="Documentation & Reference"
               statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.7 and Linux v1.0.7 builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}

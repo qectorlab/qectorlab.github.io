@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import ReactMarkdown from 'react-markdown';
 import type { Components } from 'react-markdown';
+import CodeBlock from '../components/CodeBlock';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -91,7 +92,10 @@ export default function BlogPost() {
         return res.text();
       })
       .then((text) => {
-        setContent(text);
+        // The article title is rendered by the page header above; drop the
+        // markdown's leading H1 so the page keeps a single h1 landmark.
+        const stripped = text.replace(/^\s*#[^#\n]*\r?\n/, '');
+        setContent(stripped);
         setLoadedFilename(filename);
         setErrorFilename(null);
       })
@@ -133,7 +137,7 @@ export default function BlogPost() {
       <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
-          <Link to="/blog" className="text-emerald-400 hover:text-emerald-300">
+          <Link to="/blog" className="text-cyan-300 hover:text-cyan-200">
             Return to Blog
           </Link>
         </div>
@@ -142,28 +146,28 @@ export default function BlogPost() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-cyan-400/30">
       <SEO 
         title={`${postMeta.title} - QECTOR Blog`}
         description={postMeta.description} 
       />
 
-      <main className="pt-32 pb-24 relative overflow-hidden">
+      <div className="pt-32 pb-24 relative overflow-hidden">
         {/* Subtle Background Elements */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-slate-800/20 blur-[100px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <Link 
             to="/blog" 
-            className="inline-flex items-center text-slate-400 hover:text-emerald-400 mb-12 transition-colors duration-300 font-medium tracking-wide"
+            className="inline-flex items-center min-h-[44px] text-slate-400 hover:text-cyan-300 mb-12 transition-colors duration-300 font-medium tracking-wide"
           >
             <ArrowLeft size={18} className="mr-2" />
             Back to All Articles
           </Link>
 
           <header className="mb-16 border-b border-slate-800/60 pb-10">
-            <div className="flex flex-wrap items-center text-emerald-400 mb-6 gap-4">
+            <div className="flex flex-wrap items-center text-cyan-300 mb-6 gap-4">
               <span className="flex items-center text-sm font-semibold tracking-widest uppercase">
                 <Calendar size={16} className="mr-2" />
                 {postMeta.date}
@@ -183,7 +187,7 @@ export default function BlogPost() {
           <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl">
             {loading ? (
               <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                <Loader2 size={48} className="animate-spin text-emerald-500 mb-4" />
+                <Loader2 size={48} className="animate-spin text-cyan-400 mb-4" />
                 <p className="animate-pulse">Loading article...</p>
               </div>
             ) : error ? (
@@ -191,7 +195,7 @@ export default function BlogPost() {
                 <p>Failed to load the article. Please try again later.</p>
               </div>
             ) : (
-              <article className="prose prose-invert prose-emerald max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline prose-code:text-emerald-300 prose-code:bg-emerald-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-pre:bg-slate-950/80 prose-pre:border prose-pre:border-slate-800 prose-img:rounded-xl prose-img:border prose-img:border-slate-800">
+              <article className="prose prose-invert prose-cyan max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-cyan-300 prose-a:no-underline hover:prose-a:underline prose-code:text-cyan-200 prose-code:bg-cyan-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-pre:bg-slate-950/80 prose-pre:border prose-pre:border-slate-800 prose-img:rounded-xl prose-img:border prose-img:border-slate-800">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm, remarkMath]} 
                   rehypePlugins={[rehypeKatex, rehypeRaw]}
@@ -205,6 +209,19 @@ export default function BlogPost() {
                         </div>
                       );
                     },
+                    pre: (props) => {
+                      const { node: _node, children } = props;
+                      const codeEl = React.Children.toArray(children)[0];
+                      let code = '';
+                      let language = 'text';
+                      if (React.isValidElement(codeEl)) {
+                        const codeProps = codeEl.props as { className?: string; children?: React.ReactNode };
+                        const match = /language-([\w-]+)/.exec(codeProps.className || '');
+                        if (match) language = match[1];
+                        code = extractText(codeProps.children).replace(/\n$/, '');
+                      }
+                      return <CodeBlock code={code} language={language} className="not-prose" />;
+                    },
                     img: (props) => {
                       const sized = props.width != null && props.height != null;
                       return (
@@ -212,8 +229,8 @@ export default function BlogPost() {
                           {...props}
                           className={
                             sized
-                              ? 'rounded-xl border border-slate-800 shadow-xl'
-                              : 'rounded-xl border border-slate-800 shadow-xl aspect-video object-cover'
+                              ? 'rounded-xl border border-slate-800 shadow-xl max-w-full h-auto'
+                              : 'rounded-xl border border-slate-800 shadow-xl max-w-full h-auto aspect-video object-cover'
                           }
                           loading="lazy"
                         />
@@ -227,7 +244,7 @@ export default function BlogPost() {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -356,7 +356,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['Solo / Indie commercial', '$1,299 / yr', '1 named user', 'Production internal use, priority email support'],
             ['Solo / Indie perpetual', '$3,299 one-time', '1 named user', 'Same rights as annual for v3.x (all v3.x patch/minor updates included; major version upgrades such as v4.0 are a new license)'],
             ['Startup / Growth', '$4,499 / yr', 'Up to 10', 'Production internal use, advanced BP-OSD/LDPC workflows'],
-            ['Professional / Lab', '$11,500 / yr', 'Up to 25', 'Production internal use, SLA, validation report package credit'],
+            ['Professional', '$11,500 / yr', 'Up to 25', 'Production internal use, SLA, validation report package credit'],
             ['Enterprise / OEM / SaaS', 'Custom', 'Custom', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
           ]
         ) +

@@ -104,7 +104,7 @@ export default function Founder() {
       />
 
       {/* HERO */}
-      <section className="relative py-24 md:py-28 overflow-hidden">
+      <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-8">
@@ -113,6 +113,7 @@ export default function Founder() {
               alt="Portrait of Guillaume Lessard, founder of QECTOR and iD01t Productions"
               width={160}
               height={160}
+              loading="lazy"
               className="w-40 h-40 rounded-2xl object-cover border border-cyan-300/30 shadow-lg shrink-0"
             />
             <div className="text-center md:text-left">
@@ -129,16 +130,16 @@ export default function Founder() {
                  I build and support the platform independently from Longueuil, Québec.
                </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
-                <a href={ORCID} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
+                <a href={ORCID} target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
                   ORCID 0009-0000-3465-3753
                 </a>
-                <a href="https://github.com/qectorlab" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
+                <a href="https://github.com/qectorlab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
                   GitHub
                 </a>
-                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
+                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
                   PyPI
                 </a>
-                <span className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary">
+                <span className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary">
                   iD01t Productions
                 </span>
               </div>

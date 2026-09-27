@@ -240,7 +240,7 @@ export default function ClaudePlugin() {
       />
 
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
+      <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/5 via-surface/40 to-void pointer-events-none" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -309,7 +309,7 @@ export default function ClaudePlugin() {
       </section>
 
       {/* Core Architectural Pillars */}
-      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="card-surface p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all">
             <div className="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-800/50 flex items-center justify-center text-cyan-400 mb-4">
@@ -354,7 +354,7 @@ export default function ClaudePlugin() {
       </section>
 
        {/* 7 Flagship Skills */}
-      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-800/40 text-cyan-300 text-xs font-mono font-medium mb-3">
             <Layers className="w-3.5 h-3.5" />
@@ -409,7 +409,7 @@ export default function ClaudePlugin() {
       </section>
 
       {/* 5 Specialized Agents */}
-      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-800/40 text-cyan-300 text-xs font-mono font-medium mb-3">
             <Activity className="w-3.5 h-3.5" />
@@ -443,7 +443,7 @@ export default function ClaudePlugin() {
       </section>
 
        {/* MCP Tool Surfaces */}
-      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-800/40 text-cyan-300 text-xs font-mono font-medium mb-3">
             <Binary className="w-3.5 h-3.5" />
@@ -509,7 +509,7 @@ export default function ClaudePlugin() {
        </section>
 
       {/* Installation & Configuration */}
-      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="mb-10">
           <h2 className="text-3xl font-extrabold text-slate-100 tracking-tight">
             Installation & Setup
@@ -576,7 +576,7 @@ export default function ClaudePlugin() {
       </section>
 
       {/* Package Downloads & Prebuilt Artifacts */}
-      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 mb-12">
+      <section className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6 mb-12">
         <div className="card-surface p-8 border border-cyan-900/50 relative overflow-hidden bg-gradient-to-br from-slate-950 via-surface/60 to-slate-950">
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>

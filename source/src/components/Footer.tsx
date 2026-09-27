@@ -38,7 +38,7 @@ const companyLinks: LinkItem[] = [
 ];
 
 function FooterLink({ href, external, badge, children }: { href?: string; external?: boolean; badge?: string; children: React.ReactNode }) {
-  const classes = 'group flex items-center justify-between text-secondary hover:text-cyan-300 text-sm transition-colors duration-200 py-0.5';
+  const classes = 'group flex items-center justify-between gap-3 min-h-[44px] py-1.5 text-secondary hover:text-cyan-300 text-sm transition-colors duration-200';
 
   const content = (
     <>
@@ -85,24 +85,27 @@ export default function Footer() {
             
             {/* Column 1 & 2: Brand Header */}
             <div className="lg:col-span-2 space-y-6">
-              <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors">
+              <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors duration-200">
                 <img src="/images/logo.png" alt="QECTOR official logo" width="40" height="40" className="h-10 w-10 rounded-lg object-cover" />
+                <span className="text-lg font-extrabold tracking-tight text-white">
+                  QECTOR<span className="text-cyan-300">.</span>
+                </span>
               </Link>
 
               <p className="text-secondary/80 text-sm leading-relaxed max-w-sm">
                 Quantum error correction decoding for Python. Built by Guillaume Lessard at iD01t Productions.
               </p>
 
-              <div className="flex items-center gap-4 pt-2">
-                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors" aria-label="PyPI">
+              <div className="flex items-center gap-2 pt-2">
+                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] text-muted-foreground hover:text-cyan-300 transition-colors" aria-label="PyPI">
                   <span className="text-sm font-mono border border-gridline rounded px-2 py-1 hover:border-cyan-300/30">v{pypiVersion}</span>
                   <span className="sr-only">(opens in new tab)</span>
                 </a>
-                <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="GitHub">
+                <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-1 text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="GitHub">
                   GitHub
                   <span className="sr-only">(opens in new tab)</span>
                 </a>
-                <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="ORCID">
+                <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-1 text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="ORCID">
                   ORCID
                   <span className="sr-only">(opens in new tab)</span>
                 </a>
@@ -111,8 +114,8 @@ export default function Footer() {
 
             {/* Column 3: Platform */}
             <div className="space-y-5">
-              <h2 className="text-white font-semibold text-sm tracking-wide">Platform</h2>
-              <div className="flex flex-col gap-3">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-white/90">Platform</h2>
+              <div className="flex flex-col gap-1">
                 {platformLinks.map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
                     {link.label}
@@ -123,8 +126,8 @@ export default function Footer() {
 
             {/* Column 4: Research */}
             <div className="space-y-5">
-              <h2 className="text-white font-semibold text-sm tracking-wide">Research &amp; Docs</h2>
-              <div className="flex flex-col gap-3">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-white/90">Research &amp; Docs</h2>
+              <div className="flex flex-col gap-1">
                 {researchLinks.map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
                     {link.label}
@@ -135,8 +138,8 @@ export default function Footer() {
 
             {/* Column 5: Company */}
             <div className="space-y-5">
-              <h2 className="text-white font-semibold text-sm tracking-wide">Company</h2>
-              <div className="flex flex-col gap-3">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-white/90">Company</h2>
+              <div className="flex flex-col gap-1">
                 {/* Omit legal links from this column, keep only company links */}
                 {companyLinks.slice(0, 5).map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
@@ -150,16 +153,16 @@ export default function Footer() {
 
           <div className="mt-16 pt-8 border-t border-gridline flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="text-xs text-muted-foreground max-w-xl leading-relaxed">
-              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="text-cyan-300 hover:underline">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64 (no system Python required).
+              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="link-accent">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64 (no system Python required).
             </div>
             
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-muted-foreground">
-              <Link to="/privacy" className="hover:text-cyan-300 transition-colors">Privacy</Link>
-              <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms</Link>
-              <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund</Link>
-               <Link to="/license" className="hover:text-cyan-300 transition-colors">License</Link>
-              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security<span className="sr-only">(opens in new tab)</span></a>
-            </div>
+            <nav aria-label="Legal" className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-muted-foreground">
+              <Link to="/privacy" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Privacy</Link>
+              <Link to="/terms" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Terms</Link>
+              <Link to="/refund" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Refund</Link>
+               <Link to="/license" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">License</Link>
+              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Security<span className="sr-only">(opens in new tab)</span></a>
+            </nav>
           </div>
         </div>
       </div>

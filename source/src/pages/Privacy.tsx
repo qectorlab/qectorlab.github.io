@@ -57,7 +57,7 @@ export default function Privacy() {
             </p>
             <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
               <li><strong className="text-primary">Stripe buy-button script</strong> (js.stripe.com), loaded automatically on the pricing pages. Purpose: payment processing. See the <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">Stripe Privacy Policy</a>.</li>
-              <li><strong className="text-primary">Calendly scheduling widget</strong>, loaded on the contact page. Purpose: booking appointments. See the <a href="https://calendly.com/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">Calendly Privacy Policy</a>.</li>
+              <li><strong className="text-primary">Calendly scheduling widget</strong>, loaded on the contact page. Purpose: booking appointments. See the <a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">Calendly Privacy Policy</a>.</li>
             </ul>
           </div>
 

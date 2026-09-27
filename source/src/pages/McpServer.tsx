@@ -151,7 +151,7 @@ export default function McpServer() {
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill mb-6">
             Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 1.0.0
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
@@ -176,6 +176,7 @@ export default function McpServer() {
       <section className="section-padding pb-24">
         <div className="max-w-4xl mx-auto space-y-10">
 
+          <h2 className="text-2xl font-bold mb-6">Design principles</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               {
@@ -330,7 +331,7 @@ export default function McpServer() {
 
           <div className="card-surface">
             <h2 className="text-2xl font-bold mb-4">Operational guidance</h2>
-            <ul className="space-y-3 text-secondary text-sm leading-relaxed">
+            <ul className="space-y-3 text-secondary text-sm leading-relaxed list-disc pl-5 marker:text-cyan-300/60">
               <li>
                 <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review; they are not part of this public library contract.
               </li>

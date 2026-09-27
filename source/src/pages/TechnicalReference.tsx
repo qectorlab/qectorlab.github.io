@@ -238,7 +238,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill mb-6">
             16 Decoder APIs · Stim DEM · Signatures Are Examples
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Technical Reference" className="text-4xl md:text-6xl font-extrabold" /></h1>
@@ -254,8 +254,10 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
         <div className="max-w-6xl mx-auto">
           {/* Search bar */}
           <div className="relative mb-8 max-w-md mx-auto md:mx-0">
+            <label htmlFor="decoder-search" className="sr-only">Search decoders</label>
             <input
-              type="text"
+              id="decoder-search"
+              type="search"
               placeholder="Search decoders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -284,7 +286,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
                     }`}
                   >
                     <span className="font-mono font-semibold">{item.name}</span>
-                    {expandedClass === item.name ? <ChevronRight className="w-4 h-4" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+                    {expandedClass === item.name ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4 text-muted-foreground" />}
                   </button>
                 ))}
                 {filteredClasses.length === 0 && (

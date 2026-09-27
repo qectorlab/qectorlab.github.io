@@ -64,7 +64,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
+          <div className="eyebrow-pill mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse-dot" />
             iD01t Productions · Longueuil, Québec · ORCID 0009-0000-3465-3753
           </div>
@@ -179,9 +179,9 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                    { year: '2026-08-11 to 2026-09-04', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.7 releases for Windows and Linux (2026-09-04).' },
                    { year: '2026-08-15 to 2026-08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
                  ].map((item) => (
-                <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
-                  <span className="text-cyan-300 font-mono text-sm min-w-[80px] pt-0.5">{item.year}</span>
-                  <p className="text-secondary text-sm leading-relaxed">{item.event}</p>
+                <div key={item.year} className="flex flex-col gap-1 sm:flex-row sm:gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
+                  <span className="text-cyan-300 font-mono text-sm sm:min-w-[80px] shrink-0 pt-0.5">{item.year}</span>
+                  <p className="text-secondary text-sm leading-relaxed min-w-0">{item.event}</p>
                 </div>
               ))}
             </div>

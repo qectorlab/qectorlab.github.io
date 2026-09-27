@@ -119,7 +119,7 @@ export default function Navigation() {
               </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                className="lg:hidden flex flex-col items-center justify-center gap-1.5 p-2 min-h-[44px] min-w-[44px] rounded-lg hover:bg-white/5 transition-colors"
                 aria-label={location.pathname.startsWith('/fr/') ? (isOpen ? 'Fermer le menu' : 'Ouvrir le menu') : (isOpen ? 'Close menu' : 'Open menu')}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
@@ -137,7 +137,7 @@ export default function Navigation() {
           id="mobile-menu"
           aria-hidden={!isOpen}
           className={`lg:hidden mt-2 glass-nav rounded-2xl overflow-hidden transition-all duration-300 ${
-            isOpen ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'
+            isOpen ? 'max-h-[calc(100dvh-110px)] overflow-y-auto opacity-100 visible' : 'max-h-0 opacity-0 invisible'
           }`}
         >
           <div className="px-4 py-3 space-y-1">
@@ -146,7 +146,7 @@ export default function Navigation() {
                 key={link.href}
                 to={link.href}
                 aria-current={isActive(link.href) ? 'page' : undefined}
-                className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center px-4 py-3 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive(link.href)
                     ? 'text-cyan-300 bg-cyan-300/10'
                     : 'text-secondary hover:text-primary hover:bg-white/5'
@@ -158,7 +158,7 @@ export default function Navigation() {
             ))}
             <Link
               to="/pricing"
-              className="block sm:hidden mt-2 text-center px-4 py-2.5 border border-gold-400/60 text-gold-400 text-sm font-medium rounded-lg hover:bg-gold-400/10 transition-all"
+              className="sm:hidden mt-2 text-center px-4 py-3 min-h-[44px] flex items-center justify-center border border-gold-400/60 text-gold-400 text-sm font-medium rounded-lg hover:bg-gold-400/10 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Get License

@@ -32,7 +32,7 @@ export default function CodeBlock({ code, language = 'python', filename, classNa
         </div>
       )}
       <div className="relative group">
-        <pre className="p-4 overflow-x-auto overflow-y-auto font-mono text-sm leading-relaxed text-secondary bg-void/30 max-h-[400px]">
+        <pre className="p-4 pr-14 overflow-x-auto overflow-y-auto font-mono text-sm leading-relaxed text-secondary bg-void/30 max-h-[400px]">
           <code className={`language-${language}`}>{code}</code>
         </pre>
         <button
@@ -42,6 +42,7 @@ export default function CodeBlock({ code, language = 'python', filename, classNa
         >
           {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
         </button>
+        <span className="sr-only" aria-live="polite">{copied ? 'Code copied to clipboard' : ''}</span>
       </div>
     </div>
   );

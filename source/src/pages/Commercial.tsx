@@ -16,6 +16,7 @@ export default function Commercial() {
       />
       <section className="py-24 md:py-32 section-padding text-center">
         <div className="max-w-2xl mx-auto">
+          <span className="eyebrow-pill">Enterprise &amp; OEM</span>
           <h1 className="text-3xl md:text-5xl font-bold mb-6"><NeuralReveal text="Enterprise & OEM Licensing" className="text-3xl md:text-5xl font-bold" /></h1>
           <p className="text-secondary text-lg mb-8">
             Custom licensing for redistribution, SaaS hosting, hardware bundling, and strategic partnerships.

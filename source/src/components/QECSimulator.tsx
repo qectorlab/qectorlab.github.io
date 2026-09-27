@@ -375,7 +375,7 @@ export default function QECSimulator() {
         </div>
         <button
           onClick={() => setShowExplanation(!showExplanation)}
-          className="text-secondary hover:text-cyan-300 transition-colors"
+          className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-secondary hover:text-cyan-300 transition-colors"
           aria-label="Toggle help"
         >
           <HelpCircle className="w-5 h-5" />
@@ -588,7 +588,7 @@ export default function QECSimulator() {
       <div className="grid grid-cols-3 gap-2">
         <button
           onClick={() => handleInjectRandom(0.2)}
-          className="px-3 py-2 bg-surface hover:bg-white/5 border border-gridline rounded-lg text-xs font-semibold text-secondary hover:text-primary transition-all flex items-center justify-center gap-1.5"
+          className="px-3 py-3 bg-surface hover:bg-white/5 border border-gridline rounded-lg text-xs font-semibold text-secondary hover:text-primary transition-all flex items-center justify-center gap-1.5"
         >
           <Sparkles className="w-3.5 h-3.5" />
           Inject Errors
@@ -596,14 +596,14 @@ export default function QECSimulator() {
         <button
           onClick={solveMWPM}
           disabled={Object.keys(activeChecks).length === 0}
-          className="px-3 py-2 bg-cyan-300 disabled:bg-cyan-300/20 disabled:text-void/40 hover:bg-cyan-200 text-void rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+          className="px-3 py-3 bg-cyan-300 disabled:bg-cyan-300/20 disabled:text-void/40 hover:bg-cyan-200 text-void rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${hasDecoded ? '' : 'animate-spin'}`} />
           Run Decoder
         </button>
         <button
           onClick={handleReset}
-          className="px-3 py-2 bg-surface hover:bg-red-950/20 border border-gridline hover:border-red-900/30 rounded-lg text-xs font-semibold text-secondary hover:text-red-400 transition-all"
+          className="px-3 py-3 bg-surface hover:bg-red-950/20 border border-gridline hover:border-red-900/30 rounded-lg text-xs font-semibold text-secondary hover:text-red-400 transition-all"
         >
           Reset Graph
         </button>

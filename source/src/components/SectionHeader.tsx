@@ -26,16 +26,17 @@ export default function SectionHeader({
   className = '',
 }: SectionHeaderProps) {
   const alignment = align === 'center' ? 'text-center mx-auto' : 'text-left';
+  const descAlign = align === 'center' ? 'mx-auto' : '';
 
   return (
     <div className={`${maxWidth} ${alignment} mb-12 md:mb-16 ${className}`}>
       {eyebrow && (
-        <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-medium text-cyan-300 uppercase tracking-wider mb-4">
+        <span className="eyebrow-pill mb-4">
           {eyebrow}
         </span>
       )}
-      <h2 className="text-3xl md:text-4xl font-bold mb-4">{heading}</h2>
-      {description && <p className="text-secondary text-lg leading-relaxed">{description}</p>}
+      <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-balance mb-4">{heading}</h2>
+      {description && <p className={`text-secondary text-lg leading-relaxed text-pretty max-w-prose ${descAlign}`}>{description}</p>}
     </div>
   );
 }
