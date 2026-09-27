@@ -4,7 +4,10 @@ import NeuralReveal from '../components/NeuralReveal';
 export default function Terms() {
   return (
     <>
-      <SEO title="Terms of Service · QECTOR" description="Terms of service for QECTOR website and software." />
+      <SEO title="Terms of Service · QECTOR" description="Terms of service for QECTOR website and software." lang="en" alternates={[
+          { lang: 'en', href: 'https://qector.store/terms/' },
+          { lang: 'fr', href: 'https://qector.store/fr/terms/' },
+        ]} />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />

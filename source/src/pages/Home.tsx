@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { FolderGit2, BookOpen, Package, Monitor, Fingerprint } from 'lucide-react';
 import { SEO, JsonLd } from '../lib/seo';
 import TrustSignal from '../components/TrustSignal';
 import SectionHeader from '../components/SectionHeader';
@@ -65,7 +66,7 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="QECTOR · Production-Grade Quantum Error Correction Decoding for Python"
+        title="QECTOR · Quantum Error Correction Decoding for Python"
         description="QECTOR Decoder v3 - Rust-core Python library with 17 concrete decoder configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance."
       />
       <JsonLd
@@ -75,7 +76,7 @@ export default function Home() {
             {
               '@type': 'SoftwareApplication',
               name: 'QECTOR Decoder v3',
-              description: 'QECTOR Decoder v3 is the certified qector-decoder-v3 1.0.0 Rust/Python quantum error correction package with 17 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.',
+              description: 'QECTOR Decoder v3 is the qector-decoder-v3 1.0.0 Rust/Python quantum error correction package with 17 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.',
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Linux, macOS, Windows',
               programmingLanguage: 'Python',
@@ -123,14 +124,13 @@ export default function Home() {
             className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-center text-xs leading-relaxed text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} · Certified First Stable Release · Changelog →’</span>
+            <span>v{pypiVersion} · First Stable Release · Changelog →</span>
           </Link>
 
           <h1
             className="max-w-4xl mx-auto break-words text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6"
             style={{ textShadow: '0 4px 32px rgba(0,0,0,0.9)' }}
           >
-            Production-Grade{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-400">
               QEC Decoding
             </span>{' '}
@@ -151,7 +151,7 @@ export default function Home() {
 
           <div className="flex flex-wrap gap-4 justify-center mb-10">
             <Link to="/pricing" className="btn-gold text-base px-8 py-4 text-sm sm:text-base font-bold">
-              Start $499 Evaluation →’
+              Start $499 Evaluation →
             </Link>
             <Link to="/decoder" className="btn-cyan text-base px-8 py-4 text-sm sm:text-base">
               Explore the Decoder
@@ -210,7 +210,7 @@ export default function Home() {
            </div>
            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
              <div className="card-surface p-6 border-cyan-300/20">
-               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Certified Runtime</div>
+               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Current Runtime</div>
                <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 1.0.0</h3>
                <p className="text-secondary text-sm leading-relaxed">The live PyPI release supports Python 3.9 through 3.13 with 15 binary wheels across Windows, Linux, and macOS.</p>
              </div>
@@ -223,11 +223,11 @@ export default function Home() {
                <div className="text-gold-400 font-mono text-xs uppercase tracking-wider mb-3">Secure Delivery</div>
                <h3 className="text-lg font-bold text-primary mb-2">Signed, traceable licensing</h3>
                <p className="text-secondary text-sm leading-relaxed">Commercial fulfillment requires a live Stripe event, issues a v2 Ed25519 token, and records independent billing and license delivery states.</p>
-               <Link to="/license" className="inline-block text-gold-400 text-sm font-medium hover:underline mt-3">Read the certified procedure →’</Link>
+               <Link to="/license" className="inline-block text-gold-400 text-sm font-medium hover:underline mt-3">Read the license activation procedure →</Link>
              </div>
            </div>
            <div className="mt-8 card-surface p-6 border-cyan-300/20">
-             <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Certified Evidence Registry</div>
+             <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Evidence Registry</div>
              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                <a href="https://doi.org/10.5281/zenodo.21941046" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-cyan-300 transition-colors">
                  <span className="block text-primary font-semibold">Normative reference manual</span>
@@ -238,7 +238,7 @@ export default function Home() {
                  <span className="font-mono text-xs">10.5281/zenodo.21611214</span>
                </a>
                <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-cyan-300 transition-colors">
-                 <span className="block text-primary font-semibold">Certification and proof bundle</span>
+                 <span className="block text-primary font-semibold">Verification and proof bundle</span>
                  <span className="font-mono text-xs">10.5281/zenodo.22046403</span>
                </a>
              </div>
@@ -276,11 +276,11 @@ export default function Home() {
         <div className="section-padding">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
             {[
-              { icon: 'ðŸ“‹', label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
-              { icon: 'ðŸ“–', label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
-              { icon: 'ðŸ“¦', label: `PyPI Wheel v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
-              { icon: 'ðŸ’»', label: 'Free Workbench App', href: '/workbench' },
-              { icon: 'ðŸ†”', label: 'ORCID 0009-0000-3465-3753', href: 'https://orcid.org/0009-0000-3465-3753' },
+              { icon: <FolderGit2 size={16} />, label: 'Artifacts (GitHub)', href: 'https://github.com/GuillaumeLessard/qector-decoder' },
+              { icon: <BookOpen size={16} />, label: 'Mastering QEC · Google Play', href: 'https://play.google.com/store/books/details?id=dGXuEQAAQBAJ', gold: true },
+              { icon: <Package size={16} />, label: `PyPI Wheel v${pypiVersion}`, href: 'https://pypi.org/project/qector-decoder-v3/' },
+              { icon: <Monitor size={16} />, label: 'Free Workbench App', href: '/workbench' },
+              { icon: <Fingerprint size={16} />, label: 'ORCID 0009-0000-3465-3753', href: 'https://orcid.org/0009-0000-3465-3753' },
             ].map((pill) => (
               <TrustSignal
                 key={pill.label}
@@ -299,18 +299,18 @@ export default function Home() {
         <div className="section-padding max-w-6xl mx-auto">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-4">
-              Certified Proof Suite
+              Proof Suite
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold">Executable Certification for v1.0.0</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">Executable Verification for v1.0.0</h2>
             <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
-              Hashed-lock reproducible install, CERT_STRICT gate, and Lean/Coq kernel evidence — verifiable against Reference Manual v1.0.0.
+              Hashed-lock reproducible install, CERT_STRICT gate, and Lean/Coq kernel evidence - verifiable against Reference Manual v1.0.0.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="card-surface p-6 border-emerald-500/20">
               <div className="text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">Reproducible Install</div>
               <h3 className="text-lg font-bold text-primary mb-2">Hashed-lock & CERT_STRICT</h3>
-              <p className="text-secondary text-sm leading-relaxed">Every proof run is hashed-locked and gated by CERT_STRICT — no universal benchmark figures, only workload-scoped artifacts.</p>
+              <p className="text-secondary text-sm leading-relaxed">Proof runs are hashed-locked and gated by CERT_STRICT - no universal benchmark figures, only workload-scoped artifacts.</p>
             </div>
             <div className="card-surface p-6 border-emerald-500/20">
               <div className="text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">Reference Manual v1.0.0</div>
@@ -320,7 +320,7 @@ export default function Home() {
             <div className="card-surface p-6 border-emerald-500/20">
               <div className="text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">Lean/Coq Evidence</div>
               <h3 className="text-lg font-bold text-primary mb-2">Kernel-checked proofs</h3>
-              <p className="text-secondary text-sm leading-relaxed">Executable suite checks GF(2) invariants and logical cosets with Lean/Coq kernels — evidence, not claims.</p>
+              <p className="text-secondary text-sm leading-relaxed">Executable suite checks GF(2) invariants and logical cosets with Lean/Coq kernels - evidence, not claims.</p>
             </div>
           </div>
           <div className="text-center mt-8">
@@ -339,9 +339,9 @@ export default function Home() {
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
               How It Works
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold">From Installation to Validation in Minutes</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">From Installation to Validation</h2>
             <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
-              QECTOR integrates directly into your existing QEC workflow with zero friction.
+              QECTOR integrates directly into your existing QEC workflow with minimal friction.
             </p>
           </div>
 
@@ -350,21 +350,21 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Install',
-                 desc: 'Install the certified v1.0.0 wheel in a supported Python 3.9–3.13 environment alongside your existing Stim or PyMatching workflow.',
+                 desc: 'Install the v1.0.0 wheel in a supported Python 3.9-3.13 environment alongside your existing Stim or PyMatching workflow.',
                  detail: 'pip install qector-decoder-v3==1.0.0',
                 code: true,
               },
               {
                 step: '02',
                 title: 'Decode',
-                 desc: 'Access 15 concrete Rust-accelerated decoder configurations through a unified Python API. Workbench also exposes AutoDecoder and Auto Router as two orchestration kinds, for 19 named kinds in total.',
+                 desc: 'Access 17 concrete Rust-accelerated decoder configurations through a unified Python API. Workbench also exposes AutoDecoder and Auto Router as two orchestration kinds, for 19 named kinds in total.',
                 detail: 'from qector_decoder_v3 import BlossomDecoder, BpOsdDecoder',
                 code: true,
               },
               {
                 step: '03',
                 title: 'Validate',
-                 desc: 'Every claim is scoped to a declared workload and backed by SHA-256 sealed artifacts. Run qector-doctor before relying on optional paths and preserve the report with the result.',
+                 desc: 'Claims are scoped to a declared workload and backed by SHA-256 sealed artifacts. Run qector-doctor before relying on optional paths and preserve the report with the result.',
                  detail: 'evidence policy · SHA-256 sealed',
                 code: false,
               },
@@ -446,10 +446,10 @@ export default function Home() {
             <div ref={(el) => addRef(el, 7)} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                   17 Workbench Kinds · 15+ Concrete Configs
+                   19 Workbench Kinds · 17 Concrete Configs
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Production-Grade Decoding Algorithms
+                  Decoding Algorithms
                 </h2>
                 <p className="text-secondary text-lg leading-relaxed mb-8">
                    Union-Find, Fast Union-Find, Blossom MWPM, Sparse Blossom, Belief-Matching, BP-OSD, GPU Batch (CUDA/OpenCL),
@@ -459,8 +459,8 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     { label: ' v1.0.0 First Stable', desc: 'API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor.' },
-                    { label: ' 15 Binary Wheels', desc: 'Python 3.9–3.13 across Windows amd64, Linux x86_64, and macOS arm64, Sigstore-attested on PyPI.' },
-                    { label: ' GPU Batch Acceleration', desc: 'CUDA path ships in every wheel (edge_weights, precision="f64"); OpenCL via source build.' },
+                    { label: ' 15 Binary Wheels', desc: 'Python 3.9-3.13 across Windows amd64, Linux x86_64, and macOS arm64, released on PyPI.' },
+                    { label: ' GPU Batch Paths', desc: 'CUDA and OpenCL batch paths are available for supported hardware and drivers; OpenCL via source build.' },
                     { label: ' Reproducible Harness', desc: 'qector bench ships with the package; measure on your own hardware, no universal figures claimed.' },
                   ].map((item) => (
                     <div key={item.label} className="p-4 bg-void/50 border border-gridline/50 rounded-xl">
@@ -472,13 +472,13 @@ export default function Home() {
 
                 <div className="flex flex-wrap gap-3 mt-8">
                   <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/pypi/v/qector-decoder-v3?style=flat-square&color=24e7ff" alt="PyPI" loading="lazy" />
+                    <img src="https://img.shields.io/pypi/v/qector-decoder-v3?style=flat-square&color=24e7ff" alt="qector-decoder-v3 version on PyPI" loading="lazy" />
                   </a>
                   <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/github/v/release/GuillaumeLessard/qector-decoder?style=flat-square&color=24e7ff" alt="GitHub" loading="lazy" />
+                    <img src="https://img.shields.io/github/v/release/GuillaumeLessard/qector-decoder?style=flat-square&color=24e7ff" alt="Latest qector-decoder release on GitHub" loading="lazy" />
                   </a>
                   <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/badge/GitHub-Artifacts-blue?logo=github" alt="GitHub Artifacts" loading="lazy" />
+                    <img src="https://img.shields.io/badge/GitHub-Artifacts-blue?logo=github" alt="GitHub release artifacts for QECTOR" loading="lazy" />
                   </a>
                 </div>
               </div>
@@ -504,7 +504,7 @@ export default function Home() {
                 title="Reproducible Benchmark Harness"
                 statement="No universal benchmark figures are published on this site, because results depend on your hardware, drivers, and workloads. The qector bench harness ships with the package so you can measure logical error rates and throughput on your own machines."
                 href="https://github.com/GuillaumeLessard/qector-decoder"
-                linkLabel="GitHub Artifacts →’"
+                linkLabel="GitHub Artifacts →"
                 className="max-w-3xl mx-auto mb-6"
               />
             </div>
@@ -514,7 +514,7 @@ export default function Home() {
                 <div><span className="text-cyan-300">$</span> pip install "qector-decoder-v3[bench]"</div>
                 <div><span className="text-cyan-300">$</span> qector-doctor</div>
                 <div><span className="text-cyan-300">$</span> qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001</div>
-                <div className="text-green-400 mt-2">✓“ Logical error rates and throughput written as reproducible JSON</div>
+                <div className="text-green-400 mt-2">✓ Logical error rates and throughput written as reproducible JSON</div>
               </div>
             </div>
 
@@ -539,7 +539,7 @@ export default function Home() {
                  hosted services, and redistribution require the written scope described on the license and pricing pages.
               </p>
               <Link to="/commercial" className="text-cyan-300 text-sm font-medium hover:underline">
-                Learn about licensing →’
+                Learn about licensing →
               </Link>
             </div>
 
@@ -554,7 +554,7 @@ export default function Home() {
                 100% credit toward any annual license.
               </p>
               <Link to="/pricing" className="btn-gold text-sm">
-                View Pricing &amp; Tiers →’
+                View Pricing &amp; Tiers →
               </Link>
             </div>
           </div>
@@ -604,7 +604,7 @@ export default function Home() {
                   '100% credit toward annual license',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-xs text-secondary">
-                    <span className="text-green-400">✓“</span>
+                    <span className="text-green-400">✓</span>
                     <span>{item}</span>
                   </div>
                 ))}
@@ -612,7 +612,7 @@ export default function Home() {
             </div>
 
             <p className="text-xs text-muted-foreground mt-4">
-              Need annual pricing, multi-seat, or OEM? <Link to="/commercial" className="text-cyan-300 hover:underline">View all tiers →’</Link>
+              Need annual pricing, multi-seat, or OEM? <Link to="/commercial" className="text-cyan-300 hover:underline">View all tiers →</Link>
             </p>
           </div>
         </div>

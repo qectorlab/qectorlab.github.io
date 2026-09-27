@@ -10,7 +10,7 @@ export default function Privacy() {
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            No ad tracking · No data sold · Last updated June 2026
+            No ad networks · No data sold · Last updated June 2026
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Privacy Policy" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -35,8 +35,8 @@ export default function Privacy() {
             <h2 className="text-xl font-bold mb-4">Data We Collect</h2>
             <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
               <li><strong className="text-primary">Contact form:</strong> Name, email, organization, message - stored only to respond to your inquiry.</li>
-              <li><strong className="text-primary">Usage analytics:</strong> Standard server access logs only (no page-view analytics, no cookies, no tracking scripts).</li>
-              <li><strong className="text-primary">Technical logs:</strong> Standard server logs (IP address, user agent) retained for 30 days for security.</li>
+              <li><strong className="text-primary">Usage analytics:</strong> Standard server access logs only (no first-party analytics, no advertising). Third-party services you interact with directly (e.g. the Calendly scheduling widget, Stripe checkout) operate under their own privacy policies.</li>
+              <li><strong className="text-primary">Technical logs:</strong> Standard server logs (IP address, user agent) retained for a limited period for security purposes.</li>
             </ul>
           </div>
 
@@ -45,7 +45,7 @@ export default function Privacy() {
             <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
               <li>Respond to inquiries and support requests</li>
               <li>Improve website and product experience</li>
-              <li>Send occasional product updates (only if you opt in)</li>
+              <li>Send product updates you have opted into</li>
               <li>Detect and prevent abuse</li>
             </ul>
           </div>
@@ -56,7 +56,7 @@ export default function Privacy() {
               We do not sell, rent, or trade your personal information. Data is only shared with:
             </p>
             <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5 mt-3">
-              <li>Service providers necessary for operation (hosting, email delivery)</li>
+              <li>Service providers necessary for operation (hosting, email delivery, scheduling, payment processing)</li>
               <li>When required by law or to protect our rights</li>
             </ul>
           </div>

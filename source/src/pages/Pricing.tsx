@@ -1,4 +1,5 @@
-﻿import { useEffect, useRef } from 'react';
+﻿import { GraduationCap } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
@@ -39,7 +40,12 @@ export default function Pricing() {
     <>
       <SEO
         title="Pricing · QECTOR"
-        description="QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD."
+        description="QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers from $1,299/yr. Enterprise and OEM custom pricing. Prices in USD, exclusive of tax."
+        lang="en"
+        alternates={[
+          { lang: 'en', href: 'https://qector.store/pricing/' },
+          { lang: 'fr', href: 'https://qector.store/fr/pricing/' },
+        ]}
       />
       <JsonLd
         data={{
@@ -89,8 +95,8 @@ export default function Pricing() {
                   Includes CPU + CUDA batch decoding, written license agreement, benchmark artifact package, and priority support.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓“</span> 100% creditable toward annual license</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓“</span> Unlimited internal seats</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> 100% creditable toward annual license</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Unlimited internal seats</div>
                 </div>
               </div>
               
@@ -118,7 +124,7 @@ export default function Pricing() {
               For teams deploying QECTOR internally or integrating into private SaaS infrastructure.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              ðŸŽ“ 40% Academic Discount available on all annual tiers. Contact sales.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> 40% Academic Discount available on all annual tiers. Contact sales.
             </div>
           </div>
           
@@ -177,15 +183,15 @@ export default function Pricing() {
         <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="card-surface border-gold-400/20 bg-gold-400/5">
             <h3 className="text-2xl font-bold text-gold-400 mb-2">QECTOR Validation Sprint</h3>
-            <p className="text-sm text-gold-200/60 mb-4">$3,750 one-time · 10–20 days delivery</p>
+            <p className="text-sm text-gold-200/60 mb-4">$3,750 one-time · 10-20 days delivery</p>
             <p className="text-secondary text-sm mb-6">
               The recommended fast-track for teams seeking immediate, defensible proof of workflow value. 
               We execute up to 3 standard benchmark workloads using QECTOR and deliver reproducible artifact bundles.
             </p>
             <ul className="text-secondary text-sm space-y-2 mb-8">
-              <li className="flex gap-2"><span className="text-gold-400">✓“</span> Includes 60-day Commercial Evaluation</li>
-              <li className="flex gap-2"><span className="text-gold-400">✓“</span> Comparative analysis vs PyMatching/Stim</li>
-              <li className="flex gap-2"><span className="text-gold-400">✓“</span> 60-minute results review call</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> Includes 60-day Commercial Evaluation</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> Comparative analysis vs PyMatching/Stim</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> 60-minute results review call</li>
             </ul>
             <Link to="/contact" className="btn-gold block text-center">Request Validation Sprint</Link>
           </div>

@@ -1,6 +1,10 @@
 {
   "name": "QECTOR Decoder v3",
   "short_name": "QECTOR",
+  "id": "/",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
   "description": "Production-grade quantum error correction decoder and research platform",
   "start_url": "/",
   "display": "standalone",

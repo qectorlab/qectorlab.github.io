@@ -1,4 +1,5 @@
-﻿import { useState, useEffect, useRef } from 'react';
+﻿import { Zap } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import { APP_CONFIG, CALENDLY_URL } from '../lib/config';
@@ -134,7 +135,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </div>
               </div>
               <div className="p-4 bg-green-400/5 border border-green-400/20 rounded-xl">
-                <p className="text-green-400 text-sm font-semibold">âš¡ Lead-reply time: 1 business day for commercial inquiries.</p>
+                <p className="text-green-400 text-sm font-semibold flex items-center gap-2"><Zap size={14} className="shrink-0" aria-hidden="true" /> Lead-reply time: 1 business day for commercial inquiries.</p>
               </div>
             </div>
 
@@ -144,7 +145,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 {submitted ? (
                   <div className="text-center py-12" role="status" aria-live="polite">
                     <div className="w-16 h-16 rounded-full bg-green-400/10 border border-green-400/20 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-green-400 text-2xl" aria-hidden="true">✓“</span>
+                      <span className="text-green-400 text-2xl" aria-hidden="true">✓</span>
                     </div>
                     <h3 className="text-primary font-bold text-xl mb-2">
                       {submitted === 'sent' ? 'Message Sent' : 'Email Draft Opened'}

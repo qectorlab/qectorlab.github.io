@@ -1,4 +1,4 @@
-# qector.store — canonical crawler policy (audit S3: minimal, widely supported
+# qector.store - canonical crawler policy (audit S3: minimal, widely supported
 # directives). Everything is allowed; the wildcard group is the only enforceable
 # rule most crawlers need. Vendor-specific agent names were removed because a
 # matching named group disables the wildcard group for that agent and adds

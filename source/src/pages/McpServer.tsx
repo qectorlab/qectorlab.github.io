@@ -144,7 +144,7 @@ export default function McpServer() {
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Windows, macOS, Linux',
           description:
-            'Local stdio Model Context Protocol server exposing 8 verified QEC decoding tools. Syndromes never leave the machine.',
+            'Local stdio Model Context Protocol server exposing 8 QEC decoding tools. Designed for local stdio use.',
         }}
       />
 
@@ -158,7 +158,7 @@ export default function McpServer() {
             <NeuralReveal text="Library MCP Server" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            The app-free, library-only MCP server: eight verified tools covering Union-Find, exact
+            The app-free, library-only MCP server: eight tools covering Union-Find, exact
             Blossom MWPM, SparseBlossom, and the auto router, with syndrome validation against
             <code className="text-cyan-300"> H c = s (mod 2) </code> and coset-scored logical outcomes.
             Runs on <code className="text-cyan-300">qector-decoder-v3==1.0.0</code> with
@@ -184,7 +184,7 @@ export default function McpServer() {
               },
               {
                 t: 'Runs locally',
-                d: 'Local stdio JSON-RPC. No syndromes leave the machine, no network call, no telemetry. The protocol is local stdio only.',
+                d: 'Local stdio JSON-RPC. Syndromes are processed locally on the host machine; this library server includes no telemetry.',
               },
               {
                 t: 'App-free',
@@ -207,14 +207,14 @@ export default function McpServer() {
                 Looking for the full Claude Code Plugin?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                 The Claude Plugin v1.0.6 includes 28 skills, 11 slash commands, 5 agents, and four local MCP servers: 8 stable library tools, 29 opt-in research tools, 3 opt-in admin tools, and a safe Desktop profile. Workbench v1.0.7 remains the largest desktop surface with 85 tools on Windows, Linux, and macOS.
+                 The Claude Plugin v1.0.6 includes 28 skills, 11 slash commands, 5 agents, and four local MCP servers: 8 stable library tools, 29 opt-in research tools, 3 opt-in admin tools, and a safe Desktop profile. Workbench v1.0.7 remains the largest desktop surface with 85 tools on Windows and Linux.
               </p>
             </div>
             <Link
               to="/claude-plugin"
               className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-xs font-mono transition-all whitespace-nowrap shadow-lg shadow-cyan-400/20"
             >
-              Explore Claude Plugin →’
+              Explore Claude Plugin →
             </Link>
           </div>
 
@@ -279,14 +279,14 @@ export default function McpServer() {
             <p className="text-secondary text-sm leading-relaxed mb-4">
               Nine code families (graphlike eligible where marked; non-graphlike inputs route to
               BP-OSD or require <code className="text-cyan-300"> build_code_from_matrix </code>)
-              and five stable decoders. No universal benchmark figures are published on the site —
+              and five stable decoders. No universal benchmark figures are published on the site -
               run the shipped harness to measure your own hardware.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {FAMILIES.map((f) => (
                 <div key={f.name} className="p-4 bg-void border border-gridline rounded-xl">
                   <span className="text-cyan-300 font-mono font-bold">{f.name}</span>
-                  <div className="text-xs text-muted-foreground mt-1 font-mono">→’ {f.desc}</div>
+                  <div className="text-xs text-muted-foreground mt-1 font-mono">→ {f.desc}</div>
                 </div>
               ))}
             </div>
@@ -332,10 +332,10 @@ export default function McpServer() {
             <h2 className="text-2xl font-bold mb-4">Operational guidance</h2>
             <ul className="space-y-3 text-secondary text-sm leading-relaxed">
               <li>
-                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review — they are not part of this public library contract.
+                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review - they are not part of this public library contract.
               </li>
               <li>
-                <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation â‰¤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.
+                <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation ≤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.
               </li>
               <li>
                 <strong className="text-primary">LER is coset-scored.</strong> Logical outcomes use the logical coset, never raw correction-vector equality. Wilson 95% intervals and a <code className="text-cyan-300"> code_capacity </code> tag are included; do not compare with <code className="text-cyan-300"> circuit_level </code> results.

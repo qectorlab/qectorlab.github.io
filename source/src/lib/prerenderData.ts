@@ -1,4 +1,4 @@
-﻿// Prerender route data: the single source of truth for the static HTML shells
+// Prerender route data: the single source of truth for the static HTML shells
 // emitted per route at build time (see ghPagesSpaShell in vite.config.ts).
 //
 // Why this exists: qector.store is a client-rendered SPA. Without prerendering,
@@ -16,7 +16,7 @@
 // here fails the build loudly (the vite plugin errors out). Titles/descriptions
 // should mirror the <SEO> props of the corresponding page component.
 
-import { FAQ_ITEMS } from './faqData';
+import { FAQ_ITEMS, FAQ_ITEMS_FR } from './faqData';
 import { blogPosts } from './blogData';
 import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES } from './releases';
 
@@ -153,14 +153,14 @@ const page = (inner: string) => wrap(inner + nav());
 export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/',
-    title: 'QECTOR · Production-Grade Quantum Error Correction Decoding for Python',
+    title: 'QECTOR · Quantum Error Correction Decoding for Python',
     description:
       'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder with 17 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance.',
-    heading: 'Production-Grade QEC Decoding for Python',
+    heading: 'QEC Decoding for Python',
     body: page(
-      h1('Production-Grade QEC Decoding for Python') +
+      h1('QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library with 15 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library with 17 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -181,9 +181,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           `PyPI package: <a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3 ${DECODER_VERSION}</a>`,
           `Artifacts and reproduction harness: <a href="${GITHUB_URL}" style="color:#67e8f9;">github.com/GuillaumeLessard/qector-decoder</a>`,
-          '<a href="https://doi.org/10.5281/zenodo.22244510" style="color:#67e8f9;">Normative reference manual DOI 10.5281/zenodo.22244510</a>',
+          '<a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">Normative reference manual DOI 10.5281/zenodo.21941046</a>',
           '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>',
-          '<a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">Certification and proof bundle DOI 10.5281/zenodo.22046403</a>',
+          '<a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">Verification and proof bundle DOI 10.5281/zenodo.22046403</a>',
           'Validation reports and SHA-256 sealed manifests, archived with the decoder source on GitHub.',
         ])
     ),
@@ -194,14 +194,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/decoder',
-    title: 'QECTOR Decoder v3 · Production-Grade QEC Decoding for Python',
+    title: 'QECTOR Decoder v3 · QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 – 15+ decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 15+ decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
+          'Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
         h2('Production decoders (Stable)') +
         ul([
@@ -221,11 +221,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         table(
           ['Key', 'Value'],
           [
-            ['Languages', 'Rust core (PyO3) / Python 3.9–3.13 API'],
+            ['Languages', 'Rust core (PyO3) / Python 3.9-3.13 API'],
             ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (15 binary wheels)'],
-            ['GPU', 'CUDA ships in the wheel; OpenCL via source build'],
+            ['GPU', 'CUDA/OpenCL optional and environment-dependent; check the installed release diagnostics'],
             ['QEC library', 'Stim / Sinter / PyMatching / qiskit-qec compatible'],
-            ['Packaging', 'PyPI binary wheels (cp39–cp313, 3 platforms), Trusted Publishing + Sigstore'],
+            ['Packaging', 'PyPI binary wheels (cp39-cp313, 3 platforms); no sdist'],
             ['License', 'PolyForm Noncommercial 1.0.0 (community) / Commercial'],
           ]
         ) +
@@ -242,7 +242,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Evidence & Reports') +
         p(
-          'Every public claim is backed by a verifiable artifact: the six-record Zenodo evidence corpus, validation reports, and SHA-256 sealed manifests, all archived with the decoder source on GitHub.'
+          'Public claims link to supporting artifacts where published: the six-record Zenodo evidence corpus, validation reports, and SHA-256 sealed manifests, all archived with the decoder source on GitHub.'
         ) +
         h2('Zenodo evidence registry') +
         table(
@@ -252,8 +252,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['<a href="https://doi.org/10.5281/zenodo.21822738" style="color:#67e8f9;">10.5281/zenodo.21822738</a>', 'Restricted source custody', '2026-08-06', 'embargoed'],
             ['<a href="https://doi.org/10.5281/zenodo.21823755" style="color:#67e8f9;">10.5281/zenodo.21823755</a>', 'Full scientific verification &amp; validation report', '2026-08-06', 'open'],
             ['<a href="https://doi.org/10.5281/zenodo.21850315" style="color:#67e8f9;">10.5281/zenodo.21850315</a>', 'Technical monograph (multi-backend architecture)', '2026-08-08', 'open'],
-            ['<a href="https://doi.org/10.5281/zenodo.22244510" style="color:#67e8f9;">10.5281/zenodo.22244510</a>', 'Normative reference manual v1.0.0', '2026-08-14', 'open'],
-            ['<a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">10.5281/zenodo.22046403</a>', 'Certification / verification proof bundle', '2026-08-21', 'open'],
+            ['<a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">10.5281/zenodo.21941046</a>', 'Normative reference manual v1.0.0', '2026-08-14', 'open'],
+            ['<a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">10.5281/zenodo.22046403</a>', 'Verification proof bundle', '2026-08-21', 'open'],
           ]
         ) +
         p(
@@ -271,7 +271,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     jsonLdExtra: [
       techArticleNode(
         'QECTOR Evidence & Validation Reports',
-        'Complete six-record Zenodo evidence corpus, the official v1.0.0 reference manual (DOI 10.5281/zenodo.22244510), and SHA-256 sealed validation artifacts.'
+        'Complete six-record Zenodo evidence corpus, the official v1.0.0 reference manual (DOI 10.5281/zenodo.21941046), and SHA-256 sealed validation artifacts.'
       ),
     ],
   },
@@ -279,18 +279,17 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/workbench',
     title: 'Workbench · QECTOR',
     description:
-      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.7 (x64), Linux v1.0.7 (x64), and macOS — not ready yet, each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
+      'QECTOR Workbench desktop GUI and MCP releases: Windows v1.0.7 (x64) and Linux v1.0.7 (x64), each with an 85-tool MCP server and a qector-decoder-v3 1.0.0 backend.',
     heading: 'QECTOR Workbench',
     body: page(
       h1('QECTOR Workbench') +
         p(
-          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The live repositories publish Windows, Linux, and macOS — not ready yet builds. Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router), and 10 code families.'
+          'QECTOR Workbench is a free desktop application and Model Context Protocol server. The live repositories publish Windows and Linux builds. Each build ships an 85-tool MCP server, a bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router), and 10 code families.'
         ) +
         h2('Downloads') +
         ul([
           'Windows x64: <code>QectorWorkbench-Portable.exe</code> (<code>c53ca5f4fc49152f242a847d0ca11f147164dda426ae29ec170c451871b8ab13</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/tag/v1.0.7" style="color:#67e8f9;">live release notes</a>',
           'Linux x64: <code>QectorWorkbench-Portable</code> (<code>aa3949d25082165dc3b89115486e1ea4e210cd5254659da32185fe6a8e71a1c8</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-linux/releases/tag/v1.0.7" style="color:#67e8f9;">live release notes</a>',
-          'macOS arm64 (Apple silicon): <code>QectorWorkbench-1.0.6-arm64.dmg — not ready yet</code> (<code>not-ready-yet</code>): <a href="https://github.com/qectorlab/qector-decoder-workbench-macos/releases/tag/v1.0.2" style="color:#67e8f9;">live release notes</a>',
           'Headless MCP server on every platform: <code>--mcp</code>; MCP protocol 2024-11-05 over stdio JSON-RPC 2.0.',
           'SHA-256 checksums for every released file are published in the release notes.',
         ]) +
@@ -327,9 +326,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Workbench',
         description:
-          'Free desktop application and Model Context Protocol server for quantum error correction. Windows, Linux, and macOS — not ready yet each provide an 85-tool MCP server, 19 named decoder kinds (17 concrete configurations plus 2 routing kinds), and 10 quantum code families.',
+          'Free desktop application and Model Context Protocol server for quantum error correction. Windows and Linux builds each provide an 85-tool MCP server, 19 named decoder kinds (17 concrete configurations plus 2 routing kinds), and 10 quantum code families.',
         applicationCategory: 'DeveloperApplication',
-        operatingSystem: 'Windows, Linux, macOS',
+        operatingSystem: 'Windows, Linux',
         softwareVersion: '1.0.7',
         url: SITE_URL + '/workbench/',
         downloadUrl: 'https://github.com/qectorlab/qector-decoder-workbench-windows/releases/download/v1.0.7/QectorWorkbench-Portable.exe',
@@ -342,7 +341,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/pricing',
     title: 'Pricing · QECTOR',
     description:
-      'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD.',
+      'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers from $1,299/yr. Enterprise and OEM custom pricing. Prices in USD, excluding tax.',
     heading: 'Pricing & Licensing',
     body: page(
       h1('Pricing & Licensing') +
@@ -358,7 +357,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['Solo / Indie perpetual', '$3,299 one-time', '1 named user', 'Same rights as annual for v3.x (all v3.x patch/minor updates included; major version upgrades such as v4.0 are a new license)'],
             ['Startup / Growth', '$4,499 / yr', 'Up to 10', 'Production internal use, advanced BP-OSD/LDPC workflows'],
             ['Professional / Lab', '$11,500 / yr', 'Up to 25', 'Production internal use, SLA, validation report package credit'],
-            ['Enterprise R&amp;D', '$28,000 / yr', 'Unlimited seats &amp; qubits', 'Dedicated support engineer, custom builds, Rust source access on request'],
             ['Enterprise / OEM / SaaS', 'Custom', 'Custom', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
           ]
         ) +
@@ -391,10 +389,35 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/fr/pricing',
-    title: 'Tarification · QECTOR',
-    description: 'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD.',
-    heading: 'Tarification et Licences',
-    body: page(h1('Tarification et Licences') + p('QECTOR Decoder v3 is source-available...')),
+    title: 'Tarifs · QECTOR',
+    description: 'Licences commerciales QECTOR Decoder v3. Évaluation de 60 jours à 499 $, entièrement créditable. Paliers de production annuels à partir de 1 299 $/an. Entreprise et OEM sur mesure. Prix en USD, hors taxes.',
+    heading: 'Tarification et licences',
+    body: page(
+      h1('Tarification et licences') +
+        p(
+          'QECTOR Decoder v3 est disponible en source : gratuit pour un usage non commercial, académique et personnel sous PolyForm Noncommercial 1.0.0. Le déploiement commercial exige une licence payante. Tous les prix sont en dollars américains (USD), hors taxes.'
+        ) +
+        h2('Paliers') +
+        ul([
+          'Évaluation commerciale de 60 jours : 499 $ paiement unique, sièges internes illimités, 100 % créditable vers un palier annuel.',
+          'Solo / Indie : 1 299 $/an · Startup / Growth : 4 499 $/an · Professional : 11 500 $/an.',
+          'Enterprise & OEM : sur mesure (tarification personnalisée).',
+          'Rabais académique de 40 % disponible sur les paliers annuels.',
+        ]) +
+        p(
+          'Voir <a href="/pricing" style="color:#67e8f9;">la version anglaise pour le détail complet</a>. Contact : <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>'
+        )
+    ),
+    jsonLdExtra: [
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQ_ITEMS_FR.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
   },
   {
     path: '/commercial',
@@ -448,19 +471,19 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Skills') +
         ul([
           'Systems and performance: Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
-          'Python engineering: Python 3.9–3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, sigstore attestation.',
+          'Python engineering: Python 3.9-3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, release signing documentation.',
           'Quantum error correction: MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
-          'Applications and desktop: CustomTkinter GUI, self-contained runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
+          'Applications and desktop: CustomTkinter GUI, runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
           'Web and product: React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
           'Writing and publishing: technical documentation, long-form instructional writing, audiobook production, electronic music production.',
         ]) +
         h2('Selected work') +
         ul([
            `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 17 concrete decoder configurations, first stable release v1.0.0.`,
-           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows, Linux, and macOS — not ready yet releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
-           '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>; <a href="https://doi.org/10.5281/zenodo.22244510" style="color:#67e8f9;">normative manual DOI 10.5281/zenodo.22244510</a>; <a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">certification/proof DOI 10.5281/zenodo.22046403</a>.',
+           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows and Linux releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
+           '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>; <a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">normative manual DOI 10.5281/zenodo.21941046</a>; <a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">verification/proof DOI 10.5281/zenodo.22046403</a>.',
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
-          'Mastering QEC and the QEC Academy instructional series; SATI CODEX and the LCL-832/833 corpora, signed through ORCID and Zenodo.',
+          'Mastering QEC and the QEC Academy instructional series.',
         ]) +
         p('Book a 30-minute call: <a href="https://calendly.com/qector-info/30min" style="color:#67e8f9;">calendly.com/qector-info/30min</a> · <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -522,11 +545,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('About QECTOR') +
         p(
-          'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: a production-grade, evidence-backed quantum error correction decoder for Python.'
+          'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: an evidence-backed quantum error correction decoder for Python.'
         ) +
         ul([
           'No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. v1.0.0 (2026-08-06) is the first stable release of the decoder.',
-          'SATI CODEX / LCL-833 theoretical work is research context: the shipping product is the decoder and its workbench.',
         ]) +
         p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -551,8 +573,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'pymatching submodule shim: from qector_decoder_v3.pymatching import Matching.',
           'SparseBlossomDecoder hot path is now zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed.',
           'Licence hardening: v2 tokens carry tier + expiry; malformed tokens return False; unreadable key files report invalid.',
-          '15 binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64), PyPI Trusted Publishing + Sigstore. No sdist.',
-          'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.22244510).',
+          '15 binary wheels (cp39-cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64). No sdist.',
+          'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.21941046).',
         ]) +
          h2('Verified PyPI release dates (UTC)') +
          ul([
@@ -589,8 +611,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
       h1('Documentation Hub') +
         ul([
            '<a href="/claude-plugin" style="color:#67e8f9;">Claude Code Plugin</a>: v1.0.6 with 28 skills, 5 agents, four MCP servers, and explicit stable, research, and admin profiles.',
-           '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 19 named decoder kinds, v1.0.7 on Windows and Linux — macOS not ready yet.',
-          '<a href="/mcp-server" style="color:#67e8f9;">MCP Server</a>: app-free local library server exposing 8 verified tools.',
+           '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 19 named decoder kinds, v1.0.7 on Windows and Linux.',
+          '<a href="/mcp-server" style="color:#67e8f9;">MCP Server</a>: app-free local library server exposing 8 local tools.',
           '<a href="/installer" style="color:#67e8f9;">Installation guide</a>: pip install on Linux, macOS, Windows.',
           '<a href="/manual" style="color:#67e8f9;">User manual</a>: configuration, decoder selection, benchmarking, troubleshooting.',
           '<a href="/technical-reference" style="color:#67e8f9;">Technical reference</a>: API parameters and module documentation.',
@@ -617,7 +639,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['Blossom (MWPM)', 'Graphlike CSS / surface', 'Workload-dependent', 'Minimum-weight matching objective', 'Stable'],
             ['Belief-Matching', 'Correlated-noise research', 'Workload-dependent', 'Evaluate locally', 'Research'],
             ['BP-OSD', 'qLDPC, LDPC', 'Workload-dependent', 'Evaluate locally', 'Research'],
-            ['Union-Find', 'Large surface', 'Near-linear O(N)', 'Approximate', 'Production'],
+            ['Union-Find', 'Large surface', 'Near-linear O(N)', 'Approximate', 'Stable'],
             ['GPU Batch', 'Supported batch workloads', 'Runtime-dependent', 'Validate locally', 'Workload-sensitive'],
             ['Hybrid / Cascade', 'Degenerate, mixed', 'Iterative', 'High', 'Research'],
             ['GNN Belief Matcher', 'Surface, research', 'Slow (offline)', 'Neural-enhanced', 'Research'],
@@ -651,7 +673,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/installer',
     title: 'Installation · QECTOR',
     description:
-      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9–3.13.',
+      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9-3.13.',
     heading: 'Installation',
     body: page(
       h1('Installation') +
@@ -670,7 +692,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/license',
     title: 'License · QECTOR',
     description:
-      'QECTOR Decoder v3 license terms and certified v1.0.0 token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
+      'QECTOR Decoder v3 license terms and v1.0.0 token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
     heading: 'License',
     body: page(
       h1('License') +
@@ -685,10 +707,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'The package is byte-identical for licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>); no functionality is gated or disabled.',
           'No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.',
          ]) +
-         h2('Certified license activation procedure') +
+         h2('License activation procedure') +
          ul([
            'Verify the purchase: the fulfillment worker accepts only a Stripe-signed live checkout event and records the reference, email, tier, and token in the protected fulfillment ledger.',
-           'Install the certified runtime: pip install --upgrade qector-decoder-v3==1.0.0 from the official PyPI project.',
+           'Install the official runtime: pip install --upgrade qector-decoder-v3==1.0.0 from the official PyPI project.',
            'Activate both variables: set QECTOR_LICENSE and QECTOR_LICENSE_KEY to the same token from the license email.',
            'Verify offline: python -c "import qector_decoder_v3 as q; print(q._is_license_active())" must print True; no license server or phone-home is involved.',
            'Keep the token with the Stripe invoice or payment confirmation. Never put it in a URL, issue tracker, chat, or public repository.',
@@ -732,11 +754,28 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/fr/terms',
-    title: 'Conditions gÃ©nÃ©rales (FR) · QECTOR',
-    description: "Conditions d'utilisation de QECTOR.",
-    noindex: true,
-    heading: 'Conditions gÃ©nÃ©rales',
-    body: page(h1('Conditions gÃ©nÃ©rales') + p('Use of the QECTOR website...')),
+    title: 'Conditions générales · QECTOR',
+    description: "Conditions d'utilisation du site et du logiciel QECTOR.",
+    heading: 'Conditions générales',
+    body: page(
+      h1('Conditions générales') +
+        p(
+          'En utilisant le logiciel QECTOR ou ce site web, vous acceptez ces conditions. Vendeur : Guillaume Lessard, entrepreneur individuel, exploitant sous le nom iD01t Productions, Québec, Canada. Tous les prix sont en dollars américains (USD), hors taxes. Les paiements sont traités par Stripe. Droit applicable : Québec, Canada. Les jetons de licence sont livrés instantanément et toutes les ventes sont finales : voir la <a href="/refund" style="color:#67e8f9;">politique de remboursement</a>.'
+        ) +
+        h2('Licence du logiciel') +
+        p(
+          'QECTOR Decoder v3 est concédé sous la licence PolyForm Noncommercial 1.0.0 pour l’usage non commercial. L’usage commercial exige un contrat de licence commerciale distinct. Voir la <a href="/license" style="color:#67e8f9;">page de licence</a>.'
+        ) +
+        h2('Exclusion de garanties') +
+        p(
+          'LE LOGICIEL EST FOURNI « TEL QUEL », SANS GARANTIE D’AUCUNE SORTE, EXPRESSE OU IMPLICITE. QECTOR Decoder v3 est un logiciel validé par simulation, pas une pile de tolérance aux pannes de production.'
+        ) +
+        h2('Limitation de responsabilité') +
+        p(
+          'EN AUCUN CAS LES AUTEURS OU LES DÉTENTEURS DES DROITS D’AUTEUR NE SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DE TOUT DOMMAGE OU DE TOUTE AUTRE RESPONSABILITÉ DÉCOULANT DU LOGICIEL OU DE SON UTILISATION.'
+        ) +
+        p('Contact : <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+    ),
   },
   {
     path: '/refund',
@@ -804,16 +843,16 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/claude-plugin',
     title: 'QECTOR Claude Plugin · Quantum Error Correction for Claude Code',
     description:
-      'Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local zero-egress decoding.',
+      'Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local decoding.',
     heading: 'QECTOR Claude Plugin',
     body: page(
       h1('QECTOR Claude Plugin') +
         p(
-          `Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version ${CLAUDE_PLUGIN_RELEASE.version} (published ${CLAUDE_PLUGIN_RELEASE.releaseDate}). Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.22244510) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Zero-egress local stdio architecture ensures that circuits, parity matrices, and syndromes never leave your machine.`
+          `Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version ${CLAUDE_PLUGIN_RELEASE.version} (published ${CLAUDE_PLUGIN_RELEASE.releaseDate}). Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Local stdio transport keeps decoding inside the host environment; the plugin makes no license checks or telemetry calls.`
         ) +
         h2('28 Domain Skills') +
         p(
-          'The plugin ships 28 skills. The seven flagship skills are qector-core (verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding), qector-math-foundations (Theorems 1–16 executable ground truth over GF(2), fail-closed syndrome checking H c = s (mod 2), Wilson 95% CIs), qector-developer (Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing), qector-researcher (literature review, threshold discovery, Monte Carlo noise simulation, reproducible export), qector-hardware-engineer (physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets), qector-educator (tutorial generation, conceptual explainers, interactive decoding walkthroughs), and qector-sysadmin (environment health diagnostics, resource bounds enforcement, runtime hygiene).'
+          'The plugin ships 28 skills. The seven flagship skills are qector-core (verified platform facts, 8 library MCP tools, 5 stable decoders, API grounding), qector-math-foundations (Theorems 1-16 executable ground truth over GF(2), fail-closed syndrome checking H c = s (mod 2), Wilson 95% CIs), qector-developer (Python SDK best practices, parity-check matrix generation, Sinter/Stim adapters, CI/CD testing), qector-researcher (literature review, threshold discovery, Monte Carlo noise simulation, reproducible export), qector-hardware-engineer (physical qubit mapping, heavy-hex/surface graph constraints, cryogenic error budgets), qector-educator (tutorial generation, conceptual explainers, interactive decoding walkthroughs), and qector-sysadmin (environment health diagnostics, resource bounds enforcement, runtime hygiene).'
         ) +
         h2('5 Specialized Agents') +
         ul([
@@ -845,10 +884,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Claude Plugin',
         description:
-          'Official QECTOR plugin v1.0.6 for Claude Code and Claude Desktop. 28 skills, 5 agents, four MCP servers, and local zero-egress decoding backed by qector-decoder-v3 1.0.0.',
+          'Official QECTOR plugin v1.0.6 for Claude Code and Claude Desktop. 28 skills, 5 agents, four MCP servers, and local decoding backed by qector-decoder-v3 1.0.0.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
-        softwareVersion: '1.0.7',
+        softwareVersion: '1.0.6',
         author: {
           '@type': 'Person',
           name: 'Guillaume Lessard',
@@ -878,7 +917,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     heading: 'QECTOR Blog',
     body: page(
       h1('QECTOR Blog') +
-         blogPosts.map(p => `<a href="/blog/${p.id}/">${p.title}</a>`).join('<br/>')
+         blogPosts.map(p => `<a href="/blog/${p.id}">${p.title}</a>`).join('<br/>')
     ),
     jsonLdExtra: [
       {

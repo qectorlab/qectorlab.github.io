@@ -1,9 +1,10 @@
-﻿import { useEffect, useRef } from 'react';
+import { GraduationCap } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { SEO, JsonLd } from '../lib/seo';
+import { SEO } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
-import { FAQ_ITEMS } from '../lib/faqData';
+import { FAQ_ITEMS_FR } from '../lib/faqData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -38,37 +39,31 @@ export default function PricingFR() {
   return (
     <>
       <SEO
-        title="Pricing · QECTOR"
-        description="QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers $1,299 to $28,000+. Enterprise and OEM available. Prices in USD."
-      />
-      <JsonLd
-        data={{
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: FAQ_ITEMS.map((f) => ({
-            '@type': 'Question',
-            name: f.q,
-            acceptedAnswer: { '@type': 'Answer', text: f.a },
-          })),
-        }}
+        title="Tarifs · QECTOR"
+        description="Licences commerciales QECTOR Decoder v3. Évaluation de 60 jours à 499 $, entièrement créditable. Paliers de production annuels à partir de 1 299 $/an. Entreprise et OEM sur mesure. Prix en USD, hors taxes."
+        lang="fr"
+        alternates={[
+          { lang: 'en', href: 'https://qector.store/pricing/' },
+          { lang: 'fr', href: 'https://qector.store/fr/pricing/' },
+        ]}
       />
 
       {/* HERO */}
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/10 via-surface/30 to-void" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/20 via-void to-void pointer-events-none" />
-        
+
         <div className="relative z-10 max-w-4xl mx-auto px-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-bold text-cyan-300 uppercase tracking-widest mb-8 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-cyan-300 animate-pulse-dot" />
-            Clear, Transparent Commercial Licensing
+            Licences commerciales claires et transparentes
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
-            <NeuralReveal text="License QECTOR for Production" className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
+            <NeuralReveal text="Licenciez QECTOR pour la production" className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
           </h1>
           <p className="text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-            QECTOR Decoder v3 is Source-Available for academic and non-commercial research. 
-            For internal R&D, pilot programs, and commercial deployment, select a license below.
+            QECTOR Decoder v3 est disponible en source pour la recherche académique et non commerciale.
+            Pour la R&D interne, les programmes pilotes et le déploiement commercial, choisissez une licence ci-dessous.
           </p>
         </div>
       </section>
@@ -81,29 +76,29 @@ export default function PricingFR() {
             <div className="bg-void/90 backdrop-blur-xl rounded-[23px] p-8 md:p-12 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-left">
                 <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
-                  Self-Serve · Instant Clearance
+                  Libre-service · Activation instantanée
                 </div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Commercial Evaluation</h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Évaluation commerciale</h2>
                 <p className="text-secondary text-base leading-relaxed max-w-xl">
-                  A 60-day full-access pilot designed for serious QEC research teams. 
-                  Includes CPU + CUDA batch decoding, written license agreement, benchmark artifact package, and priority support.
+                  Un pilote de 60 jours avec accès complet, conçu pour les équipes sérieuses de recherche QEC.
+                  Inclut le décodage batch CPU + CUDA, un contrat de licence écrit, un lot d’artefacts de référence et un support prioritaire.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓“</span> 100% creditable toward annual license</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓“</span> Unlimited internal seats</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Crédit de 100 % vers une licence annuelle</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Sièges internes illimités</div>
                 </div>
               </div>
-              
+
               <div className="w-full md:w-auto flex flex-col items-center">
                 <div className="text-4xl font-black text-white mb-1">$499</div>
-                <div className="text-secondary text-sm mb-6">One-time flat fee</div>
+                <div className="text-secondary text-sm mb-6">Frais uniques</div>
                 <a
                   href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
                   className="w-full text-center py-4 px-8 bg-cyan-400 hover:bg-cyan-300 text-void font-bold rounded-xl shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] transition-all hover:scale-105"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Start 60-Day Pilot
+                  Lancer le pilote de 60 jours
                 </a>
               </div>
             </div>
@@ -113,62 +108,62 @@ export default function PricingFR() {
         {/* 2. THE PRODUCTION TIERS */}
         <div ref={(el) => addRef(el, 1)}>
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Annual Production Tiers</h2>
+            <h2 className="text-3xl font-bold mb-4">Paliers de production annuels</h2>
             <p className="text-secondary text-lg mb-4">
-              For teams deploying QECTOR internally or integrating into private SaaS infrastructure.
+              Pour les équipes qui déploient QECTOR en interne ou l’intègrent à une infrastructure SaaS privée.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              ðŸŽ“ 40% Academic Discount available on all annual tiers. Contact sales.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> 40 % de rabais académique disponible sur tous les paliers annuels. Contactez les ventes.
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <PricingTierCard
               name="Solo / Indie"
               price="$1,299"
-              period="/ year"
-              desc="Production rights for a single named user."
-              features={['Full v3 decoders', 'Commercial R&D rights', 'Single named user', 'Priority email support']}
-              ctaLabel="Subscribe Now"
+              period="/ an"
+              desc="Droits de production pour un seul utilisateur nommé."
+              features={['Tous les décodeurs v3', 'Droits commerciaux de R&D', 'Un seul utilisateur nommé', 'Support courriel prioritaire']}
+              ctaLabel="S’abonner"
               ctaHref="https://buy.stripe.com/cNi9AV63TfkubbY87UeUU09"
             />
             <PricingTierCard
               name="Startup / Growth"
               price="$4,499"
-              period="/ year"
-              desc="Up to 10 named users. Advanced BP-OSD/LDPC workflows."
+              period="/ an"
+              desc="Jusqu’à 10 utilisateurs nommés. Flux BP-OSD/LDPC avancés."
               featured
-              featuredLabel="Most Popular"
-              features={['Up to 10 named users', 'Advanced BP-OSD/LDPC', 'CPU + CUDA batch', 'Support SLA + 2hr integration']}
-              ctaLabel="Subscribe Now"
+              featuredLabel="Le plus populaire"
+              features={['Jusqu’à 10 utilisateurs nommés', 'BP-OSD/LDPC avancé', 'Batch CPU + CUDA', 'SLA de support + intégration 2 h']}
+              ctaLabel="S’abonner"
               ctaHref="https://buy.stripe.com/14A5kF4ZP5JU7ZMdseeUU0c"
             />
             <PricingTierCard
               name="Professional"
               price="$11,500"
-              period="/ year"
-              desc="Up to 25 named users. Validation Report Package credit."
-              features={['Up to 25 named users', 'All advanced workflows', 'Dedicated integration', 'Validation Report credit']}
-              ctaLabel="Subscribe Now"
+              period="/ an"
+              desc="Jusqu’à 25 utilisateurs nommés. Crédit pour le lot de rapports de validation."
+              features={['Jusqu’à 25 utilisateurs nommés', 'Tous les flux avancés', 'Intégration dédiée', 'Crédit rapport de validation']}
+              ctaLabel="S’abonner"
               ctaHref="https://buy.stripe.com/28EeVf1ND0pA6VIewieUU0d"
             />
             <PricingTierCard
               name="Enterprise & OEM"
-              price="Custom"
+              price="Sur mesure"
               period=""
-              desc="Unlimited seats, custom builds, and SaaS/OEM distribution."
+              desc="Sièges illimités, versions personnalisées et distribution SaaS/OEM."
               accent="gold"
-              features={['Unlimited logical qubits', 'SaaS hosting rights', 'OEM bundling rights', 'Dedicated support engineer']}
-              ctaLabel="Contact Sales"
+              features={['Qubits logiques illimités', 'Droits d’hébergement SaaS', 'Droits de regroupement OEM', 'Ingénieur de support dédié']}
+              ctaLabel="Contacter les ventes"
               ctaHref="/contact"
             />
           </div>
-          
+
           {/* Solo Perpetual Note */}
           <div className="mt-8 text-center">
             <p className="text-sm text-secondary">
-              Prefer to own it outright? <strong className="text-cyan-300">Solo / Indie Perpetual is $3,299 one-time.</strong>{' '}
-               <Link to="/contact" className="text-cyan-400 hover:underline">Contact sales to activate</Link>
+              Vous préférez l’acheter définitivement ? <strong className="text-cyan-300">Solo / Indie Perpétuelle à 3 299 $ paiement unique.</strong>{' '}
+               <Link to="/contact" className="text-cyan-400 hover:underline">Contactez les ventes pour l’activer</Link>
             </p>
           </div>
         </div>
@@ -177,67 +172,67 @@ export default function PricingFR() {
         <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="card-surface border-gold-400/20 bg-gold-400/5">
             <h3 className="text-2xl font-bold text-gold-400 mb-2">QECTOR Validation Sprint</h3>
-            <p className="text-sm text-gold-200/60 mb-4">$3,750 one-time · 10–20 days delivery</p>
+            <p className="text-sm text-gold-200/60 mb-4">$3,750 paiement unique · Livraison en 10-20 jours</p>
             <p className="text-secondary text-sm mb-6">
-              The recommended fast-track for teams seeking immediate, defensible proof of workflow value. 
-              We execute up to 3 standard benchmark workloads using QECTOR and deliver reproducible artifact bundles.
+              La voie rapide recommandée pour les équipes qui veulent une preuve immédiate et défendable de la valeur sur leur flux de travail.
+              Nous exécutons jusqu’à 3 charges de référence standard avec QECTOR et livrons des lots d’artefacts reproductibles.
             </p>
             <ul className="text-secondary text-sm space-y-2 mb-8">
-              <li className="flex gap-2"><span className="text-gold-400">✓“</span> Includes 60-day Commercial Evaluation</li>
-              <li className="flex gap-2"><span className="text-gold-400">✓“</span> Comparative analysis vs PyMatching/Stim</li>
-              <li className="flex gap-2"><span className="text-gold-400">✓“</span> 60-minute results review call</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> Inclut l’évaluation commerciale de 60 jours</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> Analyse comparative vs PyMatching/Stim</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> Appel de révision des résultats de 60 minutes</li>
             </ul>
-            <Link to="/contact" className="btn-gold block text-center">Request Validation Sprint</Link>
+            <Link to="/contact" className="btn-gold block text-center">Demander un Validation Sprint</Link>
           </div>
-          
+
           <div className="card-surface bg-surface border-gridline">
-            <h3 className="text-2xl font-bold mb-4">Activating Your License</h3>
+            <h3 className="text-2xl font-bold mb-4">Activer votre licence</h3>
             <p className="text-secondary text-sm mb-6">
-              Everyone installs the same wheel from PyPI: there is no separate commercial build. 
-              Setting your license token simply disables the non-commercial usage notice.
+              Tout le monde installe la même wheel depuis PyPI : il n’existe pas de build commercial séparé.
+              Définir votre jeton de licence désactive simplement l’avis d’usage non commercial.
             </p>
             <pre className="bg-void/50 border border-gridline rounded-xl p-4 text-xs font-mono text-cyan-300 overflow-x-auto mb-6">
- {`# Commercial use: activate with the Ed25519 token
- export QECTOR_LICENSE="<your-token>"
- export QECTOR_LICENSE_KEY="<your-token>"
+ {`# Usage commercial : activer avec le jeton Ed25519
+ export QECTOR_LICENSE="<votre-jeton>"
+ export QECTOR_LICENSE_KEY="<votre-jeton>"
 
-# Optional: suppress the licensing notice in CI logs
+# Optionnel : désactiver l'avis de licence dans les journaux CI
 export QECTOR_SILENT=1`}
             </pre>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Tokens are verified offline against a public key embedded in the package: no license server, no phone-home, works completely air-gapped.
+              Les jetons sont vérifiés hors ligne contre une clé publique embarquée dans le paquet : aucun serveur de licence, aucun appel maison, fonctionne complètement hors réseau.
             </p>
           </div>
         </div>
 
         {/* 4. COMPARISON AND WHY QECTOR */}
         <div ref={(el) => addRef(el, 3)}>
-          <h2 className="text-3xl font-bold mb-8 text-center">Why License QECTOR?</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">Pourquoi licencier QECTOR ?</h2>
           <div className="card-surface bg-surface/50 border border-gridline">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-gridline/50">
-                    <th className="text-left py-4 px-6 text-cyan-300 font-semibold text-sm">Free (Source-Available)</th>
-                    <th className="text-left py-4 px-6 text-gold-400 font-semibold text-sm">Licensed (Commercial)</th>
+                    <th className="text-left py-4 px-6 text-cyan-300 font-semibold text-sm">Gratuit (source disponible)</th>
+                    <th className="text-left py-4 px-6 text-gold-400 font-semibold text-sm">Licencié (commercial)</th>
                   </tr>
                 </thead>
                 <tbody className="text-sm">
                   <tr className="border-b border-gridline/30">
-                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">Non-commercial research use only</td>
-                    <td className="py-4 px-6 text-primary font-medium">Internal R&D and production rights</td>
+                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">Usage de recherche non commerciale seulement</td>
+                    <td className="py-4 px-6 text-primary font-medium">Droits internes de R&D et de production</td>
                   </tr>
                   <tr className="border-b border-gridline/30">
-                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">Community support (GitHub Issues)</td>
-                    <td className="py-4 px-6 text-primary font-medium">Priority email support & SLAs</td>
+                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">Support communautaire (GitHub Issues)</td>
+                    <td className="py-4 px-6 text-primary font-medium">Support courriel prioritaire et SLA</td>
                   </tr>
                   <tr className="border-b border-gridline/30">
-                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">QECTOR Workbench GUI (Free)</td>
-                    <td className="py-4 px-6 text-primary font-medium">Validation artifact reproduction harnesses</td>
+                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">QECTOR Workbench GUI (gratuit)</td>
+                    <td className="py-4 px-6 text-primary font-medium">Harnais de reproduction d’artefacts de validation</td>
                   </tr>
                   <tr>
-                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">PolyForm Noncommercial License</td>
-                    <td className="py-4 px-6 text-primary font-medium">Written Commercial License Agreement</td>
+                    <td className="py-4 px-6 text-secondary border-r border-gridline/30">Licence PolyForm Noncommercial</td>
+                    <td className="py-4 px-6 text-primary font-medium">Contrat de licence commerciale écrit</td>
                   </tr>
                 </tbody>
               </table>
@@ -248,10 +243,10 @@ export QECTOR_SILENT=1`}
         {/* 5. FAQ */}
         <div ref={(el) => addRef(el, 4)} className="pt-12">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold mb-4">Foire aux questions</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {FAQ_ITEMS.map((item, idx) => (
+            {FAQ_ITEMS_FR.map((item, idx) => (
               <div key={idx} className="card-surface bg-surface/30 border-gridline/40 hover:bg-surface/60 transition-colors p-6 rounded-2xl">
                 <h4 className="text-base font-bold text-primary mb-3 text-cyan-300">
                   {item.q}
@@ -267,14 +262,14 @@ export QECTOR_SILENT=1`}
         {/* 6. FINE PRINT & PROCUREMENT */}
         <div ref={(el) => addRef(el, 5)} className="border-t border-gridline/40 pt-12 text-center text-xs text-muted-foreground max-w-3xl mx-auto space-y-4">
           <p>
-            <strong>What is not included:</strong> Unless explicitly granted, no tier includes redistribution, OEM, SaaS hosting, or sublicensing rights. Contact sales for Custom terms.
+            <strong>Ce qui n’est pas inclus :</strong> sauf mention explicite, aucun palier n’inclut la redistribution, l’OEM, l’hébergement SaaS ni les droits de sous-licence. Contactez les ventes pour des conditions sur mesure.
           </p>
           <p>
-            <strong>Procurement:</strong> All prices are USD and exclude tax. Stripe handles local taxes automatically. Tokens are delivered instantly via email. Due to instant delivery, sales are final. Please use the $499 Evaluation to test suitability before annual commitment.
+            <strong>Approvisionnement :</strong> tous les prix sont en USD et hors taxes. Stripe gère les taxes locales automatiquement. Les jetons sont livrés instantanément par courriel. En raison de la livraison instantanée, les ventes sont finales. Utilisez l’évaluation à 499 $ pour tester l’adéquation avant un engagement annuel.
           </p>
           <div className="flex justify-center gap-6 pt-4">
-            <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund Policy</Link>
-            <Link to="/contact" className="hover:text-cyan-300 transition-colors">Contact Engineering</Link>
+            <Link to="/refund" className="hover:text-cyan-300 transition-colors">Politique de remboursement</Link>
+            <Link to="/contact" className="hover:text-cyan-300 transition-colors">Contacter l’ingénierie</Link>
           </div>
         </div>
 
@@ -282,4 +277,3 @@ export QECTOR_SILENT=1`}
     </>
   );
 }
-

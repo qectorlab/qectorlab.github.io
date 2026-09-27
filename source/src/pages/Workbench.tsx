@@ -98,8 +98,8 @@ export default function Workbench() {
   return (
     <>
       <SEO
-        title="QECTOR Workbench — Windows v1.0.7 and Linux v1.0.7 — macOS not ready yet"
-        description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools — macOS not ready yet.`}
+        title="QECTOR Workbench - Windows v1.0.7 and Linux v1.0.7"
+        description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools.`}
       />
 
       {/* Top Notice */}
@@ -120,7 +120,7 @@ export default function Workbench() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider mb-6">
-            Windows {WIN.version} · Linux {LINUX.version} · macOS not ready · backend qector_decoder_v3 {WIN.backendVersion} · {WIN.mcpTools} MCP tools
+            Windows {WIN.version} · Linux {LINUX.version} · backend qector_decoder_v3 {WIN.backendVersion} · {WIN.mcpTools} MCP tools
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="QECTOR Workbench" className="text-4xl md:text-6xl font-extrabold" />
@@ -128,10 +128,10 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            Each v1.0.7 release (Windows/Linux) names 19 kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries; macOS — not ready yet names 17. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64, Linux x64, and macOS arm64 (Apple silicon).
-            Ships as a portable executable: each one{' '}
-            <span className="text-primary font-semibold">fully self-contained</span>, bundling its own Python runtime,
-            scientific stack, and decoder wheel. No system Python, no pip, no internet connection, and no update checks.
+            Each v1.0.7 release (Windows/Linux) names 19 kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64 and Linux x64.
+            Ships as a portable executable: each one is
+            self-contained, bundling its own Python runtime,
+            scientific stack, and decoder wheel. No system Python, no pip, and no online update checks.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href={WIN.artifactUrl} target="_blank" rel="noopener noreferrer" className="btn-cyan">
@@ -148,7 +148,7 @@ export default function Workbench() {
             </Link>
           </div>
           <p className="text-muted-foreground text-xs mt-4">
-             Windows v1.0.7 (x64) and Linux v1.0.7 (x64) plus macOS — not ready yet releases are published with direct artifacts and SHA-256 checksums verified against each live release.
+             Windows v1.0.7 (x64) and Linux v1.0.7 (x64) releases are published with direct artifacts and SHA-256 checksums verified against each live release.
           </p>
         </div>
       </section>
@@ -175,7 +175,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 0.5)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
-              Nine workspaces are documented for the live v1.0.7 (Windows/Linux) — macOS not ready yet releases:{' '}
+              Nine workspaces are documented for the live v1.0.7 (Windows/Linux) releases:{' '}
               {modules.map((m, i) => (
                 <span key={m}>
                   <span className="text-primary font-medium">{m}</span>
@@ -204,7 +204,7 @@ export default function Workbench() {
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3">
                 <h3 className="text-cyan-300 font-semibold text-base">Windows x64 · {WIN.version}</h3>
                 <p className="text-secondary text-xs leading-relaxed">
-                  Portable single executable and release ZIP. No installer required, no admin rights, no internet connection.
+                  Portable single executable and release ZIP. No installer required, no admin rights. The app makes no online update checks.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
                   <li>Published {WIN.releaseDate} in the verified GitHub release.</li>
@@ -253,13 +253,13 @@ export default function Workbench() {
               </div>
 
               <div className="p-5 bg-void border border-gridline rounded-xl space-y-3 opacity-60">
-                <h3 className="text-cyan-300 font-semibold text-base">macOS arm64 — not ready yet</h3>
+                <h3 className="text-cyan-300 font-semibold text-base">macOS arm64 - not ready yet</h3>
                 <p className="text-secondary text-xs leading-relaxed">
                   Apple silicon build requires a build on Apple hardware and is not included until that build is produced and signed.
                 </p>
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
-                  <li>Requires Apple hardware build — coming soon</li>
-                  <li>No artifact yet — check back for macOS release</li>
+                  <li>Requires Apple hardware build - coming soon</li>
+                  <li>No artifact yet - check back for macOS release</li>
                   <li>Windows and Linux v1.0.7 are live with 19 decoders</li>
                 </ul>
                 <span className="text-muted-foreground text-xs">Not available yet</span>
@@ -287,7 +287,7 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Each v1.0.7 release (Windows/Linux) — macOS not ready yet — declares <strong className="text-secondary">19 named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
+              Each v1.0.7 release (Windows/Linux) declares <strong className="text-secondary">19 named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
               its bundled qector_decoder_v3 {WIN.backendVersion} backend. Consult each release's
               included manuals for platform-specific coverage.
             </p>
@@ -339,15 +339,15 @@ export default function Workbench() {
               {[
                 {
                   name: 'Desktop GUI',
-                  desc: 'CustomTkinter desktop UI for Windows and Linux. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3–d63 on supported families.',
+                  desc: 'CustomTkinter desktop UI for Windows and Linux. Visual circuit builder, syndrome viewer, decoder performance dashboard, and a distance slider covering d3-d63 on supported families.',
                 },
                 {
                   name: 'MCP Tools',
                   desc: 'Native Model Context Protocol server over stdio JSON-RPC 2.0, launched with --mcp and usable headlessly with no display. Connects AI agents directly to decoder execution and diagnostics.',
                 },
                 {
-                  name: 'Fully Self-Contained',
-                  desc: 'Bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 1.0.0 wheel. No system Python, pip, or internet connection required, and no online update checks.',
+                  name: 'Self-Contained',
+                  desc: 'Bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 1.0.0 wheel. No system Python or pip required; the app makes no online update checks.',
                 },
                 {
                   name: 'Self / Auto-Debug Layer',
@@ -388,7 +388,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 5)}>
             <EvidenceBlock
               title="Documentation & Reference"
-              statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.7, Linux v1.0.7, and macOS — not ready yet builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
+              statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.7 and Linux v1.0.7 builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a

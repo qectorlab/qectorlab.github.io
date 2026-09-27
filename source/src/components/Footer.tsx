@@ -31,7 +31,7 @@ const companyLinks: LinkItem[] = [
   { label: 'iD01t Productions', href: 'https://id01t.store/', external: true },
   { label: 'Commercial Licensing', href: '/commercial' },
   { label: 'Contact Engineering', href: '/contact' },
-  { label: 'EULA & License', href: '/license/' },
+  { label: 'EULA & License', href: '/license' },
   { label: 'Terms of Service', href: '/terms' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Refund Policy', href: '/refund' },
@@ -84,7 +84,7 @@ export default function Footer() {
               </Link>
 
               <p className="text-secondary/80 text-sm leading-relaxed max-w-sm">
-                Production-grade quantum error correction decoding for Python. Built by Guillaume Lessard at iD01t Productions.
+                Production-grade → Quantum error correction decoding for Python. Built by Guillaume Lessard at iD01t Productions.
               </p>
 
               <div className="flex items-center gap-4 pt-2">
@@ -141,14 +141,14 @@ export default function Footer() {
 
           <div className="mt-16 pt-8 border-t border-gridline flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="text-xs text-muted-foreground max-w-xl leading-relaxed">
-              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="text-cyan-300 hover:underline">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows x64, Linux x64, and macOS arm64 (no system Python required).
+              <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="text-cyan-300 hover:underline">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64 (no system Python required).
             </div>
             
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-muted-foreground">
               <Link to="/privacy" className="hover:text-cyan-300 transition-colors">Privacy</Link>
               <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms</Link>
               <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund</Link>
-               <Link to="/license/" className="hover:text-cyan-300 transition-colors">License</Link>
+               <Link to="/license" className="hover:text-cyan-300 transition-colors">License</Link>
               <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security</a>
             </div>
           </div>

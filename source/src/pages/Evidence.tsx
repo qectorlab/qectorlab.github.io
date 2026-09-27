@@ -14,12 +14,12 @@ gsap.registerPlugin(ScrollTrigger);
 const REPORTS_DATA = [
   {
     title: 'Official User Manual v1.0.0',
-    desc: 'QECTOR Decoder v3 Reference Manual v1.0.0 (August 2026, DOI 10.5281/zenodo.22244510): the normative source for decoder contracts and claim boundaries.',
+    desc: 'QECTOR Decoder v3 Reference Manual v1.0.0 (DOI 10.5281/zenodo.21941046): the normative source for decoder contracts and claim boundaries.',
     status: 'Verified',
   },
   {
     title: 'SHA-256 Sealed Artifact Manifests',
-    desc: 'Source and artifact releases are SHA-256 sealed on GitHub, so every published build can be reproduced and verified byte-for-byte.',
+    desc: 'Source and artifact releases carry SHA-256 sealed manifests on GitHub, so published builds can be verified against their recorded hashes.',
     status: 'Verified',
   },
   {
@@ -73,11 +73,11 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <NeuralReveal text="Evidence & Reports" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
-            Every public claim is backed by a verifiable artifact: the six-record Zenodo evidence corpus,
+            Public claims are documented with their boundaries: the six-record Zenodo evidence corpus,
             validation reports, and SHA-256 sealed manifests archived on GitHub.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →’</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-cyan">GitHub Repository →</a>
             <Link to="/technical-reference" className="btn-outline">Technical Reference</Link>
           </div>
         </div>
@@ -140,7 +140,6 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                   color: report.status === 'Verified' ? 'green' : 'gold',
                 }}
                 desc={report.desc}
-                proof={report.proof}
               />
             ))}
           </div>
@@ -244,7 +243,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           {/* Transparency */}
           <EvidenceBlock
             title="Our Transparency Commitment"
-            statement={`We publish all validation results: passes, non-passes, and known limitations. All numeric claims link to GitHub artifact releases. We do not hide non-passes behind aggregate statistics.`}
+            statement={`We document validation results openly, including known limitations. Published numeric claims link to GitHub artifact releases. We do not hide non-passes behind aggregate statistics.`}
           />
 
         </div>

@@ -16,6 +16,12 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Keep <html lang> in sync with the route: French routes under /fr/*
+    // must announce lang="fr" to screen readers during SPA navigation
+    // (the prerendered shells carry the right lang from the build).
+    document.documentElement.lang = location.pathname.startsWith('/fr/')
+      ? 'fr'
+      : 'en';
     // Move focus to main content on route change so screen reader users
     // land on the new page instead of staying on the old nav position.
     document.getElementById('main-content')?.focus();
@@ -23,6 +29,7 @@ export default function Layout({ children }: LayoutProps) {
     // Global reveal animation for top-tier aesthetics, robust against Suspense lazy loading
     let observer: MutationObserver | null = null;
     const ctx = gsap.context(() => {});
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     const animateNodes = () => {
       let added = false;
@@ -30,6 +37,9 @@ export default function Layout({ children }: LayoutProps) {
       elements.forEach((el) => {
         added = true;
         el.classList.add('gsap-revealed');
+        // Respect users who ask for reduced motion: reveal content
+        // immediately instead of animating it.
+        if (reducedMotion) return;
         ctx.add(() => {
           gsap.fromTo(
             el,

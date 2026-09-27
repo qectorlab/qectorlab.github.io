@@ -49,7 +49,7 @@ export default function Changelog() {
                 'qector decode / qector bench / qector serve CLI and qector-doctor (environment diagnostic)',
                 'pymatching submodule shim (from qector_decoder_v3.pymatching import Matching); DemModel.make_decoder covers all native families',
                 'SparseBlossomDecoder hot path zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed; licence hardening (v2 tokens with tier + expiry)',
-                'Binary wheels (cp39–cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64) with PyPI Trusted Publishing + Sigstore; no sdist',
+                'Binary wheels (cp39-cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64); no sdist',
                  'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.21941046)',
                 'Free QECTOR Workbench (current): Comprehensive MCP tools, 19 named kinds (17 concrete decoder configurations plus AutoDecoder and Auto Router), 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',
                 'No universal benchmark figures are published on the site; qector bench ships with the package for measuring on your own hardware',

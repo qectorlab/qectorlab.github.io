@@ -32,7 +32,7 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-base leading-relaxed">
-              QECTOR Decoder v3 is a production-grade Python library for quantum error correction (QEC) decoding. v1.0.0 is the first stable release: it provides 15+ decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
+              QECTOR Decoder v3 is a Python library for quantum error correction (QEC) decoding. v1.0.0 is the first stable release: it provides 17 decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
             </p>
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
@@ -53,7 +53,7 @@ export default function Manual() {
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                   <h4 className="text-cyan-300 font-semibold text-sm mb-1">Multi-Algorithm Diversity</h4>
-                  <p className="text-muted-foreground text-xs leading-relaxed">15+ decoder configurations from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed">17 decoder configurations from exact Blossom MWPM to Belief-Matching, BP-OSD, and GPU batch decoding.</p>
                 </div>
                 <div className="p-4 bg-void border border-gridline rounded-xl">
                     <h4 className="text-cyan-300 font-semibold text-sm mb-1">Compiled Rust Core</h4>
@@ -155,7 +155,7 @@ print("Syndrome-faithful correction")`}
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR includes 15+ decoder configurations categorized into stable, workload-sensitive, and experimental/research tiers. Choose based on code type and speed/accuracy tradeoffs:
+              QECTOR includes 17 decoder configurations categorized into stable, workload-sensitive, and experimental/research tiers. Choose based on code type and speed/accuracy tradeoffs:
             </p>
 
             <div className="overflow-x-auto">
@@ -350,6 +350,7 @@ print("Syndrome-faithful correction")`}
               <a
                 href="/docs/reference.md"
                 target="_blank"
+                rel="noopener noreferrer"
                 download="QECTOR Decoder v3 - Reference (package only).md"
                 className="btn-cyan text-xs py-2 px-4"
               >
@@ -365,7 +366,7 @@ print("Syndrome-faithful correction")`}
                 filename="terminal"
               />
               <div className="mt-3 border border-gridline bg-void/30 rounded-xl overflow-hidden text-xs">
-                <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Python</span><span className="text-primary font-mono">3.9 – 3.13</span></div>
+                <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Python</span><span className="text-primary font-mono">3.9 - 3.13</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Platforms</span><span className="text-primary">Linux x86_64 (manylinux), Windows x64, macOS arm64</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">License</span><span className="text-primary">Source-available (Free academic / non-commercial)</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Startup Notice</span><span className="text-primary font-mono">Suppressed with QECTOR_SILENT=1</span></div>

@@ -28,12 +28,12 @@ const SKILLS = [
     name: 'qector-core',
     role: 'Core Ground Truth',
     desc: 'Verified platform facts, 8 library MCP tools, 5 stable decoders, and strict API grounding to prevent hallucination.',
-    keyFeatures: ['Grounds tool names & signatures', 'Enforces strict math boundary', 'Zero-egress verification'],
+    keyFeatures: ['Grounds tool names & signatures', 'Enforces strict math boundary', 'Local verification'],
   },
   {
     name: 'qector-math-foundations',
     role: 'Mathematical Axioms',
-    desc: 'Theorems 1–16 executable obligations over GF(2), syndrome equivalence H c = s (mod 2), Wilson 95% CIs, and coset scoring.',
+    desc: 'Theorems 1-16 executable obligations over GF(2), syndrome equivalence H c = s (mod 2), Wilson 95% CIs, and coset scoring.',
     keyFeatures: ['Theorem 1 fail-closed verification', 'Theorem 2 logical coset scoring', 'Wilson score intervals'],
   },
   {
@@ -113,7 +113,7 @@ const AGENTS = [
   {
     file: 'qec-validator.md',
     title: 'Mathematical Proof Validator',
-    desc: 'Specialized in formal theorem checking, finite matrix verification, syndrome faithfulness, and zero-egress enforcement.',
+    desc: 'Specialized in formal theorem checking, finite matrix verification, syndrome faithfulness, and local-only enforcement.',
   },
   {
     file: 'qec-sysadmin.md',
@@ -214,7 +214,7 @@ export default function ClaudePlugin() {
     <>
       <SEO
         title="QECTOR Claude Plugin · Quantum Error Correction for Claude Code"
-        description="Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local zero-egress decoding."
+        description="Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local stdio-based decoding."
       />
       <JsonLd
         data={{
@@ -255,11 +255,11 @@ export default function ClaudePlugin() {
           </h1>
 
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
-             Empower Claude with local, production-grade Quantum Error Correction engineering.
+             Empower Claude with local Quantum Error Correction engineering.
              Release v1.0.6 adds marketplace compliance hardening and environment-agnostic setup. It includes{' '}
              <span className="text-cyan-300 font-semibold">28 domain skills</span>,{' '}
              <span className="text-cyan-300 font-semibold">5 specialized agents</span>,{' '}
-             <span className="text-cyan-300 font-semibold">8 stable library tools</span>, 29 opt-in research tools, and 3 opt-in admin tools across four MCP servers. The default configuration remains local stdio with zero egress.
+             <span className="text-cyan-300 font-semibold">8 stable library tools</span>, 29 opt-in research tools, and 3 opt-in admin tools across four MCP servers. The default configuration uses local stdio transport.
           </p>
 
           {/* Quick Install Box */}
@@ -302,6 +302,9 @@ export default function ClaudePlugin() {
               <Code2 className="w-4 h-4 text-cyan-400" />
             </Link>
           </div>
+          <p className="text-xs text-slate-500 mt-6">
+            Independent plugin by iD01t Productions. Not affiliated with or endorsed by Anthropic.
+          </p>
         </div>
       </section>
 
@@ -312,9 +315,9 @@ export default function ClaudePlugin() {
             <div className="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-800/50 flex items-center justify-center text-cyan-400 mb-4">
               <Lock className="w-6 h-6" />
             </div>
-            <h2 className="text-lg font-bold text-slate-100 mb-2">Zero-Egress Security</h2>
+            <h2 className="text-lg font-bold text-slate-100 mb-2">Local-First Security</h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Pure local stdio transport. Parity matrices, syndromes, quantum circuits, and simulation artifacts never leave your device.
+              Local stdio transport by default. Parity matrices, syndromes, quantum circuits, and simulation artifacts are processed on the host machine; verify your host environment if confidentiality matters.
             </p>
           </div>
 
@@ -324,7 +327,7 @@ export default function ClaudePlugin() {
             </div>
             <h2 className="text-lg font-bold text-slate-100 mb-2">Strict Mathematics</h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Every decode is checked against <code className="text-cyan-300 font-mono">H c = s (mod 2)</code>. Scored with logical cosets and Wilson 95% CIs.
+              Decodes are checked against <code className="text-cyan-300 font-mono">H c = s (mod 2)</code>. Scored with logical cosets and Wilson 95% CIs.
             </p>
           </div>
 
@@ -361,7 +364,7 @@ export default function ClaudePlugin() {
             28 Grounded QEC Skills
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-             Each skill encodes verified domain rules and strict-math obligations to prevent AI hallucination and ground every interaction in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in v1.0.6.
+             Each skill encodes verified domain rules and strict-math obligations to reduce hallucination risk and ground interactions in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in v1.0.6.
           </p>
         </div>
 

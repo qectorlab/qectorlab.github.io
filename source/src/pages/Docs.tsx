@@ -1,4 +1,5 @@
-﻿import { useEffect, useRef } from 'react';
+﻿import { FolderGit2, Package, ClipboardList } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
@@ -25,8 +26,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
   const docLinks = [
     { title: 'Claude Code Plugin', desc: 'v1.0.6: 28 skills, 5 agents, four MCP servers, and explicit local tool profiles', href: '/claude-plugin' },
-    { title: 'Workbench (Win / Linux / macOS)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.7 on Windows/Linux — macOS not ready yet', href: '/workbench' },
-    { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 verified tools', href: '/mcp-server' },
+    { title: 'Workbench (Win / Linux)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.7 on Windows/Linux', href: '/workbench' },
+    { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 local tools', href: '/mcp-server' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
     { title: 'Package Reference (v1.0.0)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
@@ -93,21 +94,21 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h2 className="text-xl font-bold mb-4">External Resources</h2>
             <div className="flex flex-col gap-3">
               <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-void rounded-xl hover:bg-surface transition-colors">
-                <span className="text-2xl">ðŸ¤–</span>
+                <span className="shrink-0"><FolderGit2 className="h-5 w-5 text-cyan-300" aria-hidden="true" /></span>
                 <div>
                   <div className="text-primary font-medium text-sm">GitHub Repository</div>
                   <div className="text-muted-foreground text-xs">Source code, issues, and contributions</div>
                 </div>
               </a>
               <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-void rounded-xl hover:bg-surface transition-colors">
-                <span className="text-2xl">ðŸ“¦</span>
+                <span className="shrink-0"><Package className="h-5 w-5 text-cyan-300" aria-hidden="true" /></span>
                 <div>
                   <div className="text-primary font-medium text-sm">PyPI Package</div>
                   <div className="text-muted-foreground text-xs">Latest release and installation</div>
                 </div>
               </a>
               <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-void rounded-xl hover:bg-surface transition-colors">
-                <span className="text-2xl">ðŸ“‹</span>
+                <span className="shrink-0"><ClipboardList className="h-5 w-5 text-cyan-300" aria-hidden="true" /></span>
                 <div>
                   <div className="text-primary font-medium text-sm">GitHub Artifacts &amp; Validation</div>
                   <div className="text-muted-foreground text-xs">github.com/GuillaumeLessard/qector-decoder</div>

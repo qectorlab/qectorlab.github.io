@@ -35,6 +35,11 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   html = setTag(html, /(<meta name="twitter:title" content=")[^"]*(")/, route.title)
   html = setTag(html, /(<meta name="twitter:description" content=")[^"]*(")/, route.description)
 
+  // HTML language: French routes get lang="fr" so screen readers, spell
+  // checkers, and crawlers see the correct language in the prerendered shell.
+  const htmlLang = route.path.startsWith('/fr/') ? 'fr' : 'en'
+  html = html.replace(/<html lang="[^"]*"/, `<html lang="${htmlLang}"`)
+
   // hreflang alternates: French pages link their English twin and vice versa.
   const alternates: Record<string, [string, string][]> = {
     '/fr/pricing': [
@@ -93,7 +98,7 @@ function cfRocketBypass(): import('vite').Plugin {
 //    matches (same asset hashes, same attributes).
 //
 // 2. *Known* paths. Pages has no rewrite rule, so a direct hit on /pricing also
-//    fell through to 404.html — the page rendered, but the response carried HTTP
+//    fell through to 404.html - the page rendered, but the response carried HTTP
 //    404. That is invisible in a browser and very visible to Google (routes were
 //    not indexable) and to Stripe (cancel_url / success_url both answered 404).
 //    The `_redirects` file in this repo is Netlify/Cloudflare-Pages syntax and is
@@ -144,7 +149,7 @@ function ghPagesSpaShell(): import('vite').Plugin {
         const meta = PRERENDER_ROUTE_MAP[routePath]
         if (!meta) {
           // Adding a <Route> to App.tsx without adding its metadata to
-          // prerenderData.ts is a build error — every route needs a shell.
+          // prerenderData.ts is a build error - every route needs a shell.
           this.error(
             `gh-pages-spa-shell: Missing prerender data for "${routePath}". ` +
               `Add an entry to src/lib/prerenderData.ts`

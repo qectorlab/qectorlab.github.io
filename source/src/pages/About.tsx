@@ -1,4 +1,5 @@
-﻿import { useEffect, useRef } from 'react';
+﻿import { Fingerprint } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import gsap from 'gsap';
@@ -102,7 +103,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             </div>
             <div className="flex flex-wrap gap-2">
               <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-green-400/10 border border-green-400/20 rounded-lg text-sm text-green-400 font-mono hover:bg-green-400/20 transition-colors">
-                ðŸ†” ORCID 0009-0000-3465-3753
+                <Fingerprint size={16} className="shrink-0" aria-hidden="true" /> ORCID 0009-0000-3465-3753
               </a>
               {[
                 { label: 'GitHub Artifacts', href: 'https://github.com/GuillaumeLessard/qector-decoder', external: true },
@@ -123,10 +124,10 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>CSS stabilizer codes: surface codes, LDPC, qLDPC</li>
                   <li>MWPM (Blossom), Belief-Matching, BP-OSD decoding</li>
-                  <li>Advanced Custom Topologies: <code className="text-cyan-300 text-xs">[[832,10,4]]</code> CSS code on genus-5 surface</li>
-                  <li>Titan-Class Environments: <code className="text-cyan-300 text-xs">[[72,12,6]]</code> Bivariate Bicycle QLDPC</li>
+                  <li>Custom CSS code topology research and GF(2) eligibility analysis</li>
+                  <li>Bivariate bicycle qLDPC codes</li>
                   <li>Reproducible provenance and SHA-256 sealed artifacts on GitHub</li>
-                  <li>Monte Carlo FSS threshold analysis, Zâ‚₂ monodromy algebra, Jones polynomial verification</li>
+                  <li>Monte Carlo threshold analysis and reproducible validation workflows</li>
                 </ul>
               </div>
               <div ref={(el) => addRef(el, 2)} className="card-surface">
@@ -144,7 +145,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               <div ref={(el) => addRef(el, 3)} className="card-surface">
                 <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Engineering Philosophy</h3>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
-                  <li>Reproducibility first: every claim ships with verifiable artifacts</li>
+                  <li>Reproducibility first: public claims link to supporting artifacts where published</li>
                   <li>Honest documentation: Decoder is Source-Available (not free); Workbench GUI app is free</li>
                   <li>Simulation-validated before any public claim</li>
                   <li>Full provenance trail: SHA-256 bundles</li>
@@ -157,7 +158,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
-                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: live Windows, Linux, and macOS — not ready yet releases with 85-tool MCP servers and 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router).</li>
+                   <li><strong className="text-primary">Free QECTOR Workbench</strong>: live Windows and Linux releases with 85-tool MCP servers and 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router).</li>
                    <li><strong className="text-primary">Documentation & Education</strong>: Public methodology, validation guidance, and "Mastering QEC" book context (see the decoder repository for primary evidence).</li>
                 </ul>
               </div>
@@ -170,11 +171,11 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                  {[
                    { year: '2026-06-23', event: 'The public qectorlab.github.io repository was created.' },
                    { year: '2026-06-24', event: 'The qector-decoder repository was created and v0.5.0 / v0.5.1 were first recorded on PyPI.' },
-                   { year: '2026-06-24–07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
+                   { year: '2026-06-24-07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
                    { year: '2026-08-02', event: 'QECTOR Decoder v3 v0.7.0 was published on PyPI.' },
                    { year: '2026-08-06', event: `QECTOR Decoder v3 v${pypiVersion || '1.0.0'} reached its first stable release, with the official reference manual (DOI 10.5281/zenodo.21941046).` },
-                   { year: '2026-08-11–08-21', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.7 releases for Windows, Linux, and macOS on 2026-08-21.' },
-                   { year: '2026-08-15–08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
+                   { year: '2026-08-11-09-04', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.7 releases for Windows and Linux (2026-09-04).' },
+                   { year: '2026-08-15-08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
                  ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
                   <span className="text-cyan-300 font-mono text-sm min-w-[80px] pt-0.5">{item.year}</span>

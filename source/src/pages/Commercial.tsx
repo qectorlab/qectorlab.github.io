@@ -21,7 +21,7 @@ export default function Commercial() {
             Custom licensing for redistribution, SaaS hosting, hardware bundling, and strategic partnerships.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/pricing" className="btn-cyan">View All Pricing & Tiers →’</Link>
+            <Link to="/pricing" className="btn-cyan">View All Pricing & Tiers →</Link>
             <Link to="/contact" className="btn-gold">Contact Enterprise Sales</Link>
           </div>
           <p className="text-muted-foreground text-sm mt-6">

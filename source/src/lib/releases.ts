@@ -1,4 +1,4 @@
-// Single release registry — the one source of truth for every version,
+// Single release registry - the one source of truth for every version,
 // platform and evidence claim surfaced on the site (audit item A1/H1).
 // Never hand-type a release version in a page: import it from here.
 
@@ -95,7 +95,7 @@ export const WORKBENCH_VERSION_SUMMARY = WORKBENCH_RELEASES.map(
   (r) => `${r.label} ${r.version}`
 ).join(' · ');
 
-// Canonical seller record — used by Terms, Refund, Privacy, Commercial and
+// Canonical seller record - used by Terms, Refund, Privacy, Commercial and
 // all structured data (audit item L1). One record, no exceptions.
 export const SELLER_RECORD = {
   name: 'Guillaume Lessard',
@@ -118,7 +118,7 @@ export type ZenodoKind =
   | 'verification-validation'
   | 'technical-monograph'
   | 'normative-manual'
-  | 'certification-bundle';
+  | 'verification-bundle';
 
 export interface ZenodoRecord {
   id: number;
@@ -190,8 +190,8 @@ export const ZENODO_RECORDS: ZenodoRecord[] = [
     url: 'https://doi.org/10.5281/zenodo.22046403',
     title:
       'QECTOR-Decoder-v3: High-Performance Compiled Rust Quantum Error Correction Engine & Verification Proof Suite',
-    kind: 'certification-bundle',
-    kindLabel: 'Certification / proof bundle',
+    kind: 'verification-bundle',
+    kindLabel: 'Verification / proof bundle',
     date: '2026-08-21',
     access: 'open',
   },

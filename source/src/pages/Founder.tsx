@@ -1,4 +1,5 @@
-﻿import { Link } from 'react-router-dom';
+﻿import { ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import CalendlyWidget from '../components/CalendlyWidget';
 import { CALENDLY_URL } from '../lib/config';
@@ -27,7 +28,7 @@ const skillGroups = [
   },
   {
     title: 'Python Engineering',
-    items: ['Python 3.9–3.13', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering', 'Sigstore attestation'],
+    items: ['Python 3.9-3.13', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering'],
   },
   {
     title: 'Quantum Error Correction',
@@ -194,7 +195,7 @@ export default function Founder() {
              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                <a href="https://doi.org/10.5281/zenodo.21611214" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">v1.0.0 user manual<br /><span className="font-mono">10.5281/zenodo.21611214</span></a>
                <a href="https://doi.org/10.5281/zenodo.21941046" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Normative reference manual<br /><span className="font-mono">10.5281/zenodo.21941046</span></a>
-               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Certification and proof bundle<br /><span className="font-mono">10.5281/zenodo.22046403</span></a>
+               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Certification and proof bundle → Verification and proof bundle<br /><span className="font-mono">10.5281/zenodo.22046403</span></a>
              </div>
            </div>
 
@@ -217,7 +218,7 @@ export default function Founder() {
                  Quantum error correction is where that method currently points. QECTOR Decoder v3 is a Rust core
                  behind a Python API implementing 15+ decoder configurations, with v1.0.0 as the first stable release
                  (2026-08-06). The public contract separates mathematical correctness from machine-specific performance:
-                 every correction is checked against the declared syndrome relation, while local benchmark results carry
+                 decodes can be checked against the declared syndrome relation, while local benchmark results carry
                  their workload, environment, raw artifact, and hash. The qector Claude Plugin v1.0.6 extends the same
                  evidence-first approach into local Claude Code and Claude Desktop workflows.
                </p>
@@ -247,19 +248,19 @@ export default function Founder() {
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 15+ decoder configurations</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench</Link>: free desktop GUI and comprehensive MCP server</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 15+ decoder configurations</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench</Link>: free desktop GUI and comprehensive MCP server</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
                 </ul>
               </div>
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Research &amp; Engineering</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span>Advanced custom topologies and QEC corpora</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span>High-performance batch simulation pipelines</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓“</span><span>Complete workflow reproducibility</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Custom decoder topologies for research workflows</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>High-performance batch simulation pipelines</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Reproducible artifact workflows</span></li>
                 </ul>
               </div>
             </div>
@@ -275,7 +276,7 @@ export default function Founder() {
                   <ul className="space-y-1.5">
                     {group.items.map((item) => (
                       <li key={item} className="text-secondary text-xs flex items-start gap-2">
-                        <span className="text-cyan-300 mt-0.5">â–¸</span>
+                        <ChevronRight size={14} className="text-cyan-300 mt-0.5 shrink-0" aria-hidden="true" />
                         <span>{item}</span>
                       </li>
                     ))}
