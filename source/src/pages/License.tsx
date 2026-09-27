@@ -86,7 +86,7 @@ export default function License() {
               <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.</li>
               <li>• <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
               <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
-              <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). No functionality is gated, degraded, or disabled.</li>
+              <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). The token does two things: it silences the notice and it unlocks tier-scoped runtime features, distance caps of 7, 19, or 63 depending on tier, and GPU batch paths on Pro and Enterprise tiers.</li>
               <li>• No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.</li>
             </ul>
             <p className="text-secondary text-sm leading-relaxed mt-4">

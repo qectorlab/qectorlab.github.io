@@ -202,8 +202,8 @@ export default function Pricing() {
           <div className="card-surface bg-surface border-gridline">
             <h3 className="text-2xl font-bold mb-4">Activating Your License</h3>
             <p className="text-secondary text-sm mb-6">
-              Everyone installs the same wheel from PyPI: there is no separate commercial build. 
-              Setting your license token simply disables the non-commercial usage notice.
+              Everyone installs the same wheel from PyPI: there is no separate commercial build.
+              Setting your license token disables the non-commercial usage notice and unlocks your tier's runtime features: distance caps of 7, 19, or 63 depending on tier, and GPU batch paths on Pro and Enterprise tiers.
             </p>
             <CodeBlock
               language="bash"

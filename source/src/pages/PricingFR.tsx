@@ -192,7 +192,7 @@ export default function PricingFR() {
             <h3 className="text-2xl font-bold mb-4">Activer votre licence</h3>
             <p className="text-secondary text-sm mb-6">
               Tout le monde installe la même wheel depuis PyPI : il n’existe pas de build commercial séparé.
-              Définir votre jeton de licence désactive simplement l’avis d’usage non commercial.
+              Définir votre jeton de licence désactive l’avis d’usage non commercial et déverrouille les fonctionnalités de votre palier : plafonds de distance de 7, 19 ou 63 selon le palier, et chemins GPU batch sur les paliers Pro et Entreprise.
             </p>
             <CodeBlock
               language="bash"
