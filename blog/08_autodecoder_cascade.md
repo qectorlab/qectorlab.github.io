@@ -8,7 +8,7 @@ Tags: decoder routing, cascade decoding, CSS codes, orchestration, QEC systems
 
 ## Abstract
 
-A quantum error-correction stack rarely has one workload. It may receive a small code, a large batch, a graphlike surface-code syndrome, a qLDPC hypergraph, or two correlated CSS sectors. QECTOR's orchestration layer chooses an eligible backend, verifies the result, and escalates when the chosen path is unsuitable. This post explains the structural routing guard, the documented fallback sequence, the hybrid cascade acceptance criterion, two-stage CSS feedforward, lookup tables, and the limits of an `AutoDecoder` policy.
+A quantum error-correction stack rarely has one workload. It may receive a small code, a large batch, a graphlike surface-code syndrome, a qLDPC hypergraph, or two correlated CSS sectors. QECTOR's orchestration layer chooses an eligible backend, verifies the result, and escalates when the chosen path is unsuitable. This post explains the structural routing guard, the documented fallback sequence, the hybrid cascade acceptance criterion, two-stage CSS feedforward, lookup tables, and the limits of an `AutoDecoder` policy. The class names used below are those of the shipped package: `AutoDecoder`, `NativeAutoDecoder`, `HybridCascadeDecoder`, and `TwoStageDecoder`.
 
 ## 1. Routing is a validity decision
 
@@ -40,9 +40,9 @@ The policy is a recommendation. The backend contract and post-decode syndrome ve
 
 ## 3. The fallback controller
 
-The Python `AutoDecoder` controller tries progressively safer execution paths and verifies the syndrome after each tier. The documented sequence includes native routing, CUDA, OpenCL, Rayon batch, CPU batch, single-thread execution, Blossom, and lookup-table paths, followed by BP-OSD as the arbitrary-GF(2) fallback. A zero correction is documented only as a last-resort return after all verification paths fail; it is not a successful decode claim.
+The Python `AutoDecoder` controller tries progressively safer execution paths and verifies the syndrome after each tier. The documented sequence runs through native routing, CUDA, OpenCL, Rayon batch, CPU batch, single-thread execution, Blossom, and lookup-table paths, followed by BP-OSD as the arbitrary-GF(2) fallback. A zero correction is documented only as a last-resort return after all verification paths fail; it is not a successful decode claim.
 
-This controller separates two failure classes:
+Two failure classes stay distinct:
 
 - a backend may be unavailable because of hardware or licensing;
 - a backend may return a result that is incomplete or fails `Hc = s`.
@@ -51,7 +51,7 @@ GPU failures disable the GPU path for subsequent attempts in the controller, whi
 
 ## 4. The hybrid cascade
 
-The cascade uses a cheap faithful pre-filter and an expensive fallback. Let `c_UF` be the Fast Union-Find result and let `W_budget` be a declared weight budget. The acceptance criterion is
+`HybridCascadeDecoder` uses a cheap faithful pre-filter and an expensive fallback. Let `c_UF` be the Fast Union-Find result and `W_budget` a declared weight budget. The acceptance criterion is
 
 $$
 Hc_{UF} = s \pmod 2
@@ -59,15 +59,15 @@ Hc_{UF} = s \pmod 2
 |c_{UF}| \le W_{budget}.
 $$
 
-If both conditions pass, the correction is accepted. Otherwise the controller escalates to Blossom for a graphlike workload or BP-OSD for a non-graphlike workload/deadline path.
+If both conditions pass, the correction is accepted. Otherwise the controller escalates to Blossom for a graphlike workload, or to BP-OSD for a non-graphlike workload or deadline path.
 
-The parity check is not redundant even though UF is documented as faithful on supported graphs. It turns the cascade into a self-checking boundary and catches integration errors. The weight budget is a policy choice; it must be recorded with the workload rather than treated as a universal constant.
+The parity check is not redundant even though UF is documented as faithful on supported graphs. It turns the cascade into a self-checking boundary and catches integration errors. The weight budget is a policy choice; it must be recorded with the workload, not treated as a universal constant.
 
-The cascade preserves syndrome faithfulness when the pre-filter is faithful and the fallback is faithful. It does not, by itself, prove that accepted UF corrections have the same logical-coset quality as exact MWPM on every noise model.
+The cascade preserves syndrome faithfulness when the pre-filter is faithful and the fallback is faithful. It does not by itself prove that accepted UF corrections match exact MWPM in logical-coset quality on every noise model.
 
 ## 5. Two-stage CSS decoding
 
-Independent X and Z decoders assume that sector errors are independent. Depolarizing noise contains Y errors, which couple the sectors. QECTOR documents a feedforward construction:
+Independent X and Z decoders assume that sector errors are independent. Depolarizing noise contains Y errors, which couple the sectors. `TwoStageDecoder` documents a feedforward construction:
 
 $$
 c_X \leftarrow \operatorname{Decode}_X(s_X),
@@ -83,7 +83,7 @@ $$
 
 and `c = c_X + c_Z`.
 
-If both sector decoders are faithful on their actual inputs, then stage two cancels the induced cross-coupling:
+If both sector decoders are faithful on their actual inputs, stage two cancels the induced cross-coupling:
 
 $$
 H_Z(c_X+c_Z) = H_{Z,X}c_X + s'_Z = s_Z \pmod 2.
@@ -93,7 +93,7 @@ Together with `H_X c_X = s_X`, the joint correction is faithful. The theorem est
 
 ## 6. Lookup tables and small codes
 
-For sufficiently small codes, a lookup table can enumerate stored syndrome-to-correction entries. The manual scopes `LookupTableDecoder` to small codes, with exhaustive entries for `n_qubits <= 20` and a Union-Find fallback. The lookup is exact for entries that are actually stored; it is not a general solution for arbitrary code sizes.
+For sufficiently small codes, `LookupTableDecoder` can enumerate stored syndrome-to-correction entries. The manual scopes it to small codes, with exhaustive entries for `n_qubits <= 20` and a Union-Find fallback. The lookup is exact for entries that are actually stored; it is not a general solution for arbitrary code sizes.
 
 The table must still be generated and validated against the parity-check map. A fast array access is not evidence unless the stored correction satisfies the syndrome equation for its key.
 
@@ -112,15 +112,19 @@ verification result: H @ c == s
 logical score, if a sampled error/observable is available
 ```
 
-This record makes a routing decision explainable. It also prevents an accidental benchmark comparison from mixing a graphlike path with a hypergraph path or an unweighted path with a DEM-weighted path.
+This record makes a routing decision explainable. It also prevents an accidental benchmark comparison from mixing a graphlike path with a hypergraph path, or an unweighted path with a DEM-weighted path.
 
 ## 8. Licensing is separate from hardware availability
 
-The manual documents Community, Pro, and Enterprise distance caps of 7, 19, and 63, with GPU batch paths gated by Enterprise. Token verification is offline and performed in the Rust core. `is_available()` reports hardware; it does not grant a license tier. These are separate decisions and should remain separate in diagnostics and documentation.
+The manual documents Community, Pro, and Enterprise distance caps of 7, 19, and 63, with GPU batch paths gated by Enterprise. Token verification is offline, performed in the Rust core, using Ed25519. `is_available()` reports hardware; it does not grant a license tier. These are separate decisions and should stay separate in diagnostics and documentation.
+
+License input is explicit: keys arrive through `set_license_key()` (read back with `get_license_info()`), through the `QECTOR_LICENSE_KEY` or `QECTOR_LICENSE_FILE` environment variables, or through `~/.qector/license.key`. `QECTOR_ENFORCE=1` and `QECTOR_SILENT=1` control strictness and banner output.
 
 ## 9. The right claim about orchestration
 
 An orchestrator can provide a common API, structural eligibility checks, fallback behaviour, and verification. It cannot make every backend exact, every workload comparable, or every hardware path production-ready. The manual explicitly classifies network surfaces as provisional and requires deployment review for authentication, rate limits, TLS, audit logging, and resource quotas.
+
+The live ecosystem also ships the Workbench (v1.0.7): 19 kinds (17 concrete configurations plus AutoDecoder and the Auto Router), 85 MCP tools, and 10 code families. Those network surfaces remain provisional under the same deployment review.
 
 ## Takeaway
 

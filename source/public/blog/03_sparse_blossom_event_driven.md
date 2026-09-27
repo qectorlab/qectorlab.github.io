@@ -8,13 +8,13 @@ Tags: Sparse Blossom, MWPM, region growth, radix heap, quantum error correction
 
 ## Abstract
 
-Exact matching is a useful reference for graphlike quantum error correction, but building every defect-to-defect distance is wasteful when the decoding graph is sparse and geometric. Sparse Blossom changes the execution model: regions grow from defects, collision events are scheduled, and only edges that become tight are exposed to the matching logic. This post explains the region states, collision-time equation, tight-edge invariant, radix-heap queue, and the important scope boundary in the v1.0.0 manual: the shipped decoder is documented and tested as syndrome-faithful and near-optimal, with escalation when a sparse solve is incomplete or unfaithful.
+Exact matching is a useful reference for graphlike quantum error correction, but building every defect-to-defect distance is wasteful when the decoding graph is sparse and geometric. Sparse Blossom changes the execution model: regions grow from defects, collision events are scheduled, and only edges that become tight are exposed to the matching logic. This post explains the region states, the collision-time equation, the tight-edge invariant, the radix-heap queue, and the scope boundary in the v1.0.0 manual: the shipped decoder is documented and tested as syndrome-faithful and near-optimal, with escalation when a sparse solve is incomplete or unfaithful.
 
 ## 1. Why avoid a dense distance matrix?
 
 For a syndrome `s`, matching operates on the complete graph of defects. Even when the physical detector graph has only local edges, the complete matching graph contains a potential edge for every pair of defects. Most of those pairs cannot participate in an optimal low-weight solution at the current dual state.
 
-Sparse Blossom does not guess that long edges are impossible. It discovers candidate edges in the order in which they can become tight under a feasible dual solution. This is a correctness-oriented form of laziness: an edge is not ignored forever; it is deferred until its collision event is relevant.
+Sparse Blossom does not guess that long edges are impossible. It discovers candidate edges in the order in which they can become tight under a feasible dual solution. This is a correctness-oriented form of laziness: an edge is not ignored forever, it is deferred until its collision event becomes relevant.
 
 ## 2. The three region states
 
@@ -26,7 +26,7 @@ Frozen    dy/dt =  0   matched region or outer blossom shell
 Shrinking dy/dt = -1   inner region of a blossom
 ```
 
-The states are a compact representation of Edmonds' alternating-tree labels. Growing regions expand their dual variables. Frozen regions hold their current value. Shrinking regions contract inside a blossom so internal tight edges stay tight.
+The states compactly encode Edmonds' alternating-tree labels. Growing regions expand their dual variables, frozen regions hold their current value, and shrinking regions contract inside a blossom so internal tight edges stay tight.
 
 For a dual edge constraint, define the slack
 
@@ -56,9 +56,9 @@ $$
 t^* = t + \frac{w_{uv}-y_u-y_v}{2}.
 $$
 
-If the denominator is non-positive, the regions are not approaching one another under the current state assignment, so there is no future collision for that interval.
+If the denominator is non-positive, the regions are not approaching one another under the current state assignment, so there is no future collision in that interval.
 
-The event queue stores future collision times. Processing events in non-decreasing order means that the first moment an edge can become tight is handled before a dual constraint is violated.
+The event queue stores future collision times. Processing events in non-decreasing order means the first moment an edge can become tight is handled before any dual constraint is violated.
 
 ## 4. Tight edges and complementary slackness
 
@@ -68,13 +68,13 @@ $$
 E_{tight}(t) = \{(u,v): y_u+y_v+\sum z_B = w_{uv}\}.
 $$
 
-For a feasible dual solution, complementary slackness says that an optimal matching can be selected from tight edges, with the usual blossom boundary conditions. Sparse Blossom therefore needs to expose the tight subgraph, not the whole complete graph, at each event time.
+For a feasible dual solution, complementary slackness says an optimal matching can be selected from tight edges, with the usual blossom boundary conditions. Sparse Blossom therefore needs to expose the tight subgraph at each event time, not the whole complete graph.
 
-This is the core invariant:
+The core invariant is:
 
 > An edge that has not reached its collision time is not yet required by the current tight-edge solve; an edge that reaches its collision time enters the candidate structure.
 
-The implementation still verifies the returned correction. A candidate set that cannot complete a faithful solve is not silently accepted.
+The implementation still verifies the returned correction. A candidate set that cannot complete a faithful solve is never silently accepted.
 
 ## 5. Blossoms in an event-driven solver
 
@@ -86,7 +86,7 @@ When a tight edge is popped, the solver examines the alternating-tree roots:
 4. The new region continues with the state implied by the outer/inner structure.
 5. An edge internal to an inner region is not an augmenting event.
 
-Shrinking is not merely a graph operation. It is a dual update. The outer and inner rates are chosen so that the sum controlling an internal edge remains constant. That is why edges already known to be tight remain usable while the search continues.
+Shrinking is not merely a graph operation. It is a dual update. The outer and inner rates are chosen so the sum controlling an internal edge stays constant, which is why edges already known to be tight remain usable while the search continues.
 
 ## 6. Why a radix heap fits the event stream
 
@@ -96,7 +96,7 @@ $$
 O(E + V\log C).
 $$
 
-The manual also records the ordinary binary-heap bound `O(E log V)` for the event path. These are asymptotic implementation bounds. They are not wall-clock promises, and a benchmark must report its machine, workload, distribution, and artifact separately.
+The manual also records the ordinary binary-heap bound `O(E log V)` for the event path. These are asymptotic implementation bounds, not wall-clock promises. A benchmark must report its machine, workload, distribution, and artifact separately.
 
 ## 7. Candidate sparsification and fallback
 
@@ -108,7 +108,7 @@ $$
 
 with a documented default multiplier of `2.0`. Candidate generation is event-driven. If the sparse solve is detected to be incomplete or unfaithful, the solver escalates to the full graph.
 
-This is the right way to communicate the guarantee:
+The guarantee is communicated this way:
 
 - syndrome faithfulness is a required checked property;
 - sparse region growth is documented as near-optimal within its tested scope;
@@ -119,11 +119,11 @@ This is the right way to communicate the guarantee:
 
 Imagine each defect inflating a weighted ball. The radius is not a physical distance; it is a dual variable. When two balls meet, the connecting route becomes tight and the matching search can use it. If the tight edges contain an odd cycle, the cycle becomes a blossom and the dual motion changes locally.
 
-That mental model explains why the algorithm can avoid an up-front all-pairs computation without changing the matching mathematics. It also explains why the implementation has to track state transitions carefully: missing a collision is a dual-feasibility bug, while accepting an unverified sparse completion is a syndrome-faithfulness bug.
+That model explains why the algorithm can skip the up-front all-pairs computation without changing the matching mathematics. It also explains why the implementation must track state transitions carefully: missing a collision is a dual-feasibility bug, while accepting an unverified sparse completion is a syndrome-faithfulness bug.
 
 ## 9. How to evaluate it
 
-The manual points reviewers to the Sparse Blossom faithfulness test, adaptive-`k` regression, and candidate-set tests. A useful evaluation should record:
+The manual points reviewers to the Sparse Blossom faithfulness test, the adaptive-`k` regression, and the candidate-set tests. A useful evaluation should record:
 
 ```text
 code family and distance
@@ -139,7 +139,7 @@ If optimality is the question, compare the matching objective against an exact o
 
 ## Takeaway
 
-Sparse Blossom is best understood as event-driven primal-dual matching, not as a generic shortcut around correctness. Growth exposes tight edges, the queue orders the moments at which those edges matter, and blossom state transitions preserve the dual structure. The shipped scope remains explicit: faithful and near-optimal in tested configurations, with escalation when sparse evidence is insufficient.
+Sparse Blossom is best understood as event-driven primal-dual matching, not as a generic shortcut around correctness. Growth exposes tight edges, the queue orders the moments at which those edges matter, and blossom state transitions preserve the dual structure. The shipped scope stays explicit: faithful and near-optimal in tested configurations, with escalation when sparse evidence is insufficient.
 
 ## Reference
 

@@ -8,7 +8,7 @@ Tags: Union-Find, graphlike decoding, cluster growth, GF(2), Rust systems
 
 ## Abstract
 
-Union-Find decoding trades global matching optimality for a simple local process: grow clusters around fired detectors, merge them, and peel a spanning forest. QECTOR's UF-01 path makes that process predictable in memory as well as in algebra. This post derives the cluster-parity invariant, explains the satisfiability condition and boundary sink, proves why leaf-to-root peeling returns a syndrome-faithful correction, and states the documented domain boundary: Union-Find is for graphlike codes, not arbitrary hypergraph checks.
+Union-Find decoding trades global matching optimality for a simple local process: grow clusters around fired detectors, merge them, and peel a spanning forest. QECTOR's UF-01 path makes that process predictable in memory as well as in algebra. This post derives the cluster-parity invariant, explains the satisfiability condition and the boundary sink, proves why leaf-to-root peeling returns a syndrome-faithful correction, and states the documented domain boundary: Union-Find is for graphlike codes, not arbitrary hypergraph checks.
 
 ## 1. Eligibility comes first
 
@@ -18,7 +18,7 @@ $$
 Hc = s \pmod 2.
 $$
 
-If a qubit participates in more than two checks, it is a hyperedge. QECTOR explicitly rejects that structure for the Union-Find family and routes it to BP-OSD. This is a contract, not a performance limitation to be worked around by silently changing the graph.
+If a qubit participates in more than two checks, it is a hyperedge. QECTOR explicitly rejects that structure for the Union-Find family and routes it to BP-OSD. This is a contract, not a performance limitation to work around by silently changing the graph.
 
 ## 2. Cluster parity
 
@@ -38,7 +38,7 @@ An even cluster can be satisfied internally. An odd cluster needs either another
 
 ## 3. Growth and fusion
 
-The unweighted procedure can be read as five stages:
+The unweighted procedure reads as five stages:
 
 1. Create a cluster for each fired detector.
 2. Grow the frontier of every unsatisfied odd cluster.
@@ -56,7 +56,7 @@ The implementation maintains parity, boundary state, root, and size in the Union
 
 ## 4. Peeling a spanning forest
 
-Growth records a subgraph, not necessarily a tree. UF-01 builds a spanning forest and processes each tree from leaves to root. For an oriented tree edge from parent `p` to child `v`, flip the edge if the residual parity of the child subtree is one:
+Growth records a subgraph, not necessarily a tree. UF-01 builds a spanning forest and processes each tree from leaves to root. For an oriented tree edge from parent `p` to child `v`, flip the edge when the residual parity of the child subtree is one:
 
 $$
 c_{(p,v)} = \pi(\text{subtree}(v)).
@@ -66,7 +66,7 @@ The child residual is then XORed into the parent residual.
 
 ### Peeling proof
 
-At a leaf, the only way to remove a syndrome bit is to flip its parent edge when that bit is one. Assume every processed child subtree has satisfied all internal vertices and has passed only one residual bit to its parent. XOR is additive over `F2`, so combining child residuals and the parent's syndrome gives the correct residual for the larger subtree. At the root, the growth halt condition guarantees that the residual is zero or is absorbed by the virtual boundary. Therefore every detector receives exactly its requested syndrome parity, and
+At a leaf, the only way to remove a syndrome bit is to flip its parent edge when that bit is one. Assume every processed child subtree has satisfied all internal vertices and passed only one residual bit to its parent. XOR is additive over `F2`, so combining child residuals with the parent's syndrome gives the correct residual for the larger subtree. At the root, the growth halt condition guarantees the residual is zero or is absorbed by the virtual boundary. Every detector therefore receives exactly its requested syndrome parity, and
 
 $$
 Hc = s \pmod 2.
@@ -84,9 +84,9 @@ $$
 
 The weighted UF path advances clusters by adaptive time steps, stopping when a frontier edge saturates. Invalid weights are rejected during construction. With uniform weights, the weighted and unweighted paths are documented to agree in correction cost within the tested scope.
 
-The weighted path is still a graphlike cluster-growth decoder. It is not a replacement for BP-OSD on hyperedges and it is not an exact MWPM solver.
+The weighted path is still a graphlike cluster-growth decoder. It is not a replacement for BP-OSD on hyperedges, and it is not an exact MWPM solver.
 
-## 6. Repetition-code example
+## 6. Repetition-code example and API path
 
 Use the repetition checks
 
@@ -115,6 +115,19 @@ c2 = [0, 1, 0, 0, 0].
 
 Directly, `H @ c1 = s1` and `H @ c2 = s2` modulo two. The decoder did not need to enumerate all error patterns; cluster parity determined the required forest action.
 
+The stable Python call mirrors the Blossom path:
+
+```python
+import numpy as np
+from qector_decoder_v3 import UnionFindDecoder
+
+checks = [[0, 1], [1, 2], [2, 3], [3, 4]]
+syndrome = np.array([1, 1, 0, 0], dtype=np.uint8)
+
+correction = UnionFindDecoder(checks, n_qubits=5).decode(syndrome)
+# H @ correction == syndrome (mod 2) on graphlike inputs.
+```
+
 ## 7. What zero allocation means here
 
 UF-01 preallocates graph-sized buffers and resets them in place. The manual describes no heap allocation in the steady-state hot path and points to memory-growth and scratch-reuse tests. That is a structural property of the implementation, not a promise of a particular latency.
@@ -125,7 +138,7 @@ $$
 O((V+E)\alpha(V+E))
 $$
 
-with `O(V+E)` space. Here `alpha` is the inverse Ackermann function. An asymptotic bound does not identify the wall-clock behavior of a particular CPU, compiler, graph, batch shape, or memory hierarchy.
+with `O(V+E)` space, where `alpha` is the inverse Ackermann function. An asymptotic bound does not identify the wall-clock behavior of a particular CPU, compiler, graph, batch shape, or memory hierarchy.
 
 ## 8. Logical correctness is separate
 
@@ -148,8 +161,8 @@ Union-Find is not minimum-weight perfect matching, so its logical-error behavior
 For a UF experiment, record:
 
 - the check-to-qubit structure and proof that every qubit degree is at most two;
-- boundary convention and whether growth is weighted;
-- code family, distance, rounds, noise model, and reachable-syndrome generator;
+- the boundary convention and whether growth is weighted;
+- the code family, distance, rounds, noise model, and reachable-syndrome generator;
 - single-shot versus pre-built hot-path versus batch timing;
 - the exact package/build environment and commit;
 - faithfulness results and logical-observable results separately;

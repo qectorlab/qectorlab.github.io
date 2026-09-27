@@ -1,15 +1,15 @@
 # Detector Error Models: From Fault Mechanisms to a Decoder Graph
 
-Author: Guillaume Lessard / qector.store  
+Author: Guillaume Lessard  
 Series: QECTOR Decoder v3 companion notes, Post 13  
 Source: QECTOR Decoder v3 Reference Manual v1.0.0  
 Date: August 2026  
-DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)  
+DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)
 Tags: detector error model, Stim, graph collapse, observables, QEC tooling
 
 ## Abstract
 
-A decoder cannot choose sensible paths from a circuit without a machine-readable description of the circuit's fault mechanisms. A detector error model (DEM) provides that description: rows are detectors, columns are mechanisms, and each mechanism carries a prior and an observable effect. This post follows QECTOR's DEM pipeline from parsing and graphlike classification through parallel-edge collapse, likelihood weights, prior recalibration, and decoder construction.
+A decoder cannot choose sensible paths from a circuit without a machine-readable description of that circuit's fault mechanisms. A detector error model (DEM) provides the description: rows are detectors, columns are mechanisms, and each mechanism carries a prior probability and an observable effect. This post follows QECTOR's DEM pipeline from parsing and graphlike classification through parallel-edge collapse, likelihood weights, prior recalibration, and decoder construction.
 
 ## 1. The DEM as a matrix
 
@@ -21,7 +21,7 @@ Represent a DEM by a binary matrix `H_DEM`:
 
 The syndrome is a vector of fired detectors. A correction is a selection of mechanism columns whose XOR reproduces that vector.
 
-The parser described by the manual handles `error`, `detector`, `logical_observable`, `shift_detectors`, and `repeat` blocks. It can parse a Stim DEM object or text without requiring Stim to be installed at parse time.
+The parser described by the manual handles `error`, `detector`, `logical_observable`, `shift_detectors`, and `repeat` blocks. It can parse a Stim DEM object or DEM text without requiring Stim to be installed at parse time.
 
 ## 2. Graphlike classification
 
@@ -32,7 +32,7 @@ weight <= 2  -> graph edge or boundary edge
 weight > 2   -> hyperedge; matching is not valid
 ```
 
-This classification must happen before constructing a matching decoder. Decomposing a hyperedge into pairwise edges changes the fault model and can change the logical result. QECTOR routes non-graphlike models to BP-OSD.
+This classification must happen before constructing a matching decoder. Decomposing a hyperedge into pairwise edges silently changes the fault model and can change the logical result. QECTOR routes non-graphlike models to BP-OSD.
 
 ## 3. Likelihood weights
 
@@ -42,29 +42,29 @@ $$
 w = \log\left(\frac{1-p}{p}\right).
 $$
 
-For a graphlike model, a shortest path under these weights is the most likely chain under the independent mechanism model used by the DEM. A matching decoder then optimizes over pairings of detector defects.
+For a graphlike model, a shortest path under these weights is the most likely chain under the independent-mechanism model the DEM encodes. A matching decoder then optimizes over pairings of detector defects.
 
-Weights are not optional decoration. If one mechanism has probability `1e-4` and another has probability `1e-2`, their weights are approximately `9.21` and `4.60`. Treating them as equal erases information that the circuit model supplied.
+Weights are not optional decoration. If one mechanism has probability `1e-4` and another has probability `1e-2`, their weights are approximately `9.21` and `4.60`. Treating them as equal erases information the circuit model already supplied.
 
 ## 4. Collapsing parallel mechanisms
 
-Circuit decomposition can create multiple independent mechanisms connecting the same detector pair. QECTOR can collapse them for graphlike decoding using the independent-XOR rule:
+Circuit decomposition can create multiple independent mechanisms connecting the same detector pair. QECTOR collapses them for graphlike decoding with the independent-XOR rule:
 
 $$
 p = p_1(1-p_2) + p_2(1-p_1).
 $$
 
-For `p1=0.01` and `p2=0.02`,
+For `p1=0.01` and `p2=0.02`:
 
 $$
 p = 0.01(0.98)+0.02(0.99)=0.0296.
 $$
 
-The collapsed edge receives `log((1-p)/p)`. The manual also documents which observable set is retained: the set belonging to the most likely member of the parallel group. The rule is tested by dedicated DEM-collapse fixtures.
+The collapsed edge receives `log((1-p)/p)`. The manual also documents which observable set survives: the set belonging to the most likely member of the parallel group. The rule is covered by dedicated DEM-collapse fixtures.
 
 ## 5. Observables are not detector rows
 
-Detectors tell the decoder which parity constraints fired. Logical observables tell the scoring harness whether the predicted logical outcome differs from the sampled outcome. They should not be conflated.
+Detectors tell the decoder which parity constraints fired. Logical observables tell the scoring harness whether the predicted logical outcome differs from the sampled outcome. Conflating them is a common source of wrong LER numbers.
 
 The DEM therefore carries both:
 
@@ -88,7 +88,7 @@ If observed detector events are available, the manual describes simple prior est
 
 - for a hyperedge, use the maximum firing rate among its detectors as the documented conservative estimate.
 
-Recalibration changes the weights and therefore the selected representative. It does not remove the need to validate `Hc=s` or to score logical observables under a declared experiment.
+Recalibration changes the weights and therefore the selected representative. It does not remove the need to validate `Hc=s`, nor to score logical observables under a declared experiment.
 
 ## 7. A safe construction workflow
 
@@ -106,7 +106,7 @@ else:
     decoder = model.make_decoder("bposd")
 ```
 
-The exact names and options should be checked against the installed v1.0.0 API. The structural guard is the important part: do not force a matching decoder onto a hypergraph model.
+The method names (`from_stim`, `is_graphlike`, `collapse_to_graph`, `make_decoder`) are confirmed in the v1.0.0 API; check the installed package for the full option set. The structural guard is the important part: never force a matching decoder onto a hypergraph model.
 
 ## 8. DEM audit fields
 

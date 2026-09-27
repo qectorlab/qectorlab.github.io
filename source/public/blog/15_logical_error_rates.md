@@ -1,10 +1,10 @@
 # Logical Error Rates Without the Wrong Metric
 
-Author: Guillaume Lessard / qector.store  
+Author: Guillaume Lessard  
 Series: QECTOR Decoder v3 companion notes, Post 15  
 Source: QECTOR Decoder v3 Reference Manual v1.0.0  
 Date: August 2026  
-DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)  
+DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)
 Tags: logical error rate, Wilson interval, observables, reproducible QEC
 
 ## Abstract
@@ -19,9 +19,9 @@ $$
 H(c+e)=0.
 $$
 
-The residual is in the kernel. It is logically harmless only when it is in the stabilizer row space. A different correction vector is not automatically a logical error.
+The residual sits in the kernel. It is logically harmless only when it also sits in the stabilizer row space. A different correction vector is not automatically a logical error.
 
-For a circuit with logical observables, compare the sampled observable flips with the predicted observable flips after applying the correction. A shot is a logical error when those observable values differ.
+For a circuit with logical observables, compare the sampled observable flips with the predicted observable flips after applying the correction. A shot counts as a logical error when those observable values differ.
 
 This definition respects degeneracy and matches the manual's LER methodology.
 
@@ -38,18 +38,18 @@ $$
 
 where `z = 1.959963985`.
 
-The interval stays in `[0,1]` and behaves better than the Wald approximation when errors are rare or counts are small.
+The interval stays inside `[0,1]` and behaves better than the Wald approximation when errors are rare or counts are small.
 
 ## 3. Hand calculation: 10 errors in 1000 shots
 
-Take `k=10` and `n=1000`, so `p_hat=0.01`. The reference manual evaluates the Wilson interval as approximately
+This is a worked example from the reference manual, not a product measurement. Take `k=10` and `n=1000`, so `p_hat=0.01`. The manual evaluates the Wilson interval as approximately
 
 ```text
 lower ~= 0.00544
 upper ~= 0.01831
 ```
 
-The point estimate is one percent, but the interval shows the uncertainty from only 1000 trials. Publishing only `0.01` hides that uncertainty.
+The point estimate is one percent, but the interval shows the uncertainty carried by only 1000 trials. Publishing `0.01` alone hides that uncertainty.
 
 ## 4. Comparability is part of the metric
 
@@ -68,42 +68,48 @@ package versions and environment
 
 Then the decoder row is the changing factor. Mixing a code-capacity QECTOR run with a circuit-level reference is not a meaningful leaderboard.
 
-## 5. The report schema
+## 5. An example of a published comparison
+
+The v1.0.0 package changelog ships a 120-test LER suite against PyMatching on a repetition code at `d=3` and `p=0.01`. It reports `ler_qector=0.00392` and `ler_pymatching=0.00317`, described as agreeing within a declared 4.5x margin.
+
+These are measurements on one fixed workload, not universal claims. Their value is the discipline behind them: both decoders ran the same workload with the same noise value, so the comparison isolates the decoder rather than the setup.
+
+## 6. The report schema
 
 Every public LER report should include:
 
 | Field | Example content |
 |---|---|
 | Circuit | Generator command or checked-in `.stim` file |
-| DEM | Settings, raw count, collapsed count, graphlike status |
-| Code | Family, distance, rounds, checks, qubits, detectors |
-| Noise | Channel, physical rate, model tag |
-| Decoder | Exact class, weights, BP/OSD/GPU flags |
-| Sampling | Shots, warmup, seed, logical-error count |
+| DEM | Settings, counts, graphlike status |
+| Code | Family, distance, rounds, checks, qubits |
+| Noise | Channel, rate, model tag |
+| Decoder | Exact class, weights, BP/OSD flags |
+| Sampling | Shots, warmup, seed, error count |
 | Statistics | LER and Wilson interval |
-| Environment | OS, CPU, RAM, Python/Rust/packages, GPU/runtime |
+| Environment | OS, CPU, RAM, Python/Rust/packages |
 | Artifact | Raw JSON/CSV path and SHA-256 |
 
 If one of these fields is missing, the result may still be a useful smoke test, but it is not a complete portable evidence artifact.
 
-## 6. Correctness before statistics
+## 7. Correctness before statistics
 
 The LER harness should reject or record unfaithful shots before logical scoring. The sequence is:
 
 1. Generate or load the same detector samples for every decoder.
 2. Decode each syndrome.
-3. Check `H @ correction == syndrome` for reachable inputs.
+3. Check `H @ correction == syndrome` on reachable inputs.
 4. Compute observable flips.
 5. Count logical mismatches.
-6. Calculate the LER and interval.
+6. Compute the LER and its interval.
 
-This prevents an invalid correction from being hidden inside an apparently low logical-error rate.
+This stops an invalid correction from hiding inside an apparently low logical-error rate.
 
-## 7. Threshold language
+## 8. Threshold language
 
-A crossing in a plot is a workload result, not a property of a decoder in the abstract. Safe wording identifies the code, noise model, distance range, shots, seed, decoder configuration, and surviving artifact. The reference manual excludes threshold claims that lack that evidence.
+A crossing in a plot is a workload result, not a property of a decoder in the abstract. Safe wording names the code, noise model, distance range, shots, seed, decoder configuration, and surviving artifact. The reference manual excludes threshold claims that lack that evidence.
 
-Likewise, do not infer that exact MWPM is always logically best for a non-graphlike code, or that a GPU result is faster simply because it is a GPU result. The methodology is part of the claim.
+Likewise, do not infer that exact MWPM is always logically best on a non-graphlike code, or that a GPU result is faster simply because it ran on a GPU. The methodology is part of the claim.
 
 ## Takeaway
 

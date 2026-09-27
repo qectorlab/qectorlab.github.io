@@ -12,7 +12,7 @@ The interesting GPU question in a decoder is not only how many shots can be laun
 
 ## 1. Why batch state must be isolated
 
-For a batch of independent syndromes, each shot can run its own cluster growth and peeling process. A GPU work-item receives one syndrome and owns a private slice of scratch memory. No work-item reads another shot's parent array, parity state, frontier, or correction buffer.
+For a batch of independent syndromes, each shot runs its own cluster growth and peeling process. A GPU work-item receives one syndrome and owns a private slice of scratch memory. No work-item reads another shot's parent array, parity state, frontier, or correction buffer.
 
 That design avoids two problems at once:
 
@@ -72,7 +72,7 @@ The scope is essential: the manual anchors the theorem to tested graphlike confi
 
 ## 5. Weighted paths are a separate claim
 
-The batch kernels accept DEM edge weights for weighted growth. The unweighted path has the strongest bit-identity statement. The weighted path mirrors CPU weighted growth and is validated for equivalence on tested configurations, but should not be silently described as the same bit-identity theorem without the configuration and test evidence.
+The batch kernels accept DEM edge weights for weighted growth. The unweighted path carries the strongest bit-identity statement. The weighted path mirrors CPU weighted growth and is validated for equivalence on tested configurations, but it should not be silently described as the same bit-identity theorem without the configuration and test evidence.
 
 The same distinction applies to `CUDABpOsdDecoder`. It is a batched qLDPC path; the manual recommends the CPU single-shot path where a one-shot GPU launch would not amortize.
 
@@ -80,9 +80,9 @@ The same distinction applies to `CUDABpOsdDecoder`. It is a batched qLDPC path; 
 
 `is_available()` answers whether the local runtime can see the relevant hardware. It does not answer whether the caller is licensed to construct the decoder. The v1.0.0 tier table documents GPU-enabled paths under the Enterprise tier, while distance caps are enforced in the Rust core.
 
-Published wheels are CUDA-enabled but can install and run without a GPU; CUDA availability is checked at runtime. OpenCL remains a documented source-build path. These packaging facts are important when a result is reproduced on another machine.
+The published v1.0.0 wheels are CPU-only: 15 wheels on PyPI (CPython 3.9 through 3.13; Windows x86_64, manylinux x86_64, macOS arm64) with no CUDA binary inside (verified: each wheel carries a single native module of about 4 MB). CUDA and OpenCL are build-time feature gates, not published wheels; OpenCL remains a documented source-build path. Whether the local runtime can actually use a GPU is answered at runtime by `cuda_is_available()`, which the CPU fallback and the `AutoDecoder` controller consult before selecting a path.
 
-The manual also records a known GPU-context limitation: the native CUDA path and CuPy can use different CUDA contexts, and an intermittent access violation was observed under load on one tested configuration. The documented workaround is to run those workloads in separate processes or hide the device for a monolithic suite.
+The manual also records a known GPU-context limitation: the native CUDA path and CuPy can use different CUDA contexts, and an intermittent access violation was observed under load on one tested configuration. The documented workaround is to run those workloads in separate processes, or hide the device for a monolithic suite.
 
 ## 7. How to validate a GPU batch path
 
@@ -106,7 +106,7 @@ The reproduction workflow in the manual enables the CUDA feature, runs the focus
 
 ## 8. What not to publish from a local run
 
-A local throughput number is not portable evidence. It depends on kernel version, compiler flags, GPU, driver, transfer path, batch size, warmup, and whether construction and memory movement were included. If a number is needed, publish the raw artifact with the full metadata and report hot and cold paths separately.
+A local throughput number is not portable evidence. It depends on kernel version, compiler flags, GPU, driver, transfer path, batch size, warmup, and whether construction and memory movement were included. If a number is needed, publish the raw artifact with the full metadata, and report hot and cold paths separately.
 
 The v1.0.0 manual deliberately withdraws earlier latency, throughput, memory, and VRAM figures whose artifacts did not survive a core fingerprint change. A blog post should preserve that caution rather than resurrecting the number in a new chart.
 

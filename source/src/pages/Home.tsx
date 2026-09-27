@@ -120,7 +120,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-void/25 to-void z-[1]" />
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.04] to-transparent z-[1]" />
 
-        <div className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-24 pb-20">
+        <div className="relative z-10 w-full min-w-0 text-center max-w-5xl mx-auto px-6 pt-24 pb-20">
           <Link
             to="/changelog"
             className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-center text-xs leading-relaxed text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
@@ -156,16 +156,16 @@ export default function Home() {
              Claim boundaries and verification paths are published with the product documentation.
           </p>
 
-          <div className="flex flex-wrap gap-4 justify-center mb-10">
-            <Link to="/pricing" className="btn-gold px-8 py-4 text-sm sm:text-base font-bold">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-10">
+            <Link to="/pricing" className="btn-gold px-8 py-4 text-sm sm:text-base font-bold w-full sm:w-auto">
               Start $499 Evaluation →
             </Link>
-            <Link to="/decoder" className="btn-cyan px-8 py-4 text-sm sm:text-base">
+            <Link to="/decoder" className="btn-cyan px-8 py-4 text-sm sm:text-base w-full sm:w-auto">
               Explore the Decoder
             </Link>
             <a
               href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest"
-              className="btn-outline px-8 py-4 text-sm sm:text-base"
+              className="btn-outline px-8 py-4 text-sm sm:text-base w-full sm:w-auto"
               target="_blank" rel="noopener noreferrer"
             >
               Free Workbench GUI
@@ -303,7 +303,7 @@ export default function Home() {
       <section className="section-band bg-void border-y border-gridline">
         <div className="section-padding max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <span className="eyebrow-pill-emerald mb-4">
+            <span className="eyebrow-pill mb-4">
               Proof Suite
             </span>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Executable Verification for v1.0.0</h2>
@@ -312,18 +312,18 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="card-surface p-6 border-emerald-500/20">
-              <div className="text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">Reproducible Install</div>
+            <div className="card-surface p-6 border-cyan-300/20">
+              <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Reproducible Install</div>
               <h3 className="text-lg font-bold text-primary mb-2">Hashed-lock & CERT_STRICT</h3>
               <p className="text-secondary text-sm leading-relaxed">Proof runs are hashed-locked and gated by CERT_STRICT - no universal benchmark figures, only workload-scoped artifacts.</p>
             </div>
-            <div className="card-surface p-6 border-emerald-500/20">
-              <div className="text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">Reference Manual v1.0.0</div>
+            <div className="card-surface p-6 border-cyan-300/20">
+              <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Reference Manual v1.0.0</div>
               <h3 className="text-lg font-bold text-primary mb-2">DOI 10.5281/zenodo.21941046</h3>
               <p className="text-secondary text-sm leading-relaxed">Normative manual with syndrome-faithfulness foundations, 15 backends, and API stability tiers. All proofs trace to this document.</p>
             </div>
-            <div className="card-surface p-6 border-emerald-500/20">
-              <div className="text-emerald-400 font-mono text-xs uppercase tracking-wider mb-3">Lean/Coq Evidence</div>
+            <div className="card-surface p-6 border-cyan-300/20">
+              <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Lean/Coq Evidence</div>
               <h3 className="text-lg font-bold text-primary mb-2">Kernel-checked proofs</h3>
               <p className="text-secondary text-sm leading-relaxed">Executable suite checks GF(2) invariants and logical cosets with Lean/Coq kernels - evidence, not claims.</p>
             </div>
@@ -558,7 +558,7 @@ export default function Home() {
               </h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
                 $499 for a 60-day commercial evaluation. Unlimited internal seats, all decoders,
-                GPU batch paths, priority support, and full validation artifact access.
+                priority support, and full validation artifact access.
                 100% credit toward any annual license purchased within 90 days of your evaluation start.
               </p>
               <Link to="/pricing" className="btn-gold text-sm">
@@ -605,7 +605,6 @@ export default function Home() {
               <div className="border-t border-gridline/60 pt-4 mt-4 text-left space-y-2">
                 {[
                   'Full QECTOR Decoder v3 (all decoder families)',
-                  'CPU + CUDA/OpenCL batch decoding',
                   'Written license agreement',
                   'Priority email support (2 business day response)',
                   'Benchmark artifact package',

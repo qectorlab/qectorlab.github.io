@@ -19,7 +19,7 @@ export default function NotFound() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-transparent to-void pointer-events-none" />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] bg-cyan-400/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 text-center max-w-2xl mx-auto">
+        <div className="relative z-10 w-full min-w-0 text-center max-w-2xl mx-auto">
           <span className="eyebrow-pill mb-6">404 · Not found</span>
 
           <div className="text-8xl md:text-9xl font-extrabold tracking-tight leading-none mb-6">

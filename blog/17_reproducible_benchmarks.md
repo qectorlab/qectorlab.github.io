@@ -4,12 +4,12 @@ Author: Guillaume Lessard / qector.store
 Series: QECTOR Decoder v3 companion notes, Post 17  
 Source: QECTOR Decoder v3 Reference Manual v1.0.0  
 Date: August 2026  
-DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)  
+DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)
 Tags: reproducible research, QEC benchmarks, artifacts, latency, logical error rate
 
 ## Abstract
 
-Quantum-decoder benchmarks combine a mathematical problem, a stochastic workload, compiled code, and hardware. A number without that context is not portable evidence. The QECTOR v1.0.0 manual defines the metadata, statistical, memory, and claim rules needed to turn a local run into a reviewable artifact. This post turns those rules into a practical checklist for research teams, systems engineers, and product reviews.
+A quantum-decoder benchmark mixes a mathematical problem, a stochastic workload, compiled code, and real hardware. A number without that context is not portable evidence. The QECTOR v1.0.0 manual defines the metadata, statistical, memory, and claim rules that turn a local run into a reviewable artifact. This post turns those rules into a practical checklist for research teams, systems engineers, and product reviews.
 
 ## 1. Start with a scoped sentence
 
@@ -21,11 +21,11 @@ An unsafe claim looks like:
 
 > Decoder A is universally faster or always more accurate.
 
-The manual excludes the second style. It also warns that previous benchmark artifacts were withdrawn after a core fingerprint change.
+The manual excludes the second style. It also records that earlier benchmark artifacts were withdrawn after a core fingerprint change, so provenance belongs in every claim.
 
 ## 2. Separate correctness from performance
 
-Every run should answer the correctness question before the timing question:
+Answer the correctness questions before the timing questions:
 
 ```text
 Did every reachable syndrome produce H @ c == s?
@@ -37,9 +37,9 @@ Only after those gates pass should the run report latency, throughput, memory, o
 
 ## 3. Cold path and hot path
 
-Decoder construction includes graph creation, weight preprocessing, allocations, and setup. That is the cold path. Repeated `decode()` with a pre-built decoder and in-memory syndromes is the hot path.
+Decoder construction covers graph creation, weight preprocessing, allocations, and setup. That is the cold path. Repeated `decode()` calls on a pre-built decoder with in-memory syndromes are the hot path.
 
-Both can be useful, but they answer different operational questions:
+Both are useful, but they answer different questions:
 
 | Measurement | Includes | Appropriate for |
 |---|---|---|
@@ -66,19 +66,19 @@ git commit or release tag
 raw JSON/CSV path and SHA-256
 ```
 
-If a number depends on a GPU or driver, include the exact device and runtime. If memory is measured, identify whether it is Python allocation, process RSS, native heap, or VRAM.
+If a number depends on a GPU or driver, record the exact device and runtime. If memory is measured, say whether it is Python allocation, process RSS, native heap, or VRAM.
 
 ## 5. Statistical reporting
 
 For latency, report the distribution: `n`, mean, median, standard deviation, minimum, maximum, p50, p90, p95, p99, and a confidence interval on the mean.
 
-For logical error rates, report errors, shots, the LER, and a Wilson interval. If the result has zero observed errors, do not turn that observation into a claim of zero logical-error probability; report the interval and sampling context.
+For logical error rates, report errors, shots, the LER, and a Wilson interval. With zero observed errors, do not claim a zero logical-error probability; report the interval and the sampling context.
 
-For decoder comparisons, use the same sampled detector data, DEM settings, observable map, and noise model. A different random sample can be useful for an independent replication, but it is not a paired head-to-head comparison unless the pairing protocol is stated.
+For decoder comparisons, use the same sampled detector data, DEM settings, observable map, and noise model. A different random sample supports an independent replication, but it is not a paired head-to-head comparison unless the pairing protocol is stated.
 
 ## 6. Reproducible command design
 
-A good command is explicit about every hidden degree of freedom:
+A good command leaves no hidden degree of freedom:
 
 ```text
 benchmark --code rotated_surface --distance 5
@@ -88,11 +88,11 @@ benchmark --code rotated_surface --distance 5
           --out results/run.json
 ```
 
-The actual command should be stored beside the output. The environment block and the commit hash make it possible to distinguish a changed workload from a changed implementation.
+Store the command next to the output. The environment block and the commit hash are what let a reviewer tell a changed workload apart from a changed implementation.
 
 ## 7. Benchmark images need a disposition
 
-The manual includes structural figures and excludes charts tied to withdrawn or non-surviving hardware measurements. A useful chart can still be generated locally, but its status should be clear:
+The manual keeps structural figures and excludes charts tied to withdrawn or non-surviving hardware measurements. A locally generated chart is still useful, but its status must be explicit:
 
 ```text
 structural illustration
@@ -101,7 +101,7 @@ checked-in evidence artifact
 published comparative result
 ```
 
-Only the last two should support public numerical claims, and only with the accompanying artifact.
+Only the last two should support public numerical claims, and only together with the accompanying artifact.
 
 ## 8. A release-review checklist
 
@@ -110,17 +110,17 @@ Before quoting a result:
 1. Pin the release or commit.
 2. Capture dependency versions and hardware.
 3. Run the local correctness and import smoke tests.
-4. Label hot/cold/end-to-end timing.
+4. Label hot, cold, and end-to-end timing.
 5. Store raw JSON/CSV and hash it.
 6. Attach a Wilson interval for LER.
-7. State safe and unsafe wording.
+7. State the safe and unsafe wording.
 8. Remove customer data, proprietary circuits, and secrets from logs.
 
-The last item matters for service deployments: a benchmark artifact can accidentally disclose inputs that were never meant to be public.
+Item 8 matters for service deployments: a benchmark artifact can accidentally disclose inputs that were never meant to be public.
 
 ## Takeaway
 
-Reproducibility is not a citation added after the graph. It is the relationship between the claim, command, environment, raw artifact, and hash. That discipline makes a local QEC result useful to another lab and keeps product language honest.
+Reproducibility is not a citation added after the graph. It is the link between the claim, the command, the environment, the raw artifact, and the hash. That discipline makes a local QEC result useful to another lab and keeps product language honest.
 
 ## Reference
 

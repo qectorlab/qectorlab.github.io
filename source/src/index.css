@@ -56,7 +56,15 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply text-primary font-sans tracking-tight;
-    text-wrap: balance;
+  }
+
+  /* Balanced headline wrapping is a desktop refinement: on narrow
+     viewports it can force single-line overflow, so keep normal
+     wrapping there. */
+  @media (min-width: 768px) {
+    h1, h2, h3, h4, h5, h6 {
+      text-wrap: balance;
+    }
   }
 
   code {
@@ -129,10 +137,6 @@
 
   .eyebrow-pill-gold {
     @apply inline-flex items-center gap-2 px-3 py-1.5 bg-gold-400/10 border border-gold-400/20 rounded-full text-xs font-semibold text-gold-400 uppercase tracking-wider;
-  }
-
-  .eyebrow-pill-emerald {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-xs font-semibold text-emerald-400 uppercase tracking-wider;
   }
 
   /* Inline text link inside body copy: single hover/focus treatment. */

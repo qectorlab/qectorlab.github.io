@@ -8,7 +8,7 @@ Tags: qLDPC, BP-OSD, belief propagation, ordered statistics, GF(2), hypergraphs
 
 ## Abstract
 
-Minimum-weight matching is natural when each fault mechanism touches at most two detectors. Quantum LDPC and other non-graphlike codes do not provide that guarantee. BP-OSD is QECTOR's general GF(2) path: belief propagation supplies a reliability ordering, then ordered-statistics decoding solves a residual linear system. The important design separation is that beliefs choose a candidate representative while the algebraic solve restores syndrome faithfulness. This post derives the log-domain update, the OSD-0/OSD-W stages, and the residual-solve theorem, then explains the numerical, batching, and claim boundaries documented in v1.0.0.
+Minimum-weight matching is natural when each fault mechanism touches at most two detectors. Quantum LDPC and other non-graphlike codes do not provide that guarantee. BP-OSD is QECTOR's general GF(2) path: belief propagation supplies a reliability ordering, then ordered-statistics decoding solves a residual linear system. The design separation matters: beliefs choose a candidate representative, while the algebraic solve restores syndrome faithfulness. This post derives the log-domain update, the OSD-0/OSD-W stages, and the residual-solve theorem, then explains the numerical, batching, and claim boundaries documented in v1.0.0.
 
 ## 1. Why hyperedges change the decoder choice
 
@@ -25,7 +25,7 @@ The BP-OSD contract is expressed for an arbitrary reachable GF(2) matrix. This i
 
 ## 2. Belief propagation in the log domain
 
-For each qubit `q`, let the prior log-likelihood ratio be combined with messages from neighboring checks. With `m_(q->c)` and `m_(c->q)` denoting variable-to-check and check-to-variable messages, the exact sum-product check update uses
+For each qubit `q`, the prior log-likelihood ratio is combined with messages from neighboring checks. With `m_(q->c)` and `m_(c->q)` denoting variable-to-check and check-to-variable messages, the exact sum-product check update uses
 
 $$
 m_{c\to q} = \operatorname{sgn}\left(\prod_{q'\in N(c)\setminus q}m_{q'\to c}\right)
@@ -46,7 +46,7 @@ $$
 
 The decoder hard-decodes from the signs of `gamma`. If that hard decision already satisfies `H e = s`, it can return immediately. Otherwise it passes the residual to OSD.
 
-QECTOR also documents min-sum as an opt-in approximation and a relay/layered schedule in which checks are processed sequentially. These are schedule choices; they do not remove the need for the faithful post-process.
+QECTOR also documents min-sum as an opt-in approximation and a relay (layered) schedule in which checks are processed sequentially. These are schedule choices; they do not remove the need for the faithful post-process.
 
 ## 3. Ordered statistics decoding
 
@@ -64,7 +64,7 @@ OSD uses BP for ranking rather than treating BP's hard decision as infallible.
 
    of the least-reliable columns and retain the lowest-weight faithful candidate.
 
-OSD-0 performs one residual solve. Higher order adds a search over selected reliability perturbations. The search changes which representative is preferred; it does not change the syndrome equation that every candidate must satisfy.
+OSD-0 performs one residual solve. Higher order adds a search over selected reliability perturbations. The search changes which representative is preferred; it does not change the syndrome equation every candidate must satisfy.
 
 ## 4. The residual-solve theorem
 
@@ -94,7 +94,7 @@ Hc = H_{fixed}e_{fixed} + H_B e_B
     = s \pmod 2.
 $$
 
-Therefore BP convergence affects which candidate the decoder prefers, but not whether the OSD candidate reproduces the reachable syndrome.
+BP convergence therefore affects which candidate the decoder prefers, but not whether the OSD candidate reproduces the reachable syndrome.
 
 ## 5. What OSD does and does not optimize
 
@@ -106,7 +106,7 @@ $$
 
 for logical success. Faithfulness only establishes `c + e in ker(H)`.
 
-This division of labour is useful:
+The division of labour is:
 
 | Stage | Question answered |
 |---|---|
@@ -119,7 +119,7 @@ This division of labour is useful:
 
 The manual records two check-node rules, exact sum-product and min-sum, plus a relay schedule. The Rust implementation evaluates the box-plus function exactly in a small range and uses a tabulated interpolation path over a larger range. The relevant evidence is numerical-stability testing, not a universal floating-point guarantee across arbitrary hardware.
 
-The Python batch path can run BP over a batch on a usable GPU and send only non-converged shots through the exact GF(2) post-process. Without a device it falls back to NumPy with the same validity contract. The single-shot path is CPU-oriented because a GPU launch is not assumed to amortize for one syndrome.
+On the Python surface, `BPOSDDecoder` exposes `bp_method` ("relay" selects the layered schedule) and an adjustable `osd_lambda`. The batch path can run BP over a batch on a usable GPU and send only non-converged shots through the exact GF(2) post-process. Two bounds apply: the published 1.0.0 wheels are CPU-only, so GPU paths are build-time feature gates whose runtime availability is reported by `cuda_is_available()`; and without a usable device the batch path falls back to NumPy with the same validity contract. The single-shot path is CPU-oriented because a GPU launch is not assumed to amortize for one syndrome.
 
 ## 7. Complexity language that stays honest
 

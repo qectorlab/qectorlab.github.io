@@ -60,6 +60,8 @@ The module map groups responsibilities into matching, Union-Find, BP-OSD, GPU, t
 
 Arrays cross the FFI boundary as contiguous `uint8` NumPy buffers. Repacking occurs only when an input is non-contiguous or has the wrong dtype. Decode calls release the Python GIL, allowing compiled work to run alongside other Python threads.
 
+Interoperability is first-class. The package ships a PyMatching-compatible shim (`from qector_decoder_v3.pymatching import Matching`), Sinter entry points (`qector_blossom`, `qector_belief`, `qector_unionfind`, `qector_bposd`, `qector_unionfind_unweighted`), and a `qiskit-qec` plugin, so existing harnesses can swap in QECTOR backends without rewriting their scoring code.
+
 ### Batch and memory model
 
 Batch paths use Rayon data parallelism with worker-local scratch. The observable goal is bit determinism: output should not depend on worker count or prior calls. Hot paths reuse preallocated buffers and reset them in place. Python allocations, process RSS, native heap, and GPU memory are separate metrics and must never be merged into one number.
@@ -81,6 +83,8 @@ Every report should carry:
 | Environment | OS, CPU, RAM, Python/Rust/package versions, GPU/runtime, commit |
 | Artifact | Raw JSON/CSV path and SHA-256 |
 
+The only published comparative LER figure is the v1.0.0 changelog's 120-test suite against PyMatching, reported with a stated 4.5x margin. The head-to-head numbers include repetition-code distance 3 at p=0.01, where QECTOR records 0.00392 against PyMatching's 0.00317. Any new comparison should hold the harness constant the same way.
+
 ## 5. Wilson intervals and comparability
 
 For `k` logical errors in `n` shots, QECTOR reports a 95 percent Wilson interval rather than the simple Wald interval:
@@ -95,7 +99,7 @@ Noise models must also be comparable. A code-capacity LER at a nominal `p` canno
 
 ## 6. Hot path and cold path
 
-Decoder construction is the cold path: graph building, weight preprocessing, and allocation. Repeated `decode()` on an already-built decoder with syndromes in memory is the hot path. Reporting only hot-path latency is valid only for a clearly labeled pre-built repeated-decode workload.
+Decoder construction is the cold path: graph building, weight preprocessing, and allocation. Repeated `decode()` on an already-built decoder with syndromes in memory is the hot path. Reporting only hot-path latency is valid solely for a clearly labeled pre-built repeated-decode workload.
 
 A latency report should include `n`, mean, median, standard deviation, minimum, maximum, p50, p90, p95, p99, and a 95 percent confidence interval on the mean. A single mean is not a complete public claim.
 
@@ -117,9 +121,11 @@ The frozen tree records an older test-count report as stale. No current pass/fai
 
 ## 8. Release and deployment posture
 
-The public delivery path is wheels only. No source distribution is published because the proprietary Rust core is not tracked as rebuildable source. Release gates include Rust tests, Clippy with warnings denied, Python lint/format checks, the Python test suite, wheel import/decode smoke tests, and dependency audit policy.
+The public delivery path is wheels only. No source distribution is published because the proprietary Rust core is not tracked as rebuildable source. The v1.0.0 release on PyPI (2026-08-06) ships 15 CPU-only wheels, CPython 3.9 through 3.13 across Windows x86_64, manylinux x86_64, and macOS arm64, requires Python 3.9 or later, and carries the PolyForm-Noncommercial-1.0.0 license. The CLI surface is `qector decode`, `qector bench`, and `qector serve`, plus `qector-doctor` and `qector-bench-quick`.
 
-The local CPU library is the preferred research path. CUDA/OpenCL are controlled local paths. REST, gRPC, MCP, and metrics surfaces are provisional and require authentication, authorization, TLS, rate limits, timeouts, audit logging, request limits, and resource quotas before a customer-facing deployment. The decoder does not make a blocking network call during local decoding; license verification is offline.
+Release gates include Rust tests, Clippy with warnings denied, Python lint/format checks, the Python test suite, wheel import/decode smoke tests, and dependency audit policy.
+
+The local CPU library is the preferred research path. CUDA/OpenCL are controlled local paths. REST, gRPC, MCP, and metrics surfaces are provisional and require authentication, authorization, TLS, rate limits, timeouts, audit logging, request limits, and resource quotas before a customer-facing deployment. The decoder makes no blocking network call during local decoding; license verification is offline.
 
 ## 9. A reproducible benchmark skeleton
 

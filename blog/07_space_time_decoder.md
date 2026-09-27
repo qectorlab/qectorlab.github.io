@@ -8,11 +8,11 @@ Tags: space-time decoding, detector error model, measurement noise, streaming QE
 
 ## Abstract
 
-With noisy syndrome extraction, a single round of measurements is not the same object as a clean syndrome. Data faults and measurement faults must be represented together so the decoder can decide whether a detection event is spatial or temporal. QECTOR's `SpaceTimeDecoder` lifts the problem into a `(2+1)`-dimensional detector lattice; `StreamingDecoder` and `SlidingWindowDecoder` provide separate multi-round primitives. This post derives detector differencing, anisotropic edge weights, the lifted faithfulness equation, a measurement-glitch example, and the manual's explicit boundary on Python streaming claims.
+With noisy syndrome extraction, one round of measurements is not the same object as a clean syndrome. Data faults and measurement faults must be represented together so the decoder can decide whether a detection event is spatial or temporal. QECTOR's `SpaceTimeDecoder` lifts the problem into a `(2+1)`-dimensional detector lattice; `StreamingDecoder` and `SlidingWindowDecoder` provide separate multi-round primitives. This post derives detector differencing, anisotropic edge weights, the lifted faithfulness equation, a measurement-glitch example, and the manual's explicit boundary on Python streaming claims.
 
 ## 1. Raw syndromes are histories
 
-Let `s_(c,t)` be the observed syndrome bit for check `c` at round `t`. It can contain both data-error effects and measurement noise. Instead of decoding each round as an isolated two-dimensional problem, form detector differences:
+Let `s_(c,t)` be the observed syndrome bit for check `c` at round `t`. It mixes data-error effects with measurement noise. Instead of decoding each round as an isolated two-dimensional problem, form detector differences:
 
 $$
 d_{c,t} = s_{c,t} + s_{c,t-1} \pmod 2,
@@ -20,7 +20,18 @@ $$
 
 with the initial layer handled by the chosen boundary convention.
 
-The difference records changes rather than absolute values. A data fault that persists across rounds creates events at the temporal boundaries of its interval. A measurement flip that appears and then disappears creates a pair of events at the same detector in adjacent layers. The decoder can then prefer a time-like explanation when the measurement prior makes it more likely.
+The difference records changes rather than absolute values. A persistent data fault creates events at the temporal boundaries of its interval. A measurement flip that appears and then disappears creates a pair of events at the same detector in adjacent layers. The decoder can then prefer a time-like explanation when the measurement prior makes it more likely.
+
+The detector error model (DEM) is the object that enumerates these mechanisms. QECTOR exposes it through a small verified API:
+
+```python
+from qector_decoder_v3 import dem
+
+model = dem.from_stim(circuit)        # detector error model
+decoder = model.make_decoder()        # routed backend
+if model.is_graphlike:
+    graph = model.collapse_to_graph() # MWPM-ready form
+```
 
 ## 2. The lifted parity-check problem
 
@@ -32,11 +43,11 @@ $$
 H_{ST}c_{ST} = d \pmod 2.
 $$
 
-For graphlike lifted models, paths in the detector lattice have the same boundary property as paths in the two-dimensional graph. The `SpaceTimeDecoder` can therefore solve one matching problem over all rounds instead of making independent decisions that confuse measurement faults with data faults.
+For graphlike lifted models, paths in the detector lattice have the same boundary property as paths in the two-dimensional graph. The `SpaceTimeDecoder` therefore solves one matching problem over all rounds, instead of making independent decisions that confuse measurement faults with data faults.
 
 ## 3. Anisotropic weights
 
-Data and measurement mechanisms need not have the same probability. Assign
+Data and measurement mechanisms need not share a probability. Assign
 
 $$
 w_{space} = \log\left(\frac{1-p_{data}}{p_{data}}\right),
@@ -48,9 +59,9 @@ $$
 w_{time} = \log\left(\frac{1-p_{meas}}{p_{meas}}\right).
 $$
 
-The decoder compares path costs using these priors. If measurement faults are more likely than data faults, a time-like path may be cheaper. If the measurement channel is cleaner, spatial paths may be preferred. The weights are part of the detector model, not a cosmetic tuning parameter.
+The decoder compares path costs under these priors. If measurement faults are more likely than data faults, a time-like path may be cheaper. If the measurement channel is cleaner, spatial paths are preferred. The weights belong to the detector model, not to a tuning knob.
 
-For example, if `p_data = 0.01`, then `w_space` is approximately `4.595`. If `p_meas = 0.03`, then `w_time` is approximately `3.476`. The numerical example explains the direction of the preference; it is not a claim about logical-error performance.
+For example, `p_data = 0.01` gives `w_space` around `4.595`, while `p_meas = 0.03` gives `w_time` around `3.476`. The example shows the direction of the preference. It is not a claim about logical-error performance.
 
 ## 4. A glitch that must not become a data correction
 
@@ -61,7 +72,7 @@ appearance at (check 2, round 3)
 disappearance at (check 2, round 4)
 ```
 
-The most natural explanation is a pair of time-like edges. The projected spatial correction is empty because no data qubit changed. This is precisely the regression behaviour described in the manual: a lone measurement glitch that reverts on the next round must not corrupt the spatial correction.
+The natural explanation is a pair of time-like edges. The projected spatial correction is empty because no data qubit changed. This is the regression behaviour described in the manual: a lone measurement glitch that reverts on the next round must not corrupt the spatial correction.
 
 ## 5. The lifted faithfulness theorem
 
@@ -71,9 +82,9 @@ $$
 H_{ST}c_{ST} = d,
 $$
 
-then every detector event is reproduced by the correction. Projecting away the measurement columns yields a spatial correction whose final-round syndrome differs from the raw final measurement only by the final-round measurement-error boundary term. The projection statement is a property of the lifted chain complex, not a claim that measurement noise has been eliminated from the physical device.
+then every detector event is reproduced by the correction. Projecting away the measurement columns yields a spatial correction whose final-round syndrome differs from the raw final measurement only by the final-round measurement-error boundary term.
 
-The logical test remains separate. Once the final spatial correction is formed, its residual must be evaluated in the appropriate logical-observable or stabilizer quotient.
+That projection statement is a property of the lifted chain complex. It is not a claim that measurement noise has been eliminated from the physical device. The logical test stays separate: once the final spatial correction is formed, its residual must be scored in the appropriate logical-observable or stabilizer quotient.
 
 ## 6. Full space-time versus streaming primitives
 
@@ -96,7 +107,7 @@ The expression describes the history approximation. It does not by itself establ
 
 ## 7. Choosing between offline and online paths
 
-Use the full lifted decoder when the experiment needs a circuit-level or multi-round decision that can use the complete detector history. Use a streaming primitive when the workflow needs bounded state, incremental commits, or telemetry and can accept the stated windowing semantics.
+Use the full lifted decoder when the experiment needs a circuit-level or multi-round decision that consumes the complete detector history. Use a streaming primitive when the workflow needs bounded state, incremental commits, or telemetry, and can accept the stated windowing semantics.
 
 In either case, record:
 
@@ -113,7 +124,7 @@ Do not describe a per-round Python window as full circuit-level space-time match
 
 ## 8. Why this matters to hardware teams
 
-The detector lattice is an interface between measurement electronics and decoding software. It lets a decoder consume repeated stabilizer outcomes without requiring the hardware layer to declare every event a data fault. It also makes priors visible: calibration data can inform time-like and space-like weights, while the algebraic gate verifies the emitted detector correction.
+The detector lattice is an interface between measurement electronics and decoding software. It lets a decoder consume repeated stabilizer outcomes without forcing the hardware layer to declare every event a data fault. It also makes priors visible: calibration data can inform time-like and space-like weights, while the algebraic gate verifies the emitted detector correction.
 
 This separation supports heterogeneous systems. The physical layer produces rounds, the DEM describes mechanisms, the space-time decoder handles correlated history, and the validation harness scores observables under a named noise model.
 

@@ -4,37 +4,35 @@ Author: Guillaume Lessard / qector.store
 Series: QECTOR Decoder v3 companion notes, Post 19  
 Source: QECTOR Decoder v3 Reference Manual v1.0.0  
 Date: August 2026  
-DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)  
+DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)
 Tags: release engineering, API stability, licensing, deployment security, QEC software
 
 ## Abstract
 
-Research code becomes infrastructure when other people install it, automate it, and place it near sensitive circuits or hardware. The QECTOR v1.0.0 manual treats release engineering, licensing, API stability, and service hardening as part of the technical contract. This post summarizes those boundaries so an evaluator can distinguish a stable Python symbol from a provisional service surface and a local research library from a network deployment.
+Research code becomes infrastructure when other people install it, automate it, and place it near sensitive circuits or hardware. The QECTOR v1.0.0 manual treats release engineering, licensing, API stability, and service hardening as part of the technical contract. This post summarizes those boundaries so an evaluator can tell a stable Python symbol from a provisional service surface, and a local research library from a network deployment.
 
 ## 1. API stability has layers
 
 The manual separates public surfaces into stable, provisional, and internal detail.
 
-Stable examples include:
+Stable symbols for the whole 1.x line include:
 
 ```text
-UnionFindDecoder
-FastUnionFindDecoder
-BlossomDecoder
-SparseBlossomDecoder
+UnionFindDecoder, BlossomDecoder, SparseBlossomDecoder
 NativeAutoDecoder
-code-generation helpers
-license status helpers
+the four generate_*_code_checks helpers
+set_license_key, get_license_info
+the Sinter and qiskit-qec entry points
 DecodeResult
 ```
 
-Provisional or workload-sensitive surfaces include batch aliases, AutoDecoder ordering, streaming constructors, BP-OSD tuning arguments, GPU decoders, and network surfaces. A provisional symbol is supported and tested, but its exact surface may change in a 1.x release with a changelog note.
+Provisional or workload-sensitive surfaces include batch aliases, AutoDecoder ordering, streaming constructors, BP-OSD tuning kwargs, GPU batch constructors, and network surfaces. A provisional symbol is supported and tested, but its exact shape may change in a 1.x release with a changelog note.
 
-The distinction helps downstream teams plan upgrades without pretending that every experimental option is frozen.
+The distinction lets downstream teams plan upgrades without treating every experimental option as frozen.
 
 ## 2. Wheels only
 
-The release policy publishes deterministic binary wheels and no source distribution. The proprietary Rust core is delivered into the build pipeline through a chunked, hash-anchored packaging mechanism; the manifest is checked before building so stale or corrupted input fails explicitly.
+The 1.0.0 release (published 2026-08-06) ships deterministic binary wheels on PyPI and no source distribution: 15 wheels covering CPython 3.9 through 3.13 on Windows (win_amd64), Linux (manylinux x86_64), and macOS (arm64), with `requires-python >= 3.9` and a PolyForm-Noncommercial-1.0.0 license. The proprietary Rust core is delivered into the build pipeline through a chunked, hash-anchored packaging mechanism, and the manifest is checked before building so stale or corrupted input fails explicitly.
 
 The user-facing implication is simple:
 
@@ -43,7 +41,7 @@ pip install -> resolve a supported wheel
 wheel smoke -> import, decode, assert H @ c == s
 ```
 
-The exact supported platforms and feature flags belong in the release notes for the installed version. Do not assume that a CUDA-enabled wheel means a GPU is present or that an OpenCL wheel exists when the manual says OpenCL requires a source build.
+Read the platform and feature flags from the release notes of the installed version. No CUDA wheel is published for 1.0.0: do not assume a GPU is present, and do not assume an OpenCL wheel exists when the manual says OpenCL requires a source build.
 
 ## 3. License tiers are enforced locally
 
@@ -55,9 +53,9 @@ The v1.0.0 manual documents these distance caps:
 | Pro | 19 | No |
 | Enterprise | 63 | Yes |
 
-Tokens are verified offline in the Rust core using Ed25519, with expiry and an offline revocation list. The decoder does not make a blocking network call while decoding.
+Tokens are verified offline in the Rust core using Ed25519, with expiry and an offline revocation list. Decoding never makes a blocking network call.
 
-The environment includes a key resolution order:
+Key resolution order:
 
 ```text
 QECTOR_LICENSE_KEY
@@ -65,9 +63,9 @@ QECTOR_LICENSE_FILE
 ~/.qector/license.key
 ```
 
-An explicitly set but unreadable license-file path is invalid; it is not a silent downgrade. `QECTOR_ENFORCE=1` turns tier violations into hard errors, while the default mode logs a warning.
+An explicitly set but unreadable license-file path is invalid, not a silent downgrade. `QECTOR_ENFORCE=1` turns tier violations into hard errors; the default mode logs a warning. `QECTOR_SILENT=1` quiets the licensing output.
 
-Hardware availability and licensing are separate. A device probe can report a GPU even when the requested tier is not active.
+Hardware availability and licensing are separate facts. A device probe can report a GPU even when the requested tier is not active.
 
 ## 4. Pre-flight gates
 
@@ -80,11 +78,9 @@ The documented release gates include:
 5. Wheel import/decode smoke testing.
 6. Dependency audit according to release policy.
 
-The wheel smoke test is especially important for a proprietary core. It validates the artifact that users install, not only the source tree used to build it.
+The wheel smoke test matters most for a proprietary core: it validates the artifact users install, not just the source tree that built it.
 
 ## 5. Local library versus service
-
-The manual's deployment posture is explicit:
 
 | Mode | Status | Guidance |
 |---|---|---|
@@ -95,7 +91,7 @@ The manual's deployment posture is explicit:
 | SaaS/hosted API | Contact-only beta | Separate commercial agreement and hardening |
 | OEM/embedded | Contact-only partner path | Validate hardware and support scope |
 
-Transport wrappers reuse the same decoder contracts, but transport security is not inherited automatically from the local library.
+Transport wrappers reuse the same decoder contracts, but transport security is not inherited from the local library.
 
 ## 6. Service hardening checklist
 
@@ -113,15 +109,15 @@ redact customer inputs and proprietary circuits from logs
 document owner, rollback, update, and incident paths
 ```
 
-The manual notes built-in request and frame caps for some surfaces but treats them as necessary, not sufficient, hardening.
+The manual notes built-in request and frame caps on some surfaces, but treats them as necessary rather than sufficient hardening.
 
 ## 7. Commercial boundaries
 
-Network use, hosted APIs, OEM integration, internal commercial use, product integration, paid consulting, and commercial benchmarking require the written commercial scope described by the project. A public blog should explain the boundary without embedding tokens, private keys, customer circuits, or internal fulfillment details.
+Network use, hosted APIs, OEM integration, internal commercial use, product integration, paid consulting, and commercial benchmarking require the written commercial scope described by the project. A public post can explain the boundary without embedding tokens, private keys, customer circuits, or internal fulfillment details.
 
 ## 8. Version promotion
 
-A provisional symbol becomes stable only after a dated promotion entry, the same property/regression/example test bar, an update to the stable API document, and a changelog note. This process is useful beyond QECTOR: it converts "we have used this for a while" into an auditable compatibility decision.
+A provisional symbol becomes stable only after a dated promotion entry, the same property, regression, and example test bar, an update to the stable API document, and a changelog note. The process generalizes: it turns "we have used this for a while" into an auditable compatibility decision.
 
 ## Takeaway
 

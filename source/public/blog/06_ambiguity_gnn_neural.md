@@ -8,11 +8,11 @@ Tags: qLDPC, ambiguity clustering, GNN, neural predecoder, decoder verification
 
 ## Abstract
 
-Belief propagation can leave only a small part of a qLDPC problem uncertain, even when its global hard decision is not faithful. Ambiguity clustering uses that observation: freeze confident qubits, compute the residual syndrome, and solve disconnected ambiguous components exactly when they are small. QECTOR also exposes learned predecoder surfaces that provide priors or dynamic weights. The important boundary is architectural: learned components may influence the selected correction, but the final syndrome-faithfulness gate remains algebraic and is enforced independently of training quality.
+Belief propagation can leave only a small part of a qLDPC problem uncertain, even when its global hard decision is not faithful. Ambiguity clustering exploits that: freeze confident qubits, compute the residual syndrome, and solve disconnected ambiguous components exactly when they are small. QECTOR also exposes learned predecoder surfaces that supply priors or dynamic weights. The architectural boundary matters: learned components may influence the selected correction, but the final syndrome-faithfulness gate stays algebraic and independent of training quality.
 
 ## 1. Confidence is not correctness
 
-After BP, each qubit receives a posterior log-likelihood ratio `gamma_q`. A large magnitude means the model is confident about the bit; it does not prove the bit is correct. A hard decision can still fail the syndrome equation
+After BP, each qubit receives a posterior log-likelihood ratio `gamma_q`. A large magnitude means the model is confident about the bit. It does not prove the bit correct. A hard decision can still fail the syndrome equation
 
 $$
 H\hat e \ne s \pmod 2.
@@ -30,24 +30,24 @@ $$
 Q_{amb} = \{q : |\gamma_q| < \tau\}.
 $$
 
-Freeze the reliable set to its hard decision `e_rel` and compute
+Freeze the reliable set to its hard decision `e_rel` and compute the residual
 
 $$
 s_{res} = s + H_{rel}e_{rel} \pmod 2.
 $$
 
-If `s_res` is zero, the frozen assignment is already faithful. Otherwise, the remaining work is concentrated on the ambiguous support.
+If `s_res` is zero, the frozen assignment is already faithful. Otherwise the remaining work concentrates on the ambiguous support.
 
 ## 2. Component-wise solving
 
-Build the Tanner-induced subgraph on `Q_amb`. Under the component-separation condition, it decomposes into connected components `C_k` with disjoint column support. QECTOR's documented strategy is:
+Build the Tanner-induced subgraph on `Q_amb`. When the component-separation condition holds, it decomposes into connected components `C_k` with disjoint column support. QECTOR's documented strategy is:
 
 1. Solve a component exactly by enumeration when its size is at most the configured `K_max`, documented as 12 by default.
 2. Use a restricted OSD-0 solve for larger components.
 3. Escalate if a component cannot satisfy its residual syndrome.
 4. XOR the component corrections with the frozen reliable assignment.
 
-The exact-enumeration path searches the local space rather than the full `2^n` space. The method is attractive when BP confidence leaves small disconnected islands, but it is not a promise that every qLDPC instance decomposes into small components.
+The exact path searches the local space, not the full `2^n` space. It is attractive when BP confidence leaves small disconnected islands. It is not a promise that every qLDPC instance decomposes into small components.
 
 ## 3. Faithfulness theorem
 
@@ -75,24 +75,28 @@ Hc
 \end{aligned}
 $$
 
-The threshold `tau` changes which representative is frozen and which work is enumerated. It does not change the algebraic conclusion as long as every component residual is solved or escalated.
+The threshold `tau` changes which representative is frozen and which work is enumerated. It does not change the algebraic conclusion, as long as every component residual is solved or escalated.
 
 ## 4. Logical scoring remains a separate layer
 
-Faithfulness implies that `c + e` lies in `ker(H)`. It does not identify whether that residual is a stabilizer or a logical operator. For a stabilizer code, the logical criterion remains
+Faithfulness implies `c + e` lies in `ker(H)`. It does not identify whether that residual is a stabilizer or a logical operator. For a stabilizer code, the logical criterion remains
 
 $$
 c + e \in \operatorname{im}(H^T)
 $$
 
-for success. An exact local component solve can still choose a globally nontrivial logical coset if the code's logical structure crosses the component boundary. That is why the manual calls the component method faithful and exact within clusters, but does not make a universal logical-accuracy claim for a learned or thresholded configuration.
+for success. An exact local component solve can still pick a globally nontrivial logical coset when the code's logical structure crosses a component boundary. That is why the manual calls the method faithful and exact within clusters, but makes no universal logical-accuracy claim for any learned or thresholded configuration.
 
 ## 5. Learned predecoders
 
-The manual describes two research-grade surfaces:
+The manual describes two research-grade surfaces, available in the package as `NeuralPredecoder` and `GNNPredecoder`:
 
 - `NeuralPredecoder`: a small leaky-ReLU MLP trained with SGD.
 - `GNNPredecoder`: a message-passing network with a softplus edge readout that predicts dynamic per-edge weights.
+
+```python
+from qector_decoder_v3 import NeuralPredecoder, GNNPredecoder
+```
 
 The learned output can influence BP priors, reliability ordering, or matching weights. A positive softplus readout is useful when the downstream matching path expects non-negative edge costs. But training data, architecture, calibration, and distribution shift all affect the result.
 
@@ -100,19 +104,19 @@ The safe statement is therefore:
 
 > Learned surfaces are training-dependent research paths. Their accuracy is not claimed by the v1.0.0 manual without a surviving artifact. Their returned correction still passes the same `Hc = s` gate.
 
-This distinction is valuable to both researchers and product teams. A model can be useful as a prior without becoming the authority on correctness.
+This distinction serves both researchers and product teams. A model can be a useful prior without becoming the authority on correctness.
 
 ## 6. A practical failure mode
 
-Suppose BP marks most qubits reliable but freezes one wrong bit. That bit contributes a nonzero term to `H_rel e_rel`, so the residual syndrome records the mistake. A component solver that ignores that residual may return a plausible-looking vector with the wrong boundary. A component solver that receives `s_res` can repair it, and the final matrix product exposes any implementation bug immediately.
+Suppose BP marks most qubits reliable but freezes one wrong bit. That bit contributes a nonzero term to `H_rel e_rel`, so the residual syndrome records the mistake. A component solver that ignores the residual may return a plausible-looking vector with the wrong boundary. A solver that receives `s_res` can repair it, and the final matrix product exposes any implementation bug immediately.
 
 The residual is not optional bookkeeping. It is the interface between a probabilistic front end and a deterministic algebraic back end.
 
 ## 7. Choosing a threshold
 
-Increasing `tau` makes more qubits ambiguous. That can improve the chance that the frozen set is reliable, but it also increases component sizes and enumeration cost. Decreasing `tau` freezes more qubits and may leave a harder residual.
+Raising `tau` makes more qubits ambiguous. That can improve the chance that the frozen set is reliable, but it also grows component sizes and enumeration cost. Lowering `tau` freezes more qubits and may leave a harder residual. The manual prescribes no universal threshold.
 
-The manual does not prescribe a universal threshold. A responsible experiment should record:
+A responsible experiment should record:
 
 ```text
 code family and matrix
@@ -125,17 +129,17 @@ logical-observable results
 seed, environment, and raw artifact hash
 ```
 
-A threshold selected on one code family should not be described as a general decoder law.
+A threshold tuned on one code family should not be described as a general decoder law.
 
 ## 8. Where this fits in routing
 
-Ambiguity clustering is a useful middle path between a full BP-OSD solve and an unverified learned guess:
+Ambiguity clustering is a middle path between a full BP-OSD solve and an unverified learned guess:
 
 ```text
 BP reliabilities
       |
       v
-freeze reliable bits -> compute residual -> solve ambiguous components
+freeze reliable bits -> residual -> solve ambiguous components
       |
       v
 verify H @ correction == syndrome
@@ -144,11 +148,11 @@ verify H @ correction == syndrome
 score logical observables or escalate
 ```
 
-The routing layer may use a learned predecoder to choose weights or priors, but structural eligibility and syndrome verification remain deterministic. That separation also makes it possible to compare a learned configuration with an unlearned baseline without changing the correctness test.
+The routing layer may use a learned predecoder to choose weights or priors, but structural eligibility and syndrome verification stay deterministic. That separation lets a learned configuration be compared against an unlearned baseline without changing the correctness test.
 
 ## Takeaway
 
-Ambiguity clustering localizes uncertainty; it does not redefine correctness. Learned priors can make a decoder more informed, and exact local solves can reduce unnecessary global work, but both remain subordinate to the residual equation and the logical-coset metric. That is how to add AI to QEC without moving the proof goalposts.
+Ambiguity clustering localizes uncertainty; it does not redefine correctness. Learned priors can make a decoder more informed, and exact local solves can reduce unnecessary global work, but both stay subordinate to the residual equation and the logical-coset metric. That is how to add AI to QEC without moving the proof goalposts.
 
 ## Reference
 
