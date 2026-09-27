@@ -13,7 +13,7 @@ export default function TermsFR() {
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            Droit applicable : Québec, Canada · Dernière mise à jour : juin 2026
+            Droit applicable : Québec, Canada · Dernière mise à jour : septembre 2026
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Conditions générales" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -30,7 +30,7 @@ export default function TermsFR() {
               expect an identifiable seller and address before the first sale;
               omitting it is what turns a routine chargeback into a lost one. */}
           <div className="card-surface border-cyan-300/25">
-            <h2 className="text-xl font-bold mb-4">Chez qui vous achetez</h2>
+            <h2 className="text-xl font-bold mb-4">Votre vendeur</h2>
             <p className="text-secondary text-sm leading-relaxed mb-3">
               Le logiciel QECTOR et les licences commerciales sont vendus par{' '}
               <strong className="text-primary">Guillaume Lessard</strong>, entrepreneur individuel, exploitant sous le nom
@@ -44,7 +44,7 @@ export default function TermsFR() {
             <p className="text-secondary text-sm leading-relaxed">
               Tous les prix sont affichés et facturés en <strong className="text-primary">dollars américains (USD)</strong>, hors taxes.
               Stripe traite tous les paiements et ajoute la taxe de vente, la TPS/TVH ou la TVA applicable au paiement selon votre adresse
-              de facturation; les données de carte ne parviennent jamais aux systèmes de QECTOR. Les jetons de licence sont livrés instantanément par courriel et toutes les ventes
+              de facturation; les données de carte ne parviennent jamais aux systèmes de QECTOR. Les jetons de licence sont émis et envoyés par courriel dans les minutes suivant le paiement (généralement moins de 10 minutes) et toutes les ventes
               sont finales : voir la <a href="/refund" className="text-cyan-300 hover:underline">politique de remboursement</a>.
             </p>
           </div>
@@ -78,7 +78,17 @@ export default function TermsFR() {
             <h2 className="text-xl font-bold mb-4">Limitation de responsabilité</h2>
             <p className="text-secondary text-sm leading-relaxed">
               EN AUCUN CAS LES AUTEURS OU LES DÉTENTEURS DES DROITS D’AUTEUR NE SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DE TOUT DOMMAGE OU DE TOUTE AUTRE RESPONSABILITÉ,
-              QUE CE SOIT DANS LE CADRE D’UNE ACTION CONTRACTUELLE, DÉLICTUELLE OU AUTRE, DÉCOULANT DU LOGICIEL OU DE SON UTILISATION OU D’AUTRES RAPPORTS AVEC LE LOGICIEL, OU S’Y RAPPORTANT.
+              QUE CE SOIT DANS LE CADRE D’UNE ACTION CONTRACTUELLE, DÉLICTUELLE OU AUTRE, DÉCOULANT DU LOGICIEL OU DE SON UTILISATION OU D’AUTRES TRANSACTIONS LIÉES AU LOGICIEL.
+            </p>
+          </div>
+
+          <div className="card-surface">
+            <h2 className="text-xl font-bold mb-4">Résiliation</h2>
+            <p className="text-secondary text-sm leading-relaxed">
+              Nous pouvons suspendre ou résilier votre licence en cas de manquement grave (y compris le
+              non-respect des limites d’usage non commercial/commercial) après notification écrite et un
+              délai de correction de 15 jours. En cas de résiliation, vous devez cesser tout usage commercial
+              et supprimer les jetons ; aucun remboursement n’est dû pour la période écoulée.
             </p>
           </div>
 
@@ -86,7 +96,9 @@ export default function TermsFR() {
             <h2 className="text-xl font-bold mb-4">Droit applicable</h2>
             <p className="text-secondary text-sm leading-relaxed">
               Ces conditions sont régies et interprétées conformément aux lois du Québec, Canada.
-              Tout litige sera tranché devant les tribunaux de Montréal, Québec.
+              Tout litige sera tranché devant les tribunaux de Montréal, Québec. Si vous êtes un
+              consommateur de l’UE/Royaume-Uni, cette clause ne vous prive pas de la protection des
+              lois impératives de votre pays de résidence.
             </p>
           </div>
 
@@ -94,7 +106,10 @@ export default function TermsFR() {
             <h2 className="text-xl font-bold mb-4">Modifications des conditions</h2>
             <p className="text-secondary text-sm leading-relaxed">
               Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications prendront effet immédiatement après leur publication.
-              La poursuite de l’utilisation des services vaut acceptation des conditions modifiées.
+              La poursuite de l’utilisation des services vaut acceptation des conditions modifiées. Pour toute modification
+              substantielle affectant les licences payées, nous donnerons un préavis d’au moins 30 jours par courriel ;
+              les modifications s’appliquent aux renouvellements et aux nouveaux achats, sans effet rétroactif sur la
+              période payée en cours.
             </p>
           </div>
 

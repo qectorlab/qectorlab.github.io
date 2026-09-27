@@ -459,7 +459,17 @@ export default function QECSimulator() {
                   stroke="transparent"
                   strokeWidth="16"
                   className="cursor-pointer"
+                  tabIndex={0}
+                  role="checkbox"
+                  aria-checked={hasError}
+                  aria-label={`Toggle error on qubit edge ${edge.id}`}
                   onClick={() => handleEdgeClick(edge.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleEdgeClick(edge.id);
+                    }
+                  }}
                 />
                 {/* Main line */}
                 <line

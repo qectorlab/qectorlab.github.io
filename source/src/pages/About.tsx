@@ -13,6 +13,8 @@ export default function About() {
   const { version: pypiVersion } = usePyPIVersion();
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
     const sections = sectionsRef.current.filter(Boolean);
     sections.forEach((section) => {
@@ -73,7 +75,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             reproducible artifacts, and no speculative claims.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub Artifacts</a>
+            <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub Artifacts<span className="sr-only">(opens in new tab)</span></a>
             <Link to="/contact" className="btn-cyan">Contact</Link>
           </div>
         </div>
@@ -85,7 +87,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
           {/* Creator */}
           <div ref={(el) => addRef(el, 0)} className="card-surface">
-            <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Creator</h3>
+            <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Creator</h2>
             <p className="text-primary text-lg mb-3">
               <strong>Guillaume Lessard</strong>, software engineer and researcher based in Montreal / Longueuil, Québec, Canada.
             </p>
@@ -120,7 +122,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           {/* Two-column grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div ref={(el) => addRef(el, 1)} className="card-surface">
-                <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Research Background</h3>
+                <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Research Background</h2>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>CSS stabilizer codes: surface codes, LDPC, qLDPC</li>
                   <li>MWPM (Blossom), Belief-Matching, BP-OSD decoding</li>
@@ -131,7 +133,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </ul>
               </div>
               <div ref={(el) => addRef(el, 2)} className="card-surface">
-                <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Software Stack</h3>
+                <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Software Stack</h2>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>Rust / PyO3: core decoder engine</li>
                   <li>Python 3.9 to 3.13: API, CLI, benchmarking, simulation</li>
@@ -143,7 +145,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </ul>
               </div>
               <div ref={(el) => addRef(el, 3)} className="card-surface">
-                <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Engineering Philosophy</h3>
+                <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Engineering Philosophy</h2>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>Reproducibility first: public claims link to supporting artifacts where published</li>
                   <li>Honest documentation: Decoder is Source-Available (not free); Workbench GUI app is free</li>
@@ -154,7 +156,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </ul>
               </div>
               <div ref={(el) => addRef(el, 4)} className="card-surface">
-                <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Scope</h3>
+                <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">QECTOR Product Scope</h2>
                 <p className="text-xs text-secondary mb-2">This site and QECTOR Decoder v3 + Workbench constitute the high-performance decoder library and professional GUI.</p>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li><strong className="text-primary">QECTOR Decoder v3</strong>: Rust/Python multi-algorithm QEC decoder library (Source-Available)</li>
@@ -166,16 +168,16 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
             {/* Timeline */}
             <div ref={(el) => addRef(el, 5)} className="card-surface">
-              <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Project Timeline</h3>
+              <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Project Timeline</h2>
               <div className="space-y-4">
                  {[
                    { year: '2026-06-23', event: 'The public qectorlab.github.io repository was created.' },
                    { year: '2026-06-24', event: 'The qector-decoder repository was created and v0.5.0 / v0.5.1 were first recorded on PyPI.' },
-                   { year: '2026-06-24-07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
+                   { year: '2026-06-24 to 2026-07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
                    { year: '2026-08-02', event: 'QECTOR Decoder v3 v0.7.0 was published on PyPI.' },
                    { year: '2026-08-06', event: `QECTOR Decoder v3 v${pypiVersion || '1.0.0'} reached its first stable release, with the official reference manual (DOI 10.5281/zenodo.21941046).` },
-                   { year: '2026-08-11-09-04', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.7 releases for Windows and Linux (2026-09-04).' },
-                   { year: '2026-08-15-08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
+                   { year: '2026-08-11 to 2026-09-04', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.7 releases for Windows and Linux (2026-09-04).' },
+                   { year: '2026-08-15 to 2026-08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
                  ].map((item) => (
                 <div key={item.year} className="flex gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
                   <span className="text-cyan-300 font-mono text-sm min-w-[80px] pt-0.5">{item.year}</span>
@@ -187,7 +189,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
 
           {/* Transparency Statement */}
           <div ref={(el) => addRef(el, 6)} className="p-6 bg-green-400/5 border border-green-400/20 rounded-2xl">
-            <h3 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h3>
+            <h2 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h2>
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
                No hardware-specific measurement figures are published on this site, because results depend on your hardware. The decoder reached its first stable release on 2026-08-06 (v1.0.0).

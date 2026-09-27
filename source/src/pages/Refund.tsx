@@ -18,7 +18,7 @@ export default function Refund() {
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            All prices in USD · Instant digital delivery · Last updated August 2026
+            All prices in USD · Instant digital delivery · Last updated September 2026
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Refund Policy" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -35,7 +35,7 @@ export default function Refund() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">All sales are final</h2>
             <p className="text-secondary text-sm leading-relaxed mb-3">
-              Every commercial license is an Ed25519-signed token issued and emailed within minutes of successful payment.
+              Every commercial license is an Ed25519-signed token issued and emailed within minutes of successful payment (usually under 10 minutes).
               Because the licensed rights and the token are delivered in full and immediately, and cannot be returned or
               revoked once received, commercial licenses are <strong className="text-primary">non-refundable</strong>.
               This applies to the Commercial Evaluation License, all annual tiers, and the perpetual license.
@@ -70,7 +70,7 @@ export default function Refund() {
               Stripe invoice number and we will reissue or correct it, at no cost and with no expiry on that obligation.
             </p>
             <p className="text-secondary text-sm leading-relaxed">
-              Tokens usually arrive in under 10 minutes. If it has been longer, check your spam folder first: automated
+              Tokens are issued and emailed within minutes of successful payment (usually under 10 minutes). If it has been longer, check your spam folder first: automated
               license mail is a common false positive.
             </p>
           </div>

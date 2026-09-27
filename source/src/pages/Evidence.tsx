@@ -38,6 +38,8 @@ export default function Evidence() {
   const [selectedStatus, setSelectedStatus] = useState('All');
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
@@ -117,6 +119,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             {['All', 'Verified', 'Methodology'].map((status) => (
               <button
                 key={status}
+                aria-pressed={selectedStatus === status}
                 onClick={() => setSelectedStatus(status)}
                 className={`px-4 py-2 text-xs font-semibold rounded-lg border transition-all duration-300 ${
                   selectedStatus === status
@@ -154,7 +157,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               </p>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse">
+              <table className="w-full min-w-[640px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
                     <th className="py-3 px-3">DOI</th>
@@ -198,7 +201,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <p className="text-muted-foreground text-xs leading-relaxed">
               Document deposits carry their own document-level publication licence; software licensing
               (PolyForm Noncommercial / commercial) is separate and governed by the{' '}
-              <Link to="/license" className="text-cyan-300 hover:underline">licence page</Link>. The embargoed record is
+              <Link to="/license" className="text-cyan-300 hover:underline">license page</Link>. The embargoed record is
               restricted source custody and is not part of the public evidence set.
             </p>
           </div>

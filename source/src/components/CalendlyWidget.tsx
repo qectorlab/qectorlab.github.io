@@ -71,6 +71,8 @@ export default function CalendlyWidget({
       className="calendly-inline-widget rounded-xl overflow-hidden border border-gridline"
       style={{ minWidth, height }}
       data-url={url}
+      role="region"
+      aria-label="Schedule a meeting"
     />
   );
 }

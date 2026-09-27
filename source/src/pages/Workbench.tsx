@@ -18,6 +18,8 @@ export default function Workbench() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
       sectionsRef.current.filter(Boolean).forEach((section) => {
         gsap.fromTo(
@@ -293,7 +295,7 @@ export default function Workbench() {
             </p>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse">
+              <table className="w-full min-w-[640px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
                     <th className="py-3 px-3">Decoder Kind</th>
@@ -359,7 +361,7 @@ export default function Workbench() {
                 },
                 {
                   name: 'Lab & Personal Info',
-                  desc: 'Deposit profile (author, ORCID, affiliation, DOI, funding, keywords) for generated reports, plus decoder licence-key installation with a live tier readout.',
+                  desc: 'Deposit profile (author, ORCID, affiliation, DOI, funding, keywords) for generated reports, plus decoder license-key installation with a live tier readout.',
                 },
                 {
                   name: 'Documentation Export',

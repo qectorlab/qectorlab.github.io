@@ -18,6 +18,8 @@ export default function PricingFR() {
     script.async = true;
     document.body.appendChild(script);
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
       // Stagger animate all sections
        sectionsRef.current.filter(Boolean).forEach((section) => {
@@ -72,7 +74,7 @@ export default function PricingFR() {
 
         {/* 1. THE EVALUATION BANNER (Most important entry point) */}
         <div ref={(el) => addRef(el, 0)} id="evaluation" className="scroll-mt-32">
-          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 animate-gradient-xy">
+          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-gold-400 animate-gradient-xy">
             <div className="bg-void/90 backdrop-blur-xl rounded-[23px] p-8 md:p-12 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-left">
                 <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
@@ -84,13 +86,13 @@ export default function PricingFR() {
                   Inclut le décodage batch CPU + CUDA, un contrat de licence écrit, un lot d’artefacts de référence et un support prioritaire.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Crédit de 100 % vers une licence annuelle</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Crédit de 100 % vers une licence annuelle achetée dans les 90 jours suivant le début de votre évaluation</div>
                   <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Sièges internes illimités</div>
                 </div>
               </div>
 
               <div className="w-full md:w-auto flex flex-col items-center">
-                <div className="text-4xl font-black text-white mb-1">$499</div>
+                <div className="text-4xl font-black text-white mb-1">499 $</div>
                 <div className="text-secondary text-sm mb-6">Frais uniques</div>
                 <a
                   href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
@@ -113,38 +115,38 @@ export default function PricingFR() {
               Pour les équipes qui déploient QECTOR en interne ou l’intègrent à une infrastructure SaaS privée.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> 40 % de rabais académique disponible sur tous les paliers annuels. Contactez les ventes.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> 40 % de rabais académique disponible sur tous les paliers annuels. Contactez notre équipe commerciale.
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <PricingTierCard
               name="Solo / Indie"
-              price="$1,299"
+              price="1 299 $"
               period="/ an"
               desc="Droits de production pour un seul utilisateur nommé."
               features={['Tous les décodeurs v3', 'Droits commerciaux de R&D', 'Un seul utilisateur nommé', 'Support courriel prioritaire']}
-              ctaLabel="S’abonner"
+              ctaLabel="Acheter"
               ctaHref="https://buy.stripe.com/cNi9AV63TfkubbY87UeUU09"
             />
             <PricingTierCard
               name="Startup / Growth"
-              price="$4,499"
+              price="4 499 $"
               period="/ an"
               desc="Jusqu’à 10 utilisateurs nommés. Flux BP-OSD/LDPC avancés."
               featured
               featuredLabel="Le plus populaire"
               features={['Jusqu’à 10 utilisateurs nommés', 'BP-OSD/LDPC avancé', 'Batch CPU + CUDA', 'SLA de support + intégration 2 h']}
-              ctaLabel="S’abonner"
+              ctaLabel="Acheter"
               ctaHref="https://buy.stripe.com/14A5kF4ZP5JU7ZMdseeUU0c"
             />
             <PricingTierCard
               name="Professional"
-              price="$11,500"
+              price="11 500 $"
               period="/ an"
               desc="Jusqu’à 25 utilisateurs nommés. Crédit pour le lot de rapports de validation."
               features={['Jusqu’à 25 utilisateurs nommés', 'Tous les flux avancés', 'Intégration dédiée', 'Crédit rapport de validation']}
-              ctaLabel="S’abonner"
+              ctaLabel="Acheter"
               ctaHref="https://buy.stripe.com/28EeVf1ND0pA6VIewieUU0d"
             />
             <PricingTierCard
@@ -154,7 +156,7 @@ export default function PricingFR() {
               desc="Sièges illimités, versions personnalisées et distribution SaaS/OEM."
               accent="gold"
               features={['Qubits logiques illimités', 'Droits d’hébergement SaaS', 'Droits de regroupement OEM', 'Ingénieur de support dédié']}
-              ctaLabel="Contacter les ventes"
+              ctaLabel="Contacter l’équipe commerciale"
               ctaHref="/contact"
             />
           </div>
@@ -163,7 +165,7 @@ export default function PricingFR() {
           <div className="mt-8 text-center">
             <p className="text-sm text-secondary">
               Vous préférez l’acheter définitivement ? <strong className="text-cyan-300">Solo / Indie Perpétuelle à 3 299 $ paiement unique.</strong>{' '}
-               <Link to="/contact" className="text-cyan-400 hover:underline">Contactez les ventes pour l’activer</Link>
+               <Link to="/contact" className="text-cyan-400 hover:underline">Contactez notre équipe commerciale pour l’activer</Link>
             </p>
           </div>
         </div>
@@ -172,7 +174,7 @@ export default function PricingFR() {
         <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="card-surface border-gold-400/20 bg-gold-400/5">
             <h3 className="text-2xl font-bold text-gold-400 mb-2">QECTOR Validation Sprint</h3>
-            <p className="text-sm text-gold-200/60 mb-4">$3,750 paiement unique · Livraison en 10-20 jours</p>
+            <p className="text-sm text-gold-200/60 mb-4">3 750 $ paiement unique · Livraison en 10-20 jours</p>
             <p className="text-secondary text-sm mb-6">
               La voie rapide recommandée pour les équipes qui veulent une preuve immédiate et défendable de la valeur sur leur flux de travail.
               Nous exécutons jusqu’à 3 charges de référence standard avec QECTOR et livrons des lots d’artefacts reproductibles.
@@ -182,7 +184,7 @@ export default function PricingFR() {
               <li className="flex gap-2"><span className="text-gold-400">✓</span> Analyse comparative vs PyMatching/Stim</li>
               <li className="flex gap-2"><span className="text-gold-400">✓</span> Appel de révision des résultats de 60 minutes</li>
             </ul>
-            <Link to="/contact" className="btn-gold block text-center">Demander un Validation Sprint</Link>
+            <Link to="/contact" className="btn-gold block text-center">Demander un sprint de validation</Link>
           </div>
 
           <div className="card-surface bg-surface border-gridline">
@@ -262,7 +264,7 @@ export QECTOR_SILENT=1`}
         {/* 6. FINE PRINT & PROCUREMENT */}
         <div ref={(el) => addRef(el, 5)} className="border-t border-gridline/40 pt-12 text-center text-xs text-muted-foreground max-w-3xl mx-auto space-y-4">
           <p>
-            <strong>Ce qui n’est pas inclus :</strong> sauf mention explicite, aucun palier n’inclut la redistribution, l’OEM, l’hébergement SaaS ni les droits de sous-licence. Contactez les ventes pour des conditions sur mesure.
+            <strong>Ce qui n’est pas inclus :</strong> sauf mention explicite, aucun palier n’inclut la redistribution, l’OEM, l’hébergement SaaS ni les droits de sous-licence. Contactez notre équipe commerciale pour des conditions sur mesure.
           </p>
           <p>
             <strong>Approvisionnement :</strong> tous les prix sont en USD et hors taxes. Stripe gère les taxes locales automatiquement. Les jetons sont livrés instantanément par courriel. En raison de la livraison instantanée, les ventes sont finales. Utilisez l’évaluation à 499 $ pour tester l’adéquation avant un engagement annuel.

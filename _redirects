@@ -1,2 +1,3 @@
+# Syntaxe Netlify : ignoree par GitHub Pages (la page 404 est servie par 404.html).
 /license /license/ 301!
 /* /index.html 200

@@ -13,7 +13,7 @@ export default function Terms() {
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            Governing Law: Québec, Canada · Last updated June 2026
+            Governing Law: Québec, Canada · Last updated September 2026
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Terms of Service" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -44,7 +44,7 @@ export default function Terms() {
             <p className="text-secondary text-sm leading-relaxed">
               All prices are quoted and charged in <strong className="text-primary">US dollars (USD)</strong>, exclusive of tax.
               Stripe processes all payments and adds applicable sales tax, GST/HST, or VAT at checkout based on your billing
-              location; card details never reach QECTOR systems. License tokens are delivered instantly by email and all sales
+              location; card details never reach QECTOR systems. License tokens are issued and emailed within minutes of successful payment (usually under 10 minutes) and all sales
               are final: see the <a href="/refund" className="text-cyan-300 hover:underline">Refund Policy</a>.
             </p>
           </div>
@@ -70,7 +70,7 @@ export default function Terms() {
             <h2 className="text-xl font-bold mb-4">Disclaimer of Warranties</h2>
             <p className="text-secondary text-sm leading-relaxed">
               THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-              TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. QECTOR Decoder v3 is Source Available (PolyForm Noncommercial for community / research use; commercial license required for commercial use). It is simulation-validated software, not a production fault-tolerance stack.
+              TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. QECTOR Decoder v3 is source available (PolyForm Noncommercial for community / research use; commercial license required for commercial use). It is simulation-validated software, not a production fault-tolerance stack.
             </p>
           </div>
 
@@ -84,10 +84,21 @@ export default function Terms() {
           </div>
 
           <div className="card-surface">
+            <h2 className="text-xl font-bold mb-4">Termination</h2>
+            <p className="text-secondary text-sm leading-relaxed">
+              We may suspend or terminate your license for material breach (including breach of the
+              non-commercial/commercial use boundaries) after written notice and a 15-day cure period.
+              On termination, you must stop commercial use and delete tokens; no refund is due for
+              the elapsed term.
+            </p>
+          </div>
+
+          <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Governing Law</h2>
             <p className="text-secondary text-sm leading-relaxed">
               These terms shall be governed by and construed in accordance with the laws of Québec, Canada.
-              Any disputes shall be resolved in the courts of Montréal, Québec.
+              Any disputes shall be resolved in the courts of Montréal, Québec. If you are an EU/UK consumer,
+              this does not deprive you of the protection of the mandatory laws of your country of residence.
             </p>
           </div>
 
@@ -95,7 +106,9 @@ export default function Terms() {
             <h2 className="text-xl font-bold mb-4">Changes to Terms</h2>
             <p className="text-secondary text-sm leading-relaxed">
               We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting.
-              Continued use of the services constitutes acceptance of the modified terms.
+              Continued use of the services constitutes acceptance of the modified terms. For material changes affecting
+              paid licenses, we will give at least 30 days notice by email; changes apply to renewals and new purchases,
+              not retroactively to the current paid term.
             </p>
           </div>
 

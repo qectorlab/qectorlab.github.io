@@ -22,7 +22,7 @@ export default function NeuralReveal({
   const [displayChars, setDisplayChars] = useState<string[]>(text.split(''));
   const [resolved, setResolved] = useState<boolean[]>(text.split('').map(() => true));
   const startedRef = useRef(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLSpanElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   
@@ -134,8 +134,11 @@ export default function NeuralReveal({
     };
   }, [triggerOnView, startAnimation]);
 
+  // Phrasing content only inside: a <span> container keeps this valid when
+  // nested in headings like <h1> (a <div> there is invalid HTML).
+  // inline-block preserves the scramble layout.
   return (
-    <div ref={containerRef} className={`inline-block ${className}`}>
+    <span ref={containerRef} className={`inline-block ${className}`}>
       <Tag className="font-mono" aria-label={text}>
         <span aria-hidden="true">
           {text.split(' ').map((word, wordIndex, wordsArr) => {
@@ -166,6 +169,6 @@ export default function NeuralReveal({
           })}
         </span>
       </Tag>
-    </div>
+    </span>
   );
 }

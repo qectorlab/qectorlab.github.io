@@ -184,7 +184,7 @@ export default function BlogPost() {
             {loading ? (
               <div className="flex flex-col items-center justify-center py-20 text-slate-400">
                 <Loader2 size={48} className="animate-spin text-emerald-500 mb-4" />
-                <p className="animate-pulse">Decrypting content...</p>
+                <p className="animate-pulse">Loading article...</p>
               </div>
             ) : error ? (
               <div className="py-20 text-center text-red-400">
@@ -197,8 +197,27 @@ export default function BlogPost() {
                   rehypePlugins={[rehypeKatex, rehypeRaw]}
                   components={{
                     ...headingComponents,
+                    table: (props) => {
+                      const { node: _node, ...rest } = props;
+                      return (
+                        <div className="overflow-x-auto">
+                          <table {...rest} />
+                        </div>
+                      );
+                    },
                     img: (props) => {
-                      return <img {...props} className="rounded-xl border border-slate-800 shadow-xl" loading="lazy" />;
+                      const sized = props.width != null && props.height != null;
+                      return (
+                        <img
+                          {...props}
+                          className={
+                            sized
+                              ? 'rounded-xl border border-slate-800 shadow-xl'
+                              : 'rounded-xl border border-slate-800 shadow-xl aspect-video object-cover'
+                          }
+                          loading="lazy"
+                        />
+                      );
                     },
                   }}
                 >

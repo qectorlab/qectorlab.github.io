@@ -18,6 +18,8 @@ export default function Pricing() {
     script.async = true;
     document.body.appendChild(script);
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
       // Stagger animate all sections
        sectionsRef.current.filter(Boolean).forEach((section) => {
@@ -83,7 +85,7 @@ export default function Pricing() {
 
         {/* 1. THE EVALUATION BANNER (Most important entry point) */}
         <div ref={(el) => addRef(el, 0)} id="evaluation" className="scroll-mt-32">
-          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 animate-gradient-xy">
+          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-gold-400 animate-gradient-xy">
             <div className="bg-void/90 backdrop-blur-xl rounded-[23px] p-8 md:p-12 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-left">
                 <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
@@ -95,7 +97,7 @@ export default function Pricing() {
                   Includes CPU + CUDA batch decoding, written license agreement, benchmark artifact package, and priority support.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> 100% creditable toward annual license</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> 100% creditable toward any annual license purchased within 90 days of your evaluation start</div>
                   <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Unlimited internal seats</div>
                 </div>
               </div>
@@ -135,7 +137,7 @@ export default function Pricing() {
               period="/ year"
               desc="Production rights for a single named user."
               features={['Full v3 decoders', 'Commercial R&D rights', 'Single named user', 'Priority email support']}
-              ctaLabel="Subscribe Now"
+              ctaLabel="Buy Now"
               ctaHref="https://buy.stripe.com/cNi9AV63TfkubbY87UeUU09"
             />
             <PricingTierCard
@@ -146,7 +148,7 @@ export default function Pricing() {
               featured
               featuredLabel="Most Popular"
               features={['Up to 10 named users', 'Advanced BP-OSD/LDPC', 'CPU + CUDA batch', 'Support SLA + 2hr integration']}
-              ctaLabel="Subscribe Now"
+              ctaLabel="Buy Now"
               ctaHref="https://buy.stripe.com/14A5kF4ZP5JU7ZMdseeUU0c"
             />
             <PricingTierCard
@@ -155,7 +157,7 @@ export default function Pricing() {
               period="/ year"
               desc="Up to 25 named users. Validation Report Package credit."
               features={['Up to 25 named users', 'All advanced workflows', 'Dedicated integration', 'Validation Report credit']}
-              ctaLabel="Subscribe Now"
+              ctaLabel="Buy Now"
               ctaHref="https://buy.stripe.com/28EeVf1ND0pA6VIewieUU0d"
             />
             <PricingTierCard

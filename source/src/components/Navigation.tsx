@@ -75,6 +75,7 @@ export default function Navigation() {
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl transition-all duration-500 ease-out ${
           hidden && !isOpen ? '-translate-y-[140%]' : 'translate-y-0'
         }`}
+        inert={hidden && !isOpen}
       >
         <div
           className={`glass-nav rounded-2xl px-4 sm:px-6 py-3 transition-all duration-300 ${
@@ -87,7 +88,7 @@ export default function Navigation() {
               to="/"
               className="flex items-center gap-2.5 text-cyan-300 hover:text-cyan-100 transition-colors"
             >
-              <img src="/images/logo.png" alt="QECTOR official logo" width="48" height="48" className="h-9 w-9 rounded-lg object-cover" />
+              <img src="/images/logo.png" alt="QECTOR official logo" width="36" height="36" className="h-9 w-9 rounded-lg object-cover" />
             </Link>
 
             {/* Desktop Links */}
@@ -119,7 +120,7 @@ export default function Navigation() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="lg:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-white/5 transition-colors"
-                aria-label="Toggle menu"
+                aria-label={location.pathname.startsWith('/fr/') ? (isOpen ? 'Fermer le menu' : 'Ouvrir le menu') : (isOpen ? 'Close menu' : 'Open menu')}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >
@@ -134,8 +135,9 @@ export default function Navigation() {
         {/* Mobile Menu */}
         <div
           id="mobile-menu"
+          aria-hidden={!isOpen}
           className={`lg:hidden mt-2 glass-nav rounded-2xl overflow-hidden transition-all duration-300 ${
-            isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+            isOpen ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'
           }`}
         >
           <div className="px-4 py-3 space-y-1">

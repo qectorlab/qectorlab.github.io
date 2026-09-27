@@ -279,7 +279,7 @@ export default function McpServer() {
             <p className="text-secondary text-sm leading-relaxed mb-4">
               Nine code families (graphlike eligible where marked; non-graphlike inputs route to
               BP-OSD or require <code className="text-cyan-300"> build_code_from_matrix </code>)
-              and five stable decoders. No universal benchmark figures are published on the site -
+              and five stable decoders. No universal benchmark figures are published on the site;
               run the shipped harness to measure your own hardware.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -291,7 +291,7 @@ export default function McpServer() {
               ))}
             </div>
             <div className="mt-4 overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse">
+              <table className="w-full min-w-[640px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
                     <th className="py-2 px-3">Decoder</th>
@@ -332,7 +332,7 @@ export default function McpServer() {
             <h2 className="text-2xl font-bold mb-4">Operational guidance</h2>
             <ul className="space-y-3 text-secondary text-sm leading-relaxed">
               <li>
-                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review - they are not part of this public library contract.
+                <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review; they are not part of this public library contract.
               </li>
               <li>
                 <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation ≤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.

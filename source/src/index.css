@@ -58,13 +58,6 @@
     text-wrap: balance;
   }
 
-  /* Visible keyboard focus everywhere: consistent, on-brand, accessible */
-  :focus-visible {
-    outline: 2px solid rgba(103, 232, 249, 0.7);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
   code {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
@@ -92,6 +85,21 @@
   /* Glassmorphism Cards */
   .card-surface {
     @apply bg-[#0b1329]/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 transition-all duration-500 hover:border-cyan-300/30 hover:shadow-[0_0_30px_rgba(103,232,249,0.12)];
+  }
+
+  /* Reveal-on-scroll (class-based, added by an IntersectionObserver in
+     Layout.tsx). Hidden until revealed; no JS animation library needed. */
+  .card-surface:not(.revealed),
+  .prose:not(.revealed) {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .card-surface.revealed,
+  .prose.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity .7s ease-out, transform .7s ease-out;
   }
 
   .section-padding {
@@ -173,5 +181,22 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Never leave reveal-on-scroll targets hidden for reduced-motion users,
+     even if the 'revealed' class was not added in time. */
+  .card-surface,
+  .prose {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Windows High Contrast / forced-colors: gradient text (bg-clip-text +
+   text-transparent) becomes invisible. Force a readable system color. */
+@media (forced-colors: active) {
+  .text-gradient-cyan,
+  .text-gradient-gold {
+    color: CanvasText !important;
   }
 }

@@ -35,7 +35,7 @@ correction = decoder.decode(syndrome)`
     {
       name: 'BeliefMatchingDecoder',
       signature: 'BeliefMatchingDecoder(dem: stim.DetectorErrorModel, *, bp_iters: int = 30, max_paths: int = 10, bp_method: str = "product_sum")',
-      desc: 'Accuracy-oriented decoder. Uses Belief Propagation (BP) preprocessing to compute edge probabilities, and then matches on a reweighted Blossom matching graph. Use when accuracy matters more than latency.',
+      desc: 'Accuracy-oriented decoder. Uses Belief Propagation (BP) preprocessing to compute edge probabilities, and then runs matching on a reweighted Blossom graph. Use when accuracy matters more than latency.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'bp_iters', type: 'int', default: '30', desc: 'Max iterations for Belief Propagation' },
@@ -62,7 +62,7 @@ correction = decoder.decode(syndrome)`
     {
       name: 'UnionFindDecoder',
       signature: 'UnionFindDecoder(dem: stim.DetectorErrorModel, *, use_combined: bool = True)',
-      desc: 'Near-linear time approximate decoder. Resolves syndromes by cluster growth and path compression. Scaling is O(N) making it ideal for large distance offline simulations.',
+      desc: 'Near-linear time approximate decoder. Resolves syndromes by cluster growth and path compression. Scaling is O(N), making it ideal for large distance offline simulations.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'use_combined', type: 'bool', default: 'True', desc: 'Enable combined cluster growth constraints' },
@@ -74,7 +74,7 @@ correction = decoder.decode(syndrome)`
     {
       name: 'CPUBatchDecoder',
       signature: 'CPUBatchDecoder(dem: stim.DetectorErrorModel, *, num_threads: int = 0)',
-      desc: 'Multi-threaded CPU batch decoder. Leverages Rayon parallelism across CPU cores to decode thousands of syndromes concurrently .',
+      desc: 'Multi-threaded CPU batch decoder. Leverages Rayon parallelism across CPU cores to decode thousands of syndromes concurrently.',
       parameters: [
         { name: 'dem', type: 'stim.DetectorErrorModel', default: 'Required', desc: 'Detector error model of the circuit' },
         { name: 'num_threads', type: 'int', default: '0', desc: 'Number of worker threads (0 = auto-detect physical cores)' },
@@ -217,6 +217,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
   };
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (expandedClass && detailsRef.current) {
       gsap.fromTo(
         detailsRef.current,
@@ -238,7 +239,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
-            10 Decoder APIs · Stim DEM · Signatures Are Examples
+            16 Decoder APIs · Stim DEM · Signatures Are Examples
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Technical Reference" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -258,7 +259,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
               placeholder="Search decoders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-10 py-3 bg-surface/50 border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors"
+              className="w-full px-10 py-3 bg-surface/50 border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors"
             />
             <Search className="w-5 h-5 text-muted-foreground absolute left-3 top-3.5" />
           </div>
@@ -274,6 +275,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
                 {filteredClasses.map((item) => (
                   <button
                     key={item.name}
+                    aria-expanded={expandedClass === item.name}
                     onClick={() => toggleClass(item.name)}
                     className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-sm transition-all duration-200 ${
                       expandedClass === item.name
@@ -326,7 +328,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
                           Parameters
                         </div>
                         <div className="overflow-x-auto border border-gridline rounded-xl">
-                          <table className="w-full border-collapse text-left text-sm">
+                          <table className="w-full min-w-[640px] border-collapse text-left text-sm">
                             <thead>
                               <tr className="bg-surface/50 border-b border-gridline text-cyan-300 text-xs font-semibold uppercase tracking-wider">
                                 <th className="p-3">Name</th>

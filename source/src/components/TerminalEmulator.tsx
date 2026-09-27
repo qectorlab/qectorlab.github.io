@@ -139,7 +139,7 @@ export default function TerminalEmulator() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isExecuting}
-          className="flex-1 bg-transparent border-none outline-none font-mono text-xs text-cyan-300 px-2 py-1 placeholder-cyan-300/30"
+          className="flex-1 bg-transparent border-none outline-none font-mono text-xs text-cyan-300 px-2 py-1 placeholder-cyan-300/60 focus-visible:ring-2 focus-visible:ring-cyan-300"
           placeholder='Type a command (e.g. "help", "pip install qector-decoder-v3")...'
           aria-label="Terminal input"
         />

@@ -32,12 +32,12 @@ export default function CodeBlock({ code, language = 'python', filename, classNa
         </div>
       )}
       <div className="relative group">
-        <pre className="p-4 overflow-x-auto font-mono text-sm leading-relaxed text-secondary bg-void/30 max-h-[400px]">
+        <pre className="p-4 overflow-x-auto overflow-y-auto font-mono text-sm leading-relaxed text-secondary bg-void/30 max-h-[400px]">
           <code className={`language-${language}`}>{code}</code>
         </pre>
         <button
           onClick={handleCopy}
-          className="absolute top-3 right-3 p-1.5 bg-surface border border-gridline rounded-lg text-secondary hover:text-cyan-300 hover:border-cyan-300/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
+          className="absolute top-3 right-3 p-1.5 bg-surface border border-gridline rounded-lg text-secondary hover:text-cyan-300 hover:border-cyan-300/30 opacity-0 group-hover:opacity-100 focus:opacity-100 max-sm:opacity-100 transition-all duration-200"
           aria-label={copied ? 'Copied' : 'Copy code'}
         >
           {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}

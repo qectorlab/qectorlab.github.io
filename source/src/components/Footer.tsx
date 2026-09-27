@@ -3,7 +3,7 @@ import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 interface LinkItem {
   label: string;
-  href: string;
+  href?: string;
   external?: boolean;
   badge?: string;
 }
@@ -28,7 +28,7 @@ const researchLinks: LinkItem[] = [
 const companyLinks: LinkItem[] = [
   { label: 'About QECTOR', href: '/about' },
   { label: 'Guillaume Lessard (Founder)', href: '/guillaume-lessard' },
-  { label: 'iD01t Productions', href: 'https://id01t.store/', external: true },
+  { label: 'iD01t Productions' },
   { label: 'Commercial Licensing', href: '/commercial' },
   { label: 'Contact Engineering', href: '/contact' },
   { label: 'EULA & License', href: '/license' },
@@ -37,9 +37,9 @@ const companyLinks: LinkItem[] = [
   { label: 'Refund Policy', href: '/refund' },
 ];
 
-function FooterLink({ href, external, badge, children }: { href: string; external?: boolean; badge?: string; children: React.ReactNode }) {
+function FooterLink({ href, external, badge, children }: { href?: string; external?: boolean; badge?: string; children: React.ReactNode }) {
   const classes = 'group flex items-center justify-between text-secondary hover:text-cyan-300 text-sm transition-colors duration-200 py-0.5';
-  
+
   const content = (
     <>
       <span className="group-hover:translate-x-0.5 transition-transform duration-200">{children}</span>
@@ -51,10 +51,16 @@ function FooterLink({ href, external, badge, children }: { href: string; externa
     </>
   );
 
+  if (!href) {
+    // Plain text item: no link, no navigation.
+    return <span className={classes}>{content}</span>;
+  }
+
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
         {content}
+        <span className="sr-only">(opens in new tab)</span>
       </a>
     );
   }
@@ -80,29 +86,32 @@ export default function Footer() {
             {/* Column 1 & 2: Brand Header */}
             <div className="lg:col-span-2 space-y-6">
               <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors">
-                <img src="/images/logo.png" alt="QECTOR official logo" width="48" height="48" className="h-10 w-10 rounded-lg object-cover" />
+                <img src="/images/logo.png" alt="QECTOR official logo" width="40" height="40" className="h-10 w-10 rounded-lg object-cover" />
               </Link>
 
               <p className="text-secondary/80 text-sm leading-relaxed max-w-sm">
-                Production-grade → Quantum error correction decoding for Python. Built by Guillaume Lessard at iD01t Productions.
+                Quantum error correction decoding for Python. Built by Guillaume Lessard at iD01t Productions.
               </p>
 
               <div className="flex items-center gap-4 pt-2">
                 <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors" aria-label="PyPI">
                   <span className="text-sm font-mono border border-gridline rounded px-2 py-1 hover:border-cyan-300/30">v{pypiVersion}</span>
+                  <span className="sr-only">(opens in new tab)</span>
                 </a>
                 <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="GitHub">
                   GitHub
+                  <span className="sr-only">(opens in new tab)</span>
                 </a>
                 <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-cyan-300 transition-colors text-sm font-medium" aria-label="ORCID">
                   ORCID
+                  <span className="sr-only">(opens in new tab)</span>
                 </a>
               </div>
             </div>
 
             {/* Column 3: Platform */}
             <div className="space-y-5">
-              <h4 className="text-white font-semibold text-sm tracking-wide">Platform</h4>
+              <h2 className="text-white font-semibold text-sm tracking-wide">Platform</h2>
               <div className="flex flex-col gap-3">
                 {platformLinks.map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
@@ -114,7 +123,7 @@ export default function Footer() {
 
             {/* Column 4: Research */}
             <div className="space-y-5">
-              <h4 className="text-white font-semibold text-sm tracking-wide">Research &amp; Docs</h4>
+              <h2 className="text-white font-semibold text-sm tracking-wide">Research &amp; Docs</h2>
               <div className="flex flex-col gap-3">
                 {researchLinks.map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
@@ -126,7 +135,7 @@ export default function Footer() {
 
             {/* Column 5: Company */}
             <div className="space-y-5">
-              <h4 className="text-white font-semibold text-sm tracking-wide">Company</h4>
+              <h2 className="text-white font-semibold text-sm tracking-wide">Company</h2>
               <div className="flex flex-col gap-3">
                 {/* Omit legal links from this column, keep only company links */}
                 {companyLinks.slice(0, 5).map((link) => (
@@ -149,7 +158,7 @@ export default function Footer() {
               <Link to="/terms" className="hover:text-cyan-300 transition-colors">Terms</Link>
               <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund</Link>
                <Link to="/license" className="hover:text-cyan-300 transition-colors">License</Link>
-              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security</a>
+              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Security<span className="sr-only">(opens in new tab)</span></a>
             </div>
           </div>
         </div>
@@ -160,6 +169,9 @@ export default function Footer() {
         <div className="section-padding py-4">
           <div className="max-w-7xl mx-auto text-xs text-muted-foreground/70 text-center md:text-left">
             &copy; 2026 QECTOR Lab / iD01t Productions. All rights reserved.
+            <div className="mt-1">
+              Éditeur : Guillaume Lessard, entrepreneur individuel (iD01t Productions), 2004 De Lorimier, Longueuil, QC J4K 3H7, Canada · admin@qector.store
+            </div>
           </div>
         </div>
       </div>

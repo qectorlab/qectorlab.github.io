@@ -72,7 +72,7 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR ships as pre-compiled binary wheels on PyPI. Installing requires python and pip.
+              QECTOR ships as pre-compiled binary wheels on PyPI. Installing requires Python and pip.
             </p>
 
             <div>
@@ -159,7 +159,7 @@ print("Syndrome-faithful correction")`}
             </p>
 
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gridline text-left text-sm rounded-xl overflow-hidden">
+              <table className="w-full min-w-[640px] border-collapse border border-gridline text-left text-sm rounded-xl overflow-hidden">
                 <thead>
                   <tr className="bg-surface/50 border-b border-gridline text-cyan-300 font-semibold">
                     <th className="p-3">Decoder</th>
@@ -269,7 +269,7 @@ print("Syndrome-faithful correction")`}
               <div className="border border-gridline bg-void/30 rounded-xl overflow-hidden divide-y divide-gridline text-sm">
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">bp_iters</span>
-                  <span className="text-secondary text-xs flex-1">`int` (Default: `30`). Maximum number of belief propagation iterations. Higher Iterations improve syndrome accuracy.</span>
+                  <span className="text-secondary text-xs flex-1">`int` (Default: `30`). Maximum number of belief propagation iterations. Higher iterations improve syndrome accuracy.</span>
                 </div>
                 <div className="p-3 flex justify-between gap-4">
                   <span className="font-mono text-primary min-w-[120px]">max_paths</span>
@@ -370,7 +370,7 @@ print("Syndrome-faithful correction")`}
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Platforms</span><span className="text-primary">Linux x86_64 (manylinux), Windows x64, macOS arm64</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">License</span><span className="text-primary">Source-available (Free academic / non-commercial)</span></div>
                 <div className="p-2.5 border-b border-gridline flex justify-between"><span className="text-muted-foreground">Startup Notice</span><span className="text-primary font-mono">Suppressed with QECTOR_SILENT=1</span></div>
-                <div className="p-2.5 flex justify-between"><span className="text-muted-foreground">Licence Env</span><span className="text-primary font-mono">QECTOR_LICENSE + QECTOR_LICENSE_KEY (Ed25519 token)</span></div>
+                <div className="p-2.5 flex justify-between"><span className="text-muted-foreground">License Env</span><span className="text-primary font-mono">QECTOR_LICENSE + QECTOR_LICENSE_KEY (Ed25519 token)</span></div>
               </div>
             </div>
 
@@ -487,7 +487,7 @@ print("Syndrome-faithful correction")`}
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-6">
-             15 Backend Families · GPU Batch · Stim · Sinter · Qiskit
+             15 backend families powering 17 decoder configurations · GPU Batch · Stim · Sinter · Qiskit
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="User Manual" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">

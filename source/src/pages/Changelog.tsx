@@ -42,13 +42,13 @@ export default function Changelog() {
               }
               items={[
                 'First stable (v1) release: semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental / Internal detail)',
-                'Ecosystem entry points: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered: sinter.collect() works without custom_decoders=',
+                'Ecosystem entry points: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered; sinter.collect() works without custom_decoders=',
                 'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in method="cluster_bposd")',
                 'Relay-BP layered serial BP schedule (bp_method="relay"), CS-OSD(lambda, w) with configurable osd_lambda, and LLR message damping in BP-OSD',
                 'Weighted Union-Find on GPU: CUDABatchDecoder / OpenCLBatchDecoder accept edge_weights, plus precision="f64" double-precision growth',
                 'qector decode / qector bench / qector serve CLI and qector-doctor (environment diagnostic)',
                 'pymatching submodule shim (from qector_decoder_v3.pymatching import Matching); DemModel.make_decoder covers all native families',
-                'SparseBlossomDecoder hot path zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed; licence hardening (v2 tokens with tier + expiry)',
+                'SparseBlossomDecoder hot path zero-allocation (thread-local SbScratch); six Rust panic-to-abort paths removed; license hardening (v2 tokens with tier + expiry)',
                 'Binary wheels (cp39-cp313, Windows amd64 / Linux x86_64 / macOS 11.0+ arm64); no sdist',
                  'Official QECTOR Decoder v3 reference manual v1.0.0 (DOI 10.5281/zenodo.21941046)',
                 'Free QECTOR Workbench (current): Comprehensive MCP tools, 19 named kinds (17 concrete decoder configurations plus AutoDecoder and Auto Router), 10 code families including qLDPC and colour codes, visual circuit builder, and a self/auto-debug layer verifying H·c = s on every decode',

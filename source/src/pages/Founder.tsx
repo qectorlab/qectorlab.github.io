@@ -81,7 +81,6 @@ export default function Founder() {
           worksFor: {
             '@type': 'Organization',
             name: 'iD01t Productions',
-            url: 'https://id01t.store/',
             foundingDate: '2023',
           },
           knowsAbout: [
@@ -99,7 +98,6 @@ export default function Founder() {
             'https://github.com/qectorlab',
             'https://pypi.org/project/qector-decoder-v3/',
             'https://id01t.itch.io/',
-            'https://id01t.store/',
             'https://www.linkedin.com/in/qector/',
           ],
         }}
@@ -113,9 +111,9 @@ export default function Founder() {
             <img
               src="/assets/g.png"
               alt="Portrait of Guillaume Lessard, founder of QECTOR and iD01t Productions"
-              width={176}
-              height={176}
-              className="w-40 h-40 md:w-44 md:h-44 rounded-2xl object-cover border border-cyan-300/30 shadow-lg shrink-0"
+              width={160}
+              height={160}
+              className="w-40 h-40 rounded-2xl object-cover border border-cyan-300/30 shadow-lg shrink-0"
             />
             <div className="text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
@@ -140,9 +138,9 @@ export default function Founder() {
                 <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
                   PyPI
                 </a>
-                <a href="https://id01t.store/" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
+                <span className="px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary">
                   iD01t Productions
-                </a>
+                </span>
               </div>
             </div>
           </div>
@@ -165,21 +163,33 @@ export default function Founder() {
                 ['ORCID', '0009-0000-3465-3753', ORCID],
                 ['GitHub', 'github.com/qectorlab', 'https://github.com/qectorlab'],
                 ['PyPI', 'qector-decoder-v3', 'https://pypi.org/project/qector-decoder-v3/'],
-                ['Studio', 'iD01t Productions, Longueuil QC', 'https://id01t.store/'],
+                ['Studio', 'iD01t Productions, Longueuil QC'],
                 ['itch.io', 'id01t.itch.io', 'https://id01t.itch.io/'],
                 ['Email', 'admin@qector.store', 'mailto:admin@qector.store'],
-              ].map(([label, value, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith('mailto') ? undefined : '_blank'}
-                  rel="noopener noreferrer"
-                  className="p-3 bg-void border border-gridline rounded-xl hover:border-cyan-300/40 transition-colors"
-                >
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-0.5">{label}</div>
-                  <div className="text-cyan-300 font-mono text-xs break-all">{value}</div>
-                </a>
-              ))}
+              ].map(([label, value, href]) => {
+                const body = (
+                  <>
+                    <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-0.5">{label}</div>
+                    <div className="text-cyan-300 font-mono text-xs break-all">{value}</div>
+                  </>
+                );
+                const cellClass = 'p-3 bg-void border border-gridline rounded-xl';
+                return href ? (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith('mailto') ? undefined : '_blank'}
+                    rel="noopener noreferrer"
+                    className={`${cellClass} hover:border-cyan-300/40 transition-colors`}
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <span key={label} className={cellClass}>
+                    {body}
+                  </span>
+                );
+              })}
             </div>
            </div>
 
@@ -195,7 +205,7 @@ export default function Founder() {
              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                <a href="https://doi.org/10.5281/zenodo.21611214" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">v1.0.0 user manual<br /><span className="font-mono">10.5281/zenodo.21611214</span></a>
                <a href="https://doi.org/10.5281/zenodo.21941046" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Normative reference manual<br /><span className="font-mono">10.5281/zenodo.21941046</span></a>
-               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Certification and proof bundle → Verification and proof bundle<br /><span className="font-mono">10.5281/zenodo.22046403</span></a>
+               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Verification and proof bundle<br /><span className="font-mono">10.5281/zenodo.22046403</span></a>
              </div>
            </div>
 
@@ -211,12 +221,12 @@ export default function Founder() {
               <p>
                 For most of the last twenty years that meant building high-performance applications and tools. 
                 I founded{' '}
-                <a href="https://id01t.store/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">iD01t Productions</a>{' '}
+                <span className="text-secondary">iD01t Productions</span>{' '}
                 in 2023. QECTOR serves as its dedicated QEC software division, delivering robust decoder pipelines for research and production environments.
               </p>
                <p>
                  Quantum error correction is where that method currently points. QECTOR Decoder v3 is a Rust core
-                 behind a Python API implementing 15+ decoder configurations, with v1.0.0 as the first stable release
+                 behind a Python API implementing 17+ decoder configurations, with v1.0.0 as the first stable release
                  (2026-08-06). The public contract separates mathematical correctness from machine-specific performance:
                  decodes can be checked against the declared syndrome relation, while local benchmark results carry
                  their workload, environment, raw artifact, and hash. The qector Claude Plugin v1.0.6 extends the same
@@ -233,7 +243,7 @@ export default function Founder() {
             <h2 className="text-2xl font-bold mb-5">What I've shipped</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                 { value: '15+', label: 'Decoder Configurations' },
+                 { value: '17+', label: 'Decoder Configurations' },
                  { value: '10+', label: 'Supported Topologies' },
                  { value: '20+', label: 'Years Writing Software' },
                  { value: 'v1.0.6', label: 'Claude Plugin Release' },
@@ -248,7 +258,7 @@ export default function Founder() {
               <div className="p-5 bg-surface border border-gridline rounded-xl">
                 <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
                 <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 15+ decoder configurations</span></li>
+                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 17+ decoder configurations</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench</Link>: free desktop GUI and comprehensive MCP server</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
                   <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>

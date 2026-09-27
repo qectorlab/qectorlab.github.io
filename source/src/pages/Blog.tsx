@@ -33,7 +33,7 @@ export default function Blog() {
             </p>
           </div>
 
-          <div className="mb-12 flex flex-wrap items-center justify-center gap-3" aria-label="Filter articles by topic">
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-3" role="group" aria-label="Filter articles by topic">
             {categories.map((category) => (
               <button
                 key={category}
@@ -51,7 +51,7 @@ export default function Blog() {
             ))}
           </div>
 
-          <p className="mb-6 text-center text-sm text-slate-500">
+          <p className="mb-6 text-center text-sm text-slate-400">
             Showing {visiblePosts.length} of {blogPosts.length} field notes. Claims are scoped to the <a className="text-emerald-400 hover:text-emerald-300" href="https://doi.org/10.5281/zenodo.21941046">v1.0.0 reference manual</a>.
           </p>
 
@@ -85,7 +85,7 @@ export default function Blog() {
                   </p>
                   
                   <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-800">
-                    <div className="flex items-center text-slate-500 text-sm">
+                    <div className="flex items-center text-slate-400 text-sm">
                       <Calendar size={14} className="mr-2" />
                       {post.date}
                     </div>

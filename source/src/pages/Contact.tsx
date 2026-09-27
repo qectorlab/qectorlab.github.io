@@ -15,6 +15,8 @@ export default function Contact() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
@@ -66,7 +68,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     <>
       <SEO
         title="Contact · QECTOR"
-        description="Contact QECTOR · commercial inquiries, technical support schedules, and evaluation requests."
+        description="Contact QECTOR · commercial inquiries, technical support questions, and evaluation requests."
       />
       <JsonLd
         data={{
@@ -111,7 +113,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             {/* Left Info */}
             <div ref={(el) => addRef(el, 0)} className="lg:col-span-2 space-y-4">
               <div className="card-surface">
-                <h3 className="text-primary font-semibold mb-2">Office</h3>
+                <h2 className="text-primary font-semibold mb-2">Office</h2>
                 <p className="text-secondary text-sm leading-relaxed">
                   QECTOR is developed by iD01t Productions.<br />
                   Primary contact: Guillaume Lessard.<br />
@@ -119,23 +121,23 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 </p>
               </div>
               <div className="card-surface">
-                <h3 className="text-primary font-semibold mb-2">Working Hours</h3>
+                <h2 className="text-primary font-semibold mb-2">Working Hours</h2>
                 <p className="text-secondary text-sm leading-relaxed">
                   Monday - Friday: 09:00-17:00 EST/EDT<br />
                   Saturday - Sunday: Closed
                 </p>
               </div>
               <div className="card-surface">
-                <h3 className="text-primary font-semibold mb-2">Links</h3>
+                <h2 className="text-primary font-semibold mb-2">Links</h2>
                 <div className="flex flex-col gap-2">
                   <Link to="/guillaume-lessard" className="text-cyan-300 text-sm hover:underline">About Guillaume Lessard</Link>
-                  <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">ORCID</a>
-                  <a href="https://www.linkedin.com/in/qector/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">LinkedIn</a>
-                  <a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">QEC Book</a>
+                  <a href="https://orcid.org/0009-0000-3465-3753" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">ORCID<span className="sr-only">(opens in new tab)</span></a>
+                  <a href="https://www.linkedin.com/in/qector/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">LinkedIn<span className="sr-only">(opens in new tab)</span></a>
+                  <a href="https://play.google.com/store/books/details?id=dGXuEQAAQBAJ" target="_blank" rel="noopener noreferrer" className="text-cyan-300 text-sm hover:underline">QEC Book<span className="sr-only">(opens in new tab)</span></a>
                 </div>
               </div>
               <div className="p-4 bg-green-400/5 border border-green-400/20 rounded-xl">
-                <p className="text-green-400 text-sm font-semibold flex items-center gap-2"><Zap size={14} className="shrink-0" aria-hidden="true" /> Lead-reply time: 1 business day for commercial inquiries.</p>
+                <p className="text-green-400 text-sm font-semibold flex items-center gap-2"><Zap size={14} className="shrink-0" aria-hidden="true" /> Response time: 1 business day for commercial inquiries.</p>
               </div>
             </div>
 
@@ -147,9 +149,9 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                     <div className="w-16 h-16 rounded-full bg-green-400/10 border border-green-400/20 flex items-center justify-center mx-auto mb-4">
                       <span className="text-green-400 text-2xl" aria-hidden="true">✓</span>
                     </div>
-                    <h3 className="text-primary font-bold text-xl mb-2">
+                    <h2 className="text-primary font-bold text-xl mb-2">
                       {submitted === 'sent' ? 'Message Sent' : 'Email Draft Opened'}
-                    </h3>
+                    </h2>
                     <p className="text-secondary">
                       {submitted === 'sent'
                         ? 'We will get back to you within one business day.'
@@ -161,21 +163,21 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="contact-name" className="block text-secondary text-sm mb-2">Full Name <span className="text-cyan-300">*</span></label>
-                        <input id="contact-name" name="name" type="text" required autoComplete="name" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors" placeholder="Your name" />
+                        <input id="contact-name" name="name" type="text" required autoComplete="name" className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors" placeholder="Your name" />
                       </div>
                       <div>
                         <label htmlFor="contact-email" className="block text-secondary text-sm mb-2">Email Address <span className="text-cyan-300">*</span></label>
-                        <input id="contact-email" name="email" type="email" required autoComplete="email" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors" placeholder="you@company.com" />
+                        <input id="contact-email" name="email" type="email" required autoComplete="email" className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors" placeholder="you@company.com" />
                       </div>
                     </div>
                     <div>
                       <label htmlFor="contact-org" className="block text-secondary text-sm mb-2">Organization / Affiliation</label>
-                      <input id="contact-org" name="organization" type="text" autoComplete="organization" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors" placeholder="Company or Institution" />
+                      <input id="contact-org" name="organization" type="text" autoComplete="organization" className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors" placeholder="Company or Institution" />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="contact-referral" className="block text-secondary text-sm mb-2">Referral Source</label>
-                        <select id="contact-referral" name="referral" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors">
+                        <select id="contact-referral" name="referral" className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors">
                           <option value="">- Select -</option>
                           <option>Web search</option>
                           <option>Social media</option>
@@ -187,7 +189,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                       </div>
                       <div>
                         <label htmlFor="contact-timeline" className="block text-secondary text-sm mb-2">Evaluation Timeline</label>
-                        <select id="contact-timeline" name="timeline" className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors">
+                        <select id="contact-timeline" name="timeline" className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors">
                           <option value="">- Select -</option>
                           <option>0-30 days</option>
                           <option>30-90 days</option>
@@ -198,7 +200,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                     </div>
                     <div>
                       <label htmlFor="contact-message" className="block text-secondary text-sm mb-2">Message <span className="text-cyan-300">*</span></label>
-                      <textarea id="contact-message" name="message" required rows={6} className="w-full px-4 py-3 bg-void border border-gridline rounded-lg text-primary text-sm focus:border-cyan-300/50 focus:outline-none transition-colors resize-y" placeholder="Tell us about your interest in QECTOR and evaluation needs..." />
+                      <textarea id="contact-message" name="message" required rows={6} className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors resize-y" placeholder="Tell us about your interest in QECTOR and evaluation needs..." />
                     </div>
                     {error && <p className="text-red-400 text-sm" role="alert">{error}</p>}
                     <button type="submit" className="btn-gold w-full py-3">

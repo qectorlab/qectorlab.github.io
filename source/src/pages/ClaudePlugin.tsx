@@ -302,7 +302,7 @@ export default function ClaudePlugin() {
               <Code2 className="w-4 h-4 text-cyan-400" />
             </Link>
           </div>
-          <p className="text-xs text-slate-500 mt-6">
+          <p className="text-xs text-slate-400 mt-6">
             Independent plugin by iD01t Productions. Not affiliated with or endorsed by Anthropic.
           </p>
         </div>
@@ -463,7 +463,7 @@ export default function ClaudePlugin() {
 
         <div className="card-surface rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="bg-slate-900/90 text-xs font-mono text-cyan-400 uppercase tracking-wider border-b border-slate-800">
                 <tr>
                   <th className="px-6 py-4">Tool Name</th>
@@ -577,7 +577,7 @@ export default function ClaudePlugin() {
 
       {/* Package Downloads & Prebuilt Artifacts */}
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 mb-12">
-        <div className="card-surface p-8 rounded-3xl border border-cyan-900/50 relative overflow-hidden bg-gradient-to-br from-slate-950 via-surface/60 to-slate-950">
+        <div className="card-surface p-8 border border-cyan-900/50 relative overflow-hidden bg-gradient-to-br from-slate-950 via-surface/60 to-slate-950">
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="text-2xl font-extrabold text-slate-100 mb-2">

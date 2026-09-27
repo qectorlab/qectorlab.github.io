@@ -46,6 +46,7 @@ const abs = (path: string) => `${SITE_URL}${path === '/' ? '/' : `${path}/`}`;
 
 const organizationNode = {
   '@type': 'Organization',
+  '@id': 'https://qector.store/#organization',
   name: SITE_NAME,
   url: SITE_URL + '/',
   logo: `${SITE_URL}/images/logo.png`,
@@ -68,7 +69,6 @@ const organizationNode = {
     PYPI_URL,
     'https://github.com/qectorlab',
     'https://orcid.org/0009-0000-3465-3753',
-    'https://id01t.store/',
     'https://id01t.itch.io/',
     'https://www.linkedin.com/in/qector/',
   ],
@@ -94,7 +94,7 @@ const techArticleNode = (headline: string, description: string) => ({
   headline,
   description,
   author: { '@type': 'Person', name: 'Guillaume Lessard' },
-  publisher: organizationNode,
+  publisher: { '@id': 'https://qector.store/#organization' },
 });
 
 /* ---------- static body helpers (inline styles: readable with or without CSS) ---------- */
@@ -155,7 +155,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/',
     title: 'QECTOR · Quantum Error Correction Decoding for Python',
     description:
-      'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder with 17 concrete configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance.',
+      'QECTOR Decoder v3: Rust-core Python quantum error correction decoder with 17 configurations, a syndrome-faithful contract, and reproducible validation guidance.',
     heading: 'QEC Decoding for Python',
     body: page(
       h1('QEC Decoding for Python') +
@@ -196,7 +196,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. Reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+      'QECTOR Decoder v3: 17 decoder configurations in one Python library. Stable v1.0.0 with API tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, and qector bench.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
@@ -237,7 +237,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/evidence',
     title: 'Evidence & Reports · QECTOR',
     description:
-      'Complete six-record Zenodo evidence registry, validation reports, reproducible artifacts, and evidence bundles for QECTOR quantum error correction decoder. SHA-256 sealed on GitHub.',
+      'Six-record Zenodo evidence registry, validation reports, and SHA-256 sealed artifacts for the QECTOR quantum error correction decoder.',
     heading: 'Evidence & Reports',
     body: page(
       h1('Evidence & Reports') +
@@ -341,7 +341,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/pricing',
     title: 'Pricing · QECTOR',
     description:
-      'QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers from $1,299/yr. Enterprise and OEM custom pricing. Prices in USD, excluding tax.',
+      'QECTOR Decoder v3 commercial licensing. $499 60-day evaluation, fully creditable. Annual production tiers from $1,299/yr. Prices in USD, excluding tax.',
     heading: 'Pricing & Licensing',
     body: page(
       h1('Pricing & Licensing') +
@@ -390,7 +390,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/fr/pricing',
     title: 'Tarifs · QECTOR',
-    description: 'Licences commerciales QECTOR Decoder v3. Évaluation de 60 jours à 499 $, entièrement créditable. Paliers de production annuels à partir de 1 299 $/an. Entreprise et OEM sur mesure. Prix en USD, hors taxes.',
+    description: 'Licences commerciales QECTOR Decoder v3. Évaluation de 60 jours à 499 $, entièrement créditable. Paliers annuels dès 1 299 $/an. Prix en USD, hors taxes.',
     heading: 'Tarification et licences',
     body: page(
       h1('Tarification et licences') +
@@ -442,7 +442,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/guillaume-lessard',
     title: 'Guillaume Lessard · Founder of QECTOR and iD01t Productions',
     description:
-      'Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library. ORCID 0009-0000-3465-3753.',
+      'Guillaume Lessard, founder of QECTOR and iD01t Productions: Rust/Python quantum error correction systems, ORCID 0009-0000-3465-3753, Longueuil, Québec.',
     heading: 'Guillaume Lessard',
     body: page(
       h1('Guillaume Lessard') +
@@ -459,7 +459,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['ORCID', `<a href="https://orcid.org/0009-0000-3465-3753" style="color:#67e8f9;">0009-0000-3465-3753</a>`],
             ['GitHub', `<a href="https://github.com/qectorlab" style="color:#67e8f9;">github.com/qectorlab</a>`],
             ['PyPI', `<a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3</a>`],
-            ['Studio', `<a href="https://id01t.store/" style="color:#67e8f9;">iD01t Productions</a>, Longueuil, Québec (founded 2023)`],
+            ['Studio', `iD01t Productions, Longueuil, Québec (founded 2023)`],
             ['itch.io', `<a href="https://id01t.itch.io/" style="color:#67e8f9;">id01t.itch.io</a>`],
             ['Email', `<a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>`],
           ]
@@ -512,7 +512,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         worksFor: {
           '@type': 'Organization',
           name: 'iD01t Productions',
-          url: 'https://id01t.store/',
           foundingDate: '2023',
         },
         knowsAbout: [
@@ -530,7 +529,6 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'https://github.com/qectorlab',
           PYPI_URL,
           'https://id01t.itch.io/',
-          'https://id01t.store/',
           'https://www.linkedin.com/in/qector/',
         ],
       },
@@ -538,7 +536,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/about',
-    title: 'About · QECTOR',
+    title: 'About QECTOR · Quantum Error Correction',
     description:
       'About QECTOR: Guillaume Lessard, iD01t Productions, QEC research background, ORCID, GitHub artifacts, mission and engineering philosophy.',
     heading: 'About QECTOR',
@@ -755,7 +753,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/fr/terms',
     title: 'Conditions générales · QECTOR',
-    description: "Conditions d'utilisation du site et du logiciel QECTOR.",
+    description: "Conditions d'utilisation du site et du logiciel QECTOR Decoder v3 : licences, paiements Stripe, droit applicable au Québec.",
+    noindex: true,
     heading: 'Conditions générales',
     body: page(
       h1('Conditions générales') +
@@ -781,7 +780,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/refund',
     title: 'Refund Policy · QECTOR',
     description:
-      'QECTOR Decoder v3 refund policy. Licence tokens are delivered instantly and are non-refundable; the $499 60-day evaluation is the creditable way to evaluate before committing.',
+      'QECTOR Decoder v3 refund policy. Licence tokens are delivered instantly and are non-refundable; the $499 evaluation is the creditable way to try first.',
     heading: 'Refund Policy',
     body: page(
       h1('Refund Policy') +
@@ -912,7 +911,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/blog',
-    title: 'Blog · QECTOR',
+    title: 'QEC Field Notes · QECTOR Blog',
     description: 'QECTOR field notes on quantum error correction, decoder algorithms, qLDPC, noise models, evidence, systems, and ecosystem integration.',
     heading: 'QECTOR Blog',
     body: page(
@@ -930,7 +929,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           '@type': 'BlogPosting',
           headline: p.title,
           description: p.description,
-          datePublished: '2026-08',
+          datePublished: '2026-08-09',
+          image: OG_IMAGE,
           url: abs(`/blog/${p.id}`),
           author: { '@type': 'Person', name: 'Guillaume Lessard', url: `${SITE_URL}/guillaume-lessard/` },
         })),
@@ -950,10 +950,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'BlogPosting',
         headline: post.title,
         description: post.description,
-        datePublished: '2026-08',
-        dateModified: '2026-08',
+        datePublished: '2026-08-09',
+        dateModified: '2026-08-09',
         author: { '@type': 'Person', name: 'Guillaume Lessard', url: `${SITE_URL}/guillaume-lessard/` },
-        publisher: organizationNode,
+        publisher: { '@id': 'https://qector.store/#organization' },
+        image: OG_IMAGE,
         url: abs(`/blog/${post.id}`),
         mainEntityOfPage: abs(`/blog/${post.id}`),
         isPartOf: { '@type': 'Blog', name: 'QECTOR Blog', url: SITE_URL + '/blog/' },
@@ -976,6 +977,7 @@ export function buildJsonLdGraph(route: PrerenderRoute): Record<string, unknown>
       url: abs(route.path),
       name: route.title,
       description: route.description,
+      inLanguage: route.path.startsWith('/fr/') ? 'fr' : 'en',
       isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: SITE_URL + '/' },
       ...(route.noindex ? {} : {}),
     },

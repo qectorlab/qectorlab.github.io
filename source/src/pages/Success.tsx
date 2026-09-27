@@ -21,7 +21,7 @@ export default function Success() {
     <>
       <SEO
         title="Purchase complete · QECTOR"
-        description="Your QECTOR Decoder v3 licence is being issued. Activation instructions and your Stripe reference."
+        description="Your QECTOR Decoder v3 license is being issued. Activation instructions and your Stripe reference."
         noindex
       />
 
@@ -36,7 +36,7 @@ export default function Success() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             Stripe has confirmed your payment. Your{' '}
-            <span className="text-primary font-semibold">Ed25519-signed licence token</span>{' '}
+            <span className="text-primary font-semibold">Ed25519-signed license token</span>{' '}
             is issued automatically and sent to the email address you used at checkout.
           </p>
 
@@ -59,7 +59,7 @@ export default function Success() {
             <h2 className="text-xl font-bold mb-4">What happens next</h2>
             <ol className="space-y-4 text-secondary text-sm leading-relaxed">
               <li>
-                <strong className="text-primary">1. Check your email.</strong> The licence
+                <strong className="text-primary">1. Check your email.</strong> The license
                 token arrives within a few minutes. If nothing has appeared after 15
                 minutes, check spam, then contact us with the reference above.
               </li>
@@ -97,7 +97,7 @@ export default function Success() {
             <h2 className="text-xl font-bold mb-4">Keep the token safe</h2>
             <p className="text-secondary text-sm leading-relaxed">
               Your token is tied to your checkout email and verifies offline against a
-              public key embedded in the package. There is no licence server and no
+              public key embedded in the package. There is no license server and no
               phone-home, so it keeps working on air-gapped machines and inside CI.
             </p>
           </div>

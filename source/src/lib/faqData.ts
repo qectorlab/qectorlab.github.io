@@ -29,7 +29,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Is a hosted or customer-facing API covered by an annual tier?',
-    a: 'No. Annual tiers cover internal use: your own team, on your own infrastructure. The moment QECTOR sits behind an API, product, or service that anyone outside your organization can reach, that is SaaS or redistribution and it requires an Enterprise/OEM agreement, regardless of which annual tier you hold. Internal hosted endpoints used only by your own employees are fine under an annual tier. If you are unsure which side of the line you are on, email admin@qector.store and describe the deployment.'
+    a: 'No. Annual tiers cover internal use: your own team, on your own infrastructure. The moment QECTOR sits behind an API, product, or service that anyone outside your organization can reach, that deployment is SaaS or redistribution and it requires an Enterprise/OEM agreement, regardless of which annual tier you hold. Internal hosted endpoints used only by your own employees are fine under an annual tier. If you are unsure which side of the line you are on, email admin@qector.store and describe the deployment.'
   },
   {
     q: 'Can I redistribute QECTOR inside my product?',
@@ -50,7 +50,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Can we get a signed corporate EULA or tax form?',
-    a: 'Yes. If procurement requires a signed PDF agreement, vendor profile, W-8/W-9, or a security questionnaire, email your request with your Stripe invoice number to admin@qector.store.'
+    a: 'Yes. If procurement requires a signed PDF agreement, vendor profile, W-8BEN or equivalent tax form, or a security questionnaire, email your request with your Stripe invoice number to admin@qector.store.'
   },
 ];
 
@@ -60,7 +60,7 @@ export const FAQ_ITEMS: FaqItem[] = [
 export const FAQ_ITEMS_FR: FaqItem[] = [
   {
     q: 'Comment la licence est-elle livrée, et le paquet change-t-il une fois que j’ai un jeton ?',
-    a: 'Automatiquement, par courriel, dans les minutes qui suivent le paiement : si rien n’arrive dans les 10 minutes, vérifiez votre courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe. Tout le monde installe la même wheel via pip install qector-decoder-v3==1.0.0; il n’existe pas de build commercial séparé et aucune fonctionnalité n’est verrouillée. Définissez QECTOR_LICENSE et QECTOR_LICENSE_KEY au jeton pour que l’avis d’import et le gestionnaire de palier v1.0.0 utilisent le même identifiant. Définissez QECTOR_SILENT=1 si vous voulez aussi des journaux CI silencieux. Le jeton se vérifie hors ligne contre une clé publique embarquée dans le paquet : il fonctionne hors réseau et en CI, sans serveur de licence ni appel maison. Il n’y a pas de blocage : le décodage fonctionne de toute façon. Le jeton et votre reçu Stripe sont ce dont les achats et l’audit ont besoin.'
+    a: 'Automatiquement, par courriel, dans les minutes qui suivent le paiement : si rien n’arrive dans les 10 minutes, vérifiez votre courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe. Tout le monde installe la même wheel via pip install qector-decoder-v3==1.0.0; il n’existe pas de build commercial séparé et aucune fonctionnalité n’est verrouillée. Définissez QECTOR_LICENSE et QECTOR_LICENSE_KEY au jeton pour que l’avis d’import et le gestionnaire de palier v1.0.0 utilisent le même jeton. Définissez QECTOR_SILENT=1 si vous voulez aussi des journaux CI silencieux. Le jeton se vérifie hors ligne contre une clé publique embarquée dans le paquet : il fonctionne hors réseau et en CI, sans serveur de licence ni appel maison. Il n’y a pas de blocage : le décodage fonctionne de toute façon. Le jeton et votre reçu Stripe sont ce dont les achats et l’audit ont besoin.'
   },
   {
     q: 'Que se passe-t-il exactement à l’expiration de l’évaluation de 60 jours ?',
@@ -68,7 +68,7 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'Combien de sièges chaque palier couvre-t-il, et qu’est-ce qui compte comme production ?',
-    a: 'L’évaluation à 499 $ couvre des sièges internes illimités pendant 60 jours, mais elle est limitée à l’évaluation et aux pilotes : étalonnage (benchmarks), tests d’intégration, études de seuil et évaluation d’architecture. Elle n’accorde pas de droits de production. Les paliers annuels accordent des droits de production pour usage interne et sont comptés par sièges : Solo/Indie 1 299 $/an (1 utilisateur nommé), Startup/Growth 4 499 $/an (jusqu’à 10), Professionnel/Labo 11 500 $/an (jusqu’à 25), Entreprise & OEM sur mesure (sièges et qubits logiques illimités, droits de regroupement OEM, ingénieur de support dédié, versions personnalisées). Une licence perpétuelle Solo/Indie est aussi disponible à 3 299 $ paiement unique pour v3.x (toutes les mises à jour mineures et correctives v3.x incluses; les montées de version majeure comme v4.0 sont une nouvelle licence).'
+    a: 'L’évaluation à 499 $ couvre des sièges internes illimités pendant 60 jours, mais elle est limitée à l’évaluation et aux pilotes : tests de référence (benchmarks), tests d’intégration, études de seuil et évaluation d’architecture. Elle n’accorde pas de droits de production. Les paliers annuels accordent des droits de production pour usage interne et sont comptés par sièges : Solo/Indie 1 299 $/an (1 utilisateur nommé), Startup/Growth 4 499 $/an (jusqu’à 10), Professionnel/Labo 11 500 $/an (jusqu’à 25), Entreprise & OEM sur mesure (sièges et qubits logiques illimités, droits de regroupement OEM, ingénieur de support dédié, versions personnalisées). Une licence perpétuelle Solo/Indie est aussi disponible à 3 299 $ paiement unique pour v3.x (toutes les mises à jour mineures et correctives v3.x incluses; les montées de version majeure comme v4.0 sont une nouvelle licence).'
   },
   {
     q: 'Une API hébergée ou orientée client est-elle couverte par un palier annuel ?',
@@ -92,6 +92,6 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'Pouvons-nous obtenir un contrat EULA signé ou un formulaire fiscal ?',
-    a: 'Oui. Si vos achats exigent un contrat PDF signé, un profil de fournisseur, un W-8/W-9 ou un questionnaire de sécurité, envoyez votre demande avec votre numéro de facture Stripe à admin@qector.store.'
+    a: 'Oui. Si vos achats exigent un contrat PDF signé, un profil de fournisseur, un W-8BEN ou formulaire fiscal équivalent ou un questionnaire de sécurité, envoyez votre demande avec votre numéro de facture Stripe à admin@qector.store.'
   },
 ];

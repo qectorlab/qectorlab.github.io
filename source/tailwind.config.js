@@ -107,6 +107,10 @@ module.exports = {
           "0%, 100%": { boxShadow: "0 0 20px rgba(103, 232, 249, 0.2)" },
           "50%": { boxShadow: "0 0 40px rgba(103, 232, 249, 0.5)" },
         },
+        "gradient-xy": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -115,6 +119,7 @@ module.exports = {
         "pulse-dot": "pulse-dot 2s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "gradient-xy": "gradient-xy 6s ease infinite",
       },
     },
   },

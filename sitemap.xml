@@ -58,5 +58,7 @@
   <!-- /privacy and /terms are intentionally absent: both are served with
        <meta name="robots" content="noindex">, and listing a noindex URL in the
        sitemap is reported by Search Console as "Submitted URL marked noindex".
-       They stay reachable through the footer. -->
+       The footer is not part of the prerendered HTML shells (it renders
+       client-side), but both pages remain reachable through the legal links
+       on /refund/. -->
 </urlset>

@@ -27,6 +27,8 @@ export default function Home() {
   const { version: pypiVersion } = usePyPIVersion();
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const script = document.createElement('script');
     script.src = 'https://js.stripe.com/v3/buy-button.js';
     script.async = true;
@@ -84,7 +86,7 @@ export default function Home() {
               downloadUrl: 'https://pypi.org/project/qector-decoder-v3/',
               softwareVersion: pypiVersion,
               author: { '@type': 'Person', name: 'Guillaume Lessard', url: 'https://github.com/GuillaumeLessard' },
-              maintainer: { '@type': 'Organization', name: 'iD01t Productions', url: 'https://id01t.store/' },
+              maintainer: { '@type': 'Organization', name: 'iD01t Productions' },
               identifier: 'https://pypi.org/project/qector-decoder-v3/',
               license: 'https://qector.store/license/',
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
@@ -102,7 +104,6 @@ export default function Home() {
                 'https://pypi.org/project/qector-decoder-v3/',
                 'https://github.com/GuillaumeLessard/qector-claude-plugin',
                 'https://orcid.org/0009-0000-3465-3753',
-                'https://id01t.store/',
               ],
             },
           ],
@@ -111,7 +112,7 @@ export default function Home() {
 
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="QECTOR hero">
-        <img src="/images/hero-bg.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.45) saturate(1.1)' }} />
+        <img src="/images/hero-bg.webp" alt="" aria-hidden="true" fetchPriority="high" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.45) saturate(1.1)' }} />
         <noscript>
           <img src="/images/og-banner.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.4)' }} />
         </noscript>
@@ -150,15 +151,15 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-10">
-            <Link to="/pricing" className="btn-gold text-base px-8 py-4 text-sm sm:text-base font-bold">
+            <Link to="/pricing" className="btn-gold px-8 py-4 text-sm sm:text-base font-bold">
               Start $499 Evaluation →
             </Link>
-            <Link to="/decoder" className="btn-cyan text-base px-8 py-4 text-sm sm:text-base">
+            <Link to="/decoder" className="btn-cyan px-8 py-4 text-sm sm:text-base">
               Explore the Decoder
             </Link>
             <a
               href="https://github.com/qectorlab/qector-decoder-workbench-windows/releases/latest"
-              className="btn-outline text-base px-8 py-4 text-sm sm:text-base"
+              className="btn-outline px-8 py-4 text-sm sm:text-base"
               target="_blank" rel="noopener noreferrer"
             >
               Free Workbench GUI
@@ -398,7 +399,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 2)}>
               <SectionHeader
                 eyebrow="Why QECTOR"
-                heading={<h2 className="text-3xl md:text-4xl font-bold">More Than Just MWPM</h2>}
+                heading="More Than Just MWPM"
                  description="QEC decoding is not one-size-fits-all. Surface codes, qLDPC codes, optional batch paths, and simulation workloads each demand different decoders. QECTOR documents the supported contracts and the evidence needed to evaluate a selected workload."
               />
             </div>
@@ -498,7 +499,7 @@ export default function Home() {
             <div ref={(el) => addRef(el, 9)}>
               <SectionHeader
                 eyebrow="Performance"
-                heading={<h2 className="text-3xl md:text-4xl font-bold">Measure on Your Own Hardware</h2>}
+                heading="Measure on Your Own Hardware"
               />
               <EvidenceBlock
                 title="Reproducible Benchmark Harness"
@@ -551,7 +552,7 @@ export default function Home() {
               <p className="text-secondary text-sm leading-relaxed mb-4">
                 $499 for a 60-day commercial evaluation. Unlimited internal seats, all decoders,
                 GPU batch paths, priority support, and full validation artifact access.
-                100% credit toward any annual license.
+                100% credit toward any annual license purchased within 90 days of your evaluation start.
               </p>
               <Link to="/pricing" className="btn-gold text-sm">
                 View Pricing &amp; Tiers →
@@ -571,7 +572,7 @@ export default function Home() {
               </span>
               <h2 className="text-3xl font-bold mb-3">Commercial Evaluation License</h2>
               <p className="text-secondary text-sm max-w-md mx-auto">
-                One-time payment · 60-day pilot · Fully creditable toward annual license
+                One-time payment · 60-day pilot · Fully creditable toward an annual license bought within 90 days
               </p>
             </div>
 
@@ -601,7 +602,7 @@ export default function Home() {
                   'Written license agreement',
                   'Priority email support (2 business day response)',
                   'Benchmark artifact package',
-                  '100% credit toward annual license',
+                  '100% credit toward any annual license purchased within 90 days of your evaluation start',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-xs text-secondary">
                     <span className="text-green-400">✓</span>

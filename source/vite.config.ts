@@ -40,16 +40,31 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   const htmlLang = route.path.startsWith('/fr/') ? 'fr' : 'en'
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${htmlLang}"`)
 
+  // og:locale follows the route language so social cards get the right locale.
+  const ogLocale = route.path.startsWith('/fr/') ? 'fr_FR' : 'en_US'
+  const ogLocaleAlt = route.path.startsWith('/fr/') ? 'en_US' : 'fr_FR'
+  html = setTag(html, /(<meta property="og:locale" content=")[^"]*(")/, ogLocale)
+  html = setTag(html, /(<meta property="og:locale:alternate" content=")[^"]*(")/, ogLocaleAlt)
+
+  // og:image:alt and twitter:image:alt per language, kept in sync.
+  const ogImgAlt = route.path.startsWith('/fr/')
+    ? 'QECTOR Decoder v3 : décodeur Python de correction d\u2019erreur quantique'
+    : 'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder'
+  html = setTag(html, /(<meta property="og:image:alt" content=")[^"]*(")/, ogImgAlt)
+  html = setTag(html, /(<meta name="twitter:image:alt" content=")[^"]*(")/, ogImgAlt)
+
+  // Blog posts are articles: og:type=article plus author and section.
+  if (route.path.startsWith('/blog/') && route.path !== '/blog') {
+    html = setTag(html, /(<meta property="og:type" content=")[^"]*(")/, 'article')
+    html = html.replace('</head>', `    <meta property="article:author" content="Guillaume Lessard" />\n    <meta property="article:section" content="Quantum Error Correction" />\n  </head>`)
+  }
+
   // hreflang alternates: French pages link their English twin and vice versa.
   const alternates: Record<string, [string, string][]> = {
-    '/fr/pricing': [
-      ['en', 'https://qector.store/pricing/'],
-      ['fr', 'https://qector.store/fr/pricing/'],
-    ],
-    '/pricing': [
-      ['en', 'https://qector.store/pricing/'],
-      ['fr', 'https://qector.store/fr/pricing/'],
-    ],
+    '/fr/pricing': [['en','https://qector.store/pricing/'],['fr','https://qector.store/fr/pricing/'],['x-default','https://qector.store/pricing/']],
+    '/pricing': [['en','https://qector.store/pricing/'],['fr','https://qector.store/fr/pricing/'],['x-default','https://qector.store/pricing/']],
+    '/fr/terms': [['en','https://qector.store/terms/'],['fr','https://qector.store/fr/terms/'],['x-default','https://qector.store/terms/']],
+    '/terms': [['en','https://qector.store/terms/'],['fr','https://qector.store/fr/terms/'],['x-default','https://qector.store/terms/']],
   }
   for (const [lang, href] of alternates[route.path] ?? []) {
     html = html.replace(
@@ -85,6 +100,22 @@ function cfRocketBypass(): import('vite').Plugin {
     enforce: 'post',
     transformIndexHtml(html) {
       return html.replace(/(<script\s+type="module")/g, '$1 data-cfasync="false"')
+    },
+  }
+}
+
+// KaTeX ships ttf and woff fonts that are never used (only woff2 is loaded
+// by its CSS). Drop them from the bundle to cut emitted asset weight.
+function dropUnusedKatexFonts(): import('vite').Plugin {
+  return {
+    name: 'drop-unused-katex-fonts',
+    apply: 'build',
+    generateBundle(_options, bundle) {
+      for (const key of Object.keys(bundle)) {
+        if (/KaTeX.*\.(ttf|woff)$/.test(key)) {
+          delete bundle[key]
+        }
+      }
     },
   }
 }
@@ -128,7 +159,7 @@ function ghPagesSpaShell(): import('vite').Plugin {
         noindex: true,
         heading: '',
         body: '',
-      })
+      }).replace(/<link rel="canonical"[^>]*>\n?/, '')
       fs.writeFileSync(path.join(dist, '404.html'), _404html)
 
       // ── route shells: one dist/<path>/index.html per real route ────────────
@@ -172,7 +203,7 @@ export default defineConfig(({ command }) => ({
   // Useful in the editor while developing, but it has no business shipping to
   // production: it bloats the bundle and leaks internal file paths into the
   // live HTML. Only include it when Vite is running the dev server.
-  plugins: [...(command === 'serve' ? [inspectAttr()] : []), cfRocketBypass(), ghPagesSpaShell(), react()],
+  plugins: [...(command === 'serve' ? [inspectAttr()] : []), cfRocketBypass(), ghPagesSpaShell(), dropUnusedKatexFonts(), react()],
   server: {
     port: 3000,
   },
@@ -187,6 +218,7 @@ export default defineConfig(({ command }) => ({
           if (id.includes('node_modules/gsap')) return 'vendor-gsap';
           if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/lucide-react')) return 'vendor-ui';
           if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-')) return 'vendor-charts';
+          if (/node_modules\/(katex|react-markdown|remark-|rehype-|unified|micromark|mdast-|hast-|vfile|unist-|zwitch|bail|trough)/.test(id)) return 'vendor-md';
           if (id.includes('node_modules')) return 'vendor';
         },
       },

@@ -16,6 +16,8 @@ export default function Decoder() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const { version: pypiVersion } = usePyPIVersion();
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
     sectionsRef.current.filter(Boolean).forEach((section) => {
       gsap.fromTo(section, { opacity: 0, y: 30 }, {
