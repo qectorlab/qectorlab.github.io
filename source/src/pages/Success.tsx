@@ -87,7 +87,7 @@ export default function Success() {
                   </code>
                 </div>
                 <span className="block mt-2">
-                  This should print your paid tier (for example <code className="text-cyan-300">pro</code> or <code className="text-cyan-300">enterprise</code>), not <code className="text-cyan-300">community</code>.
+                  This should print your paid tier (for example <code className="text-cyan-300">Pro</code> or <code className="text-cyan-300">Enterprise</code>), not <code className="text-cyan-300">Community</code>.
                 </span>
               </li>
             </ol>

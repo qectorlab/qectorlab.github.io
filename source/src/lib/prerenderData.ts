@@ -694,7 +694,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/license',
     title: 'License · QECTOR',
     description:
-      'QECTOR Decoder v3 license terms and v1.0.0 token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
+      'QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
     heading: 'License',
     body: page(
       h1('License') +
@@ -714,7 +714,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
            'Verify the purchase: the fulfillment worker accepts only a Stripe-signed live checkout event and records the reference, email, tier, and token in the protected fulfillment ledger.',
            'Install the official runtime: pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2" from the official PyPI project.',
            'Activate both variables: set QECTOR_LICENSE and QECTOR_LICENSE_KEY to the same token from the license email.',
-           'Verify offline: python -c "import qector_decoder_v3 as q; print(q.get_license_info()[\'tier\'])" must print your paid tier (for example pro), not community; no license server or phone-home is involved.',
+           'Verify offline: python -c "import qector_decoder_v3 as q; print(q.get_license_info()[\'tier\'])" must print your paid tier (Pro or Enterprise), not Community; no license server or phone-home is involved.',
            'Keep the token with the Stripe invoice or payment confirmation. Never put it in a URL, issue tracker, chat, or public repository.',
          ]) +
          p('If either delivery email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.') +
