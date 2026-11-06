@@ -412,7 +412,10 @@ async function tierForSubscription(invoice, env) {
   for (const line of invoice.lines?.data || []) {
     const fromLine = tierFromMetadataOrNull(line.metadata) || tierFromMetadataOrNull(line.price?.metadata) || tierFromPriceId(line.price?.id || line.pricing?.price_details?.price, env);
     if (fromLine) return fromLine;
-    const amount = numberOrNull(line.price?.unit_amount);
+    const amount =
+      numberOrNull(line.price?.unit_amount) ??
+      numberOrNull(line.pricing?.unit_amount_decimal != null ? Number(line.pricing.unit_amount_decimal) : null) ??
+      (Number(line.quantity || 1) === 1 ? numberOrNull(line.amount) : null);
     if (amount != null && AMOUNT_TIERS[amount]) return AMOUNT_TIERS[amount];
   }
   return null;
@@ -494,15 +497,26 @@ export function tierFromMetadataOrNull(metadata) {
   return Object.prototype.hasOwnProperty.call(TIERS, tier) ? tier : null;
 }
 
+// Live legacy recurring prices whose subscriptions carry no metadata. Renewals
+// of these resolve here even when the invoice line omits the price amount
+// (newer API versions expose only `pricing.price_details.price`).
+const BUILTIN_PRICE_TIERS = Object.freeze({
+  price_1TwkW3Rsa9cg9l8AsgJhqJPR: "solo_annual",
+  price_1TyqegRsa9cg9l8ApRDrXvZa: "startup",
+  price_1TyqehRsa9cg9l8Aicyt6SHx: "professional",
+});
+
 function tierFromPriceId(priceId, env) {
-  if (!priceId || !env.PRICE_TIERS) return null;
-  try {
-    const table = JSON.parse(env.PRICE_TIERS);
-    const tier = table[priceId];
-    return tier && TIERS[tier] ? tier : null;
-  } catch {
-    return null;
+  if (!priceId) return null;
+  if (env.PRICE_TIERS) {
+    try {
+      const tier = JSON.parse(env.PRICE_TIERS)[priceId];
+      if (tier && TIERS[tier]) return tier;
+    } catch {
+      // fall through to the built-in table
+    }
   }
+  return BUILTIN_PRICE_TIERS[priceId] || null;
 }
 
 function expiryIso(productTier, nowMs = Date.now()) {

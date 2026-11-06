@@ -32,7 +32,7 @@ settings `TURNSTILE_SECRET` / `TRIAL_ALLOWED_ORIGINS` (trials are off).
 | --- | --- |
 | Checkout paid (card) | Licence token + receipt e-mailed; idempotent per event |
 | Checkout with a delayed method (bank debit) | Nothing on the "unpaid" completion; licence on `async_payment_succeeded` |
-| Renewal (`invoice.paid`) | New token with the tier recorded at checkout; unknown tiers are held, never guessed |
+| Renewal (`invoice.paid`) | New token with the tier recorded at checkout, then subscription metadata, price id (built-in table for the live legacy prices) or price amount; unknown tiers are held, never guessed |
 | Full refund or dispute | Receipt id revoked and published at `GET /stripe/revoked.txt` |
 | Partial refund | Licence kept |
 | Subscription cancelled | Not revoked: the token runs to its expiry (paid period + 14 days grace) |

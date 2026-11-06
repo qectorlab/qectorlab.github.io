@@ -272,3 +272,21 @@ test("production default: the embedded decoder key is the one checked", async ()
   delete env.QECTOR_EXPECTED_PUBLIC_KEY_B64;
   assert.equal(await keyMatchesDecoder(env), false, "a random test key must not match the production decoder key");
 });
+
+test("legacy renewal without metadata resolves on the new invoice shape (pricing.price_details)", async () => {
+  const { env, sent } = await makeEnv();
+  const mk = (id, sub, price, amount) => ({
+    id: `evt_${id}`, type: "invoice.paid", livemode: true,
+    data: { object: { id: `in_${id}`, billing_reason: "subscription_cycle", customer_email: "ops@corp.com", amount_paid: amount, subtotal: amount,
+      parent: { subscription_details: { subscription: sub, metadata: {} } },
+      lines: { data: [{ amount, quantity: 1, metadata: {}, pricing: { price_details: { price } } }] } } },
+  });
+  const startup = await (await worker.fetch(await stripeRequest(mk("st", "sub_st", "price_1TyqegRsa9cg9l8ApRDrXvZa", 449900)), env)).json();
+  assert.equal(startup.tier, "startup");
+  const pro = await (await worker.fetch(await stripeRequest(mk("pf", "sub_pf", "price_1TyqehRsa9cg9l8Aicyt6SHx", 1150000)), env)).json();
+  assert.equal(pro.tier, "professional");
+  assert.equal(decodeClaims(env.LICENSES.json("lic:in_pf").token).tier, "enterprise");
+  const byAmount = await (await worker.fetch(await stripeRequest(mk("am", "sub_am", "price_unknown", 129900)), env)).json();
+  assert.equal(byAmount.tier, "solo_annual");
+  assert.equal(sent.length, 6);
+});
