@@ -363,7 +363,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           ]
         ) +
         p(
-          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/HST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro, Team and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Academic:</strong> ${PRICES.academicDiscountPct}% off Team and Lab for industry-funded university projects.`
+          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/HST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro, Team and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Academic:</strong> universities, public research organisations and government institutions may use QECTOR free under PolyForm Noncommercial whatever their funding; academic institutions that want a paid plan get ${PRICES.academicDiscountPct}% off Team and Lab.`
         ) +
         h2('Activating your license') +
         p(
@@ -406,7 +406,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           `Équipe : ${usdFr(PRICES.team)}/an (jusqu’à 10) · Labo : ${usdFr(PRICES.lab)}/an (jusqu’à 25, distances jusqu’à 63).`,
           `Pilote de ${PRICES.pilotDays} jours : ${usdFr(PRICES.pilot)} paiement unique · Entreprise et OEM : dès ${usdFr(PRICES.enterpriseFrom)}/an.`,
           `Abonnements renouvelés automatiquement, annulables en tout temps. Garantie satisfait ou remboursé de ${PRICES.refundDays} jours sur le premier paiement.`,
-          `Rabais académique de ${PRICES.academicDiscountPct} % sur Équipe et Labo pour les projets universitaires financés par l’industrie.`,
+          `Universités, organismes de recherche publics et institutions gouvernementales : usage gratuit sous PolyForm Noncommercial, quel que soit le financement. Rabais académique de ${PRICES.academicDiscountPct} % sur Équipe et Labo pour les établissements qui veulent un forfait payant.`,
         ]) +
         p(
           'Voir <a href="/pricing" style="color:#67e8f9;">la version anglaise pour le détail complet</a>. Contact : <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>'
@@ -699,7 +699,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('License') +
         p(
-          'QECTOR Decoder v3 is source-available under the PolyForm Noncommercial License 1.0.0: free for personal, academic, and non-commercial research use. Company use, funded institutional work, SaaS, OEM integration, redistribution, or commercial benchmarking requires a commercial license.'
+          'QECTOR Decoder v3 is source-available under the PolyForm Noncommercial License 1.0.0: free for personal, academic, and non-commercial research use. Universities, public research organisations, charities and government institutions may use it free whatever their funding source. Company use (including company work done under a research contract), SaaS, OEM integration, redistribution, or commercial benchmarking requires a commercial license.'
         ) +
         h2('Commercial addendum: what a paid licence changes') +
         ul([

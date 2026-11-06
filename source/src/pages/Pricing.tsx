@@ -120,7 +120,7 @@ export default function Pricing() {
               Production rights for internal use. Plans renew automatically until cancelled.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct}% off Team and Lab for industry-funded university projects. Non-commercial research is free.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct}% off Team and Lab for academic institutions. Non-commercial research is free.
             </div>
           </div>
 

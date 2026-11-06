@@ -45,7 +45,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Do I need a licence for non-commercial research?',
-    a: 'No. Personal, academic and other non-commercial use is free under the PolyForm Noncommercial License 1.0.0. Industry-funded or contract research at a university is commercial; it gets 40% off Team and Lab with an institutional e-mail.'
+    a: 'No. Personal, academic and other non-commercial use is free under the PolyForm Noncommercial License 1.0.0. Universities, public research organisations, charities and government institutions may also use it free, whatever the source of their funding (that is what PolyForm Noncommercial says). A company using QECTOR, including on a contract with a university, needs a paid plan. Academic institutions that want a paid plan anyway, for support or to pass commercial rights to an industry partner, get 40% off Team and Lab with an institutional e-mail.'
   },
   {
     q: 'What currency are prices in, and is tax included?',
@@ -91,7 +91,7 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'Ai-je besoin d’une licence pour la recherche non commerciale ?',
-    a: 'Non. L’usage personnel, académique et non commercial est gratuit sous la licence PolyForm Noncommercial 1.0.0. La recherche universitaire financée par l’industrie ou sous contrat est commerciale; elle obtient 40 % de rabais sur Équipe et Labo avec un courriel institutionnel.'
+    a: 'Non. L’usage personnel, académique et non commercial est gratuit sous la licence PolyForm Noncommercial 1.0.0. Les universités, organismes de recherche publics, organismes de bienfaisance et institutions gouvernementales peuvent aussi l’utiliser gratuitement, quelle que soit la source de leur financement (c’est ce que prévoit PolyForm Noncommercial). Une entreprise qui utilise QECTOR, y compris dans un contrat avec une université, doit avoir un forfait payant. Les établissements d’enseignement qui veulent tout de même un forfait payant, pour le soutien ou pour transmettre des droits commerciaux à un partenaire industriel, obtiennent 40 % de rabais sur Équipe et Labo avec un courriel institutionnel.'
   },
   {
     q: 'En quelle devise sont les prix, et la taxe est-elle incluse ?',

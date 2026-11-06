@@ -40,6 +40,7 @@ export default function License() {
               <ul className="space-y-1 text-secondary text-sm">
                 <li>• Personal research and learning</li>
                 <li>• Academic research and teaching</li>
+                <li>• Use by universities, public research organisations, charities and government institutions, whatever their source of funding</li>
                 <li>• Non-commercial open-source projects</li>
                 <li>• Publishing benchmark results (with attribution)</li>
               </ul>
@@ -49,7 +50,7 @@ export default function License() {
               <ul className="space-y-1 text-secondary text-sm">
                 <li>• Commercial product integration</li>
                 <li>• Internal commercial R&D with value extraction</li>
-                <li>• Government and defense contracts</li>
+                <li>• Company work on government, defence or university contracts</li>
                 <li>• Redistribution in commercial products</li>
                 <li>• SaaS / hosted API usage</li>
               </ul>
