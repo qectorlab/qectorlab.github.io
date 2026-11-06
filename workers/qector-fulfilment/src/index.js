@@ -1,49 +1,81 @@
+// qector-fulfilment — Stripe → Ed25519 licence tokens for QECTOR Decoder v3.
+//
+// 2.0 (2026-11-05): rewritten from the deployed bundle with the audit fixes
+// and the 2026 price ladder.
+//
+//   * The tier comes from Checkout metadata first (`qector_tier`), then from a
+//     price-id table, then from the PRE-TAX `amount_subtotal`. The old code read
+//     `amount_total` (tax-inclusive, net of coupons) and mapped amounts to the
+//     canonical tier "pro", which is not a product tier, so every Solo, Startup
+//     or Professional sale without metadata got a 60-day evaluation token.
+//   * Renewals take the tier recorded at checkout for that subscription
+//     (`sub:<id>`), then subscription/price metadata; never a silent fallback
+//     to "evaluation".
+//   * Manually created invoices (credited upgrades) with `qector_tier` metadata
+//     issue a licence.
+//   * Refunds, disputes and cancellations revoke the licence's receipt id (the
+//     token's `rid`, which the decoder's offline CRL matches) and publish it at
+//     GET /stripe/revoked.txt.
+//   * POST /stripe/trial issues a 14-day commercial trial token by e-mail, one
+//     per address per 365 days, with per-IP limits and optional Turnstile.
+//   * Customer e-mails no longer pin a superseded package version.
+//
+// Token format is unchanged: v2.{base64url(JSON claims)}.{base64url(Ed25519 sig
+// over the claims segment)}; claims = {email, exp?, rid, tier} with keys sorted.
+// `tier` is always one the decoder understands (evaluation, pro, enterprise),
+// so tokens verify on every released decoder (1.0.0 and later).
+
 const SIGNATURE_TOLERANCE_SECONDS = 300;
 const EVENT_TTL_SECONDS = 60 * 60 * 24 * 30;
 const MAX_EMAIL_ATTEMPTS = 3;
 const EMAIL_TIMEOUT_MS = 5000;
+const DAY = 86400;
 
-// Expiry per purchased tier. The SIGNED tier is always canonical
-// (evaluation/pro/enterprise) because that is all PyPI 1.0.0 gates:
-// community/pro/enterprise. Signing a raw name like "startup" would verify
-// the signature yet resolve to Community at runtime.
-// Amounts are USD cents, tax-exclusive (Stripe adds tax on top).
-const TIER_DURATION_DAYS = Object.freeze({
-  evaluation: 60,
-  commercial: 60,
-  solo_annual: 366,
-  solo_perpetual: null,
-  startup: 366,
-  professional: 366,
-  enterprise: 366,
+// Product tiers sold (plus legacy names still found in old payment links and
+// tokens). `claim` is what goes into the token; `days` is the validity
+// (null = perpetual). Recurring tiers get 14 days of grace past the period so a
+// late renewal never locks a paying customer out.
+export const TIERS = Object.freeze({
+  trial: { claim: "pro", days: 14, label: "Commercial Trial (14 days)" },
+  evaluation: { claim: "evaluation", days: 60, label: "Commercial Evaluation (60 days)" },
+  pilot: { claim: "pro", days: 60, label: "Pilot (60 days)" },
+  pro_monthly: { claim: "pro", days: 31 + 14, label: "Pro (monthly)" },
+  pro_annual: { claim: "pro", days: 366 + 14, label: "Pro (annual)" },
+  pro_perpetual: { claim: "pro", days: null, label: "Pro Perpetual (3.x)" },
+  team: { claim: "pro", days: 366 + 14, label: "Team (annual, up to 10 users)" },
+  lab: { claim: "enterprise", days: 366 + 14, label: "Lab (annual, up to 25 users)" },
+  enterprise: { claim: "enterprise", days: 366 + 14, label: "Enterprise" },
+  // Legacy names (pre-2026 links, renewals of existing subscriptions).
+  commercial: { claim: "evaluation", days: 60, label: "Commercial Evaluation (60 days)" },
+  solo_annual: { claim: "pro", days: 366 + 14, label: "Solo (annual)" },
+  solo_perpetual: { claim: "pro", days: null, label: "Solo Perpetual" },
+  startup: { claim: "pro", days: 366 + 14, label: "Startup (annual)" },
+  // Professional ($11,500/yr, 25 users) paid more than Lab: same entitlement.
+  professional: { claim: "enterprise", days: 366 + 14, label: "Professional (annual)" },
 });
 
-// Canonical runtime tier written into the signed v2 token.
-const TIER_CANONICAL = Object.freeze({
-  evaluation: "evaluation",
-  commercial: "evaluation",
-  solo_annual: "pro",
-  solo_perpetual: "pro",
-  startup: "pro",
-  professional: "pro",
-  pro: "pro",
-  enterprise: "enterprise",
-});
-
-// Fallback when the Checkout Session / invoice carries no tier metadata
-// (manual invoices and the shared $499 payment link). Keyed by amount paid.
-const AMOUNT_TIER_CENTS = Object.freeze({
+// Pre-tax list prices (cents, USD) → product tier. Used only when a checkout
+// carries no `qector_tier` metadata and its price id is not in PRICE_TIERS.
+export const AMOUNT_TIERS = Object.freeze({
+  7900: "pro_monthly",
+  79000: "pro_annual",
+  199000: "pro_perpetual",
+  390000: "team",
+  990000: "lab",
+  150000: "pilot",
   49900: "evaluation",
-  89900: "pro",
-  129900: "pro",
-  329900: "pro",
-  449900: "pro",
-  1150000: "pro",
+  129900: "solo_annual",
+  329900: "solo_perpetual",
+  449900: "startup",
+  1150000: "professional",
   2800000: "enterprise",
 });
 
 const SUPPORT_EMAIL = "admin@qector.store";
 const DEFAULT_FROM = "QECTOR <licenses@qector.store>";
+const SITE = "https://qector.store";
+const TRIAL_PER_IP_PER_DAY = 3;
+const TRIAL_COOLDOWN_SECONDS = 365 * DAY;
 
 const API_SECURITY_HEADERS = {
   "cache-control": "no-store",
@@ -51,16 +83,15 @@ const API_SECURITY_HEADERS = {
   "cross-origin-opener-policy": "same-origin",
   "cross-origin-resource-policy": "same-origin",
   "origin-agent-cluster": "?1",
-  "permissions-policy": "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), document-domain=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), xr-spatial-tracking=()",
+  "permissions-policy":
+    "accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), document-domain=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), xr-spatial-tracking=()",
   "referrer-policy": "no-referrer",
   "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
   "x-content-type-options": "nosniff",
   "x-dns-prefetch-control": "off",
-  "x-download-options": "noopen",
   "x-frame-options": "DENY",
   "x-permitted-cross-domain-policies": "none",
   "x-robots-tag": "noindex, nofollow, noarchive",
-  "x-xss-protection": "1; mode=block",
 };
 
 let cachedSigningKeyB64 = "";
@@ -72,34 +103,25 @@ let cachedGmailPromise = null;
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-
-    if (url.pathname === "/stripe/webhook" && request.method === "POST") {
-      return handleWebhook(request, env);
-    }
-
-    if (url.pathname === "/stripe/reconcile" && request.method === "POST") {
-      return handleReconcile(request, env);
-    }
-
-    if (url.pathname === "/stripe/health" && (request.method === "GET" || request.method === "HEAD")) {
-      return handleHealth(env, request.method === "HEAD");
-    }
-
+    const method = request.method;
+    if (url.pathname === "/stripe/webhook" && method === "POST") return handleWebhook(request, env);
+    if (url.pathname === "/stripe/reconcile" && method === "POST") return handleReconcile(request, env);
+    if (url.pathname === "/stripe/trial" && method === "POST") return handleTrial(request, env);
+    if (url.pathname === "/stripe/revoked.txt" && (method === "GET" || method === "HEAD")) return handleRevokedList(env, method === "HEAD");
+    if (url.pathname === "/stripe/health" && (method === "GET" || method === "HEAD")) return handleHealth(env, method === "HEAD");
     return json({ error: "not found" }, 404);
   },
 };
 
-async function handleReconcile(request, env) {
-  if (!env.RECONCILE_TOKEN) {
-    return json({ error: "reconciliation is not configured" }, 404);
-  }
+// ---------------------------------------------------------------------------
+// Endpoints
+// ---------------------------------------------------------------------------
 
+async function handleReconcile(request, env) {
+  if (!env.RECONCILE_TOKEN) return json({ error: "reconciliation is not configured" }, 404);
   const authorization = request.headers.get("authorization") || "";
   const supplied = authorization.startsWith("Bearer ") ? authorization.slice(7).trim() : "";
-  if (!timingSafeEqual(supplied, env.RECONCILE_TOKEN)) {
-    return json({ error: "unauthorized" }, 401);
-  }
-
+  if (!timingSafeEqual(supplied, env.RECONCILE_TOKEN)) return json({ error: "unauthorized" }, 401);
   let body;
   try {
     body = await request.json();
@@ -107,72 +129,43 @@ async function handleReconcile(request, env) {
     return json({ error: "valid JSON is required" }, 400);
   }
   const events = Array.isArray(body?.events) ? body.events : [];
-  if (events.length === 0 || events.length > 20) {
-    return json({ error: "events must contain between 1 and 20 items" }, 400);
-  }
-
+  if (events.length === 0 || events.length > 20) return json({ error: "events must contain between 1 and 20 items" }, 400);
   const results = [];
   for (const event of events) {
-    if (!event || !event.id || !event.type || event.livemode !== true) {
+    if (!event || !event.id || !event.type || (liveMode(env) && event.livemode !== true)) {
       results.push({ ok: false, error: "invalid live event" });
       continue;
     }
-
-    const eventKey = `evt:${event.id}`;
-    const previous = await readJson(env, eventKey);
-    if (previous?.status === "completed") {
-      results.push({ ok: true, duplicate: true, event_id: event.id });
-      continue;
-    }
-    if (previous?.status === "processing") {
-      const age = Date.now() - Date.parse(previous.updated_at || "");
-      if (Number.isFinite(age) && age >= 0 && age < 5 * 60 * 1000) {
-        results.push({ ok: false, event_id: event.id, error: "event is already being processed" });
-        continue;
-      }
-    }
-
-    await writeJson(env, eventKey, {
-      status: "processing",
-      event_id: event.id,
-      event_type: event.type,
-      updated_at: new Date().toISOString(),
-    }, EVENT_TTL_SECONDS);
-
-    try {
-      const result = await processEvent(event, env);
-      await writeJson(env, eventKey, {
-        status: "completed",
-        event_id: event.id,
-        event_type: event.type,
-        receipt_id: result.receipt_id || null,
-        updated_at: new Date().toISOString(),
-      }, EVENT_TTL_SECONDS);
-      results.push({ ok: true, event_id: event.id, ...result });
-    } catch (error) {
-      const message = errorText(error);
-      await writeJson(env, eventKey, {
-        status: "pending",
-        event_id: event.id,
-        event_type: event.type,
-        updated_at: new Date().toISOString(),
-        last_error: message,
-      }, EVENT_TTL_SECONDS);
-      results.push({ ok: false, event_id: event.id, error: message });
-    }
+    const outcome = await runEventOnce(event, env);
+    results.push({ ok: outcome.ok, event_id: event.id, ...outcome.body });
   }
-
-  const ok = results.every((result) => result.ok);
+  const ok = results.every((r) => r.ok);
   return json({ ok, results }, ok ? 200 : 502);
 }
 
 function handleHealth(env, head = false) {
-  return json({
-    ok: true,
-    service: "qector-fulfilment",
-    email_provider: emailProvider(env),
-    live_mode: env.STRIPE_LIVEMODE !== "false",
-  }, 200, head);
+  return json(
+    {
+      ok: true,
+      service: "qector-fulfilment",
+      version: "2.0",
+      email_provider: emailProviders(env).join("+") || "unconfigured",
+      live_mode: liveMode(env),
+      signing_key: Boolean(env.QECTOR_LICENSE_PRIVATE_KEY_B64),
+      trials: Boolean(env.QECTOR_LICENSE_PRIVATE_KEY_B64) && env.TRIALS_ENABLED !== "false",
+    },
+    200,
+    head,
+  );
+}
+
+async function handleRevokedList(env, head = false) {
+  const list = (await readJson(env, "crl")) || [];
+  const body = ["# QECTOR licence revocation list (receipt ids, one per line)", `# generated ${new Date().toISOString()}`, ...list].join("\n") + "\n";
+  return new Response(head ? null : body, {
+    status: 200,
+    headers: { ...API_SECURITY_HEADERS, "cache-control": "public, max-age=300", "content-type": "text/plain; charset=utf-8" },
+  });
 }
 
 async function handleWebhook(request, env) {
@@ -184,108 +177,146 @@ async function handleWebhook(request, env) {
     console.error("[qector] LICENSES KV binding is not configured");
     return json({ error: "server misconfigured" }, 500);
   }
-
   const raw = await request.text();
-  const signature = request.headers.get("stripe-signature") || "";
   let event;
   try {
-    event = await verifyStripeSignature(raw, signature, env.STRIPE_WEBHOOK_SECRET);
+    event = await verifyStripeSignature(raw, request.headers.get("stripe-signature") || "", env.STRIPE_WEBHOOK_SECRET);
   } catch (error) {
-    console.warn("[qector] signature rejected:", error instanceof Error ? error.message : String(error));
+    console.warn("[qector] signature rejected:", errorText(error));
     return json({ error: "signature verification failed" }, 400);
   }
+  if (!event.id || !event.type) return json({ error: "event id and type are required" }, 400);
+  if (liveMode(env) && event.livemode !== true) return json({ error: "live endpoint received a non-live event" }, 400);
+  const outcome = await runEventOnce(event, env);
+  if (outcome.busy) return json({ error: "event is already being processed" }, 409);
+  if (!outcome.ok) return json({ error: "fulfilment pending", retryable: true }, 500);
+  return json({ received: true, ...outcome.body });
+}
 
-  if (!event.id || !event.type) {
-    return json({ error: "event id and type are required" }, 400);
-  }
-
-  // The endpoint is live-only. Returning 400 prevents an accidentally sent
-  // test event from being treated as a real entitlement.
-  if (env.STRIPE_LIVEMODE !== "false" && event.livemode !== true) {
-    return json({ error: "live endpoint received a non-live event" }, 400);
-  }
-
+// Idempotent event execution shared by the webhook and reconciliation.
+async function runEventOnce(event, env) {
   const eventKey = `evt:${event.id}`;
   const previous = await readJson(env, eventKey);
-  if (previous?.status === "completed") {
-    return json({ received: true, duplicate: true });
-  }
+  if (previous?.status === "completed") return { ok: true, body: { duplicate: true } };
   if (previous?.status === "processing") {
     const age = Date.now() - Date.parse(previous.updated_at || "");
-    if (Number.isFinite(age) && age >= 0 && age < 5 * 60 * 1000) {
-      // Stripe retries a non-2xx response. This avoids acknowledging a
-      // concurrent request before the first request has persisted its result.
-      return json({ error: "event is already being processed" }, 409);
-    }
+    if (Number.isFinite(age) && age >= 0 && age < 5 * 60 * 1000) return { ok: false, busy: true, body: { error: "event is already being processed" } };
   }
-
-  await writeJson(env, eventKey, {
-    status: "processing",
-    event_id: event.id,
-    event_type: event.type,
-    updated_at: new Date().toISOString(),
-  }, EVENT_TTL_SECONDS);
-
+  const stamp = { event_id: event.id, event_type: event.type };
+  await writeJson(env, eventKey, { status: "processing", ...stamp, updated_at: nowIso() }, EVENT_TTL_SECONDS);
   try {
     const result = await processEvent(event, env);
-    await writeJson(env, eventKey, {
-      status: "completed",
-      event_id: event.id,
-      event_type: event.type,
-      receipt_id: result.receipt_id || null,
-      updated_at: new Date().toISOString(),
-    }, EVENT_TTL_SECONDS);
-    return json({ received: true, ...result });
+    await writeJson(env, eventKey, { status: "completed", ...stamp, receipt_id: result.receipt_id || null, updated_at: nowIso() }, EVENT_TTL_SECONDS);
+    return { ok: true, body: result };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    await writeJson(env, eventKey, {
-      status: "pending",
-      event_id: event.id,
-      event_type: event.type,
-      updated_at: new Date().toISOString(),
-      last_error: message.slice(0, 300),
-    }, EVENT_TTL_SECONDS);
+    const message = errorText(error);
+    await writeJson(env, eventKey, { status: "pending", ...stamp, updated_at: nowIso(), last_error: message }, EVENT_TTL_SECONDS);
     console.error("[qector] fulfilment failed:", message);
-    return json({ error: "fulfilment pending", retryable: true }, 500);
+    return { ok: false, body: { error: message } };
   }
 }
+
+async function handleTrial(request, env) {
+  if (!env.LICENSES || !env.QECTOR_LICENSE_PRIVATE_KEY_B64 || env.TRIALS_ENABLED === "false") {
+    return json({ error: "trials are not available right now" }, 503);
+  }
+  const origin = request.headers.get("origin") || "";
+  if (origin && !allowedOrigin(origin, env)) return json({ error: "forbidden origin" }, 403);
+  let body = {};
+  try {
+    const type = request.headers.get("content-type") || "";
+    if (type.includes("application/json")) body = await request.json();
+    else body = Object.fromEntries((await request.formData()).entries());
+  } catch {
+    return json({ error: "send a JSON or form body" }, 400);
+  }
+  // Honeypot field: real browsers leave it empty.
+  if (body.website) return json({ ok: true, message: "Check your inbox for your trial token." }, 202, false, origin, env);
+  if (body.accept_terms !== true && body.accept_terms !== "on" && body.accept_terms !== "true") {
+    return json({ error: "please accept the licence terms" }, 400, false, origin, env);
+  }
+  let email;
+  try {
+    email = normalizeEmail(body.email);
+  } catch {
+    return json({ error: "a valid work e-mail is required" }, 400, false, origin, env);
+  }
+  if (env.TURNSTILE_SECRET) {
+    const ok = await verifyTurnstile(String(body["cf-turnstile-response"] || ""), request.headers.get("cf-connecting-ip") || "", env);
+    if (!ok) return json({ error: "verification failed, please retry" }, 400, false, origin, env);
+  }
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
+  const ipKey = `trialip:${ip}:${new Date().toISOString().slice(0, 10)}`;
+  const ipCount = Number((await env.LICENSES.get(ipKey)) || 0);
+  if (ipCount >= TRIAL_PER_IP_PER_DAY) return json({ error: "too many trial requests today from this network" }, 429, false, origin, env);
+  await env.LICENSES.put(ipKey, String(ipCount + 1), { expirationTtl: 2 * DAY });
+
+  const emailKey = `trial:${email}`;
+  const prior = await readJson(env, emailKey);
+  // Same response either way, so the endpoint does not reveal who has a trial.
+  const accepted = { ok: true, message: "Check your inbox for your trial token. It arrives within a few minutes." };
+  if (prior) return json(accepted, 202, false, origin, env);
+
+  const receiptId = `trial_${crypto.randomUUID().replace(/-/g, "")}`;
+  const token = await signLicenseV2(receiptId, email, "trial", env);
+  const record = makeRecord(null, {
+    receipt_id: receiptId,
+    email,
+    product_tier: "trial",
+    tier: TIERS.trial.claim,
+    token,
+    expires_at: expiryIso("trial"),
+    amount_total: 0,
+    currency: "usd",
+    source: "trial",
+  });
+  await persistRecord(env, record);
+  await writeJson(env, emailKey, { receipt_id: receiptId, at: nowIso() }, TRIAL_COOLDOWN_SECONDS);
+  try {
+    await deliverCustomerEmails(record, null, env, { billing: false });
+  } catch (error) {
+    // The record is kept; reconciliation or a support request can resend.
+    console.error("[qector] trial e-mail failed:", errorText(error));
+  }
+  return json(accepted, 202, false, origin, env);
+}
+
+// ---------------------------------------------------------------------------
+// Stripe events
+// ---------------------------------------------------------------------------
 
 async function processEvent(event, env) {
   switch (event.type) {
     case "checkout.session.completed":
       return processCheckoutSession(event, env);
     case "invoice.paid":
-      return processRenewalInvoice(event, env);
+      return processInvoice(event, env);
     case "charge.refunded":
     case "charge.dispute.created":
     case "customer.subscription.deleted":
       return revokeEntitlement(event, env);
     default:
-      console.log("[qector] ignoring event type:", event.type);
       return { ignored: event.type };
   }
 }
 
 async function processCheckoutSession(event, env) {
   const session = event.data?.object || {};
-  if (session.payment_status !== "paid") {
-    console.log(`[qector] session ${session.id || "unknown"} is not paid (${session.payment_status || "unknown"})`);
+  if (session.payment_status !== "paid" && session.payment_status !== "no_payment_required") {
     return { issued: false, reason: session.payment_status || "not_paid", receipt_id: session.id || null };
   }
-  if (!session.id) {
-    throw new Error("checkout session id is missing");
-  }
-
+  if (!session.id) throw new Error("checkout session id is missing");
   const existing = await readJson(env, `lic:${session.id}`);
   const email = normalizeEmail(pickEmail(session) || existing?.email);
-  const purchasedTier = tierFromSession(session);
-  const tier = existing?.tier || canonicalTier(purchasedTier);
-  const token = existing?.token || await signLicenseV2(session.id, email, purchasedTier, env);
+  const productTier = existing?.product_tier || tierFromSession(session, env);
+  const token = existing?.token || (await signLicenseV2(session.id, email, productTier, env));
   const record = makeRecord(existing, {
     receipt_id: session.id,
     email,
-    tier,
+    product_tier: productTier,
+    tier: TIERS[productTier].claim,
     token,
+    expires_at: existing?.expires_at ?? expiryIso(productTier),
     amount_total: numberOrNull(session.amount_total),
     amount_subtotal: numberOrNull(session.amount_subtotal),
     amount_discount: numberOrNull(session.total_details?.amount_discount),
@@ -293,431 +324,161 @@ async function processCheckoutSession(event, env) {
     event_id: event.id,
     payment_intent: stringOrNull(session.payment_intent),
     invoice: stringOrNull(session.invoice),
+    subscription: stringOrNull(session.subscription),
     payment_link: stringOrNull(session.payment_link),
     billing_url: stringOrNull(session.receipt_url),
   });
-
   await persistRecord(env, record);
   const delivered = await deliverCustomerEmails(record, session, env);
-  console.log(`[qector] fulfilled receipt=${record.receipt_id} tier=${record.tier}`);
-  return {
-    issued: true,
-    license_email: delivered.license_email_status,
-    billing_email: delivered.billing_email_status,
-    receipt_id: record.receipt_id,
-  };
+  console.log(`[qector] fulfilled receipt=${record.receipt_id} tier=${productTier}`);
+  return { issued: true, tier: productTier, license_email: delivered.license_email_status, billing_email: delivered.billing_email_status, receipt_id: record.receipt_id };
 }
 
-async function processRenewalInvoice(event, env) {
+async function processInvoice(event, env) {
   const invoice = event.data?.object || {};
-  if (invoice.billing_reason !== "subscription_cycle") {
-    return { ignored: invoice.billing_reason || "invoice", receipt_id: invoice.id || null };
+  const reason = invoice.billing_reason;
+  // First subscription invoice: the checkout session already issued the token.
+  if (reason === "subscription_create") return { ignored: reason, receipt_id: invoice.id || null };
+  let productTier = null;
+  if (reason === "subscription_cycle" || reason === "subscription_update") {
+    productTier = await tierForSubscription(invoice, env);
+    if (!productTier) throw new Error(`renewal ${invoice.id} has no recorded tier; set qector_tier on the subscription and reconcile`);
+  } else if (reason === "manual") {
+    productTier = tierFromMetadataOrNull(invoice.metadata);
+    if (!productTier) return { ignored: "manual invoice without qector_tier metadata", receipt_id: invoice.id || null };
+  } else {
+    return { ignored: reason || "invoice", receipt_id: invoice.id || null };
   }
-  if (!invoice.id) {
-    throw new Error("renewal invoice id is missing");
-  }
-
+  if (!invoice.id) throw new Error("invoice id is missing");
   const existing = await readJson(env, `lic:${invoice.id}`);
   const email = normalizeEmail(invoice.customer_email || existing?.email);
-  const tier = existing?.tier || tierFromMetadata(invoice.metadata) || "solo_annual";
-  const token = existing?.token || await signLicenseV2(invoice.id, email, tier, env);
+  const token = existing?.token || (await signLicenseV2(invoice.id, email, productTier, env));
+  const subscription = stringOrNull(invoice.subscription) || stringOrNull(invoice.parent?.subscription_details?.subscription);
   const record = makeRecord(existing, {
     receipt_id: invoice.id,
     email,
-    tier,
+    product_tier: productTier,
+    tier: TIERS[productTier].claim,
     token,
+    expires_at: existing?.expires_at ?? expiryIso(productTier),
     amount_total: numberOrNull(invoice.amount_paid),
     amount_subtotal: numberOrNull(invoice.subtotal),
-    amount_discount: numberOrNull(invoice.total_discount_amounts?.[0]?.amount),
     currency: invoice.currency || "usd",
     event_id: event.id,
     invoice: invoice.id,
+    payment_intent: stringOrNull(invoice.payment_intent),
+    subscription,
     billing_url: stringOrNull(invoice.hosted_invoice_url),
   });
-
   await persistRecord(env, record);
   const delivered = await deliverCustomerEmails(record, invoice, env);
-  return {
-    issued: true,
-    renewal: true,
-    license_email: delivered.license_email_status,
-    billing_email: delivered.billing_email_status,
-    receipt_id: record.receipt_id,
-  };
+  return { issued: true, renewal: reason !== "manual", tier: productTier, license_email: delivered.license_email_status, billing_email: delivered.billing_email_status, receipt_id: record.receipt_id };
+}
+
+async function tierForSubscription(invoice, env) {
+  const subscription = stringOrNull(invoice.subscription) || stringOrNull(invoice.parent?.subscription_details?.subscription);
+  if (subscription) {
+    const recorded = await readJson(env, `sub:${subscription}`);
+    if (recorded?.product_tier && TIERS[recorded.product_tier]) return recorded.product_tier;
+  }
+  const fromMeta =
+    tierFromMetadataOrNull(invoice.subscription_details?.metadata) ||
+    tierFromMetadataOrNull(invoice.parent?.subscription_details?.metadata) ||
+    tierFromMetadataOrNull(invoice.metadata);
+  if (fromMeta) return fromMeta;
+  for (const line of invoice.lines?.data || []) {
+    const fromLine = tierFromMetadataOrNull(line.metadata) || tierFromMetadataOrNull(line.price?.metadata) || tierFromPriceId(line.price?.id || line.pricing?.price_details?.price, env);
+    if (fromLine) return fromLine;
+    const amount = numberOrNull(line.price?.unit_amount);
+    if (amount != null && AMOUNT_TIERS[amount]) return AMOUNT_TIERS[amount];
+  }
+  return null;
 }
 
 async function revokeEntitlement(event, env) {
   const object = event.data?.object || {};
-  const identifiers = [object.id, object.payment_intent, object.charge, object.subscription]
-    .filter((value) => typeof value === "string" && value.length > 0);
-  if (identifiers.length === 0) {
-    return { revoked: false };
-  }
-
+  const identifiers = [object.id, object.payment_intent, object.charge, object.subscription, object.invoice].filter((v) => typeof v === "string" && v.length > 0);
+  if (identifiers.length === 0) return { revoked: false };
+  const receipts = new Set();
   for (const identifier of identifiers) {
-    await writeJson(env, `revoked:${identifier}`, {
-      reason: event.type,
-      at: new Date().toISOString(),
-    });
-  }
-  console.log(`[qector] revoked ${identifiers[0]} (${event.type})`);
-  return { revoked: true, receipt_id: identifiers[0] };
-}
-
-function makeRecord(existing, values) {
-  return {
-    ...(existing || {}),
-    ...values,
-    issued_at: existing?.issued_at || new Date().toISOString(),
-    license_email_status: existing?.license_email_status || "pending",
-    billing_email_status: existing?.billing_email_status || "pending",
-    license_email_attempts: Number(existing?.license_email_attempts || 0),
-    billing_email_attempts: Number(existing?.billing_email_attempts || 0),
-  };
-}
-
-async function persistRecord(env, record) {
-  await writeJson(env, `lic:${record.receipt_id}`, record);
-
-  if (record.payment_intent) {
-    await writeJson(env, `pi:${record.payment_intent}`, { receipt_id: record.receipt_id });
-  }
-  if (record.invoice) {
-    await writeJson(env, `invoice:${record.invoice}`, { receipt_id: record.receipt_id });
-  }
-
-  const mailKey = `bymail:${record.email}`;
-  const prior = await readJson(env, mailKey);
-  const receipts = Array.isArray(prior) ? prior : [];
-  if (!receipts.includes(record.receipt_id)) receipts.push(record.receipt_id);
-  await writeJson(env, mailKey, receipts);
-}
-
-async function deliverCustomerEmails(record, source, env) {
-  const messages = buildCustomerMessages(record, source);
-  const pending = messages.filter(({ kind }) => record[`${kind}_email_status`] !== "sent");
-  if (pending.length === 0) return record;
-
-  const results = await Promise.allSettled(
-    pending.map(({ kind, message }) => sendWithRetry(message, `${kind}:${record.receipt_id}`, env))
-  );
-  const next = { ...record };
-  const failures = [];
-
-  results.forEach((result, index) => {
-    const kind = pending[index].kind;
-    const attemptsKey = `${kind}_email_attempts`;
-    next[attemptsKey] = Number(next[attemptsKey] || 0) + (result.status === "fulfilled" ? result.value.attempts : MAX_EMAIL_ATTEMPTS);
-    if (result.status === "fulfilled") {
-      next[`${kind}_email_status`] = "sent";
-      next[`${kind}_email_sent_at`] = new Date().toISOString();
-      next[`${kind}_email_provider`] = result.value.provider;
-      next[`${kind}_email_message_id`] = result.value.message_id || null;
-      delete next[`${kind}_email_last_error`];
-    } else {
-      next[`${kind}_email_status`] = "pending";
-      next[`${kind}_email_last_error`] = errorText(result.reason);
-      failures.push(kind);
+    for (const prefix of ["pi:", "invoice:", "sub:"]) {
+      const link = await readJson(env, `${prefix}${identifier}`);
+      if (link?.receipt_id) receipts.add(link.receipt_id);
+      for (const r of link?.receipts || []) receipts.add(r);
     }
-  });
-
-  // Persist each successful leg before reporting failure for the other leg.
-  // A Stripe retry then sends only the missing message.
-  await persistRecord(env, next);
-  if (failures.length > 0) {
-    throw new Error(`email delivery pending for: ${failures.join(", ")}`);
+    if ((await readJson(env, `lic:${identifier}`)) !== null) receipts.add(identifier);
   }
-  return next;
-}
-
-function buildCustomerMessages(record, source) {
-  const licenseText = [
-    "Your QECTOR Decoder v3 license is ready.",
-    "",
-    `Tier: ${record.tier}`,
-    `Stripe reference: ${record.receipt_id}`,
-    "",
-    "License token:",
-    "",
-    record.token,
-    "",
-    "Install the live package:",
-    "",
-    "  python -m pip install --upgrade qector-decoder-v3==1.0.0",
-    "",
-    "Activate it in a shell:",
-    `  export QECTOR_LICENSE=\"${record.token}\"`,
-    `  export QECTOR_LICENSE_KEY=\"${record.token}\"`,
-    "",
-    "Windows PowerShell:",
-    `  $env:QECTOR_LICENSE = \"${record.token}\"`,
-    `  $env:QECTOR_LICENSE_KEY = \"${record.token}\"`,
-    "",
-    "Verify offline:",
-    "  python -c \"import qector_decoder_v3 as q; print(q._is_license_active())\"",
-    "",
-    "The token is signed for this checkout email and is verified offline by qector-decoder-v3 1.0.0.",
-    `Questions: ${SUPPORT_EMAIL}`,
-  ].join("\n");
-
-  const billing = billingSummary(record, source);
-  const billingText = [
-    "QECTOR payment confirmation",
-    "",
-    `Stripe reference: ${record.receipt_id}`,
-    `Product tier: ${record.tier}`,
-    `Amount paid: ${billing.total}`,
-    billing.subtotal ? `Listed amount: ${billing.subtotal}` : null,
-    billing.discount ? `Coupon discount: ${billing.discount}` : null,
-    billing.url ? `Receipt or invoice: ${billing.url}` : null,
-    "",
-    "Your license delivery email contains the signed token and activation instructions.",
-    `Support: ${SUPPORT_EMAIL}`,
-  ].filter(Boolean).join("\n");
-
-  return [
-    {
-      kind: "license",
-      message: {
-        to: record.email,
-        subject: `Your QECTOR Decoder v3 license (${record.tier})`,
-        text: licenseText,
-        html: `<p>Your QECTOR Decoder v3 license is ready.</p><p><strong>Tier:</strong> ${escapeHtml(record.tier)}<br><strong>Stripe reference:</strong> ${escapeHtml(record.receipt_id)}</p><p><strong>License token:</strong></p><p><code>${escapeHtml(record.token)}</code></p><p>Install the live package with <code>python -m pip install --upgrade qector-decoder-v3==1.0.0</code>. Set both <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to the token. The token verifies offline.</p><p>Questions: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`,
-      },
-    },
-    {
-      kind: "billing",
-      message: {
-        to: record.email,
-        subject: `QECTOR payment confirmation (${record.receipt_id})`,
-        text: billingText,
-        html: `<p>QECTOR payment confirmation</p><p><strong>Stripe reference:</strong> ${escapeHtml(record.receipt_id)}<br><strong>Product tier:</strong> ${escapeHtml(record.tier)}<br><strong>Amount paid:</strong> ${escapeHtml(billing.total)}</p>${billing.subtotal ? `<p><strong>Listed amount:</strong> ${escapeHtml(billing.subtotal)}<br><strong>Coupon discount:</strong> ${escapeHtml(billing.discount || "included")}</p>` : ""}${billing.url ? `<p><a href="${escapeHtml(billing.url)}">Open your Stripe receipt or invoice</a></p>` : ""}<p>Your separate license delivery email contains the signed token and activation instructions.</p><p>Support: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`,
-      },
-    },
-  ];
-}
-
-function billingSummary(record, source) {
-  const currency = String(record.currency || source.currency || "usd").toUpperCase();
-  const total = record.amount_total != null ? record.amount_total : numberOrNull(source.amount_total);
-  const subtotal = record.amount_subtotal != null ? record.amount_subtotal : numberOrNull(source.amount_subtotal);
-  const discount = record.amount_discount != null ? record.amount_discount : numberOrNull(source.total_details?.amount_discount);
-  return {
-    total: formatMoney(total, currency),
-    subtotal: subtotal != null ? formatMoney(subtotal, currency) : null,
-    discount: discount != null ? formatMoney(discount, currency) : null,
-    url: record.billing_url || source.receipt_url || source.hosted_invoice_url || null,
-  };
-}
-
-async function sendWithRetry(message, deliveryKey, env) {
-  const providers = emailProviders(env);
-  if (providers.length === 0) {
-    throw new Error("no email provider configured");
+  const at = nowIso();
+  for (const identifier of [...identifiers, ...receipts]) await writeJson(env, `revoked:${identifier}`, { reason: event.type, at });
+  for (const receipt of receipts) {
+    const record = await readJson(env, `lic:${receipt}`);
+    if (record) await writeJson(env, `lic:${receipt}`, { ...record, revoked: true, revoked_at: at, revoked_reason: event.type });
   }
+  if (receipts.size > 0) {
+    const crl = (await readJson(env, "crl")) || [];
+    for (const receipt of receipts) if (!crl.includes(receipt)) crl.push(receipt);
+    await writeJson(env, "crl", crl);
+  }
+  const first = [...receipts][0] || identifiers[0];
+  console.log(`[qector] revoked ${[...receipts].join(",") || identifiers[0]} (${event.type})`);
+  return { revoked: receipts.size > 0, receipt_id: first, unmatched: receipts.size === 0 ? identifiers : undefined };
+}
 
-  let lastError;
-  for (const provider of providers) {
-    for (let attempt = 1; attempt <= MAX_EMAIL_ATTEMPTS; attempt += 1) {
-      try {
-        let result;
-        if (provider === "gmail") result = await sendViaGmail(message, deliveryKey, env);
-        else if (provider === "cloudflare") result = await sendViaCloudflareEmail(message, deliveryKey, env);
-        else result = await sendViaResend(message, deliveryKey, env);
-        return { ...result, provider, attempts: attempt };
-      } catch (error) {
-        lastError = error;
-        if (attempt < MAX_EMAIL_ATTEMPTS) await sleep(250 * 2 ** (attempt - 1));
-      }
+// ---------------------------------------------------------------------------
+// Tier resolution
+// ---------------------------------------------------------------------------
+
+export function tierFromSession(session, env = {}) {
+  const meta = tierFromMetadataOrNull(session?.metadata);
+  if (meta) return meta;
+  for (const item of session?.line_items?.data || []) {
+    const fromPrice = tierFromMetadataOrNull(item.price?.metadata) || tierFromPriceId(item.price?.id, env);
+    if (fromPrice) return fromPrice;
+  }
+  for (const field of ["amount_subtotal", "amount_total"]) {
+    const amount = session?.[field];
+    if (typeof amount === "number" && Number.isFinite(amount) && AMOUNT_TIERS[amount]) {
+      console.log(`[qector] no tier metadata; ${field} ${amount} maps to ${AMOUNT_TIERS[amount]}`);
+      return AMOUNT_TIERS[amount];
     }
   }
-  throw lastError || new Error("email provider failed");
+  // Refuse to guess: an unknown paid checkout is surfaced (500 → Stripe retries,
+  // the event shows as pending) instead of silently issuing a 60-day token.
+  throw new Error(`cannot determine the licence tier for ${session?.id || "session"} (subtotal ${session?.amount_subtotal}); add qector_tier metadata and reconcile`);
 }
 
-async function sendViaGmail(message, deliveryKey, env) {
-  const accessToken = await getGmailAccessToken(env);
-  const raw = buildGmailRaw(message, deliveryKey, env);
-  const response = await fetchWithTimeout("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ raw }),
-  });
-  if (!response.ok) {
-    const text = await response.text().catch(() => "");
-    throw new Error(`Gmail returned HTTP ${response.status} ${text.slice(0, 200)}`);
-  }
-  const body = await response.json();
-  return { message_id: body.id || null };
+export function tierFromMetadataOrNull(metadata) {
+  const raw = metadata?.qector_tier || metadata?.license_tier;
+  if (!raw) return null;
+  const tier = String(raw).trim().toLowerCase().replace(/[\s/-]+/g, "_");
+  return Object.prototype.hasOwnProperty.call(TIERS, tier) ? tier : null;
 }
 
-function buildGmailRaw(message, deliveryKey, env) {
-  const from = env.GMAIL_FROM_EMAIL || env.LICENSE_FROM_EMAIL || DEFAULT_FROM;
-  // Use the delivery key to make the MIME boundary deterministic for this message.
-  const boundary = `qector_${deliveryKey.replace(/[^a-zA-Z0-9]/g, "_")}`;
-  const headers = [
-    `From: ${from}`,
-    `To: ${message.to}`,
-    `Reply-To: ${SUPPORT_EMAIL}`,
-    `Subject: ${message.subject}`,
-    `MIME-Version: 1.0`,
-    `Content-Type: multipart/alternative; boundary="${boundary}"`,
-    `X-QECTOR-Delivery-Key: ${deliveryKey}`,
-  ].join("\r\n");
-  // MIME parts are base64-encoded so UTF-8 is safe even with Worker btoa.
-  const encodePart = (text) => {
-    const bytes = new TextEncoder().encode(text);
-    let binary = "";
-    for (const b of bytes) binary += String.fromCharCode(b);
-    return btoa(binary);
-  };
-  const body = [
-    `--${boundary}`,
-    `Content-Type: text/plain; charset="UTF-8"`,
-    `Content-Transfer-Encoding: base64`,
-    ``,
-    encodePart(message.text),
-    `--${boundary}`,
-    `Content-Type: text/html; charset="UTF-8"`,
-    `Content-Transfer-Encoding: base64`,
-    ``,
-    encodePart(message.html),
-    `--${boundary}--`,
-  ].join("\r\n");
-  const raw = `${headers}\r\n\r\n${body}`;
-  return b64url(new TextEncoder().encode(raw));
-}
-
-async function getGmailAccessToken(env) {
-  const now = Math.floor(Date.now() / 1000);
-  if (cachedGmailAccessToken && cachedGmailExpiry - 60 > now) return cachedGmailAccessToken;
-  if (cachedGmailPromise) return cachedGmailPromise;
-  if (!env.GMAIL_CLIENT_ID || !env.GMAIL_CLIENT_SECRET || !env.GMAIL_REFRESH_TOKEN) {
-    throw new Error("gmail provider not configured");
-  }
-  cachedGmailPromise = (async () => {
-    const params = new URLSearchParams({
-      client_id: env.GMAIL_CLIENT_ID,
-      client_secret: env.GMAIL_CLIENT_SECRET,
-      refresh_token: env.GMAIL_REFRESH_TOKEN,
-      grant_type: "refresh_token",
-    });
-    const response = await fetchWithTimeout("https://oauth2.googleapis.com/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params.toString(),
-    });
-    if (!response.ok) {
-      const text = await response.text().catch(() => "");
-      throw new Error(`Gmail token exchange failed HTTP ${response.status} ${text.slice(0, 200)}`);
-    }
-    const data = await response.json();
-    if (!data.access_token) throw new Error("Gmail token response missing access_token");
-    cachedGmailAccessToken = data.access_token;
-    cachedGmailExpiry = Math.floor(Date.now() / 1000) + Number(data.expires_in || 3600);
-    return cachedGmailAccessToken;
-  })();
+function tierFromPriceId(priceId, env) {
+  if (!priceId || !env.PRICE_TIERS) return null;
   try {
-    return await cachedGmailPromise;
-  } finally {
-    cachedGmailPromise = null;
+    const table = JSON.parse(env.PRICE_TIERS);
+    const tier = table[priceId];
+    return tier && TIERS[tier] ? tier : null;
+  } catch {
+    return null;
   }
 }
 
-async function sendViaCloudflareEmail(message, deliveryKey, env) {
-  const result = await env.EMAIL.send({
-    ...message,
-    from: env.LICENSE_FROM_EMAIL || DEFAULT_FROM,
-    replyTo: SUPPORT_EMAIL,
-    headers: { "X-QECTOR-Delivery-Key": deliveryKey },
-  });
-  return { message_id: result?.messageId || null };
+function expiryIso(productTier, nowMs = Date.now()) {
+  const days = TIERS[productTier].days;
+  return days == null ? null : new Date(nowMs + days * DAY * 1000).toISOString();
 }
 
-async function sendViaResend(message, deliveryKey, env) {
-  const response = await fetchWithTimeout("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-      "Idempotency-Key": deliveryKey,
-    },
-    body: JSON.stringify({
-      from: env.LICENSE_FROM_EMAIL || DEFAULT_FROM,
-      to: [message.to],
-      reply_to: SUPPORT_EMAIL,
-      subject: message.subject,
-      text: message.text,
-      html: message.html,
-      headers: { "X-QECTOR-Delivery-Key": deliveryKey },
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(`Resend returned HTTP ${response.status}`);
-  }
-  const body = await response.json();
-  return { message_id: body.id || null };
-}
+// ---------------------------------------------------------------------------
+// Token signing (format unchanged since 1.0.0)
+// ---------------------------------------------------------------------------
 
-function emailProvider(env) {
-  return emailProviders(env).join("+") || "unconfigured";
-}
-
-function emailProviders(env) {
-  const providers = [];
-  if (env.GMAIL_CLIENT_ID && env.GMAIL_CLIENT_SECRET && env.GMAIL_REFRESH_TOKEN) providers.push("gmail");
-  if (env.EMAIL && typeof env.EMAIL.send === "function") providers.push("cloudflare");
-  if (env.RESEND_API_KEY) providers.push("resend");
-  return providers;
-}
-
-async function verifyStripeSignature(payload, header, secret) {
-  const values = parseSignatureHeader(header);
-  const timestamp = Number(values.t);
-  if (!Number.isFinite(timestamp) || Math.abs(Math.floor(Date.now() / 1000) - timestamp) > SIGNATURE_TOLERANCE_SECONDS) {
-    throw new Error("timestamp outside tolerance");
-  }
-
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${timestamp}.${payload}`));
-  const expected = toHex(new Uint8Array(mac));
-  if (!values.v1.some((candidate) => timingSafeEqual(expected, candidate))) {
-    throw new Error("signature mismatch");
-  }
-  return JSON.parse(payload);
-}
-
-function parseSignatureHeader(header) {
-  const values = { t: "", v1: [] };
-  for (const item of header.split(",")) {
-    const separator = item.indexOf("=");
-    if (separator <= 0) continue;
-    const name = item.slice(0, separator).trim();
-    const value = item.slice(separator + 1).trim();
-    if (name === "t") values.t = value;
-    if (name === "v1") values.v1.push(value);
-  }
-  if (!values.t || values.v1.length === 0) throw new Error("malformed stripe-signature header");
-  return values;
-}
-
-async function signLicenseV2(receiptId, email, tier, env, nowMs = Date.now()) {
-  const cleanEmail = normalizeEmail(email);
-  const rawTier = normalizeTier(tier);
-  // Sign the canonical tier so the 1.0.0 offline tier manager (which only
-  // knows community/pro/enterprise) resolves the paid entitlement. Expiry
-  // still follows the purchased tier's duration.
-  const claims = { email: cleanEmail, rid: receiptId, tier: canonicalTier(rawTier) };
-  const days = TIER_DURATION_DAYS[rawTier];
-  if (days != null) claims.exp = Math.floor(nowMs / 1000) + days * 86400;
+export async function signLicenseV2(receiptId, email, productTier, env, nowMs = Date.now()) {
+  if (!TIERS[productTier]) throw new Error(`unknown product tier ${productTier}`);
+  const claims = { email: normalizeEmail(email), rid: receiptId, tier: TIERS[productTier].claim };
+  const days = TIERS[productTier].days;
+  if (days != null) claims.exp = Math.floor(nowMs / 1000) + days * DAY;
   const ordered = {};
   for (const key of Object.keys(claims).sort()) ordered[key] = claims[key];
   const claimsB64 = b64url(new TextEncoder().encode(JSON.stringify(ordered)));
@@ -743,47 +504,331 @@ async function signingKey(env) {
   return cachedSigningKeyPromise;
 }
 
-function pickEmail(object) {
-  return object.customer_email || object.customer_details?.email || object.metadata?.customer_email || "";
+// ---------------------------------------------------------------------------
+// Records
+// ---------------------------------------------------------------------------
+
+function makeRecord(existing, values) {
+  return {
+    ...(existing || {}),
+    ...values,
+    issued_at: existing?.issued_at || nowIso(),
+    license_email_status: existing?.license_email_status || "pending",
+    billing_email_status: existing?.billing_email_status || "pending",
+    license_email_attempts: Number(existing?.license_email_attempts || 0),
+    billing_email_attempts: Number(existing?.billing_email_attempts || 0),
+  };
 }
 
-function tierFromMetadata(metadata) {
-  return normalizeTier(metadata?.license_tier || metadata?.qector_tier || "evaluation");
+async function persistRecord(env, record) {
+  await writeJson(env, `lic:${record.receipt_id}`, record);
+  if (record.payment_intent) await writeJson(env, `pi:${record.payment_intent}`, { receipt_id: record.receipt_id });
+  if (record.invoice) await writeJson(env, `invoice:${record.invoice}`, { receipt_id: record.receipt_id });
+  if (record.subscription) {
+    const prior = (await readJson(env, `sub:${record.subscription}`)) || {};
+    const receipts = Array.isArray(prior.receipts) ? prior.receipts : [];
+    if (!receipts.includes(record.receipt_id)) receipts.push(record.receipt_id);
+    await writeJson(env, `sub:${record.subscription}`, {
+      product_tier: prior.product_tier || record.product_tier,
+      receipt_id: record.receipt_id,
+      receipts,
+    });
+  }
+  const mailKey = `bymail:${record.email}`;
+  const prior = await readJson(env, mailKey);
+  const receipts = Array.isArray(prior) ? prior : [];
+  if (!receipts.includes(record.receipt_id)) receipts.push(record.receipt_id);
+  await writeJson(env, mailKey, receipts);
 }
 
-// Purchased tier for a Checkout Session: explicit metadata wins; otherwise
-// fall back to the amount paid (manual invoices and shared payment links
-// carry no metadata, which previously minted every buyer an evaluation key).
-function tierFromSession(session) {
-  const meta = session?.metadata?.license_tier || session?.metadata?.qector_tier;
-  if (meta) return normalizeTier(meta);
-  const amount = session?.amount_total;
-  if (typeof amount === "number" && Number.isFinite(amount)) {
-    const fallback = AMOUNT_TIER_CENTS[amount];
-    if (fallback) {
-      console.log(`[qector] no tier metadata; amount ${amount} maps to ${fallback}`);
-      return fallback;
+// ---------------------------------------------------------------------------
+// E-mail
+// ---------------------------------------------------------------------------
+
+async function deliverCustomerEmails(record, source, env, { billing = true } = {}) {
+  const messages = buildCustomerMessages(record, source).filter(({ kind }) => billing || kind === "license");
+  if (!billing) record = { ...record, billing_email_status: "not_applicable" };
+  const pending = messages.filter(({ kind }) => record[`${kind}_email_status`] !== "sent");
+  if (pending.length === 0) return record;
+  const results = await Promise.allSettled(pending.map(({ kind, message }) => sendWithRetry(message, `${kind}:${record.receipt_id}`, env)));
+  const next = { ...record };
+  const failures = [];
+  results.forEach((result, index) => {
+    const kind = pending[index].kind;
+    next[`${kind}_email_attempts`] = Number(next[`${kind}_email_attempts`] || 0) + (result.status === "fulfilled" ? result.value.attempts : MAX_EMAIL_ATTEMPTS);
+    if (result.status === "fulfilled") {
+      next[`${kind}_email_status`] = "sent";
+      next[`${kind}_email_sent_at`] = nowIso();
+      next[`${kind}_email_provider`] = result.value.provider;
+      next[`${kind}_email_message_id`] = result.value.message_id || null;
+      delete next[`${kind}_email_last_error`];
+    } else {
+      next[`${kind}_email_status`] = "pending";
+      next[`${kind}_email_last_error`] = errorText(result.reason);
+      failures.push(kind);
     }
-    console.warn(`[qector] no tier metadata and unknown amount ${amount}; defaulting to evaluation`);
+  });
+  await persistRecord(env, next);
+  if (failures.length > 0) throw new Error(`email delivery pending for: ${failures.join(", ")}`);
+  return next;
+}
+
+export function buildCustomerMessages(record, source) {
+  const tierInfo = TIERS[record.product_tier] || TIERS.evaluation;
+  const validity = record.expires_at ? `Valid until: ${record.expires_at.slice(0, 10)} (UTC)` : "Valid for: all 3.x releases (perpetual)";
+  const install = 'python -m pip install --upgrade "qector-decoder-v3>=1.0,<2"';
+  const verify = `python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`;
+  const expected = tierInfo.claim === "enterprise" ? "Enterprise" : "Pro";
+  const licenseText = [
+    "Your QECTOR Decoder v3 licence is ready.",
+    "",
+    `Plan: ${tierInfo.label}`,
+    validity,
+    `Reference: ${record.receipt_id}`,
+    "",
+    "Licence token:",
+    "",
+    record.token,
+    "",
+    "1. Install or upgrade:",
+    `   ${install}`,
+    "",
+    "2. Activate (macOS / Linux):",
+    `   export QECTOR_LICENSE_KEY="${record.token}"`,
+    `   export QECTOR_LICENSE="${record.token}"`,
+    "",
+    "   Windows PowerShell:",
+    `   $env:QECTOR_LICENSE_KEY = "${record.token}"`,
+    `   $env:QECTOR_LICENSE = "${record.token}"`,
+    "",
+    "   Or save the token in ~/.qector/license.key (one line).",
+    "",
+    "3. Verify (offline, no network needed):",
+    `   ${verify}`,
+    `   It prints ${expected}.`,
+    "",
+    "Keep this token private: it is tied to this e-mail address.",
+    `Terms: ${SITE}/license/   Questions: ${SUPPORT_EMAIL}`,
+  ].join("\n");
+  const licenseHtml =
+    `<p>Your QECTOR Decoder v3 licence is ready.</p>` +
+    `<p><strong>Plan:</strong> ${escapeHtml(tierInfo.label)}<br><strong>${escapeHtml(validity.split(":")[0])}:</strong> ${escapeHtml(validity.split(": ").slice(1).join(": "))}<br><strong>Reference:</strong> ${escapeHtml(record.receipt_id)}</p>` +
+    `<p><strong>Licence token:</strong></p><p><code style="word-break:break-all">${escapeHtml(record.token)}</code></p>` +
+    `<ol><li>Install or upgrade: <code>${escapeHtml(install)}</code></li>` +
+    `<li>Set <code>QECTOR_LICENSE_KEY</code> and <code>QECTOR_LICENSE</code> to the token (or save it in <code>~/.qector/license.key</code>).</li>` +
+    `<li>Verify offline: <code>${escapeHtml(verify)}</code> prints <strong>${expected}</strong>.</li></ol>` +
+    `<p>Keep this token private: it is tied to this e-mail address.</p>` +
+    `<p><a href="${SITE}/license/">Licence terms</a> · Questions: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`;
+  const messages = [{ kind: "license", message: { to: record.email, subject: `Your QECTOR Decoder v3 licence (${tierInfo.label})`, text: licenseText, html: licenseHtml } }];
+  if (source) {
+    const billing = billingSummary(record, source);
+    const lines = [
+      "QECTOR payment confirmation",
+      "",
+      `Reference: ${record.receipt_id}`,
+      `Plan: ${tierInfo.label}`,
+      `Amount paid: ${billing.total}`,
+      billing.subtotal ? `List price: ${billing.subtotal}` : null,
+      billing.discount ? `Discount: ${billing.discount}` : null,
+      billing.url ? `Receipt or invoice: ${billing.url}` : null,
+      "",
+      "Your licence token arrives in a separate e-mail.",
+      `Refunds: ${SITE}/refund/   Support: ${SUPPORT_EMAIL}`,
+    ].filter(Boolean);
+    messages.push({
+      kind: "billing",
+      message: {
+        to: record.email,
+        subject: `QECTOR payment confirmation (${record.receipt_id})`,
+        text: lines.join("\n"),
+        html:
+          `<p>QECTOR payment confirmation</p><p><strong>Reference:</strong> ${escapeHtml(record.receipt_id)}<br><strong>Plan:</strong> ${escapeHtml(tierInfo.label)}<br><strong>Amount paid:</strong> ${escapeHtml(billing.total)}</p>` +
+          (billing.subtotal ? `<p><strong>List price:</strong> ${escapeHtml(billing.subtotal)}<br><strong>Discount:</strong> ${escapeHtml(billing.discount || "none")}</p>` : "") +
+          (billing.url ? `<p><a href="${escapeHtml(billing.url)}">Open your Stripe receipt or invoice</a></p>` : "") +
+          `<p>Your licence token arrives in a separate e-mail. <a href="${SITE}/refund/">Refund policy</a> · Support: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`,
+      },
+    });
   }
-  return "evaluation";
+  return messages;
 }
 
-function canonicalTier(value) {
-  const raw = normalizeTier(value);
-  return TIER_CANONICAL[raw] || "evaluation";
+function billingSummary(record, source) {
+  const currency = String(record.currency || source.currency || "usd").toUpperCase();
+  const total = record.amount_total != null ? record.amount_total : numberOrNull(source.amount_total);
+  const subtotal = record.amount_subtotal != null ? record.amount_subtotal : numberOrNull(source.amount_subtotal);
+  const discount = record.amount_discount != null ? record.amount_discount : numberOrNull(source.total_details?.amount_discount);
+  return {
+    total: formatMoney(total, currency),
+    subtotal: subtotal != null ? formatMoney(subtotal, currency) : null,
+    discount: discount ? formatMoney(discount, currency) : null,
+    url: record.billing_url || source.receipt_url || source.hosted_invoice_url || null,
+  };
 }
 
-function normalizeTier(value) {
-  const raw = String(value || "evaluation").trim().toLowerCase().replace(/[\s/-]+/g, "_");
-  return Object.prototype.hasOwnProperty.call(TIER_DURATION_DAYS, raw) ? raw : "evaluation";
+async function sendWithRetry(message, deliveryKey, env) {
+  const providers = emailProviders(env);
+  if (providers.length === 0) throw new Error("no email provider configured");
+  let lastError;
+  for (const provider of providers) {
+    for (let attempt = 1; attempt <= MAX_EMAIL_ATTEMPTS; attempt += 1) {
+      try {
+        let result;
+        if (provider === "gmail") result = await sendViaGmail(message, deliveryKey, env);
+        else if (provider === "cloudflare") result = await sendViaCloudflareEmail(message, deliveryKey, env);
+        else result = await sendViaResend(message, deliveryKey, env);
+        return { ...result, provider, attempts: attempt };
+      } catch (error) {
+        lastError = error;
+        if (attempt < MAX_EMAIL_ATTEMPTS) await sleep(250 * 2 ** (attempt - 1));
+      }
+    }
+  }
+  throw lastError || new Error("email provider failed");
 }
 
-function normalizeEmail(value) {
+async function sendViaGmail(message, deliveryKey, env) {
+  const accessToken = await getGmailAccessToken(env);
+  const response = await fetchWithTimeout("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ raw: buildGmailRaw(message, deliveryKey, env) }),
+  });
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`Gmail returned HTTP ${response.status} ${text.slice(0, 200)}`);
+  }
+  const body = await response.json();
+  return { message_id: body.id || null };
+}
+
+function buildGmailRaw(message, deliveryKey, env) {
+  const from = env.GMAIL_FROM_EMAIL || env.LICENSE_FROM_EMAIL || DEFAULT_FROM;
+  const boundary = `qector_${deliveryKey.replace(/[^a-zA-Z0-9]/g, "_")}`;
+  const headers = [
+    `From: ${from}`,
+    `To: ${message.to}`,
+    `Reply-To: ${SUPPORT_EMAIL}`,
+    `Subject: ${encodeHeader(message.subject)}`,
+    "MIME-Version: 1.0",
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    `X-QECTOR-Delivery-Key: ${deliveryKey}`,
+  ].join("\r\n");
+  const part = (type, text) => [`--${boundary}`, `Content-Type: ${type}; charset="UTF-8"`, "Content-Transfer-Encoding: base64", "", b64(new TextEncoder().encode(text))].join("\r\n");
+  const raw = `${headers}\r\n\r\n${part("text/plain", message.text)}\r\n${part("text/html", message.html)}\r\n--${boundary}--`;
+  return b64url(new TextEncoder().encode(raw));
+}
+
+async function getGmailAccessToken(env) {
+  const now = Math.floor(Date.now() / 1000);
+  if (cachedGmailAccessToken && cachedGmailExpiry - 60 > now) return cachedGmailAccessToken;
+  if (cachedGmailPromise) return cachedGmailPromise;
+  if (!env.GMAIL_CLIENT_ID || !env.GMAIL_CLIENT_SECRET || !env.GMAIL_REFRESH_TOKEN) throw new Error("gmail provider not configured");
+  cachedGmailPromise = (async () => {
+    const params = new URLSearchParams({ client_id: env.GMAIL_CLIENT_ID, client_secret: env.GMAIL_CLIENT_SECRET, refresh_token: env.GMAIL_REFRESH_TOKEN, grant_type: "refresh_token" });
+    const response = await fetchWithTimeout("https://oauth2.googleapis.com/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: params.toString() });
+    if (!response.ok) {
+      const text = await response.text().catch(() => "");
+      throw new Error(`Gmail token exchange failed HTTP ${response.status} ${text.slice(0, 200)}`);
+    }
+    const data = await response.json();
+    if (!data.access_token) throw new Error("Gmail token response missing access_token");
+    cachedGmailAccessToken = data.access_token;
+    cachedGmailExpiry = Math.floor(Date.now() / 1000) + Number(data.expires_in || 3600);
+    return cachedGmailAccessToken;
+  })();
+  try {
+    return await cachedGmailPromise;
+  } finally {
+    cachedGmailPromise = null;
+  }
+}
+
+async function sendViaCloudflareEmail(message, deliveryKey, env) {
+  const result = await env.EMAIL.send({ ...message, from: env.LICENSE_FROM_EMAIL || DEFAULT_FROM, replyTo: SUPPORT_EMAIL, headers: { "X-QECTOR-Delivery-Key": deliveryKey } });
+  return { message_id: result?.messageId || null };
+}
+
+async function sendViaResend(message, deliveryKey, env) {
+  const response = await fetchWithTimeout("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json", "Idempotency-Key": deliveryKey },
+    body: JSON.stringify({ from: env.LICENSE_FROM_EMAIL || DEFAULT_FROM, to: [message.to], reply_to: SUPPORT_EMAIL, subject: message.subject, text: message.text, html: message.html, headers: { "X-QECTOR-Delivery-Key": deliveryKey } }),
+  });
+  if (!response.ok) throw new Error(`Resend returned HTTP ${response.status}`);
+  const body = await response.json();
+  return { message_id: body.id || null };
+}
+
+function emailProviders(env) {
+  const providers = [];
+  if (env.GMAIL_CLIENT_ID && env.GMAIL_CLIENT_SECRET && env.GMAIL_REFRESH_TOKEN) providers.push("gmail");
+  if (env.EMAIL && typeof env.EMAIL.send === "function") providers.push("cloudflare");
+  if (env.RESEND_API_KEY) providers.push("resend");
+  return providers;
+}
+
+// ---------------------------------------------------------------------------
+// Verification helpers
+// ---------------------------------------------------------------------------
+
+export async function verifyStripeSignature(payload, header, secret, nowSeconds = Math.floor(Date.now() / 1000)) {
+  const values = parseSignatureHeader(header);
+  const timestamp = Number(values.t);
+  if (!Number.isFinite(timestamp) || Math.abs(nowSeconds - timestamp) > SIGNATURE_TOLERANCE_SECONDS) throw new Error("timestamp outside tolerance");
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${timestamp}.${payload}`));
+  const expected = toHex(new Uint8Array(mac));
+  if (!values.v1.some((candidate) => timingSafeEqual(expected, candidate))) throw new Error("signature mismatch");
+  return JSON.parse(payload);
+}
+
+function parseSignatureHeader(header) {
+  const values = { t: "", v1: [] };
+  for (const item of header.split(",")) {
+    const separator = item.indexOf("=");
+    if (separator <= 0) continue;
+    const name = item.slice(0, separator).trim();
+    const value = item.slice(separator + 1).trim();
+    if (name === "t") values.t = value;
+    if (name === "v1") values.v1.push(value);
+  }
+  if (!values.t || values.v1.length === 0) throw new Error("malformed stripe-signature header");
+  return values;
+}
+
+async function verifyTurnstile(token, ip, env) {
+  if (!token) return false;
+  const body = new URLSearchParams({ secret: env.TURNSTILE_SECRET, response: token });
+  if (ip) body.set("remoteip", ip);
+  try {
+    const response = await fetchWithTimeout("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body });
+    const data = await response.json();
+    return data.success === true;
+  } catch {
+    return false;
+  }
+}
+
+function allowedOrigin(origin, env) {
+  const allowed = String(env.TRIAL_ALLOWED_ORIGINS || "https://qector.store,https://www.qector.store").split(",").map((s) => s.trim());
+  return allowed.includes(origin);
+}
+
+// ---------------------------------------------------------------------------
+// Small utilities
+// ---------------------------------------------------------------------------
+
+function liveMode(env) {
+  return env.STRIPE_LIVEMODE !== "false";
+}
+
+function pickEmail(object) {
+  return object.customer_details?.email || object.customer_email || object.metadata?.customer_email || "";
+}
+
+export function normalizeEmail(value) {
   const email = String(value || "").trim().toLowerCase();
-  if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    throw new Error("customer email is missing or invalid");
-  }
+  if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("customer email is missing or invalid");
   return email;
 }
 
@@ -798,13 +843,12 @@ async function readJson(env, key) {
 }
 
 async function writeJson(env, key, value, expirationTtl) {
-  const options = expirationTtl ? { expirationTtl } : undefined;
-  await env.LICENSES.put(key, JSON.stringify(value), options);
+  await env.LICENSES.put(key, JSON.stringify(value), expirationTtl ? { expirationTtl } : undefined);
 }
 
 async function fetchWithTimeout(url, options) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort("email request timeout"), EMAIL_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort("request timeout"), EMAIL_TIMEOUT_MS);
   try {
     return await fetch(url, { ...options, signal: controller.signal });
   } finally {
@@ -812,17 +856,10 @@ async function fetchWithTimeout(url, options) {
   }
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function stringOrNull(value) {
-  return typeof value === "string" && value.length > 0 ? value : null;
-}
-
-function numberOrNull(value) {
-  return typeof value === "number" && Number.isFinite(value) ? value : null;
-}
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const nowIso = () => new Date().toISOString();
+const stringOrNull = (v) => (typeof v === "string" && v.length > 0 ? v : null);
+const numberOrNull = (v) => (typeof v === "number" && Number.isFinite(v) ? v : null);
 
 function formatMoney(cents, currency) {
   if (cents == null) return "not available";
@@ -838,49 +875,46 @@ function errorText(error) {
 }
 
 function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  }[character]));
+  return String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+
+function encodeHeader(value) {
+  return /^[\x20-\x7e]*$/.test(value) ? value : `=?UTF-8?B?${b64(new TextEncoder().encode(value))}?=`;
 }
 
 function b64ToBytes(value) {
   const binary = atob(String(value).replace(/\s+/g, ""));
   const bytes = new Uint8Array(binary.length);
-  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+  for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
   return bytes;
 }
 
-function b64url(bytes) {
+function b64(bytes) {
   let binary = "";
   for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return btoa(binary);
+}
+
+function b64url(bytes) {
+  return b64(bytes).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
 function toHex(bytes) {
-  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 function timingSafeEqual(left, right) {
   if (left.length !== right.length) return false;
   let difference = 0;
-  for (let index = 0; index < left.length; index += 1) difference |= left.charCodeAt(index) ^ right.charCodeAt(index);
+  for (let i = 0; i < left.length; i += 1) difference |= left.charCodeAt(i) ^ right.charCodeAt(i);
   return difference === 0;
 }
 
-function json(value, status = 200, head = false) {
-  return new Response(head ? null : JSON.stringify(value), {
-    status,
-    headers: { ...API_SECURITY_HEADERS, "content-type": "application/json; charset=utf-8" },
-  });
+function json(value, status = 200, head = false, origin = "", env = {}) {
+  const headers = { ...API_SECURITY_HEADERS, "content-type": "application/json; charset=utf-8" };
+  if (origin && allowedOrigin(origin, env)) {
+    headers["access-control-allow-origin"] = origin;
+    headers.vary = "Origin";
+  }
+  return new Response(head ? null : JSON.stringify(value), { status, headers });
 }
-
-export {
-  handleWebhook,
-  normalizeEmail,
-  signLicenseV2,
-  verifyStripeSignature,
-};
