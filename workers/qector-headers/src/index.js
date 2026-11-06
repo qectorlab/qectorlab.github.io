@@ -28,11 +28,13 @@ const SECURITY_HEADERS = {
     "upgrade-insecure-requests",
     "manifest-src 'self'",
     "worker-src 'self' blob:",
-    "script-src 'self' 'sha256-mDfvlEEbZ+pOz33Aj7pRtcA8xcbmfe1wOO1NaObDVDs=' https://js.stripe.com https://assets.calendly.com",
+    // Hashes: the js-enabled marker and the GitHub Pages SPA redirect inline
+    // scripts in index.html (recompute if either script changes).
+    "script-src 'self' 'sha256-47Y7xRUIVXITmosjladRK60OPYEE3BWeBiiCmfU0d8s=' 'sha256-2yoLb9krKtf6JSNKI8iic50UCBKaIgBtSuqyekQ5HtA=' https://js.stripe.com https://assets.calendly.com https://static.cloudflareinsights.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com",
     "img-src 'self' data: https://files.stripe.com",
     "font-src 'self' data: https://fonts.gstatic.com",
-    "connect-src 'self' https://api.stripe.com https://js.stripe.com https://api.calendly.com https://calendly.com https://pypi.org",
+    "connect-src 'self' https://cloudflareinsights.com https://api.stripe.com https://js.stripe.com https://api.calendly.com https://calendly.com https://pypi.org",
     "frame-src https://js.stripe.com https://checkout.stripe.com https://hooks.stripe.com https://calendly.com",
     "frame-ancestors 'none'",
     "form-action 'self' https://buy.stripe.com https://checkout.stripe.com https://billing.stripe.com",
