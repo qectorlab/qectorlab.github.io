@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { writeFileSync } from "node:fs";
-import worker, { tierFromSession, signLicenseV2, TIERS, AMOUNT_TIERS } from "../src/index.js";
+import worker, { tierFromSession, signLicenseV2, keyMatchesDecoder, TIERS, AMOUNT_TIERS } from "../src/index.js";
 
 const WEBHOOK_SECRET = "whsec_test_secret";
 
@@ -24,6 +24,7 @@ async function makeEnv() {
       LICENSES: new MemoryKV(),
       STRIPE_WEBHOOK_SECRET: WEBHOOK_SECRET,
       QECTOR_LICENSE_PRIVATE_KEY_B64: Buffer.from(pem).toString("base64"),
+      QECTOR_EXPECTED_PUBLIC_KEY_B64: raw.toString("base64"),
       EMAIL: { async send(message) { sent.push(message); return { messageId: `m${sent.length}` }; } },
     },
     sent,
@@ -95,7 +96,7 @@ test("checkout → licence + billing e-mail; duplicate event is idempotent", asy
   assert.ok(await verifyToken(record.token, publicKey));
   assert.equal(env.LICENSES.json("sub:sub_1").product_tier, "team");
   assert.equal(sent.length, 2);
-  assert.match(sent[0].text, /qector-decoder-v3>=1\.0,<2/);
+  assert.match(sent[0].text, /qector-decoder-v3>=1\.0\.1,<2/);
   assert.doesNotMatch(sent[0].text, /==1\.0\.0/);
   assert.match(sent[0].text, /get_license_info/);
   const again = await worker.fetch(await stripeRequest(event), env);
@@ -146,7 +147,7 @@ test("credited manual invoice with tier metadata issues a licence", async () => 
 test("refund revokes the token's receipt id and publishes it in the CRL", async () => {
   const { env } = await makeEnv();
   await worker.fetch(await stripeRequest(checkout("ref1", { metadata: { qector_tier: "pro_annual" }, amount_subtotal: 79000, amount_total: 79000, payment_intent: "pi_ref" })), env);
-  const refund = { id: "evt_refund", type: "charge.refunded", livemode: true, data: { object: { id: "ch_1", payment_intent: "pi_ref" } } };
+  const refund = { id: "evt_refund", type: "charge.refunded", livemode: true, data: { object: { id: "ch_1", payment_intent: "pi_ref", refunded: true } } };
   const res = await worker.fetch(await stripeRequest(refund), env);
   assert.equal((await res.json()).revoked, true);
   assert.equal(env.LICENSES.json("lic:cs_live_ref1").revoked, true);
@@ -194,7 +195,80 @@ test("trial: one token per address per year, honeypot, terms, per-IP cap, no ora
 test("health reports configuration without secrets", async () => {
   const { env } = await makeEnv();
   const body = await (await worker.fetch(new Request("https://qector.store/stripe/health"), env)).json();
-  assert.equal(body.version, "2.0");
+  assert.equal(body.version, "2.1");
+  assert.equal(body.key_matches_decoder, true);
   assert.equal(body.signing_key, true);
   assert.ok(!JSON.stringify(body).includes("PRIVATE"));
+});
+
+test("plan names and e-mails carry no user or seat counts", async () => {
+  for (const [name, info] of Object.entries(TIERS)) assert.doesNotMatch(info.label, /user|seat/i, name);
+  const { env, sent } = await makeEnv();
+  await worker.fetch(await stripeRequest(checkout("lab1", { metadata: { qector_tier: "lab" }, subscription: "sub_lab" })), env);
+  for (const m of sent) assert.doesNotMatch(m.text + m.html + m.subject, /users|seat/i);
+  assert.match(sent[0].text, /It prints Enterprise\./);
+});
+
+test("delayed payment: unpaid completion waits, async_payment_succeeded issues once", async () => {
+  const { env, sent } = await makeEnv();
+  const unpaid = checkout("ach1", { metadata: { qector_tier: "pro_annual" }, payment_status: "unpaid" });
+  const first = await (await worker.fetch(await stripeRequest(unpaid), env)).json();
+  assert.equal(first.issued, false);
+  assert.equal(sent.length, 0);
+  const paid = { ...unpaid, id: "evt_ach1_paid", type: "checkout.session.async_payment_succeeded", data: { object: { ...unpaid.data.object, payment_status: "paid" } } };
+  const second = await (await worker.fetch(await stripeRequest(paid), env)).json();
+  assert.equal(second.issued, true);
+  assert.equal(decodeClaims(env.LICENSES.json("lic:cs_live_ach1").token).tier, "pro");
+  assert.equal(sent.length, 2);
+});
+
+test("partial refund keeps the licence; full refund revokes", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(checkout("pr1", { metadata: { qector_tier: "pro_perpetual" }, payment_intent: "pi_pr1" })), env);
+  const partial = { id: "evt_pr_partial", type: "charge.refunded", livemode: true, data: { object: { id: "ch_pr", payment_intent: "pi_pr1", refunded: false, amount_refunded: 500 } } };
+  const p = await (await worker.fetch(await stripeRequest(partial), env)).json();
+  assert.equal(p.revoked, false);
+  assert.notEqual(env.LICENSES.json("lic:cs_live_pr1").revoked, true);
+  assert.doesNotMatch(await (await worker.fetch(new Request("https://qector.store/stripe/revoked.txt"), env)).text(), /cs_live_pr1/);
+  const full = { ...partial, id: "evt_pr_full", data: { object: { ...partial.data.object, refunded: true } } };
+  assert.equal((await (await worker.fetch(await stripeRequest(full), env)).json()).revoked, true);
+  assert.match(await (await worker.fetch(new Request("https://qector.store/stripe/revoked.txt"), env)).text(), /^cs_live_pr1$/m);
+});
+
+test("dispute revokes", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(checkout("dp1", { metadata: { qector_tier: "pro_monthly" }, payment_intent: "pi_dp1" })), env);
+  const dispute = { id: "evt_dp", type: "charge.dispute.created", livemode: true, data: { object: { id: "dp_1", charge: "ch_dp", payment_intent: "pi_dp1" } } };
+  assert.equal((await (await worker.fetch(await stripeRequest(dispute), env)).json()).revoked, true);
+});
+
+test("cancelled subscription is not revoked: the token runs to its expiry", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(checkout("cx1", { metadata: { qector_tier: "pro_annual" }, subscription: "sub_cx1", payment_intent: "pi_cx1" })), env);
+  const del = { id: "evt_cx_del", type: "customer.subscription.deleted", livemode: true, data: { object: { id: "sub_cx1" } } };
+  const body = await (await worker.fetch(await stripeRequest(del), env)).json();
+  assert.equal(body.revoked, false);
+  assert.equal(body.cancelled, true);
+  const rec = env.LICENSES.json("lic:cs_live_cx1");
+  assert.notEqual(rec.revoked, true);
+  assert.ok(rec.subscription_ended_at);
+  assert.doesNotMatch(await (await worker.fetch(new Request("https://qector.store/stripe/revoked.txt"), env)).text(), /cs_live_cx1/);
+});
+
+test("key guard: a signing key that does not match the decoder issues nothing and stays retryable", async () => {
+  const { env, sent } = await makeEnv();
+  const other = await makeEnv();
+  env.QECTOR_EXPECTED_PUBLIC_KEY_B64 = other.env.QECTOR_EXPECTED_PUBLIC_KEY_B64;
+  assert.equal(await keyMatchesDecoder(env), false);
+  const res = await worker.fetch(await stripeRequest(checkout("kg1", { metadata: { qector_tier: "lab" } })), env);
+  assert.equal(res.status, 500);
+  assert.equal(sent.length, 0);
+  assert.equal(env.LICENSES.json("lic:cs_live_kg1"), null);
+  assert.equal((await (await worker.fetch(new Request("https://qector.store/stripe/health"), env)).json()).key_matches_decoder, false);
+});
+
+test("production default: the embedded decoder key is the one checked", async () => {
+  const { env } = await makeEnv();
+  delete env.QECTOR_EXPECTED_PUBLIC_KEY_B64;
+  assert.equal(await keyMatchesDecoder(env), false, "a random test key must not match the production decoder key");
 });

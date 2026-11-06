@@ -20,6 +20,21 @@
 //     per address per 365 days, with per-IP limits and optional Turnstile.
 //   * Customer e-mails no longer pin a superseded package version.
 //
+// 2.1 (2026-11-06): licence workflow hardening.
+//
+//   * Delayed payment methods: `checkout.session.async_payment_succeeded`
+//     issues the licence (the first `completed` event arrives as "unpaid").
+//   * Only a FULL refund revokes; a partial refund (tax fix, goodwill credit)
+//     keeps the licence. Disputes still revoke.
+//   * A cancelled subscription is NOT revoked: the token already expires at the
+//     end of the paid period (+14 days grace), as the refund policy promises.
+//   * Key guard: every token is verified against the decoder's embedded public
+//     key before it is stored or e-mailed. A mismatched signing key fails the
+//     event (Stripe retries) instead of mailing tokens that never verify.
+//     /stripe/health reports `key_matches_decoder`.
+//   * Customer e-mails pin >=1.0.1 (1.0.0 refused GPU for Pro) and plan names
+//     carry no user counts.
+//
 // Token format is unchanged: v2.{base64url(JSON claims)}.{base64url(Ed25519 sig
 // over the claims segment)}; claims = {email, exp?, rid, tier} with keys sorted.
 // `tier` is always one the decoder understands (evaluation, pro, enterprise),
@@ -42,15 +57,15 @@ export const TIERS = Object.freeze({
   pro_monthly: { claim: "pro", days: 31 + 14, label: "Pro (monthly)" },
   pro_annual: { claim: "pro", days: 366 + 14, label: "Pro (annual)" },
   pro_perpetual: { claim: "pro", days: null, label: "Pro Perpetual (3.x)" },
-  team: { claim: "pro", days: 366 + 14, label: "Team (annual, up to 10 users)" },
-  lab: { claim: "enterprise", days: 366 + 14, label: "Lab (annual, up to 25 users)" },
+  team: { claim: "pro", days: 366 + 14, label: "Team (annual)" },
+  lab: { claim: "enterprise", days: 366 + 14, label: "Lab (annual)" },
   enterprise: { claim: "enterprise", days: 366 + 14, label: "Enterprise" },
   // Legacy names (pre-2026 links, renewals of existing subscriptions).
   commercial: { claim: "evaluation", days: 60, label: "Commercial Evaluation (60 days)" },
   solo_annual: { claim: "pro", days: 366 + 14, label: "Solo (annual)" },
   solo_perpetual: { claim: "pro", days: null, label: "Solo Perpetual" },
   startup: { claim: "pro", days: 366 + 14, label: "Startup (annual)" },
-  // Professional ($11,500/yr, 25 users) paid more than Lab: same entitlement.
+  // Legacy Professional ($11,500/yr) paid more than Lab: same entitlement.
   professional: { claim: "enterprise", days: 366 + 14, label: "Professional (annual)" },
 });
 
@@ -143,15 +158,16 @@ async function handleReconcile(request, env) {
   return json({ ok, results }, ok ? 200 : 502);
 }
 
-function handleHealth(env, head = false) {
+async function handleHealth(env, head = false) {
   return json(
     {
       ok: true,
       service: "qector-fulfilment",
-      version: "2.0",
+      version: "2.1",
       email_provider: emailProviders(env).join("+") || "unconfigured",
       live_mode: liveMode(env),
       signing_key: Boolean(env.QECTOR_LICENSE_PRIVATE_KEY_B64),
+      key_matches_decoder: await keyMatchesDecoder(env),
       trials: Boolean(env.QECTOR_LICENSE_PRIVATE_KEY_B64) && env.TRIALS_ENABLED !== "false",
     },
     200,
@@ -288,13 +304,20 @@ async function handleTrial(request, env) {
 async function processEvent(event, env) {
   switch (event.type) {
     case "checkout.session.completed":
+    case "checkout.session.async_payment_succeeded":
       return processCheckoutSession(event, env);
     case "invoice.paid":
       return processInvoice(event, env);
     case "charge.refunded":
-    case "charge.dispute.created":
-    case "customer.subscription.deleted":
+      // Partial refunds (tax corrections, goodwill credits) keep the licence.
+      if (event.data?.object?.refunded !== true) {
+        return { revoked: false, reason: "partial_refund", charge: event.data?.object?.id || null };
+      }
       return revokeEntitlement(event, env);
+    case "charge.dispute.created":
+      return revokeEntitlement(event, env);
+    case "customer.subscription.deleted":
+      return markSubscriptionEnded(event, env);
     default:
       return { ignored: event.type };
   }
@@ -395,6 +418,23 @@ async function tierForSubscription(invoice, env) {
   return null;
 }
 
+// Cancellation: no revocation. The token's `exp` already ends the licence after
+// the paid period plus grace; renewals simply stop. Records are annotated so
+// support can see the subscription ended.
+async function markSubscriptionEnded(event, env) {
+  const sub = event.data?.object?.id;
+  if (typeof sub !== "string" || !sub) return { revoked: false, cancelled: false };
+  const link = await readJson(env, `sub:${sub}`);
+  const receipts = new Set([link?.receipt_id, ...(link?.receipts || [])].filter(Boolean));
+  const at = nowIso();
+  for (const receipt of receipts) {
+    const record = await readJson(env, `lic:${receipt}`);
+    if (record) await writeJson(env, `lic:${receipt}`, { ...record, subscription_ended_at: at });
+  }
+  console.log(`[qector] subscription ${sub} ended; licence runs to its expiry`);
+  return { revoked: false, cancelled: true, subscription: sub, receipt_id: [...receipts][0] || null };
+}
+
 async function revokeEntitlement(event, env) {
   const object = event.data?.object || {};
   const identifiers = [object.id, object.payment_intent, object.charge, object.subscription, object.invoice].filter((v) => typeof v === "string" && v.length > 0);
@@ -483,7 +523,36 @@ export async function signLicenseV2(receiptId, email, productTier, env, nowMs = 
   for (const key of Object.keys(claims).sort()) ordered[key] = claims[key];
   const claimsB64 = b64url(new TextEncoder().encode(JSON.stringify(ordered)));
   const signature = await crypto.subtle.sign("Ed25519", await signingKey(env), new TextEncoder().encode(claimsB64));
+  if (!(await crypto.subtle.verify("Ed25519", await decoderPublicKey(env), signature, new TextEncoder().encode(claimsB64)))) {
+    throw new Error("signing key does not match the decoder's embedded public key; token not issued");
+  }
   return `v2.${claimsB64}.${b64url(new Uint8Array(signature))}`;
+}
+
+// Public half of the production key embedded in qector-decoder-v3
+// (license.rs PRODUCTION_PUBLIC_KEY / license.py PUBLIC_KEY_PEM). Overridable
+// only for tests via QECTOR_EXPECTED_PUBLIC_KEY_B64.
+const DECODER_PUBLIC_KEY_B64 = "Qh9t19EZ4KWZEYjY3EwHCUzUIehZBlovaMtrpLQXeGA=";
+let cachedDecoderKey = null;
+let cachedDecoderKeyB64 = "";
+async function decoderPublicKey(env) {
+  const b64 = String(env.QECTOR_EXPECTED_PUBLIC_KEY_B64 || DECODER_PUBLIC_KEY_B64);
+  if (!cachedDecoderKey || cachedDecoderKeyB64 !== b64) {
+    cachedDecoderKeyB64 = b64;
+    cachedDecoderKey = crypto.subtle.importKey("raw", b64ToBytes(b64), { name: "Ed25519" }, false, ["verify"]);
+  }
+  return cachedDecoderKey;
+}
+
+export async function keyMatchesDecoder(env) {
+  if (!env.QECTOR_LICENSE_PRIVATE_KEY_B64) return false;
+  try {
+    const probe = new TextEncoder().encode("qector-key-check");
+    const sig = await crypto.subtle.sign("Ed25519", await signingKey(env), probe);
+    return await crypto.subtle.verify("Ed25519", await decoderPublicKey(env), sig, probe);
+  } catch {
+    return false;
+  }
 }
 
 async function signingKey(env) {
@@ -576,7 +645,7 @@ async function deliverCustomerEmails(record, source, env, { billing = true } = {
 export function buildCustomerMessages(record, source) {
   const tierInfo = TIERS[record.product_tier] || TIERS.evaluation;
   const validity = record.expires_at ? `Valid until: ${record.expires_at.slice(0, 10)} (UTC)` : "Valid for: all 3.x releases (perpetual)";
-  const install = 'python -m pip install --upgrade "qector-decoder-v3>=1.0,<2"';
+  const install = 'python -m pip install --upgrade "qector-decoder-v3>=1.0.1,<2"';
   const verify = `python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`;
   const expected = tierInfo.claim === "enterprise" ? "Enterprise" : "Pro";
   const licenseText = [

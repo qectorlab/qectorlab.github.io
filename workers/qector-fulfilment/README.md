@@ -1,46 +1,60 @@
-# qector-fulfilment 2.0
+# qector-fulfilment 2.1
 
-Stripe webhook → Ed25519 licence tokens for QECTOR Decoder v3, plus a 14-day
-commercial trial endpoint. Replaces the deployed Worker: same KV namespace
-(`LICENSES`), same secrets, same token format (verifies on decoder 1.0.0 and
-1.0.1). **Two new routes** (`/stripe/trial`, `/stripe/revoked.txt`) are added in
-`wrangler.toml`; without them the trial form on /pricing posts to GitHub Pages
-and fails.
+Stripe webhook → Ed25519 licence tokens for QECTOR Decoder v3. Tokens are
+verified offline by the decoder (air-gapped; no licence server). Same KV
+namespace (`LICENSES`), same secrets and same token format as 2.0; tokens
+verify on decoder 1.0.0 and 1.0.1.
 
-## Deploy (from your existing qector-fulfilment wrangler project)
+## Deploy
 
 1. Use this folder's `src/index.js` **and** `wrangler.toml` (five routes,
-   `LICENSES` KV binding `046bed4b69c04304b1fd273da0fb96da`, `EMAIL` binding).
-2. Optional new settings (`wrangler secret put` / `[vars]`):
-   - `TRIALS_ENABLED` = `"false"` to switch trials off (on by default)
-   - `TURNSTILE_SECRET` requires a Turnstile token on trials. Leave it unset:
-     the site form does not send one yet, so setting it rejects every trial.
-   - `TRIAL_ALLOWED_ORIGINS` (default `https://qector.store,https://www.qector.store`)
-   - `PRICE_TIERS` = JSON `{"price_…":"team", …}` (belt and braces; every new
-     Price and payment link already carries `qector_tier` metadata)
-3. `npm test` (Node 20+, no dependencies) then `npx wrangler deploy`.
-4. Check `https://qector.store/stripe/health` shows `"version":"2.0"`.
+   `LICENSES` KV binding `046bed4b69c04304b1fd273da0fb96da`, `EMAIL` binding,
+   `TRIALS_ENABLED = "false"`).
+2. `npm test` (Node 20+, no dependencies), then
+   `npx wrangler deploy --config ./wrangler.toml`.
+3. Check `https://qector.store/stripe/health` shows `"version":"2.1"` and
+   `"key_matches_decoder":true`. If it is `false`, the Worker's signing key is
+   not the decoder's production key: no token will be issued (events stay
+   pending and Stripe retries) until the secret is fixed.
 
-## What changed from the deployed bundle
+The Stripe webhook endpoint must send these events:
+`checkout.session.completed`, `checkout.session.async_payment_succeeded`,
+`invoice.paid`, `charge.refunded`, `charge.dispute.created`,
+`customer.subscription.deleted`.
 
-| Area | Before | Now |
-| --- | --- | --- |
-| Tier without metadata | `amount_total` (tax-inclusive) → canonical `pro` → normalised to `evaluation`: Solo/Startup/Professional buyers got 60-day tokens | metadata → price-id table → pre-tax `amount_subtotal` → product tier; unknown amounts are held (event `pending`, Stripe retries) instead of mis-issued |
-| Renewals | invoice metadata (empty) → `evaluation` 60-day token | tier recorded at checkout for the subscription, then subscription/price metadata, then price amount; otherwise held |
-| Credited upgrades | `billing_reason: manual` ignored | issued when the invoice has `qector_tier` metadata |
-| Revocation | keyed by charge/PI, never matched a token | resolves the receipt id (token `rid`), marks the record, publishes `GET /stripe/revoked.txt` |
-| Trials | none | `POST /stripe/trial` {email, accept_terms}: 14-day Pro token by e-mail, once per address per 365 days, 3 per IP per day, honeypot, optional Turnstile, same answer whether or not a trial exists |
-| E-mail | pinned `qector-decoder-v3==1.0.0`, private `_is_license_active()` | `"qector-decoder-v3>=1.0,<2"`, plan + expiry date, `get_license_info()['tier']` check |
+Optional settings: `PRICE_TIERS` = JSON `{"price_…":"lab", …}` (every live
+payment link already carries `qector_tier` metadata), and the dormant trial
+settings `TURNSTILE_SECRET` / `TRIAL_ALLOWED_ORIGINS` (trials are off).
+
+## Behaviour
+
+| Event | Result |
+| --- | --- |
+| Checkout paid (card) | Licence token + receipt e-mailed; idempotent per event |
+| Checkout with a delayed method (bank debit) | Nothing on the "unpaid" completion; licence on `async_payment_succeeded` |
+| Renewal (`invoice.paid`) | New token with the tier recorded at checkout; unknown tiers are held, never guessed |
+| Full refund or dispute | Receipt id revoked and published at `GET /stripe/revoked.txt` |
+| Partial refund | Licence kept |
+| Subscription cancelled | Not revoked: the token runs to its expiry (paid period + 14 days grace) |
+| Signing key ≠ decoder key | Event fails and is retried; nothing is e-mailed |
+| Unknown amount without metadata | Held for reconciliation (`POST /stripe/reconcile`) |
 
 ## Tiers
 
+Licences cover the buying organisation's internal use; there are no seat counts.
+
 | Product tier | Token `tier` | Validity |
 | --- | --- | --- |
-| trial | pro | 14 days |
-| pilot, evaluation, commercial | pro / evaluation | 60 days |
+| pilot | pro | 60 days |
 | pro_monthly | pro | 45 days (31 + 14 grace) |
-| pro_annual, team, solo_annual, startup | pro | 380 days (366 + 14 grace) |
-| lab, enterprise, professional (legacy, priced above Lab) | enterprise | 380 days |
-| pro_perpetual, solo_perpetual | pro | no expiry |
+| pro_annual | pro | 380 days (366 + 14 grace) |
+| pro_perpetual | pro | no expiry |
+| lab, enterprise | enterprise | 380 days |
+| Legacy: evaluation, commercial | evaluation (decoder maps to Pro) | 60 days |
+| Legacy: team, solo_annual, startup | pro | 380 days |
+| Legacy: professional (priced above Lab) | enterprise | 380 days |
+| Legacy: solo_perpetual | pro | no expiry |
+| trial (endpoint disabled) | pro | 14 days |
 
-Customers with a decoder CRL can sync it: `curl -s https://qector.store/stripe/revoked.txt > ~/.qector/revoked.txt`.
+Air-gapped installs can apply revocations by copying
+`https://qector.store/stripe/revoked.txt` to `~/.qector/revoked.txt`.
