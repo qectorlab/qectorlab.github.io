@@ -469,97 +469,28 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/guillaume-lessard',
-    title: 'Guillaume Lessard · Founder of QECTOR and iD01t Productions',
+    title: 'Guillaume Lessard · Founder and Lead Engineer, QECTOR',
     description:
-      'Guillaume Lessard, founder of QECTOR and iD01t Productions: Rust/Python quantum error correction systems, ORCID 0009-0000-3465-3753, Longueuil, Québec.',
+      'Guillaume Lessard, founder and lead engineer of QECTOR: Rust and Python quantum error correction decoders, verifiable releases and offline licensing. Longueuil, Québec. ORCID 0009-0000-3465-3753.',
     heading: 'Guillaume Lessard',
     body: page(
       h1('Guillaume Lessard') +
-        p(
-          'Founder, software engineer, author and independent researcher, based in Longueuil, Québec. I design Rust/Python quantum error-correction systems, local MCP tooling, and release workflows where correctness claims are tied to declared workloads, reproducible artifacts, and public records. I build and support QECTOR independently from Longueuil.'
-        ) +
-        h2('Making sure you have the right Guillaume Lessard') +
-        p(
-          'It is a common Québécois name shared by several accomplished people: including a compiler engineer working on the Swift language and a real-estate executive. None of them are me, and I claim none of their work. The identifiers below are the ones I control.'
-        ) +
-        table(
-          ['Identifier', 'Value'],
-          [
-            ['ORCID', `<a href="https://orcid.org/0009-0000-3465-3753" style="color:#67e8f9;">0009-0000-3465-3753</a>`],
-            ['GitHub', `<a href="https://github.com/qectorlab" style="color:#67e8f9;">github.com/qectorlab</a>`],
-            ['PyPI', `<a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3</a>`],
-            ['Studio', `iD01t Productions, Longueuil, Québec (founded 2012)`],
-            ['itch.io', `<a href="https://id01t.itch.io/" style="color:#67e8f9;">id01t.itch.io</a>`],
-            ['Email', `<a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>`],
-          ]
-        ) +
-        h2('Background') +
-        p(
-          'My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to make things that worked in the real world. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T. iD01t Productions, founded in 2012, puts all of it under one roof; it is still one person.'
-        ) +
-        h2('Skills') +
-        ul([
-          'Systems and performance: Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
-          'Python engineering: Python 3.9-3.14, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, release signing documentation.',
-          'Quantum error correction: MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
-          'Applications and desktop: CustomTkinter GUI, runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
-          'Web and product: React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
-          'Writing and publishing: technical documentation, long-form instructional writing, audiobook production, electronic music production.',
-        ]) +
-        h2('Selected work') +
-        ul([
-           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 17 concrete decoder configurations, first stable release v1.0.0, current release v1.0.1.`,
-           `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows and Linux releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
-           '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>; <a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">normative manual DOI 10.5281/zenodo.21941046</a>; <a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">verification/proof DOI 10.5281/zenodo.22046403</a>.',
-          `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
-          'Mastering QEC and the QEC Academy instructional series.',
-        ]) +
-        p('Book a 30-minute call: <a href="https://calendly.com/qector-info/30min" style="color:#67e8f9;">calendly.com/qector-info/30min</a> · <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
+        p('Founder and lead engineer of QECTOR. I build quantum error correction decoders in Rust and Python, and the release and licensing infrastructure that lets teams trust them. Based in Longueuil, Québec. ORCID 0009-0000-3465-3753.')
     ),
     jsonLdExtra: [
       {
         '@type': 'Person',
-        '@id': `${SITE_URL}/guillaume-lessard#person`,
+        '@id': 'https://qector.store/guillaume-lessard#person',
         name: 'Guillaume Lessard',
-        givenName: 'Guillaume',
-        familyName: 'Lessard',
         identifier: '0009-0000-3465-3753',
-        jobTitle: 'Founder, Software Engineer and Independent Researcher',
-        description:
-          'Software engineer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
-        image: `${SITE_URL}/assets/g.png`,
-        url: `${SITE_URL}/guillaume-lessard`,
+        jobTitle: 'Founder and Lead Engineer, QECTOR',
+        image: 'https://qector.store/assets/g.png',
+        url: 'https://qector.store/guillaume-lessard/',
         email: 'admin@qector.store',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: '2004 De Lorimier',
-          addressLocality: 'Longueuil',
-          addressRegion: 'QC',
-          postalCode: 'J4K 3H7',
-          addressCountry: 'CA',
-        },
-        worksFor: {
-          '@type': 'Organization',
-          name: 'iD01t Productions',
-          foundingDate: '2012',
-        },
-        knowsAbout: [
-          'Quantum error correction',
-          'Minimum-weight perfect matching decoders',
-          'Belief propagation and OSD decoding',
-          'Rust',
-          'Python',
-          'GPU batch computing',
-          'Technical writing',
-        ],
-        sameAs: [
-          'https://orcid.org/0009-0000-3465-3753',
-          'https://github.com/GuillaumeLessard',
-          'https://github.com/qectorlab',
-          PYPI_URL,
-          'https://id01t.itch.io/',
-          'https://www.linkedin.com/in/qector/',
-        ],
+        address: { '@type': 'PostalAddress', addressLocality: 'Longueuil', addressRegion: 'QC', addressCountry: 'CA' },
+        worksFor: { '@type': 'Organization', name: 'iD01t Productions', foundingDate: '2012' },
+        knowsAbout: ['Quantum error correction', 'Minimum-weight perfect matching', 'Belief propagation and OSD decoding', 'qLDPC codes', 'Rust', 'Python'],
+        sameAs: ['https://orcid.org/0009-0000-3465-3753', 'https://github.com/GuillaumeLessard', 'https://github.com/qectorlab', 'https://pypi.org/project/qector-decoder-v3/', 'https://www.linkedin.com/in/qector/', 'https://id01t.itch.io/'],
       },
     ],
   },

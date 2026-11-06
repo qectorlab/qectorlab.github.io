@@ -1,0 +1,1 @@
+import{j as r}from"./vendor-react-BiHfrq0e.js";import{L as o}from"./LegalPage-OlrhtE5C.js";import{r as t}from"./terms-LnOasveG.js";import"./index-PdoH5kLF.js";import"./vendor-ui-B8TlNU4J.js";import"./vendor-gsap-a3sj5zmn.js";import"./NeuralReveal-Bsl9IGCr.js";function s(){return r.jsx(o,{doc:t})}export{s as default};

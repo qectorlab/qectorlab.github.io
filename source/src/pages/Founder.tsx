@@ -1,59 +1,80 @@
-﻿import { ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import CalendlyWidget from '../components/CalendlyWidget';
 import { CALENDLY_URL } from '../lib/config';
+import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES, WORKBENCH_RELEASES } from '../lib/releases';
 
-// Founder / biography page.
-//
-// This page exists for two reasons, and the second one is the important one:
-//
-//  1. Buyers of a one-person product want to know who is behind it.
-//  2. Entity disambiguation. "Guillaume Lessard" is a common Québécois name
-//     shared by other working professionals, and search engines currently
-//     conflate them. The Person JSON-LD below: with a sameAs list of
-//     identifiers that only this person controls (ORCID, GitHub, PyPI, itch.io,
-//     Zenodo): is the mechanism that separates the entities. Keep sameAs
-//     accurate and exhaustive; that is what does the work, not the prose.
-//
-// Everything stated here is verifiable from a linked primary source. Do not add
-// credentials, affiliations, or figures that cannot be pointed at.
+// Founder page. Two jobs:
+//  1. Tell a buyer or employer, in one screen, who builds QECTOR and why the
+//     work can be trusted.
+//  2. Entity disambiguation: the Person JSON-LD sameAs list (identifiers only
+//     this person controls) separates him from others with the same name.
+// Everything stated here must be verifiable from a linked primary source.
 
 const ORCID = 'https://orcid.org/0009-0000-3465-3753';
+const LINKEDIN = 'https://www.linkedin.com/in/qector/';
+const GITHUB = 'https://github.com/GuillaumeLessard';
+const PYPI = 'https://pypi.org/project/qector-decoder-v3/';
 
-const skillGroups = [
+const fmt = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+const v101 = PYPI_RELEASES.find((r) => r.version === '1.0.1')!;
+const v100 = PYPI_RELEASES.find((r) => r.version === '1.0.0')!;
+const first = PYPI_RELEASES[PYPI_RELEASES.length - 1];
+const workbench = WORKBENCH_RELEASES[0];
+
+const FOCUS = [
   {
-    title: 'Systems & Performance',
-    items: ['Rust', 'PyO3 bindings', 'C-adjacent FFI', 'CUDA / OpenCL batch kernels', 'Memory-layout and throughput tuning'],
+    title: 'Decoders that prove their output',
+    body: 'A Rust core behind a Python API: Union-Find, exact MWPM, BP-OSD and Relay-BP for qLDPC codes, on CPU and GPU. Every correction is checked against its syndrome, H·c = s (mod 2).',
   },
   {
-    title: 'Python Engineering',
-    items: ['Python 3.9-3.14', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering'],
+    title: 'Releases you can verify',
+    body: 'Wheels built in public CI, tested on each operating system before publishing, with Sigstore provenance, PyPI attestations and Trusted Publishing.',
   },
   {
-    title: 'Quantum Error Correction',
-    items: ['MWPM / Blossom matching', 'Union-Find decoding', 'Belief propagation + OSD (qLDPC)', 'Stim / Sinter / PyMatching integration', 'Benchmark design and reproducibility'],
+    title: 'Tools that stay offline',
+    body: 'Air-gapped licensing with Ed25519 tokens, a schema-validated MCP server for Claude, and a self-contained desktop Workbench.',
   },
-  {
-    title: 'Applications & Desktop',
-    items: ['CustomTkinter GUI', 'Self-contained runtime bundling', 'PyInstaller / Inno Setup / .deb packaging', 'Model Context Protocol (MCP) servers', 'Offline-first architecture'],
-  },
-  {
-    title: 'Web & Product',
-    items: ['React + TypeScript', 'Vite', 'Tailwind', 'SEO and structured data', 'Stripe commerce integration'],
-  },
-  {
-    title: 'Writing & Publishing',
-    items: ['Technical documentation', 'Long-form instructional writing', 'Audiobook production', 'Electronic music production', 'Independent distribution'],
-  },
+];
+
+const RECORD: { date: string; title: string; detail: string; href: string }[] = [
+  { date: v101.releaseDate, title: `QECTOR Decoder v3 ${v101.version}`, detail: '18 wheels for CPython 3.9 to 3.14, tested per OS, Sigstore provenance on every file', href: 'https://github.com/GuillaumeLessard/qector-decoder/releases/tag/v1.0.1' },
+  { date: CLAUDE_PLUGIN_RELEASE.releaseDate, title: `QECTOR Claude Plugin ${CLAUDE_PLUGIN_RELEASE.version}`, detail: 'Air-gapped, schema-validated MCP server for Claude Code and Claude Desktop', href: CLAUDE_PLUGIN_RELEASE.releaseUrl },
+  { date: workbench.releaseDate, title: `QECTOR Workbench ${workbench.version}`, detail: `Free desktop GUI for Windows and Linux, ${workbench.decoderKinds} decoder kinds, ${workbench.codeFamilies} code families`, href: workbench.releaseUrl },
+  { date: v100.releaseDate, title: 'QECTOR Decoder v3 1.0.0', detail: 'First stable release: API stability tiers, qector CLI, reference manual', href: PYPI },
+  { date: first.releaseDate, title: `First public release (${first.version})`, detail: `Published on PyPI; ${PYPI_RELEASES.length} releases to date`, href: PYPI },
+];
+
+const PUBLICATIONS = [
+  { title: 'QECTOR Decoder v3 User Manual (v1.0.0)', doi: '10.5281/zenodo.21611214' },
+  { title: 'Normative Reference Manual (v1.0.0)', doi: '10.5281/zenodo.21941046' },
+  { title: 'Verification and Proof Bundle', doi: '10.5281/zenodo.22046403' },
+];
+
+const EXPERTISE = [
+  { area: 'Quantum error correction', items: 'MWPM and Blossom, Union-Find, BP-OSD and Relay-BP for qLDPC, detector error models, Stim and Sinter' },
+  { area: 'Systems', items: 'Rust, PyO3, CUDA and OpenCL batch kernels, memory layout and throughput' },
+  { area: 'Python and release engineering', items: 'Binary wheels for Linux, Windows and macOS, PyPI Trusted Publishing, Sigstore, supply-chain gates' },
+  { area: 'Tooling and product', items: 'MCP servers, desktop apps, React and TypeScript, Stripe and licensing infrastructure' },
+];
+
+const IDS: [string, string, string?][] = [
+  ['ORCID', '0009-0000-3465-3753', ORCID],
+  ['GitHub', 'github.com/GuillaumeLessard', GITHUB],
+  ['GitHub organisation', 'github.com/qectorlab', 'https://github.com/qectorlab'],
+  ['PyPI', 'qector-decoder-v3', PYPI],
+  ['LinkedIn', 'linkedin.com/in/qector', LINKEDIN],
+  ['E-mail', 'admin@qector.store', 'mailto:admin@qector.store'],
 ];
 
 export default function Founder() {
   return (
     <>
       <SEO
-        title="Guillaume Lessard · Founder of QECTOR and iD01t Productions"
-        description="Guillaume Lessard, software engineer, author, and independent researcher in Longueuil, Québec. Founder of iD01t Productions and creator of QECTOR Decoder v3. ORCID 0009-0000-3465-3753."
+        title="Guillaume Lessard · Founder and Lead Engineer, QECTOR"
+        description="Guillaume Lessard, founder and lead engineer of QECTOR: Rust and Python quantum error correction decoders, verifiable releases and offline licensing. Longueuil, Québec. ORCID 0009-0000-3465-3753."
       />
       <JsonLd
         data={{
@@ -64,84 +85,44 @@ export default function Founder() {
           givenName: 'Guillaume',
           familyName: 'Lessard',
           identifier: '0009-0000-3465-3753',
-          jobTitle: 'Founder, Software Engineer and Independent Researcher',
+          jobTitle: 'Founder and Lead Engineer, QECTOR',
           description:
-            'Software engineer, author and independent researcher. Founder of iD01t Productions and author of the QECTOR Decoder v3 quantum error correction library.',
+            'Founder and lead engineer of QECTOR, a Rust and Python quantum error correction decoding platform. Founder of iD01t Productions.',
           image: 'https://qector.store/assets/g.png',
-          url: 'https://qector.store/guillaume-lessard',
+          url: 'https://qector.store/guillaume-lessard/',
           email: 'admin@qector.store',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: '2004 De Lorimier',
-            addressLocality: 'Longueuil',
-            addressRegion: 'QC',
-            postalCode: 'J4K 3H7',
-            addressCountry: 'CA',
-          },
-          worksFor: {
-            '@type': 'Organization',
-            name: 'iD01t Productions',
-            foundingDate: '2012',
-          },
-          knowsAbout: [
-            'Quantum error correction',
-            'Minimum-weight perfect matching decoders',
-            'Belief propagation and OSD decoding',
-            'Rust',
-            'Python',
-            'GPU batch computing',
-            'Technical writing',
-          ],
-          sameAs: [
-            ORCID,
-            'https://github.com/GuillaumeLessard',
-            'https://github.com/qectorlab',
-            'https://pypi.org/project/qector-decoder-v3/',
-            'https://id01t.itch.io/',
-            'https://www.linkedin.com/in/qector/',
-          ],
+          address: { '@type': 'PostalAddress', addressLocality: 'Longueuil', addressRegion: 'QC', addressCountry: 'CA' },
+          worksFor: { '@type': 'Organization', name: 'iD01t Productions', foundingDate: '2012', url: 'https://qector.store/' },
+          knowsAbout: ['Quantum error correction', 'Minimum-weight perfect matching', 'Belief propagation and OSD decoding', 'qLDPC codes', 'Rust', 'Python', 'GPU computing', 'Software supply-chain security'],
+          sameAs: [ORCID, GITHUB, 'https://github.com/qectorlab', PYPI, LINKEDIN, 'https://id01t.itch.io/'],
         }}
       />
 
       {/* HERO */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      <section className="relative pt-32 pb-16 md:pt-36 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-8">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10">
             <img
               src="/assets/g.png"
-              alt="Portrait of Guillaume Lessard, founder of QECTOR and iD01t Productions"
-              width={160}
-              height={160}
-              loading="lazy"
-              className="w-40 h-40 rounded-2xl object-cover border border-cyan-300/30 shadow-lg shrink-0"
+              alt="Guillaume Lessard"
+              width={176}
+              height={176}
+              fetchPriority="high"
+              className="w-44 h-44 rounded-2xl object-cover border border-cyan-300/30 shadow-lg shrink-0"
             />
             <div className="text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-300/10 border border-cyan-300/20 rounded-full text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-4">
-                Founder · Developer · Author · Independent Researcher
-              </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">
-                Guillaume Lessard
-              </h1>
-               <p className="text-secondary text-lg leading-relaxed mb-5">
-                 I am Guillaume Lessard, the founder of iD01t Productions and the creator of QECTOR. I design
-                 Rust/Python quantum error-correction systems, local MCP tooling, and release workflows where
-                 correctness claims are tied to declared workloads, reproducible artifacts, and public records.
-                 I build and support the platform independently from Longueuil, Québec.
-               </p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-2 text-xs">
-                <a href={ORCID} target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
-                  ORCID 0009-0000-3465-3753
-                </a>
-                <a href="https://github.com/qectorlab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
-                  GitHub
-                </a>
-                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary hover:text-cyan-300 hover:border-cyan-300/30 transition-all">
-                  PyPI
-                </a>
-                <span className="inline-flex items-center min-h-[44px] px-3 py-1.5 bg-surface border border-gridline rounded-full text-secondary">
-                  iD01t Productions
-                </span>
+              <p className="text-cyan-300 text-sm font-semibold tracking-wide mb-2">Founder and Lead Engineer, QECTOR</p>
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-4">Guillaume Lessard</h1>
+              <p className="text-secondary text-lg leading-relaxed mb-6 max-w-2xl">
+                I build quantum error correction decoders in Rust and Python, and the release and licensing infrastructure that lets
+                teams trust them: corrections checked against their syndromes, wheels with verifiable provenance, and licences that work
+                air-gapped. Based in Longueuil, Québec.
+              </p>
+              <div className="flex flex-wrap justify-center md:justify-start gap-3">
+                <a href="#book" className="btn-gold px-6 py-3 text-sm">Book a call</a>
+                <a href="mailto:admin@qector.store" className="btn-outline px-6 py-3 text-sm">admin@qector.store</a>
+                <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="btn-outline px-6 py-3 text-sm">LinkedIn</a>
               </div>
             </div>
           </div>
@@ -149,172 +130,113 @@ export default function Founder() {
       </section>
 
       <section className="section-padding pb-24">
-        <div className="max-w-4xl mx-auto space-y-10">
+        <div className="max-w-5xl mx-auto space-y-14">
 
-          {/* DISAMBIGUATION */}
-          <div className="card-surface border-gold-400/25">
-            <h2 className="text-xl font-bold mb-3">Making sure you have the right Guillaume Lessard</h2>
-            <p className="text-secondary text-sm leading-relaxed mb-4">
-              It is a common Québécois name, and several accomplished professionals share it, including a compiler engineer who works
-              on Swift and a real estate executive. None of them are me, and I claim none of their work. If you are
-              evaluating QECTOR, verifying an invoice, or checking a citation, these are the primary identifiers I control:
+          {/* FOCUS */}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">What I work on</h2>
+            <div className="grid md:grid-cols-3 gap-5">
+              {FOCUS.map((f) => (
+                <div key={f.title} className="card-surface">
+                  <h3 className="text-lg font-bold mb-2">{f.title}</h3>
+                  <p className="text-secondary text-sm leading-relaxed">{f.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RECORD */}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Track record</h2>
+            <p className="text-secondary text-sm mb-6">Public releases, newest first. Each links to its release page.</p>
+            <ol className="relative border-l border-gridline ml-2 space-y-6">
+              {RECORD.map((r) => (
+                <li key={r.title} className="pl-6 relative">
+                  <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-cyan-300" aria-hidden="true" />
+                  <time dateTime={r.date} className="text-xs font-mono text-muted-foreground">{fmt(r.date)}</time>
+                  <h3 className="font-semibold text-primary">
+                    <a href={r.href} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300">{r.title}</a>
+                  </h3>
+                  <p className="text-secondary text-sm">{r.detail}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* PUBLICATIONS */}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Publications and records</h2>
+            <p className="text-secondary text-sm mb-6">
+              Manuals and verification material are archived with DOIs on Zenodo and linked to my{' '}
+              <a href={ORCID} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">ORCID record</a>.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              {[
-                ['ORCID', '0009-0000-3465-3753', ORCID],
-                ['GitHub', 'github.com/qectorlab', 'https://github.com/qectorlab'],
-                ['PyPI', 'qector-decoder-v3', 'https://pypi.org/project/qector-decoder-v3/'],
-                ['Studio', 'iD01t Productions, Longueuil QC'],
-                ['itch.io', 'id01t.itch.io', 'https://id01t.itch.io/'],
-                ['Email', 'admin@qector.store', 'mailto:admin@qector.store'],
-              ].map(([label, value, href]) => {
-                const body = (
-                  <>
-                    <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-0.5">{label}</div>
-                    <div className="text-cyan-300 font-mono text-xs break-all">{value}</div>
-                  </>
-                );
-                const cellClass = 'p-3 bg-void border border-gridline rounded-xl';
-                return href ? (
-                  <a
-                    key={label}
-                    href={href}
-                    target={href.startsWith('mailto') ? undefined : '_blank'}
-                    rel="noopener noreferrer"
-                    className={`${cellClass} hover:border-cyan-300/40 transition-colors`}
-                  >
-                    {body}
-                  </a>
-                ) : (
-                  <span key={label} className={cellClass}>
-                    {body}
-                  </span>
-                );
-              })}
-            </div>
-           </div>
-
-           <div className="card-surface border-cyan-300/25">
-             <h2 className="text-xl font-bold mb-3">Professional Profile</h2>
-             <p className="text-secondary text-sm leading-relaxed mb-4">
-               My work combines more than two decades of software engineering with focused quantum error-correction
-               research. QECTOR Decoder v3 is published as the stable <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3 1.0.x</code>
-               Rust/PyO3 package; its companion Claude Plugin is released at <code className="text-cyan-300 font-mono text-xs">v2.0.1</code>.
-               I publish the user manual, normative reference manual, and certification/proof material so identity,
-               software version, and evidence can be checked independently.
-             </p>
-             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-               <a href="https://doi.org/10.5281/zenodo.21611214" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">v1.0.0 user manual<br /><span className="font-mono">10.5281/zenodo.21611214</span></a>
-               <a href="https://doi.org/10.5281/zenodo.21941046" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Normative reference manual<br /><span className="font-mono">10.5281/zenodo.21941046</span></a>
-               <a href="https://doi.org/10.5281/zenodo.22046403" target="_blank" rel="noopener noreferrer" className="p-3 bg-void border border-gridline rounded-xl text-cyan-300 hover:border-cyan-300/40 transition-colors">Verification and proof bundle<br /><span className="font-mono">10.5281/zenodo.22046403</span></a>
-             </div>
-           </div>
-
-           {/* BACKGROUND */}
-          <div className="card-surface">
-            <h2 className="text-2xl font-bold mb-4">Background</h2>
-            <div className="space-y-4 text-secondary text-sm leading-relaxed">
-              <p>
-                My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to
-                make things that worked in the real world. That has been the method ever since:
-                pick the problem, learn what the problem requires, ship the result, publish the evidence.
-              </p>
-              <p>
-                For most of the last twenty years that meant building high-performance applications and tools. 
-                I founded{' '}
-                <span className="text-secondary">iD01t Productions</span>{' '}
-                in 2012. QECTOR serves as its dedicated QEC software division, delivering robust decoder pipelines for research and production environments.
-              </p>
-               <p>
-                 Quantum error correction is where that method currently points. QECTOR Decoder v3 is a Rust core
-                 behind a Python API implementing 17+ decoder configurations, with v1.0.0 (August 2026) as the first stable release and v1.0.1 as the current one
-                 (2026-08-06). The public contract separates mathematical correctness from machine-specific performance:
-                 decodes can be checked against the declared syndrome relation, while local benchmark results carry
-                 their workload, environment, raw artifact, and hash. The qector Claude Plugin v2.0.1 extends the same
-                 evidence-first approach into local Claude Code and Claude Desktop workflows.
-               </p>
-              <p className="text-primary italic border-l-2 border-cyan-300/40 pl-4">
-                We ship. Even tired. Even messy. Still shipping.
-              </p>
+            <div className="grid md:grid-cols-3 gap-4">
+              {PUBLICATIONS.map((p) => (
+                <a key={p.doi} href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer" className="card-surface block hover:border-cyan-300/40">
+                  <span className="block text-primary font-semibold text-sm mb-2">{p.title}</span>
+                  <span className="block font-mono text-xs text-cyan-300 break-all">doi:{p.doi}</span>
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* WHAT I'VE SHIPPED */}
+          {/* EXPERTISE */}
           <div>
-            <h2 className="text-2xl font-bold mb-5">What I've shipped</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                 { value: '17+', label: 'Decoder Configurations' },
-                 { value: '10+', label: 'Supported Topologies' },
-                 { value: '20+', label: 'Years Writing Software' },
-                 { value: 'v2.0.1', label: 'Claude Plugin Release' },
-              ].map((s) => (
-                <div key={s.label} className="card-surface text-center">
-                  <div className="text-cyan-300 font-bold text-2xl mb-1">{s.value}</div>
-                  <div className="text-secondary text-xs">{s.label}</div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Expertise</h2>
+            <dl className="card-surface divide-y divide-gridline/60 !py-2">
+              {EXPERTISE.map((e) => (
+                <div key={e.area} className="grid md:grid-cols-[14rem_1fr] gap-1 md:gap-6 py-4">
+                  <dt className="text-primary font-semibold text-sm">{e.area}</dt>
+                  <dd className="text-secondary text-sm">{e.items}</dd>
                 </div>
               ))}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="p-5 bg-surface border border-gridline rounded-xl">
-                <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Quantum error correction</h3>
-                <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/decoder" className="text-cyan-300 hover:underline font-semibold">QECTOR Decoder v3</Link>: Rust-core Python library, 17+ decoder configurations</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/workbench" className="text-cyan-300 hover:underline font-semibold">QECTOR Workbench</Link>: free desktop GUI and comprehensive MCP server</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span><Link to="/evidence" className="text-cyan-300 hover:underline font-semibold">Evidence &amp; Provenance</Link>: validation reports and SHA-256 sealed manifests on GitHub</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Mastering QEC and the QEC Academy instructional series</span></li>
-                </ul>
-              </div>
-              <div className="p-5 bg-surface border border-gridline rounded-xl">
-                <h3 className="text-cyan-300 font-semibold mb-2 text-sm">Research &amp; Engineering</h3>
-                <ul className="text-secondary text-xs space-y-1.5">
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Work signed and traceable through ORCID and Zenodo</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Custom decoder topologies for research workflows</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>High-performance batch simulation pipelines</span></li>
-                  <li className="flex items-start gap-2"><span className="text-cyan-300">✓</span><span>Reproducible artifact workflows</span></li>
-                </ul>
-              </div>
-            </div>
+            </dl>
           </div>
 
-          {/* SKILLS */}
-          <div>
-            <h2 className="text-2xl font-bold mb-5">Skills</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {skillGroups.map((group) => (
-                <div key={group.title} className="p-5 bg-void border border-gridline rounded-xl">
-                  <h3 className="text-cyan-300 font-semibold text-sm mb-3">{group.title}</h3>
-                  <ul className="space-y-1.5">
-                    {group.items.map((item) => (
-                      <li key={item} className="text-secondary text-xs flex items-start gap-2">
-                        <ChevronRight size={14} className="text-cyan-300 mt-0.5 shrink-0" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+          {/* BEYOND QEC */}
+          <div className="grid md:grid-cols-2 gap-5">
+            <div className="card-surface">
+              <h2 className="text-xl font-bold mb-3">iD01t Productions</h2>
+              <p className="text-secondary text-sm leading-relaxed">
+                I founded iD01t Productions in 2012 as an independent studio. It publishes technical books, desktop software and games,
+                and electronic music. QECTOR is its quantum error correction line, built and supported by me directly, so you always deal
+                with the person who wrote the code.
+              </p>
+            </div>
+            <div className="card-surface">
+              <h2 className="text-xl font-bold mb-3">Verify my identity</h2>
+              <p className="text-secondary text-sm leading-relaxed mb-4">
+                Several people share my name. For invoices, citations or due diligence, these are the identifiers I control:
+              </p>
+              <ul className="grid sm:grid-cols-2 gap-2">
+                {IDS.map(([label, value, href]) => (
+                  <li key={label}>
+                    <a href={href} {...(href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className="block p-2.5 bg-void border border-gridline rounded-lg hover:border-cyan-300/40">
+                      <span className="block text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+                      <span className="block font-mono text-xs text-cyan-300 break-all">{value}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
           {/* BOOKING */}
-          <div className="card-surface">
+          <div id="book" className="card-surface scroll-mt-28">
             <h2 className="text-2xl font-bold mb-2">Book a 30-minute call</h2>
             <p className="text-secondary text-sm mb-5">
-              For a decoder audit, licensing questions, or an integration walkthrough, you will speak directly with me.
-              Prefer email? <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>.
+              Decoder evaluation, integration, licensing or research collaboration: you will speak with me directly. Prefer e-mail?{' '}
+              <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>.
             </p>
             <CalendlyWidget url={CALENDLY_URL} />
           </div>
 
-          {/* CTA */}
-          <div className="text-center pt-2">
-            <Link to="/pricing" className="btn-cyan">View Pricing &amp; Licensing</Link>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link to="/decoder" className="btn-cyan">Explore the decoder</Link>
+            <Link to="/pricing" className="btn-outline">Plans and licensing</Link>
           </div>
-
         </div>
       </section>
     </>
   );
 }
-
