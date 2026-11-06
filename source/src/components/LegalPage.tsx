@@ -81,7 +81,7 @@ export default function LegalPage({ doc }: { doc: LegalDoc }) {
                 </ul>
               )}
               {s.table && (
-                <div className="overflow-x-auto mt-3">
+                <div className="overflow-x-auto mt-3" tabIndex={0} role="region" aria-label={s.heading}>
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className="border-b border-gridline">

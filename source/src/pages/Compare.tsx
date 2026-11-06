@@ -54,7 +54,7 @@ export default function Compare() {
 
       <section className="section-padding pb-24">
         <div className="max-w-6xl mx-auto space-y-8">
-          <div className="card-surface overflow-x-auto">
+          <div className="card-surface overflow-x-auto" tabIndex={0} role="region" aria-label="Feature comparison">
             <table className="w-full min-w-[760px] text-sm text-left">
               <thead>
                 <tr className="border-b border-gridline">

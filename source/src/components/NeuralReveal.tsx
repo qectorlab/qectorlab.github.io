@@ -149,7 +149,8 @@ export default function NeuralReveal({
   // inline-block preserves the scramble layout.
   return (
     <span ref={containerRef} className={`inline-block ${className}`}>
-      <Tag aria-label={text} data-reveal-text={text}>
+      <Tag data-reveal-text={text}>
+        <span className="sr-only">{text}</span>
         <span aria-hidden="true">
           {text.split(' ').map((word, wordIndex, wordsArr) => {
             // Find the global character index for the start of this word

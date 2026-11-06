@@ -52,7 +52,7 @@ export default function Blog() {
           </div>
 
           <p className="mb-6 text-center text-sm text-slate-400">
-            Showing {visiblePosts.length} of {blogPosts.length} field notes. Claims are scoped to the <a className="text-cyan-300 hover:text-cyan-200" href="https://doi.org/10.5281/zenodo.21941046">v1.0.0 reference manual</a>.
+            Showing {visiblePosts.length} of {blogPosts.length} field notes. Claims are scoped to the <a className="text-cyan-300 underline underline-offset-2 hover:text-cyan-200" href="https://doi.org/10.5281/zenodo.21941046">v1.0.0 reference manual</a>.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

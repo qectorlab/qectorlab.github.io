@@ -32,7 +32,9 @@ const navEntries: NavEntry[] = [
   {
     label: 'Resources',
     items: [
-      { label: 'Documentation', href: '/docs', note: 'Start here' },
+      { label: 'Getting Started', href: '/getting-started', note: 'Tutorial, about 15 minutes' },
+      { label: 'Documentation', href: '/docs', note: 'Docs hub' },
+      { label: 'Use Cases', href: '/use-cases', note: 'Who it is for' },
       { label: 'User Manual', href: '/manual', note: 'Reference manual (DOI)' },
       { label: 'Technical Reference', href: '/technical-reference', note: 'API tiers and decoders' },
       { label: 'Compare', href: '/compare', note: 'QECTOR and alternatives' },
@@ -49,6 +51,7 @@ const navEntries: NavEntry[] = [
       { label: 'Founder', href: '/guillaume-lessard' },
       { label: 'Enterprise & OEM', href: '/commercial' },
       { label: 'Security & Trust', href: '/security' },
+      { label: 'Status', href: '/status' },
       { label: 'Licence Agreement', href: '/license-agreement' },
     ],
   },

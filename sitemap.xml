@@ -71,6 +71,9 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://qector.store/fr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://qector.store/" />
   </url>
+  <url><loc>https://qector.store/getting-started/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://qector.store/use-cases/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://qector.store/status/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://qector.store/compare/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://qector.store/guillaume-lessard/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://qector.store/evidence/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

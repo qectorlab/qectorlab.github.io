@@ -69,7 +69,7 @@ export const privacyEn: LegalDoc = {
         rows: [
           ['[Stripe](https://stripe.com/privacy)', 'Payments, invoices and tax; United States and Ireland.'],
           ['[Cloudflare](https://www.cloudflare.com/privacypolicy/)', 'Website delivery and security, and the licence service that stores licence records; global network, United States.'],
-          ['[Google](https://policies.google.com/privacy)', 'Sending licence e-mails (Gmail) and the website’s fonts (Google Fonts); United States.'],
+          ['[Google](https://policies.google.com/privacy)', 'Sending licence e-mails (Gmail); United States.'],
           ['[GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)', 'Website hosting (GitHub Pages) and the software’s source and releases; United States.'],
           ['[Calendly](https://calendly.com/privacy)', 'Booking calls from the Contact and Founder pages; United States.'],
         ],
@@ -79,7 +79,7 @@ export const privacyEn: LegalDoc = {
       id: 'cookies',
       heading: '6. Cookies and similar technologies',
       paras: [
-        'QECTOR sets no cookies and runs no advertising trackers. We use **Cloudflare Web Analytics**, which is cookieless: it counts page views and load times in aggregate, without cookies, fingerprinting or cross-site tracking. Some third-party features may set their own cookies: Stripe’s script on the Home and Pricing pages (fraud prevention), the Calendly widget on the Contact and Founder pages, and Cloudflare security cookies. Your browser also loads public resources from Google Fonts, PyPI and shields.io, which see your IP address.',
+        'QECTOR sets no cookies and runs no advertising trackers. We use **Cloudflare Web Analytics**, which is cookieless: it counts page views and load times in aggregate, without cookies, fingerprinting or cross-site tracking. Some third-party features may set their own cookies: Stripe’s script on the Home and Pricing pages (fraud prevention), the Calendly widget on the Contact and Founder pages, and Cloudflare security cookies. Fonts are served from qector.store itself. Some pages ask PyPI for the latest version number, so PyPI sees your IP address.',
       ],
     },
     {
@@ -183,7 +183,7 @@ export const privacyFr: LegalDoc = {
         rows: [
           ['[Stripe](https://stripe.com/fr-ca/privacy)', 'Paiements, factures et taxes; États-Unis et Irlande.'],
           ['[Cloudflare](https://www.cloudflare.com/fr-fr/privacypolicy/)', 'Diffusion et sécurité du site, et service de licences qui conserve les dossiers de licence; réseau mondial, États-Unis.'],
-          ['[Google](https://policies.google.com/privacy?hl=fr)', 'Envoi des courriels de licence (Gmail) et polices du site (Google Fonts); États-Unis.'],
+          ['[Google](https://policies.google.com/privacy?hl=fr)', 'Envoi des courriels de licence (Gmail); États-Unis.'],
           ['[GitHub](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement)', 'Hébergement du site (GitHub Pages) et du code source et des versions du logiciel; États-Unis.'],
           ['[Calendly](https://calendly.com/privacy)', 'Réservation d’appels depuis les pages Contact et Fondateur; États-Unis.'],
         ],
@@ -193,7 +193,7 @@ export const privacyFr: LegalDoc = {
       id: 'cookies',
       heading: '6. Témoins (cookies) et technologies semblables',
       paras: [
-        'QECTOR ne dépose aucun témoin et n’utilise aucun traceur publicitaire. Nous utilisons **Cloudflare Web Analytics**, sans témoin : il compte les pages vues et les temps de chargement de façon agrégée, sans témoins, empreinte numérique ni pistage intersites. Certaines fonctions de tiers peuvent déposer leurs propres témoins : le script de Stripe sur les pages Accueil et Tarifs (prévention de la fraude), le module Calendly sur les pages Contact et Fondateur, et les témoins de sécurité de Cloudflare. Votre navigateur charge aussi des ressources publiques de Google Fonts, PyPI et shields.io, qui voient votre adresse IP.',
+        'QECTOR ne dépose aucun témoin et n’utilise aucun traceur publicitaire. Nous utilisons **Cloudflare Web Analytics**, sans témoin : il compte les pages vues et les temps de chargement de façon agrégée, sans témoins, empreinte numérique ni pistage intersites. Certaines fonctions de tiers peuvent déposer leurs propres témoins : le script de Stripe sur les pages Accueil et Tarifs (prévention de la fraude), le module Calendly sur les pages Contact et Fondateur, et les témoins de sécurité de Cloudflare. Les polices sont servies par qector.store. Certaines pages demandent à PyPI le numéro de la dernière version; PyPI voit alors votre adresse IP.',
       ],
     },
     {

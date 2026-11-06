@@ -32,7 +32,7 @@ export default function CodeBlock({ code, language = 'python', filename, classNa
         </div>
       )}
       <div className="relative group">
-        <pre className="p-4 pr-14 overflow-x-auto overflow-y-auto font-mono text-sm leading-relaxed text-secondary bg-void/30 max-h-[400px]">
+        <pre tabIndex={0} aria-label="Code" className="p-4 pr-14 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 overflow-x-auto overflow-y-auto font-mono text-sm leading-relaxed text-secondary bg-void/30 max-h-[400px]">
           <code className={`language-${language}`}>{code}</code>
         </pre>
         <button

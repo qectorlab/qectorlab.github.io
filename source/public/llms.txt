@@ -52,6 +52,10 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 - Privacy policy (Québec Law 25): https://qector.store/privacy/ (French: https://qector.store/fr/privacy/)
 - Security & Trust (verification, keys, disclosure): https://qector.store/security/
 - Feature comparison with PyMatching, ldpc and fusion-blossom: https://qector.store/compare/
+- Getting started tutorial (tested on 1.0.1): https://qector.store/getting-started/
+- Use cases: https://qector.store/use-cases/
+- Live status: https://qector.store/status/
+- French home: https://qector.store/fr/
 - Contact: https://qector.store/contact
 
 ## Machine-readable

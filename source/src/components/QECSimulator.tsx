@@ -365,10 +365,10 @@ export default function QECSimulator() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h4 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider flex items-center gap-1.5">
+          <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider flex items-center gap-1.5">
             <Sparkles className="w-4 h-4" />
             Interactive QEC Simulator
-          </h4>
+          </h3>
           <p className="text-muted-foreground text-xs mt-0.5">
             Planar stabilizer code (d=3). Click edges to toggle physical errors.
           </p>

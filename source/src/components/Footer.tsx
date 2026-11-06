@@ -18,6 +18,9 @@ const platformLinks: LinkItem[] = [
 ];
 
 const researchLinks: LinkItem[] = [
+  { label: 'Getting Started', href: '/getting-started' },
+  { label: 'Use Cases', href: '/use-cases' },
+  { label: 'Compare', href: '/compare' },
   { label: 'Evidence & Reports', href: '/evidence' },
   { label: 'Technical Reference', href: '/technical-reference' },
   { label: 'Package User Manual', href: '/manual' },
@@ -29,8 +32,10 @@ const companyLinks: LinkItem[] = [
   { label: 'About QECTOR', href: '/about' },
   { label: 'Guillaume Lessard (Founder)', href: '/guillaume-lessard' },
   { label: 'iD01t Productions' },
-  { label: 'Commercial Licensing', href: '/commercial' },
-  { label: 'Contact Engineering', href: '/contact' },
+  { label: 'Enterprise & OEM', href: '/commercial' },
+  { label: 'Security & Trust', href: '/security' },
+  { label: 'Status', href: '/status' },
+  { label: 'Contact', href: '/contact' },
   { label: 'Licence Agreement', href: '/license-agreement' },
   { label: 'Terms of Service', href: '/terms' },
   { label: 'Privacy Policy', href: '/privacy' },
@@ -163,7 +168,7 @@ export default function Footer() {
               <h2 className="text-xs font-semibold uppercase tracking-widest text-white/90">Company</h2>
               <div className="flex flex-col gap-1">
                 {/* Omit legal links from this column, keep only company links */}
-                {companyLinks.slice(0, 5).map((link) => (
+                {companyLinks.slice(0, 7).map((link) => (
                   <FooterLink key={link.label} href={link.href} external={link.external} badge={link.badge}>
                     {link.label}
                   </FooterLink>

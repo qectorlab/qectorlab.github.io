@@ -20,6 +20,16 @@ export default function Changelog() {
             Version history for QECTOR Decoder v3. Exact release dates on{' '}
             <a href="https://pypi.org/project/qector-decoder-v3/#history" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">PyPI</a>. All artifacts and validation on GitHub.
           </p>
+          <div className="max-w-2xl mx-auto mt-8 p-5 rounded-2xl border border-cyan-300/20 bg-surface/60 text-left">
+            <h2 className="text-primary font-semibold mb-2">Get release alerts</h2>
+            <p className="text-secondary text-sm mb-3">No mailing list to join: subscribe with the tools you already use.</p>
+            <ul className="text-sm space-y-1.5">
+              <li><a href="https://github.com/GuillaumeLessard/qector-decoder/releases.atom" className="text-cyan-300 hover:underline">Decoder releases (Atom feed)</a> <span className="text-muted-foreground">or GitHub: Watch → Custom → Releases</span></li>
+              <li><a href="https://pypi.org/rss/project/qector-decoder-v3/releases.xml" className="text-cyan-300 hover:underline">PyPI releases (RSS)</a></li>
+              <li><a href="https://github.com/GuillaumeLessard/qector-claude-plugin/releases.atom" className="text-cyan-300 hover:underline">Claude plugin releases (Atom feed)</a></li>
+              <li><a href="/feed.xml" className="text-cyan-300 hover:underline">Blog (Atom feed)</a></li>
+            </ul>
+          </div>
         </div>
       </section>
 

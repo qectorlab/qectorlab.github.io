@@ -689,6 +689,28 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   ...LEGAL_DOCS.map(legalRoute),
   {
+    path: '/getting-started',
+    title: 'Getting Started · QECTOR Decoder v3',
+    description: 'A 15-minute tutorial for QECTOR Decoder v3: install, a first checked decode, a Stim surface-code circuit, qLDPC decoding with BP-OSD, and Sinter. Every snippet is tested against version 1.0.1.',
+    heading: 'Getting Started',
+    body: page(h1('Getting Started') + p('Install qector-decoder-v3, decode a repetition code and check H·c = s, decode a Stim surface-code circuit, decode a bivariate bicycle qLDPC code with BP-OSD, and run Sinter. Every snippet was run against 1.0.1.')),
+    jsonLdExtra: [{ '@type': 'HowTo', name: 'Getting started with QECTOR Decoder v3', totalTime: 'PT15M', step: ['Install and check', 'Your first decode, checked', 'Decode a Stim circuit', 'qLDPC with BP-OSD', 'Scale up with Sinter'].map((name, i) => ({ '@type': 'HowToStep', position: i + 1, name, url: `${SITE_URL}/getting-started/` })) }],
+  },
+  {
+    path: '/use-cases',
+    title: 'Use Cases · QECTOR',
+    description: 'How quantum hardware teams, qLDPC researchers, universities and Claude users use QECTOR Decoder v3: weighted circuit decoding, GPU batches, BP-OSD for qLDPC, free academic use and offline licensing.',
+    heading: 'Use Cases',
+    body: page(h1('Use Cases') + p('Quantum hardware teams, qLDPC code researchers, universities and public labs, and teams working with Claude: what each gets from QECTOR and which plan fits.')),
+  },
+  {
+    path: '/status',
+    title: 'Status · QECTOR',
+    description: "Live status of QECTOR's licence fulfilment, package index and revocation list. Installed software never depends on these: licences verify offline.",
+    heading: 'Status',
+    body: page(h1('Status') + p('Live checks of licence fulfilment, the PyPI package index and the revocation list. Licences verify offline, so installed software never depends on them.')),
+  },
+  {
     path: '/fr',
     title: 'QECTOR · Décodage de correction d’erreurs quantiques pour Python',
     description:

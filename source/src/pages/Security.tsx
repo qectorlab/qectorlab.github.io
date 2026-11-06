@@ -87,7 +87,7 @@ python scripts/sign_release.py --verify . \\
           </Card>
 
           <Card title="Public keys">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Public keys">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-gridline"><th className="py-2 pr-4 text-primary">Key</th><th className="py-2 text-primary">Value</th></tr>

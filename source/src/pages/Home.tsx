@@ -486,15 +486,13 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-wrap gap-3 mt-8">
-                  <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/pypi/v/qector-decoder-v3?style=flat-square&color=24e7ff" alt="qector-decoder-v3 version on PyPI" height={20} width={120} className="h-5 w-auto" loading="lazy" />
+                  <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-lg border border-gridline bg-void/50 text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/40">
+                    PyPI <span className="font-mono text-cyan-300">v{pypiVersion}</span>
                   </a>
-                  <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/github/v/release/GuillaumeLessard/qector-decoder?style=flat-square&color=24e7ff" alt="Latest qector-decoder release on GitHub" height={20} width={120} className="h-5 w-auto" loading="lazy" />
+                  <a href="https://github.com/GuillaumeLessard/qector-decoder/releases/latest" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-lg border border-gridline bg-void/50 text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/40">
+                    GitHub release, checksums and provenance
                   </a>
-                  <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/badge/GitHub-Artifacts-blue?logo=github" alt="GitHub release artifacts for QECTOR" height={20} width={120} className="h-5 w-auto" loading="lazy" />
-                  </a>
+                  <Link to="/getting-started" className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-lg border border-gridline bg-void/50 text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/40">Getting started →</Link>
                 </div>
               </div>
 
