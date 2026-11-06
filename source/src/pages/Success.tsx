@@ -65,7 +65,7 @@ export default function Success() {
               </li>
               <li>
                 <strong className="text-primary">2. Activate it.</strong> Set the token as
-                both v1.0.0 license environment variables:
+                both licence environment variables:
                 <div className="mt-2 p-4 bg-void rounded-xl">
                   <code className="text-cyan-300 text-sm break-all">
                     export QECTOR_LICENSE="&lt;your-token&gt;"

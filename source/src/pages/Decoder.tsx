@@ -35,7 +35,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     <>
       <SEO
         title="QECTOR Decoder v3 · QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v1.0.0 first stable release with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description="QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v1.0.1 current stable release (18 wheels, Python 3.9-3.14) with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
       />
       <JsonLd
         data={{
@@ -66,7 +66,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch.
-            v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI.
+            v1.0.1 is the current stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI, with build provenance for every wheel.
             A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             Stim-native. PyPI binary wheels. All artifacts published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
@@ -85,8 +85,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'Decoder Configs', value: '17', desc: 'From exact MWPM to GPU batch, across documented stability tiers' },
-              { label: 'Binary Wheels', value: '15', desc: 'Python 3.9-3.13 on Windows amd64, Linux x86_64, macOS arm64' },
-              { label: 'Stable API', value: 'v1.0.0', desc: 'First stable release with documented API stability tiers' },
+              { label: 'Binary Wheels', value: '18', desc: 'Python 3.9-3.14 on Windows amd64, Linux x86_64, macOS arm64' },
+              { label: 'Stable API', value: 'v1.0.1', desc: 'Stable release with documented API stability tiers' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} desc={m.desc} centered />
@@ -99,7 +99,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               align="left"
               maxWidth="max-w-none"
               heading="Decoding Algorithms"
-              description="Stable decoders with validation artifacts on GitHub. Experimental decoders are research-stage. v1.0.0 freezes the public API under documented stability tiers. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
+              description="Stable decoders with validation artifacts on GitHub. Experimental decoders are research-stage. Since v1.0.0 the public API is frozen under documented stability tiers. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
               className="mb-6"
             />
 
@@ -148,7 +148,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Technical Specifications</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                ['Languages', 'Rust core (PyO3) / Python 3.9-3.13 API'],
+                ['Languages', 'Rust core (PyO3) / Python 3.9-3.14 API'],
                 ['Platforms', 'Linux x86_64, macOS arm64, Windows amd64'],
                 ['GPU', 'CUDA / OpenCL batch paths (supported configurations per package docs)'],
                 ['QEC Library', 'Stim (quantum-circuit noise simulation)'],
@@ -168,7 +168,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="v1.0.0 (2026-08-06) is the first stable release. Decode runs are syndrome-validated (H·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
+              statement="v1.0.0 (2026-08-06) was the first stable release; v1.0.1 (2026-11-06) is current. Decode runs are syndrome-validated (H·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
               href="https://github.com/GuillaumeLessard/qector-decoder"
               linkLabel="GitHub Artifacts and Harness →"
             />

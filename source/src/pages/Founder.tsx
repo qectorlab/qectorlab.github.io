@@ -28,7 +28,7 @@ const skillGroups = [
   },
   {
     title: 'Python Engineering',
-    items: ['Python 3.9-3.13', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering'],
+    items: ['Python 3.9-3.14', 'NumPy / SciPy', 'Binary wheel packaging (manylinux, macOS, Windows)', 'PyPI release engineering'],
   },
   {
     title: 'Quantum Error Correction',
@@ -199,7 +199,7 @@ export default function Founder() {
              <p className="text-secondary text-sm leading-relaxed mb-4">
                My work combines more than two decades of software engineering with focused quantum error-correction
                research. QECTOR Decoder v3 is published as the stable <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3 1.0.x</code>
-               Rust/PyO3 package; its companion Claude Plugin is released at <code className="text-cyan-300 font-mono text-xs">v1.0.6</code>.
+               Rust/PyO3 package; its companion Claude Plugin is released at <code className="text-cyan-300 font-mono text-xs">v2.0.1</code>.
                I publish the user manual, normative reference manual, and certification/proof material so identity,
                software version, and evidence can be checked independently.
              </p>
@@ -227,10 +227,10 @@ export default function Founder() {
               </p>
                <p>
                  Quantum error correction is where that method currently points. QECTOR Decoder v3 is a Rust core
-                 behind a Python API implementing 17+ decoder configurations, with v1.0.0 as the first stable release
+                 behind a Python API implementing 17+ decoder configurations, with v1.0.0 (August 2026) as the first stable release and v1.0.1 as the current one
                  (2026-08-06). The public contract separates mathematical correctness from machine-specific performance:
                  decodes can be checked against the declared syndrome relation, while local benchmark results carry
-                 their workload, environment, raw artifact, and hash. The qector Claude Plugin v1.0.6 extends the same
+                 their workload, environment, raw artifact, and hash. The qector Claude Plugin v2.0.1 extends the same
                  evidence-first approach into local Claude Code and Claude Desktop workflows.
                </p>
               <p className="text-primary italic border-l-2 border-cyan-300/40 pl-4">
@@ -247,7 +247,7 @@ export default function Founder() {
                  { value: '17+', label: 'Decoder Configurations' },
                  { value: '10+', label: 'Supported Topologies' },
                  { value: '20+', label: 'Years Writing Software' },
-                 { value: 'v1.0.6', label: 'Claude Plugin Release' },
+                 { value: 'v2.0.1', label: 'Claude Plugin Release' },
               ].map((s) => (
                 <div key={s.label} className="card-surface text-center">
                   <div className="text-cyan-300 font-bold text-2xl mb-1">{s.value}</div>

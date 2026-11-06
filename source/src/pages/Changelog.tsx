@@ -13,7 +13,7 @@ export default function Changelog() {
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Latest: v1.0.0 Decoder (first stable release, live from PyPI RSS) · Workbench GUI (current)
+            Latest: v1.0.1 Decoder (2026-11-06) · Claude Plugin v2.0.1 · Workbench v1.0.7
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Changelog" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -28,11 +28,34 @@ export default function Changelog() {
           {/* Vertical neon timeline line */}
           <div className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-300 via-gold-400/30 to-transparent shadow-[0_0_8px_rgba(103,232,249,0.5)]" />
 
-          {/* Latest Decoder v1.0.0 */}
+          {/* Latest Decoder v1.0.1 */}
           <div className="relative">
             <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-cyan-300 border-4 border-void shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
             <ChangelogEntry
               latest
+              version="v1.0.1 · 2026-11-06 (current)"
+              note={
+                <>
+                  Full notes in{' '}
+                  <a href="https://github.com/GuillaumeLessard/qector-decoder/releases/tag/v1.0.1" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">the GitHub release</a>.
+                </>
+              }
+              items={[
+                'Code families corrected: rotated and unrotated surface, heavy-hex and colour codes now build at their labelled distance; Union-Find peeling and GPU kernel parity fixed',
+                '18 binary wheels: CPython 3.9-3.14 on Windows x64, Linux x86_64 (manylinux_2_17) and macOS 11+ arm64',
+                'Every wheel is installed and decoded on its own OS (H·c = s checks) before publishing; per-platform receipts ship as platform-proof.json in the release',
+                'Signed build provenance (Sigstore) for every wheel, plus PyPI attestations; published through Trusted Publishing with no API token',
+                'Licensing: every paid token (Pro or Enterprise) unlocks GPU batch decoding; licence metadata is now a standard SPDX expression (PolyForm Noncommercial 1.0.0)',
+                'QECTOR_OFFLINE=1 keeps the native core fully offline; nine security advisories in optional network dependencies fixed (rustls, webpki, h2)',
+                'Sinter: pass custom_decoders=qector_sinter_decoders() to sinter.collect()',
+              ]}
+            />
+          </div>
+
+          {/* Decoder v1.0.0 */}
+          <div className="relative">
+            <div className="absolute -left-[40px] top-6 w-4 h-4 rounded-full bg-gridline border-4 border-void" />
+            <ChangelogEntry
               version="v1.0.0 · 2026-08-06 (first stable release)"
               note={
                 <>
@@ -42,7 +65,7 @@ export default function Changelog() {
               }
               items={[
                 'First stable (v1) release: semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental / Internal detail)',
-                'Ecosystem entry points: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered; sinter.collect() works without custom_decoders=',
+                'Ecosystem entry points: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin',
                 'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in method="cluster_bposd")',
                 'Relay-BP layered serial BP schedule (bp_method="relay"), CS-OSD(lambda, w) with configurable osd_lambda, and LLR message damping in BP-OSD',
                 'Weighted Union-Find on GPU: CUDABatchDecoder / OpenCLBatchDecoder accept edge_weights, plus precision="f64" double-precision growth',
@@ -65,7 +88,7 @@ export default function Changelog() {
               items={[
                 'No v0.7.1 release appears in the public PyPI history; it is intentionally omitted.',
                 'Dates below are PyPI upload dates, not inferred development or local file dates.',
-                ...PYPI_RELEASES.slice(1).map(({ version, releaseDate, label }) => `v${version} · ${releaseDate} · ${label}`),
+                ...PYPI_RELEASES.slice(2).map(({ version, releaseDate, label }) => `v${version} · ${releaseDate} · ${label}`),
               ]}
             />
           </div>

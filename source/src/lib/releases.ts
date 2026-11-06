@@ -19,14 +19,17 @@ export interface WorkbenchRelease {
 }
 
 export const PYPI_PACKAGE = 'qector-decoder-v3';
-export const PYPI_VERSION = '1.0.0';
+export const PYPI_VERSION = '1.0.1';
+export const PYPI_WHEELS = 18;
+export const PYTHON_RANGE = '3.9-3.14';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const REFERENCE_MANUAL_DOI = '10.5281/zenodo.21941046';
-export const REGISTRY_UPDATED_AT = '2026-09-10';
+export const REGISTRY_UPDATED_AT = '2026-11-06';
 
 // Dates are PyPI upload dates (UTC), verified against the public JSON API on
-// 2026-08-25. Do not infer a release date from a local commit or file time.
+// 2026-08-25 (1.0.1 on 2026-11-06). Do not infer a release date from a local commit or file time.
 export const PYPI_RELEASES = [
+  { version: '1.0.1', releaseDate: '2026-11-06', label: 'Fixes, Python 3.14, GPU on Pro, provenance' },
   { version: '1.0.0', releaseDate: '2026-08-06', label: 'First stable release' },
   { version: '0.7.0', releaseDate: '2026-08-02', label: 'Published PyPI milestone' },
   { version: '0.6.9', releaseDate: '2026-07-26', label: 'Published PyPI milestone' },
@@ -48,9 +51,9 @@ export const PYPI_RELEASES = [
 ];
 
 export const CLAUDE_PLUGIN_RELEASE = {
-  version: '1.0.6',
-  releaseDate: '2026-08-24',
-  releaseUrl: 'https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v1.0.6',
+  version: '2.0.1',
+  releaseDate: '2026-11-06',
+  releaseUrl: 'https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v2.0.1',
 };
 
 // Verified against the public GitHub v1.0.7 release tags on 2026-09-10. macOS not ready yet.
@@ -61,7 +64,7 @@ export const WORKBENCH_RELEASES: WorkbenchRelease[] = [
     arch: 'x64',
     version: 'v1.0.7',
     releaseDate: '2026-09-04',
-    backendVersion: PYPI_VERSION,
+    backendVersion: '1.0.0', // bundled in the v1.0.7 app builds
     mcpTools: 85,
     decoderKinds: 19,
     codeFamilies: 10,
@@ -78,7 +81,7 @@ export const WORKBENCH_RELEASES: WorkbenchRelease[] = [
     arch: 'x64',
     version: 'v1.0.7',
     releaseDate: '2026-09-04',
-    backendVersion: PYPI_VERSION,
+    backendVersion: '1.0.0', // bundled in the v1.0.7 app builds
     mcpTools: 85,
     decoderKinds: 19,
     codeFamilies: 10,

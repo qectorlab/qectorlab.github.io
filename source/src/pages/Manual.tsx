@@ -61,7 +61,7 @@ export default function Manual() {
     { id: 'measurement', title: '5. Local Measurements', icon: <ChartIcon className="w-4 h-4" /> },
     { id: 'configuration', title: '6. Configuration', icon: <SettingsIcon className="w-4 h-4" /> },
     { id: 'troubleshooting', title: '7. Troubleshooting', icon: <HelpCircle className="w-4 h-4" /> },
-    { id: 'package-reference', title: '8. Package Reference (v1.0.0)', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'package-reference', title: '8. Package Reference (v1.0.1)', icon: <BookOpen className="w-4 h-4" /> },
   ];
 
   // Render individual sections beautifully
@@ -71,12 +71,12 @@ export default function Manual() {
         return (
           <div className="space-y-6">
             <p className="text-secondary text-base leading-relaxed">
-              QECTOR Decoder v3 is a Python library for quantum error correction (QEC) decoding. v1.0.0 is the first stable release: it provides 17 decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
+              QECTOR Decoder v3 is a Python library for quantum error correction (QEC) decoding. v1.0.1 is the current stable release (v1.0.0, August 2026, was the first): it provides 17 decoder configurations and helpers integrated into a high-performance compiled Rust core with a plug-and-play Python API.
             </p>
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/10 rounded-xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
               <p className="text-secondary text-sm leading-relaxed">
-                <strong className="text-primary">Ecosystem Native:</strong> Swappable backend design. You can easily plug QECTOR into Stim, PyMatching, Sinter, and Qiskit pipelines with minimal API modifications: v1.0.0 registers Sinter and qiskit-qec entry points so <code className="text-cyan-300">sinter.collect()</code> works with no <code className="text-cyan-300">custom_decoders=</code>.
+                <strong className="text-primary">Ecosystem Native:</strong> Swappable backend design. You can easily plug QECTOR into Stim, PyMatching, Sinter, and Qiskit pipelines with minimal API modifications: Sinter decoders plug in with <code className="text-cyan-300">custom_decoders=qector_sinter_decoders()</code>, and a qiskit-qec plugin is registered.
               </p>
             </div>
             <div>
@@ -384,7 +384,7 @@ print("Syndrome-faithful correction")`}
             <div className="p-4 bg-cyan-300/5 border border-cyan-300/20 rounded-xl flex items-center justify-between flex-wrap gap-4">
               <div>
                 <h3 className="text-primary font-bold text-lg">QECTOR Decoder v3: Extended Reference (package only)</h3>
-                <p className="text-muted-foreground text-xs">Version: 1.0.0 · PyPI: qector-decoder-v3 · Backend: Rust + PyO3</p>
+                <p className="text-muted-foreground text-xs">Version: 1.0.1 · PyPI: qector-decoder-v3 · Backend: Rust + PyO3</p>
               </div>
               <a
                 href="/docs/reference.md"
@@ -419,7 +419,7 @@ print("Syndrome-faithful correction")`}
                 <li><strong>Rust Core (compiled extension):</strong> Matching, UF, batch CPU/GPU algorithms.</li>
                 <li><strong>Python Surface:</strong> Clean API, Stim/Sinter compat, belief/GNN layers, licensing.</li>
                 <li><strong>Zero-copy NumPy:</strong> Direct memory access; GIL-free parallel decoding paths.</li>
-                <li><strong>Version Symbol:</strong> <code className="text-cyan-300">qector_decoder_v3.__version__ == "1.0.0"</code></li>
+                <li><strong>Version Symbol:</strong> <code className="text-cyan-300">qector_decoder_v3.__version__ == "1.0.1"</code></li>
               </ul>
             </div>
 

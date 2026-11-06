@@ -105,7 +105,17 @@
   }
 
   /* Glassmorphism Cards */
+  /* Long inline identifiers (e.g. custom_decoders=qector_sinter_decoders())
+     must wrap on phones instead of widening the page. Code blocks (pre) keep
+     their own horizontal scroll. */
+  :not(pre) > code {
+    overflow-wrap: anywhere;
+  }
+
   .card-surface {
+    /* min-width:0 lets cards shrink inside grid/flex rows so wide code blocks
+       scroll inside their card instead of widening the page on phones. */
+    min-width: 0;
     @apply bg-[#0b1329]/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 transition-all duration-500 hover:border-cyan-300/30 hover:shadow-[0_0_30px_rgba(103,232,249,0.12)];
   }
 

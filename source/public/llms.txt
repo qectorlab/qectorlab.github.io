@@ -1,4 +1,4 @@
-# QECTOR Decoder v3 (v1.0.0)
+# QECTOR Decoder v3 (v1.0.1)
 
 > Python and Rust quantum error correction decoder package for QEC research, decoder validation, reproducible artifacts, and commercial evaluation.
 
@@ -16,18 +16,18 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 
 ## QECTOR Workbench (desktop GUI + MCP server)
 
-- Windows v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds (15 concrete + AutoDecoder + Auto Router), 10 code families. Artifact `QectorWorkbench-Windows-v1.0.2.zip`, SHA-256 `ebff4fb966125ba167eec8c732ab256a3e00ff8103d8f24d91d5c4cdd8c7ccc3`.
-- Linux v1.0.2 (x64): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds, 10 code families. Artifact `QectorWorkbench-Linux-v1.0.2.zip`, SHA-256 `0da9cdee7fb5b54bed81fd2ddbb8639e6642987b7ea0d1c00935db36e270a41e`.
-- macOS v1.0.2 (arm64, Apple silicon): 85-tool MCP server, qector-decoder-v3 1.0.0 backend, 17 named decoder kinds, 10 code families. Artifact `QectorWorkbench-1.0.2-arm64.dmg`, SHA-256 `e22dd2b8558b30f3da3d9cd35f8a81f9ac53d9f1c72d4b65da6c150d5e3dd3c3`.
+- Windows v1.0.7 (x64, 2026-09-04): 85-tool MCP server, bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds (17 concrete configurations plus AutoDecoder and Auto Router), 10 code families. Artifact `QectorWorkbench-Portable.exe`, SHA-256 `c53ca5f4fc49152f242a847d0ca11f147164dda426ae29ec170c451871b8ab13`.
+- Linux v1.0.7 (x64, 2026-09-04): 85-tool MCP server, bundled qector-decoder-v3 1.0.0 backend, 19 named decoder kinds, 10 code families. Artifact `QectorWorkbench-Portable`, SHA-256 `aa3949d25082165dc3b89115486e1ea4e210cd5254659da32185fe6a8e71a1c8`.
+- macOS: not released yet.
 - MCP protocol 2024-11-05 over stdio JSON-RPC 2.0 (`--mcp` headless mode); data directory `~/.local/share/QectorWorkbench` (`QECTOR_DATA_DIR` overrides).
 
-## QECTOR Claude Plugin (v1.0.6)
+## QECTOR Claude Plugin (v2.0.1)
 
-- Claude Code / Claude Desktop plugin v1.0.6: 28 domain skills, 5 specialized agents (qec-developer, qec-researcher, qec-validator, qec-sysadmin, qec-hardware-engineer), 11 slash commands.
-- Four local MCP servers: qector-library (8 stable tools), qector-research (29 provisional tools), qector-admin (3 privileged tools), and qector-desktop-mcp (safe Desktop profile).
-- v1.0.6 moves launchers from bin/ to scripts/ for marketplace compliance and makes qec-setup work in sandboxed or remote environments with an honest native-diagnostics fallback.
+- Claude Code / Claude Desktop plugin v2.0.1 (2026-11-06), running on qector-decoder-v3 1.0.1: 28 domain skills, 5 specialized agents (qec-developer, qec-researcher, qec-validator, qec-sysadmin, qec-hardware-engineer), 11 slash commands.
+- Default MCP server qector-secure: 12 tools (the 8 stable library tools plus airgap_status, integrity_check, schema_catalog, audit_log_status), air-gapped, integrity-checked, every request and response validated against JSON Schema 2020-12. Opt-in: qector-research (29 provisional tools) and qector-admin (3 privileged tools, QECTOR_ADMIN_ENABLED=1 plus confirm=true).
+- Every dependency pinned by SHA-256 (Python 3.10-3.13, Linux/Windows/macOS); release archives signed, with SBOM and provenance.
 - Zero-egress stdio architecture: circuits, parity matrices, and syndromes never leave the machine.
-- Install: `claude plugin marketplace add GuillaumeLessard/qector-claude-plugin` then `claude plugin install qector@qector-tools`.
+- Install: `claude plugin marketplace add GuillaumeLessard/qector-claude-plugin` then `claude plugin install qector@qector-tools`. Releases: https://github.com/GuillaumeLessard/qector-claude-plugin/releases
 
 ## Official links
 
@@ -70,7 +70,6 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 - Primary GitHub repository: https://github.com/GuillaumeLessard/qector-decoder
 - Workbench Windows releases: https://github.com/qectorlab/qector-decoder-workbench-windows/releases
 - Workbench Linux releases: https://github.com/qectorlab/qector-decoder-workbench-linux/releases
-- Workbench macOS releases: https://github.com/qectorlab/qector-decoder-workbench-macos/releases
 - Claude plugin repository: https://github.com/GuillaumeLessard/qector-claude-plugin
 - Author ORCID: https://orcid.org/0009-0000-3465-3753
 

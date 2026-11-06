@@ -23,7 +23,7 @@ const OG_LOCALE: Record<string, string> = { en: 'en_US', fr: 'fr_FR' };
 
 export function SEO({
   title = 'QECTOR · Quantum Error Correction Decoding for Python',
-  description = 'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder. v1.0.0 first stable release with API stability tiers, a qector CLI, and a reproducible benchmark harness (qector bench) for measuring on your own hardware.',
+  description = 'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder. v1.0.1 stable release with API stability tiers, a qector CLI, and a reproducible measurement harness (qector bench) for measuring on your own hardware.',
   ogImage = APP_CONFIG.ogImage,
   noindex = false,
   lang = 'en',

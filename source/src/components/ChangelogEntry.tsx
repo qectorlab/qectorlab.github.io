@@ -28,7 +28,7 @@ export default function ChangelogEntry({ version, items, latest = false, note, c
         <h2 className="text-xl font-bold">{version}</h2>
       </div>
       {note && <p className="text-muted-foreground text-xs mb-3">{note}</p>}
-      <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
+      <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5 [overflow-wrap:anywhere]">
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}

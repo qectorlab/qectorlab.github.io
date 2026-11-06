@@ -17,10 +17,10 @@ import CodeBlock from '../components/CodeBlock';
 const TOOLS = [
   {
     name: 'list_code_families',
-    desc: 'List the code families available in qector-decoder-v3 1.0.0 with their live availability and graphlike eligibility.',
+    desc: 'List the code families available in qector-decoder-v3 1.0.1 with their live availability and graphlike eligibility.',
     required: [],
     optional: [],
-    returns: 'families map (generator, code_factory, available, description, single_decode), reference_manual DOI, qector_version "1.0.0"',
+    returns: 'families map (generator, code_factory, available, description, single_decode), reference_manual DOI, qector_version "1.0.1"',
   },
   {
     name: 'list_decoders',
@@ -133,7 +133,7 @@ export default function McpServer() {
   return (
     <>
       <SEO
-        title="Library MCP Server · QECTOR Decoder v3 v1.0.0"
+        title="Library MCP Server · QECTOR Decoder v3 v1.0.1"
         description="App-free Model Context Protocol server for quantum error correction decoding. 8 verified local stdio JSON-RPC 2.0 tools across 9 code families and 5 stable decoders. Ships as a local library; no Workbench or GUI required."
       />
       <JsonLd
@@ -152,7 +152,7 @@ export default function McpServer() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
-            Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 1.0.0
+            Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 1.0.1
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Library MCP Server" className="text-4xl md:text-6xl font-extrabold" />
@@ -162,7 +162,7 @@ export default function McpServer() {
             Blossom MWPM, SparseBlossom, and the auto router, with syndrome validation against
             <code className="text-cyan-300"> H c = s (mod 2) </code> and coset-scored logical outcomes.
             Runs on <code className="text-cyan-300">qector-decoder-v3 1.0.x</code> with
-            <code className="text-cyan-300">mcp==1.26.0</code>; no Workbench or GUI needed. Ships in the
+            <code className="text-cyan-300">mcp&gt;=1.30,&lt;3</code>; no Workbench or GUI needed. Ships in the
             <code className="text-cyan-300">qector-claude-plugin</code> repository.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -208,7 +208,7 @@ export default function McpServer() {
                 Looking for the full Claude Code Plugin?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                 The Claude Plugin v1.0.6 includes 28 skills, 11 slash commands, 5 agents, and four local MCP servers: 8 stable library tools, 29 opt-in research tools, 3 opt-in admin tools, and a safe Desktop profile. Workbench v1.0.7 remains the largest desktop surface with 85 tools on Windows and Linux.
+                 The Claude Plugin v2.0.1 includes 28 skills, 11 slash commands and 5 agents. Its default qector-secure server exposes 12 schema-validated tools and runs air-gapped; 29 research tools and 3 admin tools are opt-in. Workbench v1.0.7 remains the largest desktop surface with 85 tools on Windows and Linux.
               </p>
             </div>
             <Link
@@ -251,7 +251,7 @@ export default function McpServer() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                     <div>
                       <div className="text-muted-foreground uppercase tracking-wider mb-1">Required</div>
-                      <div className="text-secondary">
+                      <div className="text-secondary flex flex-wrap gap-x-2 gap-y-1">
                         {t.required.length ? t.required.map((r) => (
                           <code key={r} className="text-cyan-300 mr-2">{r}</code>
                         )) : <span className="text-muted-foreground">none</span>}
@@ -259,9 +259,9 @@ export default function McpServer() {
                     </div>
                     <div>
                       <div className="text-muted-foreground uppercase tracking-wider mb-1">Optional</div>
-                      <div className="text-secondary">
+                      <div className="text-secondary flex flex-wrap gap-x-2 gap-y-1">
                         {t.optional.length ? t.optional.map((r) => (
-                          <code key={r} className="text-muted-foreground mr-2">{r}</code>
+                          <code key={r} className="text-muted-foreground">{r}</code>
                         )) : <span className="text-muted-foreground">none</span>}
                       </div>
                     </div>

@@ -4,13 +4,11 @@ import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
-  const { version: pypiVersion } = usePyPIVersion();
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -175,9 +173,10 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                    { year: '2026-06-24', event: 'The qector-decoder repository was created and v0.5.0 / v0.5.1 were first recorded on PyPI.' },
                    { year: '2026-06-24 to 2026-07-26', event: 'The verified PyPI release train progressed from v0.5.0 through v0.6.9. Dates are listed on the Changelog page from PyPI upload metadata.' },
                    { year: '2026-08-02', event: 'QECTOR Decoder v3 v0.7.0 was published on PyPI.' },
-                   { year: '2026-08-06', event: `QECTOR Decoder v3 v${pypiVersion || '1.0.0'} reached its first stable release, with the official reference manual (DOI 10.5281/zenodo.21941046).` },
+                   { year: '2026-08-06', event: 'QECTOR Decoder v3 v1.0.0 reached its first stable release, with the official reference manual (DOI 10.5281/zenodo.21941046).' },
                    { year: '2026-08-11 to 2026-09-04', event: 'QECTOR Workbench Windows v1.0.0 and v1.0.1 were followed by verified v1.0.7 releases for Windows and Linux (2026-09-04).' },
                    { year: '2026-08-15 to 2026-08-24', event: 'The Claude Plugin repository was created on 2026-08-15; plugin v1.0.6 was published on 2026-08-24.' },
+                   { year: '2026-11-06', event: `QECTOR Decoder v3 v1.0.1 was published with 18 wheels for Python 3.9-3.14 and signed build provenance, alongside Claude Plugin v2.0.1 and the new commercial plans.` },
                  ].map((item) => (
                 <div key={item.year} className="flex flex-col gap-1 sm:flex-row sm:gap-4 items-start pb-4 border-b border-gridline/50 last:border-0">
                   <span className="text-cyan-300 font-mono text-sm sm:min-w-[80px] shrink-0 pt-0.5">{item.year}</span>
@@ -192,7 +191,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h2 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h2>
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
-               No hardware-specific measurement figures are published on this site, because results depend on your hardware. The decoder reached its first stable release on 2026-08-06 (v1.0.0).
+               No hardware-specific measurement figures are published on this site, because results depend on your hardware. The decoder reached its first stable release on 2026-08-06 (v1.0.0); the current release is v1.0.1.
                QECTOR Decoder is source-available under the published license. Workbench release terms are platform-specific. We publish validation guidance and known limitations openly.
               Documented behavior is what ships.
             </p>

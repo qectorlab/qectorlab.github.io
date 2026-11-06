@@ -24,7 +24,7 @@ import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES } from './releases';
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
 export const OG_IMAGE = 'https://qector.store/images/og-banner.png';
-export const DECODER_VERSION = '1.0.0';
+export const DECODER_VERSION = '1.0.1';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const GITHUB_URL = 'https://github.com/GuillaumeLessard/qector-decoder';
 
@@ -161,7 +161,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library with 17 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defines API stability tiers, a qector CLI, and a qector-doctor diagnostic.'
+          'QECTOR Decoder v3 is a Rust-core Python library with 17 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defined API stability tiers, a qector CLI, and a qector-doctor diagnostic; 1.0.1 (2026-11-06) is the current release, with 18 wheels for Python 3.9-3.14 and signed build provenance.'
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -169,7 +169,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('v1.0.0: first stable release') +
         ul([
           'Semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental).',
-          'Sinter entry points (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin registered: sinter.collect() works with no custom_decoders=.',
+          'Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more; pass custom_decoders=qector_sinter_decoders()) and a qiskit-qec plugin.',
           'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in cluster_bposd). Relay-BP schedules, CS-OSD(lambda, w) and LLR damping in BP-OSD.',
           'qector decode / qector bench / qector serve CLI and qector-doctor (15-check environment diagnostic).',
           'Hardware-specific benchmark data is not published here. The package and manual document how to perform a scoped local measurement with the required environment and artifact metadata.',
@@ -197,12 +197,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/decoder',
     title: 'QECTOR Decoder v3 · QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3: 17 decoder configurations in one Python library. Stable v1.0.0 with API tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, and qector bench.',
+      'QECTOR Decoder v3: 17 decoder configurations in one Python library. Stable v1.0.1 (18 wheels, Python 3.9-3.14) with API tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, and qector bench.',
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch. v1.0.0 is the first stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
+          'Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch. v1.0.1 is the current stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
         ) +
         h2('Production decoders (Stable)') +
         ul([
@@ -222,8 +222,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         table(
           ['Key', 'Value'],
           [
-            ['Languages', 'Rust core (PyO3) / Python 3.9-3.13 API'],
-            ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (15 binary wheels)'],
+            ['Languages', 'Rust core (PyO3) / Python 3.9-3.14 API'],
+            ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (18 binary wheels, Python 3.9-3.14)'],
             ['GPU', 'CUDA/OpenCL optional and environment-dependent; check the installed release diagnostics'],
             ['QEC library', 'Stim / Sinter / PyMatching / qiskit-qec compatible'],
             ['Packaging', 'PyPI binary wheels (cp39-cp313, 3 platforms); no sdist'],
@@ -472,7 +472,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         h2('Skills') +
         ul([
           'Systems and performance: Rust, PyO3 bindings, CUDA / OpenCL batch kernels, memory-layout and throughput tuning.',
-          'Python engineering: Python 3.9-3.13, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, release signing documentation.',
+          'Python engineering: Python 3.9-3.14, NumPy/SciPy, binary wheel packaging across manylinux/macOS/Windows, PyPI release engineering, release signing documentation.',
           'Quantum error correction: MWPM/Blossom matching, Union-Find, belief propagation with OSD for qLDPC, Stim/Sinter/PyMatching integration, reproducible benchmark design.',
           'Applications and desktop: CustomTkinter GUI, runtime bundling, PyInstaller / Inno Setup / .deb packaging, Model Context Protocol servers, offline-first architecture.',
           'Web and product: React, TypeScript, Vite, Tailwind, structured data and SEO, Stripe commerce integration.',
@@ -480,7 +480,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ]) +
         h2('Selected work') +
         ul([
-           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 17 concrete decoder configurations, first stable release v1.0.0.`,
+           `<a href="/decoder" style="color:#67e8f9;">QECTOR Decoder v3</a>: Rust-core Python library, 17 concrete decoder configurations, first stable release v1.0.0, current release v1.0.1.`,
            `<a href="/workbench/" style="color:#67e8f9;">QECTOR Workbench</a>: live Windows and Linux releases, each with an 85-tool MCP server and 19 named decoder kinds.`,
            '<a href="https://doi.org/10.5281/zenodo.21611214" style="color:#67e8f9;">v1.0.0 user manual DOI 10.5281/zenodo.21611214</a>; <a href="https://doi.org/10.5281/zenodo.21941046" style="color:#67e8f9;">normative manual DOI 10.5281/zenodo.21941046</a>; <a href="https://doi.org/10.5281/zenodo.22046403" style="color:#67e8f9;">verification/proof DOI 10.5281/zenodo.22046403</a>.',
           `<a href="/evidence" style="color:#67e8f9;">Evidence &amp; Provenance</a>: validation reports and SHA-256 sealed manifests on GitHub.`,
@@ -547,7 +547,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: an evidence-backed quantum error correction decoder for Python.'
         ) +
         ul([
-          'No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. v1.0.0 (2026-08-06) is the first stable release of the decoder.',
+          'No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. v1.0.0 (2026-08-06) was the first stable release of the decoder; v1.0.1 (2026-11-06) is current.',
         ]) +
         p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -557,14 +557,22 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/changelog',
     title: 'Changelog · QECTOR',
     description:
-      'Version history for QECTOR Decoder v3. Current release: v1.0.0 (2026-08-06), the first stable release. PyPI release train.',
+      'Version history for QECTOR Decoder v3. Current release: v1.0.1 (2026-11-06). First stable release: v1.0.0 (2026-08-06). PyPI release train.',
     heading: 'Changelog',
     body: page(
       h1('Changelog') +
-        h2('v1.0.0: 2026-08-06 (current, first stable release)') +
+        h2('v1.0.1: 2026-11-06 (current)') +
+        ul([
+          'Code families corrected: rotated and unrotated surface, heavy-hex and colour codes build at their labelled distance; Union-Find peeling and GPU kernel parity fixed.',
+          '18 binary wheels: CPython 3.9-3.14 on Windows x64, Linux x86_64 (manylinux_2_17) and macOS 11+ arm64, each installed and checked on its own OS before release.',
+          'Signed build provenance (Sigstore) for every wheel plus PyPI attestations; Trusted Publishing with no API token.',
+          'Every paid licence token (Pro or Enterprise) unlocks GPU batch decoding; licence metadata is the SPDX expression PolyForm-Noncommercial-1.0.0.',
+          'QECTOR_OFFLINE=1 keeps the native core offline; nine advisories in optional network dependencies fixed.',
+        ]) +
+        h2('v1.0.0: 2026-08-06 (first stable release)') +
         ul([
           'Semantic-versioning frozen; the public API is governed by documented stability tiers (Stable / Workload-sensitive / Experimental / Internal detail).',
-          'Ecosystem entry points registered: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin: sinter.collect() works without custom_decoders=.',
+          'Ecosystem entry points registered: five Sinter decoders (qector_blossom, qector_belief, qector_unionfind, and more) and a qiskit-qec plugin.',
           'New decoder families: AmbiguityClusterDecoder, TwoStageDecoder, ColourCodeDecoder (opt-in method="cluster_bposd").',
           'Relay-BP layered serial BP schedule (bp_method="relay"), CS-OSD(lambda, w) with configurable osd_lambda, and LLR message damping in bposd.py.',
           'CUDABatchDecoder / OpenCLBatchDecoder accept edge_weights; precision="f64" for double-precision weighted growth.',
@@ -609,7 +617,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Documentation Hub') +
         ul([
-           '<a href="/claude-plugin" style="color:#67e8f9;">Claude Code Plugin</a>: v1.0.6 with 28 skills, 5 agents, four MCP servers, and explicit stable, research, and admin profiles.',
+           '<a href="/claude-plugin" style="color:#67e8f9;">Claude Code Plugin</a>: v2.0.1 with an air-gapped qector-secure MCP server (12 schema-validated tools), 28 skills and 5 agents.',
            '<a href="/workbench" style="color:#67e8f9;">Workbench</a>: free desktop GUI with an 85-tool MCP server and 19 named decoder kinds, v1.0.7 on Windows and Linux.',
           '<a href="/mcp-server" style="color:#67e8f9;">MCP Server</a>: app-free local library server exposing 8 local tools.',
           '<a href="/installer" style="color:#67e8f9;">Installation guide</a>: pip install on Linux, macOS, Windows.',
@@ -655,7 +663,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Technical Reference') +
         p(
-          'API reference for qector_decoder_v3 1.0.0 package: stable and experimental decoders, utilities, and helper functions. v1.0.0 is the first stable release.'
+          'API reference for the qector_decoder_v3 1.0.1 package: stable and experimental decoders, utilities, and helper functions.'
         ) +
         h2('Stable decoders') +
         p('UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder (7-tier fallback), DecoderPool, get_decoder, clear_decoder_cache, decode_mmap, DecodeResult, decode_with_diagnostics, Workbench.') +
@@ -672,11 +680,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/installer',
     title: 'Installation · QECTOR',
     description:
-      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9-3.13.',
+      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9-3.14.',
     heading: 'Installation',
     body: page(
       h1('Installation') +
-        p('QECTOR Decoder v3 is distributed through PyPI for Python 3.9+ on the platforms listed by the current release metadata. Check the exact wheel and dependency set before deployment.') +
+        p('QECTOR Decoder v3 is distributed through PyPI for Python 3.9-3.14 on the platforms listed by the current release metadata. Check the exact wheel and dependency set before deployment.') +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"  # Local measurement tools\npip install "qector-decoder-v3[all]"    # Optional full environment\n\n# Verify\nqector-doctor\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
         ) +
@@ -823,19 +831,19 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs on qector-decoder-v3 1.0.x and mcp==1.26.0, and ships in the qector-claude-plugin repository.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs on qector-decoder-v3 1.0.x and mcp>=1.30,<3, and ships in the qector-claude-plugin repository.'
         ) +
-        pre(`pip install qector-decoder-v3==${DECODER_VERSION} mcp==1.26.0\ngit clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\npython qector-claude-plugin/mcp/mcp_server_library.py`)
+        pre(`pip install qector-decoder-v3==${DECODER_VERSION} "mcp>=1.30,<3"\ngit clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\npython qector-claude-plugin/mcp/mcp_server_library.py`)
     ),
     jsonLdExtra: [
       {
         '@type': 'SoftwareApplication',
         name: 'QECTOR MCP Server',
         description:
-          'Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools for quantum error correction decoding. Runs on qector-decoder-v3 1.0.x with mcp==1.26.0.',
+          'Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools for quantum error correction decoding. Runs on qector-decoder-v3 1.0.x with mcp>=1.30,<3.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
-        softwareVersion: '1.0.0',
+        softwareVersion: DECODER_VERSION,
         url: SITE_URL + '/mcp-server/',
         author: { '@type': 'Person', name: 'Guillaume Lessard', url: SITE_URL + '/guillaume-lessard/' },
       },
@@ -845,7 +853,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/claude-plugin',
     title: 'QECTOR Claude Plugin · Quantum Error Correction for Claude Code',
     description:
-      'Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local decoding.',
+      'Official QECTOR Claude Code and Claude Desktop plugin v2.0.1: air-gapped qector-secure MCP server (12 schema-validated tools), 28 skills and 5 agents on qector-decoder-v3 1.0.1.',
     heading: 'QECTOR Claude Plugin',
     body: page(
       h1('QECTOR Claude Plugin') +
@@ -866,11 +874,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ]) +
          h2('Four MCP Servers and Explicit Profiles') +
          p(
-           'qector-library exposes 8 stable tools. qector-research exposes 29 provisional tools for methodology, DEM and circuit inspection, evidence, compatibility, and local measurements. qector-admin exposes 3 privileged tools and requires QECTOR_ADMIN_ENABLED=1 plus confirm=true. qector-desktop-mcp provides the safe Desktop profile with the 8 stable tools. All four servers run locally over stdio; the research and admin servers are opt in.'
+           'qector-secure (the default) exposes 12 tools: the 8 stable library tools plus airgap_status, integrity_check, schema_catalog and audit_log_status; it refuses network access and validates every message against JSON Schema. qector-library exposes the 8 stable tools on their own. qector-research exposes 29 provisional tools for methodology, DEM and circuit inspection, evidence, compatibility, and local measurements. qector-admin exposes 3 privileged tools and requires QECTOR_ADMIN_ENABLED=1 plus confirm=true. qector-desktop-mcp provides the safe Desktop profile with the 8 stable tools. All four servers run locally over stdio; the research and admin servers are opt in.'
          ) +
-         h2('v1.0.6 Release Changes') +
+         h2('v2.0.1 Release') +
          p(
-           'The v1.0.6 release moves launchers from bin/ to scripts/ for Claude.ai marketplace compliance, adds a bin/ regression guard to every bundle, and makes qec-setup fall back to native diagnostics in sandboxed or remote environments. Python 3.9 through 3.13 is supported; interpreter pinning uses QECTOR_PYTHON.'
+           'Runs on qector-decoder-v3 1.0.1. The default qector-secure server is air-gapped and integrity-checked and validates every request and response against JSON Schema 2020-12. Every dependency is pinned by SHA-256 for Python 3.10-3.13 on Linux, Windows and macOS; release archives are signed and ship with an SBOM and provenance. Interpreter pinning uses QECTOR_PYTHON.'
          ) +
          h2('Install with Claude Code') +
         pre(
@@ -886,10 +894,10 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR Claude Plugin',
         description:
-          'Official QECTOR plugin v1.0.6 for Claude Code and Claude Desktop. 28 skills, 5 agents, four MCP servers, and local decoding backed by qector-decoder-v3 1.0.0.',
+          'Official QECTOR plugin v2.0.1 for Claude Code and Claude Desktop: air-gapped qector-secure MCP server, 28 skills, 5 agents, local decoding on qector-decoder-v3 1.0.1.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
-        softwareVersion: '1.0.6',
+        softwareVersion: CLAUDE_PLUGIN_RELEASE.version,
         author: {
           '@type': 'Person',
           name: 'Guillaume Lessard',

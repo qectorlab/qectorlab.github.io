@@ -223,7 +223,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               code={`# Quick validation
 pip install --upgrade "qector-decoder-v3>=1.0,<2"
 python -c "import qector_decoder_v3 as qd; print(qd.__version__)"
-# 15-check environment diagnostic (v1.0.0)
+# environment diagnostic
 qector-doctor
 # Throughput benchmark on a generated surface-code circuit
 qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001`}
@@ -241,8 +241,8 @@ qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001`}
   author  = {Guillaume Lessard},
   title   = {{QECTOR Decoder v3}: Rust/Python Quantum Error Correction Decoding Platform},
   year    = {2026},
-  version = {1.0.0},
-  url     = {https://www.qector.store},
+  version = {1.0.1},
+  url     = {https://qector.store/},
   note    = {Source-available under PolyForm Noncommercial 1.0.0. Commercial license required for commercial use.}
 }`}
             </pre>

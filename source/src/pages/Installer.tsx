@@ -16,7 +16,7 @@ export default function Installer() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Installation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            QECTOR Decoder v3 ships as a Rust-compiled Python wheel (v1.0.0: 15 binary wheels for CPython 3.9-3.13,
+            QECTOR Decoder v3 ships as a Rust-compiled Python wheel (v1.0.1: 18 binary wheels for CPython 3.9-3.14,
             no sdist).
             One command on <span className="text-cyan-300 font-semibold">Linux x86_64, macOS ARM64, and Windows amd64</span>.
             GPU backends optional.
@@ -104,7 +104,7 @@ export default function Installer() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Troubleshooting</h2>
             <div className="space-y-3 text-secondary text-sm">
-              <p><strong className="text-primary">ImportError on macOS:</strong> Ensure you have Python 3.9+ from python.org or Homebrew. The system Python may not work.</p>
+              <p><strong className="text-primary">ImportError on macOS:</strong> Ensure you have Python 3.9-3.14 from python.org or Homebrew. The system Python may not work.</p>
               <p><strong className="text-primary">GPU not detected:</strong> Verify CUDA installation with <code className="text-cyan-300 font-mono">nvidia-smi</code>. Check the package release documentation for supported CUDA versions.</p>
               <p><strong className="text-primary">Slow import:</strong> First import initializes the runtime and validates optional paths. Subsequent imports are fast.</p>
             </div>

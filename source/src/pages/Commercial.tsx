@@ -26,7 +26,7 @@ export default function Commercial() {
             <Link to="/contact" className="btn-gold">Contact Enterprise Sales</Link>
           </div>
           <p className="text-muted-foreground text-sm mt-6">
-            All standard licensing information including evaluation, annual tiers, and FAQs has moved to the{' '}
+            All standard licensing information, including plans, the Pilot and FAQs, is on the{' '}
             <Link to="/pricing" className="text-cyan-300 hover:underline">Pricing page</Link>.
           </p>
         </div>

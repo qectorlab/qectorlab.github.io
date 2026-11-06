@@ -22,7 +22,7 @@ export default function CodeBlock({ code, language = 'python', filename, classNa
   };
 
   return (
-    <div className={`my-4 border border-gridline rounded-xl overflow-hidden bg-void/50 ${className}`}>
+    <div className={`my-4 max-w-full min-w-0 border border-gridline rounded-xl overflow-hidden bg-void/50 ${className}`}>
       {filename && (
         <div className="flex items-center justify-between px-4 py-2 border-b border-gridline bg-surface/50 text-xs font-mono text-muted-foreground">
           <span>{filename}</span>

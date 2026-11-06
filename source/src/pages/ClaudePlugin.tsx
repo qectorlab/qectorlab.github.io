@@ -214,7 +214,7 @@ export default function ClaudePlugin() {
     <>
       <SEO
         title="QECTOR Claude Plugin · Quantum Error Correction for Claude Code"
-        description="Official QECTOR Claude Code and Claude Desktop plugin v1.0.6. 28 skills, 5 agents, four MCP servers, and qector-decoder-v3 1.0.0 with local stdio-based decoding."
+        description="Official QECTOR Claude Code and Claude Desktop plugin v2.0.1: air-gapped qector-secure MCP server (12 schema-validated tools), 28 skills and 5 agents on qector-decoder-v3 1.0.1."
       />
       <JsonLd
         data={{
@@ -222,10 +222,10 @@ export default function ClaudePlugin() {
           '@type': 'SoftwareApplication',
           name: 'QECTOR Claude Plugin',
           description:
-            'Official QECTOR plugin v1.0.6 for Claude Code and Claude Desktop. 28 skills, 5 agents, four MCP servers, 8 stable library tools, 29 opt-in research tools, and 3 opt-in admin tools.',
+            'Official QECTOR plugin v2.0.1 for Claude Code and Claude Desktop: air-gapped qector-secure MCP server with 12 schema-validated tools, 28 skills, 5 agents, 11 commands; 29 research and 3 admin tools are opt-in.',
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Linux, macOS, Windows',
-          softwareVersion: '1.0.6',
+          softwareVersion: CLAUDE_PLUGIN_RELEASE.version,
           author: {
             '@type': 'Person',
             name: 'Guillaume Lessard',
@@ -256,10 +256,12 @@ export default function ClaudePlugin() {
 
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
              Empower Claude with local Quantum Error Correction engineering.
-             Release v1.0.6 adds marketplace compliance hardening and environment-agnostic setup. It includes{' '}
+             Release v2.0.1 runs on qector-decoder-v3 1.0.1. The default{' '}
+             <span className="text-cyan-300 font-semibold">qector-secure</span> server is air-gapped, integrity-checked and validates every
+             request and response against JSON Schema (12 tools). It ships with{' '}
              <span className="text-cyan-300 font-semibold">28 domain skills</span>,{' '}
-             <span className="text-cyan-300 font-semibold">5 specialized agents</span>,{' '}
-             <span className="text-cyan-300 font-semibold">8 stable library tools</span>, 29 opt-in research tools, and 3 opt-in admin tools across four MCP servers. The default configuration uses local stdio transport.
+             <span className="text-cyan-300 font-semibold">5 specialized agents</span> and 11 slash commands; 29 research tools and 3 admin tools are opt-in.
+             Every dependency is pinned by SHA-256, and releases are signed.
           </p>
 
           {/* Quick Install Box */}
@@ -364,7 +366,7 @@ export default function ClaudePlugin() {
             28 Grounded QEC Skills
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-             Each skill encodes verified domain rules and strict-math obligations to reduce hallucination risk and ground interactions in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in v1.0.6.
+             Each skill encodes verified domain rules and strict-math obligations to reduce hallucination risk and ground interactions in reproducible physics. The seven flagship skills below are a subset of the 28 skills shipped in the plugin.
           </p>
         </div>
 
@@ -450,10 +452,12 @@ export default function ClaudePlugin() {
             <span>MCP SERVER TOOL SURFACE</span>
           </div>
           <h2 className="text-3xl font-extrabold text-slate-100 tracking-tight">
-             Four Local MCP Servers
+             Local MCP Servers, Air-Gapped by Default
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-             The v1.0.6 release separates local JSON-RPC 2.0 stdio capabilities by risk and purpose:
+             The v2.0.1 release separates local JSON-RPC 2.0 stdio capabilities by risk and purpose. The default
+             <code className="text-cyan-300 font-mono"> qector-secure </code> server (12 tools: the 8 stable tools below plus
+             airgap_status, integrity_check, schema_catalog and audit_log_status) refuses network access and verifies its own files;
              <code className="text-cyan-300 font-mono"> qector-library </code> (8 stable tools),
              <code className="text-cyan-300 font-mono"> qector-research </code> (29 provisional tools),
              <code className="text-cyan-300 font-mono"> qector-admin </code> (3 explicitly enabled tools), and
@@ -515,7 +519,7 @@ export default function ClaudePlugin() {
             Installation & Setup
           </h2>
           <p className="text-slate-400 text-sm mt-2">
-             Configure QECTOR Claude Plugin v1.0.6 for Claude Code or Claude Desktop in seconds.
+             Configure QECTOR Claude Plugin v2.0.1 for Claude Code or Claude Desktop in seconds.
           </p>
         </div>
 
@@ -552,7 +556,7 @@ export default function ClaudePlugin() {
                 Clone the source repository and launch with the <code className="text-cyan-300 font-mono">--plugin-dir</code> flag:
               </p>
               <CodeBlock
-                code={`git clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\ncd qector-claude-plugin\npip install -r requirements.txt\nclaude --plugin-dir .`}
+                code={`git clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\ncd qector-claude-plugin\npip install --require-hashes -r requirements.lock\nclaude --plugin-dir .`}
                 language="bash"
               />
             </div>
@@ -584,18 +588,18 @@ export default function ClaudePlugin() {
                 Download Distribution Packages
               </h3>
               <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
-                Pre-packaged standalone ZIP archives formatted specifically for the Claude.ai custom-skill uploader (forward-slash path normalized) and Claude Code multi-skill plugin distributions.
+                Signed release archives: the Claude Code plugin, Claude Desktop extensions (.mcpb, including an offline bundle with a pinned wheelhouse), SHA256SUMS with its signature, an SBOM and provenance.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <a
-                 href="https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v1.0.6"
+                 href={CLAUDE_PLUGIN_RELEASE.releaseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold text-xs font-mono transition-all inline-flex items-center gap-2 shadow-lg shadow-cyan-400/20"
               >
                 <Download className="w-4 h-4" />
-                 <span>v1.0.6 Release & Checksums</span>
+                 <span>v{CLAUDE_PLUGIN_RELEASE.version} Release, Checksums &amp; Signatures</span>
               </a>
               <Link
                 to="/docs"

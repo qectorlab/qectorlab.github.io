@@ -80,7 +80,7 @@ export default function Home() {
             {
               '@type': 'SoftwareApplication',
               name: 'QECTOR Decoder v3',
-              description: 'QECTOR Decoder v3 is the qector-decoder-v3 1.0.0 Rust/Python quantum error correction package with 17 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.',
+              description: 'QECTOR Decoder v3 is the qector-decoder-v3 1.0.1 Rust/Python quantum error correction package with 17 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.',
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Linux, macOS, Windows',
               programmingLanguage: 'Python',
@@ -144,9 +144,9 @@ export default function Home() {
             className="text-base sm:text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-5 leading-relaxed break-words"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-             The v1.0.0 runtime ships 17 concrete decoder configurations, while Workbench v1.0.7 names 19 kinds in total:
+             The 1.0.x runtime ships 17 concrete decoder configurations, while Workbench v1.0.7 names 19 kinds in total:
              those configurations plus AutoDecoder and Auto Router orchestration entries.{' '}
-             <span className="text-primary font-semibold">v1.0.0 is the first stable release:</span> API stability tiers,
+             <span className="text-primary font-semibold">1.0.1 is the current stable release:</span> API stability tiers,
             Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
           </p>
           <p
@@ -217,8 +217,8 @@ export default function Home() {
            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
              <div className="card-surface p-6 border-cyan-300/20">
                <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Current Runtime</div>
-               <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 1.0.0</h3>
-               <p className="text-secondary text-sm leading-relaxed">The live PyPI release supports Python 3.9 through 3.13 with 15 binary wheels across Windows, Linux, and macOS.</p>
+               <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 1.0.1</h3>
+               <p className="text-secondary text-sm leading-relaxed">The live PyPI release supports Python 3.9 through 3.14 with 18 binary wheels across Windows, Linux, and macOS, each with build provenance.</p>
              </div>
              <div className="card-surface p-6 border-cyan-300/20">
                <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Evidence Contract</div>
@@ -356,7 +356,7 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Install',
-                 desc: 'Install the v1.0.0 wheel in a supported Python 3.9-3.13 environment alongside your existing Stim or PyMatching workflow.',
+                 desc: 'Install the 1.0.1 wheel in a supported Python 3.9-3.14 environment alongside your existing Stim or PyMatching workflow.',
                  detail: 'pip install --upgrade "qector-decoder-v3>=1.0,<2"',
                 code: true,
               },
@@ -464,8 +464,8 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: ' v1.0.0 First Stable', desc: 'API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor.' },
-                    { label: ' 15 Binary Wheels', desc: 'Python 3.9-3.13 across Windows amd64, Linux x86_64, and macOS arm64, released on PyPI.' },
+                    { label: ' v1.0.1 Stable', desc: 'Corrected code families and Union-Find peeling, Python 3.14, GPU on Pro licences, signed provenance for every wheel.' },
+                    { label: ' 18 Binary Wheels', desc: 'Python 3.9-3.14 across Windows amd64, Linux x86_64, and macOS arm64, each tested on its own OS before release.' },
                     { label: ' GPU Batch Paths', desc: 'CUDA and OpenCL batch paths are available for supported hardware and drivers; OpenCL via source build.' },
                     { label: ' Reproducible Harness', desc: 'qector bench ships with the package; measure on your own hardware, no universal figures claimed.' },
                   ].map((item) => (

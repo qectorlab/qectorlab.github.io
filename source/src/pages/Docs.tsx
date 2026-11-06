@@ -25,12 +25,12 @@ export default function Docs() {
 const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const docLinks = [
-    { title: 'Claude Code Plugin', desc: 'v1.0.6: 28 skills, 5 agents, four MCP servers, and explicit local tool profiles', href: '/claude-plugin' },
+    { title: 'Claude Code Plugin', desc: 'v2.0.1: 28 skills, 5 agents, air-gapped qector-secure server with 12 schema-validated tools', href: '/claude-plugin' },
     { title: 'Workbench (Win / Linux)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.7 on Windows/Linux', href: '/workbench' },
     { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 local tools', href: '/mcp-server' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
-    { title: 'Package Reference (v1.0.0)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
+    { title: 'Package Reference (v1.0.1)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
     { title: 'Installation Guide', desc: 'Platform-specific setup instructions', href: '/installer' },
     { title: 'Evidence & Reports', desc: 'Six-record Zenodo registry, validation artifacts and reproducibility data', href: '/evidence' },
     { title: 'Changelog', desc: 'Version history and release notes', href: '/changelog' },
@@ -47,7 +47,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
-            Python 3.9-3.13 · Linux · macOS · Windows
+            Python 3.9-3.14 · Linux · macOS · Windows
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Documentation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
