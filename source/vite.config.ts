@@ -25,11 +25,16 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   let html = shell
 
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escAttr(route.title)}</title>`)
+
+  // The hero image is only on Home: do not make every other page download it.
+  if (route.path !== '/') html = html.replace(/\s*<link rel="preload" as="image"[^>]*hero-bg[^>]*>/, '')
   html = setTag(html, /(<meta name="description" content=")[^"]*(")/, route.description)
   if (route.noindex) {
     html = html.replace(/(<meta name="robots" content=")[^"]*(")/, '$1noindex, follow$2')
   }
   html = setTag(html, /(<link rel="canonical" href=")[^"]*(")/, url)
+  // noindex pages (thank-you, 404) declare no canonical URL.
+  if (route.noindex) html = html.replace(/\s*<link rel="canonical"[^>]*>/, '')
   html = setTag(html, /(<meta property="og:title" content=")[^"]*(")/, route.title)
   html = setTag(html, /(<meta property="og:description" content=")[^"]*(")/, route.description)
   html = setTag(html, /(<meta property="og:url" content=")[^"]*(")/, url)
@@ -297,8 +302,9 @@ export default defineConfig(({ command }) => ({
           if (id.includes('node_modules/gsap')) return 'vendor-gsap';
           if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/lucide-react')) return 'vendor-ui';
           if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-')) return 'vendor-charts';
-          if (/node_modules\/(katex|react-markdown|remark-|rehype-|unified|micromark|mdast-|hast-|vfile|unist-|zwitch|bail|trough)/.test(id)) return 'vendor-md';
-          if (id.includes('node_modules')) return 'vendor';
+          // Markdown/KaTeX and other libraries are left to Rollup's own
+          // splitting so they load only on the routes that use them (blog
+          // posts), instead of being preloaded on every page.
         },
       },
     },

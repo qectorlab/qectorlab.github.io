@@ -1,0 +1,1596 @@
+{
+ "package": "qector-decoder-v3",
+ "version": "1.0.1",
+ "generated": "2026-11-06",
+ "items": [
+  {
+   "name": "AmbiguityClusterDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, error_rate=0.05, ambig_threshold=0.5, max_cluster_size=12)",
+   "summary": "C1-02: BP + ambiguity-clustered exact decoding for qLDPC codes.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    }
+   ]
+  },
+  {
+   "name": "AutoDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, config: 'BackendConfig | None' = None)",
+   "summary": "Workload-aware, self-debugging decoder that routes to CUDA / OpenCL / Rayon / CPU / Fallback.",
+   "methods": [
+    {
+     "name": "auto_select",
+     "signature": "(checks, n_qubits, batch_size=1)"
+    },
+    {
+     "name": "available_backends",
+     "signature": "(self) -> 'list[str]'"
+    },
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes) -> 'np.ndarray'"
+    },
+    {
+     "name": "calibrate",
+     "signature": "(self, sizes=(64, 256, 1024, 4096, 16384), repeats: 'int' = 3, seed: 'int' = 0)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "diagnostics",
+     "signature": "(self) -> 'dict'"
+    },
+    {
+     "name": "reset_backend_health",
+     "signature": "(self) -> 'None'"
+    },
+    {
+     "name": "select",
+     "signature": "(self, batch_size: 'int') -> 'str'"
+    }
+   ]
+  },
+  {
+   "name": "AutoRouter",
+   "kind": "class",
+   "signature": "(*, priority: 'str' = 'balanced', hardware: 'HardwareLike' = None, error_rate: 'float' = 0.05, code_family: 'Any' = None, use_native_auto: 'bool' = True) -> 'None'",
+   "summary": "Construct, cache, and dispatch the policy-selected decoder for a problem.",
+   "methods": [
+    {
+     "name": "decode",
+     "signature": "(self, checks_or_H: 'Any', syndromes: 'Any', **ctx: 'Any') -> 'np.ndarray'"
+    },
+    {
+     "name": "explain",
+     "signature": "(self, checks_or_H: 'Any' = None, syndromes: 'Any' = None, **ctx: 'Any') -> 'dict[str, Any]'"
+    }
+   ]
+  },
+  {
+   "name": "BPOSDDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, error_rate=0.1, bp_method=None, osd_order=None)",
+   "summary": "Belief Propagation + Ordered Statistics Decoding.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "bp_decode",
+     "signature": "(self, syndrome, max_iterations=20)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_batch_flat",
+     "signature": "(self, flat_syndromes, num_shots, stride=None)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "decode_timed",
+     "signature": "(self, syndrome, max_latency_ms=10.0)"
+    }
+   ]
+  },
+  {
+   "name": "Backend",
+   "kind": "class",
+   "signature": "()",
+   "summary": "Backend identifiers & Fallback Tiers.",
+   "methods": []
+  },
+  {
+   "name": "BackendConfig",
+   "kind": "class",
+   "signature": "(rayon_threshold: 'int' = 8, gpu_threshold: 'int' = 4096, allow_gpu: 'bool' = True, prefer: 'str' = 'cuda', force: 'str | None' = None, enable_auto_debug: 'bool' = True) -> None",
+   "summary": "Tunable thresholds and policy for :class:`AutoDecoder`.",
+   "methods": []
+  },
+  {
+   "name": "BatchDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None)",
+   "summary": "Parallel batch decoder using Rayon (Rust data parallelism).",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "parallel_batch_decode",
+     "signature": "(self, syndromes)"
+    }
+   ]
+  },
+  {
+   "name": "BatchedBpDecoder",
+   "kind": "class",
+   "signature": "(H: 'Any', *, error_rate: 'float' = 0.05, priors: 'Any' = None, max_iter: 'int' = 30, alpha: 'float' = 1.0, bp_method: 'str' = 'min_sum', prefer_gpu: 'bool' = True) -> 'None'",
+   "summary": "Batched belief-propagation decoder over a fixed GF(2) check matrix ``H``.",
+   "methods": [
+    {
+     "name": "decode_batch",
+     "signature": "(self, syndromes: 'Any', *, return_llr: 'bool' = False, early_stop: 'bool' = True) -> 'tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, np.ndarray]'"
+    }
+   ]
+  },
+  {
+   "name": "BeliefMatching",
+   "kind": "class",
+   "signature": "(matrices: '_Matrices', max_iter: 'int' = 30, bp_shortcut: 'bool' = False)",
+   "summary": "Belief-propagation + minimum-weight perfect matching decoder.",
+   "methods": [
+    {
+     "name": "decode",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_batch",
+     "signature": "(self, shots) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "from_detector_error_model",
+     "signature": "(dem: 'Any', max_iter: 'int' = 20) -> 'BeliefMatching'"
+    },
+    {
+     "name": "from_numpy_h",
+     "signature": "(H, error_rate: 'float' = 0.05, max_iter: 'int' = 20) -> 'BeliefMatching'"
+    },
+    {
+     "name": "from_stim_circuit",
+     "signature": "(circuit, max_iter: 'int' = 20) -> 'BeliefMatching'"
+    }
+   ]
+  },
+  {
+   "name": "BenchmarkSuite",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, n_samples=10000, seed=42)",
+   "summary": "Production benchmark suite. Wraps Rust-native benchmarking.",
+   "methods": [
+    {
+     "name": "run",
+     "signature": "(self)"
+    },
+    {
+     "name": "save",
+     "signature": "(self, path, results)"
+    }
+   ]
+  },
+  {
+   "name": "BlossomDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, edge_weights=None)",
+   "summary": "Minimum-Weight Perfect Matching (MWPM) decoder via Edmonds' Blossom algorithm.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "batch_decode_weighted",
+     "signature": "(self, syndromes, weights)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "set_edge_weights",
+     "signature": "(self, weights)"
+    }
+   ]
+  },
+  {
+   "name": "BpOsdDecoder",
+   "kind": "class",
+   "signature": "(H: 'Any', error_rate: 'float' = 0.05, priors: 'Any' = None, max_iter: 'int' = 30, ms_scale: 'float' = 1.0, osd_order: 'int' = 0, bp_method: 'str' = 'sum_product', use_gpu: 'Any' = None, max_latency_ms: 'float | None' = None, damping: 'float' = 0.0, osd_lambda: 'Any' = None)",
+   "summary": "BP + ordered-statistics decoder for general GF(2) check matrices.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix: 'Any' = None) -> 'np.ndarray'"
+    }
+   ]
+  },
+  {
+   "name": "CPUBatchDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None)",
+   "summary": "SIMD-friendly CPU batch decoder with pooled buffers and SoA transposition.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "batch_decode_par",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "CUDABatchDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, edge_weights=None)",
+   "summary": "",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, /, syndromes)"
+    },
+    {
+     "name": "is_available",
+     "signature": "()"
+    },
+    {
+     "name": "reset",
+     "signature": "(self, /)"
+    }
+   ]
+  },
+  {
+   "name": "CUDABpOsdDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits, error_rate)",
+   "summary": "",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, /, syndromes)"
+    }
+   ]
+  },
+  {
+   "name": "ColourCodeDecoder",
+   "kind": "class",
+   "signature": "(dem: 'Any', max_iter: 'int' = 30, osd_order: 'int' = 0, method: 'str' = 'bposd')",
+   "summary": "Colour-code decoder: BP-OSD over the undecomposed hypergraph DEM.",
+   "methods": [
+    {
+     "name": "decode",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_batch",
+     "signature": "(self, syndromes) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    },
+    {
+     "name": "from_detector_error_model",
+     "signature": "(dem: 'Any', max_iter: 'int' = 30, osd_order: 'int' = 0) -> 'ColourCodeDecoder'"
+    },
+    {
+     "name": "from_stim_circuit",
+     "signature": "(circuit: 'Any', max_iter: 'int' = 30, osd_order: 'int' = 0) -> 'ColourCodeDecoder'"
+    }
+   ]
+  },
+  {
+   "name": "DecodeResult",
+   "kind": "class",
+   "signature": "(correction: 'np.ndarray', syndrome: 'np.ndarray', n_qubits: 'int', n_checks: 'int', weight: 'float | None' = None, logical_flips: 'np.ndarray | None' = None, decode_seconds: 'float | None' = None, backend: 'str' = 'cpu', fallback: 'bool' = False, fallback_reason: 'str' = '', syndrome_valid: 'bool | None' = None, metadata: 'dict' = <factory>) -> None",
+   "summary": "Result of decoding a single syndrome, with diagnostics and metadata.",
+   "methods": [
+    {
+     "name": "as_uint8",
+     "signature": "(self) -> 'np.ndarray'"
+    },
+    {
+     "name": "explain",
+     "signature": "(self) -> 'str'"
+    },
+    {
+     "name": "to_dict",
+     "signature": "(self) -> 'dict'"
+    },
+    {
+     "name": "to_json",
+     "signature": "(self, indent: 'int' = 2) -> 'str'"
+    },
+    {
+     "name": "verify",
+     "signature": "(self, H: 'np.ndarray') -> 'bool'"
+    }
+   ]
+  },
+  {
+   "name": "DecoderName",
+   "kind": "class",
+   "signature": "()",
+   "summary": "String identifiers for the routable decoders.",
+   "methods": []
+  },
+  {
+   "name": "DecoderPool",
+   "kind": "class",
+   "signature": "(check_to_qubits=None, n_qubits=None, decoder_type: 'str' = 'fast_union_find', n_workers: 'int | None' = None, num_threads: 'int | None' = None)",
+   "summary": "Multi-process decoder pool for parallel syndrome decoding.",
+   "methods": [
+    {
+     "name": "close",
+     "signature": "(self)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndromes) -> 'np.ndarray'"
+    }
+   ]
+  },
+  {
+   "name": "DetectorGraph",
+   "kind": "class",
+   "signature": "(check_to_qubits, syndrome, check_positions=None, check_types=None, base_weights=None, n_qubits=None)",
+   "summary": "Detector graph used by the GNN and hybrid decoder paths.",
+   "methods": [
+    {
+     "name": "update_syndrome",
+     "signature": "(self, syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "FastUnionFindDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, edge_weights=None)",
+   "summary": "Union-Find with a zero-allocation hot path, reusable buffers and a C ABI.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_batch_flat",
+     "signature": "(self, flat_syndromes, num_shots, stride=None)"
+    },
+    {
+     "name": "decode_batch_into_flat",
+     "signature": "(self, flat_syndromes, num_shots, corrections, stride=None)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "set_edge_weights",
+     "signature": "(self, edge_weights)"
+    }
+   ]
+  },
+  {
+   "name": "GNNBeliefMatcher",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, *, gnn=None, hidden_size: 'int' = 32, n_layers: 'int' = 2, train_samples: 'int' = 0, error_rate: 'float' = 0.05, train_epochs: 'int' = 3, seed=None)",
+   "summary": "End-to-end GNN-guided minimum-weight perfect matching decoder.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    }
+   ]
+  },
+  {
+   "name": "GNNPredecoder",
+   "kind": "class",
+   "signature": "(node_feat_dim=None, edge_feat_dim=None, hidden_size=16, n_layers=2)",
+   "summary": "Graph Neural Network Pre-Decoder for dynamic edge weight prediction.",
+   "methods": [
+    {
+     "name": "forward",
+     "signature": "(self, graph)"
+    },
+    {
+     "name": "load_weights",
+     "signature": "(self, path)"
+    },
+    {
+     "name": "new_standard",
+     "signature": "(hidden_size=16, n_layers=2)"
+    },
+    {
+     "name": "predict_with_node_probs",
+     "signature": "(self, graph)"
+    },
+    {
+     "name": "save_weights",
+     "signature": "(self, path)"
+    },
+    {
+     "name": "train",
+     "signature": "(self, graphs, targets, n_epochs)"
+    }
+   ]
+  },
+  {
+   "name": "GNNTrainer",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits, error_rate=0.1)",
+   "summary": "End-to-end GNN training pipeline with Blossom teacher model.",
+   "methods": [
+    {
+     "name": "generate_dataset",
+     "signature": "(self, n_samples)"
+    },
+    {
+     "name": "train",
+     "signature": "(self, gnn, n_samples, n_epochs)"
+    },
+    {
+     "name": "train_bp",
+     "signature": "(self, gnn, n_samples, n_epochs, max_bp_iter=20)"
+    }
+   ]
+  },
+  {
+   "name": "HardwareProfile",
+   "kind": "class",
+   "signature": "(cuda_rust: 'bool' = False, gpu: 'bool' = False) -> None",
+   "summary": "Resolved view of the GPU capability the policy should assume.",
+   "methods": [
+    {
+     "name": "as_dict",
+     "signature": "(self) -> 'dict[str, bool]'"
+    },
+    {
+     "name": "detect",
+     "signature": "() -> 'HardwareProfile'"
+    }
+   ]
+  },
+  {
+   "name": "HybridCascadeDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, edge_weights=None, max_accept_weight=None, escalation=None, error_rate=None)",
+   "summary": "Hybrid cascading decoder: Union-Find pre-filter + Blossom/BP-OSD escalation.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "batch_decode_timed",
+     "signature": "(self, syndromes, max_latency_ms=10.0)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "decode_timed",
+     "signature": "(self, syndrome, max_latency_ms=10.0)"
+    }
+   ]
+  },
+  {
+   "name": "HybridDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, check_positions=None, check_types=None, base_weights=None, gnn_hidden_size=64, gnn_n_layers=3)",
+   "summary": "GNN Pre-Decoder + SparseBlossom hybrid decoder.",
+   "methods": [
+    {
+     "name": "batch_decode_hybrid",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "batch_decode_standard",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_heuristic",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_hybrid",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "decode_standard",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "load_weights",
+     "signature": "(self, path)"
+    },
+    {
+     "name": "save_weights",
+     "signature": "(self, path)"
+    },
+    {
+     "name": "train",
+     "signature": "(self, n_samples, n_epochs, error_rate=0.1)"
+    },
+    {
+     "name": "train_bp",
+     "signature": "(self, n_samples, n_epochs, error_rate=0.1, max_bp_iter=20)"
+    }
+   ]
+  },
+  {
+   "name": "LERBenchmark",
+   "kind": "class",
+   "signature": "()",
+   "summary": "Logical Error Rate benchmark suite.",
+   "methods": [
+    {
+     "name": "run_all",
+     "signature": "(self)"
+    }
+   ]
+  },
+  {
+   "name": "LookupTableDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None)",
+   "summary": "Exact lookup-table decoder with UnionFind fallback.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "build_table",
+     "signature": "(self, max_entries)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "MAX_WORKERS",
+   "kind": "constant",
+   "signature": "",
+   "summary": "",
+   "methods": []
+  },
+  {
+   "name": "Matching",
+   "kind": "class",
+   "signature": "(H: 'Any' = None, weights: 'Any' = None, faults_matrix: 'Any' = None)",
+   "summary": "Minimum-weight perfect-matching decoder with a PyMatching-style API.",
+   "methods": [
+    {
+     "name": "add_boundary_edge",
+     "signature": "(self, node: 'int', fault_ids: 'Any' = None, weight: 'float' = 1.0, **_: 'Any') -> 'None'"
+    },
+    {
+     "name": "add_edge",
+     "signature": "(self, node1: 'int', node2: 'int', fault_ids: 'Any' = None, weight: 'float' = 1.0, **_: 'Any') -> 'None'"
+    },
+    {
+     "name": "check_matrix",
+     "signature": "(self) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome: 'Sequence[int]') -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_batch",
+     "signature": "(self, shots: 'Any') -> 'np.ndarray'"
+    },
+    {
+     "name": "decode_to_edges_array",
+     "signature": "(self, syndrome: 'Sequence[int]') -> 'np.ndarray'"
+    },
+    {
+     "name": "edges",
+     "signature": "(self) -> 'list[tuple[int | None, int | None, dict]]'"
+    },
+    {
+     "name": "from_check_matrix",
+     "signature": "(H: 'Any', weights: 'Any' = None, faults_matrix: 'Any' = None, **_: 'Any') -> 'Matching'"
+    },
+    {
+     "name": "from_detector_error_model",
+     "signature": "(dem: 'Any') -> 'Matching'"
+    },
+    {
+     "name": "from_stim_dem",
+     "signature": "(dem: 'Any') -> 'Matching'"
+    }
+   ]
+  },
+  {
+   "name": "NativeAutoDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, distance=5, noise_rate=0.01, batch_size=1, is_qldpc=False)",
+   "summary": "",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, /, syndromes)"
+    },
+    {
+     "name": "batch_decode_strided",
+     "signature": "(self, /, syndromes, stride=None, require_alignment=False)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, /, syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "NeuralPredecoder",
+   "kind": "class",
+   "signature": "(n_input, n_output, n_hidden1=None, n_hidden2=None)",
+   "summary": "Lightweight MLP pre-decoder with Xavier initialization and SGD training.",
+   "methods": [
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "predict",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "train",
+     "signature": "(self, syndromes, corrections, n_epochs, learning_rate=0.01)"
+    }
+   ]
+  },
+  {
+   "name": "OpenCLBatchDecoder",
+   "kind": "class",
+   "signature": "(*a, **k)",
+   "summary": "OpenCL batch decoder - requires source build with --features opencl.",
+   "methods": [
+    {
+     "name": "is_available",
+     "signature": "()"
+    }
+   ]
+  },
+  {
+   "name": "PredecodedDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, backend: 'str' = 'blossom')",
+   "summary": "Local-matching predecoder + exact/fast residual decoder.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes) -> 'np.ndarray'"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome) -> 'np.ndarray'"
+    }
+   ]
+  },
+  {
+   "name": "Recommendation",
+   "kind": "class",
+   "signature": "(decoder: 'str', reason: 'str', family: 'str', priority: 'str', batch_size: 'int', hardware: 'dict[str, bool]', gpu_batched_bp: 'bool' = False, forced: 'bool' = False, graphlike: 'bool | None' = None, distance: 'int | None' = None, n_qubits: 'int | None' = None) -> None",
+   "summary": "A decoder choice plus the reasoning and inputs that produced it.",
+   "methods": [
+    {
+     "name": "as_dict",
+     "signature": "(self) -> 'dict[str, Any]'"
+    }
+   ]
+  },
+  {
+   "name": "SlidingWindowDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, window_size=10, decay_factor=0.8, check_types=None, p_data=None, p_meas=None)",
+   "summary": "Sliding-window decoder with exponential decay weighting or fault-tolerant space-time decoding.",
+   "methods": [
+    {
+     "name": "decode",
+     "signature": "(self, syndrome=None)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "detector_history",
+     "signature": "(self)"
+    },
+    {
+     "name": "flush",
+     "signature": "(self)"
+    },
+    {
+     "name": "update",
+     "signature": "(self, round_syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "SpaceTimeDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, check_types, n_rounds, p_data, p_meas, n_qubits=None)",
+   "summary": "PyO3 wrapper for [`SpaceTimeDecoder`]: fault-tolerant temporal decoding via XOR-of-consecutive-rounds detectors matched on a 3D (space x time) graph, as opposed to [`crate::sliding_window::PySlidingWindowDecoder`] /…",
+   "methods": [
+    {
+     "name": "decode_history",
+     "signature": "(self, /)"
+    },
+    {
+     "name": "reset",
+     "signature": "(self, /)"
+    },
+    {
+     "name": "update",
+     "signature": "(self, /, round_syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "SparseBlossomDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, edge_weights=None)",
+   "summary": "Region-growing Sparse Blossom decoder with RadixHeap.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "decode_with_weights",
+     "signature": "(self, syndrome, weights)"
+    }
+   ]
+  },
+  {
+   "name": "StreamingDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, history_size=10, check_types=None, p_data=None, p_meas=None)",
+   "summary": "Streaming decoder that accumulates syndromes over multiple rounds.",
+   "methods": [
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "decode_rounds",
+     "signature": "(self, rounds)"
+    },
+    {
+     "name": "detector_history",
+     "signature": "(self)"
+    },
+    {
+     "name": "flush",
+     "signature": "(self)"
+    },
+    {
+     "name": "update",
+     "signature": "(self, round_syndrome)"
+    }
+   ]
+  },
+  {
+   "name": "StreamingResult",
+   "kind": "class",
+   "signature": "(corrections: 'np.ndarray', syndromes: 'np.ndarray', telemetry: 'StreamingTelemetry', logical_flips: 'np.ndarray | None' = None) -> None",
+   "summary": "Outcome of a full streaming decode.",
+   "methods": [
+    {
+     "name": "is_valid",
+     "signature": "(self, H: 'Any', *, prefer_gpu: 'bool' = True) -> 'bool'"
+    }
+   ]
+  },
+  {
+   "name": "StreamingSession",
+   "kind": "class",
+   "signature": "(code_or_checks: 'Any', n_qubits: 'int | None' = None, *, window_size: 'int' = 8, decoder: 'Any | None' = None, logicals: 'Any' = None, prefer_gpu: 'bool | None' = None) -> 'None'",
+   "summary": "Incremental multi-round decode with a sliding commit buffer.",
+   "methods": [
+    {
+     "name": "committed_corrections",
+     "signature": "(self) -> 'np.ndarray'"
+    },
+    {
+     "name": "committed_syndromes",
+     "signature": "(self) -> 'np.ndarray'"
+    },
+    {
+     "name": "flush",
+     "signature": "(self) -> 'list[np.ndarray]'"
+    },
+    {
+     "name": "push_round",
+     "signature": "(self, syndrome: 'Any') -> 'list[np.ndarray]'"
+    },
+    {
+     "name": "reset",
+     "signature": "(self) -> 'None'"
+    },
+    {
+     "name": "run",
+     "signature": "(self, syndrome_rounds: 'Any') -> 'StreamingResult'"
+    }
+   ]
+  },
+  {
+   "name": "StreamingTelemetry",
+   "kind": "class",
+   "signature": "(rounds: 'int' = 0, windows: 'int' = 0, committed: 'int' = 0, decode_seconds: 'float' = 0.0, per_window_seconds: 'list[float]' = <factory>, gpu: 'dict[str, int]' = <factory>, backend: 'dict[str, Any]' = <factory>, rounds_valid: 'int | None' = None) -> None",
+   "summary": "Real, measured counters for a streaming decode run.",
+   "methods": [
+    {
+     "name": "as_dict",
+     "signature": "(self) -> 'dict[str, Any]'"
+    },
+    {
+     "name": "record_window",
+     "signature": "(self, seconds: 'float', rounds: 'int' = 1) -> 'None'"
+    }
+   ]
+  },
+  {
+   "name": "TwoStageDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, check_types, n_qubits=None, x_decoder='blossom', z_decoder='blossom')",
+   "summary": "C1-03: Correlated two-stage matching for CSS codes.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    }
+   ]
+  },
+  {
+   "name": "UnionFindDecoder",
+   "kind": "class",
+   "signature": "(check_to_qubits, n_qubits=None, edge_weights=None)",
+   "summary": "Production-ready Union-Find quantum error correction decoder.",
+   "methods": [
+    {
+     "name": "batch_decode",
+     "signature": "(self, syndromes)"
+    },
+    {
+     "name": "decode",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_batch_flat",
+     "signature": "(self, flat_syndromes, num_shots, stride=None)"
+    },
+    {
+     "name": "decode_batch_into_flat",
+     "signature": "(self, flat_syndromes, num_shots, corrections, stride=None)"
+    },
+    {
+     "name": "decode_correction",
+     "signature": "(self, syndrome)"
+    },
+    {
+     "name": "decode_observables",
+     "signature": "(self, syndrome, observables_matrix=None)"
+    },
+    {
+     "name": "set_edge_weights",
+     "signature": "(self, edge_weights)"
+    }
+   ]
+  },
+  {
+   "name": "Workbench",
+   "kind": "class",
+   "signature": "() -> 'None'",
+   "summary": "Controller for the QECTOR Workbench (load → benchmark → export).",
+   "methods": [
+    {
+     "name": "cancel_job",
+     "signature": "(self, job_id: 'str') -> 'str'"
+    },
+    {
+     "name": "detect_backends",
+     "signature": "(self) -> 'dict'"
+    },
+    {
+     "name": "environment_snapshot",
+     "signature": "(self) -> 'dict'"
+    },
+    {
+     "name": "export_csv",
+     "signature": "(self, artifact: 'dict', path: 'str') -> 'str'"
+    },
+    {
+     "name": "export_json",
+     "signature": "(self, artifact: 'dict', path: 'str') -> 'str'"
+    },
+    {
+     "name": "export_pdf",
+     "signature": "(self, artifact: 'dict', path: 'str') -> 'str'"
+    },
+    {
+     "name": "get_job",
+     "signature": "(self, job_id: 'str') -> 'dict'"
+    },
+    {
+     "name": "get_license_info",
+     "signature": "(self) -> 'dict'"
+    },
+    {
+     "name": "job_artifact",
+     "signature": "(self, job_id: 'str') -> 'dict | None'"
+    },
+    {
+     "name": "list_jobs",
+     "signature": "(self) -> 'list[dict]'"
+    },
+    {
+     "name": "load_dem",
+     "signature": "(self, source: 'Any') -> 'dict'"
+    },
+    {
+     "name": "load_stim",
+     "signature": "(self, source: 'Any') -> 'dict'"
+    },
+    {
+     "name": "run_benchmark",
+     "signature": "(self, spec: 'dict', job: 'Job | None' = None) -> 'dict'"
+    },
+    {
+     "name": "set_license_key",
+     "signature": "(self, key: 'str') -> 'None'"
+    },
+    {
+     "name": "shutdown",
+     "signature": "(self) -> 'None'"
+    },
+    {
+     "name": "submit_job",
+     "signature": "(self, spec: 'dict') -> 'str'"
+    },
+    {
+     "name": "wait",
+     "signature": "(self, job_id: 'str', timeout: 'float | None' = None) -> 'dict'"
+    }
+   ]
+  },
+  {
+   "name": "backend",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.backend - Workload-Aware AutoDecoder with Self-Auto-Debug & Multi-Tier Fallback.",
+   "methods": []
+  },
+  {
+   "name": "batched_bp_decode",
+   "kind": "function",
+   "signature": "(H: 'Any', syndromes: 'Any', *, error_rate: 'float' = 0.05, priors: 'Any' = None, max_iter: 'int' = 30, alpha: 'float' = 1.0, bp_method: 'str' = 'min_sum', prefer_gpu: 'bool' = True, early_stop: 'bool' = True, return_llr: 'bool' = False) -> 'tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, np.ndarray]'",
+   "summary": "Decode a stack of syndromes with batched belief propagation.",
+   "methods": []
+  },
+  {
+   "name": "belief_matching",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.belief_matching - belief-propagation + MWPM (belief-matching).",
+   "methods": []
+  },
+  {
+   "name": "benchmarking",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.benchmarking - reproducible, statistically-honest benchmarks.",
+   "methods": []
+  },
+  {
+   "name": "bp_cupy",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.bp_cupy - batched, GPU-resident belief propagation.",
+   "methods": []
+  },
+  {
+   "name": "bposd",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.bposd - belief propagation + ordered-statistics decoding.",
+   "methods": []
+  },
+  {
+   "name": "changelog",
+   "kind": "function",
+   "signature": "() -> str",
+   "summary": "Return a human-readable changelog string for the loaded package.",
+   "methods": []
+  },
+  {
+   "name": "check_to_edges",
+   "kind": "function",
+   "signature": "(check_to_qubits)",
+   "summary": "Convert check_to_qubits to edge list.",
+   "methods": []
+  },
+  {
+   "name": "clear_decoder_cache",
+   "kind": "function",
+   "signature": "()",
+   "summary": "Clear the in-memory decoder and decoder pool LRU caches.",
+   "methods": []
+  },
+  {
+   "name": "codes",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.codes - Code-family helpers.",
+   "methods": []
+  },
+  {
+   "name": "colour_code",
+   "kind": "module",
+   "signature": "",
+   "summary": "C1-04: Colour-code decoder.",
+   "methods": []
+  },
+  {
+   "name": "compute_detector_differences",
+   "kind": "function",
+   "signature": "(history)",
+   "summary": "Computes XOR detector differences across consecutive syndrome rounds: detector_t = raw_t ^ raw_{t-1}.",
+   "methods": []
+  },
+  {
+   "name": "cuda_is_available",
+   "kind": "function",
+   "signature": "()",
+   "summary": "",
+   "methods": []
+  },
+  {
+   "name": "decode_mmap",
+   "kind": "function",
+   "signature": "(syndrome_path: 'str', output_path: 'str', check_to_qubits, n_qubits: 'int', decoder_type: 'str' = 'cpu_batch', batch_size: 'int' = 65536, n_shots: 'int | None' = None, dtype: '_np.dtype' = dtype('uint8'), verbose: 'bool' = False)",
+   "summary": "Out-of-core batch decoding via memory-mapped arrays.",
+   "methods": []
+  },
+  {
+   "name": "decode_with_diagnostics",
+   "kind": "function",
+   "signature": "(code: 'Any', syndrome: 'Sequence[int]', kind: 'str' = 'blossom', decoder: 'Any' = None, logicals: 'np.ndarray | None' = None) -> 'DecodeResult'",
+   "summary": "Decode one syndrome and return a fully-populated :class:`DecodeResult`.",
+   "methods": []
+  },
+  {
+   "name": "decode_with_gnn",
+   "kind": "function",
+   "signature": "(check_to_qubits, n_qubits, syndrome, **kwargs) -> 'np.ndarray'",
+   "summary": "One-shot GNN-guided MWPM decode (see :class:`GNNBeliefMatcher`).",
+   "methods": []
+  },
+  {
+   "name": "decoder_cache",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.decoder_cache - LRU-decoder cache and factory functions.",
+   "methods": []
+  },
+  {
+   "name": "decoder_pool",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.decoder_pool - Multi-process decoder pool.",
+   "methods": []
+  },
+  {
+   "name": "dem",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.dem - Stim Detector Error Model (DEM) loader.",
+   "methods": []
+  },
+  {
+   "name": "detect_hardware",
+   "kind": "function",
+   "signature": "() -> 'HardwareProfile'",
+   "summary": "Return the live :class:`HardwareProfile` (alias for ``HardwareProfile.detect``).",
+   "methods": []
+  },
+  {
+   "name": "enforce_distance_cap",
+   "kind": "function",
+   "signature": "(distance) -> None",
+   "summary": "Enforce that *distance* does not exceed the active tier's cap.",
+   "methods": []
+  },
+  {
+   "name": "enforce_unlocked",
+   "kind": "function",
+   "signature": "() -> None",
+   "summary": "Hard-gate decode path when no valid license is active (QECTOR_ENFORCE=1).",
+   "methods": []
+  },
+  {
+   "name": "estimate_distance",
+   "kind": "function",
+   "signature": "(check_to_qubits, n_qubits=None)",
+   "summary": "Python wrapper for estimate_distance.",
+   "methods": []
+  },
+  {
+   "name": "flush_usage",
+   "kind": "function",
+   "signature": "(customer_id: 'str | None' = None, api_key: 'str | None' = None) -> dict",
+   "summary": "Flush accumulated decode shots to the Stripe Billing Meter Events API.",
+   "methods": []
+  },
+  {
+   "name": "from_circuit",
+   "kind": "function",
+   "signature": "(circuit, decoder_type='blossom', **kwargs)",
+   "summary": "Build a decoder from a Stim circuit in one call.",
+   "methods": []
+  },
+  {
+   "name": "generate_biconnected_qldpc_checks",
+   "kind": "function",
+   "signature": "(n_qubits, degree)",
+   "summary": "Generate a bipolar / biconnected qLDPC Tanner graph parity check matrix.",
+   "methods": []
+  },
+  {
+   "name": "generate_parity_check_matrix",
+   "kind": "function",
+   "signature": "(check_to_qubits, n_qubits=None)",
+   "summary": "Return the binary parity-check matrix ``H`` for *check_to_qubits*.",
+   "methods": []
+  },
+  {
+   "name": "generate_repetition_code_checks",
+   "kind": "function",
+   "signature": "(distance)",
+   "summary": "Generate a 1D repetition/chain code for testing.",
+   "methods": []
+  },
+  {
+   "name": "generate_ring_code_checks",
+   "kind": "function",
+   "signature": "(distance)",
+   "summary": "Generate a simple 1D ring code for testing.",
+   "methods": []
+  },
+  {
+   "name": "generate_space_time_surface_code_checks",
+   "kind": "function",
+   "signature": "(distance, rounds)",
+   "summary": "Generate 3D space-time surface code checks across multiple rounds.",
+   "methods": []
+  },
+  {
+   "name": "generate_surface_code_checks",
+   "kind": "function",
+   "signature": "(distance)",
+   "summary": "Generate compact periodic (toric) surface-code checks.",
+   "methods": []
+  },
+  {
+   "name": "generate_toy_code_checks",
+   "kind": "function",
+   "signature": "(distance)",
+   "summary": "Generate a toy code (not a proper quantum code) with d*d qubits for backward compatibility.",
+   "methods": []
+  },
+  {
+   "name": "generate_triangular_color_code_4_8_8_checks",
+   "kind": "function",
+   "signature": "(distance)",
+   "summary": "Generate 4.8.8 triangular color code parity check matrix.",
+   "methods": []
+  },
+  {
+   "name": "get_accumulated_shots",
+   "kind": "function",
+   "signature": "() -> int",
+   "summary": "Get total accumulated decode shots.",
+   "methods": []
+  },
+  {
+   "name": "get_backend",
+   "kind": "function",
+   "signature": "() -> 'GpuBackend'",
+   "summary": "Return the cached :class:`GpuBackend` capability snapshot (built once).",
+   "methods": []
+  },
+  {
+   "name": "get_decoder",
+   "kind": "function",
+   "signature": "(checks_tuple: 'tuple[tuple[int, ...]]', n_qubits: 'int', decoder_type: 'str' = 'union_find')",
+   "summary": "Get a decoder, constructing it once and caching for reuse.",
+   "methods": []
+  },
+  {
+   "name": "get_decoder_pool",
+   "kind": "function",
+   "signature": "(checks_tuple: 'tuple[tuple[int, ...]]', n_qubits: 'int', decoder_type: 'str' = 'union_find', n_workers: 'int | None' = None)",
+   "summary": "Get a multi-process :class:`DecoderPool`, constructed once and cached.",
+   "methods": []
+  },
+  {
+   "name": "get_latency_quantiles",
+   "kind": "function",
+   "signature": "()",
+   "summary": "`get_latency_quantiles() -> tuple[float, float, float] | None`",
+   "methods": []
+  },
+  {
+   "name": "get_license_info",
+   "kind": "function",
+   "signature": "() -> dict",
+   "summary": "Get active license info dictionary.",
+   "methods": []
+  },
+  {
+   "name": "gpu_available",
+   "kind": "function",
+   "signature": "() -> 'bool'",
+   "summary": "Return ``True`` iff CuPy is importable **and** a CUDA device is usable.",
+   "methods": []
+  },
+  {
+   "name": "gpu_backend",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.gpu_backend - the CuPy GPU backend abstraction.",
+   "methods": []
+  },
+  {
+   "name": "has_cuda_rust",
+   "kind": "function",
+   "signature": "() -> 'bool'",
+   "summary": "Return ``True`` iff the Rust ``CUDABatchDecoder`` reports a usable device.",
+   "methods": []
+  },
+  {
+   "name": "has_cupy",
+   "kind": "function",
+   "signature": "() -> 'bool'",
+   "summary": "Return ``True`` if the ``cupy`` module can be imported.",
+   "methods": []
+  },
+  {
+   "name": "license",
+   "kind": "module",
+   "signature": "",
+   "summary": "",
+   "methods": []
+  },
+  {
+   "name": "opencl_is_available",
+   "kind": "function",
+   "signature": "()",
+   "summary": "",
+   "methods": []
+  },
+  {
+   "name": "predecoder",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.predecoder - a fast, faithful matching predecoder.",
+   "methods": []
+  },
+  {
+   "name": "pymatching",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.pymatching_compat - a PyMatching-compatible ``Matching`` API.",
+   "methods": []
+  },
+  {
+   "name": "pymatching_compat",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.pymatching_compat - a PyMatching-compatible ``Matching`` API.",
+   "methods": []
+  },
+  {
+   "name": "qiskit_plugin",
+   "kind": "module",
+   "signature": "",
+   "summary": "QECTOR Qiskit Plugin - optional integration with the Qiskit ecosystem.",
+   "methods": []
+  },
+  {
+   "name": "recommend",
+   "kind": "function",
+   "signature": "(code_family: 'Any' = None, distance: 'int | None' = None, n_qubits: 'int | None' = None, batch_size: 'int' = 1, priority: 'str' = 'balanced', hardware: 'HardwareLike' = None, *, graphlike: 'bool | None' = None) -> 'Recommendation'",
+   "summary": "Return a rich :class:`Recommendation` for a decoding problem.",
+   "methods": []
+  },
+  {
+   "name": "recommend_decoder",
+   "kind": "function",
+   "signature": "(code_family: 'Any' = None, distance: 'int | None' = None, n_qubits: 'int | None' = None, batch_size: 'int' = 1, priority: 'str' = 'balanced', hardware: 'HardwareLike' = None) -> 'str'",
+   "summary": "Return the *name* of the recommended decoder class (see :func:`recommend`).",
+   "methods": []
+  },
+  {
+   "name": "record_shots",
+   "kind": "function",
+   "signature": "(count: int) -> None",
+   "summary": "Record decoding shots into telemetry buffer.",
+   "methods": []
+  },
+  {
+   "name": "rest_api",
+   "kind": "module",
+   "signature": "",
+   "summary": "Minimal REST API for QECTOR.",
+   "methods": []
+  },
+  {
+   "name": "result",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.result - Rich decode results, diagnostics and debug output.",
+   "methods": []
+  },
+  {
+   "name": "routing",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.routing - intelligent decoder router / auto-selection.",
+   "methods": []
+  },
+  {
+   "name": "run_mcp_server",
+   "kind": "function",
+   "signature": "()",
+   "summary": "Python signature: ```python run_mcp_server() ```",
+   "methods": []
+  },
+  {
+   "name": "set_license_key",
+   "kind": "function",
+   "signature": "(key: str) -> None",
+   "summary": "Set the global QECTOR license key for tier enforcement.",
+   "methods": []
+  },
+  {
+   "name": "set_license_key_file",
+   "kind": "function",
+   "signature": "(path) -> None",
+   "summary": "Load a license key from *path* and activate it.",
+   "methods": []
+  },
+  {
+   "name": "sinter_compat",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.sinter_compat - plug QECTOR into Sinter.",
+   "methods": []
+  },
+  {
+   "name": "sliding_window_decode",
+   "kind": "function",
+   "signature": "(syndrome_rounds: 'Any', code: 'Any' = None, *, check_to_qubits: 'Sequence[Sequence[int]] | None' = None, n_qubits: 'int | None' = None, window_size: 'int' = 8, decoder: 'Any | None' = None, logicals: 'Any' = None, prefer_gpu: 'bool | None' = None) -> 'StreamingResult'",
+   "summary": "Decode a whole multi-round syndrome stream window-by-window.",
+   "methods": []
+  },
+  {
+   "name": "sparse_blossom_radix_neighbors",
+   "kind": "function",
+   "signature": "(decoder, defects, k=8)",
+   "summary": "Return the k-nearest candidate edges (sorted by distance) for `defects`.",
+   "methods": []
+  },
+  {
+   "name": "start_metrics_server",
+   "kind": "function",
+   "signature": "(addr='127.0.0.1:9090')",
+   "summary": "Start the Prometheus metrics HTTP server.",
+   "methods": []
+  },
+  {
+   "name": "stim_compat",
+   "kind": "module",
+   "signature": "",
+   "summary": "Stim compatibility layer - Conversion and wrappers for the Stim ecosystem.",
+   "methods": []
+  },
+  {
+   "name": "streaming",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.streaming - a higher-level Python streaming / multi-round decode *orchestration* layer.",
+   "methods": []
+  },
+  {
+   "name": "stripe_integration",
+   "kind": "module",
+   "signature": "",
+   "summary": "QECTOR Decoder v3 - Full Stripe API & Webhook License Fulfillment Integration",
+   "methods": []
+  },
+  {
+   "name": "verify_license_token",
+   "kind": "function",
+   "signature": "(token: 'str', customer_email: 'str' = '') -> 'bool'",
+   "summary": "Verifies the license token signature completely offline using Ed25519.",
+   "methods": []
+  },
+  {
+   "name": "workbench",
+   "kind": "module",
+   "signature": "",
+   "summary": "qector_decoder_v3.workbench - the QECTOR Workbench application controller.",
+   "methods": []
+  }
+ ]
+}

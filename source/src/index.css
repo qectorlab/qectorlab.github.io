@@ -121,8 +121,10 @@
 
   /* Reveal-on-scroll (class-based, added by an IntersectionObserver in
      Layout.tsx). Hidden until revealed; no JS animation library needed. */
-  .card-surface:not(.revealed),
-  .prose:not(.revealed) {
+  /* Only hide when JavaScript runs (index.html adds .js-enabled), so no-JS
+     readers and prerendered HTML always show every card. */
+  .js-enabled .card-surface:not(.revealed),
+  .js-enabled .prose:not(.revealed) {
     opacity: 0;
     transform: translateY(30px);
   }

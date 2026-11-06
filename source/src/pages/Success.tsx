@@ -15,7 +15,33 @@ export default function Success() {
   const [params] = useSearchParams();
   const raw = params.get('session_id') ?? '';
   // Stripe leaves the literal placeholder if success_url was never templated.
-  const sessionId = raw && raw !== '{CHECKOUT_SESSION_ID}' ? raw : '';
+  const sessionId = /^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(raw) ? raw : '';
+
+  // Only a real Stripe Checkout redirect says "payment received". Anyone who
+  // opens /success/ directly gets help finding their licence instead.
+  if (!sessionId) {
+    return (
+      <>
+        <SEO title="Your QECTOR licence · QECTOR" description="Where to find your QECTOR licence token, manage your subscription or get help." noindex />
+        <section className="relative py-24 md:py-32 text-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
+          <div className="relative z-10 section-padding max-w-2xl mx-auto">
+            <div className="eyebrow-pill mb-6">Licence help</div>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">Looking for your licence?</h1>
+            <p className="text-secondary text-lg leading-relaxed mb-8">
+              This page confirms a purchase right after Stripe checkout. If you bought a plan, your licence token is in the
+              e-mail you used at checkout, usually within 10 minutes (check spam).
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/pricing" className="btn-gold">View plans</Link>
+              <a href="https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00" className="btn-cyan" target="_blank" rel="noopener noreferrer">Manage subscription</a>
+              <a href="mailto:admin@qector.store" className="btn-outline">E-mail support</a>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>

@@ -13,7 +13,7 @@ const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
 export default function NeuralReveal({
   text,
   triggerOnView = true,
-  scrambleDuration = 1500,
+  scrambleDuration = 450,
   className = '',
   as: Tag = 'span',
 }: NeuralRevealProps) {
@@ -38,6 +38,16 @@ export default function NeuralReveal({
 
     if (prefersReducedMotion) {
       return;
+    }
+
+    // Once per heading per browser session: the effect is a greeting, not
+    // something to sit through on every visit.
+    const seenKey = `qector-reveal:${text}`;
+    try {
+      if (window.sessionStorage.getItem(seenKey)) return;
+      window.sessionStorage.setItem(seenKey, '1');
+    } catch {
+      // Storage unavailable (private mode): just play it.
     }
 
     // Scramble immediately to start the animation
@@ -86,14 +96,14 @@ export default function NeuralReveal({
           next[i] = text[i];
           return next;
         });
-      }, i * charDelay + 100);
+      }, i * charDelay + 30);
       timeoutsRef.current.push(timeout);
     }
 
     // Cleanup interval after duration
     const cleanup = setTimeout(() => {
       if (intervalRef.current) clearInterval(intervalRef.current);
-    }, scrambleDuration + 500);
+    }, scrambleDuration + 200);
     timeoutsRef.current.push(cleanup);
   }, [text, scrambleDuration]);
 
@@ -139,7 +149,7 @@ export default function NeuralReveal({
   // inline-block preserves the scramble layout.
   return (
     <span ref={containerRef} className={`inline-block ${className}`}>
-      <Tag className="font-mono" aria-label={text} data-reveal-text={text}>
+      <Tag aria-label={text} data-reveal-text={text}>
         <span aria-hidden="true">
           {text.split(' ').map((word, wordIndex, wordsArr) => {
             // Find the global character index for the start of this word

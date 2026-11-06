@@ -35,6 +35,11 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
     setError('');
     const form = e.currentTarget;
     const data = new FormData(form);
+    // Honeypot filled: pretend success, send nothing.
+    if (String(data.get('website') || '').trim() !== '') {
+      setSubmitted('sent');
+      return;
+    }
 
     if (APP_CONFIG.contactEndpoint) {
       try {
@@ -114,7 +119,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             {/* Left Info */}
             <div ref={(el) => addRef(el, 0)} className="lg:col-span-2 space-y-4">
               <div className="card-surface">
-                <h2 className="text-primary font-semibold mb-2">Office</h2>
+                <h2 className="text-primary font-semibold mb-2">Business address</h2>
                 <p className="text-secondary text-sm leading-relaxed">
                   QECTOR is developed by iD01t Productions.<br />
                   Primary contact: Guillaume Lessard.<br />
@@ -204,12 +209,18 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                       <label htmlFor="contact-message" className="block text-secondary text-sm mb-2">Message <span className="text-cyan-300">*</span></label>
                       <textarea id="contact-message" name="message" required rows={6} className="w-full px-4 py-3 bg-void border border-gridline rounded-xl text-primary text-sm focus:border-cyan-300/50 focus-visible:ring-2 focus-visible:ring-cyan-300 transition-colors resize-y" placeholder="Tell us about your interest in QECTOR and evaluation needs..." />
                     </div>
+                    {/* Honeypot: hidden from people and assistive tech; bots fill it. */}
+                    <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                      <label htmlFor="contact-website">Leave this field empty</label>
+                      <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                    </div>
                     {error && <p className="text-red-400 text-sm" role="alert">{error}</p>}
                     <button type="submit" className="btn-gold w-full py-3">
                       Send Message
                     </button>
                     <p className="text-muted-foreground text-xs">
-                      By submitting this form, you agree to the processing of your contact data to respond to your inquiry. We do not share submission contents with third parties.
+                      We use what you send only to answer your inquiry and keep it for 3 years after our last exchange. It is never sold or shared for marketing. See the{' '}
+                      <Link to="/privacy" className="text-cyan-300 hover:underline">Privacy Policy</Link> (<Link to="/fr/privacy" className="text-cyan-300 hover:underline">français</Link>) for your rights under Québec law.
                     </p>
                   </form>
                 )}

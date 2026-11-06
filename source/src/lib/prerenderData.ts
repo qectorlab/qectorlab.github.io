@@ -181,6 +181,7 @@ const page = (inner: string) => wrap(inner + nav());
 export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/',
+    alternates: [['en', 'https://qector.store/'], ['fr', 'https://qector.store/fr/'], ['x-default', 'https://qector.store/']],
     title: 'QECTOR · Quantum Error Correction Decoding for Python',
     description:
       'QECTOR Decoder v3: Rust-core Python quantum error correction decoder with 17 configurations, a syndrome-faithful contract, and reproducible validation guidance.',
@@ -756,6 +757,15 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     ),
   },
   ...LEGAL_DOCS.map(legalRoute),
+  {
+    path: '/fr',
+    title: 'QECTOR · Décodage de correction d’erreurs quantiques pour Python',
+    description:
+      'QECTOR Decoder v3 : décodeurs QEC à noyau Rust pour Python (Union-Find, MWPM, BP-OSD, Relay-BP, GPU). Gratuit pour la recherche non commerciale; licences commerciales dès 79 $ US/mois, vérifiées hors ligne.',
+    heading: 'Décodage QEC pour Python',
+    alternates: [['en', 'https://qector.store/'], ['fr', 'https://qector.store/fr/'], ['x-default', 'https://qector.store/']],
+    body: page(h1('Décodage QEC pour Python') + p('Une seule bibliothèque pour plusieurs familles de décodeurs : Union-Find, MWPM exact, BP-OSD et Relay-BP, sur CPU et GPU, avec Stim et Sinter. Chaque correction est vérifiée contre son syndrome; les licences commerciales se vérifient hors ligne.')),
+  },
   {
     path: '/security',
     title: 'Security & Trust · QECTOR',

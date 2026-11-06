@@ -30,6 +30,7 @@ const PrivacyFR = lazy(() => import('./pages/PrivacyFR'));
 const LicenseAgreement = lazy(() => import('./pages/LicenseAgreement'));
 const LicenseAgreementFR = lazy(() => import('./pages/LicenseAgreementFR'));
 const Security = lazy(() => import('./pages/Security'));
+const HomeFR = lazy(() => import('./pages/HomeFR'));
 const Compare = lazy(() => import('./pages/Compare'));
 const Founder = lazy(() => import('./pages/Founder'));
 const Evidence = lazy(() => import('./pages/Evidence'));
@@ -70,6 +71,7 @@ export default function App() {
             <Route path="/license-agreement" element={<LicenseAgreement />} />
             <Route path="/fr/license-agreement" element={<LicenseAgreementFR />} />
             <Route path="/security" element={<Security />} />
+            <Route path="/fr" element={<HomeFR />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/guillaume-lessard" element={<Founder />} />
             <Route path="/evidence" element={<Evidence />} />

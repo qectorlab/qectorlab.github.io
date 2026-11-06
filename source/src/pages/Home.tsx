@@ -72,6 +72,11 @@ export default function Home() {
       <SEO
         title="QECTOR · Quantum Error Correction Decoding for Python"
         description="QECTOR Decoder v3 - Rust-core Python library with 17 concrete decoder configurations plus 2 Workbench routing kinds, a syndrome-faithful contract, and reproducible validation guidance."
+        alternates={[
+          { lang: 'en', href: 'https://qector.store/' },
+          { lang: 'fr', href: 'https://qector.store/fr/' },
+          { lang: 'x-default', href: 'https://qector.store/' },
+        ]}
       />
       <JsonLd
         data={{
@@ -114,9 +119,13 @@ export default function Home() {
 
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="QECTOR hero">
-        <img src="/images/hero-bg.webp" alt="" aria-hidden="true" fetchPriority="high" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.45) saturate(1.1)' }} />
+        <picture>
+          <source type="image/avif" srcSet="/images/hero-bg-640.avif 640w, /images/hero-bg-1200.avif 1200w" sizes="100vw" />
+          <source type="image/webp" srcSet="/images/hero-bg-640.webp 640w, /images/hero-bg.webp 1200w" sizes="100vw" />
+          <img src="/images/hero-bg.webp" alt="" aria-hidden="true" width={1200} height={676} fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.45) saturate(1.1)' }} />
+        </picture>
         <noscript>
-          <img src="/images/og-banner.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.4)' }} />
+          <img src="/images/og-banner.png" alt="" aria-hidden="true" width={1200} height={630} className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.4)' }} />
         </noscript>
         <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-void/25 to-void z-[1]" />
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.04] to-transparent z-[1]" />
@@ -321,7 +330,7 @@ export default function Home() {
             <div className="card-surface p-6 border-cyan-300/20">
               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Reference Manual v1.0.0</div>
               <h3 className="text-lg font-bold text-primary mb-2">DOI 10.5281/zenodo.21941046</h3>
-              <p className="text-secondary text-sm leading-relaxed">Normative manual with syndrome-faithfulness foundations, 15 backends, and API stability tiers. All proofs trace to this document.</p>
+              <p className="text-secondary text-sm leading-relaxed">Normative manual with syndrome-faithfulness foundations, every decoder backend, and API stability tiers. All proofs trace to this document.</p>
             </div>
             <div className="card-surface p-6 border-cyan-300/20">
               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Lean/Coq Evidence</div>
@@ -478,13 +487,13 @@ export default function Home() {
 
                 <div className="flex flex-wrap gap-3 mt-8">
                   <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/pypi/v/qector-decoder-v3?style=flat-square&color=24e7ff" alt="qector-decoder-v3 version on PyPI" loading="lazy" />
+                    <img src="https://img.shields.io/pypi/v/qector-decoder-v3?style=flat-square&color=24e7ff" alt="qector-decoder-v3 version on PyPI" height={20} width={120} className="h-5 w-auto" loading="lazy" />
                   </a>
                   <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/github/v/release/GuillaumeLessard/qector-decoder?style=flat-square&color=24e7ff" alt="Latest qector-decoder release on GitHub" loading="lazy" />
+                    <img src="https://img.shields.io/github/v/release/GuillaumeLessard/qector-decoder?style=flat-square&color=24e7ff" alt="Latest qector-decoder release on GitHub" height={20} width={120} className="h-5 w-auto" loading="lazy" />
                   </a>
                   <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer">
-                    <img src="https://img.shields.io/badge/GitHub-Artifacts-blue?logo=github" alt="GitHub release artifacts for QECTOR" loading="lazy" />
+                    <img src="https://img.shields.io/badge/GitHub-Artifacts-blue?logo=github" alt="GitHub release artifacts for QECTOR" height={20} width={120} className="h-5 w-auto" loading="lazy" />
                   </a>
                 </div>
               </div>

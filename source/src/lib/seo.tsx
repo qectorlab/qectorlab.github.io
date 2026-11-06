@@ -24,13 +24,16 @@ const OG_LOCALE: Record<string, string> = { en: 'en_US', fr: 'fr_FR' };
 export function SEO({
   title = 'QECTOR · Quantum Error Correction Decoding for Python',
   description = 'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder. v1.0.1 stable release with API stability tiers, a qector CLI, and a reproducible measurement harness (qector bench) for measuring on your own hardware.',
-  ogImage = APP_CONFIG.ogImage,
+  ogImage,
   noindex = false,
   lang = 'en',
   alternates,
 }: SEOProps) {
   const location = useLocation();
   const canonical = `https://qector.store${location.pathname === '/' ? '/' : `${location.pathname.replace(/\/$/, '')}/`}`;
+  // Per-page share card (scripts/og-images.mjs) for indexable pages.
+  const slug = location.pathname === '/' ? 'home' : location.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '--');
+  const shareImage = ogImage ?? (noindex ? APP_CONFIG.ogImage : `https://qector.store/og/${slug}.jpg`);
 
   useEffect(() => {
     document.title = title;
@@ -55,23 +58,28 @@ export function SEO({
     setMeta('meta[property="og:url"]', canonical);
     setMeta('meta[property="og:type"]', 'website');
     setMeta('meta[property="og:locale"]', OG_LOCALE[lang] ?? 'en_US');
-    setMeta('meta[property="og:image"]', ogImage);
+    setMeta('meta[property="og:image"]', shareImage);
     setMeta('meta[property="og:image:alt"]', 'QECTOR official logo');
     setMeta('meta[property="og:site_name"]', 'QECTOR');
     setMeta('meta[name="twitter:card"]', 'summary_large_image');
     setMeta('meta[name="twitter:title"]', title);
     setMeta('meta[name="twitter:description"]', description);
-    setMeta('meta[name="twitter:image"]', ogImage);
-    setMeta('meta[name="twitter:image:alt"]', 'QECTOR official logo');
+    setMeta('meta[name="twitter:image"]', shareImage);
+    setMeta('meta[name="twitter:image:alt"]', title);
     setMeta('meta[name="theme-color"]', '#24e7ff');
 
+    // A noindex page (404, thank-you) declares no canonical URL.
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'canonical';
-      document.head.appendChild(link);
+    if (noindex) {
+      link?.remove();
+    } else {
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'canonical';
+        document.head.appendChild(link);
+      }
+      link.href = canonical;
     }
-    link.href = canonical;
 
     // hreflang alternates: remove stale ones, then add the current set.
     document
@@ -90,7 +98,7 @@ export function SEO({
     return () => {
       added.forEach((el) => el.remove());
     };
-  }, [title, description, canonical, ogImage, noindex, lang, alternates]);
+  }, [title, description, canonical, shareImage, noindex, lang, alternates]);
 
   return null;
 }

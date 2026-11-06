@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
+import ApiIndex from '../components/ApiIndex';
 import { Search, ChevronDown, ChevronRight, Terminal, BookOpen, Layers } from 'lucide-react';
 import gsap from 'gsap';
 
@@ -239,12 +240,12 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
-            16 Decoder APIs · Stim DEM · Signatures Are Examples
+            17 Decoder Configurations · Stim DEM · Generated API Index
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Technical Reference" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            API overview for QECTOR's decoders. Signatures, defaults, and snippets below are illustrative
-            examples; treat the installed package as the authoritative reference.
+            API overview for QECTOR's decoders. The guided examples below are illustrative; the API index at the
+            end of this page is generated from the published 1.0.1 package.
           </p>
         </div>
       </section>
@@ -374,6 +375,7 @@ matcher = qd.GNNBeliefMatcher(dem, "weights.pt")`
           </div>
         </div>
       </section>
+      <ApiIndex />
     </>
   );
 }

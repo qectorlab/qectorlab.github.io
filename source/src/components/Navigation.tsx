@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavItem { label: string; href: string; note?: string }
@@ -6,6 +6,17 @@ interface NavGroup { label: string; items: NavItem[] }
 type NavEntry = NavItem | NavGroup;
 
 const isGroup = (e: NavEntry): e is NavGroup => 'items' in e;
+
+// Pages with a translated twin; everything else switches to the language's home.
+const TWINS = ['/pricing', '/terms', '/privacy', '/refund', '/license-agreement'];
+function otherLanguage(pathname: string): { href: string; label: string; lang: string } {
+  const path = pathname.replace(/\/$/, '') || '/';
+  if (path === '/fr' || path.startsWith('/fr/')) {
+    const en = path === '/fr' ? '/' : path.slice(3);
+    return { href: TWINS.includes(en) || en === '/' ? en : '/', label: 'EN', lang: 'en' };
+  }
+  return { href: TWINS.includes(path) ? `/fr${path}` : '/fr', label: 'FR', lang: 'fr' };
+}
 
 const navEntries: NavEntry[] = [
   {
@@ -47,6 +58,7 @@ const navEntries: NavEntry[] = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const hoverOpenedAt = useRef(0);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -140,7 +152,8 @@ export default function Navigation() {
               to="/"
               className="flex items-center gap-2.5 text-cyan-300 hover:text-cyan-100 transition-colors"
             >
-              <img src="/images/logo.png" alt="QECTOR official logo" width="36" height="36" className="h-9 w-9 rounded-lg object-cover" />
+              <img src="/images/logo.png" alt="" aria-hidden="true" width="36" height="36" className="h-9 w-9 rounded-lg object-cover" />
+              <span className="text-base font-bold tracking-wide text-primary">QECTOR</span>
             </Link>
 
             {/* Desktop Links */}
@@ -148,14 +161,18 @@ export default function Navigation() {
               {navEntries.map((entry) =>
                 isGroup(entry) ? (
                   <div key={entry.label} className="relative" data-nav-group
-                    onMouseEnter={() => setOpenGroup(entry.label)}
+                    onMouseEnter={() => { hoverOpenedAt.current = Date.now(); setOpenGroup(entry.label); }}
                     onMouseLeave={() => setOpenGroup((g) => (g === entry.label ? null : g))}
                   >
                     <button
                       type="button"
                       aria-expanded={openGroup === entry.label}
                       aria-haspopup="true"
-                      onClick={() => setOpenGroup((g) => (g === entry.label ? null : entry.label))}
+                      onClick={() => {
+                        // A click right after hover-open keeps it open instead of toggling it shut.
+                        if (openGroup === entry.label && Date.now() - hoverOpenedAt.current < 800) return;
+                        setOpenGroup((g) => (g === entry.label ? null : entry.label));
+                      }}
                       className={`inline-flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                         groupActive(entry) ? 'text-cyan-300 bg-cyan-300/10' : 'text-secondary hover:text-primary hover:bg-white/5'
                       }`}
@@ -165,7 +182,7 @@ export default function Navigation() {
                     </button>
                     {openGroup === entry.label && (
                       <div className="absolute left-0 top-full pt-2 z-50">
-                        <ul className="glass-nav rounded-xl p-2 w-64 shadow-deep" role="list">
+                        <ul className="rounded-xl p-2 w-64 shadow-deep bg-[#0a1322] border border-gridline" role="list">
                           {entry.items.map((item) => (
                             <li key={item.href}>
                               <Link
@@ -199,6 +216,15 @@ export default function Navigation() {
 
             {/* CTA + Hamburger */}
             <div className="flex items-center gap-3">
+              <Link
+                to={otherLanguage(location.pathname).href}
+                hrefLang={otherLanguage(location.pathname).lang}
+                lang={otherLanguage(location.pathname).lang}
+                aria-label={otherLanguage(location.pathname).lang === 'fr' ? 'Version française' : 'English version'}
+                className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-2 rounded-lg text-xs font-semibold text-secondary hover:text-cyan-300 hover:bg-white/5"
+              >
+                {otherLanguage(location.pathname).label}
+              </Link>
               <Link
                 to="/pricing"
                 className="hidden sm:inline-flex items-center px-4 py-2 border border-gold-400/60 text-gold-400 text-sm font-medium rounded-lg hover:bg-gold-400/10 transition-all duration-300"

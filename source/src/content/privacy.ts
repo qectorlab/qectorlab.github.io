@@ -15,7 +15,7 @@ export const privacyEn: LegalDoc = {
   seoTitle: 'Privacy Policy · QECTOR',
   description:
     'How QECTOR collects, uses, stores and protects personal information under Québec Law 25: the person in charge, data collected, purposes, retention, transfers outside Québec and your rights. The software itself collects nothing.',
-  badge: `No telemetry · No ad networks · No data sold · Updated ${UPDATED_EN}`,
+  badge: `No software telemetry · No ad networks · No data sold · Updated ${UPDATED_EN}`,
   intro:
     'QECTOR collects only what it needs to sell licences and answer you. The decoder software sends nothing to us: licences are verified offline.',
   version: `Last updated ${UPDATED_EN}.`,
@@ -46,7 +46,7 @@ export const privacyEn: LegalDoc = {
           ['**Purchase:** name, organisation, e-mail, billing address, tax number (if given), plan and amount', 'Sell the licence, issue invoices and tax receipts, and meet tax law. Card details go to Stripe only; we never see them.'],
           ['**Licence record:** e-mail, receipt id, plan, licence token, expiry, refund or revocation status', 'Deliver and reissue tokens, process renewals and refunds, and publish revoked receipt ids.'],
           ['**Messages:** what you send by e-mail, the contact form (which opens your own e-mail program) or a Calendly booking', 'Answer you and provide support.'],
-          ['**Technical data:** IP address, browser type and the pages requested, in our hosting providers’ logs', 'Deliver the website and protect it from abuse.'],
+          ['**Technical data:** IP address, browser type and the pages requested, in our hosting providers’ logs; aggregate, cookieless page statistics (Cloudflare Web Analytics)', 'Deliver the website, protect it from abuse and see which pages are used.'],
         ],
       },
       paras: ['We do not use your information for advertising, we do not sell or rent it, and we make no decision about you by automated means alone.'],
@@ -79,7 +79,7 @@ export const privacyEn: LegalDoc = {
       id: 'cookies',
       heading: '6. Cookies and similar technologies',
       paras: [
-        'QECTOR sets no cookies and runs no analytics or advertising trackers. Some third-party features may set their own cookies: Stripe’s script on the Home and Pricing pages (fraud prevention), the Calendly widget on the Contact and Founder pages, and Cloudflare security cookies. Your browser also loads public resources from Google Fonts, PyPI and shields.io, which see your IP address.',
+        'QECTOR sets no cookies and runs no advertising trackers. We use **Cloudflare Web Analytics**, which is cookieless: it counts page views and load times in aggregate, without cookies, fingerprinting or cross-site tracking. Some third-party features may set their own cookies: Stripe’s script on the Home and Pricing pages (fraud prevention), the Calendly widget on the Contact and Founder pages, and Cloudflare security cookies. Your browser also loads public resources from Google Fonts, PyPI and shields.io, which see your IP address.',
       ],
     },
     {
@@ -129,7 +129,7 @@ export const privacyFr: LegalDoc = {
   seoTitle: 'Politique de confidentialité · QECTOR',
   description:
     'Comment QECTOR recueille, utilise, conserve et protège les renseignements personnels selon la Loi 25 du Québec : responsable, renseignements recueillis, fins, conservation, communication hors du Québec et vos droits. Le logiciel lui-même ne recueille rien.',
-  badge: `Aucune télémétrie · Aucune publicité · Aucune vente de données · Mise à jour le ${UPDATED_FR}`,
+  badge: `Aucune télémétrie logicielle · Aucune publicité · Aucune vente de données · Mise à jour le ${UPDATED_FR}`,
   intro:
     'QECTOR ne recueille que ce qui est nécessaire pour vendre des licences et vous répondre. Le logiciel de décodage ne nous transmet rien : les licences sont vérifiées hors ligne.',
   version: `Dernière mise à jour : ${UPDATED_FR}.`,
@@ -160,7 +160,7 @@ export const privacyFr: LegalDoc = {
           ['**Achat :** nom, organisation, courriel, adresse de facturation, numéro de taxe (s’il est fourni), forfait et montant', 'Vendre la licence, émettre les factures et reçus fiscaux et respecter les lois fiscales. Les données de carte vont uniquement à Stripe; nous ne les voyons jamais.'],
           ['**Dossier de licence :** courriel, numéro de reçu, forfait, jeton de licence, expiration, statut de remboursement ou de révocation', 'Livrer et réémettre les jetons, traiter les renouvellements et remboursements, et publier les reçus révoqués.'],
           ['**Messages :** ce que vous envoyez par courriel, par le formulaire de contact (qui ouvre votre propre logiciel de courriel) ou par une réservation Calendly', 'Vous répondre et offrir du support.'],
-          ['**Données techniques :** adresse IP, type de navigateur et pages demandées, dans les journaux de nos hébergeurs', 'Diffuser le site et le protéger contre les abus.'],
+          ['**Données techniques :** adresse IP, type de navigateur et pages demandées, dans les journaux de nos hébergeurs; statistiques de pages agrégées et sans témoin (Cloudflare Web Analytics)', 'Diffuser le site, le protéger contre les abus et savoir quelles pages sont consultées.'],
         ],
       },
       paras: ['Nous n’utilisons pas vos renseignements à des fins publicitaires, nous ne les vendons ni ne les louons, et nous ne prenons aucune décision fondée exclusivement sur un traitement automatisé.'],
@@ -193,7 +193,7 @@ export const privacyFr: LegalDoc = {
       id: 'cookies',
       heading: '6. Témoins (cookies) et technologies semblables',
       paras: [
-        'QECTOR ne dépose aucun témoin et n’utilise aucun outil d’analyse ni traceur publicitaire. Certaines fonctions de tiers peuvent déposer leurs propres témoins : le script de Stripe sur les pages Accueil et Tarifs (prévention de la fraude), le module Calendly sur les pages Contact et Fondateur, et les témoins de sécurité de Cloudflare. Votre navigateur charge aussi des ressources publiques de Google Fonts, PyPI et shields.io, qui voient votre adresse IP.',
+        'QECTOR ne dépose aucun témoin et n’utilise aucun traceur publicitaire. Nous utilisons **Cloudflare Web Analytics**, sans témoin : il compte les pages vues et les temps de chargement de façon agrégée, sans témoins, empreinte numérique ni pistage intersites. Certaines fonctions de tiers peuvent déposer leurs propres témoins : le script de Stripe sur les pages Accueil et Tarifs (prévention de la fraude), le module Calendly sur les pages Contact et Fondateur, et les témoins de sécurité de Cloudflare. Votre navigateur charge aussi des ressources publiques de Google Fonts, PyPI et shields.io, qui voient votre adresse IP.',
       ],
     },
     {
