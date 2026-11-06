@@ -159,7 +159,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-10">
             <Link to="/pricing" className="btn-gold px-8 py-4 text-sm sm:text-base font-bold w-full sm:w-auto">
-              Start Free 14-Day Trial →
+              View Plans &amp; Pricing →
             </Link>
             <Link to="/decoder" className="btn-cyan px-8 py-4 text-sm sm:text-base w-full sm:w-auto">
               Explore the Decoder
@@ -555,12 +555,12 @@ export default function Home() {
             <div className="card-surface border-gold-400/20 bg-void/50 p-8 rounded-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-gold-400/5 to-transparent pointer-events-none" />
               <h3 className="text-lg font-bold text-gold-400 flex items-center gap-2 mb-4">
-                Try It Free, Then Go Pro
+                Commercial Licences, Air-Gapped
               </h3>
               <p className="text-secondary text-sm leading-relaxed mb-4">
-                A free 14-day commercial trial, no card needed. Then Pro from {usd(PRICES.proMonthly)}/month
-                or {usd(PRICES.proAnnual)}/year with GPU batch decoding, Team and Lab plans for groups,
-                and a {PRICES.refundDays}-day money-back guarantee on every plan.
+                Pro from {usd(PRICES.proMonthly)}/month or {usd(PRICES.proAnnual)}/year with GPU batch decoding,
+                Lab for distance 63 and an SLA. Licences are verified offline, with no licence server,
+                and every plan has a {PRICES.refundDays}-day money-back guarantee.
               </p>
               <Link to="/pricing" className="btn-gold text-sm">
                 View Pricing &amp; Tiers →
@@ -580,7 +580,7 @@ export default function Home() {
               </span>
               <h2 className="text-3xl font-bold mb-3">QECTOR Pro</h2>
               <p className="text-secondary text-sm max-w-md mx-auto">
-                Free {PRICES.trialDays}-day trial · Cancel any time · {PRICES.refundDays}-day money-back guarantee
+                Air-gapped licence · Cancel any time · {PRICES.refundDays}-day money-back guarantee
               </p>
             </div>
 
@@ -588,7 +588,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 to-transparent pointer-events-none" />
               <div className="mb-6">
                 <h3 className="text-4xl font-extrabold text-primary">{usd(PRICES.proMonthly)}<span className="text-lg font-semibold text-muted-foreground">/mo</span></h3>
-                <p className="text-muted-foreground text-xs mt-1">or {usd(PRICES.proAnnual)}/year (2 months free) · 1 named user · Production use</p>
+                <p className="text-muted-foreground text-xs mt-1">or {usd(PRICES.proAnnual)}/year (2 months free) · Production use</p>
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-3 mb-6">
@@ -601,9 +601,9 @@ export default function Home() {
                   <span>Buy Pro: {usd(PRICES.proMonthly)}/mo</span>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </a>
-                <Link to="/pricing" className="btn-outline text-base py-3.5 px-8 rounded-xl">
-                  Start free trial
-                </Link>
+                <a href={LINKS.proAnnual} className="btn-outline text-base py-3.5 px-8 rounded-xl" target="_blank" rel="noopener noreferrer">
+                  Buy annual: {usd(PRICES.proAnnual)}/yr
+                </a>
               </div>
 
               <div className="border-t border-gridline/60 pt-4 mt-4 text-left space-y-2">
@@ -611,7 +611,7 @@ export default function Home() {
                   'Full QECTOR Decoder v3 (all decoder families)',
                   'GPU (CUDA/OpenCL) batch decoding unlocked',
                   'Signed licence token, verified offline: works air-gapped',
-                  'Priority email support (2 business day response)',
+                  'Email support (2 business day response)',
                   `${PRICES.refundDays}-day money-back guarantee on your first payment`,
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-xs text-secondary">
@@ -623,7 +623,7 @@ export default function Home() {
             </div>
 
             <p className="text-xs text-muted-foreground mt-4">
-              Need Team, Lab, perpetual or OEM? <Link to="/pricing" className="text-cyan-300 hover:underline">View all tiers →</Link>
+              Need Lab, perpetual or OEM? <Link to="/pricing" className="text-cyan-300 hover:underline">View all tiers →</Link>
             </p>
           </div>
         </div>

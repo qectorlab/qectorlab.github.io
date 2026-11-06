@@ -44,7 +44,7 @@ export default function TermsFR() {
             <p className="text-secondary text-sm leading-relaxed">
               Tous les prix sont affichés et facturés en <strong className="text-primary">dollars américains (USD)</strong>, hors taxes.
               Stripe traite tous les paiements et ajoute la taxe de vente, la TPS/TVH ou la TVA applicable au paiement selon votre adresse
-              de facturation; les données de carte ne parviennent jamais aux systèmes de QECTOR. Les jetons de licence sont émis et envoyés par courriel dans les minutes suivant le paiement (généralement moins de 10 minutes). Les abonnements (Pro mensuel ou annuel, Équipe, Labo) se renouvellent automatiquement
+              de facturation; les données de carte ne parviennent jamais aux systèmes de QECTOR. Les jetons de licence sont émis et envoyés par courriel dans les minutes suivant le paiement (généralement moins de 10 minutes). Les abonnements (Pro mensuel ou annuel, Labo) se renouvellent automatiquement
               jusqu’à annulation et peuvent être annulés en tout temps; le premier paiement de chaque forfait est couvert par une garantie
               satisfait ou remboursé de 14 jours : voir la <a href="/refund" className="text-cyan-300 hover:underline">politique de remboursement</a>.
             </p>

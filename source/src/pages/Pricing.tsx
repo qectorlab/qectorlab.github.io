@@ -6,7 +6,6 @@ import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import { FAQ_ITEMS } from '../lib/faqData';
 import CodeBlock from '../components/CodeBlock';
-import TrialForm from '../components/TrialForm';
 import { LINKS, PRICES, usd } from '../lib/pricing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -45,7 +44,7 @@ export default function Pricing() {
     <>
       <SEO
         title="Pricing · QECTOR"
-        description={`QECTOR Decoder v3 commercial licensing. Free ${PRICES.trialDays}-day commercial trial. Pro from ${usd(PRICES.proMonthly)}/month, Team ${usd(PRICES.team)}/yr, Lab ${usd(PRICES.lab)}/yr, Enterprise and OEM from ${usd(PRICES.enterpriseFrom)}/yr. ${PRICES.refundDays}-day money-back. Prices in USD; tax added at checkout where applicable.`}
+        description={`QECTOR Decoder v3 commercial licensing. Pro from ${usd(PRICES.proMonthly)}/month, Lab ${usd(PRICES.lab)}/yr, Enterprise and OEM from ${usd(PRICES.enterpriseFrom)}/yr. ${PRICES.refundDays}-day money-back. Prices in USD; tax added at checkout where applicable.`}
         lang="en"
         alternates={[
           { lang: 'en', href: 'https://qector.store/pricing/' },
@@ -78,38 +77,19 @@ export default function Pricing() {
             <NeuralReveal text="License QECTOR for Production" className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
           </h1>
           <p className="text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-            Free for academic and non-commercial research. For commercial use, start a free
-            {' '}{PRICES.trialDays}-day trial, then pick a plan: cancel any time, {PRICES.refundDays}-day money-back on your first payment.
+            Free for academic and non-commercial research. For commercial use, pick a plan: licences are verified
+            offline and work fully air-gapped, cancel any time, {PRICES.refundDays}-day money-back on your first payment.
           </p>
         </div>
       </section>
 
       <div className="px-6 pb-24 max-w-6xl mx-auto space-y-20 relative z-10">
 
-        {/* 1. FREE COMMERCIAL TRIAL (the entry point) */}
-        <div ref={(el) => addRef(el, 0)} id="trial" className="scroll-mt-32">
-          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-gold-400 animate-gradient-xy">
-            <div className="bg-void/90 backdrop-blur-xl rounded-[23px] p-8 md:p-12 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1 text-left">
-                <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
-                  Free · No card · Token by e-mail
-                </div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">{PRICES.trialDays}-Day Commercial Trial</h2>
-                <p className="text-secondary text-base leading-relaxed max-w-xl">
-                  Evaluate QECTOR on your own workloads with full commercial evaluation rights: every decoder family,
-                  CPU and GPU (CUDA/OpenCL) batch decoding, offline licence verification.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Up to 5 internal users</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Expires on its own: nothing to cancel</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> One trial per address per year</div>
-                </div>
-              </div>
-              <div className="w-full md:w-auto flex flex-col items-center">
-                <TrialForm lang="en" />
-              </div>
-            </div>
-          </div>
+        {/* 1. ASSURANCES */}
+        <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div className="card-surface py-6"><p className="text-cyan-300 font-bold">Air-gapped</p><p className="text-secondary text-sm mt-1">Signed token, verified offline. No licence server, no phone-home.</p></div>
+          <div className="card-surface py-6"><p className="text-cyan-300 font-bold">{PRICES.refundDays}-day money-back</p><p className="text-secondary text-sm mt-1">Full refund on your first payment of any plan, no questions asked.</p></div>
+          <div className="card-surface py-6"><p className="text-cyan-300 font-bold">Cancel any time</p><p className="text-secondary text-sm mt-1">Your licence stays valid to the end of the period you paid for.</p></div>
         </div>
 
         {/* 2. THE PRODUCTION TIERS */}
@@ -117,40 +97,31 @@ export default function Pricing() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Commercial Plans</h2>
             <p className="text-secondary text-lg mb-4">
-              Production rights for internal use. Plans renew automatically until cancelled.
+              Production rights for your organisation's internal use. Subscriptions renew automatically until cancelled.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct}% off Team and Lab for academic institutions. Non-commercial research is free.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct}% off Lab for academic institutions. Non-commercial research is free.
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <PricingTierCard
               name="Pro"
               price={usd(PRICES.proMonthly)}
               period="/ month"
-              desc={`One named user. Or ${usd(PRICES.proAnnual)}/year (2 months free).`}
-              features={['Commercial internal use', 'All decoder families', 'CPU + GPU (CUDA/OpenCL) batch', 'Email support (2 business days)']}
+              desc={`Or ${usd(PRICES.proAnnual)}/year (2 months free). Pro licence tier.`}
+              featured
+              featuredLabel="Most popular"
+              features={['Commercial internal use', 'All decoder families', 'CPU + GPU (CUDA/OpenCL) batch', 'Code distances up to 19', 'Email support (2 business days)']}
               ctaLabel="Buy monthly"
               ctaHref={LINKS.proMonthly}
-            />
-            <PricingTierCard
-              name="Team"
-              price={usd(PRICES.team)}
-              period="/ year"
-              desc="Up to 10 named users."
-              featured
-              featuredLabel="Best for startups"
-              features={['Everything in Pro', 'Up to 10 named users', 'Priority support (1 business day)', '2-hour onboarding call']}
-              ctaLabel="Buy Team"
-              ctaHref={LINKS.team}
             />
             <PricingTierCard
               name="Lab"
               price={usd(PRICES.lab)}
               period="/ year"
-              desc="Up to 25 named users. Enterprise licence tier."
-              features={['Everything in Team', 'Code distances up to 63', 'Support SLA', 'One Validation Report ($5,000 value)']}
+              desc="Enterprise licence tier, for research groups and labs."
+              features={['Everything in Pro', 'Code distances up to 63', 'Priority support with SLA', '2-hour onboarding call', 'One Validation Report ($5,000 value)']}
               ctaLabel="Buy Lab"
               ctaHref={LINKS.lab}
             />
@@ -160,7 +131,7 @@ export default function Pricing() {
               period="/ year"
               desc="Redistribution, SaaS, OEM and custom terms."
               accent="gold"
-              features={['Unlimited seats', 'SaaS and customer-facing APIs', 'OEM and hardware bundling', 'Named support engineer']}
+              features={['Signed agreement, custom terms', 'SaaS and customer-facing APIs', 'OEM and hardware bundling', 'Named support engineer']}
               ctaLabel="Contact Sales"
               ctaHref="/contact"
             />
@@ -192,7 +163,7 @@ export default function Pricing() {
             <Link to="/contact" className="btn-gold block text-center">Request Validation Sprint</Link>
             <p className="text-xs text-gold-200/60 mt-6">
               Need only the licence and a call? The <a href={LINKS.pilot} className="text-gold-400 hover:underline" rel="noopener">{PRICES.pilotDays}-day Pilot is {usd(PRICES.pilot)}</a>:
-              {' '}a 1-hour integration call and a written validation memo, 100% creditable toward Team or Lab within 90 days.
+              {' '}a 1-hour integration call and a written validation memo, 100% creditable toward Lab within 90 days.
             </p>
           </div>
           

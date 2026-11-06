@@ -6,7 +6,6 @@ import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import { FAQ_ITEMS_FR } from '../lib/faqData';
 import CodeBlock from '../components/CodeBlock';
-import TrialForm from '../components/TrialForm';
 import { LINKS, PRICES, usdFr } from '../lib/pricing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -45,7 +44,7 @@ export default function PricingFR() {
     <>
       <SEO
         title="Tarifs · QECTOR"
-        description={`Licences commerciales QECTOR Decoder v3. Essai commercial gratuit de ${PRICES.trialDays} jours. Pro dès ${usdFr(PRICES.proMonthly)}/mois, Équipe ${usdFr(PRICES.team)}/an, Labo ${usdFr(PRICES.lab)}/an, Entreprise et OEM dès ${usdFr(PRICES.enterpriseFrom)}/an. Satisfait ou remboursé ${PRICES.refundDays} jours. Prix en USD; taxes ajoutées au paiement s’il y a lieu.`}
+        description={`Licences commerciales QECTOR Decoder v3. Pro dès ${usdFr(PRICES.proMonthly)}/mois, Labo ${usdFr(PRICES.lab)}/an, Entreprise et OEM dès ${usdFr(PRICES.enterpriseFrom)}/an. Satisfait ou remboursé ${PRICES.refundDays} jours. Prix en USD; taxes ajoutées au paiement s’il y a lieu.`}
         lang="fr"
         alternates={[
           { lang: 'en', href: 'https://qector.store/pricing/' },
@@ -67,38 +66,19 @@ export default function PricingFR() {
             <NeuralReveal text="Licenciez QECTOR pour la production" className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
           </h1>
           <p className="text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-            Gratuit pour la recherche académique et non commerciale. Pour un usage commercial, commencez un essai gratuit
-            de {PRICES.trialDays} jours, puis choisissez un forfait : annulable en tout temps, satisfait ou remboursé {PRICES.refundDays} jours sur votre premier paiement.
+            Gratuit pour la recherche académique et non commerciale. Pour un usage commercial, choisissez un forfait :
+            licences vérifiées hors ligne, entièrement hors réseau, annulables en tout temps, satisfait ou remboursé {PRICES.refundDays} jours sur votre premier paiement.
           </p>
         </div>
       </section>
 
       <div className="px-6 pb-24 max-w-6xl mx-auto space-y-20 relative z-10">
 
-        {/* 1. FREE COMMERCIAL TRIAL */}
-        <div ref={(el) => addRef(el, 0)} id="trial" className="scroll-mt-32">
-          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-gold-400 animate-gradient-xy">
-            <div className="bg-void/90 backdrop-blur-xl rounded-[23px] p-8 md:p-12 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1 text-left">
-                <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
-                  Gratuit · Sans carte · Jeton par courriel
-                </div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Essai commercial de {PRICES.trialDays} jours</h2>
-                <p className="text-secondary text-base leading-relaxed max-w-xl">
-                  Évaluez QECTOR sur vos propres charges de travail avec des droits d’évaluation commerciale complets :
-                  toutes les familles de décodeurs, décodage par lots CPU et GPU (CUDA/OpenCL), vérification de licence hors ligne.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Jusqu’à 5 utilisateurs internes</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Expire de lui-même : rien à annuler</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Un essai par adresse par année</div>
-                </div>
-              </div>
-              <div className="w-full md:w-auto flex flex-col items-center">
-                <TrialForm lang="fr" />
-              </div>
-            </div>
-          </div>
+        {/* 1. ASSURANCES */}
+        <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div className="card-surface py-6"><p className="text-cyan-300 font-bold">Hors réseau</p><p className="text-secondary text-sm mt-1">Jeton signé, vérifié hors ligne. Aucun serveur de licence, aucun appel réseau.</p></div>
+          <div className="card-surface py-6"><p className="text-cyan-300 font-bold">Remboursé {PRICES.refundDays} jours</p><p className="text-secondary text-sm mt-1">Remboursement complet de votre premier paiement de tout forfait, sans question.</p></div>
+          <div className="card-surface py-6"><p className="text-cyan-300 font-bold">Annulable en tout temps</p><p className="text-secondary text-sm mt-1">Votre licence reste valide jusqu’à la fin de la période payée.</p></div>
         </div>
 
         {/* 2. PLANS */}
@@ -106,40 +86,31 @@ export default function PricingFR() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Forfaits commerciaux</h2>
             <p className="text-secondary text-lg mb-4">
-              Droits de production pour usage interne. Les forfaits se renouvellent automatiquement jusqu’à annulation.
+              Droits de production pour l’usage interne de votre organisation. Les abonnements se renouvellent automatiquement jusqu’à annulation.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct} % de rabais sur Équipe et Labo pour les établissements d’enseignement. La recherche non commerciale est gratuite.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct} % de rabais sur Labo pour les établissements d’enseignement. La recherche non commerciale est gratuite.
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <PricingTierCard
               name="Pro"
               price={usdFr(PRICES.proMonthly)}
               period="/ mois"
-              desc={`Un utilisateur nommé. Ou ${usdFr(PRICES.proAnnual)}/an (2 mois offerts).`}
-              features={['Usage commercial interne', 'Toutes les familles de décodeurs', 'Lots CPU + GPU (CUDA/OpenCL)', 'Support courriel (2 jours ouvrables)']}
+              desc={`Ou ${usdFr(PRICES.proAnnual)}/an (2 mois offerts). Palier de licence Pro.`}
+              featured
+              featuredLabel="Le plus populaire"
+              features={['Usage commercial interne', 'Toutes les familles de décodeurs', 'Lots CPU + GPU (CUDA/OpenCL)', 'Distances de code jusqu’à 19', 'Support courriel (2 jours ouvrables)']}
               ctaLabel="Acheter au mois"
               ctaHref={LINKS.proMonthly}
-            />
-            <PricingTierCard
-              name="Équipe"
-              price={usdFr(PRICES.team)}
-              period="/ an"
-              desc="Jusqu’à 10 utilisateurs nommés."
-              featured
-              featuredLabel="Idéal pour les startups"
-              features={['Tout Pro', 'Jusqu’à 10 utilisateurs nommés', 'Support prioritaire (1 jour ouvrable)', 'Appel d’intégration de 2 h']}
-              ctaLabel="Acheter Équipe"
-              ctaHref={LINKS.team}
             />
             <PricingTierCard
               name="Labo"
               price={usdFr(PRICES.lab)}
               period="/ an"
-              desc="Jusqu’à 25 utilisateurs nommés. Palier de licence Entreprise."
-              features={['Tout Équipe', 'Distances de code jusqu’à 63', 'SLA de support', 'Un rapport de validation (valeur 5 000 $)']}
+              desc="Palier de licence Entreprise, pour les groupes de recherche et laboratoires."
+              features={['Tout Pro', 'Distances de code jusqu’à 63', 'Support prioritaire avec SLA', 'Appel d’intégration de 2 h', 'Un rapport de validation (valeur 5 000 $)']}
               ctaLabel="Acheter Labo"
               ctaHref={LINKS.lab}
             />
@@ -149,7 +120,7 @@ export default function PricingFR() {
               period="/ an"
               desc="Redistribution, SaaS, OEM et conditions sur mesure."
               accent="gold"
-              features={['Sièges illimités', 'SaaS et API offertes aux clients', 'OEM et regroupement matériel', 'Ingénieur de support attitré']}
+              features={['Contrat signé, conditions sur mesure', 'SaaS et API offertes aux clients', 'OEM et regroupement matériel', 'Ingénieur de support attitré']}
               ctaLabel="Contacter l’équipe commerciale"
               ctaHref="/contact"
             />
@@ -181,7 +152,7 @@ export default function PricingFR() {
             <Link to="/contact" className="btn-gold block text-center">Demander un sprint de validation</Link>
             <p className="text-xs text-gold-200/60 mt-6">
               Seulement la licence et un appel ? Le <a href={LINKS.pilot} className="text-gold-400 hover:underline" rel="noopener">Pilote de {PRICES.pilotDays} jours est à {usdFr(PRICES.pilot)}</a> :
-              {' '}un appel d’intégration d’une heure et une note de validation écrite, crédités à 100 % sur Équipe ou Labo dans les 90 jours.
+              {' '}un appel d’intégration d’une heure et une note de validation écrite, crédités à 100 % sur Labo dans les 90 jours.
             </p>
           </div>
 

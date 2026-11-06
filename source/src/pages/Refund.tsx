@@ -12,7 +12,7 @@ export default function Refund() {
     <>
       <SEO
         title="Refund Policy · QECTOR"
-        description={`QECTOR Decoder v3 refund policy: ${PRICES.refundDays}-day money-back guarantee on your first payment of any plan, cancel renewals any time, free ${PRICES.trialDays}-day trial before you buy.`}
+        description={`QECTOR Decoder v3 refund policy: ${PRICES.refundDays}-day money-back guarantee on your first payment of any plan, cancel renewals any time.`}
       />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
@@ -23,8 +23,8 @@ export default function Refund() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Refund Policy" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Try it free for {PRICES.trialDays} days, then buy with a {PRICES.refundDays}-day money-back guarantee.
-            Plans renew automatically and you can cancel at any time. See{' '}
+            Every plan has a {PRICES.refundDays}-day money-back guarantee on the first payment.
+            Subscriptions renew automatically and you can cancel at any time. See{' '}
             <Link to="/pricing" className="text-cyan-300 hover:underline">Pricing</Link>.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function Refund() {
               If QECTOR is not right for you, email{' '}
               <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> with your
               Stripe receipt within {PRICES.refundDays} days of your <strong className="text-primary">first payment</strong> of
-              any plan (Pro monthly or annual, Pro Perpetual, Team, Lab or the Pilot). We refund it in full, no questions asked,
+              any plan (Pro monthly or annual, Pro Perpetual, Lab or the Pilot). We refund it in full, no questions asked,
               and revoke the licence token.
             </p>
             <ul className="text-secondary text-sm space-y-1.5">
@@ -50,19 +50,9 @@ export default function Refund() {
           </div>
 
           <div className="card-surface">
-            <h2 className="text-xl font-bold mb-4">Try before you buy: free {PRICES.trialDays}-day trial</h2>
-            <p className="text-secondary text-sm leading-relaxed">
-              Request a free {PRICES.trialDays}-day commercial trial on the{' '}
-              <Link to="/pricing" className="text-cyan-300 hover:underline">pricing page</Link>. No card is needed and the
-              token simply expires, so there is nothing to cancel or refund. Larger evaluations can use the
-              {' '}{PRICES.pilotDays}-day Pilot, which is covered by the same money-back guarantee.
-            </p>
-          </div>
-
-          <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Renewals and cancelling</h2>
             <p className="text-secondary text-sm leading-relaxed mb-3">
-              Pro (monthly or annual), Team and Lab are subscriptions and <strong className="text-primary">renew automatically</strong>{' '}
+              Pro (monthly or annual) and Lab are subscriptions and <strong className="text-primary">renew automatically</strong>{' '}
               until cancelled. We email a reminder 14 days before each annual renewal. Cancel any time from the link in your
               Stripe receipt or by emailing admin@qector.store; your licence stays valid until the end of the period you paid for.
             </p>

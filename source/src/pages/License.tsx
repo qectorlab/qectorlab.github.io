@@ -5,7 +5,7 @@ import NeuralReveal from '../components/NeuralReveal';
 export default function License() {
   return (
     <>
-      <SEO title="License · QECTOR" description="QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; commercial plans from $79/month with a free 14-day trial." />
+      <SEO title="License · QECTOR" description="QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; commercial plans from $79/month, verified offline (air-gapped)." />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
@@ -17,7 +17,7 @@ export default function License() {
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
             QECTOR Decoder v3 is <span className="text-primary font-semibold">Source-Available</span> (not free for commercial use).
             Free for personal, academic, and non-commercial research.
-            Commercial use requires a paid plan from <span className="text-cyan-300 font-semibold">$79/month</span>, with a <span className="text-cyan-300 font-semibold">free 14-day trial</span>. The Workbench GUI is free.
+            Commercial use requires a paid plan from <span className="text-cyan-300 font-semibold">$79/month</span>, with a <span className="text-cyan-300 font-semibold">14-day money-back guarantee</span>. The Workbench GUI is free.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/pricing" className="btn-cyan">View Pricing</Link>
@@ -73,7 +73,7 @@ export default function License() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Perpetual licenses</h2>
             <p className="text-secondary text-sm leading-relaxed">
-              Pro Perpetual ($1,990 one-time): the same rights as Pro for one named user, for every 3.x release including
+              Pro Perpetual ($1,990 one-time): the same rights as Pro, for every 3.x release including
               all patch and minor updates; a major version such as 4.0 requires a new license. Licenses bought earlier as
               Solo / Indie Perpetual keep their original terms.
             </p>
@@ -85,7 +85,7 @@ export default function License() {
           <div className="card-surface border-gold-400/25">
             <h2 className="text-xl font-bold mb-4">Commercial Addendum: What a Paid License Changes</h2>
             <ul className="space-y-2 text-secondary text-sm">
-              <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.</li>
+              <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the term you purchased.</li>
               <li>• <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
               <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
               <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). The token does two things: it silences the notice and it unlocks tier-scoped runtime features: GPU (CUDA/OpenCL) batch decoding on every paid plan, and a code-distance tier of 7 (Community), 19 (Pro, Team) or 63 (Lab, Enterprise). CPU decoding is never blocked; distance caps apply only when <code className="text-cyan-300 font-mono text-xs">QECTOR_ENFORCE=1</code> is set.</li>
@@ -94,7 +94,7 @@ export default function License() {
             <p className="text-secondary text-sm leading-relaxed mt-4">
               Tokens are delivered within minutes, and every plan has a 14-day money-back guarantee on the first payment:
               see the <Link to="/refund" className="text-cyan-300 hover:underline">Refund Policy</Link>. A refunded licence ends
-              on refund. Try it first with the free 14-day trial on the{' '}
+              on refund. Plans are on the{' '}
               <Link to="/pricing" className="text-cyan-300 hover:underline">pricing page</Link>.
             </p>
           </div>

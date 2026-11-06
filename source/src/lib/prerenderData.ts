@@ -342,7 +342,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/pricing',
     title: 'Pricing · QECTOR',
     description:
-      `QECTOR Decoder v3 commercial licensing. Free ${PRICES.trialDays}-day commercial trial. Pro from ${usd(PRICES.proMonthly)}/month, Team ${usd(PRICES.team)}/yr, Lab ${usd(PRICES.lab)}/yr, Enterprise from ${usd(PRICES.enterpriseFrom)}/yr. ${PRICES.refundDays}-day money-back. Prices in USD; tax added at checkout.`,
+      `QECTOR Decoder v3 commercial licensing, verified offline (air-gapped). Pro from ${usd(PRICES.proMonthly)}/month, Lab ${usd(PRICES.lab)}/yr, Enterprise from ${usd(PRICES.enterpriseFrom)}/yr. ${PRICES.refundDays}-day money-back. Prices in USD; tax added at checkout.`,
     heading: 'Pricing & Licensing',
     body: page(
       h1('Pricing & Licensing') +
@@ -350,20 +350,18 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'QECTOR Decoder v3 is source-available: free for non-commercial, academic, and personal use under PolyForm Noncommercial 1.0.0. Commercial deployment requires a paid license. All prices are in US dollars (USD) and exclude tax.'
         ) +
         table(
-          ['Tier', 'Price (USD)', 'Seats', 'Use case'],
+          ['Tier', 'Price (USD)', 'Licence tier', 'Use case'],
           [
-            ['Community (non-commercial)', '$0', 'Unlimited', 'Research, academic, personal projects'],
-            ['Free commercial trial', '$0', 'Up to 5 internal', `${PRICES.trialDays} days, Pro features, no card. Request it on this page`],
-            ['Pro', `${usd(PRICES.proMonthly)} / mo or ${usd(PRICES.proAnnual)} / yr`, '1 named user', `Production internal use, GPU batch decoding, priority email support. <a href="${LINKS.proMonthly}" style="color:#67e8f9;">Buy monthly</a> · <a href="${LINKS.proAnnual}" style="color:#67e8f9;">Buy annual</a>`],
-            ['Pro Perpetual', `${usd(PRICES.proPerpetual)} one-time`, '1 named user', `Pro rights for every 3.x release; a major version such as 4.0 is a new licence. <a href="${LINKS.proPerpetual}" style="color:#67e8f9;">Buy</a>`],
-            ['Team', `${usd(PRICES.team)} / yr`, 'Up to 10', `Production internal use, GPU batch decoding, priority support. <a href="${LINKS.team}" style="color:#67e8f9;">Buy Team</a>`],
-            ['Lab', `${usd(PRICES.lab)} / yr`, 'Up to 25', `Everything in Team, code distances up to 63, support SLA, one Validation Report. <a href="${LINKS.lab}" style="color:#67e8f9;">Buy Lab</a>`],
-            ['Pilot', `${usd(PRICES.pilot)} one-time`, 'Internal team', `${PRICES.pilotDays}-day evaluation for larger teams, with an integration call. <a href="${LINKS.pilot}" style="color:#67e8f9;">Buy Pilot</a>`],
-            ['Enterprise / OEM / SaaS', `From ${usd(PRICES.enterpriseFrom)} / yr`, 'Unlimited', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
+            ['Community (non-commercial)', '$0', 'Community', 'Research, academic, personal projects'],
+            ['Pro', `${usd(PRICES.proMonthly)} / mo or ${usd(PRICES.proAnnual)} / yr`, 'Pro (distance 19)', `Production internal use, GPU batch decoding, email support. <a href="${LINKS.proMonthly}" style="color:#67e8f9;">Buy monthly</a> · <a href="${LINKS.proAnnual}" style="color:#67e8f9;">Buy annual</a>`],
+            ['Pro Perpetual', `${usd(PRICES.proPerpetual)} one-time`, 'Pro (distance 19)', `Pro rights for every 3.x release; a major version such as 4.0 is a new licence. <a href="${LINKS.proPerpetual}" style="color:#67e8f9;">Buy</a>`],
+            ['Lab', `${usd(PRICES.lab)} / yr`, 'Enterprise (distance 63)', `Everything in Pro, code distances up to 63, priority support with SLA, onboarding call, one Validation Report. <a href="${LINKS.lab}" style="color:#67e8f9;">Buy Lab</a>`],
+            ['Pilot', `${usd(PRICES.pilot)} one-time`, 'Pro, 60 days', `${PRICES.pilotDays}-day evaluation with an integration call, creditable toward Lab. <a href="${LINKS.pilot}" style="color:#67e8f9;">Buy Pilot</a>`],
+            ['Enterprise / OEM / SaaS', `From ${usd(PRICES.enterpriseFrom)} / yr`, 'Enterprise', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
           ]
         ) +
         p(
-          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/HST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro, Team and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Academic:</strong> universities, public research organisations and government institutions may use QECTOR free under PolyForm Noncommercial whatever their funding; academic institutions that want a paid plan get ${PRICES.academicDiscountPct}% off Team and Lab.`
+          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/HST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Air-gapped:</strong> licence tokens are verified offline, with no licence server and no network call. <strong>Academic:</strong> universities, public research organisations and government institutions may use QECTOR free under PolyForm Noncommercial whatever their funding; academic institutions that want a paid plan get ${PRICES.academicDiscountPct}% off Lab.`
         ) +
         h2('Activating your license') +
         p(
@@ -392,7 +390,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/fr/pricing',
     title: 'Tarifs · QECTOR',
-    description: `Licences commerciales QECTOR Decoder v3. Essai commercial gratuit de ${PRICES.trialDays} jours. Pro dès ${usdFr(PRICES.proMonthly)}/mois, Équipe ${usdFr(PRICES.team)}/an, Labo ${usdFr(PRICES.lab)}/an. Garantie de remboursement de ${PRICES.refundDays} jours. Prix en USD, taxes ajoutées au paiement.`,
+    description: `Licences commerciales QECTOR Decoder v3, vérifiées hors ligne (hors réseau). Pro dès ${usdFr(PRICES.proMonthly)}/mois, Labo ${usdFr(PRICES.lab)}/an. Garantie de remboursement de ${PRICES.refundDays} jours. Prix en USD, taxes ajoutées au paiement.`,
     heading: 'Tarification et licences',
     body: page(
       h1('Tarification et licences') +
@@ -401,12 +399,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Paliers') +
         ul([
-          `Essai commercial gratuit de ${PRICES.trialDays} jours : jeton Pro par courriel, jusqu’à 5 utilisateurs internes, aucune carte requise.`,
-          `Pro : ${usdFr(PRICES.proMonthly)}/mois ou ${usdFr(PRICES.proAnnual)}/an (1 utilisateur nommé, décodage GPU) · Pro Perpétuel : ${usdFr(PRICES.proPerpetual)} paiement unique.`,
-          `Équipe : ${usdFr(PRICES.team)}/an (jusqu’à 10) · Labo : ${usdFr(PRICES.lab)}/an (jusqu’à 25, distances jusqu’à 63).`,
+          `Pro : ${usdFr(PRICES.proMonthly)}/mois ou ${usdFr(PRICES.proAnnual)}/an (palier Pro, distance 19, décodage GPU) · Pro Perpétuel : ${usdFr(PRICES.proPerpetual)} paiement unique.`,
+          `Labo : ${usdFr(PRICES.lab)}/an (palier Entreprise, distances jusqu’à 63, support avec SLA).`,
           `Pilote de ${PRICES.pilotDays} jours : ${usdFr(PRICES.pilot)} paiement unique · Entreprise et OEM : dès ${usdFr(PRICES.enterpriseFrom)}/an.`,
           `Abonnements renouvelés automatiquement, annulables en tout temps. Garantie satisfait ou remboursé de ${PRICES.refundDays} jours sur le premier paiement.`,
-          `Universités, organismes de recherche publics et institutions gouvernementales : usage gratuit sous PolyForm Noncommercial, quel que soit le financement. Rabais académique de ${PRICES.academicDiscountPct} % sur Équipe et Labo pour les établissements qui veulent un forfait payant.`,
+          `Universités, organismes de recherche publics et institutions gouvernementales : usage gratuit sous PolyForm Noncommercial, quel que soit le financement. Rabais académique de ${PRICES.academicDiscountPct} % sur Labo pour les établissements qui veulent un forfait payant.`,
         ]) +
         p(
           'Voir <a href="/pricing" style="color:#67e8f9;">la version anglaise pour le détail complet</a>. Contact : <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>'
@@ -435,9 +432,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Standard tiers cover internal use. Enterprise agreements cover redistribution, SaaS hosting, OEM integration, hardware bundling, and commercial benchmarking: with written contracts, SLAs, and procurement-friendly paperwork (W-8/W-9, vendor profiles, signed EULAs).'
         ) +
         ul([
-          'Custom scope: seats, sites, subsidiaries, and redistribution rights.',
+          'Custom scope: subsidiaries, deployments and redistribution rights.',
           'Priority support with response SLAs and integration guidance.',
-          'Academic institutions: 40% discount on annual tiers.',
+          'Academic institutions: 40% discount on Lab.',
         ]) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> or see <a href="/pricing" style="color:#67e8f9;">pricing</a>.')
     ),
@@ -703,7 +700,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Commercial addendum: what a paid licence changes') +
         ul([
-          'Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.',
+          'Grants your organisation the internal commercial use that PolyForm Noncommercial withholds, for the term you purchased.',
           'Internal use only. Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.',
           'Activated by setting <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to your Ed25519 token; verification is offline, with no licence server and no phone-home.',
           'The same package serves licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>). A paid token unlocks GPU (CUDA/OpenCL) batch decoding and the tier code-distance limit; CPU decoding is never blocked, and distance caps apply only with <code>QECTOR_ENFORCE=1</code>.',
@@ -784,22 +781,22 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/refund',
     title: 'Refund Policy · QECTOR',
     description:
-      `QECTOR Decoder v3 refund policy: ${PRICES.refundDays}-day money-back guarantee on the first payment of any plan, cancel renewals any time, free ${PRICES.trialDays}-day trial before you buy.`,
+      `QECTOR Decoder v3 refund policy: ${PRICES.refundDays}-day money-back guarantee on the first payment of any plan, cancel renewals any time.`,
     heading: 'Refund Policy',
     body: page(
       h1('Refund Policy') +
         p(
-          `Try QECTOR free for ${PRICES.trialDays} days, then buy with a ${PRICES.refundDays}-day money-back guarantee. Plans renew automatically and can be cancelled at any time.`
+          `Every plan has a ${PRICES.refundDays}-day money-back guarantee on the first payment. Subscriptions renew automatically and can be cancelled at any time.`
         ) +
         h2(`${PRICES.refundDays}-day money-back guarantee`) +
         ul([
-          `Email admin@qector.store with your Stripe receipt within ${PRICES.refundDays} days of your first payment of any plan (Pro monthly or annual, Pro Perpetual, Team, Lab or the Pilot) and we refund it in full, no questions asked.`,
+          `Email admin@qector.store with your Stripe receipt within ${PRICES.refundDays} days of your first payment of any plan (Pro monthly or annual, Pro Perpetual, Lab or the Pilot) and we refund it in full, no questions asked.`,
           'One guarantee per organisation; it applies to the first purchase, not to later renewals. Once refunded, the licence ends and the token must no longer be used.',
           'Refunds go back to the original payment method through Stripe, usually within 5–10 business days.',
         ]) +
         h2('Renewals and cancelling') +
         p(
-          'Pro (monthly or annual), Team and Lab renew automatically until cancelled, with a reminder 14 days before each annual renewal. Cancel any time from your Stripe receipt or by emailing admin@qector.store; the licence stays valid to the end of the paid period. Renewals are not refunded pro rata; if a renewal you meant to cancel went through and you have not used the new term, write within 7 days and we refund it. Pro Perpetual and the Pilot are one-time payments.'
+          'Pro (monthly or annual) and Lab renew automatically until cancelled, with a reminder 14 days before each annual renewal. Cancel any time from your Stripe receipt or by emailing admin@qector.store; the licence stays valid to the end of the paid period. Renewals are not refunded pro rata; if a renewal you meant to cancel went through and you have not used the new term, write within 7 days and we refund it. Pro Perpetual and the Pilot are one-time payments.'
         ) +
         h2('Delivery problems are fixed, not refunded') +
         p(
