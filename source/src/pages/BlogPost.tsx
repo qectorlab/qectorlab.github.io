@@ -202,6 +202,7 @@ export default function BlogPost() {
                   components={{
                     ...headingComponents,
                     table: (props) => {
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       const { node: _node, ...rest } = props;
                       return (
                         <div className="overflow-x-auto">
@@ -210,7 +211,7 @@ export default function BlogPost() {
                       );
                     },
                     pre: (props) => {
-                      const { node: _node, children } = props;
+                      const { children } = props;
                       const codeEl = React.Children.toArray(children)[0];
                       let code = '';
                       let language = 'text';

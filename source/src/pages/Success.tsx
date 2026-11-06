@@ -83,11 +83,11 @@ export default function Success() {
                 validates: this makes no network call:
                 <div className="mt-2 p-4 bg-void rounded-xl">
                   <code className="text-cyan-300 text-sm break-all">
-                    python -c "import qector_decoder_v3 as q; print(q._is_license_active())"
+                    python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"
                   </code>
                 </div>
                 <span className="block mt-2">
-                  This should print <code className="text-cyan-300">True</code>.
+                  This should print your paid tier (for example <code className="text-cyan-300">pro</code> or <code className="text-cyan-300">enterprise</code>), not <code className="text-cyan-300">community</code>.
                 </span>
               </li>
             </ol>

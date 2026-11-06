@@ -198,7 +198,7 @@ export default function Founder() {
              <h2 className="text-xl font-bold mb-3">Professional Profile</h2>
              <p className="text-secondary text-sm leading-relaxed mb-4">
                My work combines more than two decades of software engineering with focused quantum error-correction
-               research. QECTOR Decoder v3 is published as the stable <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3==1.0.0</code>
+               research. QECTOR Decoder v3 is published as the stable <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3 1.0.x</code>
                Rust/PyO3 package; its companion Claude Plugin is released at <code className="text-cyan-300 font-mono text-xs">v1.0.6</code>.
                I publish the user manual, normative reference manual, and certification/proof material so identity,
                software version, and evidence can be checked independently.

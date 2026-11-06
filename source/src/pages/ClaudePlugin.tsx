@@ -337,7 +337,7 @@ export default function ClaudePlugin() {
             </div>
             <h2 className="text-lg font-bold text-slate-100 mb-2">App-Free Library</h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Built on the official <code className="text-cyan-300 font-mono">qector-decoder-v3==1.0.0</code> Rust/PyO3 wheel. No desktop GUI required.
+              Built on the official <code className="text-cyan-300 font-mono">qector-decoder-v3 1.0.x</code> Rust/PyO3 wheel. No desktop GUI required.
             </p>
           </div>
 

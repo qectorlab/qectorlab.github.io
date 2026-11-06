@@ -62,7 +62,7 @@ export default function PricingTierCard({
   return (
     <div className={`card-surface flex flex-col relative ${centered ? 'text-center' : ''} ${featured ? accentBorder : ''} ${className}`}>
       {featured && showRibbon && (
-        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full ${accentRibbon}`}>
+        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 whitespace-nowrap text-xs font-bold uppercase tracking-wider rounded-full ${accentRibbon}`}>
           {featuredLabel}
         </span>
       )}

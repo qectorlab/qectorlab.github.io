@@ -400,7 +400,7 @@ print("Syndrome-faithful correction")`}
             <div>
               <h3 className="text-primary font-semibold text-base mb-3">1. Installation &amp; Platforms</h3>
               <CodeBlock
-                 code={`pip install qector-decoder-v3==1.0.0\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"   # local measurement tools\npip install "qector-decoder-v3[all]"     # optional full environment`}
+                 code={`pip install --upgrade "qector-decoder-v3>=1.0,<2"\npip install "qector-decoder-v3[stim]"    # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"   # local measurement tools\npip install "qector-decoder-v3[all]"     # optional full environment`}
                 language="bash"
                 filename="terminal"
               />

@@ -77,7 +77,7 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 ## Installation
 
 ```text
-pip install qector-decoder-v3==1.0.0
+pip install --upgrade "qector-decoder-v3>=1.0,<2"
 ```
 
 ## Reproducibility
@@ -88,5 +88,6 @@ The manual provides build/import smoke commands, focused correctness tests, LER 
 
 - Free academic, personal, and non-commercial research use is governed by the published project license.
 - Commercial production, hosted API, OEM, redistribution, and commercial benchmarking require the written commercial scope described by QECTOR.
+- Commercial plans (USD, tax added at checkout): free 14-day commercial trial; Pro $79/month or $790/year (1 user); Pro Perpetual $1,990; Team $3,900/year (up to 10); Lab $9,900/year (up to 25); 60-day Pilot $1,500; Enterprise/OEM from $25,000/year. Subscriptions renew automatically and can be cancelled any time; 14-day money-back guarantee on the first payment. Details: https://qector.store/pricing
 - Local CPU decoding is the preferred research path.
 - CUDA/OpenCL, REST, gRPC, MCP, and metrics paths require the hardware, feature, and deployment review described by the manual.

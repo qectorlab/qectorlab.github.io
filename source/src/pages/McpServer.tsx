@@ -7,7 +7,7 @@ import CodeBlock from '../components/CodeBlock';
  * MCP Server page.
  *
  * Documents the app-free library MCP server shipped in
- * mcp/mcp_server_library.py for qector-decoder-v3==1.0.0. The server exposes
+ * mcp/mcp_server_library.py for qector-decoder-v3 1.0.x. The server exposes
  * exactly eight local stdio JSON-RPC 2.0 tools. Every tool name, signature,
  * and description below is read verbatim from TOOL_NAMES + _tool_schema() in
  * mcp/mcp_server_library.py: if a tool is added or renamed in the source,
@@ -161,7 +161,7 @@ export default function McpServer() {
             The app-free, library-only MCP server: eight tools covering Union-Find, exact
             Blossom MWPM, SparseBlossom, and the auto router, with syndrome validation against
             <code className="text-cyan-300"> H c = s (mod 2) </code> and coset-scored logical outcomes.
-            Runs on <code className="text-cyan-300">qector-decoder-v3==1.0.0</code> with
+            Runs on <code className="text-cyan-300">qector-decoder-v3 1.0.x</code> with
             <code className="text-cyan-300">mcp==1.26.0</code>; no Workbench or GUI needed. Ships in the
             <code className="text-cyan-300">qector-claude-plugin</code> repository.
           </p>
@@ -189,7 +189,7 @@ export default function McpServer() {
               },
               {
                 t: 'App-free',
-                d: 'Runs on the published qector-decoder-v3==1.0.0 wheel and ships in the qector-claude-plugin repository. No QECTOR Workbench, no GUI, no desktop application required.',
+                d: 'Runs on the published qector-decoder-v3 1.0.x wheel and ships in the qector-claude-plugin repository. No QECTOR Workbench, no GUI, no desktop application required.',
               },
             ].map((c) => (
               <div key={c.t} className="card-surface">

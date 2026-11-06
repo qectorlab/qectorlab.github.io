@@ -17,6 +17,7 @@
 // should mirror the <SEO> props of the corresponding page component.
 
 import { FAQ_ITEMS, FAQ_ITEMS_FR } from './faqData';
+import { LINKS, PRICES, usd, usdFr } from './pricing';
 import { blogPosts } from './blogData';
 import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES } from './releases';
 
@@ -341,7 +342,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/pricing',
     title: 'Pricing · QECTOR',
     description:
-      'QECTOR Decoder v3 commercial licensing. $499 60-day evaluation, fully creditable. Annual production tiers from $1,299/yr. Prices in USD, excluding tax.',
+      `QECTOR Decoder v3 commercial licensing. Free ${PRICES.trialDays}-day commercial trial. Pro from ${usd(PRICES.proMonthly)}/month, Team ${usd(PRICES.team)}/yr, Lab ${usd(PRICES.lab)}/yr, Enterprise from ${usd(PRICES.enterpriseFrom)}/yr. ${PRICES.refundDays}-day money-back. Prices in USD; tax added at checkout.`,
     heading: 'Pricing & Licensing',
     body: page(
       h1('Pricing & Licensing') +
@@ -352,23 +353,24 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           ['Tier', 'Price (USD)', 'Seats', 'Use case'],
           [
             ['Community (non-commercial)', '$0', 'Unlimited', 'Research, academic, personal projects'],
-            ['Commercial evaluation', '$499 one-time', 'Unlimited internal', '60-day evaluation and pilot work. Not production. 100% creditable toward an annual tier bought within 90 days'],
-            ['Solo / Indie commercial', '$1,299 / yr', '1 named user', 'Production internal use, priority email support'],
-            ['Solo / Indie perpetual', '$3,299 one-time', '1 named user', 'Same rights as annual for v3.x (all v3.x patch/minor updates included; major version upgrades such as v4.0 are a new license)'],
-            ['Startup / Growth', '$4,499 / yr', 'Up to 10', 'Production internal use, advanced BP-OSD/LDPC workflows'],
-            ['Professional', '$11,500 / yr', 'Up to 25', 'Production internal use, SLA, validation report package credit'],
-            ['Enterprise / OEM / SaaS', 'Custom', 'Custom', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
+            ['Free commercial trial', '$0', 'Up to 5 internal', `${PRICES.trialDays} days, Pro features, no card. Request it on this page`],
+            ['Pro', `${usd(PRICES.proMonthly)} / mo or ${usd(PRICES.proAnnual)} / yr`, '1 named user', `Production internal use, GPU batch decoding, priority email support. <a href="${LINKS.proMonthly}" style="color:#67e8f9;">Buy monthly</a> · <a href="${LINKS.proAnnual}" style="color:#67e8f9;">Buy annual</a>`],
+            ['Pro Perpetual', `${usd(PRICES.proPerpetual)} one-time`, '1 named user', `Pro rights for every 3.x release; a major version such as 4.0 is a new licence. <a href="${LINKS.proPerpetual}" style="color:#67e8f9;">Buy</a>`],
+            ['Team', `${usd(PRICES.team)} / yr`, 'Up to 10', `Production internal use, GPU batch decoding, priority support. <a href="${LINKS.team}" style="color:#67e8f9;">Buy Team</a>`],
+            ['Lab', `${usd(PRICES.lab)} / yr`, 'Up to 25', `Everything in Team, code distances up to 63, support SLA, one Validation Report. <a href="${LINKS.lab}" style="color:#67e8f9;">Buy Lab</a>`],
+            ['Pilot', `${usd(PRICES.pilot)} one-time`, 'Internal team', `${PRICES.pilotDays}-day evaluation for larger teams, with an integration call. <a href="${LINKS.pilot}" style="color:#67e8f9;">Buy Pilot</a>`],
+            ['Enterprise / OEM / SaaS', `From ${usd(PRICES.enterpriseFrom)} / yr`, 'Unlimited', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
           ]
         ) +
         p(
-          '<strong>Tax:</strong> prices are in USD and exclude tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout based on your billing location. <strong>Delivery:</strong> your license token is emailed within 10 minutes of payment: check your spam folder before contacting support. <strong>Refunds:</strong> tokens are delivered instantly, so all sales are final: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>; the $499 evaluation is the creditable way to try before committing.'
+          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/HST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro, Team and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Academic:</strong> ${PRICES.academicDiscountPct}% off Team and Lab for industry-funded university projects.`
         ) +
         h2('Activating your license') +
         p(
-          'Everyone installs the same wheel: there is no separate commercial build and no feature gating. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Set both <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to the same token for the v1.0.0 import and tier checks; decoding runs either way, with no hard stop.'
+          'Everyone installs the same wheel: <code>pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2"</code>. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Set both <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to the same token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; CPU decoding is never blocked, and distance caps apply only with <code>QECTOR_ENFORCE=1</code>.'
         ) +
         pre(
-          `# Commercial use: activate with the Ed25519 token from your licence email\nexport QECTOR_LICENSE="<your-token>"\nexport QECTOR_LICENSE_KEY="<your-token>"\n\n# Optional: suppress the licensing notice in CI logs\nexport QECTOR_SILENT=1\n\n# Verification is offline against a public key in the package.\n# No licence server, no phone-home, works air-gapped.`
+          `# Commercial use: activate with the Ed25519 token from your licence email\nexport QECTOR_LICENSE="<your-token>"\nexport QECTOR_LICENSE_KEY="<your-token>"\n\n# Optional: suppress the licensing notice in CI logs\nexport QECTOR_SILENT=1\n\n# Verification is offline against a public key in the package.\n# No licence server, no phone-home, works air-gapped.\npython -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`
         ) +
         h2('Frequently asked questions') +
         FAQ_ITEMS.map(
@@ -390,7 +392,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   {
     path: '/fr/pricing',
     title: 'Tarifs · QECTOR',
-    description: 'Licences commerciales QECTOR Decoder v3. Évaluation de 60 jours à 499 $, entièrement créditable. Paliers annuels dès 1 299 $/an. Prix en USD, hors taxes.',
+    description: `Licences commerciales QECTOR Decoder v3. Essai commercial gratuit de ${PRICES.trialDays} jours. Pro dès ${usdFr(PRICES.proMonthly)}/mois, Équipe ${usdFr(PRICES.team)}/an, Labo ${usdFr(PRICES.lab)}/an. Garantie de remboursement de ${PRICES.refundDays} jours. Prix en USD, taxes ajoutées au paiement.`,
     heading: 'Tarification et licences',
     body: page(
       h1('Tarification et licences') +
@@ -399,10 +401,12 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ) +
         h2('Paliers') +
         ul([
-          'Évaluation commerciale de 60 jours : 499 $ paiement unique, sièges internes illimités, 100 % créditable vers un palier annuel.',
-          'Solo / Indie : 1 299 $/an · Startup / Growth : 4 499 $/an · Professional : 11 500 $/an.',
-          'Enterprise & OEM : sur mesure (tarification personnalisée).',
-          'Rabais académique de 40 % disponible sur les paliers annuels.',
+          `Essai commercial gratuit de ${PRICES.trialDays} jours : jeton Pro par courriel, jusqu’à 5 utilisateurs internes, aucune carte requise.`,
+          `Pro : ${usdFr(PRICES.proMonthly)}/mois ou ${usdFr(PRICES.proAnnual)}/an (1 utilisateur nommé, décodage GPU) · Pro Perpétuel : ${usdFr(PRICES.proPerpetual)} paiement unique.`,
+          `Équipe : ${usdFr(PRICES.team)}/an (jusqu’à 10) · Labo : ${usdFr(PRICES.lab)}/an (jusqu’à 25, distances jusqu’à 63).`,
+          `Pilote de ${PRICES.pilotDays} jours : ${usdFr(PRICES.pilot)} paiement unique · Entreprise et OEM : dès ${usdFr(PRICES.enterpriseFrom)}/an.`,
+          `Abonnements renouvelés automatiquement, annulables en tout temps. Garantie satisfait ou remboursé de ${PRICES.refundDays} jours sur le premier paiement.`,
+          `Rabais académique de ${PRICES.academicDiscountPct} % sur Équipe et Labo pour les projets universitaires financés par l’industrie.`,
         ]) +
         p(
           'Voir <a href="/pricing" style="color:#67e8f9;">la version anglaise pour le détail complet</a>. Contact : <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>'
@@ -702,15 +706,15 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Grants the commercial use that PolyForm Noncommercial withholds, for the seats and term you purchased.',
           'Internal use only. Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.',
           'Activated by setting <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to your Ed25519 token; verification is offline, with no licence server and no phone-home.',
-          'The package is byte-identical for licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>); no functionality is gated or disabled.',
+          'The same package serves licensed and unlicensed users. Without a token a licensing notice prints on import (suppressible with <code>QECTOR_SILENT=1</code>). A paid token unlocks GPU (CUDA/OpenCL) batch decoding and the tier code-distance limit; CPU decoding is never blocked, and distance caps apply only with <code>QECTOR_ENFORCE=1</code>.',
           'No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.',
          ]) +
          h2('License activation procedure') +
          ul([
            'Verify the purchase: the fulfillment worker accepts only a Stripe-signed live checkout event and records the reference, email, tier, and token in the protected fulfillment ledger.',
-           'Install the official runtime: pip install --upgrade qector-decoder-v3==1.0.0 from the official PyPI project.',
+           'Install the official runtime: pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2" from the official PyPI project.',
            'Activate both variables: set QECTOR_LICENSE and QECTOR_LICENSE_KEY to the same token from the license email.',
-           'Verify offline: python -c "import qector_decoder_v3 as q; print(q._is_license_active())" must print True; no license server or phone-home is involved.',
+           'Verify offline: python -c "import qector_decoder_v3 as q; print(q.get_license_info()[\'tier\'])" must print your paid tier (for example pro), not community; no license server or phone-home is involved.',
            'Keep the token with the Stripe invoice or payment confirmation. Never put it in a URL, issue tracker, chat, or public repository.',
          ]) +
          p('If either delivery email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.') +
@@ -745,7 +749,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'Use of the QECTOR website and software is governed by the PolyForm Noncommercial License 1.0.0 for community use, or by a written commercial license agreement for paid tiers. Benchmarks and validation artifacts may be republished with attribution. No warranty is provided; see the license for the full terms.'
         ) +
         p(
-          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Licence tokens are delivered instantly and all sales are final: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
+          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Subscriptions renew automatically until cancelled, and every plan has a 14-day money-back guarantee on the first payment: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
         ) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -759,7 +763,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Conditions générales') +
         p(
-          'En utilisant le logiciel QECTOR ou ce site web, vous acceptez ces conditions. Vendeur : Guillaume Lessard, entrepreneur individuel, exploitant sous le nom iD01t Productions, Québec, Canada. Tous les prix sont en dollars américains (USD), hors taxes. Les paiements sont traités par Stripe. Droit applicable : Québec, Canada. Les jetons de licence sont livrés instantanément et toutes les ventes sont finales : voir la <a href="/refund" style="color:#67e8f9;">politique de remboursement</a>.'
+          'En utilisant le logiciel QECTOR ou ce site web, vous acceptez ces conditions. Vendeur : Guillaume Lessard, entrepreneur individuel, exploitant sous le nom iD01t Productions, Québec, Canada. Tous les prix sont en dollars américains (USD), hors taxes. Les paiements sont traités par Stripe. Droit applicable : Québec, Canada. Les abonnements se renouvellent automatiquement jusqu’à annulation, et chaque forfait offre une garantie satisfait ou remboursé de 14 jours sur le premier paiement : voir la <a href="/refund" style="color:#67e8f9;">politique de remboursement</a>.'
         ) +
         h2('Licence du logiciel') +
         p(
@@ -780,33 +784,35 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/refund',
     title: 'Refund Policy · QECTOR',
     description:
-      'QECTOR Decoder v3 refund policy. Licence tokens are delivered instantly and are non-refundable; the $499 evaluation is the creditable way to try first.',
+      `QECTOR Decoder v3 refund policy: ${PRICES.refundDays}-day money-back guarantee on the first payment of any plan, cancel renewals any time, free ${PRICES.trialDays}-day trial before you buy.`,
     heading: 'Refund Policy',
     body: page(
       h1('Refund Policy') +
         p(
-          'QECTOR commercial licences are digital goods: an Ed25519-signed token issued and emailed within minutes of payment. Because the licensed rights and the token are delivered in full and immediately, commercial licences are non-refundable and all sales are final. This applies to the Commercial Evaluation Licence, all annual tiers, and the perpetual licence.'
+          `Try QECTOR free for ${PRICES.trialDays} days, then buy with a ${PRICES.refundDays}-day money-back guarantee. Plans renew automatically and can be cancelled at any time.`
         ) +
-        h2('Evaluate first') +
+        h2(`${PRICES.refundDays}-day money-back guarantee`) +
         ul([
-          'The $499 Commercial Evaluation Licence is a flat, non-recurring 60-day licence with unlimited internal seats, for benchmarking and pilot work.',
-          'It does not auto-renew and is not a subscription.',
-          'It is 100% creditable toward any annual tier purchased within 90 days of the evaluation start: $499 then Solo/Indie means you pay $800, not $1,299.',
-          'To claim the credit, email your Stripe invoice number to admin@qector.store.',
+          `Email admin@qector.store with your Stripe receipt within ${PRICES.refundDays} days of your first payment of any plan (Pro monthly or annual, Pro Perpetual, Team, Lab or the Pilot) and we refund it in full, no questions asked.`,
+          'One guarantee per organisation; it applies to the first purchase, not to later renewals. Once refunded, the licence ends and the token must no longer be used.',
+          'Refunds go back to the original payment method through Stripe, usually within 5–10 business days.',
         ]) +
+        h2('Renewals and cancelling') +
+        p(
+          'Pro (monthly or annual), Team and Lab renew automatically until cancelled, with a reminder 14 days before each annual renewal. Cancel any time from your Stripe receipt or by emailing admin@qector.store; the licence stays valid to the end of the paid period. Renewals are not refunded pro rata; if a renewal you meant to cancel went through and you have not used the new term, write within 7 days and we refund it. Pro Perpetual and the Pilot are one-time payments.'
+        ) +
         h2('Delivery problems are fixed, not refunded') +
         p(
-          'If a token never arrives, is tied to the wrong email, or fails offline verification, that is a delivery fault on our side. Email admin@qector.store with your Stripe invoice number and we reissue it at no cost: please do not open a dispute. Tokens usually arrive in under 10 minutes; check your spam folder first.'
+          'If a token never arrives, is tied to the wrong email, or fails offline verification, that is a delivery fault on our side. Email admin@qector.store with your Stripe receipt and we reissue it at no cost: please do not open a dispute. Tokens usually arrive in under 10 minutes; check your spam folder first.'
         ) +
         h2('Exceptions') +
         ul([
-          'Duplicate purchases of the same tier for the same organisation, and charges made in obvious error, are refunded in full on request within 30 days.',
-          'Annual licences are term licences that do not auto-renew, so there is nothing to cancel; stopping use partway through a term does not generate a partial refund.',
-          'Nothing in this policy waives non-waivable statutory consumer rights where they apply.',
+          'Duplicate purchases of the same plan for the same organisation, and charges made in obvious error, are always refunded in full within 30 days.',
+          'Nothing in this policy waives non-waivable statutory consumer rights, including under the Québec Consumer Protection Act where it applies.',
         ]) +
         h2('Currency, tax, and seller') +
         p(
-          'All prices are quoted and charged in US dollars (USD), exclusive of tax; Stripe adds applicable sales tax, GST/HST, or VAT at checkout. Licences are sold by Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Payments are processed by Stripe and card details never reach QECTOR systems.'
+          'All prices are quoted and charged in US dollars (USD), exclusive of tax; applicable sales tax, GST/HST, or VAT is added at checkout and refunded with the price. Licences are sold by Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Payments are processed by Stripe and card details never reach QECTOR systems.'
         ) +
         p('Refund and billing questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> · See also <a href="/terms" style="color:#67e8f9;">terms</a> and <a href="/license" style="color:#67e8f9;">licence</a>.')
     ),
@@ -820,7 +826,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR MCP Server') +
         p(
-          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs on qector-decoder-v3==1.0.0 and mcp==1.26.0, and ships in the qector-claude-plugin repository.'
+          'A Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools (list_code_families, list_decoders, get_license_info, decode_syndrome, decode_single, threshold_sweep, build_code_from_matrix, compat_report) for any MCP-compatible AI client. Runs on qector-decoder-v3 1.0.x and mcp==1.26.0, and ships in the qector-claude-plugin repository.'
         ) +
         pre(`pip install qector-decoder-v3==${DECODER_VERSION} mcp==1.26.0\ngit clone https://github.com/GuillaumeLessard/qector-claude-plugin.git\npython qector-claude-plugin/mcp/mcp_server_library.py`)
     ),
@@ -829,7 +835,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         '@type': 'SoftwareApplication',
         name: 'QECTOR MCP Server',
         description:
-          'Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools for quantum error correction decoding. Runs on qector-decoder-v3==1.0.0 with mcp==1.26.0.',
+          'Model Context Protocol server (MCP stdio, JSON-RPC 2.0, protocol 2024-11-05) exposing 8 verified library tools for quantum error correction decoding. Runs on qector-decoder-v3 1.0.x with mcp==1.26.0.',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
         softwareVersion: '1.0.0',
@@ -847,7 +853,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QECTOR Claude Plugin') +
         p(
-          `Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version ${CLAUDE_PLUGIN_RELEASE.version} (published ${CLAUDE_PLUGIN_RELEASE.releaseDate}). Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3==1.0.0 Rust/PyO3 wheel. Local stdio transport keeps decoding inside the host environment; the plugin makes no license checks or telemetry calls.`
+          `Official QECTOR quantum error correction engineering plugin for Claude Code and Claude Desktop, version ${CLAUDE_PLUGIN_RELEASE.version} (published ${CLAUDE_PLUGIN_RELEASE.releaseDate}). Grounded in the QECTOR Decoder v3 reference manual (DOI 10.5281/zenodo.21941046) and the live qector-decoder-v3 1.0.x Rust/PyO3 wheel. Local stdio transport keeps decoding inside the host environment; the plugin makes no license checks or telemetry calls.`
         ) +
         h2('28 Domain Skills') +
         p(

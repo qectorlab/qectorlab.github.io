@@ -16,41 +16,44 @@ export interface FaqItem {
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    q: 'How is the license delivered, and does the package change once I have a token?',
-    a: 'Automatically, by email, within minutes of payment: if nothing arrives within 10 minutes, check your spam folder, then email admin@qector.store with your Stripe receipt. Everyone installs the same wheel via pip install qector-decoder-v3==1.0.0; there is no separate commercial build. The v1.0.0 tier manager unlocks tier-scoped features from that same token: distance caps of 7, 19, or 63 depending on tier, and GPU batch paths on Pro and Enterprise tiers. Set both QECTOR_LICENSE and QECTOR_LICENSE_KEY to the token so the import notice and v1.0.0 tier manager use the same credential. Set QECTOR_SILENT=1 if you also want quiet CI logs. The token verifies offline against a public key embedded in the package, so it works air-gapped and in CI with no license server and no phone-home. There is no hard stop: decoding runs either way. The token plus your Stripe receipt are what procurement and audit need.'
+    q: 'How do I try QECTOR commercially before paying?',
+    a: 'Request the free 14-day commercial trial on this page: a Pro licence token arrives by e-mail within minutes, for up to 5 internal users. No card is needed and the token simply expires; there is nothing to cancel. One trial per e-mail address per year.'
   },
   {
-    q: 'What exactly happens when the 60-day evaluation expires?',
-    a: 'The $499 evaluation is a flat, non-recurring 60-day license: it is not a subscription and it does not auto-renew. The token carries a 60-day expiry. After that date your commercial evaluation rights end and the licensing notice returns on import, but nothing is disabled, no code stops working, and your data and results remain yours. To continue commercial use you move to an annual tier. The $499 is 100% creditable toward any annual license purchased within 90 days of your evaluation start: buy Solo/Indie at $1,299/yr within that window and you pay $800, not $1,299. Email admin@qector.store with your Stripe invoice number and we invoice the difference.'
+    q: 'How is the licence delivered, and what does the token unlock?',
+    a: 'By e-mail within minutes of payment (check spam, then write to admin@qector.store with your Stripe receipt). Everyone installs the same wheel: pip install --upgrade "qector-decoder-v3>=1.0,<2". Set QECTOR_LICENSE_KEY and QECTOR_LICENSE to the token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; Lab and Enterprise also raise the code-distance tier to 63. CPU decoding is never blocked, and distance caps are only enforced if you set QECTOR_ENFORCE=1. The token is verified offline against a public key in the package: no licence server, works air-gapped.'
   },
   {
-    q: 'How many seats does each tier cover, and what counts as production?',
-    a: 'The $499 evaluation covers unlimited internal seats for 60 days, but it is scoped to evaluation and pilot work: benchmarking, integration testing, threshold studies, and architecture assessment. It does not grant production rights. Annual tiers grant production rights for internal use and are seat-counted: Solo/Indie $1,299/yr (1 named user), Startup/Growth $4,499/yr (up to 10), Professional $11,500/yr (up to 25), Enterprise & OEM custom pricing (unlimited seats and logical qubits, OEM bundling rights, dedicated support engineer, custom builds). A Solo/Indie perpetual license is also available at $3,299 one-time for v3.x (all v3.x patch/minor updates included; major version upgrades such as v4.0 are a new license).'
-  },
-  {
-    q: 'Is a hosted or customer-facing API covered by an annual tier?',
-    a: 'No. Annual tiers cover internal use: your own team, on your own infrastructure. The moment QECTOR sits behind an API, product, or service that anyone outside your organization can reach, that deployment is SaaS or redistribution and it requires an Enterprise/OEM agreement, regardless of which annual tier you hold. Internal hosted endpoints used only by your own employees are fine under an annual tier. If you are unsure which side of the line you are on, email admin@qector.store and describe the deployment.'
-  },
-  {
-    q: 'Can I redistribute QECTOR inside my product?',
-    a: 'No: standard tiers cover internal use only. Enterprise OEM licenses cover redistribution, SaaS hosting, and hardware bundling. Email admin@qector.store for a custom agreement.'
-  },
-  {
-    q: 'Do I need a license for non-commercial research?',
-    a: 'No. Non-commercial, academic, and personal use is free under the PolyForm Noncommercial License 1.0.0. Only commercial deployment requires a paid tier. The licensing notice on import is informational: it does not restrict non-commercial use, and QECTOR_SILENT=1 suppresses it.'
-  },
-
-  {
-    q: 'What currency are prices in, and is tax included?',
-    a: 'All prices are in US dollars (USD). Listed prices are exclusive of tax. Stripe calculates and adds any applicable sales tax, GST/HST, or VAT at checkout based on your billing location: Canadian, UK, and EU buyers should expect tax on top of the listed price. If your organization is tax-exempt or has a valid VAT/GST registration number, enter it at checkout, or email admin@qector.store with your Stripe invoice number for a corrected invoice.'
+    q: 'Do plans renew automatically, and how do I cancel?',
+    a: 'Yes. Pro (monthly or annual), Team and Lab renew automatically until cancelled, and you get a reminder e-mail 14 days before each annual renewal. Cancel any time from your Stripe receipt or by writing to admin@qector.store; your licence stays valid until the end of the paid period. Pro Perpetual and the Pilot are one-time payments and never renew.'
   },
   {
     q: 'What is your refund policy?',
-    a: 'License tokens are delivered immediately on payment, so all sales are final and commercial licenses are non-refundable. That is precisely why the $499 60-day evaluation exists: it is the low-cost, fully creditable way to validate QECTOR against your own workloads before committing to an annual tier. If a token never arrives or fails to verify, that is a delivery fault rather than a refund matter: email admin@qector.store and we will reissue it. This policy does not limit non-waivable statutory rights where they apply. Full terms are on the refund policy page.'
+    a: '14-day money-back guarantee on your first payment of any plan: write to admin@qector.store with your Stripe receipt and we refund it in full and revoke the token. Renewals are not refunded pro rata. Duplicate purchases and charges made in error are always refunded. If a token never arrives or fails to verify, we reissue it at no cost. This does not limit non-waivable statutory rights.'
   },
   {
-    q: 'Can we get a signed corporate EULA or tax form?',
-    a: 'Yes. If procurement requires a signed PDF agreement, vendor profile, W-8BEN or equivalent tax form, or a security questionnaire, email your request with your Stripe invoice number to admin@qector.store.'
+    q: 'How many seats does each plan cover, and what counts as production?',
+    a: 'Pro: 1 named user. Team: up to 10. Lab: up to 25. Enterprise: unlimited. All paid plans grant production rights for internal use. The free trial and the 60-day Pilot are for evaluation (benchmarking, integration testing, threshold studies), not production. Pro Perpetual covers one named user for every 3.x release; a major version such as 4.0 is a new licence.'
+  },
+  {
+    q: 'Is a hosted or customer-facing API covered?',
+    a: 'No. Pro, Team and Lab cover internal use on your own infrastructure. As soon as QECTOR sits behind an API, product or service that anyone outside your organisation can reach, that is SaaS or redistribution and needs an Enterprise/OEM agreement. Internal endpoints used only by your own staff are fine. Unsure? Describe the deployment to admin@qector.store.'
+  },
+  {
+    q: 'Can I redistribute QECTOR inside my product?',
+    a: 'Only under an Enterprise/OEM agreement, which covers redistribution, SaaS hosting and hardware bundling. Write to admin@qector.store.'
+  },
+  {
+    q: 'Do I need a licence for non-commercial research?',
+    a: 'No. Personal, academic and other non-commercial use is free under the PolyForm Noncommercial License 1.0.0. Industry-funded or contract research at a university is commercial; it gets 40% off Team and Lab with an institutional e-mail.'
+  },
+  {
+    q: 'What currency are prices in, and is tax included?',
+    a: 'Prices are in US dollars and exclude tax. Applicable sales tax, GST/HST or VAT is calculated and added at checkout from your billing address. Businesses can enter a VAT/GST number at checkout.'
+  },
+  {
+    q: 'Can we get a signed agreement, tax form or security questionnaire?',
+    a: 'Yes. For a signed PDF agreement, vendor profile, W-8BEN or equivalent, or a security questionnaire, write to admin@qector.store with your Stripe invoice number. Enterprise agreements are always signed contracts.'
   },
 ];
 
@@ -59,39 +62,43 @@ export const FAQ_ITEMS: FaqItem[] = [
 // shells; update prerenderData.ts if that changes.
 export const FAQ_ITEMS_FR: FaqItem[] = [
   {
-    q: 'Comment la licence est-elle livrée, et le paquet change-t-il une fois que j’ai un jeton ?',
-    a: 'Automatiquement, par courriel, dans les minutes qui suivent le paiement : si rien n’arrive dans les 10 minutes, vérifiez votre courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe. Tout le monde installe la même wheel via pip install qector-decoder-v3==1.0.0; il n’existe pas de build commercial séparé. Le gestionnaire de palier v1.0.0 déverrouille les fonctionnalités propres à chaque palier à partir de ce même jeton : plafonds de distance de 7, 19 ou 63 selon le palier, et chemins GPU batch sur les paliers Pro et Entreprise. Définissez QECTOR_LICENSE et QECTOR_LICENSE_KEY au jeton pour que l’avis d’import et le gestionnaire de palier v1.0.0 utilisent le même jeton. Définissez QECTOR_SILENT=1 si vous voulez aussi des journaux CI silencieux. Le jeton se vérifie hors ligne contre une clé publique embarquée dans le paquet : il fonctionne hors réseau et en CI, sans serveur de licence ni appel maison. Il n’y a pas de blocage : le décodage fonctionne de toute façon. Le jeton et votre reçu Stripe sont ce dont les achats et l’audit ont besoin.'
+    q: 'Comment essayer QECTOR commercialement avant de payer ?',
+    a: 'Demandez l’essai commercial gratuit de 14 jours sur cette page : un jeton de licence Pro arrive par courriel en quelques minutes, pour jusqu’à 5 utilisateurs internes. Aucune carte n’est requise et le jeton expire de lui-même : rien à annuler. Un essai par adresse courriel par année.'
   },
   {
-    q: 'Que se passe-t-il exactement à l’expiration de l’évaluation de 60 jours ?',
-    a: 'L’évaluation à 499 $ est une licence forfaitaire de 60 jours, non récurrente : ce n’est pas un abonnement et elle ne se renouvelle pas automatiquement. Le jeton porte une échéance de 60 jours. Après cette date, vos droits d’évaluation commerciale prennent fin et l’avis de licence réapparaît à l’import, mais rien n’est désactivé, aucun code ne cesse de fonctionner, et vos données et résultats restent à vous. Pour poursuivre un usage commercial, vous passez à un palier annuel. Les 499 $ sont crédités à 100 % vers toute licence annuelle achetée dans les 90 jours suivant le début de votre évaluation : achetez Solo/Indie à 1 299 $/an dans ce délai et vous payez 800 $, pas 1 299 $. Écrivez à admin@qector.store avec votre numéro de facture Stripe et nous facturons la différence.'
+    q: 'Comment la licence est-elle livrée, et que déverrouille le jeton ?',
+    a: 'Par courriel dans les minutes qui suivent le paiement (vérifiez le courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe). Tout le monde installe la même wheel : pip install --upgrade "qector-decoder-v3>=1.0,<2". Définissez QECTOR_LICENSE_KEY et QECTOR_LICENSE au jeton. Chaque forfait payant déverrouille le décodage GPU (CUDA/OpenCL) par lots; Labo et Entreprise portent aussi le palier de distance à 63. Le décodage CPU n’est jamais bloqué, et les plafonds de distance ne s’appliquent que si QECTOR_ENFORCE=1. Le jeton se vérifie hors ligne contre une clé publique incluse dans le paquet : aucun serveur de licence, fonctionne hors réseau.'
   },
   {
-    q: 'Combien de sièges chaque palier couvre-t-il, et qu’est-ce qui compte comme production ?',
-    a: 'L’évaluation à 499 $ couvre des sièges internes illimités pendant 60 jours, mais elle est limitée à l’évaluation et aux pilotes : tests de référence (benchmarks), tests d’intégration, études de seuil et évaluation d’architecture. Elle n’accorde pas de droits de production. Les paliers annuels accordent des droits de production pour usage interne et sont comptés par sièges : Solo/Indie 1 299 $/an (1 utilisateur nommé), Startup/Growth 4 499 $/an (jusqu’à 10), Professionnel 11 500 $/an (jusqu’à 25), Entreprise & OEM sur mesure (sièges et qubits logiques illimités, droits de regroupement OEM, ingénieur de support dédié, versions personnalisées). Une licence perpétuelle Solo/Indie est aussi disponible à 3 299 $ paiement unique pour v3.x (toutes les mises à jour mineures et correctives v3.x incluses; les montées de version majeure comme v4.0 sont une nouvelle licence).'
-  },
-  {
-    q: 'Une API hébergée ou orientée client est-elle couverte par un palier annuel ?',
-    a: 'Non. Les paliers annuels couvrent l’usage interne : votre propre équipe, sur votre propre infrastructure. Dès que QECTOR se trouve derrière une API, un produit ou un service accessible à quiconque hors de votre organisation, c’est du SaaS ou de la redistribution et cela exige un contrat Entreprise/OEM, quel que soit le palier annuel détenu. Les points d’accès hébergés internes utilisés uniquement par vos propres employés sont couverts par un palier annuel. En cas de doute, écrivez à admin@qector.store et décrivez le déploiement.'
-  },
-  {
-    q: 'Puis-je redistribuer QECTOR dans mon produit ?',
-    a: 'Non : les paliers standards couvrent l’usage interne seulement. Les licences Entreprise OEM couvrent la redistribution, l’hébergement SaaS et le regroupement matériel. Écrivez à admin@qector.store pour un contrat sur mesure.'
-  },
-  {
-    q: 'Ai-je besoin d’une licence pour la recherche non commerciale ?',
-    a: 'Non. L’usage non commercial, académique et personnel est gratuit sous la licence PolyForm Noncommercial 1.0.0. Seul le déploiement commercial exige un palier payant. L’avis de licence à l’import est informatif : il ne restreint pas l’usage non commercial, et QECTOR_SILENT=1 le désactive.'
-  },
-  {
-    q: 'En quelle devise sont les prix, et la taxe est-elle incluse ?',
-    a: 'Tous les prix sont en dollars américains (USD). Les prix affichés sont hors taxes. Stripe calcule et ajoute toute taxe de vente, TPS/TVH ou TVA applicable au paiement selon votre adresse de facturation : les acheteurs canadiens, britanniques et européens doivent s’attendre à une taxe en sus du prix affiché. Si votre organisation est exonérée ou possède un numéro d’enregistrement TPS/TVA valide, saisissez-le au paiement, ou écrivez à admin@qector.store avec votre numéro de facture Stripe pour une facture corrigée.'
+    q: 'Les forfaits se renouvellent-ils automatiquement, et comment annuler ?',
+    a: 'Oui. Pro (mensuel ou annuel), Équipe et Labo se renouvellent automatiquement jusqu’à annulation, avec un courriel de rappel 14 jours avant chaque renouvellement annuel. Annulez en tout temps depuis votre reçu Stripe ou en écrivant à admin@qector.store; votre licence reste valide jusqu’à la fin de la période payée. Pro Perpétuel et le Pilote sont des paiements uniques et ne se renouvellent jamais.'
   },
   {
     q: 'Quelle est votre politique de remboursement ?',
-    a: 'Les jetons de licence sont livrés immédiatement au paiement : toutes les ventes sont donc finales et les licences commerciales ne sont pas remboursables. C’est précisément pourquoi l’évaluation à 499 $ pour 60 jours existe : c’est le moyen économique et entièrement créditable de valider QECTOR sur vos propres charges de travail avant de vous engager sur un palier annuel. Si un jeton n’arrive jamais ou ne se vérifie pas, c’est un défaut de livraison plutôt qu’un sujet de remboursement : écrivez à admin@qector.store et nous le réémettrons. Cette politique ne limite pas les droits statutaires non renonçables là où ils s’appliquent. Les conditions complètes sont sur la page de politique de remboursement.'
+    a: 'Garantie satisfait ou remboursé de 14 jours sur votre premier paiement de tout forfait : écrivez à admin@qector.store avec votre reçu Stripe et nous remboursons en entier et révoquons le jeton. Les renouvellements ne sont pas remboursés au prorata. Les achats en double et les frais faits par erreur sont toujours remboursés. Si un jeton n’arrive pas ou ne se vérifie pas, nous le réémettons sans frais. Cela ne limite pas les droits légaux auxquels on ne peut renoncer.'
   },
   {
-    q: 'Pouvons-nous obtenir un contrat EULA signé ou un formulaire fiscal ?',
-    a: 'Oui. Si vos achats exigent un contrat PDF signé, un profil de fournisseur, un W-8BEN ou formulaire fiscal équivalent ou un questionnaire de sécurité, envoyez votre demande avec votre numéro de facture Stripe à admin@qector.store.'
+    q: 'Combien de sièges chaque forfait couvre-t-il, et qu’est-ce que la production ?',
+    a: 'Pro : 1 utilisateur nommé. Équipe : jusqu’à 10. Labo : jusqu’à 25. Entreprise : illimité. Tous les forfaits payants accordent des droits de production pour usage interne. L’essai gratuit et le Pilote de 60 jours servent à l’évaluation (benchmarks, tests d’intégration, études de seuil), pas à la production. Pro Perpétuel couvre un utilisateur nommé pour toutes les versions 3.x; une version majeure comme 4.0 est une nouvelle licence.'
+  },
+  {
+    q: 'Une API hébergée ou offerte aux clients est-elle couverte ?',
+    a: 'Non. Pro, Équipe et Labo couvrent l’usage interne sur votre propre infrastructure. Dès que QECTOR se trouve derrière une API, un produit ou un service accessible hors de votre organisation, c’est du SaaS ou de la redistribution, ce qui exige un contrat Entreprise/OEM. Les points d’accès internes réservés à votre personnel sont couverts. En cas de doute, décrivez le déploiement à admin@qector.store.'
+  },
+  {
+    q: 'Puis-je redistribuer QECTOR dans mon produit ?',
+    a: 'Seulement avec un contrat Entreprise/OEM, qui couvre la redistribution, l’hébergement SaaS et le regroupement matériel. Écrivez à admin@qector.store.'
+  },
+  {
+    q: 'Ai-je besoin d’une licence pour la recherche non commerciale ?',
+    a: 'Non. L’usage personnel, académique et non commercial est gratuit sous la licence PolyForm Noncommercial 1.0.0. La recherche universitaire financée par l’industrie ou sous contrat est commerciale; elle obtient 40 % de rabais sur Équipe et Labo avec un courriel institutionnel.'
+  },
+  {
+    q: 'En quelle devise sont les prix, et la taxe est-elle incluse ?',
+    a: 'Les prix sont en dollars américains, hors taxes. La taxe de vente, TPS/TVH ou TVA applicable est calculée et ajoutée au paiement selon votre adresse de facturation. Les entreprises peuvent saisir un numéro de TPS/TVA au paiement.'
+  },
+  {
+    q: 'Pouvons-nous obtenir un contrat signé, un formulaire fiscal ou un questionnaire de sécurité ?',
+    a: 'Oui. Pour un contrat PDF signé, un profil de fournisseur, un W-8BEN ou équivalent, ou un questionnaire de sécurité, écrivez à admin@qector.store avec votre numéro de facture Stripe. Les contrats Entreprise sont toujours signés.'
   },
 ];

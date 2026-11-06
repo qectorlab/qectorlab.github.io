@@ -44,8 +44,9 @@ export default function Terms() {
             <p className="text-secondary text-sm leading-relaxed">
               All prices are quoted and charged in <strong className="text-primary">US dollars (USD)</strong>, exclusive of tax.
               Stripe processes all payments and adds applicable sales tax, GST/HST, or VAT at checkout based on your billing
-              location; card details never reach QECTOR systems. License tokens are issued and emailed within minutes of successful payment (usually under 10 minutes) and all sales
-              are final: see the <a href="/refund" className="text-cyan-300 hover:underline">Refund Policy</a>.
+              location; card details never reach QECTOR systems. License tokens are issued and emailed within minutes of successful payment (usually under 10 minutes). Subscriptions (Pro monthly or annual, Team, Lab) renew automatically until cancelled and can
+              be cancelled at any time; the first payment of every plan carries a 14-day money-back guarantee: see the{' '}
+              <a href="/refund" className="text-cyan-300 hover:underline">Refund Policy</a>.
             </p>
           </div>
 

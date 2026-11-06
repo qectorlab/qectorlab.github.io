@@ -6,6 +6,8 @@ import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import { FAQ_ITEMS } from '../lib/faqData';
 import CodeBlock from '../components/CodeBlock';
+import TrialForm from '../components/TrialForm';
+import { LINKS, PRICES, usd } from '../lib/pricing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -43,7 +45,7 @@ export default function Pricing() {
     <>
       <SEO
         title="Pricing · QECTOR"
-        description="QECTOR Decoder v3 commercial licensing. $499 one-time 60-day evaluation, fully creditable. Annual production tiers from $1,299/yr. Enterprise and OEM custom pricing. Prices in USD, exclusive of tax."
+        description={`QECTOR Decoder v3 commercial licensing. Free ${PRICES.trialDays}-day commercial trial. Pro from ${usd(PRICES.proMonthly)}/month, Team ${usd(PRICES.team)}/yr, Lab ${usd(PRICES.lab)}/yr, Enterprise and OEM from ${usd(PRICES.enterpriseFrom)}/yr. ${PRICES.refundDays}-day money-back. Prices in USD; tax added at checkout where applicable.`}
         lang="en"
         alternates={[
           { lang: 'en', href: 'https://qector.store/pricing/' },
@@ -76,44 +78,35 @@ export default function Pricing() {
             <NeuralReveal text="License QECTOR for Production" className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70" />
           </h1>
           <p className="text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-            QECTOR Decoder v3 is Source-Available for academic and non-commercial research. 
-            For internal R&D, pilot programs, and commercial deployment, select a license below.
+            Free for academic and non-commercial research. For commercial use, start a free
+            {' '}{PRICES.trialDays}-day trial, then pick a plan: cancel any time, {PRICES.refundDays}-day money-back on your first payment.
           </p>
         </div>
       </section>
 
       <div className="px-6 pb-24 max-w-6xl mx-auto space-y-20 relative z-10">
 
-        {/* 1. THE EVALUATION BANNER (Most important entry point) */}
-        <div ref={(el) => addRef(el, 0)} id="evaluation" className="scroll-mt-32">
+        {/* 1. FREE COMMERCIAL TRIAL (the entry point) */}
+        <div ref={(el) => addRef(el, 0)} id="trial" className="scroll-mt-32">
           <div className="relative p-1 rounded-3xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-gold-400 animate-gradient-xy">
             <div className="bg-void/90 backdrop-blur-xl rounded-[23px] p-8 md:p-12 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-left">
                 <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
-                  Self-Serve · Instant Clearance
+                  Free · No card · Token by e-mail
                 </div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Commercial Evaluation</h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">{PRICES.trialDays}-Day Commercial Trial</h2>
                 <p className="text-secondary text-base leading-relaxed max-w-xl">
-                  A 60-day full-access pilot designed for serious QEC research teams. 
-                  Includes CPU + CUDA batch decoding, written license agreement, benchmark artifact package, and priority support.
+                  Evaluate QECTOR on your own workloads with full commercial evaluation rights: every decoder family,
+                  CPU and GPU (CUDA/OpenCL) batch decoding, offline licence verification.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 text-sm text-cyan-100/70">
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> 100% creditable toward any annual license purchased within 90 days of your evaluation start</div>
-                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Unlimited internal seats</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Up to 5 internal users</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> Expires on its own: nothing to cancel</div>
+                  <div className="flex items-center gap-2"><span className="text-cyan-400">✓</span> One trial per address per year</div>
                 </div>
               </div>
-              
               <div className="w-full md:w-auto flex flex-col items-center">
-                <div className="text-4xl font-black text-white mb-1">$499</div>
-                <div className="text-secondary text-sm mb-6">One-time flat fee</div>
-                <a
-                  href="https://buy.stripe.com/6oU00l77Xc8ifsegEqeUU07"
-                  className="btn-cyan w-full text-center py-4 px-8 font-bold shadow-[0_0_30px_rgba(34,211,238,0.3)]"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Start 60-Day Pilot
-                </a>
+                <TrialForm lang="en" />
               </div>
             </div>
           </div>
@@ -122,62 +115,62 @@ export default function Pricing() {
         {/* 2. THE PRODUCTION TIERS */}
         <div ref={(el) => addRef(el, 1)}>
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Annual Production Tiers</h2>
+            <h2 className="text-3xl font-bold mb-4">Commercial Plans</h2>
             <p className="text-secondary text-lg mb-4">
-              For teams deploying QECTOR internally or integrating into private SaaS infrastructure.
+              Production rights for internal use. Plans renew automatically until cancelled.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300">
-              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> 40% Academic Discount available on all annual tiers. Contact sales.
+              <GraduationCap size={14} className="shrink-0" aria-hidden="true" /> {PRICES.academicDiscountPct}% off Team and Lab for industry-funded university projects. Non-commercial research is free.
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <PricingTierCard
-              name="Solo / Indie"
-              price="$1,299"
-              period="/ year"
-              desc="Production rights for a single named user."
-              features={['Full v3 decoders', 'Commercial R&D rights', 'Single named user', 'Priority email support']}
-              ctaLabel="Buy Now"
-              ctaHref="https://buy.stripe.com/cNi9AV63TfkubbY87UeUU09"
+              name="Pro"
+              price={usd(PRICES.proMonthly)}
+              period="/ month"
+              desc={`One named user. Or ${usd(PRICES.proAnnual)}/year (2 months free).`}
+              features={['Commercial internal use', 'All decoder families', 'CPU + GPU (CUDA/OpenCL) batch', 'Email support (2 business days)']}
+              ctaLabel="Buy monthly"
+              ctaHref={LINKS.proMonthly}
             />
             <PricingTierCard
-              name="Startup / Growth"
-              price="$4,499"
+              name="Team"
+              price={usd(PRICES.team)}
               period="/ year"
-              desc="Up to 10 named users. Advanced BP-OSD/LDPC workflows."
+              desc="Up to 10 named users."
               featured
-              featuredLabel="Most Popular"
-              features={['Up to 10 named users', 'Advanced BP-OSD/LDPC', 'CPU + CUDA batch', 'Support SLA + 2hr integration']}
-              ctaLabel="Buy Now"
-              ctaHref="https://buy.stripe.com/14A5kF4ZP5JU7ZMdseeUU0c"
+              featuredLabel="Best for startups"
+              features={['Everything in Pro', 'Up to 10 named users', 'Priority support (1 business day)', '2-hour onboarding call']}
+              ctaLabel="Buy Team"
+              ctaHref={LINKS.team}
             />
             <PricingTierCard
-              name="Professional"
-              price="$11,500"
+              name="Lab"
+              price={usd(PRICES.lab)}
               period="/ year"
-              desc="Up to 25 named users. Validation Report Package credit."
-              features={['Up to 25 named users', 'All advanced workflows', 'Dedicated integration', 'Validation Report credit']}
-              ctaLabel="Buy Now"
-              ctaHref="https://buy.stripe.com/28EeVf1ND0pA6VIewieUU0d"
+              desc="Up to 25 named users. Enterprise licence tier."
+              features={['Everything in Team', 'Code distances up to 63', 'Support SLA', 'One Validation Report ($5,000 value)']}
+              ctaLabel="Buy Lab"
+              ctaHref={LINKS.lab}
             />
             <PricingTierCard
               name="Enterprise & OEM"
-              price="Custom"
-              period=""
-              desc="Unlimited seats, custom builds, and SaaS/OEM distribution."
+              price={`$${PRICES.enterpriseFrom / 1000}k+`}
+              period="/ year"
+              desc="Redistribution, SaaS, OEM and custom terms."
               accent="gold"
-              features={['Unlimited logical qubits', 'SaaS hosting rights', 'OEM bundling rights', 'Dedicated support engineer']}
+              features={['Unlimited seats', 'SaaS and customer-facing APIs', 'OEM and hardware bundling', 'Named support engineer']}
               ctaLabel="Contact Sales"
               ctaHref="/contact"
             />
           </div>
-          
-          {/* Solo Perpetual Note */}
-          <div className="mt-8 text-center">
+
+          <div className="mt-8 text-center space-y-2">
             <p className="text-sm text-secondary">
-              Prefer to own it outright? <strong className="text-cyan-300">Solo / Indie Perpetual is $3,299 one-time.</strong>{' '}
-               <Link to="/contact" className="text-cyan-400 hover:underline">Contact sales to activate</Link>
+              Pro billed yearly: <a href={LINKS.proAnnual} className="text-cyan-400 hover:underline" rel="noopener">{usd(PRICES.proAnnual)} / year</a>.{' '}
+              Prefer to own it? <a href={LINKS.proPerpetual} className="text-cyan-400 hover:underline" rel="noopener"><strong>Pro Perpetual: {usd(PRICES.proPerpetual)} one-time</strong></a>{' '}
+              (every 3.x release, 12 months of support).
             </p>
           </div>
         </div>
@@ -192,28 +185,33 @@ export default function Pricing() {
               We execute up to 3 standard benchmark workloads using QECTOR and deliver reproducible artifact bundles.
             </p>
             <ul className="text-secondary text-sm space-y-2 mb-8">
-              <li className="flex gap-2"><span className="text-gold-400">✓</span> Includes 60-day Commercial Evaluation</li>
+              <li className="flex gap-2"><span className="text-gold-400">✓</span> Includes a {PRICES.pilotDays}-day Pilot licence</li>
               <li className="flex gap-2"><span className="text-gold-400">✓</span> Comparative analysis vs PyMatching/Stim</li>
               <li className="flex gap-2"><span className="text-gold-400">✓</span> 60-minute results review call</li>
             </ul>
             <Link to="/contact" className="btn-gold block text-center">Request Validation Sprint</Link>
+            <p className="text-xs text-gold-200/60 mt-6">
+              Need only the licence and a call? The <a href={LINKS.pilot} className="text-gold-400 hover:underline" rel="noopener">{PRICES.pilotDays}-day Pilot is {usd(PRICES.pilot)}</a>:
+              {' '}a 1-hour integration call and a written validation memo, 100% creditable toward Team or Lab within 90 days.
+            </p>
           </div>
           
           <div className="card-surface bg-surface border-gridline">
             <h3 className="text-2xl font-bold mb-4">Activating Your License</h3>
             <p className="text-secondary text-sm mb-6">
               Everyone installs the same wheel from PyPI: there is no separate commercial build.
-              Setting your license token disables the non-commercial usage notice and unlocks your tier's runtime features: distance caps of 7, 19, or 63 depending on tier, and GPU batch paths on Pro and Enterprise tiers.
+              Your token unlocks the paid features: GPU (CUDA/OpenCL) batch decoding on every paid plan, and code distances up to 63 on Lab and Enterprise.
+              CPU decoding is never blocked; distance caps are enforced only when you set QECTOR_ENFORCE=1.
             </p>
             <CodeBlock
               language="bash"
               className="mb-6"
-              code={`# Commercial use: activate with the Ed25519 token
-export QECTOR_LICENSE="<your-token>"
+              code={`pip install --upgrade "qector-decoder-v3>=1.0,<2"
 export QECTOR_LICENSE_KEY="<your-token>"
+export QECTOR_LICENSE="<your-token>"
 
-# Optional: suppress the licensing notice in CI logs
-export QECTOR_SILENT=1`}
+# Verify offline: prints Pro or Enterprise
+python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
             />
             <p className="text-xs text-muted-foreground leading-relaxed">
               Tokens are verified offline against a public key embedded in the package: no license server, no phone-home, works completely air-gapped.
@@ -281,7 +279,8 @@ export QECTOR_SILENT=1`}
             <strong>What is not included:</strong> Unless explicitly granted, no tier includes redistribution, OEM, SaaS hosting, or sublicensing rights. Contact sales for Custom terms.
           </p>
           <p>
-            <strong>Procurement:</strong> All prices are USD and exclude tax. Stripe handles local taxes automatically. Tokens are delivered instantly via email. Due to instant delivery, sales are final. Please use the $499 Evaluation to test suitability before annual commitment.
+            <strong>Procurement:</strong> All prices are in USD; applicable taxes are added at checkout. Monthly and annual plans renew automatically until cancelled, with a reminder before each annual renewal.
+            {' '}{PRICES.refundDays}-day money-back guarantee on your first payment of any plan. Tokens are emailed within minutes.
           </p>
           <div className="flex justify-center gap-6 pt-4">
             <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund Policy</Link>
