@@ -48,6 +48,10 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 - Changelog: https://qector.store/changelog
 - License: https://qector.store/license
 - Refund policy: https://qector.store/refund
+- Commercial Licence Agreement: https://qector.store/license-agreement/ (French: https://qector.store/fr/license-agreement/)
+- Privacy policy (Québec Law 25): https://qector.store/privacy/ (French: https://qector.store/fr/privacy/)
+- Security & Trust (verification, keys, disclosure): https://qector.store/security/
+- Feature comparison with PyMatching, ldpc and fusion-blossom: https://qector.store/compare/
 - Contact: https://qector.store/contact
 
 ## Machine-readable
@@ -76,7 +80,7 @@ The public blog provides 20 field notes across foundations, decoder algorithms, 
 ## Installation
 
 ```text
-pip install --upgrade "qector-decoder-v3>=1.0,<2"
+pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
 ```
 
 ## Reproducibility

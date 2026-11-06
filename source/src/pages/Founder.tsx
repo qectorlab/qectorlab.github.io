@@ -81,7 +81,7 @@ export default function Founder() {
           worksFor: {
             '@type': 'Organization',
             name: 'iD01t Productions',
-            foundingDate: '2023',
+            foundingDate: '2012',
           },
           knowsAbout: [
             'Quantum error correction',
@@ -223,7 +223,7 @@ export default function Founder() {
                 For most of the last twenty years that meant building high-performance applications and tools. 
                 I founded{' '}
                 <span className="text-secondary">iD01t Productions</span>{' '}
-                in 2023. QECTOR serves as its dedicated QEC software division, delivering robust decoder pipelines for research and production environments.
+                in 2012. QECTOR serves as its dedicated QEC software division, delivering robust decoder pipelines for research and production environments.
               </p>
                <p>
                  Quantum error correction is where that method currently points. QECTOR Decoder v3 is a Rust core

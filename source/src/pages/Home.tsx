@@ -127,7 +127,7 @@ export default function Home() {
             className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-center text-xs leading-relaxed text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} · First Stable Release · Changelog →</span>
+            <span>v{pypiVersion} · 18 verified wheels · Changelog →</span>
           </Link>
 
           <h1
@@ -144,17 +144,17 @@ export default function Home() {
             className="text-base sm:text-lg md:text-xl text-secondary/90 max-w-3xl mx-auto mb-5 leading-relaxed break-words"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
           >
-             The 1.0.x runtime ships 17 concrete decoder configurations, while Workbench v1.0.7 names 19 kinds in total:
-             those configurations plus AutoDecoder and Auto Router orchestration entries.{' '}
-             <span className="text-primary font-semibold">1.0.1 is the current stable release:</span> API stability tiers,
-            Relay-BP, CS-OSD, Sinter/qiskit entry points and the qector CLI.
+            One library for many decoder families on the same check matrix: Union-Find, exact MWPM, BP-OSD and Relay-BP
+            for qLDPC codes, on CPU and GPU, with Stim and Sinter integration.{' '}
+            <span className="text-primary font-semibold">Every correction is checked against its syndrome</span>, and commercial
+            licences verify offline, so it runs air-gapped.
           </p>
           <p
             className="text-sm text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
             style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
           >
-             Local measurement tools are documented for declared workloads; this site publishes no universal performance figures.
-             Claim boundaries and verification paths are published with the product documentation.
+            Built for hardware teams, qLDPC researchers and academic labs. Free for academic and non-commercial research;
+            commercial plans from $79/month with a 14-day money-back guarantee.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-10">
@@ -183,10 +183,10 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x md:divide-white/5 border-t border-white/5 pt-6 max-w-2xl mx-auto">
-             <CounterStat value="19" label="Workbench Kinds (17 + 2 routing)" />
-            <CounterStat value="GF(2)" label="Faithfulness Contract" />
-            <CounterStat value="CPU + GPU" label="Optional Execution Paths" />
-            <CounterStat value="Open" label="Evidence Policy" />
+            <CounterStat value="17" label="Decoder configurations" />
+            <CounterStat value="H·c = s" label="Checked on every result" />
+            <CounterStat value="CPU + GPU" label="Batch decoding" />
+            <CounterStat value="Offline" label="Air-gapped licensing" />
           </div>
 
           {/* Evidence policy */}
@@ -307,7 +307,7 @@ export default function Home() {
             <span className="eyebrow-pill mb-4">
               Proof Suite
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Executable Verification for v1.0.0</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Executable Verification for the 1.0 Line</h2>
             <p className="text-secondary text-lg max-w-2xl mx-auto mt-3">
               Hashed-lock reproducible install, CERT_STRICT gate, and Lean/Coq kernel evidence - verifiable against Reference Manual v1.0.0.
             </p>
@@ -357,7 +357,7 @@ export default function Home() {
                 step: '01',
                 title: 'Install',
                  desc: 'Install the 1.0.1 wheel in a supported Python 3.9-3.14 environment alongside your existing Stim or PyMatching workflow.',
-                 detail: 'pip install --upgrade "qector-decoder-v3>=1.0,<2"',
+                 detail: 'pip install --upgrade "qector-decoder-v3>=1.0.1,<2"',
                 code: true,
               },
               {

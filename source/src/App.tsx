@@ -25,6 +25,12 @@ const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const TermsFR = lazy(() => import('./pages/TermsFR'));
 const Refund = lazy(() => import('./pages/Refund'));
+const RefundFR = lazy(() => import('./pages/RefundFR'));
+const PrivacyFR = lazy(() => import('./pages/PrivacyFR'));
+const LicenseAgreement = lazy(() => import('./pages/LicenseAgreement'));
+const LicenseAgreementFR = lazy(() => import('./pages/LicenseAgreementFR'));
+const Security = lazy(() => import('./pages/Security'));
+const Compare = lazy(() => import('./pages/Compare'));
 const Founder = lazy(() => import('./pages/Founder'));
 const Evidence = lazy(() => import('./pages/Evidence'));
 const Changelog = lazy(() => import('./pages/Changelog'));
@@ -59,6 +65,12 @@ export default function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/fr/terms" element={<TermsFR />} />
             <Route path="/refund" element={<Refund />} />
+            <Route path="/fr/refund" element={<RefundFR />} />
+            <Route path="/fr/privacy" element={<PrivacyFR />} />
+            <Route path="/license-agreement" element={<LicenseAgreement />} />
+            <Route path="/fr/license-agreement" element={<LicenseAgreementFR />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/compare" element={<Compare />} />
             <Route path="/guillaume-lessard" element={<Founder />} />
             <Route path="/evidence" element={<Evidence />} />
             <Route path="/changelog" element={<Changelog />} />

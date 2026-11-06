@@ -90,7 +90,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               <strong>Guillaume Lessard</strong>, software engineer and researcher based in Montreal / Longueuil, Québec, Canada.
             </p>
             <p className="text-secondary leading-relaxed mb-4">
-              Operating as the QEC software division of <strong>iD01t Productions</strong> (founded 2023), Guillaume focuses on quantum error correction software engineering, building high-throughput decoders and advanced validation tooling.
+              Operating as the QEC software division of <strong>iD01t Productions</strong> (founded 2012), Guillaume focuses on quantum error correction software engineering, building high-throughput decoders and advanced validation tooling.
             </p>
             <div className="flex flex-wrap gap-2 mb-4">
               <span className="text-secondary text-sm">Publishing aliases:</span>

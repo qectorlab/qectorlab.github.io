@@ -141,7 +141,7 @@ export default function Pricing() {
             <p className="text-sm text-secondary">
               Pro billed yearly: <a href={LINKS.proAnnual} className="text-cyan-400 hover:underline" rel="noopener">{usd(PRICES.proAnnual)} / year</a>.{' '}
               Prefer to own it? <a href={LINKS.proPerpetual} className="text-cyan-400 hover:underline" rel="noopener"><strong>Pro Perpetual: {usd(PRICES.proPerpetual)} one-time</strong></a>{' '}
-              (every 3.x release, 12 months of support).
+              (every 1.x release, 12 months of support).
             </p>
           </div>
         </div>
@@ -177,7 +177,7 @@ export default function Pricing() {
             <CodeBlock
               language="bash"
               className="mb-6"
-              code={`pip install --upgrade "qector-decoder-v3>=1.0,<2"
+              code={`pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
 export QECTOR_LICENSE_KEY="<your-token>"
 export QECTOR_LICENSE="<your-token>"
 
@@ -253,7 +253,11 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
             <strong>Procurement:</strong> All prices are in USD; applicable taxes are added at checkout. Monthly and annual plans renew automatically until cancelled, with a reminder before each annual renewal.
             {' '}{PRICES.refundDays}-day money-back guarantee on your first payment of any plan. Tokens are emailed within minutes.
           </p>
-          <div className="flex justify-center gap-6 pt-4">
+          <p>
+            By purchasing, you accept the <Link to="/license-agreement" className="text-cyan-300 hover:underline">Commercial Licence Agreement</Link>.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 pt-4">
+            <Link to="/license-agreement" className="hover:text-cyan-300 transition-colors">Licence Agreement</Link>
             <Link to="/refund" className="hover:text-cyan-300 transition-colors">Refund Policy</Link>
             <Link to="/contact" className="hover:text-cyan-300 transition-colors">Contact Engineering</Link>
           </div>

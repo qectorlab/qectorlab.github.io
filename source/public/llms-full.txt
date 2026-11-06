@@ -102,7 +102,7 @@ Hot-path and cold-path timing are reported separately. Python allocation, proces
 ## Install
 
 ```text
-pip install --upgrade "qector-decoder-v3>=1.0,<2"
+pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
 ```
 
 ## Deployment posture

@@ -21,7 +21,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'How is the licence delivered, and what does the token unlock?',
-    a: 'By e-mail within minutes of payment (check spam, then write to admin@qector.store with your Stripe receipt). Everyone installs the same wheel: pip install --upgrade "qector-decoder-v3>=1.0,<2". Set QECTOR_LICENSE_KEY and QECTOR_LICENSE to the token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; Lab and Enterprise also raise the code-distance tier to 63. CPU decoding is never blocked, and distance caps are only enforced if you set QECTOR_ENFORCE=1.'
+    a: 'By e-mail within minutes of payment (check spam, then write to admin@qector.store with your Stripe receipt). Everyone installs the same wheel: pip install --upgrade "qector-decoder-v3>=1.0.1,<2". Set QECTOR_LICENSE_KEY and QECTOR_LICENSE to the token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; Lab and Enterprise also raise the code-distance tier to 63. CPU decoding is never blocked, and distance caps are only enforced if you set QECTOR_ENFORCE=1.'
   },
   {
     q: 'Can I try it before committing?',
@@ -37,7 +37,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'What does a licence cover?',
-    a: 'Internal commercial use by your organisation, including production. Pro and Lab differ in licence tier (Lab raises the code-distance tier to 63) and support level. Pro Perpetual covers every 3.x release; a major version such as 4.0 is a new licence. The Pilot is for evaluation (benchmarking, integration testing, threshold studies), not production.'
+    a: 'Internal commercial use by your organisation, including production. Pro and Lab differ in licence tier (Lab raises the code-distance tier to 63) and support level. Pro Perpetual covers every 1.x release of qector-decoder-v3; a new major version such as 2.0 is a new licence. The Pilot is for evaluation (benchmarking, integration testing, threshold studies), not production.'
   },
   {
     q: 'Is a hosted or customer-facing API covered?',
@@ -71,7 +71,7 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'Comment la licence est-elle livrée, et que déverrouille le jeton ?',
-    a: 'Par courriel dans les minutes qui suivent le paiement (vérifiez le courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe). Tout le monde installe la même wheel : pip install --upgrade "qector-decoder-v3>=1.0,<2". Définissez QECTOR_LICENSE_KEY et QECTOR_LICENSE au jeton. Chaque forfait payant déverrouille le décodage GPU (CUDA/OpenCL) par lots; Labo et Entreprise portent aussi le palier de distance à 63. Le décodage CPU n’est jamais bloqué, et les plafonds de distance ne s’appliquent que si QECTOR_ENFORCE=1.'
+    a: 'Par courriel dans les minutes qui suivent le paiement (vérifiez le courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe). Tout le monde installe la même wheel : pip install --upgrade "qector-decoder-v3>=1.0.1,<2". Définissez QECTOR_LICENSE_KEY et QECTOR_LICENSE au jeton. Chaque forfait payant déverrouille le décodage GPU (CUDA/OpenCL) par lots; Labo et Entreprise portent aussi le palier de distance à 63. Le décodage CPU n’est jamais bloqué, et les plafonds de distance ne s’appliquent que si QECTOR_ENFORCE=1.'
   },
   {
     q: 'Puis-je l’essayer avant de m’engager ?',
@@ -87,7 +87,7 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'Que couvre une licence ?',
-    a: 'L’usage commercial interne par votre organisation, y compris en production. Pro et Labo diffèrent par le palier de licence (Labo porte le palier de distance à 63) et le niveau de support. Pro Perpétuel couvre toutes les versions 3.x; une version majeure comme 4.0 est une nouvelle licence. Le Pilote sert à l’évaluation (benchmarks, tests d’intégration, études de seuil), pas à la production.'
+    a: 'L’usage commercial interne par votre organisation, y compris en production. Pro et Labo diffèrent par le palier de licence (Labo porte le palier de distance à 63) et le niveau de support. Pro Perpétuel couvre toutes les versions 1.x de qector-decoder-v3; une nouvelle version majeure comme 2.0 est une nouvelle licence. Le Pilote sert à l’évaluation (benchmarks, tests d’intégration, études de seuil), pas à la production.'
   },
   {
     q: 'Une API hébergée ou offerte aux clients est-elle couverte ?',

@@ -56,7 +56,7 @@ export const TIERS = Object.freeze({
   pilot: { claim: "pro", days: 60, label: "Pilot (60 days)" },
   pro_monthly: { claim: "pro", days: 31 + 14, label: "Pro (monthly)" },
   pro_annual: { claim: "pro", days: 366 + 14, label: "Pro (annual)" },
-  pro_perpetual: { claim: "pro", days: null, label: "Pro Perpetual (3.x)" },
+  pro_perpetual: { claim: "pro", days: null, label: "Pro Perpetual (1.x)" },
   team: { claim: "pro", days: 366 + 14, label: "Team (annual)" },
   lab: { claim: "enterprise", days: 366 + 14, label: "Lab (annual)" },
   enterprise: { claim: "enterprise", days: 366 + 14, label: "Enterprise" },
@@ -658,7 +658,7 @@ async function deliverCustomerEmails(record, source, env, { billing = true } = {
 
 export function buildCustomerMessages(record, source) {
   const tierInfo = TIERS[record.product_tier] || TIERS.evaluation;
-  const validity = record.expires_at ? `Valid until: ${record.expires_at.slice(0, 10)} (UTC)` : "Valid for: all 3.x releases (perpetual)";
+  const validity = record.expires_at ? `Valid until: ${record.expires_at.slice(0, 10)} (UTC)` : "Valid for: every 1.x release of qector-decoder-v3 (perpetual)";
   const install = 'python -m pip install --upgrade "qector-decoder-v3>=1.0.1,<2"';
   const verify = `python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`;
   const expected = tierInfo.claim === "enterprise" ? "Enterprise" : "Pro";
@@ -691,7 +691,7 @@ export function buildCustomerMessages(record, source) {
     `   It prints ${expected}.`,
     "",
     "Keep this token private: it is tied to this e-mail address.",
-    `Terms: ${SITE}/license/   Questions: ${SUPPORT_EMAIL}`,
+    `Terms: ${SITE}/license-agreement/   Questions: ${SUPPORT_EMAIL}`,
   ].join("\n");
   const licenseHtml =
     `<p>Your QECTOR Decoder v3 licence is ready.</p>` +
@@ -701,7 +701,7 @@ export function buildCustomerMessages(record, source) {
     `<li>Set <code>QECTOR_LICENSE_KEY</code> and <code>QECTOR_LICENSE</code> to the token (or save it in <code>~/.qector/license.key</code>).</li>` +
     `<li>Verify offline: <code>${escapeHtml(verify)}</code> prints <strong>${expected}</strong>.</li></ol>` +
     `<p>Keep this token private: it is tied to this e-mail address.</p>` +
-    `<p><a href="${SITE}/license/">Licence terms</a> · Questions: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`;
+    `<p><a href="${SITE}/license-agreement/">Licence terms</a> · Questions: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`;
   const messages = [{ kind: "license", message: { to: record.email, subject: `Your QECTOR Decoder v3 licence (${tierInfo.label})`, text: licenseText, html: licenseHtml } }];
   if (source) {
     const billing = billingSummary(record, source);

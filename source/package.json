@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-full.mjs dist",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:spa": "vite build",
+    "og": "vite build && node scripts/og-images.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

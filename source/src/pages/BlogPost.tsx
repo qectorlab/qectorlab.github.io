@@ -175,6 +175,10 @@ export default function BlogPost() {
               <span className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold tracking-wider text-slate-400">
                 {postMeta.category}
               </span>
+              <span className="text-sm text-slate-400">
+                By <Link to="/guillaume-lessard" className="hover:text-cyan-300">Guillaume Lessard</Link>
+                {content ? ` · ${Math.max(1, Math.round(content.split(/\s+/).length / 220))} min read` : ''}
+              </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 leading-tight text-white">
               {postMeta.title}

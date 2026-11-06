@@ -1,5 +1,6 @@
 import path from "path"
 import fs from "fs"
+import { execFileSync } from "child_process"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 import { inspectAttr } from 'kimi-plugin-inspect-react'
@@ -40,11 +41,32 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   const htmlLang = route.path.startsWith('/fr/') ? 'fr' : 'en'
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${htmlLang}"`)
 
-  // og:locale follows the route language so social cards get the right locale.
+  // hreflang alternates: French pages link their English twin and vice versa.
+  const pricingAlts: [string, string][] = [['en','https://qector.store/pricing/'],['fr','https://qector.store/fr/pricing/'],['x-default','https://qector.store/pricing/']]
+  const alternates: [string, string][] =
+    route.alternates ?? (route.path === '/pricing' || route.path === '/fr/pricing' ? pricingAlts : [])
+
+  // og:locale follows the route language. og:locale:alternate is only kept
+  // when a translated twin really exists (otherwise it promises a page that
+  // is not there).
   const ogLocale = route.path.startsWith('/fr/') ? 'fr_FR' : 'en_US'
   const ogLocaleAlt = route.path.startsWith('/fr/') ? 'en_US' : 'fr_FR'
   html = setTag(html, /(<meta property="og:locale" content=")[^"]*(")/, ogLocale)
-  html = setTag(html, /(<meta property="og:locale:alternate" content=")[^"]*(")/, ogLocaleAlt)
+  if (alternates.length > 0) {
+    html = setTag(html, /(<meta property="og:locale:alternate" content=")[^"]*(")/, ogLocaleAlt)
+  } else {
+    html = html.replace(/\s*<meta property="og:locale:alternate" content="[^"]*"\s*\/?>/, '')
+  }
+
+  // Per-page share card (scripts/og-images.mjs) when one exists.
+  const ogSlug = route.path === '/' ? 'home' : route.path.replace(/^\//, '').replace(/\//g, '--')
+  if (fs.existsSync(path.resolve(__dirname, `public/og/${ogSlug}.jpg`))) {
+    const img = `${SITE_URL}/og/${ogSlug}.jpg`
+    html = setTag(html, /(<meta property="og:image" content=")[^"]*(")/, img)
+    html = setTag(html, /(<meta name="twitter:image" content=")[^"]*(")/, img)
+    html = setTag(html, /(<meta property="og:image:secure_url" content=")[^"]*(")/, img)
+    html = html.replace(/(<meta property="og:image:type" content=")[^"]*(")/, '$1image/jpeg$2')
+  }
 
   // og:image:alt and twitter:image:alt per language, kept in sync.
   const ogImgAlt = route.path.startsWith('/fr/')
@@ -52,21 +74,20 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
     : 'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder'
   html = setTag(html, /(<meta property="og:image:alt" content=")[^"]*(")/, ogImgAlt)
   html = setTag(html, /(<meta name="twitter:image:alt" content=")[^"]*(")/, ogImgAlt)
+  if (fs.existsSync(path.resolve(__dirname, `public/og/${ogSlug}.jpg`))) {
+    html = setTag(html, /(<meta property="og:image:alt" content=")[^"]*(")/, route.title)
+    html = setTag(html, /(<meta name="twitter:image:alt" content=")[^"]*(")/, route.title)
+  }
 
   // Blog posts are articles: og:type=article plus author and section.
   if (route.path.startsWith('/blog/') && route.path !== '/blog') {
     html = setTag(html, /(<meta property="og:type" content=")[^"]*(")/, 'article')
-    html = html.replace('</head>', `    <meta property="article:author" content="Guillaume Lessard" />\n    <meta property="article:section" content="Quantum Error Correction" />\n  </head>`)
+    const published = (route as PrerenderRoute & { published?: string }).published
+    const dateMeta = published ? `    <meta property="article:published_time" content="${published}" />\n` : ''
+    html = html.replace('</head>', `${dateMeta}    <meta property="article:author" content="Guillaume Lessard" />\n    <meta property="article:section" content="Quantum Error Correction" />\n  </head>`)
   }
 
-  // hreflang alternates: French pages link their English twin and vice versa.
-  const alternates: Record<string, [string, string][]> = {
-    '/fr/pricing': [['en','https://qector.store/pricing/'],['fr','https://qector.store/fr/pricing/'],['x-default','https://qector.store/pricing/']],
-    '/pricing': [['en','https://qector.store/pricing/'],['fr','https://qector.store/fr/pricing/'],['x-default','https://qector.store/pricing/']],
-    '/fr/terms': [['en','https://qector.store/terms/'],['fr','https://qector.store/fr/terms/'],['x-default','https://qector.store/terms/']],
-    '/terms': [['en','https://qector.store/terms/'],['fr','https://qector.store/fr/terms/'],['x-default','https://qector.store/terms/']],
-  }
-  for (const [lang, href] of alternates[route.path] ?? []) {
+  for (const [lang, href] of alternates) {
     html = html.replace(
       '</head>',
       `    <link rel="alternate" hreflang="${lang}" href="${href}" />\n  </head>`
@@ -118,6 +139,63 @@ function dropUnusedKatexFonts(): import('vite').Plugin {
       }
     },
   }
+}
+
+
+// ── sitemap.xml generated from the real routes ─────────────────────────────
+// lastmod is the last git commit date of the files that make up the page
+// (its component, its content file, its blog markdown), not the build date,
+// so search engines can trust it.
+const SITEMAP_PRIORITY: Record<string, [string, string]> = {
+  '/': ['weekly', '1.0'], '/decoder': ['weekly', '0.9'], '/claude-plugin': ['weekly', '0.8'], '/pricing': ['monthly', '0.8'],
+  '/evidence': ['monthly', '0.8'], '/workbench': ['monthly', '0.8'], '/blog': ['weekly', '0.8'], '/compare': ['monthly', '0.7'],
+  '/commercial': ['monthly', '0.7'], '/about': ['monthly', '0.7'], '/guillaume-lessard': ['monthly', '0.7'],
+  '/mcp-server': ['monthly', '0.6'], '/changelog': ['weekly', '0.6'], '/security': ['monthly', '0.6'],
+}
+
+function gitDate(files: string[]): string {
+  const existing = files.filter((f) => fs.existsSync(f))
+  if (existing.length === 0) return new Date().toISOString().slice(0, 10)
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...existing], { cwd: __dirname, encoding: 'utf8' }).trim()
+    return out || new Date().toISOString().slice(0, 10)
+  } catch {
+    return new Date().toISOString().slice(0, 10)
+  }
+}
+
+function routeSourceFiles(routePath: string, app: string): string[] {
+  const files: string[] = []
+  const route = app.match(new RegExp(`<Route\\s+path="${routePath.replace(/[/-]/g, (c) => `\\${c}`)}"\\s+element=\\{<(\\w+)`))
+  if (route) {
+    const imp = app.match(new RegExp(`const ${route[1]} = lazy\\(\\(\\) => import\\('\\./pages/(\\w+)'\\)\\)`))
+    const name = imp ? imp[1] : route[1]
+    files.push(path.resolve(__dirname, `src/pages/${name}.tsx`))
+  }
+  if (routePath.startsWith('/blog/')) {
+    const meta = PRERENDER_ROUTE_MAP[routePath] as PrerenderRoute & { sourceFile?: string }
+    if (meta?.sourceFile) files.push(path.resolve(__dirname, meta.sourceFile))
+    files.push(path.resolve(__dirname, 'src/pages/BlogPost.tsx'))
+  }
+  if (/license-agreement/.test(routePath)) files.push(path.resolve(__dirname, 'src/content/licenseAgreement.ts'))
+  if (/privacy/.test(routePath)) files.push(path.resolve(__dirname, 'src/content/privacy.ts'))
+  if (/terms|refund/.test(routePath)) files.push(path.resolve(__dirname, 'src/content/terms.ts'))
+  return files
+}
+
+function buildSitemap(routePaths: string[], app: string): string {
+  const urls = ['/', ...routePaths]
+    .filter((r) => r !== '/success' && !PRERENDER_ROUTE_MAP[r]?.noindex)
+    .map((r) => {
+      const loc = `${SITE_URL}${r === '/' ? '/' : `${r}/`}`
+      const [freq, prio] = SITEMAP_PRIORITY[r] ?? (r.startsWith('/blog/') ? ['monthly', '0.6'] : r.startsWith('/fr/') ? ['monthly', '0.4'] : ['monthly', '0.5'])
+      const alts = (PRERENDER_ROUTE_MAP[r]?.alternates ?? (r === '/pricing' || r === '/fr/pricing'
+        ? [['en', `${SITE_URL}/pricing/`], ['fr', `${SITE_URL}/fr/pricing/`], ['x-default', `${SITE_URL}/pricing/`]]
+        : [])) as [string, string][]
+      const altXml = alts.map(([l, h]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${h}" />`).join('')
+      return `  <url><loc>${loc}</loc><lastmod>${gitDate(routeSourceFiles(r, app))}</lastmod><changefreq>${freq}</changefreq><priority>${prio}</priority>${altXml}${alts.length ? '\n  ' : ''}</url>`
+    })
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`
 }
 
 // GitHub Pages SPA routing.
@@ -190,8 +268,9 @@ function ghPagesSpaShell(): import('vite').Plugin {
         fs.mkdirSync(dir, { recursive: true })
         fs.writeFileSync(path.join(dir, 'index.html'), applyRouteSeo(shell, meta))
       }
+      fs.writeFileSync(path.join(dist, 'sitemap.xml'), buildSitemap(routePaths, app))
       console.log(
-        `gh-pages-spa-shell: emitted prerendered 200-status shells for ${routePaths.length} routes`
+        `gh-pages-spa-shell: emitted prerendered 200-status shells for ${routePaths.length} routes and sitemap.xml`
       )
     },
   }

@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+﻿import { Link, useLocation } from 'react-router-dom';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
 interface LinkItem {
@@ -31,7 +31,7 @@ const companyLinks: LinkItem[] = [
   { label: 'iD01t Productions' },
   { label: 'Commercial Licensing', href: '/commercial' },
   { label: 'Contact Engineering', href: '/contact' },
-  { label: 'EULA & License', href: '/license' },
+  { label: 'Licence Agreement', href: '/license-agreement' },
   { label: 'Terms of Service', href: '/terms' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Refund Policy', href: '/refund' },
@@ -71,8 +71,30 @@ function FooterLink({ href, external, badge, children }: { href?: string; extern
   );
 }
 
+const LEGAL_EN = [
+  { label: 'Licence Agreement', href: '/license-agreement' },
+  { label: 'License', href: '/license' },
+  { label: 'Terms', href: '/terms' },
+  { label: 'Privacy', href: '/privacy' },
+  { label: 'Refund', href: '/refund' },
+  { label: 'Security', href: '/security' },
+  { label: 'Français', href: '/fr/pricing', hrefLang: 'fr' },
+];
+
+const LEGAL_FR = [
+  { label: 'Contrat de licence', href: '/fr/license-agreement' },
+  { label: 'Conditions', href: '/fr/terms' },
+  { label: 'Confidentialité', href: '/fr/privacy' },
+  { label: 'Remboursement', href: '/fr/refund' },
+  { label: 'Tarifs', href: '/fr/pricing' },
+  { label: 'Sécurité', href: '/security' },
+  { label: 'English', href: '/pricing', hrefLang: 'en' },
+];
+
 export default function Footer() {
   const { version: pypiVersion } = usePyPIVersion();
+  const fr = useLocation().pathname.startsWith('/fr/');
+  const legalLinks: { label: string; href: string; hrefLang?: string }[] = fr ? LEGAL_FR : LEGAL_EN;
   return (
     <footer className="border-t border-cyan-900/40 bg-void/95 relative overflow-hidden text-left">
       {/* Top Ambient Glow */}
@@ -156,12 +178,10 @@ export default function Footer() {
               <span className="font-semibold text-secondary">Distribution:</span> PyPI (<code className="text-cyan-300/80 font-mono">qector-decoder-v3</code>) is the Python library. The free <Link to="/installer" className="link-accent">Workbench GUI</Link> is a standalone desktop application shipped self-contained for Windows x64 and Linux x64 (no system Python required).
             </div>
             
-            <nav aria-label="Legal" className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-muted-foreground">
-              <Link to="/privacy" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Privacy</Link>
-              <Link to="/terms" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Terms</Link>
-              <Link to="/refund" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Refund</Link>
-               <Link to="/license" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">License</Link>
-              <a href="/.well-known/security.txt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">Security<span className="sr-only">(opens in new tab)</span></a>
+            <nav aria-label={fr ? 'Mentions légales' : 'Legal'} className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-muted-foreground">
+              {legalLinks.map((l) => (
+                <Link key={l.href} to={l.href} hrefLang={l.hrefLang} className="inline-flex items-center min-h-[44px] px-1 hover:text-cyan-300 transition-colors duration-200">{l.label}</Link>
+              ))}
             </nav>
           </div>
         </div>

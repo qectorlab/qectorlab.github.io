@@ -130,7 +130,7 @@ export default function PricingFR() {
             <p className="text-sm text-secondary">
               Pro facturé à l’année : <a href={LINKS.proAnnual} className="text-cyan-400 hover:underline" rel="noopener">{usdFr(PRICES.proAnnual)} / an</a>.{' '}
               Vous préférez l’acheter définitivement ? <a href={LINKS.proPerpetual} className="text-cyan-400 hover:underline" rel="noopener"><strong>Pro Perpétuel : {usdFr(PRICES.proPerpetual)} paiement unique</strong></a>{' '}
-              (toutes les versions 3.x, 12 mois de support).
+              (toutes les versions 1.x, 12 mois de support).
             </p>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function PricingFR() {
             <CodeBlock
               language="bash"
               className="mb-6"
-              code={`pip install --upgrade "qector-decoder-v3>=1.0,<2"
+              code={`pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
 export QECTOR_LICENSE_KEY="<votre-jeton>"
 export QECTOR_LICENSE="<votre-jeton>"
 
@@ -242,8 +242,12 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
             <strong>Approvisionnement :</strong> tous les prix sont en USD; les taxes applicables sont ajoutées au paiement. Les forfaits mensuels et annuels se renouvellent automatiquement jusqu’à annulation, avec un rappel avant chaque renouvellement annuel.
             {' '}Satisfait ou remboursé {PRICES.refundDays} jours sur votre premier paiement de tout forfait. Les jetons sont envoyés par courriel en quelques minutes.
           </p>
-          <div className="flex justify-center gap-6 pt-4">
-            <Link to="/refund" className="hover:text-cyan-300 transition-colors">Politique de remboursement</Link>
+          <p>
+            En achetant, vous acceptez le <Link to="/fr/license-agreement" className="text-cyan-300 hover:underline">Contrat de licence commerciale</Link>.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 pt-4">
+            <Link to="/fr/license-agreement" className="hover:text-cyan-300 transition-colors">Contrat de licence</Link>
+            <Link to="/fr/refund" className="hover:text-cyan-300 transition-colors">Politique de remboursement</Link>
             <Link to="/contact" className="hover:text-cyan-300 transition-colors">Contacter l’ingénierie</Link>
           </div>
         </div>

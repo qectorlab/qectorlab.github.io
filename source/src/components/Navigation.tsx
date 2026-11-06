@@ -1,20 +1,52 @@
 ﻿import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const navLinks = [
-  { label: 'Platform', href: '/' },
-  { label: 'Decoder', href: '/decoder' },
-  { label: 'Claude Plugin', href: '/claude-plugin' },
-  { label: 'Workbench', href: '/workbench' },
-  { label: 'MCP Server', href: '/mcp-server' },
-  { label: 'Evidence', href: '/evidence' },
-  { label: 'Blog', href: '/blog' },
+interface NavItem { label: string; href: string; note?: string }
+interface NavGroup { label: string; items: NavItem[] }
+type NavEntry = NavItem | NavGroup;
+
+const isGroup = (e: NavEntry): e is NavGroup => 'items' in e;
+
+const navEntries: NavEntry[] = [
+  {
+    label: 'Products',
+    items: [
+      { label: 'Decoder', href: '/decoder', note: 'Python library, Rust core' },
+      { label: 'Claude Plugin', href: '/claude-plugin', note: 'Air-gapped MCP for Claude' },
+      { label: 'Workbench', href: '/workbench', note: 'Free desktop GUI' },
+      { label: 'MCP Server', href: '/mcp-server', note: 'Tools for any MCP client' },
+      { label: 'Installers', href: '/installer', note: 'Downloads and checksums' },
+    ],
+  },
+  {
+    label: 'Resources',
+    items: [
+      { label: 'Documentation', href: '/docs', note: 'Start here' },
+      { label: 'User Manual', href: '/manual', note: 'Reference manual (DOI)' },
+      { label: 'Technical Reference', href: '/technical-reference', note: 'API tiers and decoders' },
+      { label: 'Compare', href: '/compare', note: 'QECTOR and alternatives' },
+      { label: 'Evidence', href: '/evidence', note: 'Validation and DOIs' },
+      { label: 'Changelog', href: '/changelog', note: 'Every release' },
+      { label: 'Blog', href: '/blog', note: 'QEC articles' },
+    ],
+  },
   { label: 'Pricing', href: '/pricing' },
+  {
+    label: 'Company',
+    items: [
+      { label: 'About', href: '/about' },
+      { label: 'Founder', href: '/guillaume-lessard' },
+      { label: 'Enterprise & OEM', href: '/commercial' },
+      { label: 'Security & Trust', href: '/security' },
+      { label: 'Licence Agreement', href: '/license-agreement' },
+    ],
+  },
   { label: 'Contact', href: '/contact' },
 ];
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -43,7 +75,26 @@ export default function Navigation() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false);
+    setOpenGroup(null);
   }, [location]);
+
+  useEffect(() => {
+    if (!openGroup) return;
+    const close = (e: MouseEvent | KeyboardEvent) => {
+      if (e instanceof KeyboardEvent) {
+        if (e.key === 'Escape') setOpenGroup(null);
+        return;
+      }
+      const target = e.target as HTMLElement | null;
+      if (!target?.closest('[data-nav-group]')) setOpenGroup(null);
+    };
+    window.addEventListener('mousedown', close);
+    window.addEventListener('keydown', close);
+    return () => {
+      window.removeEventListener('mousedown', close);
+      window.removeEventListener('keydown', close);
+    };
+  }, [openGroup]);
 
   useEffect(() => {
     if (isOpen) {
@@ -65,8 +116,9 @@ export default function Navigation() {
 
   const isActive = (href: string) => {
     if (href === '/') return location.pathname === '/';
-    return location.pathname === href;
+    return location.pathname === href || location.pathname.startsWith(`${href}/`);
   };
+  const groupActive = (g: NavGroup) => g.items.some((i) => isActive(i.href));
 
   return (
     <>
@@ -93,20 +145,56 @@ export default function Navigation() {
 
             {/* Desktop Links */}
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  aria-current={isActive(link.href) ? 'page' : undefined}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isActive(link.href)
-                      ? 'text-cyan-300 bg-cyan-300/10'
-                      : 'text-secondary hover:text-primary hover:bg-white/5'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navEntries.map((entry) =>
+                isGroup(entry) ? (
+                  <div key={entry.label} className="relative" data-nav-group
+                    onMouseEnter={() => setOpenGroup(entry.label)}
+                    onMouseLeave={() => setOpenGroup((g) => (g === entry.label ? null : g))}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={openGroup === entry.label}
+                      aria-haspopup="true"
+                      onClick={() => setOpenGroup((g) => (g === entry.label ? null : entry.label))}
+                      className={`inline-flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                        groupActive(entry) ? 'text-cyan-300 bg-cyan-300/10' : 'text-secondary hover:text-primary hover:bg-white/5'
+                      }`}
+                    >
+                      {entry.label}
+                      <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" className={`transition-transform ${openGroup === entry.label ? 'rotate-180' : ''}`}><path d="M1 3l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" /></svg>
+                    </button>
+                    {openGroup === entry.label && (
+                      <div className="absolute left-0 top-full pt-2 z-50">
+                        <ul className="glass-nav rounded-xl p-2 w-64 shadow-deep" role="list">
+                          {entry.items.map((item) => (
+                            <li key={item.href}>
+                              <Link
+                                to={item.href}
+                                aria-current={isActive(item.href) ? 'page' : undefined}
+                                className={`block px-3 py-2 rounded-lg transition-colors ${isActive(item.href) ? 'bg-cyan-300/10' : 'hover:bg-white/5'}`}
+                              >
+                                <span className={`block text-sm font-medium ${isActive(item.href) ? 'text-cyan-300' : 'text-primary'}`}>{item.label}</span>
+                                {item.note && <span className="block text-xs text-muted-foreground">{item.note}</span>}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={entry.href}
+                    to={entry.href}
+                    aria-current={isActive(entry.href) ? 'page' : undefined}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      isActive(entry.href) ? 'text-cyan-300 bg-cyan-300/10' : 'text-secondary hover:text-primary hover:bg-white/5'
+                    }`}
+                  >
+                    {entry.label}
+                  </Link>
+                ),
+              )}
             </div>
 
             {/* CTA + Hamburger */}
@@ -141,21 +229,38 @@ export default function Navigation() {
           }`}
         >
           <div className="px-4 py-3 space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                aria-current={isActive(link.href) ? 'page' : undefined}
-                className={`flex items-center px-4 py-3 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-200 ${
-                  isActive(link.href)
-                    ? 'text-cyan-300 bg-cyan-300/10'
-                    : 'text-secondary hover:text-primary hover:bg-white/5'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navEntries.map((entry) =>
+              isGroup(entry) ? (
+                <div key={entry.label} className="pt-2">
+                  <div className="px-4 pb-1 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{entry.label}</div>
+                  {entry.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      aria-current={isActive(item.href) ? 'page' : undefined}
+                      className={`flex items-center px-4 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive(item.href) ? 'text-cyan-300 bg-cyan-300/10' : 'text-secondary hover:text-primary hover:bg-white/5'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <Link
+                  key={entry.href}
+                  to={entry.href}
+                  aria-current={isActive(entry.href) ? 'page' : undefined}
+                  className={`flex items-center px-4 py-3 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive(entry.href) ? 'text-cyan-300 bg-cyan-300/10' : 'text-secondary hover:text-primary hover:bg-white/5'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {entry.label}
+                </Link>
+              ),
+            )}
             <Link
               to="/pricing"
               className="sm:hidden mt-2 text-center px-4 py-3 min-h-[44px] flex items-center justify-center border border-gold-400/60 text-gold-400 text-sm font-medium rounded-lg hover:bg-gold-400/10 transition-all"

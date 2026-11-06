@@ -64,7 +64,10 @@ export default function License() {
               validation packages. See <Link to="/pricing" className="text-cyan-300 hover:underline">Pricing</Link> for tier details.
             </p>
             <p className="text-secondary text-sm leading-relaxed">
-              All commercial licenses include: written license agreement, commercial use rights (internal),
+              Every paid plan is governed by the{' '}
+              <Link to="/license-agreement" className="text-cyan-300 hover:underline">Commercial Licence Agreement</Link>{' '}
+              (<Link to="/fr/license-agreement" className="text-cyan-300 hover:underline">version française</Link>).
+              All commercial licenses include: commercial use rights (internal, no seat counts),
               reproducible artifact bundles, and priority bug review. No redistribution or OEM rights included by default;
               contact <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> for OEM/SaaS licensing.
             </p>
@@ -73,8 +76,8 @@ export default function License() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Perpetual licenses</h2>
             <p className="text-secondary text-sm leading-relaxed">
-              Pro Perpetual ($1,990 one-time): the same rights as Pro, for every 3.x release including
-              all patch and minor updates; a major version such as 4.0 requires a new license. Licenses bought earlier as
+              Pro Perpetual ($1,990 one-time): the same rights as Pro, for every 1.x release of
+              qector-decoder-v3, including all patch and minor updates; a new major version such as 2.0 requires a new license. Licenses bought earlier as
               Solo / Indie Perpetual keep their original terms.
             </p>
           </div>

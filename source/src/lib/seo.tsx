@@ -63,7 +63,6 @@ export function SEO({
     setMeta('meta[name="twitter:description"]', description);
     setMeta('meta[name="twitter:image"]', ogImage);
     setMeta('meta[name="twitter:image:alt"]', 'QECTOR official logo');
-    setMeta('meta[name="twitter:site"]', '@DJiD01T');
     setMeta('meta[name="theme-color"]', '#24e7ff');
 
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;

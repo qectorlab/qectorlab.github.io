@@ -221,7 +221,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <CodeBlock
               language="bash"
               code={`# Quick validation
-pip install --upgrade "qector-decoder-v3>=1.0,<2"
+pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
 python -c "import qector_decoder_v3 as qd; print(qd.__version__)"
 # environment diagnostic
 qector-doctor

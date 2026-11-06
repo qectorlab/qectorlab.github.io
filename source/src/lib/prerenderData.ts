@@ -20,6 +20,27 @@ import { FAQ_ITEMS, FAQ_ITEMS_FR } from './faqData';
 import { LINKS, PRICES, usd, usdFr } from './pricing';
 import { blogPosts } from './blogData';
 import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES } from './releases';
+import { alternatesFor, legalToHtml, type LegalDoc } from './legal';
+import { licenseAgreementEn, licenseAgreementFr } from '../content/licenseAgreement';
+import { privacyEn, privacyFr } from '../content/privacy';
+import { termsEn, termsFr, refundEn, refundFr } from '../content/terms';
+
+/** Every legal document, EN and FR. Each becomes an indexable route whose
+ *  static body is the full text (same source as the React page). */
+export const LEGAL_DOCS: LegalDoc[] = [
+  licenseAgreementEn, licenseAgreementFr, privacyEn, privacyFr, termsEn, termsFr, refundEn, refundFr,
+];
+
+function legalRoute(doc: LegalDoc): PrerenderRoute {
+  return {
+    path: doc.path,
+    title: doc.seoTitle,
+    description: doc.description,
+    heading: doc.title,
+    body: legalToHtml(doc),
+    alternates: alternatesFor(doc).map((a) => [a.lang, a.href] as [string, string]),
+  };
+}
 
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
@@ -39,6 +60,12 @@ export interface PrerenderRoute {
   body: string;
   /** Extra schema.org nodes appended to the page's JSON-LD @graph. */
   jsonLdExtra?: Record<string, unknown>[];
+  /** hreflang alternates [lang, absolute URL] for translated page pairs. */
+  alternates?: [string, string][];
+  /** Source file whose git date is the page's sitemap lastmod (blog markdown). */
+  sourceFile?: string;
+  /** ISO publication date for articles (article:published_time). */
+  published?: string;
 }
 
 const abs = (path: string) => `${SITE_URL}${path === '/' ? '/' : `${path}/`}`;
@@ -52,7 +79,7 @@ const organizationNode = {
   url: SITE_URL + '/',
   logo: `${SITE_URL}/images/logo.png`,
   email: 'admin@qector.store',
-  foundingDate: '2023',
+  foundingDate: '2012',
   founder: {
     '@type': 'Person',
     name: 'Guillaume Lessard',
@@ -226,7 +253,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (18 binary wheels, Python 3.9-3.14)'],
             ['GPU', 'CUDA/OpenCL optional and environment-dependent; check the installed release diagnostics'],
             ['QEC library', 'Stim / Sinter / PyMatching / qiskit-qec compatible'],
-            ['Packaging', 'PyPI binary wheels (cp39-cp313, 3 platforms); no sdist'],
+            ['Packaging', 'PyPI binary wheels (18: cp39 to cp314 on Linux x86_64, Windows x64 and macOS arm64), each with Sigstore provenance; no sdist'],
             ['License', 'PolyForm Noncommercial 1.0.0 (community) / Commercial'],
           ]
         ) +
@@ -354,7 +381,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           [
             ['Community (non-commercial)', '$0', 'Community', 'Research, academic, personal projects'],
             ['Pro', `${usd(PRICES.proMonthly)} / mo or ${usd(PRICES.proAnnual)} / yr`, 'Pro (distance 19)', `Production internal use, GPU batch decoding, email support. <a href="${LINKS.proMonthly}" style="color:#67e8f9;">Buy monthly</a> · <a href="${LINKS.proAnnual}" style="color:#67e8f9;">Buy annual</a>`],
-            ['Pro Perpetual', `${usd(PRICES.proPerpetual)} one-time`, 'Pro (distance 19)', `Pro rights for every 3.x release; a major version such as 4.0 is a new licence. <a href="${LINKS.proPerpetual}" style="color:#67e8f9;">Buy</a>`],
+            ['Pro Perpetual', `${usd(PRICES.proPerpetual)} one-time`, 'Pro (distance 19)', `Pro rights for every 1.x release of qector-decoder-v3; a new major version such as 2.0 is a new licence. <a href="${LINKS.proPerpetual}" style="color:#67e8f9;">Buy</a>`],
             ['Lab', `${usd(PRICES.lab)} / yr`, 'Enterprise (distance 63)', `Everything in Pro, code distances up to 63, priority support with SLA, onboarding call, one Validation Report. <a href="${LINKS.lab}" style="color:#67e8f9;">Buy Lab</a>`],
             ['Pilot', `${usd(PRICES.pilot)} one-time`, 'Pro, 60 days', `${PRICES.pilotDays}-day evaluation with an integration call, creditable toward Lab. <a href="${LINKS.pilot}" style="color:#67e8f9;">Buy Pilot</a>`],
             ['Enterprise / OEM / SaaS', `From ${usd(PRICES.enterpriseFrom)} / yr`, 'Enterprise', 'Redistribution, SaaS hosting, customer-facing APIs, hardware bundling'],
@@ -422,9 +449,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/commercial',
-    title: 'Enterprise Licensing · QECTOR',
+    title: 'Enterprise & OEM Licensing · QECTOR',
     description:
-      'Enterprise and OEM licenses for QECTOR Decoder v3. Custom agreements for redistribution, SaaS hosting, and hardware bundling.',
+      'Enterprise and OEM licences for QECTOR Decoder v3: hosted and SaaS rights, OEM and hardware bundling, named support and a signed agreement, from $25,000 a year. Air-gapped licensing.',
     heading: 'Enterprise & OEM Licensing',
     body: page(
       h1('Enterprise & OEM Licensing') +
@@ -460,14 +487,14 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
             ['ORCID', `<a href="https://orcid.org/0009-0000-3465-3753" style="color:#67e8f9;">0009-0000-3465-3753</a>`],
             ['GitHub', `<a href="https://github.com/qectorlab" style="color:#67e8f9;">github.com/qectorlab</a>`],
             ['PyPI', `<a href="${PYPI_URL}" style="color:#67e8f9;">qector-decoder-v3</a>`],
-            ['Studio', `iD01t Productions, Longueuil, Québec (founded 2023)`],
+            ['Studio', `iD01t Productions, Longueuil, Québec (founded 2012)`],
             ['itch.io', `<a href="https://id01t.itch.io/" style="color:#67e8f9;">id01t.itch.io</a>`],
             ['Email', `<a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>`],
           ]
         ) +
         h2('Background') +
         p(
-          'My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to make things that worked in the real world. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T. iD01t Productions was founded in 2023 to put all of it under one roof; it is still one person.'
+          'My engineering philosophy is rooted in practical execution. Over the course of my career, I learned to build robust systems because I wanted to make things that worked in the real world. That has been the method ever since: pick the problem, learn what it requires, ship the result, publish the evidence. Over the last twenty years that has meant 167+ eBooks, 103 audiobooks, independently released desktop tools and games, and six albums plus twenty-three singles as DJ iD01T. iD01t Productions, founded in 2012, puts all of it under one roof; it is still one person.'
         ) +
         h2('Skills') +
         ul([
@@ -513,7 +540,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         worksFor: {
           '@type': 'Organization',
           name: 'iD01t Productions',
-          foundingDate: '2023',
+          foundingDate: '2012',
         },
         knowsAbout: [
           'Quantum error correction',
@@ -728,98 +755,34 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
+  ...LEGAL_DOCS.map(legalRoute),
   {
-    path: '/privacy',
-    title: 'Privacy Policy · QECTOR',
-    description: 'Privacy policy for QECTOR website and services.',
-    noindex: true,
-    heading: 'Privacy Policy',
-    body: page(
-      h1('Privacy Policy') +
-        p(
-          'QECTOR collects the minimum data needed to operate: contact-form messages, licensing correspondence, and Stripe checkout records (processed by Stripe; card data never touches QECTOR servers). The decoder package performs no telemetry and no network calls: license verification is offline Ed25519 signature checking.'
-        ) +
-        p('Questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
-    ),
-  },
-  {
-    path: '/terms',
-    title: 'Terms of Service · QECTOR',
-    description: 'Terms of service for QECTOR website and software.',
-    noindex: true,
-    heading: 'Terms of Service',
-    body: page(
-      h1('Terms of Service') +
-        p(
-          'Use of the QECTOR website and software is governed by the PolyForm Noncommercial License 1.0.0 for community use, or by a written commercial license agreement for paid tiers. Benchmarks and validation artifacts may be republished with attribution. No warranty is provided; see the license for the full terms.'
-        ) +
-        p(
-          'Seller: Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: admin@qector.store. Prices are in US dollars and exclude tax. Payments are processed by Stripe. Governing law: Québec, Canada. Subscriptions renew automatically until cancelled, and every plan has a 14-day money-back guarantee on the first payment: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>.'
-        ) +
-        p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
-    ),
-  },
-  {
-    path: '/fr/terms',
-    title: 'Conditions générales · QECTOR',
-    description: "Conditions d'utilisation du site et du logiciel QECTOR Decoder v3 : licences, paiements Stripe, droit applicable au Québec.",
-    noindex: true,
-    heading: 'Conditions générales',
-    body: page(
-      h1('Conditions générales') +
-        p(
-          'En utilisant le logiciel QECTOR ou ce site web, vous acceptez ces conditions. Vendeur : Guillaume Lessard, entrepreneur individuel, exploitant sous le nom iD01t Productions, Québec, Canada. Tous les prix sont en dollars américains (USD), hors taxes. Les paiements sont traités par Stripe. Droit applicable : Québec, Canada. Les abonnements se renouvellent automatiquement jusqu’à annulation, et chaque forfait offre une garantie satisfait ou remboursé de 14 jours sur le premier paiement : voir la <a href="/refund" style="color:#67e8f9;">politique de remboursement</a>.'
-        ) +
-        h2('Licence du logiciel') +
-        p(
-          'QECTOR Decoder v3 est concédé sous la licence PolyForm Noncommercial 1.0.0 pour l’usage non commercial. L’usage commercial exige un contrat de licence commerciale distinct. Voir la <a href="/license" style="color:#67e8f9;">page de licence</a>.'
-        ) +
-        h2('Exclusion de garanties') +
-        p(
-          'LE LOGICIEL EST FOURNI « TEL QUEL », SANS GARANTIE D’AUCUNE SORTE, EXPRESSE OU IMPLICITE. QECTOR Decoder v3 est un logiciel validé par simulation, pas une pile de tolérance aux pannes de production.'
-        ) +
-        h2('Limitation de responsabilité') +
-        p(
-          'EN AUCUN CAS LES AUTEURS OU LES DÉTENTEURS DES DROITS D’AUTEUR NE SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DE TOUT DOMMAGE OU DE TOUTE AUTRE RESPONSABILITÉ DÉCOULANT DU LOGICIEL OU DE SON UTILISATION.'
-        ) +
-        p('Contact : <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
-    ),
-  },
-  {
-    path: '/refund',
-    title: 'Refund Policy · QECTOR',
+    path: '/security',
+    title: 'Security & Trust · QECTOR',
     description:
-      `QECTOR Decoder v3 refund policy: ${PRICES.refundDays}-day money-back guarantee on the first payment of any plan, cancel renewals any time.`,
-    heading: 'Refund Policy',
+      'QECTOR security and procurement pack: no telemetry, offline licence verification, Sigstore provenance on every wheel, signed releases, SBOM, vulnerability disclosure and data handling.',
+    heading: 'Security & Trust',
     body: page(
-      h1('Refund Policy') +
-        p(
-          `Every plan has a ${PRICES.refundDays}-day money-back guarantee on the first payment. Subscriptions renew automatically and can be cancelled at any time.`
-        ) +
-        h2(`${PRICES.refundDays}-day money-back guarantee`) +
+      h1('Security & Trust') +
         ul([
-          `Email admin@qector.store with your Stripe receipt within ${PRICES.refundDays} days of your first payment of any plan (Pro monthly or annual, Pro Perpetual, Lab or the Pilot) and we refund it in full, no questions asked.`,
-          'One guarantee per organisation; it applies to the first purchase, not to later renewals. Once refunded, the licence ends and the token must no longer be used.',
-          'Refunds go back to the original payment method through Stripe, usually within 5–10 business days.',
-        ]) +
-        h2('Renewals and cancelling') +
-        p(
-          'Pro (monthly or annual) and Lab renew automatically until cancelled, with a reminder 14 days before each annual renewal. Cancel any time from your Stripe receipt or by emailing admin@qector.store; the licence stays valid to the end of the paid period. Renewals are not refunded pro rata; if a renewal you meant to cancel went through and you have not used the new term, write within 7 days and we refund it. Pro Perpetual and the Pilot are one-time payments.'
-        ) +
-        h2('Delivery problems are fixed, not refunded') +
-        p(
-          'If a token never arrives, is tied to the wrong email, or fails offline verification, that is a delivery fault on our side. Email admin@qector.store with your Stripe receipt and we reissue it at no cost: please do not open a dispute. Tokens usually arrive in under 10 minutes; check your spam folder first.'
-        ) +
-        h2('Exceptions') +
-        ul([
-          'Duplicate purchases of the same plan for the same organisation, and charges made in obvious error, are always refunded in full within 30 days.',
-          'Nothing in this policy waives non-waivable statutory consumer rights, including under the Québec Consumer Protection Act where it applies.',
-        ]) +
-        h2('Currency, tax, and seller') +
-        p(
-          'All prices are quoted and charged in US dollars (USD), exclusive of tax; applicable sales tax, GST/HST, or VAT is added at checkout and refunded with the price. Licences are sold by Guillaume Lessard, sole proprietor, trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Payments are processed by Stripe and card details never reach QECTOR systems.'
-        ) +
-        p('Refund and billing questions: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> · See also <a href="/terms" style="color:#67e8f9;">terms</a> and <a href="/license" style="color:#67e8f9;">licence</a>.')
+          'No telemetry: the decoder, plugin and Workbench send nothing to QECTOR.',
+          'Air-gapped licensing: Ed25519 licence tokens verified offline; no licence server.',
+          'All 18 decoder wheels built in GitHub Actions with Sigstore provenance and PEP 740 attestations, published by Trusted Publishing.',
+          'Each wheel tested on its own OS before release; receipts in platform-proof.json.',
+          'Plugin releases signed (Ed25519 over SHA256SUMS) with an SPDX SBOM; dependencies pinned by SHA-256.',
+          'Vulnerability reports: admin@qector.store, subject [SECURITY] QECTOR disclosure; acknowledged within 5 business days.',
+        ])
+    ),
+  },
+  {
+    path: '/compare',
+    title: 'QECTOR vs PyMatching, ldpc and fusion-blossom · Feature Comparison',
+    description:
+      'An honest feature comparison of QECTOR Decoder v3 with PyMatching, ldpc and fusion-blossom: decoder families, qLDPC support, GPU, Stim and Sinter, licences and support. No speed claims.',
+    heading: 'How QECTOR Compares',
+    body: page(
+      h1('How QECTOR Compares') +
+        p('PyMatching, ldpc and fusion-blossom are excellent open-source decoders. QECTOR offers many decoder families, qLDPC decoding and GPU batch decoding behind one API, with every correction checked against its syndrome. Features and licences only; no speed claims.')
     ),
   },
   {
@@ -872,9 +835,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           '<strong>qec-sysadmin.md</strong>: Operations, monitoring, incident response.',
           '<strong>qec-hardware-engineer.md</strong>: Physical qubit characterization, cryogenic systems.',
         ]) +
-         h2('Four MCP Servers and Explicit Profiles') +
+         h2('Four Plugin MCP Servers, Plus a Desktop Profile') +
          p(
-           'qector-secure (the default) exposes 12 tools: the 8 stable library tools plus airgap_status, integrity_check, schema_catalog and audit_log_status; it refuses network access and validates every message against JSON Schema. qector-library exposes the 8 stable tools on their own. qector-research exposes 29 provisional tools for methodology, DEM and circuit inspection, evidence, compatibility, and local measurements. qector-admin exposes 3 privileged tools and requires QECTOR_ADMIN_ENABLED=1 plus confirm=true. qector-desktop-mcp provides the safe Desktop profile with the 8 stable tools. All four servers run locally over stdio; the research and admin servers are opt in.'
+           'qector-secure (the default) exposes 12 tools: the 8 stable library tools plus airgap_status, integrity_check, schema_catalog and audit_log_status; it refuses network access and validates every message against JSON Schema. qector-library exposes the 8 stable tools on their own. qector-research exposes 29 provisional tools for methodology, DEM and circuit inspection, evidence, compatibility, and local measurements. qector-admin exposes 3 privileged tools and requires QECTOR_ADMIN_ENABLED=1 plus confirm=true. The separate Claude Desktop adapter, qector-desktop-mcp, provides a safe profile with the 8 stable tools. Every server runs locally over stdio; the research and admin servers are opt in.'
          ) +
          h2('v2.0.1 Release') +
          p(
@@ -953,6 +916,8 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     title: `${post.title} · QECTOR Blog`,
     description: post.description,
     heading: post.title,
+    sourceFile: `public/blog/${post.filename}`,
+    published: '2026-08-09',
     body: page(
       h1(post.title) + p(post.description)
     ),

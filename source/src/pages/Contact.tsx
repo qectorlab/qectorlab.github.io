@@ -118,6 +118,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <p className="text-secondary text-sm leading-relaxed">
                   QECTOR is developed by iD01t Productions.<br />
                   Primary contact: Guillaume Lessard.<br />
+                  2004 De Lorimier, Longueuil, Québec, Canada J4K 3H7<br />
                   Email: <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>
                 </p>
               </div>
