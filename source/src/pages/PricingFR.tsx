@@ -248,6 +248,7 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 pt-4">
             <Link to="/fr/license-agreement" className="hover:text-cyan-300 transition-colors">Contrat de licence</Link>
             <Link to="/fr/refund" className="hover:text-cyan-300 transition-colors">Politique de remboursement</Link>
+            <a href="https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors">Gérer l’abonnement</a>
             <Link to="/contact" className="hover:text-cyan-300 transition-colors">Contacter l’ingénierie</Link>
           </div>
         </div>

@@ -88,7 +88,7 @@ export const licenseAgreementEn: LegalDoc = {
       id: 'term',
       heading: '7. Term, renewal and cancellation',
       paras: [
-        'Pro (monthly or annual) and Lab are subscriptions that **renew automatically** for the same period at the current price until cancelled. We e-mail a reminder 14 days before each annual renewal. You may cancel at any time; your licence stays valid until the end of the period you paid for.',
+        'Pro (monthly or annual) and Lab are subscriptions that **renew automatically** for the same period at the current price until cancelled. We e-mail a reminder 14 days before each annual renewal. You may cancel at any time in the [customer portal](https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00) or by e-mail; your licence stays valid until the end of the period you paid for.',
         'The Pilot ends after 60 days and does not renew. Pro Perpetual has no end date for the 1.x releases it covers.',
       ],
     },
@@ -252,7 +252,7 @@ export const licenseAgreementFr: LegalDoc = {
       id: 'term',
       heading: '7. Durée, renouvellement et résiliation',
       paras: [
-        'Pro (mensuel ou annuel) et Labo sont des abonnements qui **se renouvellent automatiquement** pour la même période au prix en vigueur jusqu’à leur résiliation. Nous envoyons un rappel 14 jours avant chaque renouvellement annuel. Vous pouvez résilier en tout temps; votre licence reste valide jusqu’à la fin de la période payée.',
+        'Pro (mensuel ou annuel) et Labo sont des abonnements qui **se renouvellent automatiquement** pour la même période au prix en vigueur jusqu’à leur résiliation. Nous envoyons un rappel 14 jours avant chaque renouvellement annuel. Vous pouvez résilier en tout temps dans le [portail client](https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00) ou par courriel; votre licence reste valide jusqu’à la fin de la période payée.',
         'Le Pilote prend fin après 60 jours et ne se renouvelle pas. Pro Perpétuel n’a pas de date de fin pour les versions 1.x qu’il couvre.',
       ],
     },

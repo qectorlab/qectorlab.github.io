@@ -224,7 +224,7 @@ export const refundEn: LegalDoc = {
       id: 'renewals',
       heading: 'Renewals and cancelling',
       paras: [
-        'Pro (monthly or annual) and Lab are subscriptions and **renew automatically** until cancelled. We e-mail a reminder 14 days before each annual renewal. Cancel at any time from the link in your Stripe receipt or by e-mailing admin@qector.store; your licence stays valid until the end of the period you paid for.',
+        'Pro (monthly or annual) and Lab are subscriptions and **renew automatically** until cancelled. We e-mail a reminder 14 days before each annual renewal. Cancel at any time in the [customer portal](https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00) (sign in with your billing e-mail) or by e-mailing admin@qector.store; your licence stays valid until the end of the period you paid for.',
         'Renewal payments are not refunded pro rata. If a renewal went through that you meant to cancel and you have not used the renewed term, write to us within 7 days and we will refund it. Pro Perpetual and the Pilot are one-time payments and never renew.',
       ],
     },
@@ -288,7 +288,7 @@ export const refundFr: LegalDoc = {
       id: 'renewals',
       heading: 'Renouvellements et résiliation',
       paras: [
-        'Pro (mensuel ou annuel) et Labo sont des abonnements qui **se renouvellent automatiquement** jusqu’à leur résiliation. Nous envoyons un rappel 14 jours avant chaque renouvellement annuel. Résiliez en tout temps par le lien de votre reçu Stripe ou en écrivant à admin@qector.store; votre licence reste valide jusqu’à la fin de la période payée.',
+        'Pro (mensuel ou annuel) et Labo sont des abonnements qui **se renouvellent automatiquement** jusqu’à leur résiliation. Nous envoyons un rappel 14 jours avant chaque renouvellement annuel. Résiliez en tout temps dans le [portail client](https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00) (connexion avec votre courriel de facturation) ou en écrivant à admin@qector.store; votre licence reste valide jusqu’à la fin de la période payée.',
         'Les paiements de renouvellement ne sont pas remboursés au prorata. Si un renouvellement que vous vouliez annuler a été prélevé et que vous n’avez pas utilisé la nouvelle période, écrivez-nous dans les 7 jours et nous le rembourserons. Pro Perpétuel et le Pilote sont des paiements uniques qui ne se renouvellent jamais.',
       ],
     },

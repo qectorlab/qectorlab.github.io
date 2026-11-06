@@ -19,9 +19,9 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://qector.store/pricing/" />
   </url>
   <url><loc>https://qector.store/commercial/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://qector.store/contact/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://qector.store/contact/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://qector.store/license/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://qector.store/privacy/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority>
+  <url><loc>https://qector.store/privacy/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://qector.store/privacy/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://qector.store/fr/privacy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://qector.store/privacy/" />
@@ -70,24 +70,24 @@
   <url><loc>https://qector.store/docs/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://qector.store/installer/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://qector.store/manual/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://qector.store/blog/01QecFoundations/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/02BlossomMwpmExact/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/03SparseBlossomEventDriven/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/04FastUnionFind/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/05BpOsdQldpc/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/06AmbiguityGnnNeural/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/07SpaceTimeDecoder/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/08AutoDecoderCascade/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/09GpuAcceleration/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/10BenchmarksArchitecture/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/11SteaneWorkedDecode/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/12RotatedSurfaceD3/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/13DemPipeline/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/14WeightedDecoding/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/15LogicalErrorRates/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/16DecoderSelection/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/17ReproducibleBenchmarks/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/18RustPyo3Architecture/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/19ReleaseLicensing/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://qector.store/blog/20EcosystemIntegration/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/01QecFoundations/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/02BlossomMwpmExact/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/03SparseBlossomEventDriven/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/04FastUnionFind/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/05BpOsdQldpc/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/06AmbiguityGnnNeural/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/07SpaceTimeDecoder/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/08AutoDecoderCascade/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/09GpuAcceleration/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/10BenchmarksArchitecture/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/11SteaneWorkedDecode/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/12RotatedSurfaceD3/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/13DemPipeline/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/14WeightedDecoding/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/15LogicalErrorRates/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/16DecoderSelection/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/17ReproducibleBenchmarks/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/18RustPyo3Architecture/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/19ReleaseLicensing/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://qector.store/blog/20EcosystemIntegration/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

@@ -691,6 +691,7 @@ export function buildCustomerMessages(record, source) {
     `   It prints ${expected}.`,
     "",
     "Keep this token private: it is tied to this e-mail address.",
+    "Manage your subscription, invoices and billing details: https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00",
     `Terms: ${SITE}/license-agreement/   Questions: ${SUPPORT_EMAIL}`,
   ].join("\n");
   const licenseHtml =
@@ -701,7 +702,7 @@ export function buildCustomerMessages(record, source) {
     `<li>Set <code>QECTOR_LICENSE_KEY</code> and <code>QECTOR_LICENSE</code> to the token (or save it in <code>~/.qector/license.key</code>).</li>` +
     `<li>Verify offline: <code>${escapeHtml(verify)}</code> prints <strong>${expected}</strong>.</li></ol>` +
     `<p>Keep this token private: it is tied to this e-mail address.</p>` +
-    `<p><a href="${SITE}/license-agreement/">Licence terms</a> · Questions: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`;
+    `<p><a href="${SITE}/license-agreement/">Licence terms</a> · <a href="https://billing.stripe.com/p/login/7sY9AVdwlgoyfse9bYeUU00">Manage subscription</a> · Questions: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>`;
   const messages = [{ kind: "license", message: { to: record.email, subject: `Your QECTOR Decoder v3 licence (${tierInfo.label})`, text: licenseText, html: licenseHtml } }];
   if (source) {
     const billing = billingSummary(record, source);
