@@ -25,7 +25,7 @@ export const privacyEn: LegalDoc = {
       heading: '1. Who is responsible',
       accent: true,
       paras: [
-        'QECTOR is operated by **Guillaume Lessard**, sole proprietor trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7.',
+        'QECTOR is operated by **Guillaume Lessard**, sole proprietor trading as iD01t Productions, 288 boul. des Ormeaux, Longueuil, Québec, Canada J4L 1J4.',
         'Guillaume Lessard is the **person in charge of the protection of personal information**. Contact: [admin@qector.store](mailto:admin@qector.store), subject line "Privacy".',
       ],
     },
@@ -139,7 +139,7 @@ export const privacyFr: LegalDoc = {
       heading: '1. Responsable',
       accent: true,
       paras: [
-        'QECTOR est exploité par **Guillaume Lessard**, entrepreneur individuel faisant affaire sous le nom iD01t Productions, 2004 De Lorimier, Longueuil (Québec) Canada J4K 3H7.',
+        'QECTOR est exploité par **Guillaume Lessard**, entrepreneur individuel faisant affaire sous le nom iD01t Productions, 288, boul. des Ormeaux, Longueuil (Québec) Canada J4L 1J4.',
         'Guillaume Lessard est le **responsable de la protection des renseignements personnels**. Pour le joindre : [admin@qector.store](mailto:admin@qector.store), objet « Confidentialité ».',
       ],
     },

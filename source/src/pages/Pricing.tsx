@@ -6,6 +6,7 @@ import PricingTierCard from '../components/PricingTierCard';
 import NeuralReveal from '../components/NeuralReveal';
 import { FAQ_ITEMS } from '../lib/faqData';
 import CodeBlock from '../components/CodeBlock';
+import MobileCollapse from '../components/MobileCollapse';
 import { LINKS, PRICES, usd } from '../lib/pricing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -147,6 +148,7 @@ export default function Pricing() {
         </div>
 
         {/* 3. ADDITIONAL SERVICES (Validation Sprint) */}
+        <MobileCollapse more="Validation Sprint and activation">
         <div ref={(el) => addRef(el, 2)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="card-surface border-gold-400/20 bg-gold-400/5">
             <h3 className="text-2xl font-bold text-gold-400 mb-2">QECTOR Validation Sprint</h3>
@@ -189,6 +191,7 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
             </p>
           </div>
         </div>
+        </MobileCollapse>
 
         {/* 4. COMPARISON AND WHY QECTOR */}
         <div ref={(el) => addRef(el, 3)}>
@@ -230,16 +233,15 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             {FAQ_ITEMS.map((item, idx) => (
-              <div key={idx} className="card-surface bg-surface/30 border-gridline/40 hover:bg-surface/60 transition-colors p-6 rounded-2xl">
-                <h3 className="text-base font-bold text-primary mb-3 text-cyan-300">
-                  {item.q}
-                </h3>
-                <p className="text-secondary text-sm leading-relaxed">
-                  {item.a}
-                </p>
-              </div>
+              <details key={idx} className="faq-item group bg-surface/30 border border-gridline/40 rounded-2xl hover:bg-surface/60 transition-colors">
+                <summary className="cursor-pointer list-none flex items-start justify-between gap-4 p-5 min-h-[44px] text-base font-bold text-cyan-300">
+                  <h3 className="text-base font-bold">{item.q}</h3>
+                  <span aria-hidden="true" className="shrink-0 text-muted-foreground transition-transform group-open:rotate-45 text-xl leading-none">+</span>
+                </summary>
+                <p className="text-secondary text-sm leading-relaxed px-5 pb-5">{item.a}</p>
+              </details>
             ))}
           </div>
         </div>

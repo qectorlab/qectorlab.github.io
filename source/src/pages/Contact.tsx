@@ -119,11 +119,11 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             {/* Left Info */}
             <div ref={(el) => addRef(el, 0)} className="lg:col-span-2 space-y-4">
               <div className="card-surface">
-                <h2 className="text-primary font-semibold mb-2">Business address</h2>
+                <h2 className="text-primary font-semibold mb-2">Mailing address</h2>
                 <p className="text-secondary text-sm leading-relaxed">
                   QECTOR is developed by iD01t Productions.<br />
                   Primary contact: Guillaume Lessard.<br />
-                  2004 De Lorimier, Longueuil, Québec, Canada J4K 3H7<br />
+                  288 boul. des Ormeaux, Longueuil, Québec, Canada J4L 1J4<br />
                   Email: <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>
                 </p>
               </div>

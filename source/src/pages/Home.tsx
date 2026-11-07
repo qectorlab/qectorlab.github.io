@@ -5,6 +5,7 @@ import { FolderGit2, BookOpen, Package, Monitor, Fingerprint } from 'lucide-reac
 import { SEO, JsonLd } from '../lib/seo';
 import TrustSignal from '../components/TrustSignal';
 import SectionHeader from '../components/SectionHeader';
+import MobileCollapse from '../components/MobileCollapse';
 import AlgorithmCard from '../components/AlgorithmCard';
 import EvidenceBlock from '../components/EvidenceBlock';
 import QECSimulator from '../components/QECSimulator';
@@ -105,7 +106,7 @@ export default function Home() {
               logo: 'https://qector.store/images/logo.png',
               email: 'admin@qector.store',
               founder: { '@type': 'Person', name: 'Guillaume Lessard', identifier: '0009-0000-3465-3753' },
-              address: { '@type': 'PostalAddress', addressLocality: 'Longueuil', addressRegion: 'QC', postalCode: 'J4K 3H7', addressCountry: 'CA' },
+              address: { '@type': 'PostalAddress', addressLocality: 'Longueuil', addressRegion: 'QC', postalCode: 'J4L 1J4', addressCountry: 'CA' },
               sameAs: [
                 'https://github.com/GuillaumeLessard/qector-decoder',
                 'https://pypi.org/project/qector-decoder-v3/',
@@ -223,7 +224,8 @@ export default function Home() {
                The public release, validation contract, and commercial delivery path are explicit by design.
              </p>
            </div>
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+           <MobileCollapse>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
              <div className="card-surface p-6 border-cyan-300/20">
                <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Current Runtime</div>
                <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 1.0.1</h3>
@@ -258,6 +260,7 @@ export default function Home() {
                </a>
              </div>
            </div>
+           </MobileCollapse>
          </div>
        </section>
 
@@ -321,7 +324,8 @@ export default function Home() {
               Hashed-lock reproducible install, CERT_STRICT gate, and Lean/Coq kernel evidence - verifiable against Reference Manual v1.0.0.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <MobileCollapse>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="card-surface p-6 border-cyan-300/20">
               <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Reproducible Install</div>
               <h3 className="text-lg font-bold text-primary mb-2">Hashed-lock & CERT_STRICT</h3>
@@ -344,6 +348,7 @@ export default function Home() {
             </a>
             <span className="text-muted-foreground text-xs ml-3">github.com/GuillaumeLessard/qector-proof</span>
           </div>
+          </MobileCollapse>
         </div>
       </section>
 
@@ -360,7 +365,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <MobileCollapse>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 step: '01',
@@ -402,6 +408,7 @@ export default function Home() {
               </div>
             ))}
           </div>
+          </MobileCollapse>
         </div>
       </section>
 
@@ -418,7 +425,8 @@ export default function Home() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <MobileCollapse>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
                   title: 'Blossom MWPM (Exact)',
@@ -450,6 +458,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            </MobileCollapse>
           </div>
         </div>
       </section>
@@ -471,7 +480,8 @@ export default function Home() {
                    Hybrid, Predecoded, two-stage, ambiguity-cluster, colour-code, space-time, and other concrete paths are exposed through a consistent Python API. Workbench adds the two orchestration kinds, AutoDecoder and Auto Router, to make 19 named kinds.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <MobileCollapse>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     { label: ' v1.0.1 Stable', desc: 'Corrected code families and Union-Find peeling, Python 3.14, GPU on Pro licences, signed provenance for every wheel.' },
                     { label: ' 18 Binary Wheels', desc: 'Python 3.9-3.14 across Windows amd64, Linux x86_64, and macOS arm64, each tested on its own OS before release.' },
@@ -484,6 +494,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+                </MobileCollapse>
 
                 <div className="flex flex-wrap gap-3 mt-8">
                   <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-lg border border-gridline bg-void/50 text-sm text-secondary hover:text-cyan-300 hover:border-cyan-300/40">
@@ -497,7 +508,9 @@ export default function Home() {
               </div>
 
               <div ref={(el) => addRef(el, 8)} className="relative w-full">
-                <QECSimulator />
+                <MobileCollapse more="Open the interactive simulator" less="Hide the simulator">
+                  <QECSimulator />
+                </MobileCollapse>
               </div>
             </div>
           </div>

@@ -5,7 +5,12 @@ import NeuralReveal from '../components/NeuralReveal';
 export default function License() {
   return (
     <>
-      <SEO title="License · QECTOR" description="QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; commercial plans from $79/month, verified offline (air-gapped)." />
+      <SEO title="License · QECTOR" description="QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; commercial plans from $79/month, verified offline (air-gapped)."
+        alternates={[
+          { lang: 'en', href: 'https://qector.store/license/' },
+          { lang: 'fr', href: 'https://qector.store/fr/license/' },
+        ]}
+      />
 
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />

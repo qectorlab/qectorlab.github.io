@@ -7,9 +7,9 @@ const UPDATED_EN = '6 November 2026';
 const UPDATED_FR = '6 novembre 2026';
 
 const SELLER_EN =
-  'QECTOR software and licences are sold by **Guillaume Lessard**, sole proprietor trading as **iD01t Productions**, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7. Contact: [admin@qector.store](mailto:admin@qector.store).';
+  'QECTOR software and licences are sold by **Guillaume Lessard**, sole proprietor trading as **iD01t Productions**, 288 boul. des Ormeaux, Longueuil, Québec, Canada J4L 1J4. Contact: [admin@qector.store](mailto:admin@qector.store).';
 const SELLER_FR =
-  'Le logiciel et les licences QECTOR sont vendus par **Guillaume Lessard**, entrepreneur individuel faisant affaire sous le nom **iD01t Productions**, 2004 De Lorimier, Longueuil (Québec) Canada J4K 3H7. Contact : [admin@qector.store](mailto:admin@qector.store).';
+  'Le logiciel et les licences QECTOR sont vendus par **Guillaume Lessard**, entrepreneur individuel faisant affaire sous le nom **iD01t Productions**, 288, boul. des Ormeaux, Longueuil (Québec) Canada J4L 1J4. Contact : [admin@qector.store](mailto:admin@qector.store).';
 
 export const termsEn: LegalDoc = {
   lang: 'en',

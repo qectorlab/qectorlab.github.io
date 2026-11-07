@@ -36,6 +36,10 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
       <SEO
         title="QECTOR Decoder v3 · QEC Decoding for Python"
         description="QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v1.0.1 current stable release (18 wheels, Python 3.9-3.14) with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        alternates={[
+          { lang: 'en', href: 'https://qector.store/decoder/' },
+          { lang: 'fr', href: 'https://qector.store/fr/decoder/' },
+        ]}
       />
       <JsonLd
         data={{

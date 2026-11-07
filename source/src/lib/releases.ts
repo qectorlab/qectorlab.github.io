@@ -103,15 +103,15 @@ export const WORKBENCH_VERSION_SUMMARY = WORKBENCH_RELEASES.map(
 export const SELLER_RECORD = {
   name: 'Guillaume Lessard',
   tradingAs: 'iD01t Productions',
-  street: '2004 De Lorimier',
+  street: '288 boul. des Ormeaux',
   city: 'Longueuil',
   region: 'Québec',
   country: 'Canada',
-  postalCode: 'J4K 3H7',
+  postalCode: 'J4L 1J4',
   email: 'admin@qector.store',
 };
 
-export const SELLER_ADDRESS_LINE = `${SELLER_RECORD.street}, ${SELLER_RECORD.city}, ${SELLER_RECORD.region}, ${SELLER_RECORD.country}, ${SELLER_RECORD.postalCode}`;
+export const SELLER_ADDRESS_LINE = `${SELLER_RECORD.street}, ${SELLER_RECORD.city}, ${SELLER_RECORD.region}, ${SELLER_RECORD.country} ${SELLER_RECORD.postalCode}`;
 
 // Six-record Zenodo evidence corpus, each verified live on 2026-08-21 via
 // zenodo.org/api/records/<id> (audit items H4/H6/A5).

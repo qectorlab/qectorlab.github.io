@@ -7,7 +7,7 @@ import { PRICES, usdFr } from '../lib/pricing';
 // les pages commerciales et juridiques ont toutes leur version française.
 
 const PRODUITS = [
-  { titre: 'QECTOR Decoder v3', texte: 'La bibliothèque Python à noyau Rust : Union-Find, MWPM exact (Blossom), BP-OSD et Relay-BP pour les codes qLDPC, décodage par lots CPU et GPU, intégration Stim et Sinter.', lien: '/decoder', libelle: 'Le décodeur (anglais)' },
+  { titre: 'QECTOR Decoder v3', texte: 'La bibliothèque Python à noyau Rust : Union-Find, MWPM exact (Blossom), BP-OSD et Relay-BP pour les codes qLDPC, décodage par lots CPU et GPU, intégration Stim et Sinter.', lien: '/fr/decoder', libelle: 'Le décodeur' },
   { titre: 'Plugiciel Claude', texte: 'Un serveur MCP isolé du réseau (air-gapped) qui apporte le décodage vérifié dans Claude Code et Claude Desktop, avec schémas validés et versions signées.', lien: '/claude-plugin', libelle: 'Le plugiciel (anglais)' },
   { titre: 'Workbench', texte: 'L’application de bureau gratuite pour Windows et Linux : constructeur de circuits, familles de codes et décodeurs, sans installation de Python.', lien: '/workbench', libelle: 'Le Workbench (anglais)' },
 ];
@@ -52,7 +52,7 @@ export default function HomeFR() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
             <Link to="/fr/pricing" className="btn-gold px-8 py-4">Voir les forfaits →</Link>
-            <Link to="/decoder" className="btn-cyan px-8 py-4" hrefLang="en">Découvrir le décodeur</Link>
+            <Link to="/fr/decoder" className="btn-cyan px-8 py-4">Découvrir le décodeur</Link>
           </div>
           <div className="max-w-2xl mx-auto text-left">
             <CodeBlock language="bash" filename="Démarrage rapide" code={`pip install qector-decoder-v3==1.0.1\npython -c "from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')"`} />
@@ -79,7 +79,7 @@ export default function HomeFR() {
               <div key={p.titre} className="card-surface flex flex-col">
                 <h3 className="text-lg font-bold mb-2">{p.titre}</h3>
                 <p className="text-secondary text-sm leading-relaxed flex-1">{p.texte}</p>
-                <Link to={p.lien} hrefLang="en" className="text-cyan-300 text-sm mt-4 hover:underline">{p.libelle} →</Link>
+                <Link to={p.lien} hrefLang={p.lien.startsWith('/fr') ? undefined : 'en'} className="text-cyan-300 text-sm mt-4 hover:underline">{p.libelle} →</Link>
               </div>
             ))}
           </div>
@@ -90,6 +90,7 @@ export default function HomeFR() {
         <div className="max-w-3xl mx-auto card-surface">
           <h2 className="text-xl font-bold mb-4">En français</h2>
           <ul className="space-y-2 text-secondary text-sm list-disc pl-5">
+            <li><Link to="/fr/decoder" className="text-cyan-300 hover:underline">Le décodeur</Link> et sa <Link to="/fr/license" className="text-cyan-300 hover:underline">licence</Link> (usage gratuit, usage commercial, activation).</li>
             <li><Link to="/fr/pricing" className="text-cyan-300 hover:underline">Tarifs et forfaits</Link> : Pro, Labo, Pilote et Entreprise.</li>
             <li><Link to="/fr/license-agreement" className="text-cyan-300 hover:underline">Contrat de licence commerciale</Link>, version 2026-11.</li>
             <li><Link to="/fr/privacy" className="text-cyan-300 hover:underline">Politique de confidentialité</Link> (Loi 25).</li>

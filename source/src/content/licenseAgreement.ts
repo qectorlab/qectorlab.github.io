@@ -26,7 +26,7 @@ export const licenseAgreementEn: LegalDoc = {
       heading: '1. Parties and acceptance',
       accent: true,
       paras: [
-        'This agreement is between **Guillaume Lessard**, sole proprietor trading as **iD01t Productions**, 2004 De Lorimier, Longueuil, Québec, Canada, J4K 3H7 ("Licensor", "we"), and the organisation named at checkout ("Licensee", "you").',
+        'This agreement is between **Guillaume Lessard**, sole proprietor trading as **iD01t Productions**, 288 boul. des Ormeaux, Longueuil, Québec, Canada J4L 1J4 ("Licensor", "we"), and the organisation named at checkout ("Licensee", "you").',
         'You accept it by completing a purchase, by activating a licence token, or by using the Software commercially. The person who buys confirms they may bind the organisation. If you do not accept these terms, do not buy or use a paid plan. The [14-day money-back guarantee](/refund) applies.',
       ],
     },
@@ -190,7 +190,7 @@ export const licenseAgreementFr: LegalDoc = {
       heading: '1. Parties et acceptation',
       accent: true,
       paras: [
-        'Le présent contrat est conclu entre **Guillaume Lessard**, entrepreneur individuel faisant affaire sous le nom **iD01t Productions**, 2004 De Lorimier, Longueuil (Québec) Canada J4K 3H7 (le « Concédant », « nous »), et l’organisation nommée lors du paiement (le « Licencié », « vous »).',
+        'Le présent contrat est conclu entre **Guillaume Lessard**, entrepreneur individuel faisant affaire sous le nom **iD01t Productions**, 288, boul. des Ormeaux, Longueuil (Québec) Canada J4L 1J4 (le « Concédant », « nous »), et l’organisation nommée lors du paiement (le « Licencié », « vous »).',
         'Vous l’acceptez en effectuant un achat, en activant un jeton de licence ou en utilisant le Logiciel à des fins commerciales. La personne qui achète confirme qu’elle peut engager l’organisation. Si vous n’acceptez pas ces conditions, n’achetez pas et n’utilisez pas de forfait payant. La [garantie de remboursement de 14 jours](/fr/refund) s’applique.',
       ],
     },

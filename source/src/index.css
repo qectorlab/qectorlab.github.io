@@ -159,11 +159,11 @@
   /* Section rhythm: full feature sections get generous desktop air,
      band sections stay compact but gain a desktop step. */
   .section-feature {
-    @apply py-20 md:py-28;
+    @apply py-14 md:py-28;
   }
 
   .section-band {
-    @apply py-16 md:py-20;
+    @apply py-12 md:py-20;
   }
 
   .section-thin {
@@ -274,3 +274,16 @@
     color: CanvasText !important;
   }
 }
+
+/* MobileCollapse: short previews of long sections on phones. */
+.mobile-collapse__bar { display: none; }
+@media (max-width: 767px) {
+  .js-enabled .mobile-collapse[data-open='false'] .mobile-collapse__body {
+    max-height: 20rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+    mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  }
+  .js-enabled .mobile-collapse__bar { display: flex; justify-content: center; margin-top: 1rem; }
+}
+.faq-item > summary::-webkit-details-marker { display: none; }

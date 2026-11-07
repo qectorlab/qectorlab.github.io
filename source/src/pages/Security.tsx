@@ -132,7 +132,7 @@ python scripts/sign_release.py --verify . \\
 
           <Card title="Procurement">
             <ul className="space-y-2 list-disc pl-5">
-              <li><strong className="text-primary">Seller:</strong> Guillaume Lessard, sole proprietor trading as iD01t Productions, 2004 De Lorimier, Longueuil, Québec, Canada J4K 3H7.</li>
+              <li><strong className="text-primary">Seller:</strong> Guillaume Lessard, sole proprietor trading as iD01t Productions, 288 boul. des Ormeaux, Longueuil, Québec, Canada J4L 1J4.</li>
               <li><strong className="text-primary">Contract:</strong> the <Link to="/license-agreement" className="text-cyan-300 hover:underline">Commercial Licence Agreement</Link> (<Link to="/fr/license-agreement" className="text-cyan-300 hover:underline">français</Link>); Enterprise deals use a signed agreement.</li>
               <li><strong className="text-primary">Payment:</strong> card or invoice through Stripe, in USD; tax numbers accepted at checkout.</li>
               <li><strong className="text-primary">On request:</strong> W-8BEN for US customers, completed security questionnaires, and a call with the developer. Write to <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a>.</li>

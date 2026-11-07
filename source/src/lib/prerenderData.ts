@@ -223,6 +223,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/decoder',
+    alternates: [['en', 'https://qector.store/decoder/'], ['fr', 'https://qector.store/fr/decoder/'], ['x-default', 'https://qector.store/decoder/']],
     title: 'QECTOR Decoder v3 · QEC Decoding for Python',
     description:
       'QECTOR Decoder v3: 17 decoder configurations in one Python library. Stable v1.0.1 (18 wheels, Python 3.9-3.14) with API tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, and qector bench.',
@@ -656,6 +657,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
   },
   {
     path: '/license',
+    alternates: [['en', 'https://qector.store/license/'], ['fr', 'https://qector.store/fr/license/'], ['x-default', 'https://qector.store/license/']],
     title: 'License · QECTOR',
     description:
       'QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
@@ -686,6 +688,22 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
         p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
+  },
+  {
+    path: '/fr/decoder',
+    title: 'QECTOR Decoder v3 · Décodage QEC pour Python',
+    description: 'QECTOR Decoder v3 : 17 configurations de décodeurs dans une seule bibliothèque Python. Version stable 1.0.1 (18 roues, Python 3.9 à 3.14), paliers de stabilité d’API, Relay-BP, CS-OSD, Sinter et qiskit, et le banc d’essai qector bench.',
+    heading: 'QECTOR Decoder v3',
+    alternates: [['en', 'https://qector.store/decoder/'], ['fr', 'https://qector.store/fr/decoder/'], ['x-default', 'https://qector.store/decoder/']],
+    body: page(h1('QECTOR Decoder v3') + p('Bibliothèque Python à noyau Rust offrant 17 configurations de décodeurs, du MWPM exact au décodage GPU par lots. Chaque correction est vérifiée contre son syndrome (H·c = s).')),
+  },
+  {
+    path: '/fr/license',
+    title: 'Licence · QECTOR',
+    description: 'Conditions de licence de QECTOR Decoder v3 et procédure d’activation du jeton. PolyForm Noncommercial pour l’usage communautaire; forfaits commerciaux dès 79 $ US/mois, vérifiés hors ligne.',
+    heading: 'Licence',
+    alternates: [['en', 'https://qector.store/license/'], ['fr', 'https://qector.store/fr/license/'], ['x-default', 'https://qector.store/license/']],
+    body: page(h1('Licence') + p('Gratuit pour l’usage personnel, académique et la recherche non commerciale sous PolyForm Noncommercial 1.0.0. L’usage commercial exige un forfait payant, vérifié hors ligne.')),
   },
   ...LEGAL_DOCS.map(legalRoute),
   {

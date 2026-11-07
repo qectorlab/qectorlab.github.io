@@ -83,10 +83,12 @@ const LEGAL_EN = [
   { label: 'Privacy', href: '/privacy' },
   { label: 'Refund', href: '/refund' },
   { label: 'Security', href: '/security' },
-  { label: 'Français', href: '/fr/pricing', hrefLang: 'fr' },
+  { label: 'Français', href: '/fr', hrefLang: 'fr' },
 ];
 
 const LEGAL_FR = [
+  { label: 'Décodeur', href: '/fr/decoder' },
+  { label: 'Licence', href: '/fr/license' },
   { label: 'Contrat de licence', href: '/fr/license-agreement' },
   { label: 'Conditions', href: '/fr/terms' },
   { label: 'Confidentialité', href: '/fr/privacy' },
@@ -98,7 +100,8 @@ const LEGAL_FR = [
 
 export default function Footer() {
   const { version: pypiVersion } = usePyPIVersion();
-  const fr = useLocation().pathname.startsWith('/fr/');
+  const { pathname } = useLocation();
+  const fr = pathname === '/fr' || pathname === '/fr/' || pathname.startsWith('/fr/');
   const legalLinks: { label: string; href: string; hrefLang?: string }[] = fr ? LEGAL_FR : LEGAL_EN;
   return (
     <footer className="border-t border-cyan-900/40 bg-void/95 relative overflow-hidden text-left">
@@ -198,7 +201,7 @@ export default function Footer() {
           <div className="max-w-7xl mx-auto text-xs text-muted-foreground/70 text-center md:text-left">
             &copy; 2026 QECTOR Lab / iD01t Productions. All rights reserved.
             <div className="mt-1">
-              Éditeur : Guillaume Lessard, entrepreneur individuel (iD01t Productions), 2004 De Lorimier, Longueuil, QC J4K 3H7, Canada · admin@qector.store
+              Éditeur : Guillaume Lessard, entrepreneur individuel (iD01t Productions), 288, boul. des Ormeaux, Longueuil (Québec) Canada J4L 1J4 · admin@qector.store
             </div>
           </div>
         </div>

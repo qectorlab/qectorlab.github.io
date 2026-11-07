@@ -21,6 +21,8 @@ const PricingFR = lazy(() => import('./pages/PricingFR'));
 const Commercial = lazy(() => import('./pages/Commercial'));
 const Contact = lazy(() => import('./pages/Contact'));
 const License = lazy(() => import('./pages/License'));
+const LicenseFR = lazy(() => import('./pages/LicenseFR'));
+const DecoderFR = lazy(() => import('./pages/DecoderFR'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const TermsFR = lazy(() => import('./pages/TermsFR'));
@@ -65,6 +67,8 @@ export default function App() {
             <Route path="/commercial" element={<Commercial />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/license" element={<License />} />
+            <Route path="/fr/license" element={<LicenseFR />} />
+            <Route path="/fr/decoder" element={<DecoderFR />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/fr/terms" element={<TermsFR />} />

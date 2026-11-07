@@ -8,7 +8,7 @@ type NavEntry = NavItem | NavGroup;
 const isGroup = (e: NavEntry): e is NavGroup => 'items' in e;
 
 // Pages with a translated twin; everything else switches to the language's home.
-const TWINS = ['/pricing', '/terms', '/privacy', '/refund', '/license-agreement'];
+const TWINS = ['/decoder', '/license', '/pricing', '/terms', '/privacy', '/refund', '/license-agreement'];
 function otherLanguage(pathname: string): { href: string; label: string; lang: string } {
   const path = pathname.replace(/\/$/, '') || '/';
   if (path === '/fr' || path.startsWith('/fr/')) {
