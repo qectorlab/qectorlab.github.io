@@ -43,7 +43,8 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
 
   // HTML language: French routes get lang="fr" so screen readers, spell
   // checkers, and crawlers see the correct language in the prerendered shell.
-  const htmlLang = route.path.startsWith('/fr/') ? 'fr' : 'en'
+  const isFr = route.path === '/fr' || route.path.startsWith('/fr/')
+  const htmlLang = isFr ? 'fr' : 'en'
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${htmlLang}"`)
 
   // hreflang alternates: French pages link their English twin and vice versa.
@@ -54,8 +55,8 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   // og:locale follows the route language. og:locale:alternate is only kept
   // when a translated twin really exists (otherwise it promises a page that
   // is not there).
-  const ogLocale = route.path.startsWith('/fr/') ? 'fr_FR' : 'en_US'
-  const ogLocaleAlt = route.path.startsWith('/fr/') ? 'en_US' : 'fr_FR'
+  const ogLocale = isFr ? 'fr_FR' : 'en_US'
+  const ogLocaleAlt = isFr ? 'en_US' : 'fr_FR'
   html = setTag(html, /(<meta property="og:locale" content=")[^"]*(")/, ogLocale)
   if (alternates.length > 0) {
     html = setTag(html, /(<meta property="og:locale:alternate" content=")[^"]*(")/, ogLocaleAlt)
@@ -74,7 +75,7 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
   }
 
   // og:image:alt and twitter:image:alt per language, kept in sync.
-  const ogImgAlt = route.path.startsWith('/fr/')
+  const ogImgAlt = isFr
     ? 'QECTOR Decoder v3 : décodeur Python de correction d\u2019erreur quantique'
     : 'QECTOR Decoder v3 - Rust-core Python quantum error correction decoder'
   html = setTag(html, /(<meta property="og:image:alt" content=")[^"]*(")/, ogImgAlt)

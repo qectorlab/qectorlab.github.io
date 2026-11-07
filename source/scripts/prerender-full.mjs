@@ -55,6 +55,14 @@ for (const r of routes) {
   const file = r === '/' ? join(dist, 'index.html') : join(dist, r, 'index.html');
   originals.set(file, readFileSync(file, 'utf8'));
 }
+// The 404 page is rendered too: an unknown path loads 404.html, exactly as
+// GitHub Pages serves it, so its static body matches the live one (no shift).
+const NOT_FOUND = join(dist, '404.html');
+const MISSING_ROUTE = '/__qector-missing__';
+if (existsSync(NOT_FOUND)) {
+  originals.set(NOT_FOUND, readFileSync(NOT_FOUND, 'utf8'));
+  routes.push(MISSING_ROUTE);
+}
 
 const server = createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
@@ -62,6 +70,11 @@ const server = createServer((req, res) => {
   let file = join(dist, path);
   if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
   if (!existsSync(file)) {
+    if (!extname(path) && originals.has(NOT_FOUND)) {
+      res.writeHead(404, { 'content-type': MIME['.html'] });
+      res.end(originals.get(NOT_FOUND));
+      return;
+    }
     res.writeHead(404).end();
     return;
   }
@@ -98,6 +111,9 @@ const failed = [];
 
 for (const route of routes) {
   const page = await context.newPage();
+  // Pages with live checks (Status) read this flag and keep their neutral
+  // "Checking…" state, so no build-machine result is ever baked into HTML.
+  await page.addInitScript(() => { window.__PRERENDER__ = true; });
   const url = `${origin}${route === '/' ? '/' : `${route}/`}`;
   try {
     await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
@@ -113,7 +129,7 @@ for (const route of routes) {
     await page.waitForTimeout(600);
     const html = await page.evaluate(CLEAN);
     if (html.length < 2000) throw new Error(`rendered body too small (${html.length} bytes)`);
-    const file = route === '/' ? join(dist, 'index.html') : join(dist, route, 'index.html');
+    const file = route === MISSING_ROUTE ? NOT_FOUND : route === '/' ? join(dist, 'index.html') : join(dist, route, 'index.html');
     const shell = originals.get(file);
     const start = shell.indexOf('<div id="root">');
     const end = shell.indexOf('<noscript>', start);

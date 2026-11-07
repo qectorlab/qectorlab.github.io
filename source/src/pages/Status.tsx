@@ -29,6 +29,8 @@ export default function Status() {
   const [checkedAt, setCheckedAt] = useState<string>('');
 
   useEffect(() => {
+    // Build-time prerender: keep the neutral "Checking…" state in static HTML.
+    if ((window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__) return;
     const ctrl = new AbortController();
     const set = (i: number, patch: Partial<Check>) => setChecks((c) => c.map((x, j) => (j === i ? { ...x, ...patch } : x)));
     (async () => {

@@ -113,7 +113,7 @@ export default function Footer() {
             {/* Column 1 & 2: Brand Header */}
             <div className="lg:col-span-2 space-y-6">
               <Link to="/" className="inline-flex items-center gap-3 text-cyan-300 hover:text-cyan-100 transition-colors duration-200">
-                <img src="/images/logo.png" alt="QECTOR official logo" width="40" height="40" className="h-10 w-10 rounded-lg object-cover" />
+                <img src="/images/logo-80.webp" srcSet="/images/logo-80.webp 2x, /images/logo-160.webp 4x" alt="QECTOR official logo" width="40" height="40" className="h-10 w-10 rounded-lg object-cover" />
                 <span className="text-lg font-extrabold tracking-tight text-white">
                   QECTOR<span className="text-cyan-300">.</span>
                 </span>

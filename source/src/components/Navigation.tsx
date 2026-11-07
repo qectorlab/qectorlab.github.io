@@ -155,7 +155,7 @@ export default function Navigation() {
               to="/"
               className="flex items-center gap-2.5 text-cyan-300 hover:text-cyan-100 transition-colors"
             >
-              <img src="/images/logo.png" alt="" aria-hidden="true" width="36" height="36" className="h-9 w-9 rounded-lg object-cover" />
+              <img src="/images/logo-80.webp" srcSet="/images/logo-80.webp 2x, /images/logo-160.webp 4x" alt="" aria-hidden="true" width="36" height="36" className="h-9 w-9 rounded-lg object-cover" />
               <span className="text-base font-bold tracking-wide text-primary">QECTOR</span>
             </Link>
 
