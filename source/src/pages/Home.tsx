@@ -354,7 +354,7 @@ export default function Home() {
                 <h3 className="text-lg font-bold text-primary mb-2">{step.title}</h3>
                 <p className="text-secondary text-sm leading-relaxed mb-3">{step.desc}</p>
                 {step.code && (
-                  <code className="block text-xs bg-void border border-gridline rounded-lg px-3 py-2 text-cyan-300 font-mono overflow-x-auto" tabIndex={0} role="region" aria-label="Command">
+                  <code className="block text-xs bg-void border border-gridline rounded-lg px-3 py-2 text-cyan-300 font-mono overflow-x-auto" tabIndex={0} role="region" aria-label={`Command: ${step.title}`}>
                     {step.detail}
                   </code>
                 )}

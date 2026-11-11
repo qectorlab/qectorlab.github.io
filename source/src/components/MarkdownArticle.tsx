@@ -4,7 +4,6 @@ import type { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-import rehypeRaw from 'rehype-raw';
 import CodeBlock from './CodeBlock';
 
 // IMPORTANT: We need KaTeX CSS to render math formulas correctly
@@ -28,6 +27,27 @@ function extractText(children: React.ReactNode): string {
     return extractText((children as React.ReactElement<{ children?: React.ReactNode }>).props.children);
   }
   return '';
+}
+
+/** The part of a Markdown syntax-tree node this file reads. */
+interface TreeNode {
+  type?: string;
+  tagName?: string;
+  value?: string;
+  children?: TreeNode[];
+}
+
+const treeText = (node: TreeNode): string => (node.type === 'text' ? (node.value ?? '') : (node.children ?? []).map(treeText).join(''));
+
+/** Column headings of a table node, e.g. "Decoder, Target code, Speed". */
+function tableHeadings(node: TreeNode | undefined): string {
+  const cells: string[] = [];
+  const walk = (n: TreeNode) => {
+    if (n.tagName === 'th') cells.push(treeText(n).trim());
+    else (n.children ?? []).forEach(walk);
+  };
+  if (node) walk(node);
+  return cells.filter(Boolean).join(', ').slice(0, 90);
 }
 
 /**
@@ -72,10 +92,12 @@ const components: Partial<Components> = {
   h5: makeHeading('h5'),
   h6: makeHeading('h6'),
   table: (props) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { node: _node, ...rest } = props;
+    const { node, ...rest } = props;
+    // The scroll region is named after the table's own column headings, so
+    // two tables in one post are distinguishable landmarks.
+    const headings = tableHeadings(node);
     return (
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={headings ? `Table: ${headings}` : 'Table'}>
         <table {...rest} />
       </div>
     );
@@ -110,7 +132,9 @@ const components: Partial<Components> = {
 };
 
 const remarkPlugins = [remarkGfm, remarkMath];
-const rehypePlugins = [rehypeKatex, rehypeRaw];
+// Raw HTML in a post is not interpreted: no post uses any, and leaving the
+// HTML parser out keeps about 150 kB off every blog page.
+const rehypePlugins = [rehypeKatex];
 
 export default function MarkdownArticle({ content }: { content: string }) {
   return (

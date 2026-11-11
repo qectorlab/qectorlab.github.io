@@ -14,9 +14,9 @@ concurrency:
 
 jobs:
   site:
-    name: Site (type-check, lint, build)
+    name: Site (type-check, lint, build, page checks)
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: source
@@ -32,8 +32,13 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run lint
-      # Bundle and route shells only: the Playwright prerender runs on deploy.
-      - run: npx vite build
+      # Type-check, bundle, and render every route to static HTML.
+      - run: npm run build
+      - run: npm run check:static
+      - name: Install the browser for the page checks
+        run: npx playwright install --with-deps chromium
+      - run: npm run check:browser
+      - run: npm run check:a11y
 
   workers:
     name: Workers (unit tests)

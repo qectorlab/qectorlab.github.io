@@ -21,10 +21,11 @@ This repository contains the Vite/React source of the site, the two Cloudflare W
 ```text
 cd source
 npm ci
-npx playwright install chromium   # once: the build prerenders every page
+npx playwright install chromium   # once, for `npm run check`
 npm run dev
 npm run lint
-npm run build                     # type-check, bundle, prerender to dist/
+npm run build                     # type-check, bundle, render every route to static HTML in dist/
+npm run check                     # static, browser and accessibility checks of dist/
 ```
 
 ## Deployment

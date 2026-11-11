@@ -121,6 +121,18 @@ while (queue.length) {
 const orphans = assets.filter((a) => !reachable.has(a));
 if (orphans.length) problems.push(`assets/: ${orphans.length} file(s) not reachable from any page, e.g. ${orphans.slice(0, 3).join(', ')}`);
 
+// Page weight: the script a page asks for up front (its entry and preloads).
+// Blog posts also preload the Markdown/KaTeX renderer, hence the higher limit.
+const BUDGET_KB = { page: 450, blog: 1100 };
+for (const file of htmlFiles) {
+  const rel = file.slice(dist.length);
+  const html = readFileSync(file, 'utf8');
+  const scripts = new Set([...html.matchAll(/<(?:script|link)\b[^>]*(?:src|href)="\/assets\/([^"]+\.js)"/g)].map((m) => m[1]));
+  const kb = [...scripts].reduce((n, name) => n + (existsSync(join(dist, 'assets', name)) ? statSync(join(dist, 'assets', name)).size : 0), 0) / 1e3;
+  const limit = /^\/blog\/[^/]+\//.test(rel) ? BUDGET_KB.blog : BUDGET_KB.page;
+  if (kb > limit) problems.push(`${rel}: ${kb.toFixed(0)} kB of script requested up front (limit ${limit} kB)`);
+}
+
 // sitemap entries must be real pages
 const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
 const locs = [...sitemap.matchAll(/<loc>https:\/\/qector\.store([^<]*)<\/loc>/g)].map((m) => m[1]);

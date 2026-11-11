@@ -142,14 +142,33 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
         }
       });
       await page.waitForTimeout(1600);
+      // Reveal-on-scroll: a block may still be waiting off screen (on a slow
+      // machine it can pass between two frames), which is harmless. What must
+      // never happen is a block that stays invisible once it is on screen, so
+      // each one that is still hidden is brought into view and given time.
+      await page.evaluate(async () => {
+        const isHidden = (el) => el.style.opacity === '0' || (el.matches('.card-surface, .prose') && getComputedStyle(el).opacity === '0');
+        // Blocks clipped inside a collapsed "Show more" section are not expected to be visible yet.
+        const candidates = [...document.querySelectorAll('main *')].filter((el) => !el.closest(".mobile-collapse[data-open='false'] .mobile-collapse__body") && isHidden(el));
+        let stuck = 0;
+        for (const el of candidates) {
+          el.scrollIntoView({ block: 'center' });
+          let shown = false;
+          for (let i = 0; i < 40 && !shown; i += 1) {
+            await new Promise((r) => setTimeout(r, 100));
+            shown = !isHidden(el);
+          }
+          if (!shown) stuck += 1;
+        }
+        window.__stillHidden = stuck;
+      });
       const state = await page.evaluate(() => ({
         csp: window.__csp,
         prerendered: (window.__static || []).length,
         rerendered: (window.__static || []).filter((el) => !el.isConnected).length,
         h1: document.querySelectorAll('h1').length,
         lang: document.documentElement.lang,
-        // Blocks clipped inside a collapsed "Show more" section are not expected to be visible yet.
-        hidden: [...document.querySelectorAll('main *')].filter((el) => !el.closest(".mobile-collapse[data-open='false'] .mobile-collapse__body") && (el.style.opacity === '0' || (el.matches('.card-surface, .prose') && getComputedStyle(el).opacity === '0'))).length,
+        hidden: window.__stillHidden,
         article: (() => { const a = document.querySelector('main article.prose'); return a ? getComputedStyle(a).opacity : null; })(),
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         inter: document.fonts.check('16px "Inter Variable"'),
@@ -167,7 +186,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
       if (state.h1 !== 1) issues.push(`${state.h1} <h1> elements`);
       const fr = route === '/fr' || route.startsWith('/fr/');
       if (state.lang !== (fr ? 'fr' : 'en')) issues.push(`lang="${state.lang}"`);
-      if (state.hidden > 0) issues.push(`${state.hidden} elements still invisible after scrolling`);
+      if (state.hidden > 0) issues.push(`${state.hidden} element(s) stay invisible even when scrolled into view`);
       if (state.article !== null && state.article !== '1') issues.push(`article body opacity ${state.article}`);
       if (state.overflow > 1) issues.push(`page is ${state.overflow}px wider than the viewport`);
       if (!fontsChecked) {

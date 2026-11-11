@@ -150,6 +150,24 @@ function cfRocketBypass(): Plugin {
   }
 }
 
+// The text font is needed for the first paint of every page. Asking for it in
+// the HTML, instead of after the stylesheet has been fetched and parsed,
+// shortens the moment text is shown in the fallback font and then swapped.
+function preloadTextFont(): import('vite').Plugin {
+  return {
+    name: 'preload-text-font',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        const font = Object.keys(ctx.bundle ?? {}).find((file) => /inter-latin-wght-normal-[\w-]+\.woff2$/.test(file));
+        if (!font) return html;
+        return html.replace('</title>', `</title>\n    <link rel="preload" as="font" type="font/woff2" crossorigin href="/${font}" />`);
+      },
+    },
+  };
+}
+
 // KaTeX ships ttf and woff fonts that are never used (only woff2 is loaded
 // by its CSS). Drop them from the bundle to cut emitted asset weight.
 function dropUnusedKatexFonts(): Plugin {
@@ -405,7 +423,7 @@ export default defineConfig(({ command, isSsrBuild }) => ({
   // live HTML. Only include it when Vite is running the dev server.
   // The shells belong to the client build; the server build (isSsrBuild) only
   // produces the bundle that renders into them.
-  plugins: [...(command === 'serve' ? [inspectAttr()] : []), cfRocketBypass(), ...(isSsrBuild ? [] : [ghPagesSpaShell(BUILD_YEAR)]), dropUnusedKatexFonts(), react()],
+  plugins: [...(command === 'serve' ? [inspectAttr()] : []), cfRocketBypass(), preloadTextFont(), ...(isSsrBuild ? [] : [ghPagesSpaShell(BUILD_YEAR)]), dropUnusedKatexFonts(), react()],
   define: {
     __BUILD_YEAR__: JSON.stringify(BUILD_YEAR),
   },
