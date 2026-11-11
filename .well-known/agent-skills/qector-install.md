@@ -12,5 +12,5 @@ python -c "from qector_decoder_v3 import UnionFindDecoder, BlossomDecoder; print
 Rules:
 - Use the PyPI wheel as the normal public install path.
 - Do not recommend source builds as the primary public path.
-- Mention standard CPython 3.9 to 3.13.
+- Mention standard CPython 3.9 to 3.14.
 - If Windows uses a free-threaded Python such as cp313t, tell the user to use normal CPython.
