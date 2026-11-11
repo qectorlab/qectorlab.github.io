@@ -1,0 +1,1 @@
+import{j as e}from"./vendor-react-BiHfrq0e.js";import{L as r}from"./LegalPage-DkxEufxQ.js";import{l as t}from"./licenseAgreement-9WeM91af.js";import"./index-DwlKoRWy.js";import"./vendor-ui-Cuih3uGn.js";function a(){return e.jsx(r,{doc:t})}export{a as default};
