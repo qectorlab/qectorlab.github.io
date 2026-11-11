@@ -1,4 +1,3 @@
-﻿import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
@@ -6,36 +5,25 @@ import MetricCard from '../components/MetricCard';
 import AlgorithmCard from '../components/AlgorithmCard';
 import SectionHeader from '../components/SectionHeader';
 import EvidenceBlock from '../components/EvidenceBlock';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import {
+  PYPI_CURRENT_RELEASE,
+  PYPI_FIRST_STABLE_RELEASE,
+  PYPI_VERSION,
+  PYPI_WHEELS,
+  PYTHON_RANGE,
+} from '../lib/releases';
 
 export default function Decoder() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
+  const addRef = useScrollReveal({ y: 30, duration: 600 });
   const { version: pypiVersion } = usePyPIVersion();
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-    sectionsRef.current.filter(Boolean).forEach((section) => {
-      gsap.fromTo(section, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-      });
-    });
-    });
-    return () => { ctx.revert(); };
-  }, []);
-
-const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   return (
     <>
       <SEO
         title="QECTOR Decoder v3 · QEC Decoding for Python"
-        description="QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v1.0.1 current stable release (18 wheels, Python 3.9-3.14) with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware."
+        description={`QECTOR Decoder v3 - 17 decoder configurations in a single Python library. v${PYPI_VERSION} current stable release (${PYPI_WHEELS} wheels, Python ${PYTHON_RANGE}) with API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points. A reproducible benchmark harness (qector bench) ships with the package for measuring on your own hardware.`}
         alternates={[
           { lang: 'en', href: 'https://qector.store/decoder/' },
           { lang: 'fr', href: 'https://qector.store/fr/decoder/' },
@@ -70,7 +58,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch.
-            v1.0.1 is the current stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI, with build provenance for every wheel.
+            v{PYPI_VERSION} is the current stable release: API stability tiers, Relay-BP and CS-OSD, Sinter/qiskit entry points, and the qector CLI, with build provenance for every wheel.
             A reproducible benchmark harness (qector bench) ships with the package so you can measure on your own hardware.
             Stim-native. PyPI binary wheels. All artifacts published on{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
@@ -89,8 +77,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'Decoder Configs', value: '17', desc: 'From exact MWPM to GPU batch, across documented stability tiers' },
-              { label: 'Binary Wheels', value: '18', desc: 'Python 3.9-3.14 on Windows amd64, Linux x86_64, macOS arm64' },
-              { label: 'Stable API', value: 'v1.0.1', desc: 'Stable release with documented API stability tiers' },
+              { label: 'Binary Wheels', value: String(PYPI_WHEELS), desc: `Python ${PYTHON_RANGE} on Windows amd64, Linux x86_64, macOS arm64` },
+              { label: 'Stable API', value: `v${PYPI_VERSION}`, desc: 'Stable release with documented API stability tiers' },
               { label: 'CI Test Suite', value: 'Automated', desc: 'Continuous validation and Stim comparison test suite on GitHub' },
             ].map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} desc={m.desc} centered />
@@ -152,7 +140,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h3 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Technical Specifications</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                ['Languages', 'Rust core (PyO3) / Python 3.9-3.14 API'],
+                ['Languages', `Rust core (PyO3) / Python ${PYTHON_RANGE} API`],
                 ['Platforms', 'Linux x86_64, macOS arm64, Windows amd64'],
                 ['GPU', 'CUDA / OpenCL batch paths (supported configurations per package docs)'],
                 ['QEC Library', 'Stim (quantum-circuit noise simulation)'],
@@ -172,7 +160,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
           <div ref={(el) => addRef(el, 3)}>
             <EvidenceBlock
               title="Validation Status"
-              statement="v1.0.0 (2026-08-06) was the first stable release; v1.0.1 (2026-11-06) is current. Decode runs are syndrome-validated (H·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware."
+              statement={`v${PYPI_FIRST_STABLE_RELEASE.version} (${PYPI_FIRST_STABLE_RELEASE.releaseDate}) was the first stable release; v${PYPI_CURRENT_RELEASE.version} (${PYPI_CURRENT_RELEASE.releaseDate}) is current. Decode runs are syndrome-validated (H·c = s) through the self-debugging harness, and artifact manifests are SHA-256 sealed on GitHub. No universal benchmark figures are published; the qector bench harness ships in the package for measuring on your own hardware.`}
               href="https://github.com/GuillaumeLessard/qector-decoder"
               linkLabel="GitHub Artifacts and Harness →"
             />

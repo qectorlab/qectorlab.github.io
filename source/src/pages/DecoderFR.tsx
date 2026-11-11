@@ -6,11 +6,18 @@ import AlgorithmCard from '../components/AlgorithmCard';
 import SectionHeader from '../components/SectionHeader';
 import EvidenceBlock from '../components/EvidenceBlock';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
+import {
+  PYPI_CURRENT_RELEASE,
+  PYPI_FIRST_STABLE_RELEASE,
+  PYPI_VERSION,
+  PYPI_WHEELS,
+  PYTHON_RANGE_FR,
+} from '../lib/releases';
 
 // French twin of /decoder. Same facts, same order; keep the two in sync.
 
 const STABLE = [
-  { name: 'Union-Find', tag: 'Quasi linéaire', color: 'green', desc: 'Décodeur approché en temps quasi linéaire. L’option à haut débit pour les codes de type graphe : un peu moins précis, beaucoup plus rapide.' },
+  { name: 'Union-Find', tag: 'Quasi linéaire', color: 'green', desc: 'Décodeur approché en temps quasi linéaire. L’option à haut débit pour les codes de type graphe : échange un peu de précision sur le taux d’erreur logique contre de la vitesse.' },
   { name: 'Fast Union-Find', tag: 'Chemin rapide', color: 'green', desc: 'Chemin Union-Find optimisé pour les pipelines de simulation hors ligne à faible latence.' },
   { name: 'Blossom MWPM', tag: 'Référence exacte', color: 'gold', desc: 'Couplage parfait de poids minimal exact pour les codes de type graphe. Le décodeur de référence des codes de surface.' },
   { name: 'Décodage par lots CPU et GPU', tag: 'Parallèle', color: 'gold', desc: 'Décodage par lots natif CUDA / OpenCL pour les charges prises en charge. Le débit dépend du matériel et de la taille des lots; CUDA accepte edge_weights et precision="f64" depuis la v1.0.0.' },
@@ -26,7 +33,7 @@ const RESEARCH = [
 ];
 
 const SPECS: [string, string][] = [
-  ['Langages', 'Noyau Rust (PyO3) / API Python 3.9 à 3.14'],
+  ['Langages', `Noyau Rust (PyO3) / API Python ${PYTHON_RANGE_FR}`],
   ['Plateformes', 'Linux x86_64, macOS arm64, Windows amd64'],
   ['GPU', 'Chemins par lots CUDA / OpenCL (configurations prises en charge selon la documentation)'],
   ['Bibliothèque QEC', 'Stim (simulation de bruit sur circuits quantiques)'],
@@ -41,7 +48,7 @@ export default function DecoderFR() {
     <>
       <SEO
         title="QECTOR Decoder v3 · Décodage QEC pour Python"
-        description="QECTOR Decoder v3 : 17 configurations de décodeurs dans une seule bibliothèque Python. Version stable 1.0.1 (18 roues, Python 3.9 à 3.14), paliers de stabilité d’API, Relay-BP, CS-OSD, Sinter et qiskit, et le banc d’essai qector bench."
+        description={`QECTOR Decoder v3 : 17 configurations de décodeurs dans une seule bibliothèque Python. Version stable ${PYPI_VERSION} (${PYPI_WHEELS} roues, Python ${PYTHON_RANGE_FR}), paliers de stabilité d’API, Relay-BP, CS-OSD, Sinter et qiskit, et le banc d’essai qector bench.`}
         lang="fr"
         alternates={[
           { lang: 'en', href: 'https://qector.store/decoder/' },
@@ -77,7 +84,7 @@ export default function DecoderFR() {
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Bibliothèque Python à noyau Rust offrant 17 configurations de décodeurs, du MWPM exact au décodage GPU par lots.
-            La v1.0.1 est la version stable actuelle : paliers de stabilité d’API, Relay-BP et CS-OSD, points d’entrée Sinter et qiskit,
+            La v{PYPI_VERSION} est la version stable actuelle : paliers de stabilité d’API, Relay-BP et CS-OSD, points d’entrée Sinter et qiskit,
             et l’outil en ligne de commande qector, avec une provenance de compilation pour chaque roue. Le banc d’essai reproductible
             qector bench est inclus pour mesurer sur votre propre matériel. Compatible Stim, roues binaires sur PyPI, artefacts publiés sur{' '}
             <a href="https://github.com/GuillaumeLessard/qector-decoder" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline">GitHub</a>.
@@ -94,8 +101,8 @@ export default function DecoderFR() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'Configurations', value: '17', desc: 'Du MWPM exact au GPU par lots, selon des paliers de stabilité documentés' },
-              { label: 'Roues binaires', value: '18', desc: 'Python 3.9 à 3.14 sur Windows amd64, Linux x86_64 et macOS arm64' },
-              { label: 'API stable', value: 'v1.0.1', desc: 'Version stable avec paliers de stabilité d’API documentés' },
+              { label: 'Roues binaires', value: String(PYPI_WHEELS), desc: `Python ${PYTHON_RANGE_FR} sur Windows amd64, Linux x86_64 et macOS arm64` },
+              { label: 'API stable', value: `v${PYPI_VERSION}`, desc: 'Version stable avec paliers de stabilité d’API documentés' },
               { label: 'Tests CI', value: 'Automatisés', desc: 'Validation continue et comparaison avec Stim sur GitHub' },
             ].map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} desc={m.desc} centered />
@@ -139,7 +146,7 @@ export default function DecoderFR() {
           <div>
             <EvidenceBlock
               title="État de la validation"
-              statement="La v1.0.0 (2026-08-06) a été la première version stable; la v1.0.1 (2026-11-06) est la version actuelle. Chaque décodage est vérifié contre son syndrome (H·c = s) et les manifestes d’artefacts sont scellés par SHA-256 sur GitHub. Aucun chiffre de performance universel n’est publié; qector bench est inclus pour mesurer sur votre matériel."
+              statement={`La v${PYPI_FIRST_STABLE_RELEASE.version} (${PYPI_FIRST_STABLE_RELEASE.releaseDate}) a été la première version stable; la v${PYPI_CURRENT_RELEASE.version} (${PYPI_CURRENT_RELEASE.releaseDate}) est la version actuelle. Chaque décodage est vérifié contre son syndrome (H·c = s) et les manifestes d’artefacts sont scellés par SHA-256 sur GitHub. Aucun chiffre de performance universel n’est publié; qector bench est inclus pour mesurer sur votre matériel.`}
               href="https://github.com/GuillaumeLessard/qector-decoder"
               linkLabel="Artefacts et banc d’essai sur GitHub →"
             />

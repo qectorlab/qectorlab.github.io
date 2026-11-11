@@ -1,8 +1,8 @@
 # QECTOR - qectorlab.github.io
 
-**Useful static bridge for QECTOR Decoder v3 (high-performance library) and QECTOR Workbench (free GUI v1.0.2, see qector.store) under the qectorlab brand.**
+**Source of qector.store: QECTOR Decoder v3 (Python library, Rust core) and the free QECTOR Workbench GUI, under the qectorlab brand.**
 
-**Current stable release: QECTOR Decoder v3 v1.0.0 — first stable release. API stability tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, qector CLI + qector-doctor, and the official reference manual (DOI 10.5281/zenodo.21941046).**
+**Release numbers are not repeated here: `src/lib/releases.ts` is the single source for the decoder, Workbench and plugin versions shown on the site.**
 
 **Primary site: [qector.store](https://qector.store) for full details, licensing, commercial evaluation.**
 
@@ -11,11 +11,11 @@
 ## Quick Start
 ```bash
 pip install qector-decoder-v3
-# Free Workbench v1.0.2: https://qector.store/workbench/
+# Free Workbench: https://qector.store/workbench/
 ```
 
 ## Key Claims + Evidence (all on GitHub)
-- Stable release v1.0.0: fifteen documented backend families; API stability tiers; Relay-BP, CS-OSD, LLR damping, ColourCodeDecoder, TwoStageDecoder, and AmbiguityClusterDecoder
+- Stable 1.0 line: fifteen documented backend families; API stability tiers; Relay-BP, CS-OSD, LLR damping, ColourCodeDecoder, TwoStageDecoder, and AmbiguityClusterDecoder
 - No universal benchmark figures are published on the site, because results depend on specific hardware, drivers, and workloads
 - The package ships the benchmark harness (`qector bench` prints one honest, machine-conditional rate line) and `qector-doctor` (15-point environment diagnostic) so results can be reproduced on your own machines
 - Validation reports, SHA-256 sealed artifact manifests, and claim-boundary documentation are published on GitHub and at https://qector.store/evidence
@@ -45,31 +45,45 @@ Primary source of truth: decoder repo README. This bridge has quick-start, claim
 |---|---|
 | Framework | React 19 + TypeScript, built with Vite 7 |
 | Routing | `react-router` v7, route-based code splitting per page |
-| Styling | Tailwind CSS 3, `tailwindcss-animate` |
-| UI primitives | shadcn/ui on top of Radix UI |
-| Motion | GSAP + ScrollTrigger for section reveals |
-| 3D / visuals | `three`, `@react-three/fiber`, `@react-three/drei` (where used) |
-| Charts | Inline SVG for data visuals; `recharts` available |
-| SEO | Custom `SEO` / `JsonLd` helpers in `src/lib/seo.tsx` (per-page title, description, structured data) |
+| Styling | Tailwind CSS 3, `tailwindcss-animate`, `@tailwindcss/typography` |
+| Icons | `lucide-react` |
+| Fonts | Inter and JetBrains Mono, bundled (`@fontsource-variable/*`); no third-party font host |
+| Motion | `useScrollReveal` (IntersectionObserver + Web Animations) and CSS; no animation library |
+| Charts | Inline SVG |
+| Blog | Markdown rendered with `react-markdown`, GFM, KaTeX |
+| Static generation | Every route is rendered to HTML by React at build time (`react-dom/static`) and hydrated in the browser |
+| SEO | Custom `SEO` / `JsonLd` helpers in `src/lib/seo.tsx`; per-route metadata in `src/lib/prerenderData.ts` |
 
 ## Getting started
 
 ```bash
-npm install
-npm run dev        # local dev server with HMR
-npm run build       # type-check (tsc -b) + production build to dist/
+npm ci
+npm run dev         # local dev server with HMR
+npm run typecheck   # tsc -b
+npm run lint        # eslint
+npm run build       # tsc -b, production bundle, then every route rendered to static HTML in dist/
 npm run preview     # preview the production build locally
-npm run lint         # eslint
+npm run check       # static, browser and accessibility checks of dist/ (needs `npx playwright install chromium` once)
+npm run deploy      # commit dist/ to the gh-pages branch (add `-- --push` to publish)
 ```
 
-Node 18+ is recommended. The production build type-checks the whole project before bundling - a failing `tsc -b` will fail the build.
+Node 22 is what the audit workflow uses. The build type-checks first: a failing `tsc -b` fails the build. It needs no browser: Playwright is only used by the checks (`npm run check`) and by `npm run og`.
+
+### How a page is built and loaded
+
+1. `vite build` bundles the site and writes one HTML file per route (`dist/<route>/index.html`, plus `404.html`). Each has the route's `<head>` (title, description, canonical, Open Graph, JSON-LD, hreflang, and the `<link>` tags for the route's own chunk and stylesheet) and a short summary in `#root`. Routes come from `src/App.tsx` and the blog posts; a route without an entry in `src/lib/prerenderData.ts` is a build error. `npm run build:spa` stops here.
+2. `scripts/prerender.mjs` bundles `src/entry-server.tsx` for Node (a Vite SSR build) and renders every route with React itself (`prerender` from `react-dom/static`, which waits for lazy routes) at the URL the browser will have (`/pricing/`). The result replaces the summary in `#root`, marked with that URL (`data-prerendered`). It prints how many routes it rendered, and fails if a page is left with a loading state, hidden content or a script.
+3. In the browser, `src/main.tsx` attaches to that HTML with `hydrateRoot`. Nothing is rendered twice, and a lazy route's static HTML stays on screen while its chunk loads.
+
+Three pages differ. Blog posts carry their Markdown as a JSON data block (`<script type="application/json" id="qector-post">`, never executed, so the Content-Security-Policy is not involved): the browser starts from it instead of fetching the article, and still fetches when a post is opened by navigating inside the site. `/success` depends on its query string, so nothing is generated for it and the browser renders it (`CLIENT_RENDERED_ROUTES` in `vite.config.ts`). `404.html` contains the NotFound page, but it is served for every unknown URL, so the browser renders it again instead of attaching to it.
+
+Hydration only works when the browser's first render produces exactly what the build produced. Code that runs during render must therefore give the same result in Node and in every browser: `window`, `document`, the clock, random numbers and locale-dependent formatting (`toLocaleDateString`) belong in effects and event handlers. `npm run check:browser` opens every route and fails on any hydration error and on static HTML that React had to render again.
 
 ## Project structure
 
 ```
 src/
   components/       Shared UI building blocks
-    ui/             shadcn/ui primitives (button, card, dialog, etc.)
     Navigation.tsx  Site header, mobile menu, active-route highlighting
     Footer.tsx      Site footer, link groups, legal links
     Layout.tsx      Page shell: skip link, route-change focus management
@@ -84,13 +98,14 @@ src/
   pages/            One file per route (see Navigation.tsx for the route list)
   lib/
     seo.tsx         <SEO> and <JsonLd> helpers
-    utils.ts        Class-name and misc utilities
-  hooks/            Shared hooks (e.g. use-mobile)
+    releases.ts     Release constants (versions, Python range, DOIs)
+    prerenderData.ts  Per-route title, description and structured data
+  hooks/            Shared hooks (useScrollReveal, usePyPIVersion)
 ```
 
 ### Shared component pattern
 
-Cards, section headers, and evidence blocks are intentionally centralized (`components/*.tsx`, not `ui/*`) so that every page - Home, Decoder, Evidence, Pricing, Docs - renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
+Cards, section headers, and evidence blocks are intentionally centralized in `components/*.tsx` so that every page - Home, Decoder, Evidence, Pricing, Docs - renders the same visual language instead of re-implementing card markup per page. When adding a new page, prefer reusing one of these over writing new markup; if none fit, extract a new shared component rather than duplicating.
 
 ## Accessibility
 
@@ -111,7 +126,7 @@ No universal benchmark figures are published on the site, because results depend
 
 ## Deployment
 
-The site is a static Vite build deployed to GitHub Pages from `qectorlab/qectorlab.github.io`. `npm run build` outputs to `dist/`; the deployed site is served from that output. SEO/crawler files (`robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt`) and `.well-known` metadata live in `public/` and are copied as-is.
+The site is a static Vite build published to GitHub Pages from the `gh-pages` branch of `qectorlab/qectorlab.github.io`: `npm run build` writes `dist/`, and `npm run deploy` commits that folder to the branch (hashed files of the previous build are kept for one more deploy, so open tabs keep working). SEO and crawler files (`robots.txt`, `llms.txt`, `llms-full.txt`) and `.well-known` metadata live in `public/` and are copied as-is; `sitemap.xml` is generated from the routes at build time. Response headers come from the `qector-headers` Worker, which mirrors `public/_headers`.
 
 ## License
 

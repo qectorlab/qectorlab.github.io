@@ -9,6 +9,8 @@
 // QECTOR_SILENT documentation in the package reference) and the Stripe prices
 // wired into Pricing.tsx. Do not describe behaviour the wheel does not have.
 
+import { PYPI_INSTALL_SPEC } from './releases';
+
 export interface FaqItem {
   q: string;
   a: string;
@@ -21,7 +23,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'How is the licence delivered, and what does the token unlock?',
-    a: 'By e-mail within minutes of payment (check spam, then write to admin@qector.store with your Stripe receipt). Everyone installs the same wheel: pip install --upgrade "qector-decoder-v3>=1.0.1,<2". Set QECTOR_LICENSE_KEY and QECTOR_LICENSE to the token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; Lab and Enterprise also raise the code-distance tier to 63. CPU decoding is never blocked, and distance caps are only enforced if you set QECTOR_ENFORCE=1.'
+    a: `By e-mail within minutes of payment (check spam, then write to admin@qector.store with your Stripe receipt). Everyone installs the same wheel: pip install --upgrade "${PYPI_INSTALL_SPEC}". Set QECTOR_LICENSE_KEY and QECTOR_LICENSE to the token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; Lab and Enterprise also raise the code-distance tier to 63. CPU decoding is never blocked, and distance caps are only enforced if you set QECTOR_ENFORCE=1.`
   },
   {
     q: 'Can I try it before committing?',
@@ -53,7 +55,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'What currency are prices in, and is tax included?',
-    a: 'Prices are in US dollars and exclude tax. Applicable sales tax, GST/HST or VAT is calculated and added at checkout from your billing address. Businesses can enter a VAT/GST number at checkout.'
+    a: 'Prices are in US dollars and exclude tax. Applicable sales tax, GST/QST or VAT is calculated and added at checkout from your billing address. Businesses can enter a VAT/GST number at checkout.'
   },
   {
     q: 'Can we get a signed agreement, tax form or security questionnaire?',
@@ -71,7 +73,7 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'Comment la licence est-elle livrée, et que déverrouille le jeton ?',
-    a: 'Par courriel dans les minutes qui suivent le paiement (vérifiez le courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe). Tout le monde installe la même wheel : pip install --upgrade "qector-decoder-v3>=1.0.1,<2". Définissez QECTOR_LICENSE_KEY et QECTOR_LICENSE au jeton. Chaque forfait payant déverrouille le décodage GPU (CUDA/OpenCL) par lots; Labo et Entreprise portent aussi le palier de distance à 63. Le décodage CPU n’est jamais bloqué, et les plafonds de distance ne s’appliquent que si QECTOR_ENFORCE=1.'
+    a: `Par courriel dans les minutes qui suivent le paiement (vérifiez le courrier indésirable, puis écrivez à admin@qector.store avec votre reçu Stripe). Tout le monde installe la même wheel : pip install --upgrade "${PYPI_INSTALL_SPEC}". Définissez QECTOR_LICENSE_KEY et QECTOR_LICENSE au jeton. Chaque forfait payant déverrouille le décodage GPU (CUDA/OpenCL) par lots; Labo et Entreprise portent aussi le palier de distance à 63. Le décodage CPU n’est jamais bloqué, et les plafonds de distance ne s’appliquent que si QECTOR_ENFORCE=1.`
   },
   {
     q: 'Puis-je l’essayer avant de m’engager ?',
@@ -103,7 +105,7 @@ export const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: 'En quelle devise sont les prix, et la taxe est-elle incluse ?',
-    a: 'Les prix sont en dollars américains, hors taxes. La taxe de vente, TPS/TVH ou TVA applicable est calculée et ajoutée au paiement selon votre adresse de facturation. Les entreprises peuvent saisir un numéro de TPS/TVA au paiement.'
+    a: 'Les prix sont en dollars américains, hors taxes. La taxe de vente, TPS/TVQ ou TVA applicable est calculée et ajoutée au paiement selon votre adresse de facturation. Les entreprises peuvent saisir un numéro de TPS/TVA au paiement.'
   },
   {
     q: 'Pouvons-nous obtenir un contrat signé, un formulaire fiscal ou un questionnaire de sécurité ?',

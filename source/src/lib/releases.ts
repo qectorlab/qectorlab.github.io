@@ -22,6 +22,14 @@ export const PYPI_PACKAGE = 'qector-decoder-v3';
 export const PYPI_VERSION = '1.0.1';
 export const PYPI_WHEELS = 18;
 export const PYTHON_RANGE = '3.9-3.14';
+// The same range written for French copy ("Python 3.9 à 3.14").
+export const PYTHON_RANGE_FR = PYTHON_RANGE.replace('-', ' à ');
+// Requirement specifier for every install command shown to buyers. The floor is
+// 1.0.1, the first release in which every paid licence token unlocks GPU batch
+// decoding; it is a floor, not the current version, so it does not follow
+// PYPI_VERSION automatically.
+export const PYPI_INSTALL_SPEC = `${PYPI_PACKAGE}>=1.0.1,<2`;
+export const PYPI_FIRST_STABLE_VERSION = '1.0.0';
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const REFERENCE_MANUAL_DOI = '10.5281/zenodo.21941046';
 export const REGISTRY_UPDATED_AT = '2026-11-06';
@@ -49,6 +57,17 @@ export const PYPI_RELEASES = [
   { version: '0.5.1', releaseDate: '2026-06-24', label: 'Published PyPI milestone' },
   { version: '0.5.0', releaseDate: '2026-06-24', label: 'First recorded PyPI release' },
 ];
+
+// Registry entries for the two releases pages name most often. A version
+// constant with no matching PYPI_RELEASES row fails the build instead of
+// rendering an undefined date.
+function pypiRelease(version: string) {
+  const release = PYPI_RELEASES.find((r) => r.version === version);
+  if (!release) throw new Error(`releases.ts: PYPI_RELEASES has no entry for ${version}`);
+  return release;
+}
+export const PYPI_CURRENT_RELEASE = pypiRelease(PYPI_VERSION);
+export const PYPI_FIRST_STABLE_RELEASE = pypiRelease(PYPI_FIRST_STABLE_VERSION);
 
 export const CLAUDE_PLUGIN_RELEASE = {
   version: '2.0.1',

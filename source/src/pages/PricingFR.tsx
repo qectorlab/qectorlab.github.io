@@ -1,5 +1,4 @@
 import { GraduationCap } from 'lucide-react';
-import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
@@ -7,38 +6,11 @@ import NeuralReveal from '../components/NeuralReveal';
 import { FAQ_ITEMS_FR } from '../lib/faqData';
 import CodeBlock from '../components/CodeBlock';
 import { LINKS, PRICES, usdFr } from '../lib/pricing';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { PYPI_INSTALL_SPEC } from '../lib/releases';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function PricingFR() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://js.stripe.com/v3/buy-button.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-      // Stagger animate all sections
-       sectionsRef.current.filter(Boolean).forEach((section) => {
-        gsap.fromTo(section, { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-        });
-      });
-    });
-
-    return () => {
-      ctx.revert();
-      if (script.parentNode === document.body) document.body.removeChild(script);
-    };
-  }, []);
-
-  const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+  const addRef = useScrollReveal({ y: 40, duration: 800 });
 
   return (
     <>
@@ -166,7 +138,7 @@ export default function PricingFR() {
             <CodeBlock
               language="bash"
               className="mb-6"
-              code={`pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
+              code={`pip install --upgrade "${PYPI_INSTALL_SPEC}"
 export QECTOR_LICENSE_KEY="<votre-jeton>"
 export QECTOR_LICENSE="<votre-jeton>"
 
@@ -183,7 +155,7 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
         <div ref={(el) => addRef(el, 3)}>
           <h2 className="text-3xl font-bold mb-8 text-center">Pourquoi licencier QECTOR ?</h2>
           <div className="card-surface bg-surface/50 border border-gridline">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Comparaison de l’usage gratuit et sous licence">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-gridline/50">

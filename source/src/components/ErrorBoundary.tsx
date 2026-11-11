@@ -9,6 +9,8 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
+const RELOAD_FLAG = 'qector-chunk-reload';
+
 export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { hasError: false };
 
@@ -18,6 +20,18 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error('QECTOR site error boundary caught:', error, info.componentStack);
+    // A tab opened before a deploy can ask for a route chunk that has since
+    // been replaced. Reload once to pick up the current build; the flag stops
+    // a reload loop if the chunk is missing for another reason.
+    const staleChunk = /dynamically imported module|Importing a module script failed|module script failed/i.test(error.message);
+    if (!staleChunk) return;
+    try {
+      if (window.sessionStorage.getItem(RELOAD_FLAG)) return;
+      window.sessionStorage.setItem(RELOAD_FLAG, '1');
+    } catch {
+      return;
+    }
+    window.location.reload();
   }
 
   handleReload = () => {

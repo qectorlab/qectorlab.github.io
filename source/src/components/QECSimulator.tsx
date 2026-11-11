@@ -220,7 +220,7 @@ export default function QECSimulator() {
       pairs: Array<[Node | 'L' | 'R', Node | 'L' | 'R']>;
     }
 
-    // Memoized solve solver
+    // Exhaustive search: at most nine active checks, so no memoization is needed.
     const solve = (unmatched: Node[]): MatchResult => {
       if (unmatched.length === 0) {
         return { cost: 0, pairs: [] };
@@ -300,64 +300,23 @@ export default function QECSimulator() {
     setHasDecoded(true);
   }, [activeChecks, nodes, getShortestPath]);
 
-  // Compute success/logical error status:
-  // Combined subgraph = error edges XOR correction edges.
-  // A logical error occurs if the combined subgraph connects left boundary to right boundary.
+  // Success or logical error, from the residual = error edges XOR correction edges.
   const codeStatus = useMemo(() => {
     if (!hasDecoded) return 'idle';
 
-    // Build adjacency list for path finding on active sub-graph (Errors XOR Corrections)
-    // In QEC, correction cancels syndrome errors, so if error XOR correction connects boundaries,
-    // it means we created a logical loop.
-    const activeEdges = edges.filter((edge) => {
-      const err = errors[edge.id] || false;
-      const corr = corrections[edge.id] || false;
-      return err !== corr; // XOR
-    });
-
-    // Node representation: 'L' boundary, 'R' boundary, or check coordinates 'r_c'
-    const adj: Record<string, string[]> = {};
-    const addEdge = (u: string, v: string) => {
-      if (!adj[u]) adj[u] = [];
-      if (!adj[v]) adj[v] = [];
-      adj[u].push(v);
-      adj[v].push(u);
-    };
-
-    activeEdges.forEach((edge) => {
-      if (edge.type === 'H') {
-        addEdge(`${edge.r}_${edge.c}`, `${edge.r}_${edge.c + 1}`);
-      } else if (edge.type === 'V') {
-        addEdge(`${edge.r}_${edge.c}`, `${edge.r + 1}_${edge.c}`);
-      } else if (edge.type === 'L') {
-        addEdge('L', `${edge.r}_0`);
-      } else if (edge.type === 'R') {
-        addEdge('R', `${edge.r}_2`);
-      }
-    });
-
-    // BFS to find if 'L' connects to 'R'
-    const visited: Record<string, boolean> = {};
-    const queue = ['L'];
-    visited['L'] = true;
-
-    let hasPath = false;
-    while (queue.length > 0) {
-      const u = queue.shift() as string;
-      if (u === 'R') {
-        hasPath = true;
-        break;
-      }
-      const neighbors = adj[u] || [];
-      neighbors.forEach((v) => {
-        if (!visited[v]) {
-          visited[v] = true;
-          queue.push(v);
-        }
-      });
-    }
-
-    return hasPath ? 'failure' : 'success';
+    // The residual (errors XOR corrections) has no syndrome left, so it is made
+    // of closed loops and of chains that end on a boundary. Only a chain that
+    // runs from the left boundary to the right one is a logical operator, and
+    // two of them cancel; a chain that returns to the boundary it left is a
+    // product of stabilizers. A left-to-left chain uses two left-boundary
+    // qubits and a left-to-right chain one, so the logical outcome is the
+    // parity of the residual on the left boundary. (Testing whether the two
+    // boundaries are merely connected reports two crossing chains, which act
+    // as the identity, as a failure.)
+    const leftCrossings = edges.filter(
+      (edge) => edge.type === 'L' && (errors[edge.id] || false) !== (corrections[edge.id] || false),
+    ).length;
+    return leftCrossings % 2 === 1 ? 'failure' : 'success';
   }, [hasDecoded, errors, corrections, edges]);
 
   return (

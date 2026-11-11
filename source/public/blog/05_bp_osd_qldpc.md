@@ -119,7 +119,7 @@ The division of labour is:
 
 The manual records two check-node rules, exact sum-product and min-sum, plus a relay schedule. The Rust implementation evaluates the box-plus function exactly in a small range and uses a tabulated interpolation path over a larger range. The relevant evidence is numerical-stability testing, not a universal floating-point guarantee across arbitrary hardware.
 
-On the Python surface, `BPOSDDecoder` exposes `bp_method` ("relay" selects the layered schedule) and an adjustable `osd_lambda`. The batch path can run BP over a batch on a usable GPU and send only non-converged shots through the exact GF(2) post-process. Two bounds apply: the published 1.0.0 wheels are CPU-only, so GPU paths are build-time feature gates whose runtime availability is reported by `cuda_is_available()`; and without a usable device the batch path falls back to NumPy with the same validity contract. The single-shot path is CPU-oriented because a GPU launch is not assumed to amortize for one syndrome.
+On the Python surface, `BpOsdDecoder` exposes `bp_method` ("relay" selects the layered schedule) and an adjustable `osd_lambda`. The batch path can run BP over a batch on a usable GPU and send only non-converged shots through the exact GF(2) post-process. Two bounds apply: the published 1.0.0 wheels are CPU-only, so GPU paths are build-time feature gates whose runtime availability is reported by `cuda_is_available()`; and without a usable device the batch path falls back to NumPy with the same validity contract. The single-shot path is CPU-oriented because a GPU launch is not assumed to amortize for one syndrome.
 
 ## 7. Complexity language that stays honest
 

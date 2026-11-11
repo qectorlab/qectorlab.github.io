@@ -2,7 +2,7 @@ import path from "path"
 import fs from "fs"
 import { execFileSync } from "child_process"
 import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
+import { defineConfig, type Plugin, type Rollup } from "vite"
 import { inspectAttr } from 'kimi-plugin-inspect-react'
 import { PRERENDER_ROUTE_MAP, buildJsonLdGraph, SITE_URL, type PrerenderRoute } from './src/lib/prerenderData'
 
@@ -16,11 +16,21 @@ function setTag(html: string, re: RegExp, value: string): string {
   return html.replace(re, (_m, pre: string, post: string) => `${pre}${escAttr(value)}${post}`)
 }
 
+interface ShellOptions {
+  /** <link> tags for the route's own code and styles (see routeHeadLinks). */
+  headLinks?: string
+  /** The page depends on something only the browser knows (a query string):
+   *  #root stays empty and the browser renders it. */
+  clientRendered?: boolean
+}
+
 // Inject route-specific SEO + static content into a built HTML shell.
-// Turns the empty SPA shell into a prerendered page: crawlers and no-JS
-// agents get a real title, real meta tags, JSON-LD, and readable body text.
-// React replaces the static body on mount (createRoot clears #root).
-function applyRouteSeo(shell: string, route: PrerenderRoute): string {
+// Turns the empty SPA shell into a page with a real title, real meta tags,
+// JSON-LD and a short readable summary in #root. scripts/prerender.mjs then
+// replaces that summary with the page as React renders it; a build that stops
+// before that step (`npm run build:spa`) keeps the summary, which React
+// replaces on mount.
+function applyRouteSeo(shell: string, route: PrerenderRoute, options: ShellOptions = {}): string {
   const url = `${SITE_URL}${route.path === '/' ? '/' : `${route.path}/`}`
   let html = shell
 
@@ -107,10 +117,19 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
     `    <script type="application/ld+json">${jsonLd}</script>\n  </head>`
   )
 
-  // Static, crawlable body content. React clears it on mount; no-JS agents keep it.
-  html = html.replace(
-    '<div id="root"></div>',
-    `<div id="root">${route.body}</div>\n    <noscript><p style="font-family:system-ui;padding:1rem;text-align:center;color:#94a3b8;">This page is fully interactive with JavaScript enabled. The text above is the static summary of ${escAttr(url)}.</p></noscript>`
+  // The route's own chunk and stylesheet, so the browser fetches them with the
+  // entry script instead of after it has run.
+  if (options.headLinks) html = html.replace('</head>', () => `${options.headLinks}  </head>`)
+
+  // Static, crawlable body content (replacer functions: the summary is HTML
+  // with "$" in it, which a replacement string would interpret).
+  const note = `<p style="font-family:system-ui;padding:1rem;text-align:center;color:#94a3b8;">This page is fully interactive with JavaScript enabled. The text above is the static summary of ${escAttr(url)}.</p>`
+  html = html.replace('<div id="root"></div>', () =>
+    options.clientRendered
+      // Nothing in #root for React to attach to; readers without JavaScript
+      // get the summary from the <noscript> block.
+      ? `<div id="root"></div>\n    <noscript>${route.body}${note}</noscript>`
+      : `<div id="root">${route.body}</div>\n    <noscript>${note}</noscript>`
   )
 
   return html
@@ -121,7 +140,7 @@ function applyRouteSeo(shell: string, route: PrerenderRoute): string {
 // <script type="<random>-module">, breaking ESM and causing the browser to
 // download files instead. The data-cfasync="false" attribute tells Cloudflare
 // to skip Rocket Loader for that tag.
-function cfRocketBypass(): import('vite').Plugin {
+function cfRocketBypass(): Plugin {
   return {
     name: 'cf-rocket-bypass',
     enforce: 'post',
@@ -133,7 +152,7 @@ function cfRocketBypass(): import('vite').Plugin {
 
 // KaTeX ships ttf and woff fonts that are never used (only woff2 is loaded
 // by its CSS). Drop them from the bundle to cut emitted asset weight.
-function dropUnusedKatexFonts(): import('vite').Plugin {
+function dropUnusedKatexFonts(): Plugin {
   return {
     name: 'drop-unused-katex-fonts',
     apply: 'build',
@@ -170,14 +189,19 @@ function gitDate(files: string[]): string {
   }
 }
 
+// The page component file behind a <Route path="…"> of App.tsx (the path as
+// written there: "/pricing", "/blog/:id", "*").
+function routePageFile(declaredPath: string, app: string): string | null {
+  const route = app.match(new RegExp(`<Route\\s+path="${declaredPath.replace(/[/*:-]/g, (c) => `\\${c}`)}"\\s+element=\\{<(\\w+)`))
+  if (!route) return null
+  const imp = app.match(new RegExp(`const ${route[1]} = lazy\\(\\(\\) => import\\('\\./pages/(\\w+)'\\)\\)`))
+  return path.resolve(__dirname, `src/pages/${imp ? imp[1] : route[1]}.tsx`)
+}
+
 function routeSourceFiles(routePath: string, app: string): string[] {
   const files: string[] = []
-  const route = app.match(new RegExp(`<Route\\s+path="${routePath.replace(/[/-]/g, (c) => `\\${c}`)}"\\s+element=\\{<(\\w+)`))
-  if (route) {
-    const imp = app.match(new RegExp(`const ${route[1]} = lazy\\(\\(\\) => import\\('\\./pages/(\\w+)'\\)\\)`))
-    const name = imp ? imp[1] : route[1]
-    files.push(path.resolve(__dirname, `src/pages/${name}.tsx`))
-  }
+  const pageFile = routePageFile(routePath, app)
+  if (pageFile) files.push(pageFile)
   if (routePath.startsWith('/blog/')) {
     const meta = PRERENDER_ROUTE_MAP[routePath] as PrerenderRoute & { sourceFile?: string }
     if (meta?.sourceFile) files.push(path.resolve(__dirname, meta.sourceFile))
@@ -204,13 +228,73 @@ function buildSitemap(routePaths: string[], app: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`
 }
 
-// GitHub Pages SPA routing.
+// ── Static generation: what the client build hands to scripts/prerender.mjs ──
+// The list of pages to render is decided here, with the shells, and written to
+// a small manifest next to the server bundle (node_modules/.ssg/, never
+// published), so the prerender step never has to guess routes from dist/.
+const SSG_DIR = path.resolve(__dirname, 'node_modules/.ssg')
+const SSG_MANIFEST = path.join(SSG_DIR, 'pages.json')
+
+// Routes whose content depends on something only the browser knows. /success
+// reads ?session_id= from the URL Stripe redirects to, so there is no single
+// HTML to generate for it: its #root is left empty and the browser renders it.
+const CLIENT_RENDERED_ROUTES = new Set(['/success'])
+
+interface SsgPage {
+  /** HTML file, relative to the output directory. */
+  file: string
+  /** URL to render: the one the browser has when it loads that file. */
+  url: string
+  /** hydrate: React attaches to the generated HTML.
+   *  replace: generated HTML for first paint and no-JS readers, which the
+   *           browser renders again (404.html answers every unknown URL, so it
+   *           cannot be the render of any one of them).
+   *  client:  nothing is generated; the browser renders the page. */
+  mode: 'hydrate' | 'replace' | 'client'
+  /** Blog posts: the article to render and embed. */
+  post?: { filename: string; source: string }
+}
+
+// <link> tags for a route's own code: its chunk, the chunks that one imports,
+// and their stylesheets. Vite only puts the entry's imports in index.html, so
+// without these the browser learns about the page's chunk when the entry
+// script runs and asks for it, and a statically rendered page that needs its
+// own stylesheet (KaTeX on blog posts) is painted before the stylesheet exists.
+// Chunks the page loads lazily itself (the Markdown renderer of a blog post)
+// are included: the generated HTML contains what they render, so hydrating the
+// page needs them. Pages inside the entry bundle (Home) need nothing.
+function routeHeadLinks(bundle: Rollup.OutputBundle, pageFile: string | null): string {
+  const chunks = Object.values(bundle).filter((f): f is Rollup.OutputChunk => f.type === 'chunk')
+  const byName = new Map(chunks.map((c) => [c.fileName, c]))
+  const closure = (roots: Rollup.OutputChunk[], into = new Set<Rollup.OutputChunk>()) => {
+    for (const chunk of roots) {
+      if (into.has(chunk)) continue
+      into.add(chunk)
+      closure(chunk.imports.flatMap((name) => byName.get(name) ?? []), into)
+    }
+    return into
+  }
+  const page = pageFile && chunks.find((c) => !c.isEntry && c.facadeModuleId && path.resolve(c.facadeModuleId) === pageFile)
+  if (!page) return ''
+  // Already in index.html: the entry script, its imports and their stylesheets.
+  const loaded = closure(chunks.filter((c) => c.isEntry))
+  const needed = [...closure([page, ...page.dynamicImports.flatMap((name) => byName.get(name) ?? [])])].filter((c) => !loaded.has(c))
+  const css = (list: Iterable<Rollup.OutputChunk>) => new Set([...list].flatMap((c) => [...(c.viteMetadata?.importedCss ?? [])]))
+  const loadedCss = css(loaded)
+  return [
+    ...needed.map((c) => `    <link rel="modulepreload" crossorigin href="/${c.fileName}">\n`),
+    ...[...css(needed)].filter((file) => !loadedCss.has(file)).map((file) => `    <link rel="stylesheet" crossorigin href="/${file}">\n`),
+  ].join('')
+}
+
+// GitHub Pages routing: one real HTML file per route.
 //
 // Two problems, one plugin:
 //
-// 1. Unknown paths. GitHub Pages serves 404.html, which must be an exact copy of
-//    index.html so the React router can take over. Generated here so it always
-//    matches (same asset hashes, same attributes).
+// 1. Unknown paths. GitHub Pages serves 404.html, which is built from the same
+//    shell as every other page (same asset hashes, same attributes), so the
+//    React router takes over and shows the NotFound page, or the real page
+//    when the URL only differs from a route by its letter case.
 //
 // 2. *Known* paths. Pages has no rewrite rule, so a direct hit on /pricing also
 //    fell through to 404.html - the page rendered, but the response carried HTTP
@@ -222,18 +306,28 @@ function buildSitemap(routePaths: string[], app: string): string {
 //    Emitting dist/<route>/index.html for every real route makes each one a
 //    genuine 200. Routes are parsed straight out of App.tsx rather than kept in a
 //    second list here, so a new <Route> can never silently miss a directory.
-function ghPagesSpaShell(): import('vite').Plugin {
+//
+// Each file gets the route's <head> and a short summary in #root. The page
+// itself is rendered into #root afterwards by scripts/prerender.mjs, from the
+// list written to SSG_MANIFEST.
+function ghPagesSpaShell(buildYear: string): Plugin {
+  let dist = path.resolve(__dirname, 'dist')
   return {
     name: 'gh-pages-spa-shell',
     apply: 'build',
-    writeBundle() {
-      const dist = path.resolve(__dirname, 'dist')
+    configResolved(config) {
+      dist = path.resolve(config.root, config.build.outDir)
+    },
+    writeBundle(_options, bundle) {
       const shell = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
+      const app = fs.readFileSync(path.resolve(__dirname, 'src/App.tsx'), 'utf8')
+      const pages: SsgPage[] = []
 
       // ── base index.html (route /) ──────────────────────────────────────────
       const homeMeta = PRERENDER_ROUTE_MAP['/']
       if (!homeMeta) this.error('gh-pages-spa-shell: Missing prerender data for "/".')
-      fs.writeFileSync(path.join(dist, 'index.html'), applyRouteSeo(shell, homeMeta))
+      fs.writeFileSync(path.join(dist, 'index.html'), applyRouteSeo(shell, homeMeta, { headLinks: routeHeadLinks(bundle, routePageFile('/', app)) }))
+      pages.push({ file: 'index.html', url: '/', mode: 'hydrate' })
 
       // ── 404 unknown-path fallback (keep SEO-poor so it does not compete) ──
       const _404html = applyRouteSeo(shell, {
@@ -243,11 +337,11 @@ function ghPagesSpaShell(): import('vite').Plugin {
         noindex: true,
         heading: '',
         body: '',
-      }).replace(/<link rel="canonical"[^>]*>\n?/, '')
+      }, { headLinks: routeHeadLinks(bundle, routePageFile('*', app)) }).replace(/<link rel="canonical"[^>]*>\n?/, '')
       fs.writeFileSync(path.join(dist, '404.html'), _404html)
+      pages.push({ file: '404.html', url: '/404', mode: 'replace' })
 
       // ── route shells: one dist/<path>/index.html per real route ────────────
-      const app = fs.readFileSync(path.resolve(__dirname, 'src/App.tsx'), 'utf8')
       const declaredRoutePaths = [...app.matchAll(/<Route\s+path="([^"]+)"/g)]
         .map((m) => m[1])
         .filter((p) => p !== '*' && p !== '/' && !p.includes(':'))
@@ -270,25 +364,51 @@ function ghPagesSpaShell(): import('vite').Plugin {
               `Add an entry to src/lib/prerenderData.ts`
           )
         }
-        const dir = path.join(dist, routePath.replace(/^\//, ''))
-        fs.mkdirSync(dir, { recursive: true })
-        fs.writeFileSync(path.join(dir, 'index.html'), applyRouteSeo(shell, meta))
+        const isPost = dynamicBlogPaths.includes(routePath)
+        const clientRendered = CLIENT_RENDERED_ROUTES.has(routePath)
+        const headLinks = routeHeadLinks(bundle, routePageFile(isPost ? '/blog/:id' : routePath, app))
+        const file = `${routePath.replace(/^\//, '')}/index.html`
+        fs.mkdirSync(path.dirname(path.join(dist, file)), { recursive: true })
+        fs.writeFileSync(path.join(dist, file), applyRouteSeo(shell, meta, { headLinks, clientRendered }))
+        const page: SsgPage = { file, url: `${routePath}/`, mode: clientRendered ? 'client' : 'hydrate' }
+        if (isPost) {
+          // A post without its Markdown would be published as an empty article.
+          if (!meta.sourceFile || !fs.existsSync(path.resolve(__dirname, meta.sourceFile))) {
+            this.error(`gh-pages-spa-shell: no Markdown file for "${routePath}" (sourceFile: ${meta.sourceFile ?? 'not set'}).`)
+          }
+          page.post = { filename: path.basename(meta.sourceFile), source: path.resolve(__dirname, meta.sourceFile) }
+        }
+        pages.push(page)
       }
       fs.writeFileSync(path.join(dist, 'sitemap.xml'), buildSitemap(routePaths, app))
+      fs.mkdirSync(SSG_DIR, { recursive: true })
+      fs.writeFileSync(SSG_MANIFEST, JSON.stringify({ outDir: dist, buildYear, pages }, null, 2))
       console.log(
-        `gh-pages-spa-shell: emitted prerendered 200-status shells for ${routePaths.length} routes and sitemap.xml`
+        `gh-pages-spa-shell: emitted 200-status shells for ${routePaths.length} routes and sitemap.xml`
       )
     },
   }
 }
 
-export default defineConfig(({ command }) => ({
+// The copyright year in the footer is fixed when the site is built, so the
+// generated HTML and the browser bundle print the same text (React attaches to
+// the HTML only if they agree). The server bundle is built by a second Vite run:
+// scripts/prerender.mjs passes it the year of the client build (recorded in
+// SSG_MANIFEST), so a build that straddles midnight on 31 December still agrees.
+const BUILD_YEAR = String(new Date().getFullYear())
+
+export default defineConfig(({ command, isSsrBuild }) => ({
   base: '/',
   // inspectAttr() tags every JSX element with source file/line data attributes.
   // Useful in the editor while developing, but it has no business shipping to
   // production: it bloats the bundle and leaks internal file paths into the
   // live HTML. Only include it when Vite is running the dev server.
-  plugins: [...(command === 'serve' ? [inspectAttr()] : []), cfRocketBypass(), ghPagesSpaShell(), dropUnusedKatexFonts(), react()],
+  // The shells belong to the client build; the server build (isSsrBuild) only
+  // produces the bundle that renders into them.
+  plugins: [...(command === 'serve' ? [inspectAttr()] : []), cfRocketBypass(), ...(isSsrBuild ? [] : [ghPagesSpaShell(BUILD_YEAR)]), dropUnusedKatexFonts(), react()],
+  define: {
+    __BUILD_YEAR__: JSON.stringify(BUILD_YEAR),
+  },
   server: {
     port: 3000,
   },
@@ -299,16 +419,19 @@ export default defineConfig(({ command }) => ({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/') || id.includes('node_modules/scheduler')) return 'vendor-react';
-          if (id.includes('node_modules/three') || id.includes('node_modules/@react-three')) return 'vendor-three';
-          if (id.includes('node_modules/gsap')) return 'vendor-gsap';
-          if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/lucide-react')) return 'vendor-ui';
-          if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-')) return 'vendor-charts';
+          if (id.includes('node_modules/lucide-react')) return 'vendor-ui';
           // Markdown/KaTeX and other libraries are left to Rollup's own
           // splitting so they load only on the routes that use them (blog
           // posts), instead of being preloaded on every page.
         },
       },
     },
+  },
+  ssr: {
+    // The server bundle (src/entry-server.tsx) contains its dependencies, like
+    // the browser bundle does: both then render with the very same modules,
+    // and Node never has to resolve a package that only ships browser code.
+    noExternal: true,
   },
   resolve: {
     alias: {

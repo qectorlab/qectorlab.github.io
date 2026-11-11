@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import CodeBlock from '../components/CodeBlock';
 import { PRICES, usdFr } from '../lib/pricing';
+import { PYPI_VERSION, PYPI_WHEELS } from '../lib/releases';
 
 // Page d'accueil en français. Les pages produit détaillées restent en anglais;
 // les pages commerciales et juridiques ont toutes leur version française.
@@ -15,7 +16,7 @@ const PRODUITS = [
 const GARANTIES = [
   ['Chaque correction est vérifiée', 'Chaque résultat satisfait H·c = s (mod 2) : la correction reproduit le syndrome.'],
   ['Licences hors ligne', 'Jetons Ed25519 vérifiés localement. Aucun serveur de licence, aucune télémétrie : fonctionne sur des machines isolées.'],
-  ['Versions vérifiables', '18 wheels construites dans GitHub Actions, avec provenance Sigstore et attestations PyPI, testées sur chaque système avant publication.'],
+  ['Versions vérifiables', `${PYPI_WHEELS} wheels construites dans GitHub Actions, avec provenance Sigstore et attestations PyPI, testées sur chaque système avant publication.`],
   ['Aucun nombre de postes', 'Une licence couvre l’usage interne de votre organisation, sur autant de machines et par autant de personnes que nécessaire.'],
 ];
 
@@ -36,7 +37,7 @@ export default function HomeFR() {
       <section className="relative pt-36 pb-20 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding max-w-4xl mx-auto">
-          <div className="eyebrow-pill mb-6">v1.0.1 · 18 wheels vérifiées</div>
+          <div className="eyebrow-pill mb-6">v{PYPI_VERSION} · {PYPI_WHEELS} wheels vérifiées</div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.08] mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-400">Décodage QEC</span> pour Python
           </h1>
@@ -55,7 +56,7 @@ export default function HomeFR() {
             <Link to="/fr/decoder" className="btn-cyan px-8 py-4">Découvrir le décodeur</Link>
           </div>
           <div className="max-w-2xl mx-auto text-left">
-            <CodeBlock language="bash" filename="Démarrage rapide" code={`pip install qector-decoder-v3==1.0.1\npython -c "from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')"`} />
+            <CodeBlock language="bash" filename="Démarrage rapide" code={`pip install qector-decoder-v3==${PYPI_VERSION}\npython -c "from qector_decoder_v3 import BlossomDecoder; print('QECTOR OK')"`} />
           </div>
         </div>
       </section>

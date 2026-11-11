@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
+import { PYTHON_RANGE } from '../lib/releases';
 
 // Who QECTOR is for, by audience. Describes what each audience can do with
 // shipped features; no customer names or quotes are implied.
@@ -35,7 +36,7 @@ const CASES = [
     need: 'You teach or research QEC and need a decoder library students can install in one command, without licence paperwork.',
     how: [
       'Free under PolyForm Noncommercial for academic, educational and public research use, whatever the funding source.',
-      'Wheels for Python 3.9 to 3.14 on Linux, Windows and macOS: no compiler needed.',
+      `Wheels for Python ${PYTHON_RANGE} on Linux, Windows and macOS: no compiler needed.`,
       'A free desktop Workbench for teaching without code.',
       '40% off Lab when a paid plan is needed, for example to pass commercial rights to an industry partner.',
     ],

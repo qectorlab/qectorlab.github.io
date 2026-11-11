@@ -1,6 +1,7 @@
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
+import { PYPI_VERSION, PYPI_WHEELS, PYTHON_RANGE } from '../lib/releases';
 
 export default function Installer() {
   const { version: pypiVersion } = usePyPIVersion();
@@ -12,14 +13,14 @@ export default function Installer() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
-            PyPI Binary Wheels · AIO Installer · CUDA + OpenCL Optional
+            PyPI Binary Wheels · AIO Installer · CUDA Optional · OpenCL Needs a Source Build
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Installation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            QECTOR Decoder v3 ships as a Rust-compiled Python wheel (v1.0.1: 18 binary wheels for CPython 3.9-3.14,
+            QECTOR Decoder v3 ships as a Rust-compiled Python wheel (v{PYPI_VERSION}: {PYPI_WHEELS} binary wheels for CPython {PYTHON_RANGE},
             no sdist).
             One command on <span className="text-cyan-300 font-semibold">Linux x86_64, macOS ARM64, and Windows amd64</span>.
-            GPU backends optional.
+            CUDA batch decoding is optional; OpenCL is not in the wheels and requires a source build.
           </p>
           <div className="inline-block px-6 py-3 bg-void border border-gridline rounded-xl font-mono text-sm text-cyan-300">
             pip install qector-decoder-v3
@@ -34,10 +35,10 @@ export default function Installer() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">System Requirements</h2>
             <ul className="space-y-2 text-secondary text-sm list-disc pl-5">
-              <li>Python 3.9, 3.10, 3.11, 3.12, or 3.13</li>
+              <li>CPython {PYTHON_RANGE}</li>
               <li>64-bit operating system (Linux x86_64, macOS arm64, Windows amd64)</li>
                <li>Stim/Sinter/PyMatching are optional extras; install <code className="text-cyan-300 font-mono text-xs">qector-decoder-v3[stim]</code> when needed.</li>
-               <li>GPU paths are optional and environment-dependent; follow the package release documentation for supported drivers and extras.</li>
+               <li>GPU paths are optional and environment-dependent; follow the package release documentation for supported drivers and extras. OpenCL is not included in the published wheels: it requires a source build.</li>
             </ul>
           </div>
 
@@ -91,6 +92,11 @@ export default function Installer() {
            <div className="card-surface">
              <h2 className="text-xl font-bold mb-4">Optional GPU Workflows</h2>
              <p className="text-secondary text-sm mb-3">GPU availability depends on the installed wheel, optional dependencies, operating system, driver, and device. Use the extras and support matrix documented by the package release rather than assuming a GPU backend is available.</p>
+             <p className="text-secondary text-sm mb-3">
+               Since 1.0.1 every paid licence (Pro or Enterprise) unlocks GPU batch decoding. The OpenCL backend is not part of the published wheels:{' '}
+               <code className="text-cyan-300 font-mono text-xs">OpenCLBatchDecoder</code> requires a source build with{' '}
+               <code className="text-cyan-300 font-mono text-xs">--features opencl</code>, and PyPI carries wheels only (no sdist).
+             </p>
              <div className="p-4 bg-void rounded-xl font-mono text-sm text-muted-foreground space-y-1">
                <div className="text-cyan-300"># Optional full environment</div>
                <div>pip install "qector-decoder-v3[all]"</div>
@@ -104,7 +110,7 @@ export default function Installer() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Troubleshooting</h2>
             <div className="space-y-3 text-secondary text-sm">
-              <p><strong className="text-primary">ImportError on macOS:</strong> Ensure you have Python 3.9-3.14 from python.org or Homebrew. The system Python may not work.</p>
+              <p><strong className="text-primary">ImportError on macOS:</strong> Ensure you have Python {PYTHON_RANGE} from python.org or Homebrew. The system Python may not work.</p>
               <p><strong className="text-primary">GPU not detected:</strong> Verify CUDA installation with <code className="text-cyan-300 font-mono">nvidia-smi</code>. Check the package release documentation for supported CUDA versions.</p>
               <p><strong className="text-primary">Slow import:</strong> First import initializes the runtime and validates optional paths. Subsequent imports are fast.</p>
             </div>

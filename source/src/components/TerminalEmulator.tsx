@@ -13,15 +13,21 @@ export default function TerminalEmulator() {
      { text: 'No command is executed and no external service is contacted.', type: 'info' },
   ]);
   const [isExecuting, setIsExecuting] = useState(false);
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const screenRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  // Keep the newest line in view by scrolling the terminal's own output
+  // region. scrollIntoView would scroll the whole page too, including on
+  // mount, and pull the reader away from what they were looking at.
   useEffect(() => {
-    scrollToBottom();
-  }, [lines]);
+    const screen = screenRef.current;
+    if (!screen) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof screen.scrollTo === 'function') {
+      screen.scrollTo({ top: screen.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' });
+    } else {
+      screen.scrollTop = screen.scrollHeight;
+    }
+  }, [lines, isExecuting]);
 
   const handleCommand = async (cmd: string) => {
     const trimmed = cmd.trim().toLowerCase();
@@ -109,7 +115,14 @@ export default function TerminalEmulator() {
       </div>
 
       {/* Terminal Screen */}
-      <div className="p-5 font-mono text-xs h-72 overflow-y-auto space-y-2 select-text custom-scrollbar">
+      <div
+        ref={screenRef}
+        role="log"
+        aria-live="polite"
+        aria-label="Terminal output"
+        tabIndex={0}
+        className="p-5 font-mono text-xs h-72 overflow-y-auto space-y-2 select-text custom-scrollbar focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
+      >
         {lines.map((line, idx) => {
           let colorClass = 'text-secondary';
           if (line.type === 'input') colorClass = 'text-cyan-300 font-semibold';
@@ -123,12 +136,11 @@ export default function TerminalEmulator() {
           );
         })}
         {isExecuting && (
-          <div className="text-muted-foreground animate-pulse flex items-center gap-1">
+          <div aria-hidden="true" className="text-muted-foreground animate-pulse flex items-center gap-1">
             <span className="w-1.5 h-3 bg-muted-foreground inline-block animate-caret" />
             <span>Executing...</span>
           </div>
         )}
-        <div ref={terminalEndRef} />
       </div>
 
       {/* Terminal Input Form */}

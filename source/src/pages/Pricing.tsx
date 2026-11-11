@@ -1,5 +1,4 @@
-﻿import { GraduationCap } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import PricingTierCard from '../components/PricingTierCard';
@@ -8,38 +7,11 @@ import { FAQ_ITEMS } from '../lib/faqData';
 import CodeBlock from '../components/CodeBlock';
 import MobileCollapse from '../components/MobileCollapse';
 import { LINKS, PRICES, usd } from '../lib/pricing';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { PYPI_INSTALL_SPEC } from '../lib/releases';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Pricing() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://js.stripe.com/v3/buy-button.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-      // Stagger animate all sections
-       sectionsRef.current.filter(Boolean).forEach((section) => {
-        gsap.fromTo(section, { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-        });
-      });
-    });
-
-    return () => {
-      ctx.revert();
-      if (script.parentNode === document.body) document.body.removeChild(script);
-    };
-  }, []);
-
-  const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+  const addRef = useScrollReveal({ y: 40, duration: 800 });
 
   return (
     <>
@@ -179,7 +151,7 @@ export default function Pricing() {
             <CodeBlock
               language="bash"
               className="mb-6"
-              code={`pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
+              code={`pip install --upgrade "${PYPI_INSTALL_SPEC}"
 export QECTOR_LICENSE_KEY="<your-token>"
 export QECTOR_LICENSE="<your-token>"
 
@@ -197,7 +169,7 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
         <div ref={(el) => addRef(el, 3)}>
           <h2 className="text-3xl font-bold mb-8 text-center">Why License QECTOR?</h2>
           <div className="card-surface bg-surface/50 border border-gridline">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Free and licensed use compared">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-gridline/50">
@@ -249,7 +221,7 @@ python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`}
         {/* 6. FINE PRINT & PROCUREMENT */}
         <div ref={(el) => addRef(el, 5)} className="border-t border-gridline/40 pt-12 text-center text-xs text-muted-foreground max-w-3xl mx-auto space-y-4">
           <p>
-            <strong>What is not included:</strong> Unless explicitly granted, no tier includes redistribution, OEM, SaaS hosting, or sublicensing rights. Contact sales for Custom terms.
+            <strong>What is not included:</strong> Unless explicitly granted, no tier includes redistribution, OEM, SaaS hosting, or sublicensing rights. Contact sales for custom terms.
           </p>
           <p>
             <strong>Procurement:</strong> All prices are in USD; applicable taxes are added at checkout. Monthly and annual plans renew automatically until cancelled, with a reminder before each annual renewal.

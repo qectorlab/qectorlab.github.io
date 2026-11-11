@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
+import { PYPI_INSTALL_SPEC } from '../lib/releases';
 
 export default function License() {
   return (
@@ -96,7 +97,7 @@ export default function License() {
               <li>• Grants the commercial use that PolyForm Noncommercial withholds, for the term you purchased.</li>
               <li>• <strong className="text-primary">Internal use only.</strong> Redistribution, sublicensing, OEM bundling, and customer-facing SaaS or hosted APIs are excluded unless a written Enterprise/OEM agreement grants them.</li>
               <li>• Activated by setting <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to your Ed25519 token. Verification is offline against a public key embedded in the package: no license server, no phone-home, works air-gapped.</li>
-              <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). The token does two things: it silences the notice and it unlocks tier-scoped runtime features: GPU (CUDA/OpenCL) batch decoding on every paid plan, and a code-distance tier of 7 (Community), 19 (Pro, Team) or 63 (Lab, Enterprise). CPU decoding is never blocked; distance caps apply only when <code className="text-cyan-300 font-mono text-xs">QECTOR_ENFORCE=1</code> is set.</li>
+              <li>• <strong className="text-primary">The package is identical for licensed and unlicensed users.</strong> Without a token, a licensing notice prints on import (suppressible with <code className="text-cyan-300 font-mono text-xs">QECTOR_SILENT=1</code>). The token does two things: it silences the notice and it unlocks tier-scoped runtime features: GPU (CUDA/OpenCL) batch decoding on every paid plan, and a code-distance tier of 7 (Community), 19 (Pro) or 63 (Lab, Enterprise). CPU decoding is never blocked; distance caps apply only when <code className="text-cyan-300 font-mono text-xs">QECTOR_ENFORCE=1</code> is set.</li>
               <li>• No warranty, indemnification, exclusivity, trademark, or patent grant is included by default.</li>
             </ul>
             <p className="text-secondary text-sm leading-relaxed mt-4">
@@ -111,12 +112,12 @@ export default function License() {
             <h2 className="text-xl font-bold mb-4">License Activation Procedure</h2>
             <ol className="space-y-3 text-secondary text-sm leading-relaxed">
               <li><strong className="text-primary">1. Verify the purchase.</strong> The fulfillment worker accepts only a Stripe-signed live checkout event and records the Stripe reference, customer email, tier, and token in the protected fulfillment ledger.</li>
-              <li><strong className="text-primary">2. Install the runtime.</strong> Use <code className="text-cyan-300 font-mono text-xs">python -m pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2"</code> from the official PyPI project.</li>
+              <li><strong className="text-primary">2. Install the runtime.</strong> Use <code className="text-cyan-300 font-mono text-xs">python -m pip install --upgrade "{PYPI_INSTALL_SPEC}"</code> from the official PyPI project.</li>
               <li><strong className="text-primary">3. Activate both variables.</strong> Set <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE</code> and <code className="text-cyan-300 font-mono text-xs">QECTOR_LICENSE_KEY</code> to the same token from the license email. The first is used by the import notice; the second is used by the tier-aware runtime.</li>
               <li><strong className="text-primary">4. Verify offline.</strong> Run <code className="text-cyan-300 font-mono text-xs">python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"</code>. It must print your paid tier (for example <code className="text-cyan-300">Pro</code>), not <code className="text-cyan-300">Community</code>; no license server or phone-home is involved.</li>
               <li><strong className="text-primary">5. Preserve the audit record.</strong> Keep the token and Stripe invoice or payment confirmation together. Never send the token in a URL, issue tracker, chat, or public repository.</li>
             </ol>
-            <p className="text-secondary text-xs leading-relaxed mt-4">If either email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.</p>
+            <p className="text-secondary text-xs leading-relaxed mt-4">If the license email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" className="text-cyan-300 hover:underline">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.</p>
           </div>
 
           <div className="card-surface">
@@ -134,7 +135,7 @@ export default function License() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Third-Party Licenses</h2>
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR depends on several open-source projects including Stim (Apache 2.0), PyMatching (MIT),
+              QECTOR depends on several open-source projects including Stim (Apache 2.0), PyMatching (Apache 2.0),
               NumPy (BSD), and NetworkX (BSD). Full third-party attribution is included in the distribution.
               All third-party names are trademarks of their respective owners; QECTOR is not affiliated with,
               sponsored, or endorsed by them.

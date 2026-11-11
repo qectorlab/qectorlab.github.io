@@ -1,116 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import { lazy, Suspense, useContext, useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
-import ReactMarkdown from 'react-markdown';
-import type { Components } from 'react-markdown';
-import CodeBlock from '../components/CodeBlock';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import rehypeRaw from 'rehype-raw';
 import { blogPosts } from '../lib/blogData';
+import { EmbeddedPostContext } from '../lib/embeddedPost';
 import { ArrowLeft, Calendar, Loader2 } from 'lucide-react';
 
-// IMPORTANT: We need KaTeX CSS to render math formulas correctly
-import 'katex/dist/katex.min.css';
+// The Markdown/KaTeX renderer is most of this page's code. Loaded on its own,
+// the post's header and links work (and hydrate) without waiting for it.
+const loadMarkdownArticle = () => import('../components/MarkdownArticle');
+const MarkdownArticle = lazy(loadMarkdownArticle);
 
-/**
- * Extract plain text from React children, recursively flattening
- * any nested elements. Strips KaTeX/math markup so that the slug
- * matches the hand-authored TOC anchors in each blog post.
- */
-function extractText(children: React.ReactNode): string {
-  if (typeof children === 'string') return children;
-  if (typeof children === 'number') return String(children);
-  if (!children) return '';
-  if (Array.isArray(children)) return children.map(extractText).join('');
-  if (typeof children === 'object' && 'props' in children) {
-    return extractText((children as React.ReactElement).props.children);
-  }
-  return '';
-}
+// The article title is rendered by the page header; drop the Markdown's
+// leading H1 so the page keeps a single h1 landmark.
+const withoutTitle = (markdown: string) => markdown.replace(/^\s*#[^#\n]*\r?\n/, '');
 
-/**
- * Slugify text using the same algorithm as github-slugger / rehype-slug:
- * lowercase, strip non-alphanumeric (except hyphens and spaces), collapse
- * whitespace to single hyphens, trim leading/trailing hyphens.
- *
- * Additionally strips LaTeX commands ($...$, \\mathrm{}, \\equiv, etc.)
- * before slugifying so that headings containing math produce the same
- * anchors the TOC links expect.
- */
-function slugify(text: string): string {
-  return text
-    .replace(/\$[^$]*\$/g, '')           // strip inline math $...$
-    .replace(/\\[a-zA-Z]+\{[^}]*\}/g, '') // strip \command{...}
-    .replace(/[\\{}]/g, '')               // strip remaining backslashes/braces
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')             // strip non-word chars except spaces/hyphens
-    .replace(/\s+/g, '-')                 // spaces to hyphens
-    .replace(/-+/g, '-')                  // collapse consecutive hyphens
-    .replace(/^-+|-+$/g, '');             // trim leading/trailing hyphens
-}
-
-/**
- * Factory for heading components (h1..h6) that auto-generate id attributes
- * from the heading text. This replaces rehype-slug which produces
- * unpredictable IDs when headings contain KaTeX math.
- */
-function makeHeading(Tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') {
-  return function HeadingWithId({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-    const text = extractText(children);
-    const id = props.id || slugify(text);
-    return <Tag {...props} id={id}>{children}</Tag>;
-  };
-}
-
-const headingComponents: Partial<Components> = {
-  h1: makeHeading('h1'),
-  h2: makeHeading('h2'),
-  h3: makeHeading('h3'),
-  h4: makeHeading('h4'),
-  h5: makeHeading('h5'),
-  h6: makeHeading('h6'),
-};
+const articleLoading = (
+  <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+    <Loader2 size={48} className="animate-spin text-cyan-400 mb-4" />
+    <p className="animate-pulse">Loading article...</p>
+  </div>
+);
 
 export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
   const postMeta = blogPosts.find((p) => p.id === id);
-  const [content, setContent] = useState<string>('');
-  const [loadedFilename, setLoadedFilename] = useState<string | null>(null);
+  // The article this page was generated with (a full page load of this post):
+  // its Markdown came embedded in the HTML, so the first render already has it
+  // and matches the static page. Any other post is fetched.
+  const embedded = useContext(EmbeddedPostContext);
+  const embeddedMarkdown = postMeta && embedded?.filename === postMeta.filename ? embedded.markdown : null;
+  const [fetched, setFetched] = useState<{ filename: string; markdown: string } | null>(null);
   const [errorFilename, setErrorFilename] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!postMeta) return;
+    if (!postMeta || embeddedMarkdown !== null) return;
 
     const controller = new AbortController();
     const filename = postMeta.filename;
+    // Fetch the renderer alongside the article, not after it. A failure here
+    // is reported when the article is rendered.
+    loadMarkdownArticle().catch(() => undefined);
     // Fetch the markdown file from the public directory
     fetch(`/blog/${filename}`, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load post');
         return res.text();
       })
-      .then((text) => {
-        // The article title is rendered by the page header above; drop the
-        // markdown's leading H1 so the page keeps a single h1 landmark.
-        const stripped = text.replace(/^\s*#[^#\n]*\r?\n/, '');
-        setContent(stripped);
-        setLoadedFilename(filename);
+      .then((markdown) => {
+        setFetched({ filename, markdown });
         setErrorFilename(null);
       })
       .catch((err) => {
         if (err instanceof DOMException && err.name === 'AbortError') return;
         console.error(err);
-        setLoadedFilename(filename);
         setErrorFilename(filename);
       });
 
-    return () => controller.abort();
-  }, [postMeta]);
+    return () => {
+      controller.abort();
+      // Coming back to this post later starts clean and tries again.
+      setErrorFilename(null);
+    };
+  }, [postMeta, embeddedMarkdown]);
 
-  const loading = Boolean(postMeta && loadedFilename !== postMeta.filename);
-  const error = Boolean(postMeta && errorFilename === postMeta.filename);
+  const markdown = embeddedMarkdown ?? (postMeta && fetched?.filename === postMeta.filename ? fetched.markdown : null);
+  const content = useMemo(() => (markdown === null ? '' : withoutTitle(markdown)), [markdown]);
+  const error = Boolean(postMeta && markdown === null && errorFilename === postMeta.filename);
+  const loading = Boolean(postMeta && markdown === null && !error);
 
   // Handle click on in-page anchor links for smooth scrolling
   useEffect(() => {
@@ -119,14 +75,24 @@ export default function BlogPost() {
       const anchor = target.closest('a');
       if (!anchor) return;
       const href = anchor.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
-      e.preventDefault();
-      const el = document.getElementById(href.slice(1));
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Update URL hash without jumping
-        window.history.pushState(null, '', href);
+      if (!href || !href.startsWith('#') || href.length < 2) return;
+      let id = href.slice(1);
+      try {
+        id = decodeURIComponent(id);
+      } catch {
+        // Malformed escape: use the raw fragment.
       }
+      const el = document.getElementById(id);
+      // No such target: leave the link to the browser.
+      if (!el) return;
+      e.preventDefault();
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      // Update URL hash without jumping
+      window.history.pushState(null, '', href);
+      // Keyboard and screen-reader users follow the link too, not only the viewport.
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+      el.focus({ preventScroll: true });
     }
     document.addEventListener('click', handleAnchorClick);
     return () => document.removeEventListener('click', handleAnchorClick);
@@ -190,62 +156,17 @@ export default function BlogPost() {
 
           <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl">
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                <Loader2 size={48} className="animate-spin text-cyan-400 mb-4" />
-                <p className="animate-pulse">Loading article...</p>
-              </div>
+              articleLoading
             ) : error ? (
               <div className="py-20 text-center text-red-400">
                 <p>Failed to load the article. Please try again later.</p>
               </div>
             ) : (
-              <article className="prose prose-invert prose-cyan max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-cyan-300 prose-a:no-underline hover:prose-a:underline prose-code:text-cyan-200 prose-code:bg-cyan-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-pre:bg-slate-950/80 prose-pre:border prose-pre:border-slate-800 prose-img:rounded-xl prose-img:border prose-img:border-slate-800">
-                <ReactMarkdown 
-                  remarkPlugins={[remarkGfm, remarkMath]} 
-                  rehypePlugins={[rehypeKatex, rehypeRaw]}
-                  components={{
-                    ...headingComponents,
-                    table: (props) => {
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      const { node: _node, ...rest } = props;
-                      return (
-                        <div className="overflow-x-auto">
-                          <table {...rest} />
-                        </div>
-                      );
-                    },
-                    pre: (props) => {
-                      const { children } = props;
-                      const codeEl = React.Children.toArray(children)[0];
-                      let code = '';
-                      let language = 'text';
-                      if (React.isValidElement(codeEl)) {
-                        const codeProps = codeEl.props as { className?: string; children?: React.ReactNode };
-                        const match = /language-([\w-]+)/.exec(codeProps.className || '');
-                        if (match) language = match[1];
-                        code = extractText(codeProps.children).replace(/\n$/, '');
-                      }
-                      return <CodeBlock code={code} language={language} className="not-prose" />;
-                    },
-                    img: (props) => {
-                      const sized = props.width != null && props.height != null;
-                      return (
-                        <img
-                          {...props}
-                          className={
-                            sized
-                              ? 'rounded-xl border border-slate-800 shadow-xl max-w-full h-auto'
-                              : 'rounded-xl border border-slate-800 shadow-xl max-w-full h-auto aspect-video object-cover'
-                          }
-                          loading="lazy"
-                        />
-                      );
-                    },
-                  }}
-                >
-                  {content}
-                </ReactMarkdown>
-              </article>
+              <Suspense fallback={articleLoading}>
+                <article className="prose prose-invert prose-cyan max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-cyan-300 prose-a:no-underline hover:prose-a:underline prose-code:text-cyan-200 prose-code:bg-cyan-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-pre:bg-slate-950/80 prose-pre:border prose-pre:border-slate-800 prose-img:rounded-xl prose-img:border prose-img:border-slate-800">
+                  <MarkdownArticle content={content} />
+                </article>
+              </Suspense>
             )}
           </div>
         </div>

@@ -111,7 +111,7 @@ For a single online round with a tight latency budget, the same physical code mi
 
 ## 7. Do not confuse API stability with algorithmic scope
 
-Version 1.0.0 freezes a stable surface for the whole 1.x line. Stable symbols include `UnionFindDecoder`, `BlossomDecoder`, `SparseBlossomDecoder`, `NativeAutoDecoder`, the four `generate_*_code_checks` helpers, `set_license_key`, `get_license_info`, the Sinter and qiskit-qec entry points, and `DecodeResult`.
+Version 1.0.0 freezes a stable surface for the whole 1.x line. Stable symbols include `UnionFindDecoder`, `BlossomDecoder`, `SparseBlossomDecoder`, `NativeAutoDecoder`, the five `generate_*_code_checks` helpers, `set_license_key`, `get_license_info`, the Sinter and qiskit-qec entry points, and `DecodeResult`.
 
 Provisional surfaces stay supported and tested, but their exact shape may change with a changelog note. This group includes BP-OSD tuning kwargs, GPU batch constructors, and network surfaces.
 

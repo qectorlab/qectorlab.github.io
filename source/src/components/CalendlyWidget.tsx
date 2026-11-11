@@ -46,20 +46,44 @@ export default function CalendlyWidget({
       window.Calendly.initInlineWidget({ url, parentElement: containerRef.current });
     };
 
-    const existing = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT}"]`);
-    if (window.Calendly) {
-      init();
-    } else if (existing) {
-      existing.addEventListener('load', init);
+    let existing: HTMLScriptElement | null = null;
+    const load = () => {
+      existing = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT}"]`);
+      if (window.Calendly) {
+        init();
+      } else if (existing) {
+        existing.addEventListener('load', init);
+      } else {
+        const script = document.createElement('script');
+        script.src = CALENDLY_SCRIPT;
+        script.async = true;
+        script.addEventListener('load', init);
+        document.body.appendChild(script);
+        existing = script;
+      }
+    };
+
+    // The widget sits below the contact form. Its third-party script (and the
+    // cookies that come with it) is requested only when a visitor scrolls
+    // towards it.
+    let observer: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver === 'undefined') {
+      load();
     } else {
-      const script = document.createElement('script');
-      script.src = CALENDLY_SCRIPT;
-      script.async = true;
-      script.addEventListener('load', init);
-      document.body.appendChild(script);
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer?.disconnect();
+            load();
+          }
+        },
+        { rootMargin: '600px 0px' },
+      );
+      observer.observe(container);
     }
 
     return () => {
+      observer?.disconnect();
       existing?.removeEventListener('load', init);
       if (container) container.innerHTML = '';
     };

@@ -17,6 +17,7 @@ const dist = join(root, 'dist');
 const out = join(root, 'public', 'og');
 mkdirSync(out, { recursive: true });
 const logo = `data:image/png;base64,${readFileSync(join(root, 'public/images/logo.png')).toString('base64')}`;
+const inter = `data:font/woff2;base64,${readFileSync(join(root, 'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')).toString('base64')}`;
 
 export function slugFor(route) {
   return route === '/' ? 'home' : route.replace(/^\//, '').replace(/\//g, '--');
@@ -45,8 +46,9 @@ function section(route) {
 
 function card(title, description, label) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>
+  @font-face{font-family:"Inter Variable";font-weight:100 900;src:url(${inter}) format("woff2-variations")}
   *{box-sizing:border-box;margin:0}
-  body{width:1200px;height:630px;font-family:Inter,"Segoe UI",system-ui,sans-serif;color:#e6edf6;
+  body{width:1200px;height:630px;font-family:"Inter Variable",Inter,"Segoe UI",system-ui,sans-serif;color:#e6edf6;
     background:radial-gradient(900px 500px at 85% 15%,rgba(36,231,255,.18),transparent 60%),linear-gradient(135deg,#050b14 0%,#0b1626 60%,#071019 100%);
     padding:64px 72px;display:flex;flex-direction:column;justify-content:space-between}
   .top{display:flex;align-items:center;gap:18px;font-size:26px;font-weight:600;color:#7dd3fc;letter-spacing:.02em}

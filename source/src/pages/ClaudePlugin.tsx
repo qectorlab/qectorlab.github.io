@@ -1,9 +1,9 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
-import { CLAUDE_PLUGIN_RELEASE } from '../lib/releases';
+import { CLAUDE_PLUGIN_RELEASE, PYPI_VERSION } from '../lib/releases';
 import {
   ShieldCheck,
   Terminal,
@@ -214,7 +214,7 @@ export default function ClaudePlugin() {
     <>
       <SEO
         title="QECTOR Claude Plugin · Quantum Error Correction for Claude Code"
-        description="Official QECTOR Claude Code and Claude Desktop plugin v2.0.1: air-gapped qector-secure MCP server (12 schema-validated tools), 28 skills and 5 agents on qector-decoder-v3 1.0.1."
+        description={`Official QECTOR Claude Code and Claude Desktop plugin v${CLAUDE_PLUGIN_RELEASE.version}: air-gapped qector-secure MCP server (12 schema-validated tools), 28 skills and 5 agents on qector-decoder-v3 ${PYPI_VERSION}.`}
       />
       <JsonLd
         data={{
@@ -222,7 +222,7 @@ export default function ClaudePlugin() {
           '@type': 'SoftwareApplication',
           name: 'QECTOR Claude Plugin',
           description:
-            'Official QECTOR plugin v2.0.1 for Claude Code and Claude Desktop: air-gapped qector-secure MCP server with 12 schema-validated tools, 28 skills, 5 agents, 11 commands; 29 research and 3 admin tools are opt-in.',
+            `Official QECTOR plugin v${CLAUDE_PLUGIN_RELEASE.version} for Claude Code and Claude Desktop: air-gapped qector-secure MCP server with 12 schema-validated tools, 28 skills, 5 agents, 11 commands; 29 research and 3 admin tools are opt-in.`,
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Linux, macOS, Windows',
           softwareVersion: CLAUDE_PLUGIN_RELEASE.version,
@@ -256,7 +256,7 @@ export default function ClaudePlugin() {
 
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
              Empower Claude with local Quantum Error Correction engineering.
-             Release v2.0.1 runs on qector-decoder-v3 1.0.1. The default{' '}
+             Release v{CLAUDE_PLUGIN_RELEASE.version} runs on qector-decoder-v3 {PYPI_VERSION}. The default{' '}
              <span className="text-cyan-300 font-semibold">qector-secure</span> server is air-gapped, integrity-checked and validates every
              request and response against JSON Schema (12 tools). It ships with{' '}
              <span className="text-cyan-300 font-semibold">28 domain skills</span>,{' '}
@@ -281,7 +281,7 @@ export default function ClaudePlugin() {
                 <span>{copiedMarketplace ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
-            <pre className="font-mono text-sm text-cyan-300 overflow-x-auto whitespace-pre leading-relaxed">
+            <pre className="font-mono text-sm text-cyan-300 overflow-x-auto whitespace-pre leading-relaxed" tabIndex={0} role="region" aria-label="Install commands">
               {marketplaceSnippet}
             </pre>
           </div>
@@ -455,7 +455,7 @@ export default function ClaudePlugin() {
              Local MCP Servers, Air-Gapped by Default
           </h2>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl">
-             The v2.0.1 release separates local JSON-RPC 2.0 stdio capabilities by risk and purpose. The default
+             The v{CLAUDE_PLUGIN_RELEASE.version} release separates local JSON-RPC 2.0 stdio capabilities by risk and purpose. The default
              <code className="text-cyan-300 font-mono"> qector-secure </code> server (12 tools: the 8 stable tools below plus
              airgap_status, integrity_check, schema_catalog and audit_log_status) refuses network access and verifies its own files;
              <code className="text-cyan-300 font-mono"> qector-library </code> (8 stable tools),
@@ -466,7 +466,7 @@ export default function ClaudePlugin() {
         </div>
 
         <div className="card-surface rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Plugin tools">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="bg-slate-900/90 text-xs font-mono text-cyan-400 uppercase tracking-wider border-b border-slate-800">
                 <tr>
@@ -519,7 +519,7 @@ export default function ClaudePlugin() {
             Installation & Setup
           </h2>
           <p className="text-slate-400 text-sm mt-2">
-             Configure QECTOR Claude Plugin v2.0.1 for Claude Code or Claude Desktop in seconds.
+             Configure QECTOR Claude Plugin v{CLAUDE_PLUGIN_RELEASE.version} for Claude Code or Claude Desktop in seconds.
           </p>
         </div>
 

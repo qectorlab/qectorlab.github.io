@@ -1,8 +1,16 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import CalendlyWidget from '../components/CalendlyWidget';
 import { CALENDLY_URL } from '../lib/config';
-import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES, WORKBENCH_RELEASES } from '../lib/releases';
+import {
+  CLAUDE_PLUGIN_RELEASE,
+  PYPI_CURRENT_RELEASE,
+  PYPI_FIRST_STABLE_RELEASE,
+  PYPI_RELEASES,
+  PYPI_WHEELS,
+  PYTHON_RANGE,
+  WORKBENCH_RELEASES,
+} from '../lib/releases';
 
 // Founder page. Two jobs:
 //  1. Tell a buyer or employer, in one screen, who builds QECTOR and why the
@@ -19,8 +27,8 @@ const PYPI = 'https://pypi.org/project/qector-decoder-v3/';
 const fmt = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 
-const v101 = PYPI_RELEASES.find((r) => r.version === '1.0.1')!;
-const v100 = PYPI_RELEASES.find((r) => r.version === '1.0.0')!;
+const current = PYPI_CURRENT_RELEASE;
+const firstStable = PYPI_FIRST_STABLE_RELEASE;
 const first = PYPI_RELEASES[PYPI_RELEASES.length - 1];
 const workbench = WORKBENCH_RELEASES[0];
 
@@ -40,10 +48,10 @@ const FOCUS = [
 ];
 
 const RECORD: { date: string; title: string; detail: string; href: string }[] = [
-  { date: v101.releaseDate, title: `QECTOR Decoder v3 ${v101.version}`, detail: '18 wheels for CPython 3.9 to 3.14, tested per OS, Sigstore provenance on every file', href: 'https://github.com/GuillaumeLessard/qector-decoder/releases/tag/v1.0.1' },
+  { date: current.releaseDate, title: `QECTOR Decoder v3 ${current.version}`, detail: `${PYPI_WHEELS} wheels for CPython ${PYTHON_RANGE}, tested per OS, Sigstore provenance on every file`, href: `https://github.com/GuillaumeLessard/qector-decoder/releases/tag/v${current.version}` },
   { date: CLAUDE_PLUGIN_RELEASE.releaseDate, title: `QECTOR Claude Plugin ${CLAUDE_PLUGIN_RELEASE.version}`, detail: 'Air-gapped, schema-validated MCP server for Claude Code and Claude Desktop', href: CLAUDE_PLUGIN_RELEASE.releaseUrl },
   { date: workbench.releaseDate, title: `QECTOR Workbench ${workbench.version}`, detail: `Free desktop GUI for Windows and Linux, ${workbench.decoderKinds} decoder kinds, ${workbench.codeFamilies} code families`, href: workbench.releaseUrl },
-  { date: v100.releaseDate, title: 'QECTOR Decoder v3 1.0.0', detail: 'First stable release: API stability tiers, qector CLI, reference manual', href: PYPI },
+  { date: firstStable.releaseDate, title: `QECTOR Decoder v3 ${firstStable.version}`, detail: 'First stable release: API stability tiers, qector CLI, reference manual', href: PYPI },
   { date: first.releaseDate, title: `First public release (${first.version})`, detail: `Published on PyPI; ${PYPI_RELEASES.length} releases to date`, href: PYPI },
 ];
 

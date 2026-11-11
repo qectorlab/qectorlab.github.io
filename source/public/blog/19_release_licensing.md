@@ -20,7 +20,7 @@ Stable symbols for the whole 1.x line include:
 ```text
 UnionFindDecoder, BlossomDecoder, SparseBlossomDecoder
 NativeAutoDecoder
-the four generate_*_code_checks helpers
+the five generate_*_code_checks helpers
 set_license_key, get_license_info
 the Sinter and qiskit-qec entry points
 DecodeResult
@@ -52,6 +52,8 @@ The v1.0.0 manual documents these distance caps:
 | Community | 7 | No |
 | Pro | 19 | No |
 | Enterprise | 63 | Yes |
+
+> **Update (1.0.1), November 2026:** every paid licence, Pro or Enterprise, unlocks GPU batch decoding.
 
 Tokens are verified offline in the Rust core using Ed25519, with expiry and an offline revocation list. Decoding never makes a blocking network call.
 

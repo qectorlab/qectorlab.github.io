@@ -182,7 +182,7 @@ export const licenseAgreementFr: LegalDoc = {
     'Le contrat de licence commerciale de QECTOR Decoder v3 : usage commercial interne, aucun nombre de postes, vérification hors ligne (air-gapped), forfaits, renouvellements, remboursements, responsabilité et droit applicable.',
   badge: `Version ${AGREEMENT_VERSION} · En vigueur le ${AGREEMENT_EFFECTIVE_FR} · Droit applicable : Québec`,
   intro:
-    'Ces conditions s’appliquent lorsque votre organisation achète un forfait QECTOR. L’usage non commercial reste gratuit sous la [licence PolyForm Noncommercial 1.0.0](/license).',
+    'Ces conditions s’appliquent lorsque votre organisation achète un forfait QECTOR. L’usage non commercial reste gratuit sous la [licence PolyForm Noncommercial 1.0.0](/fr/license).',
   version: `Version ${AGREEMENT_VERSION}, en vigueur le ${AGREEMENT_EFFECTIVE_FR}. La version en vigueur à la date de votre achat ou de votre renouvellement régit cette période payée.`,
   sections: [
     {

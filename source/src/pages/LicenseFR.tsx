@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import { PRICES, usdFr } from '../lib/pricing';
+import { PYPI_INSTALL_SPEC } from '../lib/releases';
 
 // French twin of /license. Same facts, same order; keep the two in sync.
 
@@ -98,7 +99,7 @@ export default function LicenseFR() {
               <li>• Accorde l’usage commercial que PolyForm Noncommercial exclut, pour la durée achetée.</li>
               <li>• <strong className="text-primary">Usage interne seulement.</strong> La redistribution, la sous-licence, l’intégration OEM et les services SaaS ou API hébergées offerts à des clients sont exclus, sauf entente écrite Entreprise ou OEM.</li>
               <li>• S’active en réglant <code className={code}>QECTOR_LICENSE</code> et <code className={code}>QECTOR_LICENSE_KEY</code> à votre jeton Ed25519. La vérification se fait hors ligne, avec une clé publique intégrée au paquet : aucun serveur de licences, aucune communication sortante, fonctionne sur un réseau isolé.</li>
-              <li>• <strong className="text-primary">Le paquet est identique avec ou sans licence.</strong> Sans jeton, un avis de licence s’affiche à l’importation (masquable avec <code className={code}>QECTOR_SILENT=1</code>). Le jeton masque l’avis et débloque les fonctions liées au palier : décodage GPU par lots (CUDA/OpenCL) sur tous les forfaits payants, et une distance de code maximale de 7 (Communauté), 19 (Pro, Équipe) ou 63 (Labo, Entreprise). Le décodage CPU n’est jamais bloqué; les plafonds de distance ne s’appliquent que si <code className={code}>QECTOR_ENFORCE=1</code> est réglé.</li>
+              <li>• <strong className="text-primary">Le paquet est identique avec ou sans licence.</strong> Sans jeton, un avis de licence s’affiche à l’importation (masquable avec <code className={code}>QECTOR_SILENT=1</code>). Le jeton masque l’avis et débloque les fonctions liées au palier : décodage GPU par lots (CUDA/OpenCL) sur tous les forfaits payants, et une distance de code maximale de 7 (Communauté), 19 (Pro) ou 63 (Labo, Entreprise). Le décodage CPU n’est jamais bloqué; les plafonds de distance ne s’appliquent que si <code className={code}>QECTOR_ENFORCE=1</code> est réglé.</li>
               <li>• Aucune garantie, indemnisation, exclusivité, marque de commerce ni licence de brevet n’est incluse par défaut.</li>
             </ul>
             <p className="text-secondary text-sm leading-relaxed mt-4">
@@ -111,7 +112,7 @@ export default function LicenseFR() {
             <h2 className="text-xl font-bold mb-4">Activer votre licence</h2>
             <ol className="space-y-3 text-secondary text-sm leading-relaxed">
               <li><strong className="text-primary">1. Achat vérifié.</strong> Le service de livraison n’accepte qu’un événement de paiement Stripe signé et enregistre la référence Stripe, le courriel, le palier et le jeton dans un registre protégé.</li>
-              <li><strong className="text-primary">2. Installer.</strong> <code className={code}>python -m pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2"</code> depuis le projet PyPI officiel.</li>
+              <li><strong className="text-primary">2. Installer.</strong> <code className={code}>python -m pip install --upgrade "{PYPI_INSTALL_SPEC}"</code> depuis le projet PyPI officiel.</li>
               <li><strong className="text-primary">3. Régler les deux variables.</strong> Donnez à <code className={code}>QECTOR_LICENSE</code> et à <code className={code}>QECTOR_LICENSE_KEY</code> le même jeton, reçu par courriel. La première sert à l’avis d’importation, la seconde au moteur selon le palier.</li>
               <li><strong className="text-primary">4. Vérifier hors ligne.</strong> <code className={code}>python -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"</code> doit afficher votre palier payant (par exemple <code className="text-cyan-300">Pro</code>) et non <code className="text-cyan-300">Community</code>. Aucun serveur n’est contacté.</li>
               <li><strong className="text-primary">5. Conserver la preuve.</strong> Gardez le jeton avec la facture ou la confirmation Stripe. N’envoyez jamais le jeton dans une URL, un suivi de bogues, une messagerie ou un dépôt public.</li>
@@ -137,7 +138,7 @@ export default function LicenseFR() {
           <div className="card-surface">
             <h2 className="text-xl font-bold mb-4">Licences de tiers</h2>
             <p className="text-secondary text-sm leading-relaxed">
-              QECTOR s’appuie sur plusieurs projets libres, dont Stim (Apache 2.0), PyMatching (MIT), NumPy (BSD) et NetworkX (BSD).
+              QECTOR s’appuie sur plusieurs projets libres, dont Stim (Apache 2.0), PyMatching (Apache 2.0), NumPy (BSD) et NetworkX (BSD).
               Les attributions complètes sont incluses dans la distribution. Les noms de tiers sont des marques de leurs propriétaires respectifs;
               QECTOR n’est ni affilié à eux, ni commandité, ni approuvé par eux.
             </p>

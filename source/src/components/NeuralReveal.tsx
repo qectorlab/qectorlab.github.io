@@ -157,7 +157,7 @@ export default function NeuralReveal({
             const startIndex = wordsArr.slice(0, wordIndex).join(' ').length + (wordIndex > 0 ? 1 : 0);
             return (
               <span key={wordIndex} className="inline-block whitespace-nowrap">
-                {word.split('').map((char, charIndex) => {
+                {word.split('').map((_char, charIndex) => {
                   const i = startIndex + charIndex;
                   return (
                     <span

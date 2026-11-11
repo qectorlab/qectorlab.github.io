@@ -1,31 +1,11 @@
-﻿import { Fingerprint } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { Fingerprint } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { PYPI_FIRST_STABLE_RELEASE, PYPI_VERSION, PYTHON_RANGE } from '../lib/releases';
 
 export default function About() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-    const sections = sectionsRef.current.filter(Boolean);
-    sections.forEach((section) => {
-      gsap.fromTo(section, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-      });
-    });
-    });
-    return () => { ctx.revert(); };
-  }, []);
-
-const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+  const addRef = useScrollReveal({ y: 30, duration: 600 });
 
   return (
     <>
@@ -134,7 +114,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
                 <h2 className="text-cyan-300 font-semibold text-sm uppercase tracking-wider mb-4">Software Stack</h2>
                 <ul className="space-y-2 text-secondary text-sm leading-relaxed list-disc pl-5">
                   <li>Rust / PyO3: core decoder engine</li>
-                  <li>Python 3.9 to 3.13: API, CLI, benchmarking, simulation</li>
+                  <li>Python {PYTHON_RANGE}: API, CLI, benchmarking, simulation</li>
                   <li>Stim: circuit-level noise simulation</li>
                   <li>OpenCL / CUDA: GPU-accelerated batch decoding</li>
                   <li>PyPI distribution: <code className="text-cyan-300 text-xs">qector-decoder-v3</code></li>
@@ -191,7 +171,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <h2 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Transparency Statement</h2>
             <p className="text-secondary text-sm leading-relaxed">
               QECTOR is an independent R&D project, not backed by a quantum hardware company, VC funding, or a university lab.
-               No hardware-specific measurement figures are published on this site, because results depend on your hardware. The decoder reached its first stable release on 2026-08-06 (v1.0.0); the current release is v1.0.1.
+               No hardware-specific measurement figures are published on this site, because results depend on your hardware. The decoder reached its first stable release on {PYPI_FIRST_STABLE_RELEASE.releaseDate} (v{PYPI_FIRST_STABLE_RELEASE.version}); the current release is v{PYPI_VERSION}.
                QECTOR Decoder is source-available under the published license. Workbench release terms are platform-specific. We publish validation guidance and known limitations openly.
               Documented behavior is what ships.
             </p>
