@@ -133,6 +133,15 @@ for (const file of htmlFiles) {
   if (kb > limit) problems.push(`${rel}: ${kb.toFixed(0)} kB of script requested up front (limit ${limit} kB)`);
 }
 
+// Pages React attaches to must opt out of Cloudflare's e-mail obfuscation:
+// it rewrites addresses in the served HTML, which breaks hydration.
+for (const file of htmlFiles) {
+  const html = readFileSync(file, 'utf8');
+  if (/<div id="root" data-prerendered=/.test(html) && !/<!--email_off--><div id="root"/.test(html)) {
+    problems.push(`${file.slice(dist.length)}: hydrated page without the <!--email_off--> marker`);
+  }
+}
+
 // sitemap entries must be real pages
 const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
 const locs = [...sitemap.matchAll(/<loc>https:\/\/qector\.store([^<]*)<\/loc>/g)].map((m) => m[1]);

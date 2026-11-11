@@ -75,6 +75,16 @@ function problemsIn(html, post) {
 // HTML a few bytes later anyway, so they are dropped.
 const withoutResourceHints = (html) => html.replace(/^(?:<link rel="preload"[^>]*>)+/, '');
 
+// Cloudflare's "Email Address Obfuscation" rewrites every address it finds in
+// the HTML it serves (a placeholder element plus a decoding script). That
+// changes the text React is about to attach to, and hydration of the page
+// fails with a text mismatch (seen live on /contact/). Cloudflare leaves
+// everything between these two comments alone. They sit outside #root, so
+// React never sees them.
+const EMAIL_OFF = '<!--email_off-->';
+const EMAIL_ON = '<!--/email_off-->';
+const EMAIL_MARKERS = /<!--\/?email_off-->/g;
+
 // ── 3. Write ─────────────────────────────────────────────────────────────────
 const dataBlock = new RegExp(`\\s*<script type="application/json" id="${EMBEDDED_POST_ELEMENT_ID}">[\\s\\S]*?</script>`);
 
@@ -82,13 +92,13 @@ const dataBlock = new RegExp(`\\s*<script type="application/json" id="${EMBEDDED
 // Everything between its tags is replaced, whether that is the summary of a
 // fresh `vite build` or the page written by an earlier run of this script.
 function fill(shell, html, page, post) {
-  const clean = shell.replace(dataBlock, '');
+  const clean = shell.replace(dataBlock, '').replace(EMAIL_MARKERS, '');
   const open = [...clean.matchAll(/<div id="root"[^>]*>/g)];
   const close = clean.lastIndexOf('</div>', clean.lastIndexOf('<noscript>'));
   if (open.length !== 1 || close < open[0].index) throw new Error('cannot find #root followed by <noscript> in the shell');
   const mark = page.mode === 'hydrate' ? ` data-prerendered="${page.url}"` : '';
   const data = post ? `\n    <script type="application/json" id="${EMBEDDED_POST_ELEMENT_ID}">${serializeEmbeddedPost(post)}</script>` : '';
-  return `${clean.slice(0, open[0].index)}<div id="root"${mark}>${html}</div>${data}${clean.slice(close + '</div>'.length)}`;
+  return `${clean.slice(0, open[0].index)}${EMAIL_OFF}<div id="root"${mark}>${html}</div>${data}${EMAIL_ON}${clean.slice(close + '</div>'.length)}`;
 }
 
 const failures = [];

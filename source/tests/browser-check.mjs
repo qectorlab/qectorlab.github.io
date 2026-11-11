@@ -63,7 +63,9 @@ function routeDirs(dir, base = '') {
   }
   return out;
 }
-const routes = ['/', ...routeDirs(dist), '/__missing__'];
+// CHECK_ROUTES=/contact,/blog limits the run to a few routes while working on them.
+const only = process.env.CHECK_ROUTES ? process.env.CHECK_ROUTES.split(',') : null;
+const routes = ['/', ...routeDirs(dist), '/__missing__'].filter((route) => !only || only.includes(route));
 
 const browser = await chromium.launch();
 const problems = [];
