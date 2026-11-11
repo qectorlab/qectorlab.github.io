@@ -68,7 +68,7 @@
   }
 
   code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Fira Code', monospace;
   }
 
   ::selection {
@@ -119,21 +119,19 @@
     @apply bg-[#0b1329]/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 transition-all duration-500 hover:border-cyan-300/30 hover:shadow-[0_0_30px_rgba(103,232,249,0.12)];
   }
 
-  /* Reveal-on-scroll (class-based, added by an IntersectionObserver in
-     Layout.tsx). Hidden until revealed; no JS animation library needed. */
-  /* Only hide when JavaScript runs (index.html adds .js-enabled), so no-JS
-     readers and prerendered HTML always show every card. */
-  .js-enabled .card-surface:not(.revealed),
-  .js-enabled .prose:not(.revealed) {
+  /* Reveal-on-scroll (classes set by the IntersectionObserver in Layout.tsx).
+     Blocks are visible unless the observer has marked them as waiting off
+     screen, so prerendered HTML, no-JS readers and any block the observer
+     misses always show their content. */
+  .card-surface.reveal-pending,
+  .prose.reveal-pending {
     opacity: 0;
     transform: translateY(30px);
   }
 
   .card-surface.revealed,
   .prose.revealed {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity .7s ease-out, transform .7s ease-out;
+    transition: opacity .7s ease-out, transform .7s ease-out, border-color .3s ease, box-shadow .3s ease;
   }
 
   .section-padding {
@@ -256,13 +254,30 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  /* Never leave reveal-on-scroll targets hidden for reduced-motion users,
-     even if the 'revealed' class was not added in time. */
-  .card-surface,
-  .prose {
+  /* Reduced motion: reveal-on-scroll never hides anything. */
+  .card-surface.reveal-pending,
+  .prose.reveal-pending {
     opacity: 1;
     transform: none;
-    transition: none;
+  }
+}
+
+/* Printing (people do print the licence agreement and the terms): sections
+   still waiting below the fold must be on the page, and the fixed navigation
+   must not cover it. */
+@media print {
+  .reveal-pending,
+  main [style*="opacity: 0"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  nav[aria-label="Main"] {
+    display: none !important;
+  }
+  .mobile-collapse__body {
+    max-height: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
   }
 }
 

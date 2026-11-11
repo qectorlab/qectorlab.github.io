@@ -118,6 +118,8 @@ This record makes a routing decision explainable. It also prevents an accidental
 
 The manual documents Community, Pro, and Enterprise distance caps of 7, 19, and 63, with GPU batch paths gated by Enterprise. Token verification is offline, performed in the Rust core, using Ed25519. `is_available()` reports hardware; it does not grant a license tier. These are separate decisions and should stay separate in diagnostics and documentation.
 
+> **Update (1.0.1), November 2026:** every paid licence, Pro or Enterprise, unlocks GPU batch decoding.
+
 License input is explicit: keys arrive through `set_license_key()` (read back with `get_license_info()`), through the `QECTOR_LICENSE_KEY` or `QECTOR_LICENSE_FILE` environment variables, or through `~/.qector/license.key`. `QECTOR_ENFORCE=1` and `QECTOR_SILENT=1` control strictness and banner output.
 
 ## 9. The right claim about orchestration

@@ -1,5 +1,7 @@
+import { PYPI_VERSION } from './releases';
+
 export const APP_CONFIG = {
-  version: '1.0.1',
+  version: PYPI_VERSION,
   pypiPackage: 'qector-decoder-v3',
   contactEndpoint: import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined,
   ogImage: 'https://qector.store/images/og-banner.png',

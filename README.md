@@ -2,7 +2,7 @@
 
 Live site: [qector.store](https://qector.store)
 
-This repository contains the static GitHub Pages deployment and the Vite/React source for QECTOR Decoder v3. The QECTOR Decoder v3 Reference Manual v1.0.0 is the normative source for decoder contracts and claim boundaries:
+This repository contains the Vite/React source of the site, the two Cloudflare Workers that sit in front of it, and the production audit. The QECTOR Decoder v3 Reference Manual v1.0.0 is the normative source for decoder contracts and claim boundaries:
 
 - DOI: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)
 - Decoder repository: [github.com/GuillaumeLessard/qector-decoder](https://github.com/GuillaumeLessard/qector-decoder)
@@ -11,19 +11,33 @@ This repository contains the static GitHub Pages deployment and the Vite/React s
 ## Repository Layout
 
 - `source/`: React, TypeScript, content, public assets, and build configuration.
-- Root static files: the latest production build served by GitHub Pages.
+- `workers/qector-fulfilment/`: Stripe webhook that signs and e-mails licence tokens (`qector.store/stripe/*`).
+- `workers/qector-headers/`: adds the security headers and cache policy to every response.
+- `scripts/security-audit.mjs`: checks the live headers, redirects and licence service (run nightly by `.github/workflows/security-audit.yml`).
+- `gh-pages` branch: the built site, written by `npm run deploy`. Nothing is built or edited there by hand.
 
 ## Local Development
 
 ```text
 cd source
 npm ci
-npm run lint
-npm run build
+npx playwright install chromium   # once, for `npm run check`
 npm run dev
+npm run lint
+npm run build                     # type-check, bundle, render every route to static HTML in dist/
+npm run check                     # static, browser and accessibility checks of dist/
 ```
 
-The build emits prerendered route shells for crawlers and direct GitHub Pages requests. The root static output is synchronized from `source/dist/` before deployment.
+## Deployment
+
+```text
+cd source
+npm run build
+npm run deploy             # commits dist/ to the local gh-pages branch
+npm run deploy -- --push   # pushes it; GitHub Pages publishes within minutes
+```
+
+GitHub Pages serves the `gh-pages` branch, so only the built site is public on qector.store. The Workers are deployed separately with `npx wrangler deploy` from their own folders (see each folder's notes); deploy the site before `qector-headers` when both change, because the Worker's Content-Security-Policy is written for the current build.
 
 ## Content and Evidence Policy
 
@@ -33,7 +47,7 @@ Logical results must be scored in observable/coset space, not by raw correction-
 
 ## Branding
 
-The supplied QECTOR logo is `images/logo.png` and is copied to `source/public/images/logo.png` for the build. It is used by the header, footer, favicon, manifest, structured data, and Open Graph/Twitter metadata. No personal connection or audience export is included in the public site.
+The supplied QECTOR logo is `source/public/images/logo.png`. It is used by the header, footer, favicon, manifest, structured data, and Open Graph/Twitter metadata. No personal connection or audience export is included in the public site.
 
 ## License
 

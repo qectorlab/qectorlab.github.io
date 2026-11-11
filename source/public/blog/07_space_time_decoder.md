@@ -100,7 +100,7 @@ These names describe different scopes:
 For a decayed window, the manual gives a geometric truncation bound. If `0 <= lambda < 1`,
 
 $$
-\|S_W-S_{infty}\|_1 \leq \frac{\lambda^W}{1-\lambda}\|s\|_{infty}.
+\|S_W-S_{\infty}\|_1 \leq \frac{\lambda^W}{1-\lambda}\|s\|_{\infty}.
 $$
 
 The expression describes the history approximation. It does not by itself establish a numerical logical-fidelity loss or a hardware-control guarantee.

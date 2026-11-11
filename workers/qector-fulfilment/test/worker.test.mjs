@@ -195,7 +195,7 @@ test("trial: one token per address per year, honeypot, terms, per-IP cap, no ora
 test("health reports configuration without secrets", async () => {
   const { env } = await makeEnv();
   const body = await (await worker.fetch(new Request("https://qector.store/stripe/health"), env)).json();
-  assert.equal(body.version, "2.1");
+  assert.equal(body.version, "2.2");
   assert.equal(body.key_matches_decoder, true);
   assert.equal(body.signing_key, true);
   assert.ok(!JSON.stringify(body).includes("PRIVATE"));
@@ -289,4 +289,112 @@ test("legacy renewal without metadata resolves on the new invoice shape (pricing
   const byAmount = await (await worker.fetch(await stripeRequest(mk("am", "sub_am", "price_unknown", 129900)), env)).json();
   assert.equal(byAmount.tier, "solo_annual");
   assert.equal(sent.length, 6);
+});
+
+// ---------------------------------------------------------------------------
+// 2.2: refunds and disputes on subscription payments, with the event shapes
+// Stripe really sends. A subscription-mode Checkout Session has no
+// PaymentIntent; from API 2025-03-31 a Charge has no `invoice` and an Invoice
+// has no `payment_intent`.
+// ---------------------------------------------------------------------------
+
+const subCheckout = (n, extra = {}) =>
+  checkout(`sub${n}`, {
+    mode: "subscription", metadata: { qector_tier: "pro_annual" }, amount_subtotal: 79000, amount_total: 79000,
+    payment_intent: null, subscription: `sub_${n}`, invoice: `in_first${n}`, customer: `cus_${n}`, ...extra,
+  });
+const refundOf = (id, object) => ({ id: `evt_rf_${id}`, type: "charge.refunded", livemode: true, data: { object: { id: `ch_${id}`, refunded: true, ...object } } });
+const nowSeconds = () => Math.floor(Date.now() / 1000);
+const crlText = async (env) => (await worker.fetch(new Request("https://qector.store/stripe/revoked.txt"), env)).text();
+
+test("refund of a first subscription payment revokes through the customer index", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(1)), env);
+  assert.deepEqual(env.LICENSES.json("cus:cus_1"), ["cs_live_sub1"]);
+  const res = await worker.fetch(await stripeRequest(refundOf("a", { payment_intent: "pi_a", customer: "cus_1", amount: 79000, currency: "usd", created: nowSeconds() })), env);
+  const body = await res.json();
+  assert.equal(res.status, 200);
+  assert.equal(body.revoked, true);
+  assert.equal(body.matched_by, "customer");
+  assert.equal(env.LICENSES.json("lic:cs_live_sub1").revoked, true);
+  assert.match(await crlText(env), /^cs_live_sub1$/m);
+});
+
+test("refund of a renewal revokes that renewal, not the earlier licence", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(2)), env);
+  // The first licence was issued a billing period ago.
+  const first = env.LICENSES.json("lic:cs_live_sub2");
+  await env.LICENSES.put("lic:cs_live_sub2", JSON.stringify({ ...first, issued_at: new Date(Date.now() - 366 * 86400 * 1000).toISOString() }));
+  const renewal = { id: "evt_in2", type: "invoice.paid", livemode: true, data: { object: { id: "in_renew2", billing_reason: "subscription_cycle", customer: "cus_2", customer_email: "buyer@example.com", currency: "usd", amount_paid: 79000, subtotal: 79000, parent: { subscription_details: { subscription: "sub_2" } } } } };
+  assert.equal((await (await worker.fetch(await stripeRequest(renewal), env)).json()).issued, true);
+  assert.deepEqual(env.LICENSES.json("cus:cus_2").sort(), ["cs_live_sub2", "in_renew2"]);
+  const body = await (await worker.fetch(await stripeRequest(refundOf("b", { payment_intent: "pi_b", customer: "cus_2", amount: 79000, currency: "usd", created: nowSeconds() })), env)).json();
+  assert.equal(body.revoked, true);
+  assert.equal(body.receipt_id, "in_renew2");
+  assert.notEqual(env.LICENSES.json("lic:cs_live_sub2").revoked, true);
+});
+
+test("dispute of a subscription payment revokes once invoice_payment.paid has linked it", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(3)), env);
+  const linked = { id: "evt_ip3", type: "invoice_payment.paid", livemode: true, data: { object: { id: "inpay_3", object: "invoice_payment", invoice: "in_first3", status: "paid", payment: { type: "payment_intent", payment_intent: "pi_c" } } } };
+  assert.equal((await (await worker.fetch(await stripeRequest(linked), env)).json()).linked, true);
+  const dispute = { id: "evt_dp3", type: "charge.dispute.created", livemode: true, data: { object: { id: "dp_3", charge: "ch_c", payment_intent: "pi_c" } } };
+  const body = await (await worker.fetch(await stripeRequest(dispute), env)).json();
+  assert.equal(body.revoked, true);
+  assert.equal(body.matched_by, "link");
+  assert.match(await crlText(env), /^cs_live_sub3$/m);
+});
+
+test("older API versions: the PaymentIntent on the first invoice links the dispute", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(4)), env);
+  const firstInvoice = { id: "evt_in4", type: "invoice.paid", livemode: true, data: { object: { id: "in_first4", billing_reason: "subscription_create", subscription: "sub_4", payment_intent: "pi_d", charge: "ch_d", customer_email: "buyer@example.com" } } };
+  assert.equal((await (await worker.fetch(await stripeRequest(firstInvoice), env)).json()).ignored, "subscription_create");
+  const dispute = { id: "evt_dp4", type: "charge.dispute.created", livemode: true, data: { object: { id: "dp_4", charge: "ch_d", payment_intent: "pi_d" } } };
+  assert.equal((await (await worker.fetch(await stripeRequest(dispute), env)).json()).revoked, true);
+});
+
+test("an unmatched refund or dispute is held, and succeeds on retry once the link exists", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(5)), env);
+  const dispute = { id: "evt_dp5", type: "charge.dispute.created", livemode: true, data: { object: { id: "dp_5", charge: "ch_e", payment_intent: "pi_e" } } };
+  const held = await worker.fetch(await stripeRequest(dispute), env);
+  assert.equal(held.status, 500);
+  assert.equal((await held.json()).retryable, true);
+  assert.equal(env.LICENSES.json("evt:evt_dp5").status, "pending");
+  assert.match(env.LICENSES.json("evt:evt_dp5").last_error, /matches no licence/);
+  assert.doesNotMatch(await crlText(env), /cs_live_sub5/);
+  // The link arrives late; Stripe's retry of the same event now revokes.
+  await worker.fetch(await stripeRequest({ id: "evt_ip5", type: "invoice_payment.paid", livemode: true, data: { object: { id: "inpay_5", invoice: "in_first5", payment: { type: "payment_intent", payment_intent: "pi_e" } } } }), env);
+  const retried = await worker.fetch(await stripeRequest(dispute), env);
+  assert.equal(retried.status, 200);
+  assert.equal((await retried.json()).revoked, true);
+  // A refund for a customer with no licence at all is held too, never acknowledged.
+  const stranger = await worker.fetch(await stripeRequest(refundOf("z", { payment_intent: "pi_z", customer: "cus_unknown", amount: 79000, currency: "usd", created: nowSeconds() })), env);
+  assert.equal(stranger.status, 500);
+});
+
+test("the customer match never guesses between two licences, and ignores other amounts", async () => {
+  const { env } = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(6)), env);
+  await worker.fetch(await stripeRequest(subCheckout("6b", { customer: "cus_6" })), env);
+  const refund = refundOf("f", { payment_intent: "pi_f", customer: "cus_6", amount: 79000, currency: "usd", created: nowSeconds() });
+  const res = await worker.fetch(await stripeRequest(refund), env);
+  assert.equal(res.status, 500);
+  assert.match(env.LICENSES.json("evt:evt_rf_f").last_error, /fits 2 licences/);
+  assert.doesNotMatch(await crlText(env), /cs_live_sub6/);
+  // Wrong amount or currency: not this licence.
+  const other = await makeEnv();
+  await worker.fetch(await stripeRequest(subCheckout(7)), other.env);
+  assert.equal((await worker.fetch(await stripeRequest(refundOf("g", { payment_intent: "pi_g", customer: "cus_7", amount: 7900, currency: "usd", created: nowSeconds() })), other.env)).status, 500);
+  assert.equal((await worker.fetch(await stripeRequest(refundOf("h", { payment_intent: "pi_h", customer: "cus_7", amount: 79000, currency: "eur", created: nowSeconds() })), other.env)).status, 500);
+  assert.notEqual(other.env.LICENSES.json("lic:cs_live_sub7").revoked, true);
+});
+
+test("the amount fallback is USD only", () => {
+  assert.equal(tierFromSession({ metadata: {}, currency: "usd", amount_subtotal: 7900 }), "pro_monthly");
+  assert.throws(() => tierFromSession({ id: "cs_eur", metadata: {}, currency: "eur", amount_subtotal: 7900, amount_total: 7900 }), /cannot determine/);
+  assert.equal(tierFromSession({ metadata: { qector_tier: "pro_monthly" }, currency: "eur", amount_subtotal: 7300 }), "pro_monthly");
 });

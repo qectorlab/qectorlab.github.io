@@ -1,21 +1,18 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import AlgorithmCard from '../components/AlgorithmCard';
 import CodeBlock from '../components/CodeBlock';
 import EvidenceBlock from '../components/EvidenceBlock';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FileText, Github, ExternalLink, Lock } from 'lucide-react';
-import { ZENODO_RECORDS } from '../lib/releases';
-
-gsap.registerPlugin(ScrollTrigger);
+import { PYPI_INSTALL_SPEC, PYPI_VERSION, REFERENCE_MANUAL_DOI, ZENODO_RECORDS } from '../lib/releases';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const REPORTS_DATA = [
   {
-    title: 'Official User Manual v1.0.0',
-    desc: 'QECTOR Decoder v3 Reference Manual v1.0.0 (DOI 10.5281/zenodo.21941046): the normative source for decoder contracts and claim boundaries.',
+    title: 'Normative Reference Manual v1.0.0',
+    desc: `QECTOR Decoder v3 Reference Manual v1.0.0 (DOI ${REFERENCE_MANUAL_DOI}): the normative source for decoder contracts and claim boundaries.`,
     status: 'Verified',
   },
   {
@@ -37,22 +34,7 @@ const REPORTS_DATA = [
 
 export default function Evidence() {
   const [selectedStatus, setSelectedStatus] = useState('All');
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-    sectionsRef.current.filter(Boolean).forEach((section) => {
-      gsap.fromTo(section, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-      });
-    });
-    });
-    return () => { ctx.revert(); };
-  }, []);
-
-const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+  const addRef = useScrollReveal({ y: 30, duration: 600 });
 
   const filteredReports = REPORTS_DATA.filter(
     (report) => selectedStatus === 'All' || report.status === selectedStatus
@@ -109,7 +91,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               >
                 <FileText className="w-6 h-6 text-gold-400" aria-hidden="true" />
               <div className="text-left">
-                <div className="text-gold-400 font-semibold">Official User Manual v1.0.0</div>
+                <div className="text-gold-400 font-semibold">Reference Manual v1.0.0 · Web Companion</div>
                 <div className="text-muted-foreground text-sm">qector.store/docs/reference.md</div>
               </div>
             </a>
@@ -157,10 +139,12 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               <h2 className="text-2xl font-bold">Zenodo Evidence Registry</h2>
               <p className="text-secondary text-sm mt-1">
                 The complete six-record evidence corpus for QECTOR Decoder v3 v1.0.0. Each record is a DOI-stable,
-                versioned deposit with its scope and date listed below.
+                versioned deposit with its scope and date listed below. This corpus was produced for v1.0.0; the{' '}
+                <Link to="/changelog" className="text-cyan-300 hover:underline">changelog</Link> lists what has changed
+                since then, up to the current release, v{PYPI_VERSION}.
               </p>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Published records">
               <table className="w-full min-w-[640px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
@@ -221,7 +205,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             <CodeBlock
               language="bash"
               code={`# Quick validation
-pip install --upgrade "qector-decoder-v3>=1.0.1,<2"
+pip install --upgrade "${PYPI_INSTALL_SPEC}"
 python -c "import qector_decoder_v3 as qd; print(qd.__version__)"
 # environment diagnostic
 qector-doctor
@@ -236,12 +220,12 @@ qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001`}
             <p className="text-secondary text-xs leading-relaxed mb-3">
               If you use QECTOR Decoder v3 or its validation artifacts in academic research, please cite our software artifact release:
             </p>
-            <pre className="p-4 bg-void border border-gridline rounded-xl text-xs text-muted-foreground font-mono overflow-x-auto select-all">
+            <pre className="p-4 bg-void border border-gridline rounded-xl text-xs text-muted-foreground font-mono overflow-x-auto select-all" tabIndex={0} role="region" aria-label="BibTeX citation">
 {`@software{lessard2026qector,
   author  = {Guillaume Lessard},
   title   = {{QECTOR Decoder v3}: Rust/Python Quantum Error Correction Decoding Platform},
   year    = {2026},
-  version = {1.0.1},
+  version = {${PYPI_VERSION}},
   url     = {https://qector.store/},
   note    = {Source-available under PolyForm Noncommercial 1.0.0. Commercial license required for commercial use.}
 }`}

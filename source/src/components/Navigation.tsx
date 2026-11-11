@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavItem { label: string; href: string; note?: string }
@@ -62,6 +62,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const hoverOpenedAt = useRef(0);
+  const lastScrollY = useRef(0);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -69,12 +70,8 @@ export default function Navigation() {
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     setScrolled(currentScrollY > 50);
-    if (currentScrollY > 200) {
-      setHidden(currentScrollY > (window as unknown as { lastScrollY: number }).lastScrollY);
-    } else {
-      setHidden(false);
-    }
-    (window as unknown as { lastScrollY: number }).lastScrollY = currentScrollY;
+    setHidden(currentScrollY > 200 && currentScrollY > lastScrollY.current);
+    lastScrollY.current = currentScrollY;
   }, []);
 
   useEffect(() => {
@@ -112,12 +109,15 @@ export default function Navigation() {
   }, [openGroup]);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    // While the mobile menu is open it behaves like a dialog: the page behind
+    // it does not scroll and cannot be reached by keyboard or screen reader.
+    const behind = [document.getElementById('main-content'), document.querySelector('footer')];
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    behind.forEach((el) => el?.toggleAttribute('inert', isOpen));
+    return () => {
       document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
+      behind.forEach((el) => el?.removeAttribute('inert'));
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -223,7 +223,7 @@ export default function Navigation() {
                 to={otherLanguage(location.pathname).href}
                 hrefLang={otherLanguage(location.pathname).lang}
                 lang={otherLanguage(location.pathname).lang}
-                aria-label={otherLanguage(location.pathname).lang === 'fr' ? 'Version française' : 'English version'}
+                aria-label={otherLanguage(location.pathname).lang === 'fr' ? 'FR : version française' : 'EN: English version'}
                 className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-2 rounded-lg text-xs font-semibold text-secondary hover:text-cyan-300 hover:bg-white/5"
               >
                 {otherLanguage(location.pathname).label}
@@ -237,7 +237,7 @@ export default function Navigation() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="lg:hidden flex flex-col items-center justify-center gap-1.5 p-2 min-h-[44px] min-w-[44px] rounded-lg hover:bg-white/5 transition-colors"
-                aria-label={location.pathname.startsWith('/fr/') ? (isOpen ? 'Fermer le menu' : 'Ouvrir le menu') : (isOpen ? 'Close menu' : 'Open menu')}
+                aria-label={location.pathname === '/fr' || location.pathname.startsWith('/fr/') ? (isOpen ? 'Fermer le menu' : 'Ouvrir le menu') : (isOpen ? 'Close menu' : 'Open menu')}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >

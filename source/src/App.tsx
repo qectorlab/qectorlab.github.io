@@ -1,13 +1,20 @@
-﻿import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import PageLoader from './components/PageLoader';
 import Home from './pages/Home';
+// Eager, like Home: 404.html is served for every unknown URL, so the browser
+// renders it afresh rather than attaching to its HTML (see main.tsx). With the
+// page in the entry bundle that render is complete at once, with no spinner
+// in between.
+import NotFound from './pages/NotFound';
 
-// Route-level code splitting: Home stays eager (it's the primary landing
-// page and the most common entry point), everything else loads on demand
-// so first paint doesn't pay for pages most visitors never open.
+// Route-level code splitting: everything else loads on demand so first paint
+// doesn't pay for pages most visitors never open. Every route is also rendered
+// to static HTML at build time (src/entry-server.tsx), and the browser attaches
+// to that HTML: while a route's chunk is on its way, React leaves the static
+// page in place instead of showing the Suspense fallback.
 const About = lazy(() => import('./pages/About'));
 const Decoder = lazy(() => import('./pages/Decoder'));
 const Workbench = lazy(() => import('./pages/Workbench'));
@@ -45,7 +52,18 @@ const Docs = lazy(() => import('./pages/Docs'));
 const Installer = lazy(() => import('./pages/Installer'));
 const Manual = lazy(() => import('./pages/Manual'));
 const Success = lazy(() => import('./pages/Success'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+
+// Sets <html data-app-ready="true"> once the first route has rendered or been
+// attached to its static HTML. It sits inside the routes' Suspense boundary,
+// so it waits for the route's own code: before that, the page can be on
+// screen (static HTML) without its content being interactive yet. Read by
+// tests/browser-check.mjs.
+function AppReady() {
+  useEffect(() => {
+    document.documentElement.dataset.appReady = 'true';
+  }, []);
+  return null;
+}
 
 export default function App() {
   return (
@@ -95,6 +113,7 @@ export default function App() {
             <Route path="/success" element={<Success />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <AppReady />
         </Suspense>
       </Layout>
     </ErrorBoundary>

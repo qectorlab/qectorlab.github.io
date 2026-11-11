@@ -80,6 +80,8 @@ The same distinction applies to `CUDABpOsdDecoder`. It is a batched qLDPC path; 
 
 `is_available()` answers whether the local runtime can see the relevant hardware. It does not answer whether the caller is licensed to construct the decoder. The v1.0.0 tier table documents GPU-enabled paths under the Enterprise tier, while distance caps are enforced in the Rust core.
 
+> **Update (1.0.1), November 2026:** every paid licence, Pro or Enterprise, unlocks GPU batch decoding.
+
 The published v1.0.0 wheels are CPU-only: 15 wheels on PyPI (CPython 3.9 through 3.13; Windows x86_64, manylinux x86_64, macOS arm64) with no CUDA binary inside (verified: each wheel carries a single native module of about 4 MB). CUDA and OpenCL are build-time feature gates, not published wheels; OpenCL remains a documented source-build path. Whether the local runtime can actually use a GPU is answered at runtime by `cuda_is_available()`, which the CPU fallback and the `AutoDecoder` controller consult before selecting a path.
 
 The manual also records a known GPU-context limitation: the native CUDA path and CuPy can use different CUDA contexts, and an intermittent access violation was observed under load on one tested configuration. The documented workaround is to run those workloads in separate processes, or hide the device for a monolithic suite.

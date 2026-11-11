@@ -1,8 +1,0 @@
-{
-    "status": "ok",
-    "service": "QECTOR Store",
-    "canonical": "https://qector.store",
-    "package": "qector-decoder-v3",
-    "version": "1.0.1",
-    "note": "Static release metadata; live fulfillment status is available at /stripe/health."
-}

@@ -64,9 +64,19 @@ module.exports = {
           600: "#d97706",
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            // Inline code is already set apart by its own background; the
+            // plugin's default adds literal backticks around it.
+            'code::before': { content: 'none' },
+            'code::after': { content: 'none' },
+          },
+        },
+      },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['"Inter Variable"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', 'JetBrains Mono', 'Fira Code', 'monospace'],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

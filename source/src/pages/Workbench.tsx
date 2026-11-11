@@ -1,49 +1,16 @@
-import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import AlgorithmCard from '../components/AlgorithmCard';
 import EvidenceBlock from '../components/EvidenceBlock';
 import QECSimulator from '../components/QECSimulator';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
-
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { WORKBENCH_RELEASES } from '../lib/releases';
 
 const [WIN, LINUX] = WORKBENCH_RELEASES;
 
 export default function Workbench() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-      sectionsRef.current.filter(Boolean).forEach((section) => {
-        gsap.fromTo(
-          section,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-            scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-          }
-        );
-      });
-    });
-
-    return () => {
-      ctx.revert();
-    };
-  }, []);
-
-  const addRef = (el: HTMLDivElement | null, index: number) => {
-    if (el) sectionsRef.current[index] = el;
-  };
+  const addRef = useScrollReveal();
 
   // Decoder coverage against the qector_decoder_v3 backend.
   // The v1.0.7 apps ship 19 named decoder kinds: 17 concrete configurations
@@ -51,8 +18,8 @@ export default function Workbench() {
   const decodersList = [
     { kind: 'union_find', type: 'Graphlike', desc: 'Fast approximate Union-Find decoding; higher LER than exact MWPM.' },
     { kind: 'fast_union_find', type: 'Graphlike', desc: 'Optimized Union-Find hot path; approximate.' },
-    { kind: 'blossom', type: 'Universal', desc: "Weight-optimal exact minimum-weight perfect matching (Edmonds' Blossom)." },
-    { kind: 'sparse_blossom', type: 'Graphlike', desc: 'Event-driven Sparse Blossom with radix-heap region growth (experimental).' },
+    { kind: 'blossom', type: 'Graphlike', desc: "Weight-optimal exact minimum-weight perfect matching (Edmonds' Blossom)." },
+    { kind: 'sparse_blossom', type: 'Graphlike', desc: 'Event-driven Sparse Blossom with radix-heap region growth; near-optimal in its tested scope.' },
     { kind: 'bp_osd', type: 'Universal / qLDPC', desc: 'Belief propagation + ordered-statistics decoding for LDPC / qLDPC codes.' },
     { kind: 'auto', type: 'Graphlike', desc: 'Self-selecting AutoDecoder: picks the best available decoder for the code.' },
     { kind: 'hybrid', type: 'Graphlike', desc: 'Combines a fast heuristic pass with exact matching.' },
@@ -63,9 +30,9 @@ export default function Workbench() {
     { kind: 'gnn_belief_matching', type: 'Graphlike', desc: 'GNN-predicted per-qubit weights guide edge-weighted matching with fallback.' },
     { kind: 'belief_matching', type: 'Universal', desc: 'Sum-product BP posteriors reweight an exact Blossom matching.' },
     { kind: 'two_stage', type: 'Graphlike', desc: 'Decoupled X/Z sector decoders for CSS / colour codes.' },
-    { kind: 'ambiguity_cluster', type: 'Graphlike', desc: 'Cluster-growth decoder for high noise or non-graphlike codes.' },
+    { kind: 'ambiguity_cluster', type: 'qLDPC', desc: 'Cluster-growth decoder for high noise or non-graphlike codes.' },
     { kind: 'colour_code', type: 'Universal / qLDPC', desc: 'BP-OSD hypergraph decoder over undecomposed detector error models.' },
-    { kind: 'space_time', type: 'Universal', desc: 'Space-time decoder for multi-round decoding (experimental).' },
+    { kind: 'space_time', type: 'Lifted graphlike', desc: 'Space-time decoder for multi-round decoding (experimental).' },
     { kind: 'spacetime_mwpm', type: 'Multi-round', desc: 'Space-time MWPM for phenomenological & circuit-level decoding.' },
     { kind: 'soft_llr', type: 'Soft-decision', desc: 'Log-likelihood-ratio-weighted decoding.' },
   ];
@@ -100,7 +67,7 @@ export default function Workbench() {
   return (
     <>
       <SEO
-        title="QECTOR Workbench - Windows v1.0.7 and Linux v1.0.7"
+        title={`QECTOR Workbench - ${WIN.label} ${WIN.version} and ${LINUX.label} ${LINUX.version}`}
         description={`QECTOR Workbench desktop GUI and MCP releases: ${WIN.label} ${WIN.version} (${WIN.arch}) with ${WIN.mcpTools} tools and a ${WIN.backendVersion} backend, ${LINUX.label} ${LINUX.version} with ${LINUX.mcpTools} tools.`}
       />
 
@@ -130,7 +97,7 @@ export default function Workbench() {
           <p className="text-secondary text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             The free desktop application and Model Context Protocol server for{' '}
             <span className="text-cyan-300 font-semibold">QECTOR Decoder v3</span>.{' '}
-            Each v1.0.7 release (Windows/Linux) names 19 kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries. It also covers 10 quantum code families, a visual circuit builder, and an 85-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64 and Linux x64.
+            Each {WIN.version} release (Windows/Linux) names {WIN.decoderKinds} kinds: 17 concrete decoder configurations plus the AutoDecoder and Auto Router orchestration entries. It also covers {WIN.codeFamilies} quantum code families, a visual circuit builder, and an {WIN.mcpTools}-tool MCP server, with a bundled qector_decoder_v3 {WIN.backendVersion} backend. Available for Windows x64 and Linux x64.
             Ships as a portable executable: each one is
             self-contained, bundling its own Python runtime,
             scientific stack, and decoder wheel. No system Python, no pip, and no online update checks.
@@ -150,7 +117,7 @@ export default function Workbench() {
             </Link>
           </div>
           <p className="text-muted-foreground text-xs mt-4">
-             Windows v1.0.7 (x64) and Linux v1.0.7 (x64) releases are published with direct artifacts and SHA-256 checksums verified against each live release.
+             {WIN.label} {WIN.version} ({WIN.arch}) and {LINUX.label} {LINUX.version} ({LINUX.arch}) releases are published with direct artifacts and SHA-256 checksums verified against each live release.
           </p>
         </div>
       </section>
@@ -161,10 +128,10 @@ export default function Workbench() {
           {/* Stats Grid */}
           <div ref={(el) => addRef(el, 0)} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: 'v1.0.7 ×2', label: 'Live releases (Win / Linux)' },
+              { value: `${WIN.version} ×2`, label: 'Live releases (Win / Linux)' },
               { value: `${WIN.mcpTools}`, label: `MCP tools per ${WIN.label} release` },
-              { value: '19', label: 'Named kinds (17 + 2 routing)' },
-              { value: '10', label: 'Quantum Code Families' },
+              { value: `${WIN.decoderKinds}`, label: 'Named kinds (17 + 2 routing)' },
+              { value: `${WIN.codeFamilies}`, label: 'Quantum Code Families' },
             ].map((s) => (
               <div key={s.label} className="card-surface text-center">
                 <div className="text-cyan-300 font-bold text-3xl mb-1">{s.value}</div>
@@ -177,7 +144,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 1)}>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Inside the Workbench</h2>
             <p className="text-secondary text-sm mb-6">
-              Nine workspaces are documented for the live v1.0.7 (Windows/Linux) releases:{' '}
+              Nine workspaces are documented for the live {WIN.version} (Windows/Linux) releases:{' '}
               {modules.map((m, i) => (
                 <span key={m}>
                   <span className="text-primary font-medium">{m}</span>
@@ -262,7 +229,7 @@ export default function Workbench() {
                 <ul className="text-xs space-y-1 text-secondary list-disc pl-4">
                   <li>Requires Apple hardware build - coming soon</li>
                   <li>No artifact yet - check back for macOS release</li>
-                  <li>Windows and Linux v1.0.7 are live with 19 decoders</li>
+                  <li>Windows and Linux {WIN.version} are live with {WIN.decoderKinds} decoders</li>
                 </ul>
                 <span className="text-muted-foreground text-xs">Not available yet</span>
               </div>
@@ -280,7 +247,7 @@ export default function Workbench() {
               <div>
                 <h2 className="text-2xl font-bold">Integrated Decoders</h2>
                 <p className="text-secondary text-sm mt-1">
-                  All 19 named kinds (17 concrete configurations plus AutoDecoder and Auto Router) are exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
+                  All {WIN.decoderKinds} named kinds (17 concrete configurations plus AutoDecoder and Auto Router) are exposed through the Workbench MCP server. No benchmark figures are published on the site: run the included harness to measure your own hardware.
                 </p>
               </div>
               <span className="text-xs px-3 py-1 bg-cyan-300/10 border border-cyan-300/20 text-cyan-300 rounded-full font-mono">
@@ -289,12 +256,12 @@ export default function Workbench() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Each v1.0.7 release (Windows/Linux) declares <strong className="text-secondary">19 named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
+              Each {WIN.version} release (Windows/Linux) declares <strong className="text-secondary">{WIN.decoderKinds} named kinds: 17 concrete configurations plus 2 orchestration entries</strong> against
               its bundled qector_decoder_v3 {WIN.backendVersion} backend. Consult each release's
               included manuals for platform-specific coverage.
             </p>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Decoder kinds">
               <table className="w-full min-w-[640px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
@@ -318,9 +285,9 @@ export default function Workbench() {
 
           {/* Code Families */}
           <div ref={(el) => addRef(el, 4)}>
-            <h2 className="text-2xl font-bold mb-2">10 Supported Code Families</h2>
+            <h2 className="text-2xl font-bold mb-2">{WIN.codeFamilies} Supported Code Families</h2>
             <p className="text-secondary text-sm mb-6">
-              The published releases cover <strong className="text-primary">10 code families</strong>, including qLDPC
+              The published releases cover <strong className="text-primary">{WIN.codeFamilies} code families</strong>, including qLDPC
               and colour codes.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -349,7 +316,7 @@ export default function Workbench() {
                 },
                 {
                   name: 'Self-Contained',
-                  desc: 'Bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 1.0.0 wheel. No system Python or pip required; the app makes no online update checks.',
+                  desc: `Bundles its own Python runtime, the scientific stack, and the qector_decoder_v3 ${WIN.backendVersion} wheel. No system Python or pip required; the app makes no online update checks.`,
                 },
                 {
                   name: 'Self / Auto-Debug Layer',
@@ -390,7 +357,7 @@ export default function Workbench() {
           <div ref={(el) => addRef(el, 7)}>
             <EvidenceBlock
               title="Documentation & Reference"
-              statement={`QECTOR Workbench documentation is published alongside each app release. The Windows v1.0.7 and Linux v1.0.7 builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
+              statement={`QECTOR Workbench documentation is published alongside each app release. The ${WIN.label} ${WIN.version} and ${LINUX.label} ${LINUX.version} builds ship per-OS manuals and SHA-256 checksums; use the release-specific manuals for your platform.`}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <a

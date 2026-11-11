@@ -143,7 +143,7 @@ $$
 c + e \in \operatorname{im}(H^T).
 $$
 
-The v1.0.0 changelog anchors comparisons the way the manual requires: its 120-test LER suite on the distance-3 repetition code at `p = 0.01` reports `ler_qector = 0.00392` against `ler_pymatching = 0.00317`, inside the documented 4.5x margin. Any public comparison should still name the code family, distance, rounds, noise model, DEM settings, decoder mode, shots, seed, environment, and raw artifact. The manual intentionally excludes hardware-bound latency and throughput figures.
+The v1.0.0 changelog anchors comparisons the way the manual requires: its 120-test LER suite on the distance-3 repetition code at `p = 0.01` reports, over 12 000 seeded shots, `ler_qector_blossom = 0.00392` against `ler_pymatching = 0.00317`: a delta of 0.00075, inside the suite's `+1e-3` gate (source: [decoder CHANGELOG, section 1.0.0](https://github.com/GuillaumeLessard/qector-decoder/blob/main/CHANGELOG.md)). Any public comparison should still name the code family, distance, rounds, noise model, DEM settings, decoder mode, shots, seed, environment, and raw artifact. The manual intentionally excludes hardware-bound latency and throughput figures.
 
 ## Takeaway
 

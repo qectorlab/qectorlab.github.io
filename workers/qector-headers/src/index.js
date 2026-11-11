@@ -30,12 +30,12 @@ const SECURITY_HEADERS = {
     "worker-src 'self' blob:",
     // Hashes: the js-enabled marker and the GitHub Pages SPA redirect inline
     // scripts in index.html (recompute if either script changes).
-    "script-src 'self' 'sha256-47Y7xRUIVXITmosjladRK60OPYEE3BWeBiiCmfU0d8s=' 'sha256-2yoLb9krKtf6JSNKI8iic50UCBKaIgBtSuqyekQ5HtA=' https://js.stripe.com https://assets.calendly.com https://static.cloudflareinsights.com",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com",
-    "img-src 'self' data: https://files.stripe.com",
-    "font-src 'self' data: https://fonts.gstatic.com",
-    "connect-src 'self' https://cloudflareinsights.com https://api.stripe.com https://js.stripe.com https://api.calendly.com https://calendly.com https://pypi.org",
-    "frame-src https://js.stripe.com https://checkout.stripe.com https://hooks.stripe.com https://calendly.com",
+    "script-src 'self' 'sha256-47Y7xRUIVXITmosjladRK60OPYEE3BWeBiiCmfU0d8s=' 'sha256-2yoLb9krKtf6JSNKI8iic50UCBKaIgBtSuqyekQ5HtA=' https://assets.calendly.com https://static.cloudflareinsights.com",
+    "style-src 'self' 'unsafe-inline' https://assets.calendly.com",
+    "img-src 'self' data:",
+    "font-src 'self' data:",
+    "connect-src 'self' https://cloudflareinsights.com https://api.calendly.com https://calendly.com https://pypi.org",
+    "frame-src https://calendly.com",
     "frame-ancestors 'none'",
     "form-action 'self' https://buy.stripe.com https://checkout.stripe.com https://billing.stripe.com",
     "media-src 'self' blob:",
@@ -88,6 +88,10 @@ export default {
       headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
     } else if (url.pathname.startsWith("/assets/") || url.pathname.startsWith("/videos/")) {
       headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    } else if (url.pathname.startsWith("/images/") || url.pathname.startsWith("/og/")) {
+      // Not content-hashed, so not immutable: a day in the browser, then
+      // revalidated in the background for up to a week.
+      headers.set("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
     } else {
       headers.set("Cache-Control", "public, max-age=0, must-revalidate");
     }

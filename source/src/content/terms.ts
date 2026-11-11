@@ -133,7 +133,7 @@ export const termsFr: LegalDoc = {
       id: 'licences',
       heading: '3. Licences du logiciel',
       bullets: [
-        '**L’usage non commercial** (personnel, universitaire, éducatif, recherche publique, organismes de bienfaisance et institutions gouvernementales, quel que soit leur financement) est gratuit sous la [licence PolyForm Noncommercial 1.0.0](/license).',
+        '**L’usage non commercial** (personnel, universitaire, éducatif, recherche publique, organismes de bienfaisance et institutions gouvernementales, quel que soit leur financement) est gratuit sous la [licence PolyForm Noncommercial 1.0.0](/fr/license).',
         '**L’usage commercial** exige un forfait payant et est régi par le [Contrat de licence commerciale](/fr/license-agreement), qui prévaut sur les présentes conditions pour les forfaits payants.',
         'Les composants libres de tiers restent régis par leurs propres licences.',
       ],

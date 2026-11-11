@@ -35,6 +35,22 @@
 //   * Customer e-mails pin >=1.0.1 (1.0.0 refused GPU for Pro) and plan names
 //     carry no user counts.
 //
+// 2.2 (2026-11-10): refunds and disputes on subscription payments now revoke.
+//
+//   * A subscription-mode Checkout Session carries no PaymentIntent, and since
+//     API version 2025-03-31 a Charge no longer names its invoice, so a refund
+//     or chargeback of a subscription payment matched no licence and was
+//     acknowledged without revoking anything. Three links now close that:
+//       - `alias:<pi|ch>` → invoice, written from `invoice_payment.paid` (and
+//         from `invoice.paid` on older API versions that still carry
+//         `payment_intent` / `charge`);
+//       - `cus:<customer>` → receipt ids, written at issue time; a refunded
+//         Charge names its customer, and a single unrevoked licence with the
+//         charged amount, issued within three days of the charge, is revoked;
+//       - anything still unmatched FAILS the event (Stripe retries, the event
+//         shows as pending) instead of answering 200.
+//   * The amount → tier fallback only applies to USD amounts.
+//
 // Token format is unchanged: v2.{base64url(JSON claims)}.{base64url(Ed25519 sig
 // over the claims segment)}; claims = {email, exp?, rid, tier} with keys sorted.
 // `tier` is always one the decoder understands (evaluation, pro, enterprise),
@@ -91,6 +107,9 @@ const DEFAULT_FROM = "QECTOR <licenses@qector.store>";
 const SITE = "https://qector.store";
 const TRIAL_PER_IP_PER_DAY = 3;
 const TRIAL_COOLDOWN_SECONDS = 365 * DAY;
+// A refund is matched to a licence by customer only when the licence was
+// issued within this window of the charge (Stripe retries webhooks for 3 days).
+const CUSTOMER_MATCH_WINDOW_MS = 3 * DAY * 1000;
 
 const API_SECURITY_HEADERS = {
   "cache-control": "no-store",
@@ -163,7 +182,7 @@ async function handleHealth(env, head = false) {
     {
       ok: true,
       service: "qector-fulfilment",
-      version: "2.1",
+      version: "2.2",
       email_provider: emailProviders(env).join("+") || "unconfigured",
       live_mode: liveMode(env),
       signing_key: Boolean(env.QECTOR_LICENSE_PRIVATE_KEY_B64),
@@ -308,6 +327,8 @@ async function processEvent(event, env) {
       return processCheckoutSession(event, env);
     case "invoice.paid":
       return processInvoice(event, env);
+    case "invoice_payment.paid":
+      return recordInvoicePayment(event, env);
     case "charge.refunded":
       // Partial refunds (tax corrections, goodwill credits) keep the licence.
       if (event.data?.object?.refunded !== true) {
@@ -348,6 +369,7 @@ async function processCheckoutSession(event, env) {
     payment_intent: stringOrNull(session.payment_intent),
     invoice: stringOrNull(session.invoice),
     subscription: stringOrNull(session.subscription),
+    customer: stringOrNull(session.customer) || existing?.customer || null,
     payment_link: stringOrNull(session.payment_link),
     billing_url: stringOrNull(session.receipt_url),
   });
@@ -360,6 +382,9 @@ async function processCheckoutSession(event, env) {
 async function processInvoice(event, env) {
   const invoice = event.data?.object || {};
   const reason = invoice.billing_reason;
+  // API versions before 2025-03-31 still name the payment on the invoice:
+  // record it so a later refund or dispute of that payment finds the licence.
+  await linkPaymentToInvoice(env, invoice.id, invoice.payment_intent, invoice.charge);
   // First subscription invoice: the checkout session already issued the token.
   if (reason === "subscription_create") return { ignored: reason, receipt_id: invoice.id || null };
   let productTier = null;
@@ -391,6 +416,7 @@ async function processInvoice(event, env) {
     invoice: invoice.id,
     payment_intent: stringOrNull(invoice.payment_intent),
     subscription,
+    customer: stringOrNull(invoice.customer) || existing?.customer || null,
     billing_url: stringOrNull(invoice.hosted_invoice_url),
   });
   await persistRecord(env, record);
@@ -416,9 +442,14 @@ async function tierForSubscription(invoice, env) {
       numberOrNull(line.price?.unit_amount) ??
       numberOrNull(line.pricing?.unit_amount_decimal != null ? Number(line.pricing.unit_amount_decimal) : null) ??
       (Number(line.quantity || 1) === 1 ? numberOrNull(line.amount) : null);
-    if (amount != null && AMOUNT_TIERS[amount]) return AMOUNT_TIERS[amount];
+    if (amount != null && usdOrUnstated(invoice.currency) && AMOUNT_TIERS[amount]) return AMOUNT_TIERS[amount];
   }
   return null;
+}
+
+// AMOUNT_TIERS are USD list prices: 7900 in another currency is not Pro monthly.
+function usdOrUnstated(currency) {
+  return !currency || String(currency).toLowerCase() === "usd";
 }
 
 // Cancellation: no revocation. The token's `exp` already ends the licence after
@@ -438,10 +469,62 @@ async function markSubscriptionEnded(event, env) {
   return { revoked: false, cancelled: true, subscription: sub, receipt_id: [...receipts][0] || null };
 }
 
+// Payment → invoice link. Refund and dispute events name the PaymentIntent or
+// the Charge, never the invoice, so the link is recorded from whichever event
+// carries both ids and is followed when a licence has to be revoked.
+async function linkPaymentToInvoice(env, invoiceId, ...paymentIds) {
+  if (typeof invoiceId !== "string" || !invoiceId) return 0;
+  let linked = 0;
+  for (const id of paymentIds) {
+    if (typeof id !== "string" || !id) continue;
+    await writeJson(env, `alias:${id}`, { invoice: invoiceId });
+    linked += 1;
+  }
+  return linked;
+}
+
+// `invoice_payment.paid` (API 2025-03-31 and later): the only event that ties a
+// subscription payment's PaymentIntent to its invoice. No licence is issued here.
+async function recordInvoicePayment(event, env) {
+  const payment = event.data?.object || {};
+  const linked = await linkPaymentToInvoice(env, payment.invoice, payment.payment?.payment_intent, payment.payment?.charge);
+  return { linked: linked > 0, invoice: stringOrNull(payment.invoice) };
+}
+
+// Last resort for refunds. The Charge names its customer and licences are
+// indexed by customer at issue time. Only an unambiguous match revokes: exactly
+// one unrevoked licence of that customer with the charged amount and currency,
+// issued within CUSTOMER_MATCH_WINDOW_MS of the charge. Two candidates are
+// never guessed between: the event fails and is settled by hand.
+async function receiptForCustomerCharge(charge, env) {
+  const customer = stringOrNull(charge.customer);
+  const amount = numberOrNull(charge.amount);
+  if (!customer || amount == null) return null;
+  const index = await readJson(env, `cus:${customer}`);
+  const chargedAt = Number(charge.created) * 1000;
+  const matches = [];
+  for (const receipt of Array.isArray(index) ? index : []) {
+    const record = await readJson(env, `lic:${receipt}`);
+    if (!record || record.revoked || record.amount_total !== amount) continue;
+    if (charge.currency && record.currency && String(charge.currency).toLowerCase() !== String(record.currency).toLowerCase()) continue;
+    const issuedAt = Date.parse(record.issued_at || "");
+    if (Number.isFinite(chargedAt) && chargedAt > 0 && Number.isFinite(issuedAt) && Math.abs(issuedAt - chargedAt) > CUSTOMER_MATCH_WINDOW_MS) continue;
+    matches.push(receipt);
+  }
+  if (matches.length > 1) {
+    throw new Error(`refund ${charge.id} fits ${matches.length} licences of ${customer} (${matches.join(", ")}); revoke the right receipt id through POST /stripe/reconcile`);
+  }
+  return matches[0] || null;
+}
+
 async function revokeEntitlement(event, env) {
   const object = event.data?.object || {};
-  const identifiers = [object.id, object.payment_intent, object.charge, object.subscription, object.invoice].filter((v) => typeof v === "string" && v.length > 0);
-  if (identifiers.length === 0) return { revoked: false };
+  const identifiers = new Set([object.id, object.payment_intent, object.charge, object.subscription, object.invoice].filter((v) => typeof v === "string" && v.length > 0));
+  if (identifiers.size === 0) return { revoked: false };
+  for (const identifier of [...identifiers]) {
+    const alias = await readJson(env, `alias:${identifier}`);
+    if (typeof alias?.invoice === "string" && alias.invoice) identifiers.add(alias.invoice);
+  }
   const receipts = new Set();
   for (const identifier of identifiers) {
     for (const prefix of ["pi:", "invoice:", "sub:"]) {
@@ -451,20 +534,31 @@ async function revokeEntitlement(event, env) {
     }
     if ((await readJson(env, `lic:${identifier}`)) !== null) receipts.add(identifier);
   }
+  let matchedBy = "link";
+  if (receipts.size === 0 && event.type === "charge.refunded") {
+    const receipt = await receiptForCustomerCharge(object, env);
+    if (receipt) {
+      receipts.add(receipt);
+      matchedBy = "customer";
+    }
+  }
   const at = nowIso();
   for (const identifier of [...identifiers, ...receipts]) await writeJson(env, `revoked:${identifier}`, { reason: event.type, at });
+  if (receipts.size === 0) {
+    // Never acknowledge a refund or chargeback that revoked nothing: the event
+    // stays pending (Stripe retries, which also covers a link that arrives
+    // late). A payment that was not for a licence simply stops retrying.
+    throw new Error(`${event.type} ${object.id} matches no licence (${[...identifiers].join(", ")}); if it paid for one, revoke its receipt id through POST /stripe/reconcile`);
+  }
   for (const receipt of receipts) {
     const record = await readJson(env, `lic:${receipt}`);
     if (record) await writeJson(env, `lic:${receipt}`, { ...record, revoked: true, revoked_at: at, revoked_reason: event.type });
   }
-  if (receipts.size > 0) {
-    const crl = (await readJson(env, "crl")) || [];
-    for (const receipt of receipts) if (!crl.includes(receipt)) crl.push(receipt);
-    await writeJson(env, "crl", crl);
-  }
-  const first = [...receipts][0] || identifiers[0];
-  console.log(`[qector] revoked ${[...receipts].join(",") || identifiers[0]} (${event.type})`);
-  return { revoked: receipts.size > 0, receipt_id: first, unmatched: receipts.size === 0 ? identifiers : undefined };
+  const crl = (await readJson(env, "crl")) || [];
+  for (const receipt of receipts) if (!crl.includes(receipt)) crl.push(receipt);
+  await writeJson(env, "crl", crl);
+  console.log(`[qector] revoked ${[...receipts].join(",")} (${event.type}, matched by ${matchedBy})`);
+  return { revoked: true, receipt_id: [...receipts][0], matched_by: matchedBy };
 }
 
 // ---------------------------------------------------------------------------
@@ -478,7 +572,7 @@ export function tierFromSession(session, env = {}) {
     const fromPrice = tierFromMetadataOrNull(item.price?.metadata) || tierFromPriceId(item.price?.id, env);
     if (fromPrice) return fromPrice;
   }
-  for (const field of ["amount_subtotal", "amount_total"]) {
+  for (const field of usdOrUnstated(session?.currency) ? ["amount_subtotal", "amount_total"] : []) {
     const amount = session?.[field];
     if (typeof amount === "number" && Number.isFinite(amount) && AMOUNT_TIERS[amount]) {
       console.log(`[qector] no tier metadata; ${field} ${amount} maps to ${AMOUNT_TIERS[amount]}`);
@@ -607,6 +701,7 @@ async function persistRecord(env, record) {
   await writeJson(env, `lic:${record.receipt_id}`, record);
   if (record.payment_intent) await writeJson(env, `pi:${record.payment_intent}`, { receipt_id: record.receipt_id });
   if (record.invoice) await writeJson(env, `invoice:${record.invoice}`, { receipt_id: record.receipt_id });
+  let subscriptionReceipts = [];
   if (record.subscription) {
     const prior = (await readJson(env, `sub:${record.subscription}`)) || {};
     const receipts = Array.isArray(prior.receipts) ? prior.receipts : [];
@@ -616,12 +711,27 @@ async function persistRecord(env, record) {
       receipt_id: record.receipt_id,
       receipts,
     });
+    subscriptionReceipts = receipts;
   }
-  const mailKey = `bymail:${record.email}`;
-  const prior = await readJson(env, mailKey);
+  // Customer index: lets a refund be matched when the Charge names nothing but
+  // its customer. Earlier receipts of the same subscription belong to the same
+  // customer, so licences issued before this index existed are picked up at
+  // their next renewal.
+  if (record.customer) await addToIndex(env, `cus:${record.customer}`, [record.receipt_id, ...subscriptionReceipts]);
+  await addToIndex(env, `bymail:${record.email}`, [record.receipt_id]);
+}
+
+async function addToIndex(env, key, receiptIds) {
+  const prior = await readJson(env, key);
   const receipts = Array.isArray(prior) ? prior : [];
-  if (!receipts.includes(record.receipt_id)) receipts.push(record.receipt_id);
-  await writeJson(env, mailKey, receipts);
+  let changed = false;
+  for (const id of receiptIds) {
+    if (id && !receipts.includes(id)) {
+      receipts.push(id);
+      changed = true;
+    }
+  }
+  if (changed || !Array.isArray(prior)) await writeJson(env, key, receipts);
 }
 
 // ---------------------------------------------------------------------------

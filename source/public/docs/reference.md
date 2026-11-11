@@ -1,8 +1,8 @@
 # QECTOR Decoder v3 Reference
 
-Version: 1.0.0  
-Reference manual: [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)  
-Package: `qector-decoder-v3==1.0.0`
+Version: 1.0.1  
+Reference manual (v1.0.0): [10.5281/zenodo.21941046](https://doi.org/10.5281/zenodo.21941046)  
+Package: `qector-decoder-v3==1.0.1`
 
 This page is the web companion to the reference manual. The PDF is normative for the complete mathematical proofs, implementation contracts, evidence anchors, limitations, and reproduction commands.
 

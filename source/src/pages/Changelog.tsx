@@ -1,7 +1,7 @@
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import ChangelogEntry from '../components/ChangelogEntry';
-import { PYPI_RELEASES } from '../lib/releases';
+import { PYPI_CURRENT_RELEASE, PYPI_RELEASES } from '../lib/releases';
 
 export default function Changelog() {
   return (
@@ -13,7 +13,7 @@ export default function Changelog() {
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-dot" />
-            Latest: v1.0.1 Decoder (2026-11-06) · Claude Plugin v2.0.1 · Workbench v1.0.7
+            Latest: v{PYPI_CURRENT_RELEASE.version} Decoder ({PYPI_CURRENT_RELEASE.releaseDate}) · Claude Plugin v2.0.1 · Workbench v1.0.7
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Changelog" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">

@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
+import { CLAUDE_PLUGIN_RELEASE, PYPI_URL, PYPI_VERSION, PYPI_WHEELS } from '../lib/releases';
 
 // Trust & Security: the vendor pack a procurement or security team asks for,
-// published so they do not have to ask. Every claim links to a verifiable
-// artefact (release assets, attestations, policies).
+// published so they do not have to ask. Claims link to a verifiable artefact
+// (release assets, attestations, policies) wherever one exists; do not write
+// "every claim" unless each bullet really carries a link.
 
-const DECODER_RELEASE = 'https://github.com/GuillaumeLessard/qector-decoder/releases/tag/v1.0.1';
-const PLUGIN_RELEASE = 'https://github.com/GuillaumeLessard/qector-claude-plugin/releases/tag/v2.0.1';
+const DECODER_RELEASE = `https://github.com/GuillaumeLessard/qector-decoder/releases/tag/v${PYPI_VERSION}`;
+const PLUGIN_RELEASE = CLAUDE_PLUGIN_RELEASE.releaseUrl;
 const PLUGIN_SIGNING_KEY = 'kYwkMApz4zMgQmJsOya1UZuByvnuikzlxQkQiA8NOJg=';
 const DECODER_LICENCE_KEY = 'MCowBQYDK2VwAyEAQh9t19EZ4KWZEYjY3EwHCUzUIehZBlovaMtrpLQXeGA=';
 
@@ -28,20 +30,20 @@ export default function Security() {
     <>
       <SEO
         title="Security & Trust · QECTOR"
-        description="QECTOR security and procurement pack: no telemetry, offline licence verification, Sigstore provenance on every wheel, signed releases, SBOM, vulnerability disclosure and data handling."
+        description="QECTOR security and procurement pack: no telemetry by default, offline licence verification, Sigstore provenance on every wheel, signed releases, SBOM, vulnerability disclosure and data handling."
       />
 
       <section className="relative py-24 md:py-28 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-surface/50 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="inline-flex flex-wrap justify-center items-center gap-2 px-3 py-1.5 bg-surface border border-gridline rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            No telemetry · Offline licensing · Signed releases
+            No telemetry by default · Offline licensing · Signed releases
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Security & Trust" className="text-4xl md:text-6xl font-extrabold" />
           </h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Everything a security or procurement review needs, published. Every claim on this page links to an artefact you can check yourself.
+            Everything a security or procurement review needs, published. Where a claim can be checked, this page links to the artefact or gives the command to check it yourself.
           </p>
         </div>
       </section>
@@ -50,23 +52,26 @@ export default function Security() {
         <div className="max-w-3xl mx-auto space-y-8">
           <Card title="At a glance" accent>
             <ul className="space-y-2 list-disc pl-5">
-              <li><strong className="text-primary">No telemetry.</strong> The decoder, plugin and Workbench send nothing to QECTOR: no usage data, syndromes, matrices or circuits.</li>
+              <li>
+                <strong className="text-primary">No telemetry by default.</strong> The decoder, plugin and Workbench run locally and send no telemetry, usage data, syndromes, matrices or circuits to QECTOR. The only exception is optional usage-based billing, which exists only under a signed Enterprise agreement and is switched off with <code className="font-mono text-cyan-200">QECTOR_OFFLINE=1</code>. See the{' '}
+                <Link to="/privacy" className="text-cyan-300 hover:underline">Privacy Policy</Link>.
+              </li>
               <li><strong className="text-primary">Air-gapped licensing.</strong> Licence tokens are Ed25519 signatures verified offline against a key in the package. No licence server, no activation call.</li>
-              <li><strong className="text-primary">Verified builds.</strong> All 18 decoder wheels are built in GitHub Actions, carry Sigstore build provenance and PEP 740 attestations, and are published with Trusted Publishing (no API token).</li>
-              <li><strong className="text-primary">Tested before release.</strong> Each wheel is installed on its own OS and checked against the syndrome before publishing; the receipts ship as <code className="font-mono text-cyan-200">platform-proof.json</code>.</li>
+              <li><strong className="text-primary">Verified builds.</strong> All {PYPI_WHEELS} decoder wheels are built in GitHub Actions, carry Sigstore build provenance and PEP 740 attestations, and are published with Trusted Publishing (no API token).</li>
+              <li><strong className="text-primary">Tested before release.</strong> Each wheel is installed on its own OS and checked against the syndrome before publishing; the receipts ship as <code className="font-mono text-cyan-200">platform-proof.json</code> in the <a href={DECODER_RELEASE} {...ext}>GitHub release</a>.</li>
               <li><strong className="text-primary">Dependency gate.</strong> Releases are blocked while a RustSec advisory or licence-policy violation is open.</li>
             </ul>
           </Card>
 
           <Card title="Verify a decoder wheel">
             <p>
-              Download from PyPI or the <a href={DECODER_RELEASE} {...ext}>v1.0.1 GitHub release</a>, then check its checksum and provenance with the GitHub CLI:
+              Download from <a href={PYPI_URL} {...ext}>PyPI</a> or the <a href={DECODER_RELEASE} {...ext}>v{PYPI_VERSION} GitHub release</a>, then check its checksum and provenance with the GitHub CLI:
             </p>
             <CodeBlock
               language="bash"
               filename="verify"
               code={`sha256sum -c SHA256SUMS --ignore-missing
-gh attestation verify qector_decoder_v3-1.0.1-*.whl \\
+gh attestation verify qector_decoder_v3-${PYPI_VERSION}-*.whl \\
   --repo GuillaumeLessard/qector-decoder`}
             />
             <p>PyPI also shows each file&apos;s attestations under &quot;Verified details&quot;.</p>
@@ -74,7 +79,7 @@ gh attestation verify qector_decoder_v3-1.0.1-*.whl \\
 
           <Card title="Verify the Claude plugin">
             <p>
-              The <a href={PLUGIN_RELEASE} {...ext}>plugin v2.0.1 release</a> ships <code className="font-mono text-cyan-200">SHA256SUMS</code>, an Ed25519 signature over it, an SPDX 2.3 SBOM, a release manifest and provenance. Verify with the release-signing public key:
+              The <a href={PLUGIN_RELEASE} {...ext}>plugin v{CLAUDE_PLUGIN_RELEASE.version} release</a> ships <code className="font-mono text-cyan-200">SHA256SUMS</code>, an Ed25519 signature over it, an SPDX 2.3 SBOM, a release manifest and provenance. Verify with the release-signing public key:
             </p>
             <CodeBlock
               language="bash"

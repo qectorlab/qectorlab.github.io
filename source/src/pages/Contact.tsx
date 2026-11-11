@@ -1,34 +1,15 @@
-﻿import { Zap } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Zap } from 'lucide-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import { APP_CONFIG, CALENDLY_URL } from '../lib/config';
 import CalendlyWidget from '../components/CalendlyWidget';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Contact() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
+  const addRef = useScrollReveal();
   const [submitted, setSubmitted] = useState<'sent' | 'draft' | false>(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const ctx = gsap.context(() => {
-    sectionsRef.current.filter(Boolean).forEach((section) => {
-      gsap.fromTo(section, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-      });
-    });
-    });
-    return () => { ctx.revert(); };
-  }, []);
-
-const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,7 +46,8 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         '',
         String(data.get('message') || ''),
       ].join('\n');
-      window.location.href = `mailto:admin@qector.store?${new URLSearchParams({ subject, body })}`;
+      // encodeURIComponent, not URLSearchParams: mail clients do not read "+" as a space.
+      window.location.href = `mailto:admin@qector.store?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setSubmitted('draft');
     }
   };
@@ -87,11 +69,10 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
             '@type': 'Organization',
             name: 'QECTOR',
             url: 'https://qector.store',
-            email: 'mailto:admin@qector.store',
+            email: 'admin@qector.store',
             sameAs: [
               'https://github.com/GuillaumeLessard/qector-decoder',
               'https://pypi.org/project/qector-decoder-v3/',
-              'https://github.com/GuillaumeLessard/qector-decoder',
             ],
           },
         }}

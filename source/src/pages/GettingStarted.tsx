@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import CodeBlock from '../components/CodeBlock';
+import { PYPI_VERSION, PYTHON_RANGE } from '../lib/releases';
 import step1 from '../content/tutorial/step1.py?raw';
 import step2 from '../content/tutorial/step2.py?raw';
 import step3 from '../content/tutorial/step3.py?raw';
@@ -15,8 +16,8 @@ const STEPS = [
   {
     id: 'install',
     title: 'Install and check',
-    text: 'Install from PyPI. Wheels exist for CPython 3.9 to 3.14 on Linux x86_64, Windows x64 and macOS on Apple silicon, so there is nothing to compile. The tier stays "Community" until you activate a licence, and every decoder works on the CPU in that tier.',
-    shell: 'python -m pip install --upgrade "qector-decoder-v3>=1.0.1,<2" stim sinter',
+    text: `Install from PyPI. Wheels exist for CPython ${PYTHON_RANGE} on Linux x86_64, Windows x64 and macOS on Apple silicon, so there is nothing to compile. The tier stays "Community" until you activate a licence, and every decoder works on the CPU in that tier.`,
+    shell: `python -m pip install --upgrade "qector-decoder-v3>=${PYPI_VERSION},<2" stim sinter`,
     code: step1,
     file: 'step1_check.py',
   },

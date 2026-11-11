@@ -19,7 +19,17 @@
 import { FAQ_ITEMS, FAQ_ITEMS_FR } from './faqData';
 import { LINKS, PRICES, usd, usdFr } from './pricing';
 import { blogPosts } from './blogData';
-import { CLAUDE_PLUGIN_RELEASE, PYPI_RELEASES } from './releases';
+import {
+  CLAUDE_PLUGIN_RELEASE,
+  PYPI_CURRENT_RELEASE,
+  PYPI_FIRST_STABLE_RELEASE,
+  PYPI_INSTALL_SPEC,
+  PYPI_RELEASES,
+  PYPI_VERSION,
+  PYPI_WHEELS,
+  PYTHON_RANGE,
+  PYTHON_RANGE_FR,
+} from './releases';
 import { alternatesFor, legalToHtml, type LegalDoc } from './legal';
 import { licenseAgreementEn, licenseAgreementFr } from '../content/licenseAgreement';
 import { privacyEn, privacyFr } from '../content/privacy';
@@ -45,7 +55,8 @@ function legalRoute(doc: LegalDoc): PrerenderRoute {
 export const SITE_URL = 'https://qector.store';
 export const SITE_NAME = 'QECTOR';
 export const OG_IMAGE = 'https://qector.store/images/og-banner.png';
-export const DECODER_VERSION = '1.0.1';
+// The decoder version comes from the release registry; never retype it here.
+export const DECODER_VERSION = PYPI_VERSION;
 export const PYPI_URL = 'https://pypi.org/project/qector-decoder-v3/';
 export const GITHUB_URL = 'https://github.com/GuillaumeLessard/qector-decoder';
 
@@ -69,6 +80,12 @@ export interface PrerenderRoute {
 }
 
 const abs = (path: string) => `${SITE_URL}${path === '/' ? '/' : `${path}/`}`;
+
+/** Escape text placed inside the static HTML bodies. */
+const esc = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const INSTALL_COMMAND_HTML = esc(`pip install --upgrade "${PYPI_INSTALL_SPEC}"`);
+const FIRST_STABLE = `v${PYPI_FIRST_STABLE_RELEASE.version} (${PYPI_FIRST_STABLE_RELEASE.releaseDate})`;
+const CURRENT = `v${PYPI_CURRENT_RELEASE.version} (${PYPI_CURRENT_RELEASE.releaseDate})`;
 
 /* ---------- shared schema.org nodes ---------- */
 
@@ -189,7 +206,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('QEC Decoding for Python') +
         p(
-          'QECTOR Decoder v3 is a Rust-core Python library with 17 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defined API stability tiers, a qector CLI, and a qector-doctor diagnostic; 1.0.1 (2026-11-06) is the current release, with 18 wheels for Python 3.9-3.14 and signed build provenance.'
+          `QECTOR Decoder v3 is a Rust-core Python library with 17 concrete quantum error correction decoder configurations, from Blossom and Union-Find to BP-OSD, space-time, and optional batch paths. Workbench v1.0.7 lists 19 named kinds because it also includes the AutoDecoder and Auto Router orchestration entries. Version 1.0.0 defined API stability tiers, a qector CLI, and a qector-doctor diagnostic; ${PYPI_CURRENT_RELEASE.version} (${PYPI_CURRENT_RELEASE.releaseDate}) is the current release, with ${PYPI_WHEELS} wheels for Python ${PYTHON_RANGE} and signed build provenance.`
         ) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\nimport numpy as np\nfrom qector_decoder_v3 import BlossomDecoder\ndecoder = BlossomDecoder([[0, 1], [1, 2], [2, 3], [3, 4]], n_qubits=5)\ncorrection = decoder.decode(np.array([0, 1, 0, 0], dtype=np.uint8))`
@@ -226,24 +243,24 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     alternates: [['en', 'https://qector.store/decoder/'], ['fr', 'https://qector.store/fr/decoder/'], ['x-default', 'https://qector.store/decoder/']],
     title: 'QECTOR Decoder v3 · QEC Decoding for Python',
     description:
-      'QECTOR Decoder v3: 17 decoder configurations in one Python library. Stable v1.0.1 (18 wheels, Python 3.9-3.14) with API tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, and qector bench.',
+      `QECTOR Decoder v3: 17 decoder configurations in one Python library. Stable v${DECODER_VERSION} (${PYPI_WHEELS} wheels, Python ${PYTHON_RANGE}) with API tiers, Relay-BP, CS-OSD, Sinter/qiskit entry points, and qector bench.`,
     heading: 'QECTOR Decoder v3',
     body: page(
       h1('QECTOR Decoder v3') +
         p(
-          'Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch. v1.0.1 is the current stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.'
+          `Rust-core Python library implementing 17 decoder configurations from exact MWPM to GPU batch. v${DECODER_VERSION} is the current stable release: API stability tiers, Relay-BP and CS-OSD in BP-OSD, Sinter/qiskit entry points, and the qector CLI. A reproducible benchmark harness (qector bench) ships in the package so you can measure on your own hardware. Stim-native, PyPI binary wheels, artifacts published on GitHub.`
         ) +
         h2('Production decoders (Stable)') +
         ul([
           '<strong>UnionFindDecoder / FastUnionFindDecoder</strong>: near-linear time approximate decoding for graph-like codes.',
-          '<strong>BlossomDecoder</strong>: exact minimum-weight perfect matching reference decoder for surface codes.',
+          '<strong>BlossomDecoder</strong>: exact minimum-weight perfect matching for graph-like codes; the reference decoder for surface codes.',
           '<strong>BatchDecoder / CPUBatchDecoder / CUDABatchDecoder / OpenCLBatchDecoder</strong>: native parallel CPU and CUDA/OpenCL batch pipelines; CUDA accepts edge_weights and precision="f64" in v1.0.0.',
         ]) +
         h2('Experimental &amp; research decoders') +
         ul([
-          '<strong>BpOsdDecoder / BPOSDDecoder</strong>: belief propagation + ordered statistics decoding for qLDPC codes; v1.0.0 adds Relay-BP, CS-OSD(lambda, w) and LLR damping.',
+          '<strong>BpOsdDecoder / BPOSDDecoder</strong>: belief propagation + ordered statistics decoding for qLDPC codes and other non-graph-like check matrices (hyperedges); v1.0.0 adds Relay-BP, CS-OSD(lambda, w) and LLR damping.',
           '<strong>BeliefMatching</strong>: BP preprocessing + reweighted exact MWPM for correlated noise (research path).',
-          '<strong>SparseBlossomDecoder</strong>: region-growing near-optimal matching; zero-allocation hot path in v1.0.0 (experimental).',
+          '<strong>SparseBlossomDecoder</strong>: region-growing, near-optimal matching for graph-like detector graphs; zero-allocation hot path in v1.0.0 (experimental).',
           '<strong>AutoDecoder / HybridDecoder</strong>: adaptive fallback and routing between Union-Find and Blossom.',
           '<strong>ColourCodeDecoder / TwoStageDecoder / AmbiguityClusterDecoder / PredecodedDecoder</strong>: specialized research workflows, new families in v1.0.0.',
         ]) +
@@ -251,11 +268,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         table(
           ['Key', 'Value'],
           [
-            ['Languages', 'Rust core (PyO3) / Python 3.9-3.14 API'],
-            ['Platforms', 'Linux x86_64, macOS ARM64, Windows x64 (18 binary wheels, Python 3.9-3.14)'],
+            ['Languages', `Rust core (PyO3) / Python ${PYTHON_RANGE} API`],
+            ['Platforms', `Linux x86_64, macOS ARM64, Windows x64 (${PYPI_WHEELS} binary wheels, Python ${PYTHON_RANGE})`],
             ['GPU', 'CUDA/OpenCL optional and environment-dependent; check the installed release diagnostics'],
             ['QEC library', 'Stim / Sinter / PyMatching / qiskit-qec compatible'],
-            ['Packaging', 'PyPI binary wheels (18: cp39 to cp314 on Linux x86_64, Windows x64 and macOS arm64), each with Sigstore provenance; no sdist'],
+            ['Packaging', `PyPI binary wheels (${PYPI_WHEELS}: CPython ${PYTHON_RANGE} on Linux x86_64, Windows x64 and macOS arm64), each with Sigstore provenance; no sdist`],
             ['License', 'PolyForm Noncommercial 1.0.0 (community) / Commercial'],
           ]
         ) +
@@ -272,7 +289,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Evidence & Reports') +
         p(
-          'Public claims link to supporting artifacts where published: the six-record Zenodo evidence corpus, validation reports, and SHA-256 sealed manifests, all archived with the decoder source on GitHub.'
+          `Public claims link to supporting artifacts where published: the six-record Zenodo evidence corpus, validation reports, and SHA-256 sealed manifests, all archived with the decoder source on GitHub. The corpus was produced for v1.0.0; the <a href="/changelog" style="color:#67e8f9;">changelog</a> lists what has changed since then, up to the current release, v${DECODER_VERSION}.`
         ) +
         h2('Zenodo evidence registry') +
         table(
@@ -390,11 +407,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           ]
         ) +
         p(
-          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/HST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Air-gapped:</strong> licence tokens are verified offline, with no licence server and no network call. <strong>Academic:</strong> universities, public research organisations and government institutions may use QECTOR free under PolyForm Noncommercial whatever their funding; academic institutions that want a paid plan get ${PRICES.academicDiscountPct}% off Lab.`
+          `<strong>Tax:</strong> prices are in USD and exclude tax; applicable sales tax, GST/QST or VAT is added at checkout from your billing address. <strong>Delivery:</strong> your licence token is e-mailed within minutes of payment: check your spam folder before contacting support. <strong>Renewals:</strong> Pro and Lab renew automatically until cancelled; cancel any time. <strong>Refunds:</strong> ${PRICES.refundDays}-day money-back guarantee on the first payment of every plan: see the <a href="/refund" style="color:#67e8f9;">refund policy</a>. <strong>Air-gapped:</strong> licence tokens are verified offline, with no licence server and no network call. <strong>Academic:</strong> universities, public research organisations and government institutions may use QECTOR free under PolyForm Noncommercial whatever their funding; academic institutions that want a paid plan get ${PRICES.academicDiscountPct}% off Lab.`
         ) +
         h2('Activating your license') +
         p(
-          'Everyone installs the same wheel: <code>pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2"</code>. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Set both <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to the same token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding; CPU decoding is never blocked, and distance caps apply only with <code>QECTOR_ENFORCE=1</code>.'
+          `Everyone installs the same wheel: <code>${INSTALL_COMMAND_HTML}</code>. If <code>QECTOR_LICENSE</code> is unset a licensing notice prints on import, which is expected for non-commercial use. Set both <code>QECTOR_LICENSE</code> and <code>QECTOR_LICENSE_KEY</code> to the same token. Every paid plan unlocks GPU (CUDA/OpenCL) batch decoding, and Lab and Enterprise raise the code-distance tier to 63; CPU decoding is never blocked, and distance caps apply only with <code>QECTOR_ENFORCE=1</code>.`
         ) +
         pre(
           `# Commercial use: activate with the Ed25519 token from your licence email\nexport QECTOR_LICENSE="<your-token>"\nexport QECTOR_LICENSE_KEY="<your-token>"\n\n# Optional: suppress the licensing notice in CI logs\nexport QECTOR_SILENT=1\n\n# Verification is offline against a public key in the package.\n# No licence server, no phone-home, works air-gapped.\npython -c "import qector_decoder_v3 as q; print(q.get_license_info()['tier'])"`
@@ -453,7 +470,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/commercial',
     title: 'Enterprise & OEM Licensing · QECTOR',
     description:
-      'Enterprise and OEM licences for QECTOR Decoder v3: hosted and SaaS rights, OEM and hardware bundling, named support and a signed agreement, from $25,000 a year. Air-gapped licensing.',
+      `Enterprise and OEM licences for QECTOR Decoder v3: hosted and SaaS rights, OEM and hardware bundling, named support and a signed agreement, from ${usd(PRICES.enterpriseFrom)} a year. Air-gapped licensing.`,
     heading: 'Enterprise & OEM Licensing',
     body: page(
       h1('Enterprise & OEM Licensing') +
@@ -463,7 +480,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
         ul([
           'Custom scope: subsidiaries, deployments and redistribution rights.',
           'Priority support with response SLAs and integration guidance.',
-          'Academic institutions: 40% discount on Lab.',
+          `Academic institutions: ${PRICES.academicDiscountPct}% discount on Lab.`,
         ]) +
         p('Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> or see <a href="/pricing" style="color:#67e8f9;">pricing</a>.')
     ),
@@ -507,7 +524,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
           'QECTOR is built by Guillaume Lessard (ORCID 0009-0000-3465-3753) / iD01t Productions. The project focuses on one thing: an evidence-backed quantum error correction decoder for Python.'
         ) +
         ul([
-          'No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. v1.0.0 (2026-08-06) was the first stable release of the decoder; v1.0.1 (2026-11-06) is current.',
+          `No universal benchmark figures are published on this site, because results depend on specific hardware; validation reports and SHA-256 sealed manifests are published with the evidence. ${FIRST_STABLE} was the first stable release of the decoder; ${CURRENT} is current.`,
         ]) +
         p('Contact: <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
@@ -517,7 +534,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/changelog',
     title: 'Changelog · QECTOR',
     description:
-      'Version history for QECTOR Decoder v3. Current release: v1.0.1 (2026-11-06). First stable release: v1.0.0 (2026-08-06). PyPI release train.',
+      `Version history for QECTOR Decoder v3. Current release: ${CURRENT}. First stable release: ${FIRST_STABLE}. PyPI release train.`,
     heading: 'Changelog',
     body: page(
       h1('Changelog') +
@@ -547,7 +564,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
          ul([
            'No v0.7.1 release appears in the public PyPI history; it is intentionally omitted.',
            'These are PyPI upload dates, not inferred development or local file dates.',
-           ...PYPI_RELEASES.slice(1).map(({ version, releaseDate, label }) => `v${version}: ${releaseDate} · ${label}`),
+           ...PYPI_RELEASES.slice(2).map(({ version, releaseDate, label }) => `v${version}: ${releaseDate} · ${label}`),
          ]) +
          p('The canonical PyPI history contains the complete artifact record and remains the source of truth for package release dates.')
     ),
@@ -623,7 +640,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Technical Reference') +
         p(
-          'API reference for the qector_decoder_v3 1.0.1 package: stable and experimental decoders, utilities, and helper functions.'
+          `API reference for the qector_decoder_v3 ${DECODER_VERSION} package: stable and experimental decoders, utilities, and helper functions.`
         ) +
         h2('Stable decoders') +
         p('UnionFindDecoder, FastUnionFindDecoder, BlossomDecoder, SparseBlossomDecoder, BeliefMatching, BpOsdDecoder, BatchDecoder, CPUBatchDecoder, CUDABatchDecoder, OpenCLBatchDecoder, AutoDecoder (7-tier fallback), DecoderPool, get_decoder, clear_decoder_cache, decode_mmap, DecodeResult, decode_with_diagnostics, Workbench.') +
@@ -640,11 +657,11 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     path: '/installer',
     title: 'Installation · QECTOR',
     description:
-      'Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python 3.9-3.14.',
+      `Install QECTOR Decoder v3 on Linux, macOS, or Windows. PyPI pip install with binary wheels, Python ${PYTHON_RANGE}.`,
     heading: 'Installation',
     body: page(
       h1('Installation') +
-        p('QECTOR Decoder v3 is distributed through PyPI for Python 3.9-3.14 on the platforms listed by the current release metadata. Check the exact wheel and dependency set before deployment.') +
+        p(`QECTOR Decoder v3 is distributed through PyPI for Python ${PYTHON_RANGE} on the platforms listed by the current release metadata. Check the exact wheel and dependency set before deployment.`) +
         pre(
           `pip install qector-decoder-v3==${DECODER_VERSION}\n\n# Optional extras\npip install "qector-decoder-v3[stim]"   # Stim / Sinter / PyMatching / LDPC ecosystem\npip install "qector-decoder-v3[bench]"  # Local measurement tools\npip install "qector-decoder-v3[all]"    # Optional full environment\n\n# Verify\nqector-doctor\npython -c "import qector_decoder_v3 as qd; print(qd.__version__)"`
         ) +
@@ -660,7 +677,7 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     alternates: [['en', 'https://qector.store/license/'], ['fr', 'https://qector.store/fr/license/'], ['x-default', 'https://qector.store/license/']],
     title: 'License · QECTOR',
     description:
-      'QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; written commercial licenses available.',
+      `QECTOR Decoder v3 license terms and token activation procedure. PolyForm Noncommercial for community use; commercial plans from ${usd(PRICES.proMonthly)}/month, verified offline (air-gapped).`,
     heading: 'License',
     body: page(
       h1('License') +
@@ -678,21 +695,21 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
          h2('License activation procedure') +
          ul([
            'Verify the purchase: the fulfillment worker accepts only a Stripe-signed live checkout event and records the reference, email, tier, and token in the protected fulfillment ledger.',
-           'Install the official runtime: pip install --upgrade "qector-decoder-v3&gt;=1.0,&lt;2" from the official PyPI project.',
+           `Install the official runtime: ${INSTALL_COMMAND_HTML} from the official PyPI project.`,
            'Activate both variables: set QECTOR_LICENSE and QECTOR_LICENSE_KEY to the same token from the license email.',
            'Verify offline: python -c "import qector_decoder_v3 as q; print(q.get_license_info()[\'tier\'])" must print your paid tier (Pro or Enterprise), not Community; no license server or phone-home is involved.',
            'Keep the token with the Stripe invoice or payment confirmation. Never put it in a URL, issue tracker, chat, or public repository.',
          ]) +
-         p('If either delivery email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.') +
+         p('If the license email is missing or the token fails verification, contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a> with the Stripe reference. Do not open a duplicate checkout or dispute while delivery is being repaired.') +
          p('Full PolyForm Noncommercial License 1.0.0 text: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" style="color:#67e8f9;">polyformproject.org/licenses/noncommercial/1.0.0</a>: also bundled with the package distribution.') +
-        p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (MIT); those licenses govern their respective components.') +
+        p('QECTOR depends on open-source projects including Stim (Apache 2.0) and PyMatching (Apache 2.0); those licenses govern their respective components.') +
         p('Commercial terms: <a href="/pricing" style="color:#67e8f9;">pricing</a> · <a href="/refund" style="color:#67e8f9;">refund policy</a> · Contact <a href="mailto:admin@qector.store" style="color:#67e8f9;">admin@qector.store</a>')
     ),
   },
   {
     path: '/fr/decoder',
     title: 'QECTOR Decoder v3 · Décodage QEC pour Python',
-    description: 'QECTOR Decoder v3 : 17 configurations de décodeurs dans une seule bibliothèque Python. Version stable 1.0.1 (18 roues, Python 3.9 à 3.14), paliers de stabilité d’API, Relay-BP, CS-OSD, Sinter et qiskit, et le banc d’essai qector bench.',
+    description: `QECTOR Decoder v3 : 17 configurations de décodeurs dans une seule bibliothèque Python. Version stable ${DECODER_VERSION} (${PYPI_WHEELS} roues, Python ${PYTHON_RANGE_FR}), paliers de stabilité d’API, Relay-BP, CS-OSD, Sinter et qiskit, et le banc d’essai qector bench.`,
     heading: 'QECTOR Decoder v3',
     alternates: [['en', 'https://qector.store/decoder/'], ['fr', 'https://qector.store/fr/decoder/'], ['x-default', 'https://qector.store/decoder/']],
     body: page(h1('QECTOR Decoder v3') + p('Bibliothèque Python à noyau Rust offrant 17 configurations de décodeurs, du MWPM exact au décodage GPU par lots. Chaque correction est vérifiée contre son syndrome (H·c = s).')),
@@ -746,9 +763,9 @@ export const PRERENDER_ROUTES: PrerenderRoute[] = [
     body: page(
       h1('Security & Trust') +
         ul([
-          'No telemetry: the decoder, plugin and Workbench send nothing to QECTOR.',
+          'No telemetry by default: the decoder, plugin and Workbench send nothing to QECTOR. The only exception is optional usage-based billing under a signed Enterprise agreement, switched off with QECTOR_OFFLINE=1 (see the Privacy Policy).',
           'Air-gapped licensing: Ed25519 licence tokens verified offline; no licence server.',
-          'All 18 decoder wheels built in GitHub Actions with Sigstore provenance and PEP 740 attestations, published by Trusted Publishing.',
+          `All ${PYPI_WHEELS} decoder wheels built in GitHub Actions with Sigstore provenance and PEP 740 attestations, published by Trusted Publishing.`,
           'Each wheel tested on its own OS before release; receipts in platform-proof.json.',
           'Plugin releases signed (Ed25519 over SHA256SUMS) with an SPDX SBOM; dependencies pinned by SHA-256.',
           'Vulnerability reports: admin@qector.store, subject [SECURITY] QECTOR disclosure; acknowledged within 5 business days.',

@@ -70,7 +70,7 @@ Then the decoder row is the changing factor. Mixing a code-capacity QECTOR run w
 
 ## 5. An example of a published comparison
 
-The v1.0.0 package changelog ships a 120-test LER suite against PyMatching on a repetition code at `d=3` and `p=0.01`. It reports `ler_qector=0.00392` and `ler_pymatching=0.00317`, described as agreeing within a declared 4.5x margin.
+The v1.0.0 package changelog ships a 120-test LER suite against PyMatching on a repetition code at `d=3` and `p=0.01`. Over 12 000 seeded shots it reports `ler_qector_blossom=0.00392` and `ler_pymatching=0.00317`: a delta of 0.00075, inside the declared `+1e-3` gate (source: [decoder CHANGELOG, section 1.0.0](https://github.com/GuillaumeLessard/qector-decoder/blob/main/CHANGELOG.md)).
 
 These are measurements on one fixed workload, not universal claims. Their value is the discipline behind them: both decoders ran the same workload with the same noise value, so the comparison isolates the decoder rather than the setup.
 

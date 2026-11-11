@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { lazy, Suspense } from 'react';
 import { LINKS, PRICES, usd } from '../lib/pricing';
 import { Link } from 'react-router-dom';
 import { FolderGit2, BookOpen, Package, Monitor, Fingerprint } from 'lucide-react';
@@ -8,13 +8,13 @@ import SectionHeader from '../components/SectionHeader';
 import MobileCollapse from '../components/MobileCollapse';
 import AlgorithmCard from '../components/AlgorithmCard';
 import EvidenceBlock from '../components/EvidenceBlock';
-import QECSimulator from '../components/QECSimulator';
 import CodeBlock from '../components/CodeBlock';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
 
-gsap.registerPlugin(ScrollTrigger);
+// Far down the page and not needed to read it: kept out of the entry bundle.
+const QECSimulator = lazy(() => import('../components/QECSimulator'));
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { PYPI_INSTALL_SPEC, PYPI_VERSION, PYPI_WHEELS, PYTHON_RANGE } from '../lib/releases';
 
 function CounterStat({ value, label }: { value: string; label: string }) {
   return (
@@ -26,47 +26,8 @@ function CounterStat({ value, label }: { value: string; label: string }) {
 }
 
 export default function Home() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
+  const addRef = useScrollReveal({ y: 40, duration: 800 });
   const { version: pypiVersion } = usePyPIVersion();
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const script = document.createElement('script');
-    script.src = 'https://js.stripe.com/v3/buy-button.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    const ctx = gsap.context(() => {
-      const sections = sectionsRef.current.filter(Boolean);
-      sections.forEach((section) => {
-        gsap.fromTo(
-          section,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 85%',
-              once: true,
-            },
-          }
-        );
-      });
-    });
-
-    return () => {
-      ctx.revert();
-      if (script.parentNode === document.body) document.body.removeChild(script);
-    };
-  }, []);
-
-  const addRef = (el: HTMLElement | null, index: number) => {
-    if (el) sectionsRef.current[index] = el as HTMLDivElement;
-  };
 
   return (
     <>
@@ -86,7 +47,7 @@ export default function Home() {
             {
               '@type': 'SoftwareApplication',
               name: 'QECTOR Decoder v3',
-              description: 'QECTOR Decoder v3 is the qector-decoder-v3 1.0.1 Rust/Python quantum error correction package with 17 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.',
+              description: `QECTOR Decoder v3 is the qector-decoder-v3 ${PYPI_VERSION} Rust/Python quantum error correction package with 17 concrete decoder configurations plus 2 Workbench routing kinds, offline Ed25519 licensing, and reproducible validation guidance.`,
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Linux, macOS, Windows',
               programmingLanguage: 'Python',
@@ -125,9 +86,6 @@ export default function Home() {
           <source type="image/webp" srcSet="/images/hero-bg-640.webp 640w, /images/hero-bg.webp 1200w" sizes="100vw" />
           <img src="/images/hero-bg.webp" alt="" aria-hidden="true" width={1200} height={676} fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.45) saturate(1.1)' }} />
         </picture>
-        <noscript>
-          <img src="/images/og-banner.png" alt="" aria-hidden="true" width={1200} height={630} className="absolute inset-0 w-full h-full object-cover z-0" style={{ filter: 'brightness(0.4)' }} />
-        </noscript>
         <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-void/25 to-void z-[1]" />
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.04] to-transparent z-[1]" />
 
@@ -137,7 +95,7 @@ export default function Home() {
             className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-4 py-2 bg-surface/70 border border-cyan-300/20 rounded-full text-center text-xs leading-relaxed text-cyan-300 hover:bg-cyan-300/10 transition-all mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-dot" />
-            <span>v{pypiVersion} · 18 verified wheels · Changelog →</span>
+            <span>v{pypiVersion} · {PYPI_WHEELS} verified wheels · Changelog →</span>
           </Link>
 
           <h1
@@ -228,8 +186,8 @@ export default function Home() {
 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
              <div className="card-surface p-6 border-cyan-300/20">
                <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Current Runtime</div>
-               <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 1.0.1</h3>
-               <p className="text-secondary text-sm leading-relaxed">The live PyPI release supports Python 3.9 through 3.14 with 18 binary wheels across Windows, Linux, and macOS, each with build provenance.</p>
+               <h3 className="text-lg font-bold text-primary mb-2">qector-decoder-v3 {PYPI_VERSION}</h3>
+               <p className="text-secondary text-sm leading-relaxed">The live PyPI release supports Python {PYTHON_RANGE} with {PYPI_WHEELS} binary wheels across Windows, Linux, and macOS, each with build provenance.</p>
              </div>
              <div className="card-surface p-6 border-cyan-300/20">
                <div className="text-cyan-300 font-mono text-xs uppercase tracking-wider mb-3">Evidence Contract</div>
@@ -371,8 +329,8 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Install',
-                 desc: 'Install the 1.0.1 wheel in a supported Python 3.9-3.14 environment alongside your existing Stim or PyMatching workflow.',
-                 detail: 'pip install --upgrade "qector-decoder-v3>=1.0.1,<2"',
+                 desc: `Install the ${PYPI_VERSION} wheel in a supported Python ${PYTHON_RANGE} environment alongside your existing Stim or PyMatching workflow.`,
+                 detail: `pip install --upgrade "${PYPI_INSTALL_SPEC}"`,
                 code: true,
               },
               {
@@ -396,7 +354,7 @@ export default function Home() {
                 <h3 className="text-lg font-bold text-primary mb-2">{step.title}</h3>
                 <p className="text-secondary text-sm leading-relaxed mb-3">{step.desc}</p>
                 {step.code && (
-                  <code className="block text-xs bg-void border border-gridline rounded-lg px-3 py-2 text-cyan-300 font-mono overflow-x-auto">
+                  <code className="block text-xs bg-void border border-gridline rounded-lg px-3 py-2 text-cyan-300 font-mono overflow-x-auto" tabIndex={0} role="region" aria-label={`Command: ${step.title}`}>
                     {step.detail}
                   </code>
                 )}
@@ -483,10 +441,10 @@ export default function Home() {
                 <MobileCollapse>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { label: ' v1.0.1 Stable', desc: 'Corrected code families and Union-Find peeling, Python 3.14, GPU on Pro licences, signed provenance for every wheel.' },
-                    { label: ' 18 Binary Wheels', desc: 'Python 3.9-3.14 across Windows amd64, Linux x86_64, and macOS arm64, each tested on its own OS before release.' },
-                    { label: ' GPU Batch Paths', desc: 'CUDA and OpenCL batch paths are available for supported hardware and drivers; OpenCL via source build.' },
-                    { label: ' Reproducible Harness', desc: 'qector bench ships with the package; measure on your own hardware, no universal figures claimed.' },
+                    { label: `v${PYPI_VERSION} Stable`, desc: 'Corrected code families and Union-Find peeling, Python 3.14, GPU on Pro licences, signed provenance for every wheel.' },
+                    { label: `${PYPI_WHEELS} Binary Wheels`, desc: `Python ${PYTHON_RANGE} across Windows amd64, Linux x86_64, and macOS arm64, each tested on its own OS before release.` },
+                    { label: 'GPU Batch Paths', desc: 'CUDA and OpenCL batch paths are available for supported hardware and drivers; OpenCL via source build.' },
+                    { label: 'Reproducible Harness', desc: 'qector bench ships with the package; measure on your own hardware, no universal figures claimed.' },
                   ].map((item) => (
                     <div key={item.label} className="p-4 bg-void/50 border border-gridline/50 rounded-xl">
                       <div className="text-cyan-300 font-semibold text-sm mb-1">{item.label}</div>
@@ -509,7 +467,10 @@ export default function Home() {
 
               <div ref={(el) => addRef(el, 8)} className="relative w-full">
                 <MobileCollapse more="Open the interactive simulator" less="Hide the simulator">
-                  <QECSimulator />
+                  {/* The placeholder holds the simulator's height so nothing shifts when it arrives. */}
+                  <Suspense fallback={<div className="min-h-[30rem] rounded-2xl border border-gridline bg-surface/30" role="status" aria-label="Loading the simulator" />}>
+                    <QECSimulator />
+                  </Suspense>
                 </MobileCollapse>
               </div>
             </div>
@@ -536,7 +497,7 @@ export default function Home() {
             </div>
 
             <div ref={(el) => addRef(el, 10)} className="max-w-3xl mx-auto">
-              <div className="p-5 bg-void/50 border border-gridline/50 rounded-xl font-mono text-xs text-muted-foreground leading-relaxed overflow-x-auto">
+              <div className="p-5 bg-void/50 border border-gridline/50 rounded-xl font-mono text-xs text-muted-foreground leading-relaxed overflow-x-auto" tabIndex={0} role="region" aria-label="Example terminal session">
                 <div><span className="text-cyan-300">$</span> pip install "qector-decoder-v3[bench]"</div>
                 <div><span className="text-cyan-300">$</span> qector-doctor</div>
                 <div><span className="text-cyan-300">$</span> qector bench -d 5 -r 5 -s 10000 --decoder blossom --noise 0.001</div>

@@ -1,36 +1,23 @@
-﻿import { FolderGit2, Package, ClipboardList } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { FolderGit2, Package, ClipboardList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { CLAUDE_PLUGIN_RELEASE, PYPI_VERSION, PYTHON_RANGE, WORKBENCH_RELEASES } from '../lib/releases';
 
-gsap.registerPlugin(ScrollTrigger);
+const [WORKBENCH] = WORKBENCH_RELEASES;
 
 export default function Docs() {
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-    sectionsRef.current.filter(Boolean).forEach((section) => {
-      gsap.fromTo(section, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
-      });
-    });
-    });
-    return () => { ctx.revert(); };
-  }, []);
-
-const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsRef.current[index] = el; };
+  const addRef = useScrollReveal();
 
   const docLinks = [
-    { title: 'Claude Code Plugin', desc: 'v2.0.1: 28 skills, 5 agents, air-gapped qector-secure server with 12 schema-validated tools', href: '/claude-plugin' },
-    { title: 'Workbench (Win / Linux)', desc: 'Free desktop GUI with an 85-tool MCP server, v1.0.7 on Windows/Linux', href: '/workbench' },
+    { title: 'Getting Started', desc: 'A 15-minute tutorial: install, a first checked decode, a Stim circuit, qLDPC with BP-OSD, and Sinter', href: '/getting-started' },
+    { title: 'Claude Code Plugin', desc: `v${CLAUDE_PLUGIN_RELEASE.version}: 28 skills, 5 agents, air-gapped qector-secure server with 12 schema-validated tools`, href: '/claude-plugin' },
+    { title: 'Workbench (Win / Linux)', desc: `Free desktop GUI with an ${WORKBENCH.mcpTools}-tool MCP server, ${WORKBENCH.version} on Windows/Linux`, href: '/workbench' },
     { title: 'MCP Server', desc: 'App-free local library MCP server exposing 8 local tools', href: '/mcp-server' },
     { title: 'Technical Reference', desc: 'API documentation, decoder parameters, code examples', href: '/technical-reference' },
     { title: 'User Manual', desc: 'Installation, configuration, workflow guides', href: '/manual' },
-    { title: 'Package Reference (v1.0.1)', desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
+    { title: `Package Reference (v${PYPI_VERSION})`, desc: 'Extended reference manual for qector-decoder-v3 Python package', href: '/docs/reference.md' },
     { title: 'Installation Guide', desc: 'Platform-specific setup instructions', href: '/installer' },
     { title: 'Evidence & Reports', desc: 'Six-record Zenodo registry, validation artifacts and reproducibility data', href: '/evidence' },
     { title: 'Changelog', desc: 'Version history and release notes', href: '/changelog' },
@@ -47,7 +34,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
-            Python 3.9-3.14 · Linux · macOS · Windows
+            Python {PYTHON_RANGE} · Linux · macOS · Windows
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6"><NeuralReveal text="Documentation" className="text-4xl md:text-6xl font-extrabold" /></h1>
           <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
@@ -70,6 +57,7 @@ const addRef = (el: HTMLDivElement | null, index: number) => { if (el) sectionsR
               pip install qector-decoder-v3
             </div>
             <div className="mt-4 flex flex-wrap gap-3 justify-center">
+              <Link to="/getting-started" className="btn-outline text-sm">Getting Started</Link>
               <Link to="/installer" className="btn-outline text-sm">Full Installation Guide</Link>
               <Link to="/manual" className="btn-outline text-sm">User Manual</Link>
             </div>

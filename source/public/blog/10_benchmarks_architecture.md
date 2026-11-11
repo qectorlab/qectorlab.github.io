@@ -83,7 +83,7 @@ Every report should carry:
 | Environment | OS, CPU, RAM, Python/Rust/package versions, GPU/runtime, commit |
 | Artifact | Raw JSON/CSV path and SHA-256 |
 
-The only published comparative LER figure is the v1.0.0 changelog's 120-test suite against PyMatching, reported with a stated 4.5x margin. The head-to-head numbers include repetition-code distance 3 at p=0.01, where QECTOR records 0.00392 against PyMatching's 0.00317. Any new comparison should hold the harness constant the same way.
+The only published comparative LER figure is the v1.0.0 changelog's 120-test suite against PyMatching. The head-to-head numbers include repetition-code distance 3 at p=0.01, where 12 000 seeded shots give `ler_qector_blossom = 0.00392` against `ler_pymatching = 0.00317`: a delta of 0.00075 against a gate of `+1e-3` (source: [decoder CHANGELOG, section 1.0.0](https://github.com/GuillaumeLessard/qector-decoder/blob/main/CHANGELOG.md)). Any new comparison should hold the harness constant the same way.
 
 ## 5. Wilson intervals and comparability
 

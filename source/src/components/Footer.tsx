@@ -1,5 +1,9 @@
-﻿import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { usePyPIVersion } from '../hooks/usePyPIVersion';
+
+// Copyright year, fixed when the site is built (`define` in vite.config.ts).
+// Reading the clock here would let the generated HTML and the browser disagree.
+declare const __BUILD_YEAR__: string;
 
 interface LinkItem {
   label: string;
@@ -127,7 +131,8 @@ export default function Footer() {
               </p>
 
               <div className="flex items-center gap-2 pt-2">
-                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] text-muted-foreground hover:text-cyan-300 transition-colors" aria-label="PyPI">
+                <a href="https://pypi.org/project/qector-decoder-v3/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[44px] text-muted-foreground hover:text-cyan-300 transition-colors">
+                  <span className="sr-only">PyPI </span>
                   <span className="text-sm font-mono border border-gridline rounded px-2 py-1 hover:border-cyan-300/30">v{pypiVersion}</span>
                   <span className="sr-only">(opens in new tab)</span>
                 </a>
@@ -199,7 +204,7 @@ export default function Footer() {
       <div className="bg-[#050b14]">
         <div className="section-padding py-4">
           <div className="max-w-7xl mx-auto text-xs text-muted-foreground/70 text-center md:text-left">
-            &copy; 2026 QECTOR Lab / iD01t Productions. All rights reserved.
+            &copy; {__BUILD_YEAR__} QECTOR Lab / iD01t Productions. All rights reserved.
             <div className="mt-1">
               Éditeur : Guillaume Lessard, entrepreneur individuel (iD01t Productions), 288, boul. des Ormeaux, Longueuil (Québec) Canada J4L 1J4 · admin@qector.store
             </div>

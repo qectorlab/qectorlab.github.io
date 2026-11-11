@@ -1,7 +1,10 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SEO, JsonLd } from '../lib/seo';
 import NeuralReveal from '../components/NeuralReveal';
 import CodeBlock from '../components/CodeBlock';
+import { CLAUDE_PLUGIN_RELEASE, PYPI_VERSION, WORKBENCH_RELEASES } from '../lib/releases';
+
+const [WORKBENCH] = WORKBENCH_RELEASES;
 
 /**
  * MCP Server page.
@@ -88,7 +91,7 @@ const FAMILIES = [
 const DECODERS = [
   { name: 'union_find', type: 'Graphlike', desc: 'Standard cluster-growth Union-Find decoder.' },
   { name: 'fast_union_find', type: 'Graphlike', desc: 'Faster approximate Union-Find variant.' },
-  { name: 'blossom', type: 'Universal', desc: 'Weight-optimal exact MWPM matching.' },
+  { name: 'blossom', type: 'Graphlike', desc: 'Weight-optimal exact MWPM matching.' },
   { name: 'sparse_blossom', type: 'Graphlike', desc: 'Region-growing blossom variant for sparse error graphs.' },
   { name: 'native_auto', type: 'Auto', desc: 'Self-selecting heuristic selector (blossom for graphlike, BP-OSD for hypergraph-product).' },
 ];
@@ -133,7 +136,7 @@ export default function McpServer() {
   return (
     <>
       <SEO
-        title="Library MCP Server · QECTOR Decoder v3 v1.0.1"
+        title={`Library MCP Server · QECTOR Decoder v3 v${PYPI_VERSION}`}
         description="App-free Model Context Protocol server for quantum error correction decoding. 8 verified local stdio JSON-RPC 2.0 tools across 9 code families and 5 stable decoders. Ships as a local library; no Workbench or GUI required."
       />
       <JsonLd
@@ -152,7 +155,7 @@ export default function McpServer() {
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/5 via-surface/30 to-void" />
         <div className="relative z-10 section-padding">
           <div className="eyebrow-pill mb-6">
-            Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 1.0.1
+            Local stdio · JSON-RPC 2.0 · Protocol 2024-11-05 · qector-decoder-v3 {PYPI_VERSION}
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             <NeuralReveal text="Library MCP Server" className="text-4xl md:text-6xl font-extrabold" />
@@ -166,7 +169,7 @@ export default function McpServer() {
             <code className="text-cyan-300">qector-claude-plugin</code> repository.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link to="/installer" className="btn-cyan">Install</Link>
+            <Link to="/claude-plugin" className="btn-cyan">Install the plugin</Link>
             <Link to="/docs" className="btn-outline">Documentation</Link>
             <Link to="/workbench" className="btn-outline">Workbench vs library</Link>
           </div>
@@ -208,7 +211,7 @@ export default function McpServer() {
                 Looking for the full Claude Code Plugin?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                 The Claude Plugin v2.0.1 includes 28 skills, 11 slash commands and 5 agents. Its default qector-secure server exposes 12 schema-validated tools and runs air-gapped; 29 research tools and 3 admin tools are opt-in. Workbench v1.0.7 remains the largest desktop surface with 85 tools on Windows and Linux.
+                 The Claude Plugin v{CLAUDE_PLUGIN_RELEASE.version} includes 28 skills, 11 slash commands and 5 agents. Its default qector-secure server exposes 12 schema-validated tools and runs air-gapped; 29 research tools and 3 admin tools are opt-in. Workbench {WORKBENCH.version} remains the largest desktop surface with {WORKBENCH.mcpTools} tools on Windows and Linux.
               </p>
             </div>
             <Link
@@ -227,9 +230,14 @@ export default function McpServer() {
               Claude Desktop, or any MCP client:
             </p>
             <CodeBlock language="json" code={CLIENT_CONFIG} />
+            <p className="text-secondary text-sm leading-relaxed mt-3">
+              <code className="text-cyan-300">{'${CLAUDE_PLUGIN_ROOT}'}</code> is a Claude Code plugin variable. In an MCP
+              client that does not expand it, replace it with the absolute path to your copy of the
+              <code className="text-cyan-300"> qector-claude-plugin </code> repository.
+            </p>
             <p className="text-muted-foreground text-xs mt-3">
               In Claude Code, root <code className="text-cyan-300">.mcp.json</code> already references
-              this server via <code className="text-cyan-300">${'${CLAUDE_PLUGIN_ROOT}'}</code>. Validate with
+              this server via <code className="text-cyan-300">{'${CLAUDE_PLUGIN_ROOT}'}</code>. Validate with
               <code className="text-cyan-300"> claude plugin validate "&lt;PLUGIN_ROOT&gt;" --strict </code>.
             </p>
           </div>
@@ -291,7 +299,7 @@ export default function McpServer() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 overflow-x-auto">
+            <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Decoders">
               <table className="w-full min-w-[640px] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gridline text-cyan-300 text-xs uppercase tracking-wider font-semibold">
@@ -336,7 +344,7 @@ export default function McpServer() {
                 <strong className="text-primary">Local only.</strong> The supported transport is local stdio. Network surfaces (REST/gRPC/metrics/SSE) and batch-GPU paths are Provisional and require separate deployment review; they are not part of this public library contract.
               </li>
               <li>
-                <strong className="text-primary">Graphlike guard.</strong> Exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation ≤ 2). For hyperedge matrices such as <code className="text-cyan-300"> generate_surface_code_checks </code>, use <code className="text-cyan-300"> build_code_from_matrix </code> or decompose via the documented direct-wheel APIs.
+                <strong className="text-primary">Graphlike guard.</strong> The Union-Find, exact Blossom and SparseBlossom decoders require graphlike check structures (qubit participation ≤ 2). Hyperedge matrices, such as the output of <code className="text-cyan-300"> generate_surface_code_checks </code>, are not eligible for matching: they route to BP-OSD or require <code className="text-cyan-300"> build_code_from_matrix </code>, and hyperedges are never silently decomposed into pairwise matching edges.
               </li>
               <li>
                 <strong className="text-primary">LER is coset-scored.</strong> Logical outcomes use the logical coset, never raw correction-vector equality. Wilson 95% intervals and a <code className="text-cyan-300"> code_capacity </code> tag are included; do not compare with <code className="text-cyan-300"> circuit_level </code> results.

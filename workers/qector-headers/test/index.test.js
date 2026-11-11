@@ -45,6 +45,24 @@ test("keeps immutable caching for the hero video and protects its headers", asyn
   }
 });
 
+test("caches images for a day and keeps Stripe and Google hosts out of the page policy", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => originResponse("image/avif");
+  try {
+    const response = await worker.fetch(new Request("https://qector.store/images/hero-bg-1200.avif"));
+    assert.equal(response.headers.get("cache-control"), "public, max-age=86400, stale-while-revalidate=604800");
+    const og = await worker.fetch(new Request("https://qector.store/og/home.jpg"));
+    assert.equal(og.headers.get("cache-control"), "public, max-age=86400, stale-while-revalidate=604800");
+    const csp = response.headers.get("content-security-policy");
+    assert.doesNotMatch(csp, /js\.stripe\.com|fonts\.googleapis\.com|fonts\.gstatic\.com/);
+    // Checkout and the billing portal are plain links and form targets.
+    assert.match(csp, /form-action 'self' https:\/\/buy\.stripe\.com https:\/\/checkout\.stripe\.com https:\/\/billing\.stripe\.com/);
+    assert.match(csp, /frame-src https:\/\/calendly\.com;/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("does not cache or index the success page", async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => originResponse();

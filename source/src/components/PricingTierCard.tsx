@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface PricingTierCardProps {
   name: string;
@@ -82,7 +82,7 @@ export default function PricingTierCard({
           ))}
           {excluded?.map((f) => (
             <li key={f} className={`flex items-start gap-2 text-sm text-muted-foreground/70 ${centered ? 'text-left' : ''}`}>
-              <span className="text-muted-foreground/60 mt-0.5" aria-hidden="true">✓</span>
+              <span className="text-muted-foreground/60 mt-0.5" aria-hidden="true">✕</span>
               <span><span className="sr-only">Not included: </span>{f}</span>
             </li>
           ))}

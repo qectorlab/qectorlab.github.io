@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  site:
+    name: Site (type-check, lint, build, page checks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: source
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      # Type-check, bundle, and render every route to static HTML.
+      - run: npm run build
+      - run: npm run check:static
+      - name: Install the browser for the page checks
+        run: npx playwright install --with-deps chromium
+      - run: npm run check:browser
+      - run: npm run check:a11y
+
+  workers:
+    name: Workers (unit tests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fulfilment Worker
+        working-directory: workers/qector-fulfilment
+        run: npm test
+      - name: Security-header Worker
+        working-directory: workers/qector-headers
+        run: npm test

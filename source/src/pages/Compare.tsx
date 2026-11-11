@@ -10,7 +10,7 @@ type Cell = string;
 interface Row { label: string; qector: Cell; pymatching: Cell; ldpc: Cell; fusion: Cell }
 
 const ROWS: Row[] = [
-  { label: 'Main decoders', qector: 'Union-Find, exact MWPM (Blossom, Sparse Blossom), BP-OSD, Relay-BP', pymatching: 'MWPM (Sparse Blossom), correlated matching', ldpc: 'BP+OSD, BP+LSD, BeliefFind (BP + Union-Find)', fusion: 'Parallel MWPM' },
+  { label: 'Main decoders', qector: 'Union-Find, exact MWPM (Blossom), near-optimal Sparse Blossom, BP-OSD, Relay-BP', pymatching: 'MWPM (Sparse Blossom), correlated matching', ldpc: 'BP+OSD, BP+LSD, BeliefFind (BP + Union-Find)', fusion: 'Parallel MWPM' },
   { label: 'Graph-like codes (surface, repetition)', qector: 'Yes', pymatching: 'Yes, its specialty', ldpc: 'Yes', fusion: 'Yes' },
   { label: 'qLDPC and non-graph-like codes', qector: 'Yes (BP-OSD, Relay-BP)', pymatching: 'No: needs graph-like error models', ldpc: 'Yes, its specialty', fusion: 'No' },
   { label: 'Several families on one check matrix', qector: 'Yes, one API', pymatching: 'Matching only', ldpc: 'BP-based family', fusion: 'Matching only' },
