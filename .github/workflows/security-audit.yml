@@ -1,4 +1,4 @@
-﻿name: Production Security Audit
+name: Production Security Audit
 
 on:
   schedule:

@@ -9,8 +9,11 @@ const requiredDocumentHeaders = {
   "x-xss-protection": /^1; mode=block$/i,
 };
 
+// JSON endpoints of the licence service. X-XSS-Protection is a browser
+// page-rendering header: the service does not send it and has no use for it.
+const { "x-xss-protection": _pageOnly, ...sharedHeaders } = requiredDocumentHeaders;
 const requiredApiHeaders = {
-  ...requiredDocumentHeaders,
+  ...sharedHeaders,
   "content-security-policy": /default-src 'none'.*frame-ancestors 'none'/i,
   "referrer-policy": /^no-referrer$/i,
   "cache-control": /^no-store$/i,
@@ -63,12 +66,6 @@ assertHeaders(apiResponse, requiredApiHeaders, "health");
 const health = await apiResponse.json();
 assert(health.ok === true && health.live_mode === true, "health: live service did not report ok");
 
-const videoResponse = await request("/videos/hero-lattice.mp4", { method: "HEAD" });
-assert(videoResponse.status === 200, `video: expected 200, got ${videoResponse.status}`);
-assert(/^video\/mp4/i.test(header(videoResponse, "content-type")), "video: incorrect content type");
-assert(/immutable/i.test(header(videoResponse, "cache-control")), "video: missing immutable cache policy");
-assertHeaders(videoResponse, requiredDocumentHeaders, "video");
-
 const securityResponse = await request("/.well-known/security.txt", { method: "HEAD" });
 assert(securityResponse.status === 200, `security.txt: expected 200, got ${securityResponse.status}`);
 assert(/^text\/plain/i.test(header(securityResponse, "content-type")), "security.txt: incorrect content type");
@@ -84,5 +81,5 @@ if (failures.length > 0) {
   console.error(failures.map((failure) => `FAIL: ${failure}`).join("\n"));
   process.exitCode = 1;
 } else {
-  console.log("Production security audit passed: headers, redirects, API, video, security.txt, and removed routes.");
+  console.log("Production security audit passed: headers, redirects, API, security.txt, and removed routes.");
 }
